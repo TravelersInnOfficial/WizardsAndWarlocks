@@ -1,0 +1,27 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+
+            {
+                "name": "(gdb) Launch",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceRoot}/bin/IrrlichtTest",
+                "args": [],
+                "stopAtEntry": false,
+                "cwd": "${workspaceRoot}",
+                "environment": [],
+                "externalConsole": true,
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb",
+                "setupCommands": [
+                    {
+                        "text": "target-run",
+                        "description": "Run target",
+                        "ignoreFailures": false
+                    }
+                ],
+                "preLaunchTask": "make"
+            }
+        ]
+    }
