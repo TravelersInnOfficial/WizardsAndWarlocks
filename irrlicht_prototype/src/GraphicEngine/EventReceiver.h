@@ -1,6 +1,6 @@
 #include <irrlicht/irrlicht.h>
 
-class TEventReceiver : public irr::IEventReceiver{
+class EventReceiver : public irr::IEventReceiver{
 
 public:
     // This is the one method that we have to implement
@@ -19,7 +19,7 @@ public:
         return KeyIsDown[keyCode];
     }
     
-    TEventReceiver()
+    EventReceiver()
     {
         for (irr::u32 i=0; i<irr::KEY_KEY_CODES_COUNT; ++i)
             KeyIsDown[i] = false;

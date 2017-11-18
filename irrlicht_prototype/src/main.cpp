@@ -18,33 +18,17 @@ and tell the linker to link with the .lib file.
 #endif
 
 #include <irrlicht/irrlicht.h>
-#include <irrlicht/driverChoice.h>
-#include "TravelersEngine/TravelersDevice.h"
+#include "GraphicEngine/Device.h"
 
 using namespace irr;
 
 int main()
 {
-	// ask user for driver
-	//video::E_DRIVER_TYPE driverType=driverChoiceConsole();
-	//if (driverType==video::EDT_COUNT)
-	//	return 1;
-
-	video::E_DRIVER_TYPE driverType = video::EDT_OPENGL;
-
 	// create device
-	TEventReceiver *receiver = new TEventReceiver();
+	//EventReceiver *receiver = new EventReceiver();
 
-	//TravelersDevice* device = TravelersDevice::getTravelersDevice(receiver);
-	IrrlichtDevice* device = createDevice(
-        irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(640, 480),
-        16,
-        false,
-        false,
-        false,
-        0
-    );
+	//Device* device = Device::getDevice(receiver);
+	IrrlichtDevice* device = createDevice(irr::video::EDT_OPENGL,irr::core::dimension2d<irr::u32>(640, 480),16,false,false,false,0);
 
 	if (device == 0)
 		return 1; // could not create selected driver.
@@ -53,7 +37,10 @@ int main()
 	// Get video and scene pointers
 	video::IVideoDriver* driver = device->getVideoDriver();
 	scene::ISceneManager* smgr = device->getSceneManager();
-	
+	//VideoDriver* driver = device->getVideoDriver();
+	//SceneManager* smgr = device->getSceneManager();
+
+
 	/*
 	Create the node which will be moved with the WSAD keys. We create a
 	sphere node, which is a built-in geometry primitive. We place the node
@@ -62,6 +49,8 @@ int main()
 	lighting for each model (otherwise the models would be black).
 	*/
 	scene::ISceneNode * node = smgr->addSphereSceneNode();
+	//SceneNode* node = smgr->addSphereSceneNode();
+	
 	if (node)
 	{
 		node->setPosition(core::vector3df(0,0,30));
@@ -84,7 +73,7 @@ int main()
 	{
 		n->setMaterialTexture(0, driver->getTexture("../media/t351sml.jpg"));
 		n->setMaterialFlag(video::EMF_LIGHTING, false);
-		scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(core::vector3df(-30,0,30), core::vector3df(30,0, 30), 20.0f, true, true);
+		scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(core::vector3df(-30,0,30), core::vector3df(30,0, 30), 2000.0f, true, true);
 		if (anim)
 		{
 			n->addAnimator(anim);
@@ -129,15 +118,15 @@ int main()
 		sphere node around respectively. */
 		nodePosition = node->getPosition();
 
-		if(receiver->IsKeyDown(irr::KEY_KEY_W))
-			nodePosition.Y += MOVEMENT_SPEED * frameDeltaTime;
-		else if(receiver->IsKeyDown(irr::KEY_KEY_S))
-			nodePosition.Y -= MOVEMENT_SPEED * frameDeltaTime;
-
-		if(receiver->IsKeyDown(irr::KEY_KEY_A))
-			nodePosition.X -= MOVEMENT_SPEED * frameDeltaTime;
-		else if(receiver->IsKeyDown(irr::KEY_KEY_D))
-			nodePosition.X += MOVEMENT_SPEED * frameDeltaTime;
+//		if(receiver->IsKeyDown(irr::KEY_KEY_W))
+//			nodePosition.Y += MOVEMENT_SPEED * frameDeltaTime;
+//		else if(receiver->IsKeyDown(irr::KEY_KEY_S))
+//			nodePosition.Y -= MOVEMENT_SPEED * frameDeltaTime;
+//
+//		if(receiver->IsKeyDown(irr::KEY_KEY_A))
+//			nodePosition.X -= MOVEMENT_SPEED * frameDeltaTime;
+//		else if(receiver->IsKeyDown(irr::KEY_KEY_D))
+//			nodePosition.X += MOVEMENT_SPEED * frameDeltaTime;
 
 		node->setPosition(nodePosition);
 
