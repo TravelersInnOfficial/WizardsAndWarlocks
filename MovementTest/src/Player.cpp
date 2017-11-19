@@ -70,9 +70,7 @@ void Player::Update(irr::scene::ISceneManager* sceneManager, bool isPlayerOne){
 	}
 
 	if(moving) moving = false;
-	else{
-		m_playerRigidBody->setLinearVelocity(btVector3(velocity.getX()/1.5,velocity.getY(),velocity.getZ()/1.5));
-	}
+	else m_playerRigidBody->setLinearVelocity(btVector3(velocity.getX()/1.5,velocity.getY(),velocity.getZ()/1.5));
 }
 
 void Player::positionCamera(irr::scene::ISceneManager* sceneManager){
