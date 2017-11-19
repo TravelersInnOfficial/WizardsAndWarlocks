@@ -1,0 +1,1 @@
+PATH=$PATH:./libs;export PATH=bin:$PATH; echo $PATH
