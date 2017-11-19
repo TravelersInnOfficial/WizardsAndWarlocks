@@ -46,6 +46,8 @@ class Player{
 		float m_length;
 
 		bool moving;
+		bool canJump;
+		float lastVerticalSpeed;
 
 		btRigidBody* m_playerRigidBody;
 		btCollisionShape* m_playerShape;
@@ -53,6 +55,10 @@ class Player{
 
 		irr::scene::IAnimatedMesh* m_playerMesh;
 		irr::scene::ISceneNode* m_playerNode;
+
+		void setMaxVelocity();
+		void positionCamera(irr::scene::ISceneManager*);
+
 };
 
 #endif

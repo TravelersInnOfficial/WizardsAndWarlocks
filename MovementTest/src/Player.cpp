@@ -16,7 +16,6 @@ void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::IS
 	m_playerShape = new btBoxShape(shapeInfo);
 
 	// CREATE INITIAL MOTION STATE OF THE PLAYER
-	// Con el 1 en offset contrarrestamos el -1 del suelo
     btDefaultMotionState* playerMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, 1, 0)));
 
     // CREATE PLAYER INFO
@@ -29,18 +28,8 @@ void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::IS
     // ADD PLAYER TO THE WORLD
     m_playerRigidBody = new btRigidBody(playerRigidBodyCI);
 	dynamicsWorld->addRigidBody(m_playerRigidBody);
-	//m_playerRigidBody->activate(true);
 	m_playerRigidBody->setActivationState(DISABLE_DEACTIVATION);
 	m_playerRigidBody->setAngularFactor(btVector3(0,0,0));
-	//m_playerRigidBody->setDamping(btScalar(0.9), btScalar(0));
-	//m_playerRigidBody->setGravity(btVector3(0,-9.8,0));
-
-	// IRRLICHT
-	// We set the camera with an unused keymap so it doesn't move idnependently
-	SKeyMap keyMap[2];
-	keyMap[0].Action = EKA_CROUCH;
-  	keyMap[0].KeyCode = KEY_UP;
-	sceneManager->addCameraSceneNodeFPS(0, 120, 200, -1, keyMap, 1, true);
 
 	// Cargamos el Cubo
 	m_playerNode = sceneManager->addCubeSceneNode(m_width);
@@ -51,7 +40,6 @@ void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::IS
 		m_playerNode->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 		m_playerNode->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
 		m_playerNode->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
-		//m_playerNode->setAutomaticCulling(EAC_FRUSTUM_SPHERE );
 	}
 
 }
@@ -60,7 +48,6 @@ void Player::DeletePlayer(btDiscreteDynamicsWorld* dynamicsWorld){
 	dynamicsWorld->removeRigidBody(m_playerRigidBody);
     delete m_playerRigidBody->getMotionState();
     delete m_playerRigidBody;
-
     delete m_playerShape;
 }
 
@@ -68,10 +55,34 @@ void Player::Update(irr::scene::ISceneManager* sceneManager, bool isPlayerOne){
 	m_posX = GetPlayerTrans().getOrigin().getX();
 	m_posY = GetPlayerTrans().getOrigin().getY();
 	m_posZ = GetPlayerTrans().getOrigin().getZ();
-
 	m_playerNode->setPosition( irr::core::vector3df(m_posX, m_posY, m_posZ));
 
+	setMaxVelocity();
+	if(isPlayerOne) positionCamera(sceneManager);
+	
+	btVector3 velocity = m_playerRigidBody->getLinearVelocity();
 
+	if(!canJump){
+		float verticalSpeed = velocity.getY();
+		float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
+		if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
+		lastVerticalSpeed = verticalSpeed;
+	}
+
+	if(moving) moving = false;
+	else{
+		m_playerRigidBody->setLinearVelocity(btVector3(velocity.getX()/1.5,velocity.getY(),velocity.getZ()/1.5));
+	}
+}
+
+void Player::positionCamera(irr::scene::ISceneManager* sceneManager){
+	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
+	vector3df newRot = sceneManager->getActiveCamera()->getRotation();
+	newRot.X = 0; newRot.Z = 0;
+	m_playerNode->setRotation(newRot);
+}
+
+void Player::setMaxVelocity(){
 	btVector3 velocity = m_playerRigidBody->getLinearVelocity();
 	btVector3 auxVelocity(velocity.getX(),0,velocity.getZ());
 	btScalar speed = auxVelocity.length();
@@ -81,33 +92,22 @@ void Player::Update(irr::scene::ISceneManager* sceneManager, bool isPlayerOne){
 		auxVelocity.setY(velY);
         m_playerRigidBody->setLinearVelocity(auxVelocity);
     }
-
-	if(isPlayerOne){
-		//sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_posX, m_posY+3, m_posZ-5));
-		sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
-		vector3df newRot = sceneManager->getActiveCamera()->getRotation();
-		newRot.X = 0; newRot.Z = 0;
-		m_playerNode->setRotation(newRot);
-		//cout<<"Vel en X: "<<(int)velocity.getX()<<". Vel en Y: "<<(int)velocity.getY()<<". Vel en Z: "<<(int)velocity.getZ()<<endl;
-	}
-
-	if(moving) moving = false;
-	else m_playerRigidBody->setLinearVelocity(btVector3(velocity.getX()/1.5,velocity.getY(),velocity.getZ()/1.5));
-
 }
 
 void Player::Move(float posX, float posY){
 	SetPosX(posX);
 	SetPosY(posY);
-	m_playerNode->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
 }
 
 void Player::Jump(){
-	btVector3 velocity = m_playerRigidBody->getLinearVelocity();
-	if(fabs(velocity.getY()) < 0.05f) {
+	if(canJump) {
+		btVector3 velocity = m_playerRigidBody->getLinearVelocity();
+		velocity.setY(0);
+		m_playerRigidBody->setLinearVelocity(velocity);
 		float impulse = 30 * 9.8;
 		m_playerRigidBody->applyCentralImpulse(btVector3(0,impulse,0));
 		m_posY = GetPlayerTrans().getOrigin().getY();
+		canJump = false;
 	}
 }
 
@@ -129,26 +129,6 @@ void Player::MoveZ(int dir, irr::scene::ISceneManager* sceneManager){
 	moving = true;
 }
 
-float Player::GetPosX(){
-	return m_posX;
-}
-
-float Player::GetPosY(){
-	return m_posY;
-}
-
-float Player::GetWidth(){
-	return m_width;
-}
-
-float Player::GetHeight(){
-	return m_height;
-}
-
-float Player::GetLength(){
-	return m_length;
-}
-
 btTransform Player::GetPlayerTrans(){
 	btTransform trans;
     m_playerRigidBody->getMotionState()->getWorldTransform(trans);
@@ -164,3 +144,9 @@ void Player::SetPosY(float posY){
 	m_posY = posY;
 	m_playerNode->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
 }
+
+float Player::GetPosX(){ return m_posX; }
+float Player::GetPosY(){ return m_posY; }
+float Player::GetWidth(){ return m_width; }
+float Player::GetHeight(){ return m_height; }
+float Player::GetLength(){ return m_length; }

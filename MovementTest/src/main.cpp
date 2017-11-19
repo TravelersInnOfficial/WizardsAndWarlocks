@@ -19,9 +19,6 @@ struct World{
 	btCollisionDispatcher* dispatcher;
 	btSequentialImpulseConstraintSolver* solver;
 	btDiscreteDynamicsWorld* dynamicsWorld;
-	//btCollisionShape* groundShape;
-	//btDefaultMotionState* groundMotionState;
-    //btRigidBody* groundRigidBody;
 } didneyWorl;
 
 void Create3DWorld(){
@@ -36,23 +33,6 @@ void Create3DWorld(){
 	
 	//SETS THE GRAVITY
 	didneyWorl.dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
-	
-	//CREATES THE GROUND
-	//didneyWorl.groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-
-	//GROUND INITIAL MOTION STATE
-	//didneyWorl.groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -10, 0)));
-
-	//CREATE GROUND INFO
-    //btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, didneyWorl.groundMotionState, didneyWorl.groundShape, btVector3(0, 0, 0));
-	//groundRigidBodyCI.m_friction = 0.8;
-
-    //AGREGATE THE GROUND INFO TO THE GROUND RIGID BODY
-    //didneyWorl.groundRigidBody = new btRigidBody(groundRigidBodyCI);
-
-    //ADD THE GROUND TO THE WORLD
-    //didneyWorl.dynamicsWorld->addRigidBody(didneyWorl.groundRigidBody);
-
 }
 
 void Update3DWorld(){
@@ -60,11 +40,6 @@ void Update3DWorld(){
 }
 
 void Erase3DWorld(){
-  	//Clean up behind ourselves like good little programmers
-    //didneyWorl.dynamicsWorld->removeRigidBody(didneyWorl.groundRigidBody);
-    //delete didneyWorl.groundRigidBody->getMotionState();
-    //delete didneyWorl.groundRigidBody;
-    //delete didneyWorl.groundShape;
     delete didneyWorl.dynamicsWorld;
     delete didneyWorl.solver;
     delete didneyWorl.collisionConfiguration;
@@ -89,8 +64,6 @@ void createBox(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver
 
 	Node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
 	Node->setAutomaticCulling( EAC_FRUSTUM_BOX  );
-	//Node->setDebugDataVisible(irr::scene::EDS_BBOX);
-	//Node->setMaterialTexture(0, irrDriver->getTexture("rust0.jpg"));
 
 	// Set the initial position of the object
 	btTransform Transform;
@@ -138,81 +111,97 @@ void createScenery(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDr
 	btVector3 TPosition(0,-1,5);
 	vector3df TPosition_irr(0,-1,5);
 	vector3df TScale(20,1,20);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 3, false);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 0, false);
 
 	TPosition = btVector3(0,0,3);
 	TPosition_irr = vector3df(0,0,3);
 	TScale = vector3df(1,1,1);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 1, false);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
 
 	TPosition = btVector3(3,0.5,3);
 	TPosition_irr = vector3df(3,0.5,3);
 	TScale = vector3df(2,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 1, false);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
 
 	TPosition = btVector3(1.5,1,7);
 	TPosition_irr = vector3df(1.5,1,7);
 	TScale = vector3df(3,3,3);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 1, false);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
 
 	TPosition = btVector3(5,1.5,7);
 	TPosition_irr = vector3df(5,1.5,7);
 	TScale = vector3df(5,5,5);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 1, false);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
 
-
-	TPosition = btVector3(-2,-1,2.5);
-	TPosition_irr = vector3df(-2,-1,2.5);
+	TPosition = btVector3(-5,-1,2.5);
+	TPosition_irr = vector3df(-5,-1,2.5);
 	TScale = vector3df(3,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 1, true);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+
+	TPosition = btVector3(-5,-1,4.5);
+	TPosition_irr = vector3df(-5,-1,4.5);
+	TScale = vector3df(3,2,2);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+
+	TPosition = btVector3(-5,-1,6.5);
+	TPosition_irr = vector3df(-5,-1,6.5);
+	TScale = vector3df(3,2,2);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+
+	TPosition = btVector3(-5,-1,8.5);
+	TPosition_irr = vector3df(-5,-1,8.5);
+	TScale = vector3df(3,2,2);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+}
+
+bool manageInputs(irr::scene::ISceneManager* sceneManager, Player* physicPlayer, MyEventReceiver receiver){
+	bool end = false;
+	
+	if(receiver.IsKeyDown(irr::KEY_ESCAPE)) end = true;
+	if(receiver.IsKeyDown(irr::KEY_SPACE)) physicPlayer->Jump();
+	
+	if(receiver.IsKeyDown(irr::KEY_KEY_W)) physicPlayer->MoveZ(1, sceneManager);
+	else if(receiver.IsKeyDown(irr::KEY_KEY_S)) physicPlayer->MoveZ(-1, sceneManager);
+	
+	if(receiver.IsKeyDown(irr::KEY_KEY_A)) physicPlayer->MoveX(-1, sceneManager);
+	else if(receiver.IsKeyDown(irr::KEY_KEY_D)) physicPlayer->MoveX(1, sceneManager);
+	
+	return end;
 }
 
 int main() {
 
-	// BULLET
-	Create3DWorld();
+	Create3DWorld(); // START BULLET
 
-	// IRRLICHT
+	// START IRRLICHT
 	MyEventReceiver receiver;
-	IrrlichtDevice *device = createDevice(video::EDT_OPENGL, dimension2d<u32>(900, 600), 16, false, false, false, &receiver);
+	IrrlichtDevice *device = createDevice(video::EDT_OPENGL, dimension2d<u32>(900, 600), 32, false, false, false, &receiver);
 	if (!device) return 1;
-	device->getCursorControl()->setVisible(false);
-
-	device->setWindowCaption(L"Movement Test");
-	irr::video::IVideoDriver *driver = device->getVideoDriver(); //video::EDT_OPENGL;
+	irr::video::IVideoDriver *driver = device->getVideoDriver();
 	irr::scene::ISceneManager *sceneManager = device->getSceneManager();
+	
+	device->getCursorControl()->setVisible(false);
+	device->setWindowCaption(L"Movement Test");
+	sceneManager->addCameraSceneNodeFPS(0, 120, 0);
 
 	createScenery(sceneManager, driver);
 
-	// JUGADOR
+	// START JUGADOR
 	Player* physicPlayer = new Player();
 	physicPlayer->CreatePlayer(didneyWorl.dynamicsWorld, sceneManager, device, driver);
 
-	/*Player* physicPlayer2 = new Player();
-	physicPlayer2->CreatePlayer(didneyWorl.dynamicsWorld, sceneManager, device, driver);
-	physicPlayer2->SetPosX(60);*/
-
-	while(device->run()){
+	bool end = false;
+	while(device->run() && !end){
 		Update3DWorld();
 		physicPlayer->Update(sceneManager, true);
-		//physicPlayer2->Update(sceneManager, false);
-
-		if(receiver.IsKeyDown(irr::KEY_SPACE)) physicPlayer->Jump();
-		if(receiver.IsKeyDown(irr::KEY_KEY_W)) physicPlayer->MoveZ(1, sceneManager);
-		if(receiver.IsKeyDown(irr::KEY_KEY_A)) physicPlayer->MoveX(-1, sceneManager);
-		if(receiver.IsKeyDown(irr::KEY_KEY_S)) physicPlayer->MoveZ(-1, sceneManager);
-		else if(receiver.IsKeyDown(irr::KEY_KEY_D)) physicPlayer->MoveX(1, sceneManager);
-
-		driver->beginScene(true, true, SColor(255,200,200,255)); // Color de borrado en ARGB
+		end = manageInputs(sceneManager, physicPlayer, receiver);
+		driver->beginScene(true, true, SColor(255,150,150,255)); // Color de borrado en ARGB
 		sceneManager->drawAll();
 		driver->endScene();
 	}
 
-	// End BULLET
-	Erase3DWorld();
-
-	// End IRRLICHT
-	device->drop();
+	Erase3DWorld(); // END BULLET
+	device->drop(); // END IRRLICHT
 
 	return 0;
 }
