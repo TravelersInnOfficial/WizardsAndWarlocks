@@ -174,8 +174,14 @@ int main() {
 	Create3DWorld(); // START BULLET
 
 	// START IRRLICHT
+
+	// Get screen res
+	IrrlichtDevice *nulldevice = createDevice(video::EDT_NULL);
+	core::dimension2d<u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
+	nulldevice -> drop();
+
 	MyEventReceiver receiver;
-	IrrlichtDevice *device = createDevice(video::EDT_OPENGL, dimension2d<u32>(900, 600), 32, false, false, false, &receiver);
+	IrrlichtDevice *device = createDevice(video::EDT_OPENGL, deskres, 32, true, false, true, &receiver);
 	if (!device) return 1;
 	irr::video::IVideoDriver *driver = device->getVideoDriver();
 	irr::scene::ISceneManager *sceneManager = device->getSceneManager();
