@@ -40,15 +40,14 @@ void GraphicEngine::setCursorVisible(bool visible){
     privateDevice->getCursorControl()->setVisible(visible);
 }
 
-
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
-    irr::scene::ISceneNode* n = privateSManager->addCubeSceneNode(
-        size,   //size
-        0,      //parent
-        id,     //id
-		irr::core::vector3df(p.X, p.Y, p.Z),                //position
-		irr::core::vector3df(r.X, r.Y, r.Z),                //rotation
-		irr::core::vector3df(s.X, s.Y, s.Z));    //scale
-
-    
+    return new GBody(
+        privateSManager->addCubeSceneNode(
+            size,   //size
+            0,      //parent
+            id,     //id
+            irr::core::vector3df(p.X, p.Y, p.Z),    //position
+            irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
+            irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+    ));
 }
