@@ -54,7 +54,7 @@ void Player::DeletePlayer(btDiscreteDynamicsWorld* dynamicsWorld){
 }
 
 void Player::Update(irr::scene::ISceneManager* sceneManager, bool isPlayerOne){
-	std::cout<<"PLayer X: "<<m_posX<<" Y: "<<m_posY<<" Z: "<<m_posZ<<endl;
+	if(m_posY < -50) Respawn(sceneManager);
 
 	m_posX = GetPlayerTrans().getOrigin().getX();
 	m_posY = GetPlayerTrans().getOrigin().getY();
@@ -88,7 +88,6 @@ void Player::positionCamera(irr::scene::ISceneManager* sceneManager){
 	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
-	vector3df vec = m_playerNode->getAbsolutePosition();
 	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_posX - 0.15 * sin(rot.Y), m_posY + 0.5, m_posZ - 0.15 * cos(rot.Y)));
 	sceneManager->getActiveCamera()->updateAbsolutePosition();
 	sceneManager->getActiveCamera()->setRotation(newRotAux);
@@ -143,21 +142,18 @@ void Player::Jump(){
 }
 
 void Player::ChangeHP(float HP){
-	if(m_HP + HP > 100){
-		m_HP = 100;
-	}else if(m_HP + HP < 0){
+	if(m_HP + HP > 100) m_HP = 100;
+	
+	else if(m_HP + HP < 0){
 		m_HP = 0;
 		m_dead = true;
 	}
-	else{
-		m_HP += HP;
-	}
-	//std::cout<<"Health Points --> "<<m_HP<<endl;
-	//std::cout<<"m_dead --> "<<m_dead<<endl;
+
+	else m_HP += HP;
 }
 
-void Player::Respawn(){
-	setPosition(10, 10, 10);
+void Player::Respawn(irr::scene::ISceneManager* sceneManager){
+	setPosition(0, 5, 0, sceneManager);
 	m_dead = false;
 }
 
@@ -168,17 +164,21 @@ btTransform Player::GetPlayerTrans(){
     return trans;
 }
 
-void Player::setPosition(float posX, float posY, float posZ){
+void Player::setPosition(float posX, float posY, float posZ, irr::scene::ISceneManager* sceneManager){
 	m_posX = posX;
 	m_posY = posY;
 	m_posZ = posZ;
 	m_playerNode->setPosition(irr::core::vector3df(m_posX, m_posY, m_posZ));
 	m_playerNode->updateAbsolutePosition();
-	GetPlayerTrans().getOrigin().setX(m_posX);
-	GetPlayerTrans().getOrigin().setY(m_posY);
-	GetPlayerTrans().getOrigin().setZ(m_posZ);
 
-	std::cout<<"PLayer X: "<<m_posX<<" Y: "<<m_posY<<" Z: "<<m_posZ<<endl;
+	btTransform transform;
+    m_playerRigidBody->getMotionState()->getWorldTransform(transform);
+    transform.setOrigin(btVector3(m_posX, m_posY, m_posZ));
+    m_playerRigidBody->getMotionState()->setWorldTransform(transform);
+    m_playerRigidBody->setCenterOfMassTransform(transform);
+	m_playerRigidBody->setLinearVelocity(btVector3(0,0,0));
+
+	sceneManager->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){

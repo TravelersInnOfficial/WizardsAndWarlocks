@@ -173,7 +173,7 @@ bool manageInputs(irr::scene::ISceneManager* sceneManager, Player* physicPlayer,
 	else if(receiver.IsKeyDown(irr::KEY_KEY_O)) physicPlayer->ChangeHP(+3);
 
 	/***********RESPAWN TEST************/
-	if(receiver.IsKeyDown(irr::KEY_KEY_R)) physicPlayer->Respawn();
+	if(receiver.IsKeyDown(irr::KEY_KEY_R)) physicPlayer->Respawn(sceneManager);
 	
 	return end;
 }

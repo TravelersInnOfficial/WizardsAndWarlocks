@@ -27,7 +27,7 @@ class Player{
 		void MoveZ(int, irr::scene::ISceneManager*);
 		void Jump();
 		void ChangeHP(float);
-		void Respawn();
+		void Respawn(irr::scene::ISceneManager*);
 
 		float GetPosX();
 		float GetPosY();
@@ -38,7 +38,7 @@ class Player{
 		bool GetDead();
 		btTransform GetPlayerTrans();
 
-		void setPosition(float, float, float);
+		void setPosition(float, float, float, irr::scene::ISceneManager*);
 		void SetPosX(float);
 		void SetPosY(float);
 		void SetHP(float);
