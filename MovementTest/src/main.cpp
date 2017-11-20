@@ -4,6 +4,8 @@
 #include <string>
 #include "./Player.h"
 #include "./EventReciver.cpp"
+#include <chrono>
+#include <thread>
 
 using namespace std;
 using namespace irr;
@@ -203,6 +205,7 @@ int main() {
 		end = manageInputs(sceneManager, physicPlayer, receiver);
 		driver->beginScene(true, true, SColor(255,150,150,255)); // Color de borrado en ARGB
 		sceneManager->drawAll();
+		std::this_thread::sleep_for(std::chrono::milliseconds(7));
 		driver->endScene();
 	}
 

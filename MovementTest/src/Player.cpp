@@ -75,16 +75,18 @@ void Player::Update(irr::scene::ISceneManager* sceneManager, bool isPlayerOne){
 
 void Player::positionCamera(irr::scene::ISceneManager* sceneManager){
 	vector3df newRot = sceneManager->getActiveCamera()->getRotation();
+	vector3df newRotAux = sceneManager->getActiveCamera()->getRotation();
 	vector3df rot = newRot * PI / 180.0;
 	
+	// Poner rotacion de personaje
 	newRot.X = 0; newRot.Z = 0;
 	m_playerNode->setRotation(newRot);
-	
-	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(
-																		m_posX - 0.15 * sin(rot.Y),
-																		m_posY + 0.5,
-																		m_posZ - 0.15 * cos(rot.Y)
-																	));
+
+	// Poner posicion de camara
+	vector3df vec = m_playerNode->getAbsolutePosition();
+	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_posX - 0.15 * sin(rot.Y), m_posY + 0.5, m_posZ - 0.15 * cos(rot.Y)));
+	sceneManager->getActiveCamera()->updateAbsolutePosition();
+	sceneManager->getActiveCamera()->setRotation(newRotAux);
 }
 
 void Player::setMaxVelocity(){
