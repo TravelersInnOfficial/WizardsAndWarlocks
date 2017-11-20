@@ -1,14 +1,32 @@
+#ifndef VECTOR3D_H
+#define VECTOR3D_H
+
 #include <irrlicht/irrlicht.h>
 
-class vector3df{
-
-public:
-
-    vector3df();
-    vector3df(float x, float y, float z);
-    
+template<typename T>
+class vector3d{
 
 private:
-    irr::core::vector3df privateVector3df;
+public:
+    T X, Y, Z;      // variables of vector
+    
+    /**
+     * Creates and empty 3d vector of all 0;
+    */
+    vector3d() : X(0), Y(0), Z(0) {}
+    
+    /**
+     * Creates and initializes 3d vector
+    */
+    vector3d(T nx, T ny, T nz) : X(nx), Y(ny), Z(nz) {}
 
+    /**
+     * Copy constructor
+    */
+    vector3d(const vector3d<T>& other) : X(other.X), Y(other.Y), Z(other.Z) {}
 };
+
+typedef vector3d<float> vector3df;
+typedef vector3d<int> vector3di;
+
+#endif

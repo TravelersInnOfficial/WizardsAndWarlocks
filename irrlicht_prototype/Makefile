@@ -1,66 +1,42 @@
-# Makefile for Irrlicht Examples
-# It's usually sufficient to change just the target name and source file list
-# and be sure that CXX is set to a valid compiler
-
-# Name of the executable created (.exe will be added automatically if necessary)
+# Name of the executable created
 Target := IrrlichtTest
-# List of source files, separated by spaces
-Sources := src/main.cpp
-# Path to Irrlicht directory, should contain include/ and lib/
-IrrlichtHome := /usr/local
-# Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
-BinPath = ./bin
 
-# general compiler settings (might need to be set when compiling the lib, too)
-# preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = 
-# compiler flags such as optimization flags
-USERCXXFLAGS = -O3 -ffast-math
-#USERCXXFLAGS = -g -Wall
-# linker flags such as additional libraries and link paths
-USERLDFLAGS =
+BinPath 			:= ./bin
+BuildPath 			:= ./obj
+PhysicsEnginePath 	:= ./obj/PhysicsEngine
+GraphicsEnginePath 	:= ./obj/GraphicEngine
+SoundEnginePath		:= ./obj/SoundEngine
+SourcePath			:= $(shell find src -name '*.cpp')
 
-####
-#no changes necessary below this line
-####
+CXXFLAGS 			:= -O3 -ffast-math -g -Wall
+CPPFLAGS        	:= -I/usr/include/irrlicht/ -I/usr/include/bullet -I./libs/fmod/include -I/usr/include
+LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lsfml-system -lsfml-graphics -lsfml-window 
+#-lfmodex (SOLO ES LA DE BAJO NIVEL Y EN TDS TRABAJAMOS CON LA DE ALTO NIVEL, QUE HAY QUE DESCARGARSELA DE LA PAGINA OFICIAL)
 
-# general compiler settings
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
-CXXFLAGS = $(USERCXXFLAGS)
-LDFLAGS = $(USERLDFLAGS)
+EXECUTABLE 			:= $(BinPath)/$(Target)
+SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)
+OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
 
-#default target is Linux
-all: all_linux
+#MAKE OPTIONS
+.PHONY: all clean
 
-ifeq ($(HOSTTYPE), x86_64)
-LIBSELECT=64
-endif
+all: prepare $(OBJ)
+	$(info Creando ejecutable $(Target)...)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
 
-# target specific settings
-all_linux: LDFLAGS += -L$(IrrlichtHome)/lib/ -lIrrlicht -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
-all_linux clean_linux: SYSTEM=Linux
-# name of the binary - only valid for targets which set SYSTEM
-DESTPATH = $(BinPath)/$(Target)$(SUF)
+obj/%.o: src/%.cpp
+	$(warning Creando el binario $@...)
+	$(CC) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
-all_linux:
-	$(warning Building...)
+prepare:
+	$(warning Creando la estructura de carpetas)
 	mkdir -p $(BinPath)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
+	mkdir -p $(BuildPath)
+	mkdir -p $(PhysicsEnginePath)
+	mkdir -p $(GraphicsEnginePath)
+	mkdir -p $(SoundEnginePath)
 
-clean: clean_linux clean_win32
+clean:
 	$(warning Cleaning...)
-
-clean_linux clean_win32:
-	@$(RM) $(DESTPATH)
-
-.PHONY: all clean clean_linux
-
-#multilib handling
-ifeq ($(HOSTTYPE), x86_64)
-LIBSELECT=64
-endif
-#solaris real-time features
-ifeq ($(HOSTTYPE), sun4)
-LDFLAGS += -lrt
-endif
-
+	@$(RM) $(EXECUTABLE)
+	@$(RM) $(OBJ)

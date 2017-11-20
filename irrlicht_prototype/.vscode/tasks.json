@@ -4,9 +4,9 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "taskName": "make",
+            "taskName": "execute",
             "type": "shell",
-            "command": "make",
+            "command": "run_irr",
             "group": {
                 "kind": "build",
                 "isDefault": true

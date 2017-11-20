@@ -1,3 +1,6 @@
+#ifndef EVENTRECEIVER_H
+#define EVENTRECEIVER_H
+
 #include <irrlicht/irrlicht.h>
 
 class EventReceiver : public irr::IEventReceiver{
@@ -28,3 +31,5 @@ public:
 private:
         bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
+
+#endif

@@ -18,28 +18,17 @@ and tell the linker to link with the .lib file.
 #endif
 
 #include <irrlicht/irrlicht.h>
-#include "GraphicEngine/Device.h"
+#include "GraphicEngine/GraphicEngine.h"
 
 using namespace irr;
 
 int main()
 {
-	// create device
-	//EventReceiver *receiver = new EventReceiver();
+	GraphicEngine* engine = GraphicEngine::getInstance();
+	//IrrlichtDevice* device = createDevice(irr::video::EDT_OPENGL,irr::core::dimension2d<irr::u32>(640, 480),16,false,false,false,0);
 
-	//Device* device = Device::getDevice(receiver);
-	IrrlichtDevice* device = createDevice(irr::video::EDT_OPENGL,irr::core::dimension2d<irr::u32>(640, 480),16,false,false,false,0);
-
-	if (device == 0)
+	if (engine == 0)
 		return 1; // could not create selected driver.
-
-
-	// Get video and scene pointers
-	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager* smgr = device->getSceneManager();
-	//VideoDriver* driver = device->getVideoDriver();
-	//SceneManager* smgr = device->getSceneManager();
-
 
 	/*
 	Create the node which will be moved with the WSAD keys. We create a
@@ -47,77 +36,77 @@ int main()
 	at (0,0,30) and assign a texture to it to let it look a little bit more
 	interesting. Because we have no dynamic lights in this scene we disable
 	lighting for each model (otherwise the models would be black).
-	*/
-	scene::ISceneNode * node = smgr->addSphereSceneNode();
-	//SceneNode* node = smgr->addSphereSceneNode();
-	
-	if (node)
+//	*/
+//	//scene::ISceneNode * node = smgr->addSphereSceneNode();
+//	SceneNode* node = smgr->addSphereSceneNode();
+//	
+//	if (node)
+//	{
+//		node->setPosition(core::vector3df(0,0,30));
+//		node->setMaterialTexture(0, driver->getTexture("../media/wall.bmp"));
+//		node->setMaterialFlag(video::EMF_LIGHTING, false);
+//	}
+//
+//	/*
+//	Now we create another node, movable using a scene node animator. Scene
+//	node animators modify scene nodes and can be attached to any scene node
+//	like mesh scene nodes, billboards, lights and even camera scene nodes.
+//	Scene node animators are not only able to modify the position of a
+//	scene node, they can also animate the textures of an object for
+//	example. We create a cube scene node and attach a 'fly circle' scene
+//	node animator to it, letting this node fly around our sphere scene node.
+//	*/
+//	scene::ISceneNode* n = smgr->addCubeSceneNode();
+//
+//	if (n)
+//	{
+//		n->setMaterialTexture(0, driver->getTexture("../media/t351sml.jpg"));
+//		n->setMaterialFlag(video::EMF_LIGHTING, false);
+//		scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(core::vector3df(-30,0,30), core::vector3df(30,0, 30), 2000.0f, true, true);
+//		if (anim)
+//		{
+//			n->addAnimator(anim);
+//			anim->drop();
+//		}
+//	}
+//
+//	/*
+//	To be able to look at and move around in this scene, we create a first
+//	person shooter style camera and make the mouse cursor invisible.
+//	*/
+//	smgr->addCameraSceneNodeFPS();
+//	device->getCursorControl()->setVisible(false);
+//
+//	/*
+//	Add a colorful irrlicht logo
+//	*/
+//	device->getGUIEnvironment()->addImage(
+//		driver->getTexture("../media/irrlichtlogoalpha2.tga"),
+//		core::position2d<s32>(10,20));
+//
+//	gui::IGUIStaticText* diagnostics = device->getGUIEnvironment()->addStaticText(
+//		L"", core::rect<s32>(10, 10, 400, 20));
+//	diagnostics->setOverrideColor(video::SColor(255, 255, 255, 0));
+//
+//	// In order to do framerate independent movement, we have to know
+//	// how long it was since the last frame
+//	u32 then = device->getTimer()->getTime();
+//
+//	// This is the movemen speed in units per second.
+//	const f32 MOVEMENT_SPEED = 5.f;
+//	core::vector3df nodePosition;
+//
+	while(engine->run())
 	{
-		node->setPosition(core::vector3df(0,0,30));
-		node->setMaterialTexture(0, driver->getTexture("../media/wall.bmp"));
-		node->setMaterialFlag(video::EMF_LIGHTING, false);
-	}
-
-	/*
-	Now we create another node, movable using a scene node animator. Scene
-	node animators modify scene nodes and can be attached to any scene node
-	like mesh scene nodes, billboards, lights and even camera scene nodes.
-	Scene node animators are not only able to modify the position of a
-	scene node, they can also animate the textures of an object for
-	example. We create a cube scene node and attach a 'fly circle' scene
-	node animator to it, letting this node fly around our sphere scene node.
-	*/
-	scene::ISceneNode* n = smgr->addCubeSceneNode();
-
-	if (n)
-	{
-		n->setMaterialTexture(0, driver->getTexture("../media/t351sml.jpg"));
-		n->setMaterialFlag(video::EMF_LIGHTING, false);
-		scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(core::vector3df(-30,0,30), core::vector3df(30,0, 30), 2000.0f, true, true);
-		if (anim)
-		{
-			n->addAnimator(anim);
-			anim->drop();
-		}
-	}
-
-	/*
-	To be able to look at and move around in this scene, we create a first
-	person shooter style camera and make the mouse cursor invisible.
-	*/
-	smgr->addCameraSceneNodeFPS();
-	device->getCursorControl()->setVisible(false);
-
-	/*
-	Add a colorful irrlicht logo
-	*/
-	device->getGUIEnvironment()->addImage(
-		driver->getTexture("../media/irrlichtlogoalpha2.tga"),
-		core::position2d<s32>(10,20));
-
-	gui::IGUIStaticText* diagnostics = device->getGUIEnvironment()->addStaticText(
-		L"", core::rect<s32>(10, 10, 400, 20));
-	diagnostics->setOverrideColor(video::SColor(255, 255, 255, 0));
-
-	// In order to do framerate independent movement, we have to know
-	// how long it was since the last frame
-	u32 then = device->getTimer()->getTime();
-
-	// This is the movemen speed in units per second.
-	const f32 MOVEMENT_SPEED = 5.f;
-	core::vector3df nodePosition;
-
-	while(device->run())
-	{
-		// Work out a frame delta time.
-		const u32 now = device->getTimer()->getTime();
-		const f32 frameDeltaTime = (f32)(now - then) / 1000.f; // Time in seconds
-		then = now;
-
-		/* Check if keys W, S, A or D are being held down, and move the
-		sphere node around respectively. */
-		nodePosition = node->getPosition();
-
+//		// Work out a frame delta time.
+//		const u32 now = device->getTimer()->getTime();
+//		const f32 frameDeltaTime = (f32)(now - then) / 1000.f; // Time in seconds
+//		then = now;
+//
+//		/* Check if keys W, S, A or D are being held down, and move the
+//		sphere node around respectively. */
+//		nodePosition = node->getPosition();
+//
 //		if(receiver->IsKeyDown(irr::KEY_KEY_W))
 //			nodePosition.Y += MOVEMENT_SPEED * frameDeltaTime;
 //		else if(receiver->IsKeyDown(irr::KEY_KEY_S))
@@ -128,20 +117,20 @@ int main()
 //		else if(receiver->IsKeyDown(irr::KEY_KEY_D))
 //			nodePosition.X += MOVEMENT_SPEED * frameDeltaTime;
 
-		node->setPosition(nodePosition);
-
-		driver->beginScene(true, true, video::SColor(255,113,113,133));
-
-		smgr->drawAll(); // draw the 3d scene
-		device->getGUIEnvironment()->drawAll(); // draw the gui environment (the logo)
-
-		driver->endScene();
+//		node->setPosition(nodePosition);
+//
+//		driver->beginScene(true, true, video::SColor(255,113,113,133));
+//
+//		smgr->drawAll(); // draw the 3d scene
+//		device->getGUIEnvironment()->drawAll(); // draw the gui environment (the logo)
+//
+//		driver->endScene();
 	}
 
 	/*
 	In the end, delete the Irrlicht device.
 	*/
-	device->drop();
+	engine->drop();
 	
 	return 0;
 }
