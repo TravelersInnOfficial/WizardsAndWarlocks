@@ -14,64 +14,7 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
-/*
-struct World{
-	btBroadphaseInterface* broadphase;
-	btDefaultCollisionConfiguration* collisionConfiguration;      
-	btCollisionDispatcher* dispatcher;
-	btSequentialImpulseConstraintSolver* solver;
-	btDiscreteDynamicsWorld* dynamicsWorld;
-	btCollisionShape* groundShape;
-	btDefaultMotionState* groundMotionState;
-    btRigidBody* groundRigidBody;
-} didneyWorl;
 
-void Create3DWorld(){
-	//NEEDS FOR CREATING THE WORLD
-	didneyWorl.broadphase = new btDbvtBroadphase();
-	didneyWorl.collisionConfiguration = new btDefaultCollisionConfiguration();       
-	didneyWorl.dispatcher = new btCollisionDispatcher(didneyWorl.collisionConfiguration);
-	didneyWorl.solver = new btSequentialImpulseConstraintSolver;
-	
-	//INSTANTIATES THE DYNAMICS WORLD
-	didneyWorl.dynamicsWorld = new btDiscreteDynamicsWorld(didneyWorl.dispatcher, didneyWorl.broadphase, didneyWorl.solver, didneyWorl.collisionConfiguration);
-	
-	//SETS THE GRAVITY
-	didneyWorl.dynamicsWorld->setGravity(btVector3(0, -9.8, 0));
-	
-	//CREATES THE GROUND
-	didneyWorl.groundShape = new btStaticPlaneShape(btVector3(0, 1, 0), 1);
-
-	//GROUND INITIAL MOTION STATE
-	didneyWorl.groundMotionState = new btDefaultMotionState(btTransform(btQuaternion(0, 0, 0, 1), btVector3(0, -1, 0)));
-
-	//CREATE GROUND INFO
-    btRigidBody::btRigidBodyConstructionInfo groundRigidBodyCI(0, didneyWorl.groundMotionState, didneyWorl.groundShape, btVector3(0, 0, 0));
-
-    //AGREGATE THE GROUND INFO TO THE GROUND RIGID BODY
-    didneyWorl.groundRigidBody = new btRigidBody(groundRigidBodyCI);
-
-    //ADD THE GROUND TO THE WORLD
-    didneyWorl.dynamicsWorld->addRigidBody(didneyWorl.groundRigidBody);
-}
-
-void Update3DWorld(){
-	didneyWorl.dynamicsWorld->stepSimulation(1 / 60.f, 7);
-}
-
-void Erase3DWorld(){
-  	//Clean up behind ourselves like good little programmers
-    didneyWorl.dynamicsWorld->removeRigidBody(didneyWorl.groundRigidBody);
-    delete didneyWorl.groundRigidBody->getMotionState();
-    delete didneyWorl.groundRigidBody;
-    delete didneyWorl.groundShape;
-    delete didneyWorl.dynamicsWorld;
-    delete didneyWorl.solver;
-    delete didneyWorl.collisionConfiguration;
-    delete didneyWorl.dispatcher;
-    delete didneyWorl.broadphase;
-}
-*/
 int main() {
 
 	// BULLET

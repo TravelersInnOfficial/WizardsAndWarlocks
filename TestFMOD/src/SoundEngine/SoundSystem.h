@@ -15,7 +15,7 @@ using namespace std;
 
 //#include "mathvector.h"
 #include <fmod_studio.h>
-#include <fmod/fmod_studio.hpp>
+#include <fmod_studio.hpp>
 
 class SoundEvent;
 
