@@ -32,7 +32,8 @@
                 "/usr/include/linux",
                 "/usr/local/include/",
                 "/usr/include",
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "/usr/include/bullet"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
