@@ -1,14 +1,13 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
-#include <irrlicht/irrlicht.h>
-
 template<typename T>
 class vector3d{
 
 private:
 public:
-    T X, Y, Z;      // variables of vector
+    // variables of vector
+    T X, Y, Z;      
     
     /**
      * Creates and empty 3d vector of all 0;
