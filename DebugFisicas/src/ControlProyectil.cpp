@@ -1,14 +1,25 @@
 #include "ControlProyectil.h"
 
-ControlProyectil::ControlProyectil(btDiscreteDynamicsWorld* d, irr::scene::ISceneManager* s, irr::IrrlichtDevice* de, irr::video::IVideoDriver* dr){
+ControlProyectil* ControlProyectil::instance = 0;
+
+ControlProyectil::ControlProyectil(){}
+
+ControlProyectil* ControlProyectil::GetInstance(){
+	if(instance==0){
+		instance = new ControlProyectil();
+	}
+	else return instance;
+}
+
+void ControlProyectil::AddThings(btDiscreteDynamicsWorld* d, irr::scene::ISceneManager* s, irr::IrrlichtDevice* de, irr::video::IVideoDriver* dr){
 	dynamicsWorld = d;
 	sceneManager = s;
 	device = de;
 	driver = dr;
 }
 
-void ControlProyectil::AddProyectil(float dirX, float dirY, float dirZ, float r){
-	proyectiles.push_back(new Proyectil(dirX, dirY, dirZ, r));
+void ControlProyectil::AddProyectil(float dirX, float dirY, float dirZ, float r, float v){
+	proyectiles.push_back(new Proyectil(dirX, dirY, dirZ, r, v));
 	proyectiles[proyectiles.size()-1]->CreateProyectil(dynamicsWorld, sceneManager, device, driver);
 }
 
@@ -50,3 +61,4 @@ Proyectil* ControlProyectil::GetProyectil(){
 	return proyectiles[0];
 	return NULL;
 }
+

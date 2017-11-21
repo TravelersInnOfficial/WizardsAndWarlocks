@@ -1,10 +1,12 @@
 # Name of the executable created
 Target := WizardsAndWarlocks
 
-IrrlichtPath 	:= ./Irrlicht
-BinPath 		:= ./bin
-BuildPath 		:= ./obj
-SourcePath 		:= ./src
+IrrlichtPath 		:= ./Irrlicht
+BinPath 			:= ./bin
+BuildPath 			:= ./obj
+PhysicsEnginePath	:= ./obj/PhysicsEngine
+GraphicsEnginePath 	:= ./obj/GraphicsEngine
+SourcePath			:= $(shell find src -name '*.cpp')
 
 CXXFLAGS 		:= -O3 -ffast-math -g -Wall
 CPPFLAGS        := -I/usr/include/irrlicht/ -I/usr/include/bullet
@@ -30,6 +32,8 @@ prepare:
 	$(warning Creando la estructura de carpetas)
 	mkdir -p $(BinPath)
 	mkdir -p $(BuildPath)
+	mkdir -p $(PhysicsEnginePath)
+	mkdir -p $(GraphicsEnginePath)
 
 clean:
 	$(warning Cleaning...)
