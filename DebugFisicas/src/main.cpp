@@ -1,3 +1,6 @@
+//Calcular Vector3D a partir de dos angulos
+//https://math.stackexchange.com/questions/1385137/calculate-3d-vector-out-of-two-angles-and-vector-length
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <map>
@@ -8,6 +11,7 @@
 #include "Bloque.h"
 #include "BulletDebug.h"
 #include "ControlProyectil.h"
+#include "ControlHechizo.h"
 #include "./EventReciver.cpp"
 
 using namespace std;
@@ -123,6 +127,9 @@ int main() {
 	irr::scene::ISceneManager *sceneManager = device->getSceneManager();
 
 	const irr::scene::IGeometryCreator *geomentryCreator = sceneManager->getGeometryCreator();
+	
+
+
 	/*irr::scene::IMesh* plane = geomentryCreator->createPlaneMesh(irr::core::dimension2d<irr::f32>(1, 1), irr::core::dimension2d<irr::u32>(100, 100));
 	plane->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 	irr::scene::ISceneNode* ground = sceneManager->addMeshSceneNode(plane);
@@ -138,7 +145,8 @@ int main() {
 	Player* physicPlayer = new Player();
 	physicPlayer->CreatePlayer(didneyWorl.dynamicsWorld, sceneManager, device, driver);
 
-	ControlProyectil* Protos = new ControlProyectil(didneyWorl.dynamicsWorld, sceneManager, device, driver);
+	ControlProyectil* Protos = ControlProyectil::GetInstance();
+	Protos->AddThings(didneyWorl.dynamicsWorld, sceneManager, device, driver);
 
 	while(device->run()){
 		Update3DWorld();
@@ -146,11 +154,10 @@ int main() {
 
 		if(receiver.IsKeyDown(irr::KEY_SPACE)){ 
 			physicPlayer->Jump();
-			Protos->AddProyectil(20.0f, 0.5f, 0.5f, 2.5f);
 		}
 		if(receiver.IsKeyDown(irr::KEY_KEY_W)){ 
 			physicPlayer->MoveZ(1);
-			Protos->AddToDeleteProyecil(Protos->GetProyectil());
+			//Protos->AddToDeleteProyecil(Protos->GetProyectil());
 		}
 		if(receiver.IsKeyDown(irr::KEY_KEY_A)) physicPlayer->MoveX(-1);
 		if(receiver.IsKeyDown(irr::KEY_KEY_S)) physicPlayer->MoveZ(-1);

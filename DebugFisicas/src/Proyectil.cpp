@@ -1,10 +1,13 @@
 #include "Proyectil.h"
+#include "ControlProyectil.h"
 
-Proyectil::Proyectil(float dirX, float dirY, float dirZ, float r){
+Proyectil::Proyectil(float dirX, float dirY, float dirZ, float r, float v){
     direction.push_back(dirX);
     direction.push_back(dirY);
     direction.push_back(dirZ);
+    NormalizeDir();
     radio = r;
+    velocity = v;
     clase = "proyectil";
 }
 
@@ -58,6 +61,7 @@ void Proyectil::CreateProyectil(btDiscreteDynamicsWorld* dynamicsWorld, irr::sce
 
 void Proyectil::Update(){
     btVector3 vel(direction[0], direction[1], direction[2]);
+    vel = vel * velocity;
     m_playerRigidBody->setLinearVelocity(vel);
     
     UpdatePosShape();
@@ -78,6 +82,8 @@ void Proyectil::UpdatePosShape(){
 
 void Proyectil::Contact(void* punt, std::string tipo){
     if(tipo.compare("player")==0){
+        ControlProyectil* c = ControlProyectil::GetInstance();
+        c->AddToDeleteProyecil(this);
         cout << "ups colisionaste wey"<<endl;
     }
 }
@@ -88,4 +94,11 @@ btRigidBody* Proyectil::GetBody(){
 
 irr::scene::ISceneNode* Proyectil::GetShape(){
     return m_playerNode;
+}
+
+void Proyectil::NormalizeDir(){
+    float length = sqrt(pow(direction[0], 2) + pow(direction[1], 2) + pow(direction[2],2));
+    direction[0] = direction[0]/length;
+    direction[1] = direction[1]/length;
+    direction[2] = direction[2]/length;
 }
