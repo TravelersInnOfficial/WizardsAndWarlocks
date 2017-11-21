@@ -17,7 +17,6 @@ and tell the linker to link with the .lib file.
 #pragma comment(lib, "Irrlicht.lib")
 #endif
 
-#include <irrlicht/irrlicht.h>
 #include "GraphicEngine/GraphicEngine.h"
 
 using namespace irr;
@@ -25,7 +24,6 @@ using namespace irr;
 int main()
 {
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	//IrrlichtDevice* device = createDevice(irr::video::EDT_OPENGL,irr::core::dimension2d<irr::u32>(640, 480),16,false,false,false,0);
 
 	if (engine == 0)
 		return 1; // could not create selected driver.
@@ -37,7 +35,6 @@ int main()
 	interesting. Because we have no dynamic lights in this scene we disable
 	lighting for each model (otherwise the models would be black).
 	*/
-	//scene::ISceneNode * node = smgr->addSphereSceneNode();
 	GBody* node = engine->addSphere2Scene();
 	
 	if (node)
@@ -64,12 +61,7 @@ int main()
 		n->setPosition(vector3df(20,0,30));
 		n->setMaterialTexture("../media/t351sml.jpg");
 		n->setMaterialFlag("lightning", false);
-//		scene::ISceneNodeAnimator* anim = smgr->createFlyStraightAnimator(core::vector3df(-30,0,30), core::vector3df(30,0, 30), 2000.0f, true, true);
-//		if (anim)
-//		{
-//			n->addAnimator(anim);
-//			anim->drop();
-//		}
+		engine->setAnimationFlyStraight(n, vector3df(-30, 0, 30), vector3df(30, 0, 30), 2000.0f, true, true);
 	}
 
 	/*
@@ -89,7 +81,7 @@ int main()
 //	gui::IGUIStaticText* diagnostics = device->getGUIEnvironment()->addStaticText(
 //		L"", core::rect<s32>(10, 10, 400, 20));
 //	diagnostics->setOverrideColor(video::SColor(255, 255, 255, 0));
-//
+
 	// In order to do framerate independent movement, we have to know
 	// how long it was since the last frame
 	int then = engine->getTime();
@@ -109,14 +101,15 @@ int main()
 		sphere node around respectively. */
 		nodePosition = node->getPosition();
 
-		//if(receiver->IsKeyDown(irr::KEY_KEY_W))
-		//	nodePosition.Y += MOVEMENT_SPEED * frameDeltaTime;
-		//else if(receiver->IsKeyDown(irr::KEY_KEY_S))
-		//	nodePosition.Y -= MOVEMENT_SPEED * frameDeltaTime;
-		//if(receiver->IsKeyDown(irr::KEY_KEY_A))
-		//	nodePosition.X -= MOVEMENT_SPEED * frameDeltaTime;
-		//else if(receiver->IsKeyDown(irr::KEY_KEY_D))
-		//	nodePosition.X += MOVEMENT_SPEED * frameDeltaTime;
+		if(engine->IsKeyDown(TKEY_CODE::KEY_KEY_W))
+			nodePosition.Y += MOVEMENT_SPEED * frameDeltaTime;
+		else if(engine->IsKeyDown(TKEY_CODE::KEY_KEY_S))
+			nodePosition.Y -= MOVEMENT_SPEED * frameDeltaTime;
+		if(engine->IsKeyDown(TKEY_CODE::KEY_KEY_A))
+			nodePosition.X -= MOVEMENT_SPEED * frameDeltaTime;
+		else if(engine->IsKeyDown(TKEY_CODE::KEY_KEY_D))
+			nodePosition.X += MOVEMENT_SPEED * frameDeltaTime;
+
 		node->setPosition(nodePosition);
 
 		engine->beginSceneDefault();

@@ -37,7 +37,7 @@ void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::IS
 
     // IRRLICHT
     // Cargamos el Cubo
-	m_playerNode = sceneManager->addCubeSceneNode(3.0f);
+	m_playerNode = sceneManager->addCubeSceneNode(1.0f);
 
 	// Aplicamos Material unlit y Textura
 	if (m_playerNode) {

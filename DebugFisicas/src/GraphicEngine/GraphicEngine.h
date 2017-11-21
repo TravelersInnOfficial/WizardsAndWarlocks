@@ -4,8 +4,6 @@
 #include <irrlicht/irrlicht.h>
 #include "GBody.h"
 #include "vector3d.h"
-#include "EventReceiver.h"
-#include "Keycodes.h"
 
 class GraphicEngine{
 
@@ -113,25 +111,6 @@ public:
     */
     void setTextureFlag(GBody* body, std::string flag, bool value);
 
-    /**
-     * Creates a fly straight animator, which lets the attached scene node fly or move along a line between two points
-     * body: pointer to body to set animation
-     * initialPos: Start point of the line
-     * finalPos: End point of the line
-     * time: Time in milli seconds how long the node should need to move
-     * loop: If set to false, the node stops when the end point is reached
-     * pinpong: Flag to set whether the animator should fly back from back to start again
-    */
-    void setAnimationFlyStraight(GBody* body,
-        vector3df initialPos, 
-        vector3df finalPos, 
-        float time, 
-        bool loop = true, 
-        bool pingpong = true);
-    
-
-    bool IsKeyDown(TKEY_CODE code);
-
 private:
     GraphicEngine();
 
@@ -140,7 +119,6 @@ private:
     irr::video::IVideoDriver*   privateDriver;
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
-    EventReceiver* privateReceiver;
 
 };
 
