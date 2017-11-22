@@ -11,7 +11,7 @@ SourcePath			:= $(shell find src -name '*.cpp')
 
 CXXFLAGS 			:= -O3 -ffast-math -g -Wall
 CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet
-LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio -lsfml-system -lsfml-graphics -lsfml-window 
+LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio 
 
 EXECUTABLE 			:= $(BinPath)/$(Target)
 SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)

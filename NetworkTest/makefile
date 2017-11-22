@@ -35,9 +35,3 @@ clean:
 	$(warning Cleaning...)
 	@$(RM) $(EXECUTABLE)
 	@$(RM) $(OBJ)
-
-	
-
-
-
-
