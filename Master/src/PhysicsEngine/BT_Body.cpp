@@ -62,26 +62,19 @@ void BT_Body::Update(){
 }
 
 void BT_Body::ApplyCentralImpulse(vector3df force){
-	//PASAMOS EL ANGULO A RADIANES
-	float RADX = force.Y*M_PI/180;
-	float RADY = force.X*M_PI/180;
-	float RADZ = force.Z*M_PI/180;
-
-	m_RigidBody->applyCentralImpulse(btVector3(RADX,RADY,RADZ));
+	m_RigidBody->applyCentralImpulse(btVector3(force.X,force.Y,force.Z));
 }
 
 void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
-	float RADX = rotation.Y*M_PI/180;
-	float RADY = rotation.X*M_PI/180;
-	float RADZ = rotation.Z*M_PI/180;
+	rotation = rotation*M_PI/180;
 
 	btVector3 TPosition(m_position->X,m_position->Y,m_position->Z);
 
 	btTransform tr;
 	tr.setIdentity();
 	btQuaternion quat;
-	quat.setEuler(RADX,RADY,RADZ);
+	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
 	tr.setRotation(quat);
 	tr.setOrigin(TPosition);
 	m_RigidBody->setCenterOfMassTransform(tr);

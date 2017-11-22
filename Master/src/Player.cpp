@@ -78,7 +78,7 @@ void Player::positionCamera(){
 	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
-	engine->getActiveCamera()->setPosition(vector3df(m_position.X - 0.15 * sin(rot.Y), m_position.Y + 0.5, m_position.Z - 5 - 0.15 * cos(rot.Y)));
+	engine->getActiveCamera()->setPosition(vector3df(m_position.X - 0.15 * sin(rot.Y), m_position.Y + 0.5, m_position.Z - 0.15 * cos(rot.Y)));
 	engine->getActiveCamera()->updateAbsolutePosition();
 	engine->getActiveCamera()->setRotation(newRotAux);
 }
@@ -106,6 +106,7 @@ void Player::MoveX(int dir){
 	float impulse = 30;
 	impulse *= dir;
 	vector3df rot = engine->getActiveCamera()->getRotation();
+	rot = rot*M_PI/180;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 	moving = true;
 }
@@ -114,6 +115,7 @@ void Player::MoveZ(int dir){
 	float impulse = 30;
 	impulse *= dir;
 	vector3df rot = engine->getActiveCamera()->getRotation();
+	rot = rot*M_PI/180;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 	moving = true;
 }
