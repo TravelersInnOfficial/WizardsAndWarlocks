@@ -6,15 +6,6 @@
 #include <SFML/Graphics.hpp>
 #include <map>
 #include <string>
-#include <irrlicht/irrlicht.h>
-
-using namespace irr;
-using namespace core;
-using namespace scene;
-using namespace video;
-using namespace io;
-using namespace gui;
-
 #include "./Player.h"
 
 #define MAX_CLIENTS 20
@@ -244,12 +235,6 @@ int main() {
 		cout << "FULL IP: "<< ip <<endl;
 		// -------------------------------------
 
-		IrrlichtDevice *device = createDevice( video::EDT_SOFTWARE, dimension2d<u32>(900, 600), 16, false, false, false, 0);
-		if (!device) return 1;
-		device->setWindowCaption(L"Irrlicht + Raknet + Bullet3D Demo");
-		IVideoDriver* driver = device->getVideoDriver();
-		ISceneManager* smgr = device->getSceneManager();
-
 		RakNet::SocketDescriptor sd;
 		peer->Startup(1, &sd, 1);
 		peer->Connect(ip.c_str(), SERVER_PORT, 0, 0);
@@ -268,14 +253,6 @@ int main() {
 		// We select its color and create the previous colro variable
 		player.setFillColor(getRandColor());
 		sf::Color previousColor;
-
-		ISceneNode* node = smgr->addCubeSceneNode();
-		if (node) {
-			node->setMaterialFlag(EMF_LIGHTING, false);
-			node->setMaterialTexture( 0, driver->getTexture("../../media/wall.bmp") );
-		}
-		smgr->addCameraSceneNode(0, vector3df(0,0,-100), vector3df(0,0,0)); // X(+ = Dcha), Y (+ = Arriba), Z (+ = Delante)
-
 
 		sf::RenderWindow window(sf::VideoMode(900, 600), "Networking Test");
 		window.setFramerateLimit(60);
@@ -372,10 +349,6 @@ int main() {
 				Update3DWorld();
 				physicPlayer->Update();
 				player.setPosition(sf::Vector2f(physicPlayer->GetPosX(), (600 - (physicPlayer->GetHeight()*50)) - (physicPlayer->GetPosY())));
-				float posY = physicPlayer->GetPosY();
-				posY = node->getPosition().Y;
-				cout<<posY<<endl;
-				node->setPosition(vector3df(node->getPosition().X - 10.0f ,posY,node->getPosition().Z));
 
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 					physicPlayer->Jump();
@@ -383,12 +356,10 @@ int main() {
 				if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 					player.move({ -10.0f, 0.0f });
 					physicPlayer->SetPosX(player.getPosition().x);
-					node->setPosition(vector3df(node->getPosition().X - 1.0f ,node->getPosition().Y,node->getPosition().Z));
 				}
 				else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 					player.move({ 10.0f, 0.0f });
 					physicPlayer->SetPosX(player.getPosition().x);
-					node->setPosition(vector3df(node->getPosition().X + 1.0f ,node->getPosition().Y,node->getPosition().Z));
 				}
 
 				// We select its color randomly
@@ -414,10 +385,6 @@ int main() {
 
 				peer->Send(&bitstream, LOW_PRIORITY, RELIABLE_ORDERED, 0, RakNet::UNASSIGNED_RAKNET_GUID, true);
 			}
-
-			driver->beginScene(true, true, SColor(255,200,200,255)); // Color de borrado en ARGB
-			smgr->drawAll();
-			driver->endScene();
 
 			window.clear(sf::Color::White);
 			for (auto &row : players) {

@@ -42,13 +42,9 @@ void Player::DeletePlayer(btDiscreteDynamicsWorld* dynamicsWorld){
 }
 
 void Player::Update(){
-
 	btTransform trans;
     m_playerRigidBody->getMotionState()->getWorldTransform(trans);
 	m_posY = trans.getOrigin().getY();
-
-	//std::cout<<m_posY<<std::endl;
-	
 }
 
 void Player::Jump(){
