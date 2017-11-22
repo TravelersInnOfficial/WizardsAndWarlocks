@@ -4,17 +4,17 @@ Player::Player(){
 	m_posX = 0;
 	m_posY = 0;
 	m_posZ = 0;
-	m_width = 1;
-	m_height = 1;
-	m_length = 1;
+	m_width = 2;
+	m_height = 2;
+	m_length = 2;
 	clase = "player";
 } 
 
 void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::ISceneManager* sceneManager, irr::IrrlichtDevice *device, irr::video::IVideoDriver *driver){
 
 	// CREATES THE PLAYER SHAPE (A BOX IN THIS CASE)
-	const btVector3 shapeInfo(m_width,m_height,m_length);
-	m_playerShape = new btBoxShape(shapeInfo);
+	const btVector3 HalfExtents(m_width/2,m_height/2,m_length/2);
+	m_playerShape = new btBoxShape(HalfExtents);
 
 	// CREATE INITIAL MOTION STATE OF THE PLAYER
 	// Con el 1 en offset contrarrestamos el -1 del suelo
@@ -37,7 +37,7 @@ void Player::CreatePlayer(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::IS
 
     // IRRLICHT
     // Cargamos el Cubo
-	m_playerNode = sceneManager->addCubeSceneNode(1.0f);
+	m_playerNode = sceneManager->addCubeSceneNode(m_width);
 
 	// Aplicamos Material unlit y Textura
 	if (m_playerNode) {

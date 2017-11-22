@@ -10,8 +10,8 @@
 #include "./Player.h"
 #include "Bloque.h"
 #include "BulletDebug.h"
-#include "ControlProyectil.h"
 #include "ControlHechizo.h"
+#include "ControlProyectil.h"
 #include "./EventReciver.cpp"
 
 using namespace std;
@@ -148,16 +148,21 @@ int main() {
 	ControlProyectil* Protos = ControlProyectil::GetInstance();
 	Protos->AddThings(didneyWorl.dynamicsWorld, sceneManager, device, driver);
 
+	ControlHechizo* Hech = ControlHechizo::GetInstance();
+	Hech->AddHechizo(1, physicPlayer);
+
 	while(device->run()){
 		Update3DWorld();
 		physicPlayer->Update();
 
 		if(receiver.IsKeyDown(irr::KEY_SPACE)){ 
 			physicPlayer->Jump();
+			Hech->LanzarHechizo(1, physicPlayer);
 		}
 		if(receiver.IsKeyDown(irr::KEY_KEY_W)){ 
 			physicPlayer->MoveZ(1);
-			//Protos->AddToDeleteProyecil(Protos->GetProyectil());
+			Protos->DeleteAllProyectiles();
+			
 		}
 		if(receiver.IsKeyDown(irr::KEY_KEY_A)) physicPlayer->MoveX(-1);
 		if(receiver.IsKeyDown(irr::KEY_KEY_S)) physicPlayer->MoveZ(-1);

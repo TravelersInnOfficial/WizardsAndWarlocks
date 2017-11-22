@@ -4,23 +4,25 @@ Target := WizardsAndWarlocks
 IrrlichtPath 		:= ./Irrlicht
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
-PhysicsEnginePath	:= ./obj/PhysicsEngine
-GraphicsEnginePath 	:= ./obj/GraphicsEngine
-SourcePath			:= $(shell find src -name '*.cpp')
+SourcePath			:= ./src
+PhysicsEnginePath	:= ./obj/PhysicEngine
+GraphicsEnginePath 	:= ./obj/GraphicEngine
+
+Source				:= $(shell find $(Source) -name '*.cpp')
 
 CXXFLAGS 		:= -O3 -ffast-math -g -Wall
 CPPFLAGS        := -I/usr/include/irrlicht/ -I/usr/include/bullet
 LIBS 			:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lsfml-system -lsfml-graphics -lsfml-window
 
 EXECUTABLE 		:= $(BinPath)/$(Target)
-SRC 	   		:= $(wildcard $(SourcePath)/*.cpp)
-OBJ 			:= $(subst .cpp,.o,$(SRC))
+OBJ				:= $(subst .cpp,.o,$(Source))
 OBJ 			:= $(subst $(SourcePath),$(BuildPath),$(OBJ))
 
 #MAKE OPTIONS
 .PHONY: all clean
 
 all: prepare $(OBJ)
+	$(info $(SRC))
 	$(info Creando ejecutable $(Target)...)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
 

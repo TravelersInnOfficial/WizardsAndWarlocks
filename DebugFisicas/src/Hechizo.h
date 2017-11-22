@@ -11,6 +11,8 @@ public:
 	void EmpezarCast();
 	void ComprobarCast();
 	void Lanzar();
+	float GetCurrentCooldown();
+	void DecCooldown(float time);
 private:
 	int 	costePM;
 	

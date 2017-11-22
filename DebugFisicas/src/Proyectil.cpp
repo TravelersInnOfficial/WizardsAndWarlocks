@@ -23,7 +23,11 @@ Proyectil::~Proyectil(){
 
 void Proyectil::CreateProyectil(btDiscreteDynamicsWorld* dynamicsWorld, irr::scene::ISceneManager* sceneManager, irr::IrrlichtDevice *device, irr::video::IVideoDriver *driver){
     // CREATES THE PLAYER SHAPE (A BOX IN THIS CASE)
-	m_playerShape = new btSphereShape(radio);
+	//m_playerShape = new btSphereShape(radio);
+
+    // 0.7 = Relacion radio con medio lado de un cuadrado inciso en un circulo
+    const btVector3 HalfExtents(0.7*radio,0.7*radio,0.7*radio);
+    m_playerShape = new btBoxShape(HalfExtents);
 
 	// CREATE INITIAL MOTION STATE OF THE PLAYER
 	// Con el 1 en offset contrarrestamos el -1 del suelo

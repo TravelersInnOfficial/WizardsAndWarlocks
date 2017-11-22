@@ -17,8 +17,7 @@ public:
 	void AddToDeleteProyecil(Proyectil* pro);
 	void Update();
 	void DeleteProyectiles();
-
-	Proyectil* GetProyectil();
+	void DeleteAllProyectiles();
 private:
 
 	btDiscreteDynamicsWorld* dynamicsWorld;

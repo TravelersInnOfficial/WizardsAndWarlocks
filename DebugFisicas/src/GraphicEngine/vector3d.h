@@ -25,7 +25,7 @@ public:
     vector3d(const vector3d<T>& other) : X(other.X), Y(other.Y), Z(other.Z) {}
 };
 
-//typedef vector3d<float> vector3df;
-//typedef vector3d<int> vector3di;
+typedef vector3d<float> vector3df;
+typedef vector3d<int> vector3di;
 
 #endif
