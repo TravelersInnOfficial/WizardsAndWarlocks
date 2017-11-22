@@ -92,8 +92,12 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
     ));
 }
 
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
+    return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+}
+
 void GraphicEngine::setTextureToBody(GBody* body, std::string s){
-    body->privateNode->setMaterialTexture(0, privateDriver->getTexture("../media/t351sml.jpg"));
+    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::setTextureFlag(GBody* body, std::string flag, bool value){
@@ -128,3 +132,4 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){
     return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
 }
+

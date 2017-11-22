@@ -78,7 +78,7 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float size = 10.f,
+        float size = 1.f,
         int id = -1
         );
 
@@ -94,9 +94,15 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float radius = 5.f,
+        float radius = 0.5f,
         int id = -1
         );
+
+    /**
+     * Adds a mesh to scene and returns body
+     * path: path to .obj mesh
+    */
+    GBody* addObjMeshSceneNode(std::string path);
 
     /**
      * Sets a texture to the giben body
@@ -129,8 +135,35 @@ public:
         bool loop = true, 
         bool pingpong = true);
     
-
+    /**
+     * Returns true is given code is pressed
+    */
     bool IsKeyDown(TKEY_CODE code);
+
+    /**
+     * Returns vector3df with active camera position
+    */
+    vector3df getActiveCameraPosition();
+
+    /**
+     * Returns vector3df with active camera position
+    */
+    void setActiveCameraPosition(vector3df position);
+
+    /**
+     * Returns vector3df with active camera rotation
+    */
+    vector3df getActiveCameraRotation();
+
+    /**
+     * Returns vector3df with active camera rotation
+    */
+    void setActiveCameraRotation(vector3df rotation);
+
+    /**
+     * Updates the absolute position based on the relative and the parents position of camera
+    */
+    void updateActiveCameraAbsolutePosition();
 
 private:
     GraphicEngine();
