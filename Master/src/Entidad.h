@@ -8,11 +8,11 @@ class Entidad{
 public:
 	Entidad();
 	virtual void Update();
-	virtual void Contact(void* punt, string tipo);
-	string GetClase();
+	virtual void Contact(void* punt, std::string tipo);
+	std::string GetClase();
 	~Entidad();
 protected:
-	string clase;
+	std::string clase;
 private:
 
 };

@@ -3,147 +3,132 @@
 #include <string>
 #include <chrono>
 #include <thread>
-#include "Player.h"
 #include "vector3d.h"
-#include "GraphicEngine/EventReceiver.h"
 #include "PhysicsEngine/BT_Body.h"
-//#include "PhysicsEngine/BulletDebug.h"
+#include "GraphicEngine/GraphicEngine.h"
+#include "Player.h"
 
-void createObj(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver *driver, vector3df TPosition, irr::core::vector3df TPosition_irr, irr::core::vector3df TScale, int texture, bool rotate){
+void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
+	GraphicEngine* engine = GraphicEngine::getInstance();
 	float TMass = 0;
 
 	// Create an Irrlicht cube
-	irr::scene::ISceneNode* Node =  sceneManager->addAnimatedMeshSceneNode(sceneManager->getMesh("./../assets/modelos/pocion.obj"));
+	GBody* Node = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
+	Node->setMaterialFlag("lighting", false);
 
-	Node->setScale(TScale);
-	Node->setPosition(TPosition_irr);
-	Node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
+	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
+	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
 
-	if(texture == 0) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
-	else if(texture == 1) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/stones.jpg"));
-	else if(texture == 2) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/rockwall.jpg"));
-	else if(texture == 3) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/pocion.png"));
+	Node->setMaterialFlag("normalize", true);
+	Node->setAutomaticCulling();
 
-	Node->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
-	Node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX  );
-
+	//Bullet Physics
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
 	BT_Body* RigidBody = new BT_Body();
 	RigidBody->CreateBox(TPosition, HalfExtents,TMass,0);
-
-	if(rotate){
-		vector3df rot(45,0,0);
-		irr::core::vector3df newRot(rot.X,rot.Y,rot.Z);
-		Node->setRotation(newRot);
-		vector3df rot2(0,45,0);
-		RigidBody->Rotate(rot2);
-	}
+	RigidBody->Rotate(TRotation);
 }
 
-void createBox(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver *driver,vector3df TPosition, irr::core::vector3df TPosition_irr, irr::core::vector3df TScale, int texture, bool rotate){
+void createBox(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
+	GraphicEngine* engine = GraphicEngine::getInstance();
+	
 	float TMass = 0;
 
 	// Create an Irrlicht cube
-	irr::scene::ISceneNode *Node = sceneManager->addCubeSceneNode(1.0f);
+	GBody *Node = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
+	Node->setMaterialFlag("lighting", false);
 
-	Node->setScale(TScale);
-	Node->setPosition(TPosition_irr);
-	Node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
+	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
+	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
+	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
 
-	if(texture == 0) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
-	else if(texture == 1) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/stones.jpg"));
-	else if(texture == 2) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/rockwall.jpg"));
-	else if(texture == 3) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/pocion.png"));
+	Node->setMaterialFlag("normalize", true);
+	Node->setAutomaticCulling();
 
-	Node->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
-	Node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX  );
-
+	//Bullet Physics
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
 	BT_Body* RigidBody = new BT_Body();
 	RigidBody->CreateBox(TPosition, HalfExtents,TMass,0);
-
-	if(rotate){
-		vector3df rot(45,0,0);
-		irr::core::vector3df newRot(rot.X,rot.Y,rot.Z);
-		Node->setRotation(newRot);
-		vector3df rot2(0,45,0);
-		RigidBody->Rotate(rot2);
-	}
+	RigidBody->Rotate(TRotation);
 }
 
-void createScenery(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver *driver){
+void createScenery(){
 	vector3df TPosition(0,-1,5);
-	irr::core::vector3df TPosition_irr(0,-1,5);
-	irr::core::vector3df TScale(20,1,20);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 0, false);
+	vector3df TRotation(0,0,0);
+	vector3df TScale(20,1,20);
+	createBox(TPosition, TRotation, TScale, 0);
 
 	TPosition = vector3df(0,0,3);
-	TPosition_irr = irr::core::vector3df(0,0,3);
-	TScale = irr::core::vector3df(1,1,1);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(1,1,1);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(3,0.5,3);
-	TPosition_irr = irr::core::vector3df(3,0.5,3);
-	TScale = irr::core::vector3df(2,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(2,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(5,4,3);
-	TPosition_irr = irr::core::vector3df(5,4,3);
-	TScale = irr::core::vector3df(2,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(2,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(1.5,1,7);
-	TPosition_irr = irr::core::vector3df(1.5,1,7);
-	TScale = irr::core::vector3df(3,3,3);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(3,3,3);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(5,1.5,7);
-	TPosition_irr = irr::core::vector3df(5,1.5,7);
-	TScale = irr::core::vector3df(5,5,5);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(5,5,5);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(-5,-1,2.5);
-	TPosition_irr = irr::core::vector3df(-5,-1,2.5);
-	TScale = irr::core::vector3df(3,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+	TRotation = vector3df(45,0,0);
+	TScale = vector3df(3,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(-5,-1,4.5);
-	TPosition_irr = irr::core::vector3df(-5,-1,4.5);
-	TScale = irr::core::vector3df(3,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+	TRotation = vector3df(45,0,0);
+	TScale = vector3df(3,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(-5,-1,6.5);
-	TPosition_irr = irr::core::vector3df(-5,-1,6.5);
-	TScale = irr::core::vector3df(3,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+	TRotation = vector3df(45,0,0);
+	TScale = vector3df(3,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(-5,-1,8.5);
-	TPosition_irr = irr::core::vector3df(-5,-1,8.5);
-	TScale = irr::core::vector3df(3,2,2);
-	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, true);
+	TRotation = vector3df(45,0,0);
+	TScale = vector3df(3,2,2);
+	createBox(TPosition, TRotation, TScale, 2);
 
 	TPosition = vector3df(5,4,7);
-	TPosition_irr = irr::core::vector3df(5,4,7);
-	TScale = irr::core::vector3df(0.4,0.4,0.4);
-	createObj(sceneManager, driver, TPosition, TPosition_irr, TScale, 3, false);
+	TRotation = vector3df(0,0,0);
+	TScale = vector3df(0.4,0.4,0.4);
+	createObj(TPosition, TRotation, TScale, 3);
 }
 
-bool manageInputs(irr::scene::ISceneManager* sceneManager, Player* physicPlayer, EventReceiver receiver){
+bool manageInputs(Player* physicPlayer){
+	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(receiver.IsKeyDown(irr::KEY_ESCAPE)) end = true;
-	if(receiver.IsKeyDown(irr::KEY_SPACE)) physicPlayer->Jump();
+	if(engine->IsKeyDown(KEY_ESCAPE)) end = true;
+	if(engine->IsKeyDown(KEY_SPACE)) physicPlayer->Jump();
 	
-	if(receiver.IsKeyDown(irr::KEY_KEY_W)) physicPlayer->MoveZ(1, sceneManager);
-	else if(receiver.IsKeyDown(irr::KEY_KEY_S)) physicPlayer->MoveZ(-1, sceneManager);
+	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
+	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
 	
-	if(receiver.IsKeyDown(irr::KEY_KEY_A)) physicPlayer->MoveX(-1, sceneManager);
-	else if(receiver.IsKeyDown(irr::KEY_KEY_D)) physicPlayer->MoveX(1, sceneManager);
+	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
+	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
 
-	if(receiver.IsKeyDown(irr::KEY_KEY_P)) physicPlayer->ChangeHP(-5);
-	else if(receiver.IsKeyDown(irr::KEY_KEY_O)) physicPlayer->ChangeHP(+3);
+	if(engine->IsKeyDown(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
+	else if(engine->IsKeyDown(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
 
-	if(receiver.IsKeyDown(irr::KEY_KEY_R)) physicPlayer->Respawn(sceneManager);
+	if(engine->IsKeyDown(KEY_KEY_R)) physicPlayer->Respawn();
 	
 	return end;
 }
@@ -154,39 +139,29 @@ int main() {
 	BulletEngine::GetInstance()->CreateWorld();
 
 	// START IRRLICHT
-	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
-	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
-	nulldevice -> drop();
-
-	EventReceiver receiver;
-	irr::IrrlichtDevice *device = irr::createDevice(irr::video::EDT_OPENGL, deskres, 32, true, false, true, &receiver);
-	if (!device) return 1;
-	irr::video::IVideoDriver *driver = device->getVideoDriver();
-	irr::scene::ISceneManager *sceneManager = device->getSceneManager();
+	GraphicEngine* engine = GraphicEngine::getInstance();
 	
-	device->getCursorControl()->setVisible(false);
-	device->setWindowCaption(L"Movement Test");
-	sceneManager->addCameraSceneNodeFPS(0, 120, 0);
+	engine->setCursorVisible(false);
+	engine->addCameraSceneNodeFPS(120.f, 0.f);
 
-	createScenery(sceneManager, driver);
+	createScenery();
 
 	// START JUGADOR
-	Player* physicPlayer = new Player();
-	physicPlayer->CreatePlayer(sceneManager, device, driver);
+	Player* physicPlayer = new Player(true);
 
 	bool end = false;
-	while(device->run() && !end){
+	while(engine->run() && !end){
 		BulletEngine::GetInstance()->UpdateWorld();
-		physicPlayer->Update(sceneManager, true);
-		end = manageInputs(sceneManager, physicPlayer, receiver);
-		driver->beginScene(true, true, irr::video::SColor(255,150,150,255)); // Color de borrado en ARGB
-		sceneManager->drawAll();
+		physicPlayer->Update();
+		end = manageInputs(physicPlayer);
+		engine->beginSceneDefault(); // Color de borrado en ARGB
+		engine->drawAll();
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
-		driver->endScene();
+		engine->endScene();
 	}
 
 	BulletEngine::GetInstance()->EraseWorld(); // END BULLET
-	device->drop(); // END IRRLICHT
+	engine->drop(); // END IRRLICHT
 
 	return 0;
 }

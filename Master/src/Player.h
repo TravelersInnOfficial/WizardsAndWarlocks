@@ -4,24 +4,23 @@
 #include <iostream>
 #include <math.h>
 #include "./PhysicsEngine/BT_Body.h"
-#include "vector3d.h"
-#include <irrlicht/irrlicht.h>
+#include "GraphicEngine/GraphicEngine.h"
 
 class Player{
 	public:
 
-		Player();
+		Player(bool isPlayer1);
 
-		void CreatePlayer(irr::scene::ISceneManager*, irr::IrrlichtDevice*, irr::video::IVideoDriver*);
+		void CreatePlayer();
 		void DeletePlayer( );
-		void Update(irr::scene::ISceneManager*, bool);
+		void Update();
 		
 		void Move(float, float);
-		void MoveX(int, irr::scene::ISceneManager*);
-		void MoveZ(int, irr::scene::ISceneManager*);
+		void MoveX(int);
+		void MoveZ(int);
 		void Jump();
 		void ChangeHP(float);
-		void Respawn(irr::scene::ISceneManager*);
+		void Respawn();
 
 		float GetPosX();
 		float GetPosY();
@@ -31,7 +30,7 @@ class Player{
 		float GetHP();
 		bool GetDead();
 
-		void setPosition(float, float, float, irr::scene::ISceneManager*);
+		void setPosition(float, float, float);
 		void SetPosX(float);
 		void SetPosY(float);
 		void SetHP(float);
@@ -41,11 +40,12 @@ class Player{
 
 	private:
 
-		vector3df* m_position;
-		vector3df* m_dimensions;
+		vector3df m_position;
+		vector3df m_dimensions;
 
 		float m_HP;
 		bool m_dead;
+		bool isPlayerOne;
 
 		BT_Body* bt_body;
 
@@ -53,10 +53,10 @@ class Player{
 		bool canJump;
 		float lastVerticalSpeed;
 		irr::scene::IAnimatedMesh* m_playerMesh;
-		irr::scene::ISceneNode* m_playerNode;
+		GBody* m_playerNode;
 
 		void setMaxVelocity();
-		void positionCamera(irr::scene::ISceneManager*);
+		void positionCamera();
 
 };
 

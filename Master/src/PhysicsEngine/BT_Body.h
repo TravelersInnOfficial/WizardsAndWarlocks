@@ -13,7 +13,7 @@ public:
 
 	void Update();
 
-	void ApplyCentralImpulse(float, float, float);
+	void ApplyCentralImpulse(vector3df);
 	void Rotate(vector3df rotation);
 
 	void SetPosition(vector3df);

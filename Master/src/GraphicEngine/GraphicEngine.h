@@ -3,9 +3,10 @@
 
 #include <irrlicht/irrlicht.h>
 #include "GBody.h"
-#include "vector3d.h"
+#include "GCamera.h"
 #include "EventReceiver.h"
 #include "Keycodes.h"
+#include "../vector3d.h"
 
 class GraphicEngine{
 
@@ -33,9 +34,10 @@ public:
 
     /**
      * Adds a camera scene node with an animator appropriate for FPS.
-
+     * rotateSpeed: Speed in degress with which the camera is rotated
+     * moveSpeed: Speed in units per millisecond with which the camera is moved
     */
-    void addCameraSceneNodeFPS();
+    GCamera* addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed);
 
     /**
      * Returns current virtual time in milliseconds
@@ -78,7 +80,7 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float size = 10.f,
+        float size = 1.f,
         int id = -1
         );
 
@@ -94,16 +96,23 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float radius = 5.f,
+        float radius = 0.5f,
         int id = -1
         );
 
     /**
+     * Adds a mesh to scene and returns body
+     * path: path to .obj mesh
+    */
+    GBody* addObjMeshSceneNode(std::string path);
+
+    /**
      * Sets a texture to the giben body
+     * layer: layer of texture
      * body: pointer to body where to apply texture
      * path: relative path to texture
     */
-    void setTextureToBody(GBody* body, std::string path);
+    void setTextureToBody(GBody* body, int layer, std::string path);
 
     /**
      * Sets a texture flag to the giben body
@@ -129,8 +138,15 @@ public:
         bool loop = true, 
         bool pingpong = true);
     
-
+    /**
+     * Returns true is given code is pressed
+    */
     bool IsKeyDown(TKEY_CODE code);
+
+    /**
+     * Returns active camera in scene
+    */
+    GCamera* getActiveCamera();
 
 private:
     GraphicEngine();
@@ -141,6 +157,7 @@ private:
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
     EventReceiver* privateReceiver;
+    GCamera* privateCamera;
 
 };
 

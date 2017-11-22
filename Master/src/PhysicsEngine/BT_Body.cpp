@@ -61,14 +61,19 @@ void BT_Body::Update(){
 	m_position->Z  = GetBodyTrans().getOrigin().getZ();
 }
 
-void BT_Body::ApplyCentralImpulse(float x, float y, float z){
-	m_RigidBody->applyCentralImpulse(btVector3(x,y,z));
+void BT_Body::ApplyCentralImpulse(vector3df force){
+	//PASAMOS EL ANGULO A RADIANES
+	float RADX = force.Y*M_PI/180;
+	float RADY = force.X*M_PI/180;
+	float RADZ = force.Z*M_PI/180;
+
+	m_RigidBody->applyCentralImpulse(btVector3(RADX,RADY,RADZ));
 }
 
 void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
-	float RADX = rotation.X*M_PI/180;
-	float RADY = rotation.Y*M_PI/180;
+	float RADX = rotation.Y*M_PI/180;
+	float RADY = rotation.X*M_PI/180;
 	float RADZ = rotation.Z*M_PI/180;
 
 	btVector3 TPosition(m_position->X,m_position->Y,m_position->Z);

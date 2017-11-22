@@ -47,6 +47,9 @@ public:
 
     void setZ(T newZ){ Z = newZ;}
 
+    //Operators
+    vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
+    vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
 };
 
 typedef vector3d<float> vector3df;

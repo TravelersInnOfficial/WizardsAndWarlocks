@@ -3,50 +3,20 @@
 
 #include <irrlicht/irrlicht.h>
 #include <iostream>
-#include "vector3d.h"
+#include "GEntity.h"
 
-class GBody{
+class GBody: public GEntity{
 
 public:
 
     GBody();
     
     /**
-     * Set body position
-     * pos: vector x,y,z of body position
-    */
-    void setPosition(vector3df pos);
-
-    /**
-     * Set body rotation
-     * rot: vector x,y,z of body rotation
-    */
-    void setRotation(vector3df rot);
-    
-    /**
-     * Set body scale
-    */
-    vector3df getScale();
-
-    /**
-     * Get body position
-    */
-    vector3df getPosition();
-
-    /**
-     * Get body rotation
-    */
-    vector3df getRotation();
-    
-    /**
-     * Get body scale
-    */
-    void setScale(vector3df scale);
-    /**
      * Set body texture
+     * layer: layer of texture
      * path: relative path of texture
     */
-    void setMaterialTexture(std::string path);
+    void setMaterialTexture(int layer, std::string path);
 
     /**
      * Set body flag texture
@@ -60,7 +30,6 @@ public:
 private:
 
     GBody(irr::scene::ISceneNode* node);    
-    irr::scene::ISceneNode* privateNode;
   
 };
 

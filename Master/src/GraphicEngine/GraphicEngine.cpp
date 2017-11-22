@@ -5,15 +5,24 @@ static GraphicEngine* instance;
 GraphicEngine::GraphicEngine(){
    	privateReceiver = new EventReceiver();
 
+    irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
+	nulldevice -> drop();
+
     privateDevice = irr::createDevice(
         irr::video::EDT_OPENGL,
-        irr::core::dimension2d<irr::u32>(640, 480),
+        deskres,
         16,
+        true,
         false,
-        false,
-        false,
+        true,
         privateReceiver
     );
+
+    if(!privateDevice)
+        exit(1);
+
+    privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
 
     privateDriver = privateDevice->getVideoDriver();
     privateSManager = privateDevice->getSceneManager();
@@ -39,8 +48,9 @@ void GraphicEngine::setCursorVisible(bool visible){
     privateDevice->getCursorControl()->setVisible(visible);
 }
 
-void GraphicEngine::addCameraSceneNodeFPS(){
-    privateSManager->addCameraSceneNodeFPS();
+GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
+    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed));
+    return privateCamera;
 }
 
 int GraphicEngine::getTime(){
@@ -52,7 +62,7 @@ bool GraphicEngine::beginScene(){
 }
 
 bool GraphicEngine::beginSceneDefault(){
-    return privateDriver->beginScene(true, true, irr::video::SColor(255,113,113,133));
+    return privateDriver->beginScene(true, true, irr::video::SColor(255,113,113,255));
 }
 
 bool GraphicEngine::endScene(){
@@ -92,17 +102,24 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
     ));
 }
 
-void GraphicEngine::setTextureToBody(GBody* body, std::string s){
-    body->privateNode->setMaterialTexture(0, privateDriver->getTexture("../media/t351sml.jpg"));
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
+    return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+}
+
+void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
+    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::setTextureFlag(GBody* body, std::string flag, bool value){
     irr::video::E_MATERIAL_FLAG videoFlag;
-    if (flag == "lightning"){
+    if (flag == "lighting"){
         videoFlag = irr::video::EMF_LIGHTING;
     }
     else if(flag == "wired"){
         videoFlag = irr::video::EMF_WIREFRAME;
+    }
+    else if(flag == "normalize"){
+        videoFlag = irr::video::EMF_NORMALIZE_NORMALS;
     }
     else{
         return;
@@ -127,4 +144,9 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){
     return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
+}
+
+GCamera* GraphicEngine::getActiveCamera(){
+    privateCamera->privateNode = privateSManager->getActiveCamera();
+    return privateCamera;
 }

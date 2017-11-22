@@ -6,6 +6,17 @@
 class EventReceiver : public irr::IEventReceiver{
 
 public:
+    
+    EventReceiver()
+    {
+        for (irr::u32 i=0; i<irr::KEY_KEY_CODES_COUNT; ++i)
+            KeyIsDown[i] = false;
+    }
+
+    friend class GraphicEngine;
+
+private:
+
     // This is the one method that we have to implement
     virtual bool OnEvent(const irr::SEvent& event)
     {
@@ -21,15 +32,8 @@ public:
     {
         return KeyIsDown[keyCode];
     }
-    
-    EventReceiver()
-    {
-        for (irr::u32 i=0; i<irr::KEY_KEY_CODES_COUNT; ++i)
-            KeyIsDown[i] = false;
-    }
 
-private:
-        bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
+    bool KeyIsDown[irr::KEY_KEY_CODES_COUNT];
 };
 
 #endif
