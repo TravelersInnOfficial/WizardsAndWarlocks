@@ -14,6 +14,8 @@ void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int t
 
 	// Create an Irrlicht cube
 	GBody* Node = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
+	Node->setPosition(TPosition);
+	Node->setScale(TScale);
 	Node->setMaterialFlag("lighting", false);
 
 	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
