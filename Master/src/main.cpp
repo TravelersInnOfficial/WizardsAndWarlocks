@@ -4,27 +4,27 @@
 #include <chrono>
 #include <thread>
 #include "Player.h"
-#include "EventReciver.cpp"
-#include "PhysicsEngine/BulletEngine.h"
+#include "vector3d.h"
+#include "GraphicEngine/EventReceiver.h"
 #include "PhysicsEngine/BT_Body.h"
-#include "PhysicsEngine/BulletDebug.h"
+//#include "PhysicsEngine/BulletDebug.h"
 
-void createObj(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver *driver,vector3df TPosition, irr::core::vector3df TPosition_irr, irr::core::vector3df TScale, int texture, bool rotate){
+void createObj(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver *driver, vector3df TPosition, irr::core::vector3df TPosition_irr, irr::core::vector3df TScale, int texture, bool rotate){
 	float TMass = 0;
 
 	// Create an Irrlicht cube
-	scene::ISceneNode* Node =  sceneManager->addAnimatedMeshSceneNode(sceneManager->getMesh("./../assets/modelos/pocion.obj"));
+	irr::scene::ISceneNode* Node =  sceneManager->addAnimatedMeshSceneNode(sceneManager->getMesh("./../assets/modelos/pocion.obj"));
 
 	Node->setScale(TScale);
 	Node->setPosition(TPosition_irr);
-	Node->setMaterialFlag(video::EMF_LIGHTING, false);
+	Node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	if(texture == 0) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
 	else if(texture == 1) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/stones.jpg"));
 	else if(texture == 2) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/rockwall.jpg"));
 	else if(texture == 3) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/pocion.png"));
 
-	Node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+	Node->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
 	Node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX  );
 
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
@@ -44,18 +44,18 @@ void createBox(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDriver
 	float TMass = 0;
 
 	// Create an Irrlicht cube
-	scene::ISceneNode *Node = sceneManager->addCubeSceneNode(1.0f);
+	irr::scene::ISceneNode *Node = sceneManager->addCubeSceneNode(1.0f);
 
 	Node->setScale(TScale);
 	Node->setPosition(TPosition_irr);
-	Node->setMaterialFlag(video::EMF_LIGHTING, false);
+	Node->setMaterialFlag(irr::video::EMF_LIGHTING, false);
 
 	if(texture == 0) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
 	else if(texture == 1) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/stones.jpg"));
 	else if(texture == 2) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/rockwall.jpg"));
 	else if(texture == 3) Node->setMaterialTexture(0, driver->getTexture("./../assets/textures/pocion.png"));
 
-	Node->setMaterialFlag(video::EMF_NORMALIZE_NORMALS, true);
+	Node->setMaterialFlag(irr::video::EMF_NORMALIZE_NORMALS, true);
 	Node->setAutomaticCulling( irr::scene::EAC_FRUSTUM_BOX  );
 
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
@@ -84,6 +84,11 @@ void createScenery(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDr
 
 	TPosition = vector3df(3,0.5,3);
 	TPosition_irr = irr::core::vector3df(3,0.5,3);
+	TScale = irr::core::vector3df(2,2,2);
+	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
+
+	TPosition = vector3df(5,4,3);
+	TPosition_irr = irr::core::vector3df(5,4,3);
 	TScale = irr::core::vector3df(2,2,2);
 	createBox(sceneManager, driver, TPosition, TPosition_irr, TScale, 2, false);
 
@@ -123,7 +128,7 @@ void createScenery(irr::scene::ISceneManager* sceneManager, irr::video::IVideoDr
 	createObj(sceneManager, driver, TPosition, TPosition_irr, TScale, 3, false);
 }
 
-bool manageInputs(irr::scene::ISceneManager* sceneManager, Player* physicPlayer, MyEventReceiver receiver){
+bool manageInputs(irr::scene::ISceneManager* sceneManager, Player* physicPlayer, EventReceiver receiver){
 	bool end = false;
 	
 	if(receiver.IsKeyDown(irr::KEY_ESCAPE)) end = true;
@@ -149,12 +154,12 @@ int main() {
 	BulletEngine::GetInstance()->CreateWorld();
 
 	// START IRRLICHT
-	IrrlichtDevice *nulldevice = createDevice(video::EDT_NULL);
-	core::dimension2d<u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
+	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
 	nulldevice -> drop();
 
-	MyEventReceiver receiver;
-	IrrlichtDevice *device = createDevice(video::EDT_OPENGL, deskres, 32, true, false, true, &receiver);
+	EventReceiver receiver;
+	irr::IrrlichtDevice *device = irr::createDevice(irr::video::EDT_OPENGL, deskres, 32, true, false, true, &receiver);
 	if (!device) return 1;
 	irr::video::IVideoDriver *driver = device->getVideoDriver();
 	irr::scene::ISceneManager *sceneManager = device->getSceneManager();

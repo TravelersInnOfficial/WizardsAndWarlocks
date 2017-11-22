@@ -48,7 +48,7 @@ void BulletEngine::CreateWorld(){
     m_groundRigidBody = new btRigidBody(groundRigidBodyCI);
 
     //ADD THE GROUND TO THE WORLD
-    m_dynamicsWorld->addRigidBody(m_groundRigidBody);
+    //m_dynamicsWorld->addRigidBody(m_groundRigidBody);
 }
 
 void BulletEngine::UpdateWorld(){
@@ -58,7 +58,6 @@ void BulletEngine::UpdateWorld(){
 }
 
 void BulletEngine::EraseWorld(){
-
     m_dynamicsWorld->removeRigidBody(m_groundRigidBody);
     delete m_groundRigidBody->getMotionState();
     delete m_groundRigidBody;
@@ -73,12 +72,10 @@ void BulletEngine::EraseWorld(){
 }
 
  void BulletEngine::AddRigidBody(btRigidBody* rigidBody){
-
  	m_dynamicsWorld->addRigidBody(rigidBody);
  }
 
  void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
-
  	m_dynamicsWorld->removeRigidBody(rigidBody);
  }
 

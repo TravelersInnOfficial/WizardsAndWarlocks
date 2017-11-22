@@ -6,7 +6,6 @@
 
 //CONSTRUCTOR
 BT_Body::BT_Body(){
-
 	m_position = new vector3df(0,0,0);
 	m_dimensions = new vector3df(0,0,0);
 	m_Mass = 0;
@@ -15,7 +14,6 @@ BT_Body::BT_Body(){
 	m_Shape = NULL;
 	m_MotionState = NULL;
 	m_RigidBody = NULL;
-
 }
 
 void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction){
@@ -33,7 +31,7 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 	m_Friction = friction;
 
 	//CREATES THE SHAPE (A BOX IN THIS CASE)
-	const btVector3 m_ShapeInfo(m_dimensions->X,m_dimensions->Y,m_dimensions->Z);
+	const btVector3 m_ShapeInfo(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
 	m_Shape = new btBoxShape(m_ShapeInfo);
 
 	//CREATE INITIAL MOTION STATE OF THE BOX
@@ -41,7 +39,6 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 	Transform.setIdentity();
 	Transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
 	
-
 	// Give it a default MotionState
 	m_MotionState = new btDefaultMotionState(Transform);
 
@@ -59,28 +56,17 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 }
 
 void BT_Body::Update(){
-
 	m_position->X = GetBodyTrans().getOrigin().getX();
 	m_position->Y  = GetBodyTrans().getOrigin().getY();
 	m_position->Z  = GetBodyTrans().getOrigin().getZ();
-/*
-	btVector3 velocity = m_RigidBody->getLinearVelocity();
-    btScalar speed = velocity.length();
-    if(speed > 20) {
-        velocity *= 20/speed;
-        m_RigidBody->setLinearVelocity(velocity);
-    }
-	*/
 }
 
 void BT_Body::ApplyCentralImpulse(float x, float y, float z){
-
 	m_RigidBody->applyCentralImpulse(btVector3(x,y,z));
 }
 
 void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
-
 	float RADX = rotation.X*M_PI/180;
 	float RADY = rotation.Y*M_PI/180;
 	float RADZ = rotation.Z*M_PI/180;
@@ -140,7 +126,6 @@ vector3df* BT_Body::GetLinearVelocity(){
 }
 
 void BT_Body::Erase(){
-
 	BulletEngine::GetInstance()->RemoveRigidBody(m_RigidBody);
     delete m_RigidBody->getMotionState();
     delete m_RigidBody;
@@ -150,14 +135,12 @@ void BT_Body::Erase(){
 
 //DESTRUCTOR
 BT_Body::~BT_Body(){
-
 }
 
 //=====================================================================================================//
 //=======================================\\ PRIVATE FUNCTIONS //=======================================//
 //=====================================================================================================//
 btTransform BT_Body::GetBodyTrans(){
-
 	btTransform trans;
     m_RigidBody->getMotionState()->getWorldTransform(trans);
     return trans;

@@ -75,7 +75,7 @@ void Player::positionCamera(irr::scene::ISceneManager* sceneManager){
 	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
-	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_position->X - 0.15 * sin(rot.Y), m_position->Y + 0.5, m_position->Z - 0.15 * cos(rot.Y)));
+	sceneManager->getActiveCamera()->setPosition(irr::core::vector3df(m_position->X - 0.15 * sin(rot.Y), m_position->Y + 0.5, m_position->Z - 5 - 0.15 * cos(rot.Y)));
 	sceneManager->getActiveCamera()->updateAbsolutePosition();
 	sceneManager->getActiveCamera()->setRotation(newRotAux);
 }
