@@ -9,18 +9,10 @@ Player::Player(){
 } 
 
 void Player::CreatePlayer(irr::scene::ISceneManager* sceneManager, irr::IrrlichtDevice *device, irr::video::IVideoDriver *driver){
-	//BULLET
-	m_dimensions->X = m_dimensions->X * 1 * 0.5f;
-	m_dimensions->Y = m_dimensions->Y * 1 * 0.5f;
-	m_dimensions->Z = m_dimensions->Z * 1 * 0.5f;
-	
-	bt_body = new BT_Body();
-	bt_body->CreateBox(*m_position, *m_dimensions, 50, 2.3);
-
 	//IRRLICHT
 	// Cargamos el Cubo
 	m_playerNode = sceneManager->addCubeSceneNode(m_dimensions->X);
-	m_playerNode->setScale(irr::core::vector3df(1,1,1));
+	m_playerNode->setScale(irr::core::vector3df(m_dimensions->X, m_dimensions->Y, m_dimensions->Z));
 
 	// Aplicamos Material unlit y Textura
 	if (m_playerNode) {
@@ -28,6 +20,14 @@ void Player::CreatePlayer(irr::scene::ISceneManager* sceneManager, irr::Irrlicht
 		m_playerNode->setMaterialTexture(0, driver->getTexture("./../assets/textures/wall.bmp"));
 		m_playerNode->setPosition(irr::core::vector3df(m_position->X, m_position->Y, m_position->Z));
 	}
+	
+	//BULLET
+	m_dimensions->X = m_dimensions->X * 0.5f;
+	m_dimensions->Y = m_dimensions->Y * 0.5f;
+	m_dimensions->Z = m_dimensions->Z * 0.5f;
+	
+	bt_body = new BT_Body();
+	bt_body->CreateBox(*m_position, *m_dimensions, 50, 2.3);
 
 	Respawn(sceneManager);
 
