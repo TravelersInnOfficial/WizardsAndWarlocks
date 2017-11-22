@@ -3,6 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 #include "GBody.h"
+#include "GCamera.h"
 #include "vector3d.h"
 #include "EventReceiver.h"
 #include "Keycodes.h"
@@ -141,29 +142,9 @@ public:
     bool IsKeyDown(TKEY_CODE code);
 
     /**
-     * Returns vector3df with active camera position
+     * Returns active camera in scene
     */
-    vector3df getActiveCameraPosition();
-
-    /**
-     * Returns vector3df with active camera position
-    */
-    void setActiveCameraPosition(vector3df position);
-
-    /**
-     * Returns vector3df with active camera rotation
-    */
-    vector3df getActiveCameraRotation();
-
-    /**
-     * Returns vector3df with active camera rotation
-    */
-    void setActiveCameraRotation(vector3df rotation);
-
-    /**
-     * Updates the absolute position based on the relative and the parents position of camera
-    */
-    void updateActiveCameraAbsolutePosition();
+    GCamera* getActiveCamera();
 
 private:
     GraphicEngine();
@@ -174,6 +155,7 @@ private:
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
     EventReceiver* privateReceiver;
+    GCamera* privateCamera;
 
 };
 

@@ -133,3 +133,7 @@ bool GraphicEngine::IsKeyDown(TKEY_CODE code){
     return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
 }
 
+GCamera* GraphicEngine::getActiveCamera(){
+    privateCamera->privateNode = privateSManager->getActiveCamera();
+    return privateCamera;
+}
