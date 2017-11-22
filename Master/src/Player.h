@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <math.h>
-#include "./PhysicsEngine/BT_Body.h"
+#include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
 
 class Player{
@@ -52,7 +52,7 @@ class Player{
 		bool moving;
 		bool canJump;
 		float lastVerticalSpeed;
-		irr::scene::IAnimatedMesh* m_playerMesh;
+		//irr::scene::IAnimatedMesh* m_playerMesh;
 		GBody* m_playerNode;
 
 		void setMaxVelocity();

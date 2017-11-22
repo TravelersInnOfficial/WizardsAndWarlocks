@@ -50,6 +50,9 @@ public:
     */
     void setAutomaticCulling();
 
+    //
+    void Erase();
+
 protected:
 
     irr::scene::ISceneNode* privateNode;

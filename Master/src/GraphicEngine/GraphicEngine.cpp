@@ -150,3 +150,7 @@ GCamera* GraphicEngine::getActiveCamera(){
     privateCamera->privateNode = privateSManager->getActiveCamera();
     return privateCamera;
 }
+
+void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
+    privateSManager->addToDeletionQueue(g);
+}
