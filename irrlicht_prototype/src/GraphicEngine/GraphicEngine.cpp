@@ -1,10 +1,9 @@
 #include "GraphicEngine.h"
-#include "EventReceiver.h"
 
 static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
-   	EventReceiver *receiver = new EventReceiver();
+   	privateReceiver = new EventReceiver();
 
     privateDevice = irr::createDevice(
         irr::video::EDT_OPENGL,
@@ -13,7 +12,7 @@ GraphicEngine::GraphicEngine(){
         false,
         false,
         false,
-        receiver
+        privateReceiver
     );
 
     privateDriver = privateDevice->getVideoDriver();
@@ -93,8 +92,12 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
     ));
 }
 
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
+    return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+}
+
 void GraphicEngine::setTextureToBody(GBody* body, std::string s){
-    body->privateNode->setMaterialTexture(0, privateDriver->getTexture("../media/t351sml.jpg"));
+    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::setTextureFlag(GBody* body, std::string flag, bool value){
@@ -109,4 +112,28 @@ void GraphicEngine::setTextureFlag(GBody* body, std::string flag, bool value){
         return;
     }
     body->privateNode->setMaterialFlag(videoFlag, value); 
+}
+
+void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
+    irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
+        irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z), 
+        irr::core::vector3df(  finalPos.X,   finalPos.Y,   finalPos.Z), 
+        time, 
+        loop, 
+        pingpong);
+    
+    if (anim)
+    {
+        body->privateNode->addAnimator(anim);
+        anim->drop();
+    }
+}
+
+bool GraphicEngine::IsKeyDown(TKEY_CODE code){
+    return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
+}
+
+GCamera* GraphicEngine::getActiveCamera(){
+    privateCamera->privateNode = privateSManager->getActiveCamera();
+    return privateCamera;
 }

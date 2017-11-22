@@ -3,7 +3,10 @@
 
 #include <irrlicht/irrlicht.h>
 #include "GBody.h"
+#include "GCamera.h"
 #include "vector3d.h"
+#include "EventReceiver.h"
+#include "Keycodes.h"
 
 class GraphicEngine{
 
@@ -76,7 +79,7 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float size = 10.f,
+        float size = 1.f,
         int id = -1
         );
 
@@ -92,9 +95,15 @@ public:
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
-        float radius = 5.f,
+        float radius = 0.5f,
         int id = -1
         );
+
+    /**
+     * Adds a mesh to scene and returns body
+     * path: path to .obj mesh
+    */
+    GBody* addObjMeshSceneNode(std::string path);
 
     /**
      * Sets a texture to the giben body
@@ -111,6 +120,32 @@ public:
     */
     void setTextureFlag(GBody* body, std::string flag, bool value);
 
+    /**
+     * Creates a fly straight animator, which lets the attached scene node fly or move along a line between two points
+     * body: pointer to body to set animation
+     * initialPos: Start point of the line
+     * finalPos: End point of the line
+     * time: Time in milli seconds how long the node should need to move
+     * loop: If set to false, the node stops when the end point is reached
+     * pinpong: Flag to set whether the animator should fly back from back to start again
+    */
+    void setAnimationFlyStraight(GBody* body,
+        vector3df initialPos, 
+        vector3df finalPos, 
+        float time, 
+        bool loop = true, 
+        bool pingpong = true);
+    
+    /**
+     * Returns true is given code is pressed
+    */
+    bool IsKeyDown(TKEY_CODE code);
+
+    /**
+     * Returns active camera in scene
+    */
+    GCamera* getActiveCamera();
+
 private:
     GraphicEngine();
 
@@ -119,6 +154,8 @@ private:
     irr::video::IVideoDriver*   privateDriver;
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
+    EventReceiver* privateReceiver;
+    GCamera* privateCamera;
 
 };
 
