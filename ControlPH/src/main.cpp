@@ -8,10 +8,13 @@
 #include "GraphicEngine/GraphicEngine.h"
 
 #include "Player.h"
+//Controlers
+#include "ControlEffect.h"
 #include "ControlHechizo.h"
 #include "ControlProyectil.h"
 //Enums
 #include "./Spells/SpellCodes.h"
+#include "./Effects/EffectCodes.h"
 
 void DeleteMain(){
 	ControlProyectil::GetInstance()->DeleteAllProyectiles();
@@ -168,13 +171,19 @@ int main() {
 	// START CONTROLPROYECTIL
 	ControlProyectil* masterBullet = ControlProyectil::GetInstance();
 
+	// START CONTROLEFFECT
+	ControlEffect* masterEffect = ControlEffect::GetInstance();
+
 	// START JUGADOR
 	Player* physicPlayer = new Player(true);
 	masterSpell->AddHechizo(0, physicPlayer, SPELL_PROYECTIL);
 	masterSpell->AddHechizo(1, physicPlayer, SPELL_BASIC);
 
+
+	masterEffect->AddEffect(physicPlayer, EFFECT_BASIC);
 	// Activacion del timer de ControlHechizo
 	masterSpell->StartTime();
+	masterEffect->StartTime();
 
 	bool end = false;
 	while(g_engine->run() && !end){
@@ -182,6 +191,7 @@ int main() {
 		physicPlayer->Update();
 		masterBullet->Update();
 		masterSpell->UpdateCooldown();
+		masterEffect->UpdateEffects();
 		end = manageInputs(physicPlayer);
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
