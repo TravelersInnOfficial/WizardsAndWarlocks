@@ -6,7 +6,14 @@
 #include "vector3d.h"
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
+
 #include "Player.h"
+#include "ControlHechizo.h"
+#include "ControlProyectil.h"
+
+void DeleteMain(){
+	ControlProyectil::GetInstance()->DeleteAllProyectiles();
+}
 
 void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
 	GraphicEngine* engine = GraphicEngine::getInstance();
@@ -118,8 +125,14 @@ bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(engine->IsKeyDown(KEY_ESCAPE)) end = true;
-	if(engine->IsKeyDown(KEY_SPACE)) physicPlayer->Jump();
+	if(engine->IsKeyDown(KEY_ESCAPE)) {
+		DeleteMain();
+		end = true;
+	}
+	if(engine->IsKeyDown(KEY_SPACE)){ 
+		physicPlayer->Jump();
+		ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer);
+	}
 	
 	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
 	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
@@ -148,13 +161,21 @@ int main() {
 
 	createScenery();
 
+	// START CONTROLHECHIZO
+	ControlHechizo* masterSpell = ControlHechizo::GetInstance();
+
+	// START CONTROLPROYECTIL
+	ControlProyectil* masterBullet = ControlProyectil::GetInstance();
+
 	// START JUGADOR
 	Player* physicPlayer = new Player(true);
+	masterSpell->AddHechizo(0, physicPlayer);
 
 	bool end = false;
 	while(engine->run() && !end){
 		BulletEngine::GetInstance()->UpdateWorld();
 		physicPlayer->Update();
+		masterBullet->Update();
 		end = manageInputs(physicPlayer);
 		engine->beginSceneDefault(); // Color de borrado en ARGB
 		engine->drawAll();

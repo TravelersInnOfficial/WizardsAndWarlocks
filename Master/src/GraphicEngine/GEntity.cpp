@@ -1,4 +1,5 @@
 #include "GEntity.h"
+#include "GraphicEngine.h"
 
 void GEntity::setPosition(vector3df pos){
     privateNode->setPosition(irr::core::vector3df(pos.X, pos.Y, pos.Z));
@@ -33,4 +34,8 @@ void GEntity::updateAbsolutePosition(){
 
 void GEntity::setAutomaticCulling(){
     privateNode->setAutomaticCulling(irr::scene::EAC_FRUSTUM_BOX);
+}
+
+void GEntity::Erase(){
+    GraphicEngine::getInstance()->addToDeletionQueue(privateNode);
 }

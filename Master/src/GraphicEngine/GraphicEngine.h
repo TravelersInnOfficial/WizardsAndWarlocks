@@ -4,6 +4,7 @@
 #include <irrlicht/irrlicht.h>
 #include "GBody.h"
 #include "GCamera.h"
+#include "GEntity.h"
 #include "EventReceiver.h"
 #include "Keycodes.h"
 #include "../vector3d.h"
@@ -139,6 +140,9 @@ public:
      * Returns active camera in scene
     */
     GCamera* getActiveCamera();
+
+    //
+    void addToDeletionQueue(irr::scene::ISceneNode*);
 
 private:
     GraphicEngine();

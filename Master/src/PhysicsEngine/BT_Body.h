@@ -20,11 +20,16 @@ public:
 	void SetDimensions(vector3df);
 	void SetLinearVelocity(vector3df);
 	void SetMass(float);
+	//
+	void SetGravity(vector3df);
 
 	vector3df* GetPosition();
 	vector3df* GetDimensions();
 	vector3df* GetLinearVelocity();
 	float GetMass();
+
+	//
+	void AssignPointer(void*);
 
 	void Erase();
 	~BT_Body();

@@ -108,6 +108,10 @@ void BT_Body::SetMass(float mass){
 	m_Mass = mass;
 }
 
+void BT_Body::SetGravity(vector3df gravity){
+	m_RigidBody->setGravity(btVector3(gravity.X, gravity.Y, gravity.Z));
+}
+
 vector3df* BT_Body::GetPosition(){
 	return m_position;
 }
@@ -121,6 +125,10 @@ vector3df* BT_Body::GetLinearVelocity(){
 									m_RigidBody->getLinearVelocity().getY(), 
 									m_RigidBody->getLinearVelocity().getZ());
 	return LVel;
+}
+
+void BT_Body::AssignPointer(void* pointer){
+	m_RigidBody->setUserPointer(pointer);
 }
 
 void BT_Body::Erase(){
