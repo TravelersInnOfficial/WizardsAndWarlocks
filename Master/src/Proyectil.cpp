@@ -29,7 +29,7 @@ void Proyectil::CreateProyectil(){
 
     // Aplicamos Material unlit y Textura
     if (m_proyectilNode) {
-        m_proyectilNode->setMaterialFlag("lighting", false);
+        m_proyectilNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
         m_proyectilNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
     }
 

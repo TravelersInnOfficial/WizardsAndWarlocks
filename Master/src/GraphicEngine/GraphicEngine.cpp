@@ -110,23 +110,6 @@ void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
     body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
-void GraphicEngine::setTextureFlag(GBody* body, std::string flag, bool value){
-    irr::video::E_MATERIAL_FLAG videoFlag;
-    if (flag == "lighting"){
-        videoFlag = irr::video::EMF_LIGHTING;
-    }
-    else if(flag == "wired"){
-        videoFlag = irr::video::EMF_WIREFRAME;
-    }
-    else if(flag == "normalize"){
-        videoFlag = irr::video::EMF_NORMALIZE_NORMALS;
-    }
-    else{
-        return;
-    }
-    body->privateNode->setMaterialFlag(videoFlag, value); 
-}
-
 void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
     irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
         irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z), 

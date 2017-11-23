@@ -1,9 +1,10 @@
 #ifndef GBODY_H
 #define GBODY_H
 
-#include <irrlicht/irrlicht.h>
 #include <iostream>
 #include "GEntity.h"
+#include "MaterialTypes.h"
+#include "MaterialFlags.h"
 
 class GBody: public GEntity{
 
@@ -19,17 +20,24 @@ public:
     void setMaterialTexture(int layer, std::string path);
 
     /**
-     * Set body flag texture
-     * flag: name of the flag
+     * Sets the texture of the specified layer in all materials of this scene node to the new texture
+     * flag: Which flag of all materials to be set
      * value: value of the flag (true/false)
     */
-    void setMaterialFlag(std::string flag, bool value);
+    void setMaterialFlag(MATERIAL_FLAG flag, bool value);
+
+    /**
+     * Sets the material type of all materials in this scene node to a new material type
+     * type: New type of material to be set.
+    */
+    void setMaterialType(MATERIAL_TYPE type);
 
     friend class GraphicEngine;
 
 private:
 
-    GBody(irr::scene::ISceneNode* node);    
+    GBody(irr::scene::ISceneNode* node);
+    irr::scene::IAnimatedMesh* privateAnimatedMesh;    
   
 };
 

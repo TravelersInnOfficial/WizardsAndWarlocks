@@ -22,7 +22,7 @@ void Player::CreatePlayer(){
 
 	// Aplicamos Material unlit y Textura
 	if (m_playerNode) {
-		m_playerNode->setMaterialFlag("lighting", false);
+		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
 		m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 	}

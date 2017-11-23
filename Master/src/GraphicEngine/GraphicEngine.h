@@ -116,14 +116,6 @@ public:
     void setTextureToBody(GBody* body, int layer, std::string path);
 
     /**
-     * Sets a texture flag to the giben body
-     * body: pointer to body where to apply texture
-     * flag: name of the flag to be set
-     * value: value of flag to be set 
-    */
-    void setTextureFlag(GBody* body, std::string flag, bool value);
-
-    /**
      * Creates a fly straight animator, which lets the attached scene node fly or move along a line between two points
      * body: pointer to body to set animation
      * initialPos: Start point of the line

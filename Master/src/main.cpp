@@ -23,14 +23,14 @@ void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int t
 	GBody* Node = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
 	Node->setPosition(TPosition);
 	Node->setScale(TScale);
-	Node->setMaterialFlag("lighting", false);
+	Node->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
 	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
 	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
 	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
 
-	Node->setMaterialFlag("normalize", true);
+	Node->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 	Node->setAutomaticCulling();
 
 	//Bullet Physics
@@ -47,14 +47,14 @@ void createBox(vector3df TPosition, vector3df TRotation, vector3df TScale, int t
 
 	// Create an Irrlicht cube
 	GBody *Node = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
-	Node->setMaterialFlag("lighting", false);
+	Node->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
 	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
 	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
 	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
 
-	Node->setMaterialFlag("normalize", true);
+	Node->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 	Node->setAutomaticCulling();
 
 	//Bullet Physics
