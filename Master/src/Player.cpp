@@ -80,7 +80,7 @@ void Player::positionCamera(){
 	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
-	engine->getActiveCamera()->setPosition(vector3df(m_position.X - 0.15 * sin(rot.Y), m_position.Y + 0.5, m_position.Z - 0.15 * cos(rot.Y)));
+	engine->getActiveCamera()->setPosition(vector3df(m_position.X - 0.15 * sin(rot.Y), m_position.Y /*+ 0.5*/, m_position.Z - 0.15 * cos(rot.Y)));
 	engine->getActiveCamera()->updateAbsolutePosition();
 	engine->getActiveCamera()->setRotation(newRotAux);
 }
@@ -168,9 +168,22 @@ void Player::SetPosY(float posY){
 void Player::SetHP(float HP){ m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 bool Player::GetDead(){ return m_dead; }
+float Player::GetRotY(){
+	vector3df newRot = engine->getActiveCamera()->getRotation();
+	vector3df rot = newRot * irr::core::PI / 180.0;	
+	return rot.Y;
+}
+
+vector3df Player::GetRot(){
+	vector3df newRot = engine->getActiveCamera()->getRotation();
+	vector3df rot = newRot * irr::core::PI / 180.0;	
+	return rot;
+}
 
 float Player::GetPosX(){ return m_position.X; }
 float Player::GetPosY(){ return m_position.Y; }
+float Player::GetPosZ(){ return m_position.Z; }
+vector3df Player::GetPos(){ return m_position; }
 float Player::GetWidth(){ return m_dimensions.X; }
 float Player::GetHeight(){ return m_dimensions.Y; }
 float Player::GetLength(){ return m_dimensions.Z; }

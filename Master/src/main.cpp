@@ -129,11 +129,8 @@ bool manageInputs(Player* physicPlayer){
 		DeleteMain();
 		end = true;
 	}
-	if(engine->IsKeyDown(KEY_SPACE)){ 
-		physicPlayer->Jump();
-		ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer);
-	}
-	
+	if(engine->IsKeyDown(KEY_KEY_Q)){ ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
+	if(engine->IsKeyDown(KEY_SPACE)){ physicPlayer->Jump(); }
 	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
 	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
 	

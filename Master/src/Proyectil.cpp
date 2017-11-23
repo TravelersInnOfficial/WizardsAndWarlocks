@@ -1,13 +1,13 @@
 #include "Proyectil.h"
 #include "ControlProyectil.h"
 
-Proyectil::Proyectil(float dirX, float dirY, float dirZ, float r, float v){
-    direction.push_back(dirX);
-    direction.push_back(dirY);
-    direction.push_back(dirZ);
-    NormalizeDir();
+Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
+    direction = new vector3df(dir.X, dir.Y, dir.Z);
+    //NormalizeDir();
     radio = r;
     velocity = v;
+
+    CreateProyectil(pos);
     clase = "proyectil";
 }
 
@@ -19,12 +19,12 @@ Proyectil::~Proyectil(){
     delete m_proyectilNode;
 }
 
-void Proyectil::CreateProyectil(){
+void Proyectil::CreateProyectil(vector3df pos){
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_proyectilNode = engine->addSphere2Scene(vector3df(0,0,0),vector3df(0,0,0),vector3df(1,1,1),radio, -1);
+    m_proyectilNode = engine->addSphere2Scene(pos,vector3df(0,0,0),vector3df(1,1,1),radio, -1);
     m_proyectilNode->setScale(vector3df(1,1,1));
 
     // Aplicamos Material unlit y Textura
@@ -35,16 +35,16 @@ void Proyectil::CreateProyectil(){
 
     //BULLET    
     bt_body = new BT_Body();
-    bt_body->CreateBox(vector3df(0,0,0), vector3df(0.7*radio,0.7*radio,0.7*radio), 50, 2.3);
+    bt_body->CreateBox(pos, vector3df(0.7*radio,0.7*radio,0.7*radio), 50, 2.3);
     bt_body->AssignPointer(this);
     bt_body->SetGravity(vector3df(0,0,0));
+    bt_body->SetCollisionFlags("no_contact");
+    //bt_body->SetMass(0);    
 }
 
 void Proyectil::Update(){
-    vector3df vel(direction[0], direction[1], direction[2]);
-    vel = vel * velocity;
+    vector3df vel(velocity*direction->X, velocity*direction->Y, velocity*direction->Z);
     bt_body->SetLinearVelocity(vel);
-    
     UpdatePosShape();
 }
 
@@ -70,8 +70,8 @@ GBody* Proyectil::GetShape(){
 }
 
 void Proyectil::NormalizeDir(){
-    float length = sqrt(pow(direction[0], 2) + pow(direction[1], 2) + pow(direction[2],2));
-    direction[0] = direction[0]/length;
-    direction[1] = direction[1]/length;
-    direction[2] = direction[2]/length;
+    float length = sqrt(pow(direction->X, 2) + pow(direction->Y, 2) + pow(direction->Z,2));
+    direction->X = direction->X/length;
+    direction->Y = direction->Y/length;
+    direction->Z = direction->Z/length;
 }

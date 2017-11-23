@@ -131,6 +131,12 @@ void BT_Body::AssignPointer(void* pointer){
 	m_RigidBody->setUserPointer(pointer);
 }
 
+void BT_Body::SetCollisionFlags(std::string s){
+	if(s.compare("no_contact")==0){
+		m_RigidBody->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	}
+}
+
 void BT_Body::Erase(){
 	BulletEngine::GetInstance()->RemoveRigidBody(m_RigidBody);
     delete m_RigidBody->getMotionState();

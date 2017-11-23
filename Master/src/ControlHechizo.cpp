@@ -63,8 +63,10 @@ bool ControlHechizo::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		Hechizo* h = hechizos[num][p];
 		if(h!=NULL){
-			h->Lanzar();
-			return true;
+			if(h->ComprobarCast()){
+				h->Lanzar(p);
+				return true;
+			}
 		}
 	}
 	return false;

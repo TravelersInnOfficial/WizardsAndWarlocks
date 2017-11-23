@@ -26,11 +26,15 @@ class Player: public Entidad{
 
 		float GetPosX();
 		float GetPosY();
+		float GetPosZ();
+		vector3df GetPos();
 		float GetWidth();
 		float GetHeight();
 		float GetLength();
 		float GetHP();
 		bool GetDead();
+		float GetRotY();
+		vector3df GetRot();
 
 		void setPosition(float, float, float);
 		void SetPosX(float);

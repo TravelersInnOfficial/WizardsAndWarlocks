@@ -12,7 +12,7 @@ class ControlProyectil{
 public:
 	static ControlProyectil* GetInstance();
 
-	void AddProyectil(float dirX, float dirY, float dirZ, float r, float v);
+	void AddProyectil(vector3df pos, vector3df dir, float r, float v);
 	void AddToDeleteProyecil(Proyectil* pro);
 	void Update();
 	void DeleteProyectiles();

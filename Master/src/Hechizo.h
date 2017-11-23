@@ -2,13 +2,14 @@
 #define HECHIZO_H
 
 #include <iostream>
+#include "Player.h"
 
 class Hechizo{
 public:
 	Hechizo();
 	void EmpezarCast();
-	void ComprobarCast();
-	void Lanzar();
+	bool ComprobarCast();
+	void Lanzar(Player* p);
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
 private:

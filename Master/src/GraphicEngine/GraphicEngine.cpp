@@ -11,9 +11,9 @@ GraphicEngine::GraphicEngine(){
 
     privateDevice = irr::createDevice(
         irr::video::EDT_OPENGL,
-        deskres,
+        irr::core::dimension2d<unsigned int>(900,600),
         16,
-        true,
+        false,
         false,
         true,
         privateReceiver

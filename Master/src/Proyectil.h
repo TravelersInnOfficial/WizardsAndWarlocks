@@ -12,9 +12,8 @@
 
 class Proyectil: public Entidad{
 public:
-    Proyectil(float X, float Y, float Z, float r, float v);
+    Proyectil(vector3df pos, vector3df dir, float r, float v);
     ~Proyectil();
-    void CreateProyectil();
     void Update();
     void Contact(void* punt, std::string tipo);
 
@@ -22,10 +21,11 @@ public:
     GBody* GetShape();
 
 private:
+    void CreateProyectil(vector3df pos);
 	void UpdatePosShape();
 	void NormalizeDir();
 
-    vector<float> 	direction;	// La direccion que va a tomar el proyectil
+    vector3df*   	direction;	// La direccion que va a tomar el proyectil
     float			radio;		// Radio del proyectil
     float			velocity;	// Velocidad del proyectil
 

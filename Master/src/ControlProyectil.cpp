@@ -11,9 +11,8 @@ ControlProyectil* ControlProyectil::GetInstance(){
 	return instance;
 }
 
-void ControlProyectil::AddProyectil(float dirX, float dirY, float dirZ, float r, float v){
-	proyectiles.push_back(new Proyectil(dirX, dirY, dirZ, r, v));
-	proyectiles[proyectiles.size()-1]->CreateProyectil();
+void ControlProyectil::AddProyectil(vector3df pos, vector3df dir, float r, float v){
+	proyectiles.push_back(new Proyectil(pos, dir, r, v));
 }
 
 void ControlProyectil::Update(){

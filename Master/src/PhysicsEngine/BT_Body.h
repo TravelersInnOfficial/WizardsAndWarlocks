@@ -4,6 +4,7 @@
 #include "BulletEngine.h"
 #include "../vector3d.h"
 #include <math.h>
+#include <iostream>
 
 class BT_Body{
 public:
@@ -30,6 +31,7 @@ public:
 
 	//
 	void AssignPointer(void*);
+	void SetCollisionFlags(std::string);
 
 	void Erase();
 	~BT_Body();
