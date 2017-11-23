@@ -7,8 +7,13 @@ GBody::GBody(irr::scene::ISceneNode* node){
 
 void GBody::setMaterialTexture(int layer, std::string path){
     GraphicEngine::getInstance()->setTextureToBody(this, layer, path);
+    privateNode->setMaterialType(irr::video::EMT_SOLID);
 }
 
-void GBody::setMaterialFlag(std::string flag, bool value){
-    GraphicEngine::getInstance()->setTextureFlag(this, flag, value);
+void GBody::setMaterialFlag(MATERIAL_FLAG flag, bool value){
+    privateNode->setMaterialFlag((irr::video::E_MATERIAL_FLAG)flag, value);
+}
+
+void GBody::setMaterialType(MATERIAL_TYPE type){
+    privateNode->setMaterialType((irr::video::E_MATERIAL_TYPE)type);
 }
