@@ -17,7 +17,7 @@ void ControlProyectil::AddProyectil(float dirX, float dirY, float dirZ, float r,
 }
 
 void ControlProyectil::Update(){
-	//DeleteProyectiles();
+	DeleteProyectiles();
 	int size = proyectiles.size();
 	for(int i=0; i<size; i++){
 		proyectiles[i]->Update();

@@ -14,6 +14,9 @@ Proyectil::Proyectil(float dirX, float dirY, float dirZ, float r, float v){
 Proyectil::~Proyectil(){
     bt_body->Erase();
     m_proyectilNode->Erase();
+
+    delete bt_body;
+    delete m_proyectilNode;
 }
 
 void Proyectil::CreateProyectil(){
@@ -21,7 +24,7 @@ void Proyectil::CreateProyectil(){
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_proyectilNode = engine->addSphere2Scene(vector3df(0,0,0),vector3df(0,0,0),vector3df(1,1,1),radio);
+    m_proyectilNode = engine->addSphere2Scene(vector3df(0,0,0),vector3df(0,0,0),vector3df(1,1,1),radio, -1);
     m_proyectilNode->setScale(vector3df(1,1,1));
 
     // Aplicamos Material unlit y Textura
@@ -55,7 +58,6 @@ void Proyectil::Contact(void* punt, std::string tipo){
     if(tipo.compare("player")==0){
         ControlProyectil* c = ControlProyectil::GetInstance();
         c->AddToDeleteProyecil(this);
-        cout << "ups colisionaste wey"<<endl;
     }
 }
 

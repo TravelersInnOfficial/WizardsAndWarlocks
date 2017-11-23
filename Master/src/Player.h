@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <math.h>
+#include "Entidad.h"
+
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
 
-class Player{
+class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);

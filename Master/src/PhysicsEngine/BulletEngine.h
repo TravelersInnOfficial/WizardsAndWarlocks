@@ -2,6 +2,8 @@
 #define BULLETENGINE_H
 
 #include <bullet/btBulletDynamicsCommon.h>
+#include "./BulletDebug.h"
+#include "./../Entidad.h"
 
 class BulletEngine{
 public:
@@ -13,6 +15,9 @@ public:
     void EraseWorld();
     void AddRigidBody(btRigidBody*);
     void RemoveRigidBody(btRigidBody*);
+    //
+    void CheckColisions();
+    void DebugDrawWorld();
 
 	virtual ~BulletEngine();
 
@@ -34,6 +39,7 @@ private:
 
     btRigidBody* m_groundRigidBody;
 
+    BulletDebug* m_physicsDebug;
 
 };
 

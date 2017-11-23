@@ -151,6 +151,7 @@ public:
 
     //
     void addToDeletionQueue(irr::scene::ISceneNode*);
+    void paintLineDebug(vector3df, vector3df, vector3df);
 
 private:
     GraphicEngine();

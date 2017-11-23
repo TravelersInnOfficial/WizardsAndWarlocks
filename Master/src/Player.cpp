@@ -9,6 +9,7 @@ Player::Player(bool isPlayer1){
 	m_HP = 100;
 	m_dead = false;
 	isPlayerOne=isPlayer1;
+	clase = "player";
 	CreatePlayer();
 }
 
@@ -31,6 +32,7 @@ void Player::CreatePlayer(){
 	
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3);
+	bt_body->AssignPointer(this);
 
 	Respawn();
 

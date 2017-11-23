@@ -154,3 +154,16 @@ GCamera* GraphicEngine::getActiveCamera(){
 void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
     privateSManager->addToDeletionQueue(g);
 }
+
+void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
+    irr::video::SColorf fromC;
+    fromC.set(c.X, c.Y, c.Z, 1.0f); //(r, g, b, a)
+
+    irr::core::vector3df from(f.X, f.Y, f.Z);
+    irr::core::vector3df to(t.X, t.Y, t.Z);
+
+    irr::core::matrix4 id;
+    id.makeIdentity();
+    privateDriver->setTransform(irr::video::ETS_WORLD, id);
+    privateDriver->draw3DLine(from, to, fromC.toSColor());
+}

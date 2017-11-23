@@ -149,15 +149,15 @@ bool manageInputs(Player* physicPlayer){
 }
 
 int main() {
-	
 	// START PhysicsEngine
-	BulletEngine::GetInstance()->CreateWorld();
+	BulletEngine* f_engine = BulletEngine::GetInstance();
+	f_engine->CreateWorld();
 
 	// START IRRLICHT
-	GraphicEngine* engine = GraphicEngine::getInstance();
-	
-	engine->setCursorVisible(false);
-	engine->addCameraSceneNodeFPS(120.f, 0.f);
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	g_engine->setCursorVisible(false);
+	g_engine->addCameraSceneNodeFPS(120.f, 0.f);
 
 	createScenery();
 
@@ -172,19 +172,21 @@ int main() {
 	masterSpell->AddHechizo(0, physicPlayer);
 
 	bool end = false;
-	while(engine->run() && !end){
-		BulletEngine::GetInstance()->UpdateWorld();
+	while(g_engine->run() && !end){
+		f_engine->UpdateWorld();
 		physicPlayer->Update();
 		masterBullet->Update();
 		end = manageInputs(physicPlayer);
-		engine->beginSceneDefault(); // Color de borrado en ARGB
-		engine->drawAll();
+		g_engine->beginSceneDefault(); // Color de borrado en ARGB
+
+		g_engine->drawAll();
+		f_engine->DebugDrawWorld();
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
-		engine->endScene();
+		g_engine->endScene();
 	}
 
-	BulletEngine::GetInstance()->EraseWorld(); // END BULLET
-	engine->drop(); // END IRRLICHT
+	f_engine->EraseWorld(); // END BULLET
+	g_engine->drop(); // END IRRLICHT
 
 	return 0;
 }
