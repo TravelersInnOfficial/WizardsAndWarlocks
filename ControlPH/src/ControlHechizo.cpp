@@ -89,7 +89,7 @@ Hechizo* ControlHechizo::CrearHechizo(SPELLCODE type){
 			h = new Hechizo(70, 2.0f, 5.0f);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil(20, 2.0f, 5.0f);
+			h = new HechizoProyectil(20, 0.0f, 1.0f);
 			break;
 	}
 	return h;

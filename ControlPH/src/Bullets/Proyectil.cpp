@@ -57,12 +57,11 @@ void Proyectil::UpdatePosShape(){
 
 void Proyectil::Contact(void* punt, std::string tipo){
     if(tipo.compare("player")==0){
-        ControlProyectil* c = ControlProyectil::GetInstance();
-        c->AddToDeleteProyecil(this);
-
         Player* p = (Player*)punt;
         p->ChangeHP(-25.0f);
     }
+    ControlProyectil* c = ControlProyectil::GetInstance();
+    c->AddToDeleteProyecil(this);
 }
 
 BT_Body* Proyectil::GetBody(){

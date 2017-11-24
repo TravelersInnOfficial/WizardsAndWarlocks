@@ -9,6 +9,7 @@ SoundEnginePath		:= ./obj/SoundEngine
 SpellPath			:= ./obj/Spells
 BulletPath			:= ./obj/Bullets
 EffectPath			:= ./obj/Effects
+ObjectPath			:= ./obj/Objects
 SourcePath			:= $(shell find src -name '*.cpp')
 
 
@@ -42,6 +43,7 @@ prepare:
 	mkdir -p $(SpellPath)
 	mkdir -p $(BulletPath)
 	mkdir -p $(EffectPath)
+	mkdir -p $(ObjectPath)
 
 clean:
 	$(warning Cleaning...)

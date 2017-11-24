@@ -12,6 +12,7 @@
 #include "ControlEffect.h"
 #include "ControlHechizo.h"
 #include "ControlProyectil.h"
+#include "ControlObject.h"
 //Enums
 #include "./Spells/SpellCodes.h"
 #include "./Effects/EffectCodes.h"
@@ -138,7 +139,9 @@ bool manageInputs(Player* physicPlayer){
 	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
 	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer); }
 
-	if(engine->IsKeyDown(KEY_SPACE)){ physicPlayer->Jump(); }
+	if(engine->IsKeyDown(KEY_SPACE)){ 
+		physicPlayer->Jump(); 
+	}
 	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
 	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
 	
@@ -175,6 +178,11 @@ int main() {
 	// START CONTROLEFFECT
 	ControlEffect* masterEffect = ControlEffect::GetInstance();
 
+	// START CONTROLOBJECT
+	ControlObject* masterObject = ControlObject::GetInstance();
+	masterObject->AddSwitch(masterObject->AddDoor());
+
+
 	// START JUGADOR
 	Player* physicPlayer = new Player(true);
 	masterSpell->AddHechizo(0, physicPlayer, SPELL_PROYECTIL);
@@ -194,6 +202,7 @@ int main() {
 		masterBullet->Update();
 		masterSpell->UpdateCooldown();
 		masterEffect->UpdateEffects();
+		masterObject->Update();
 
 		end = manageInputs(physicPlayer);
 		g_engine->UpdateReceiver();

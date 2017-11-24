@@ -23,7 +23,7 @@ void Hechizo::EmpezarCast(){
 	timeCasting = 0;
 	lanzable = true;
 }
-
+ 
 /**
  * @brief Comprueba si el casteo del hechizo se ha completado
  * @return True->El casteo del hechizo se ha completado
