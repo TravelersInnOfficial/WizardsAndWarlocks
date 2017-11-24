@@ -1,7 +1,7 @@
 #include "Effect.h"
 
-Effect::Effect(){
-	currentTime = 2.0f;
+Effect::Effect(float time){
+	currentTime = time;
 }
 
 Effect::~Effect(){}
@@ -14,6 +14,7 @@ Effect::~Effect(){}
  */
 bool Effect::CheckFinish(float deltaTime){
 	currentTime -= deltaTime;
+
 	if(currentTime<=0){
 		return true;
 	}

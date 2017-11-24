@@ -6,7 +6,10 @@ Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(1,1,1);
 
+	max_velocity = 3.0f;
+
 	m_HP = 100;
+	m_MP = 100;
 	m_dead = false;
 	isPlayerOne=isPlayer1;
 	clase = "player";
@@ -54,7 +57,7 @@ void Player::Update(){
 	bt_body->Update();
 	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
 
-	setMaxVelocity();
+	checkMaxVelocity();
 	if(isPlayerOne) positionCamera();
 	vector3df* velocity = bt_body->GetLinearVelocity();
 
@@ -85,15 +88,15 @@ void Player::positionCamera(){
 	engine->getActiveCamera()->setRotation(newRotAux);
 }
 
-void Player::setMaxVelocity(){
+void Player::checkMaxVelocity(){
 	vector3df* velocity = bt_body->GetLinearVelocity();
 	vector3df auxVelocity(velocity->X,0,velocity->Z);
 	float speed = auxVelocity.length();
 	
 	float velY = velocity->Y;
-    if(speed > 3) {
-        auxVelocity.X *= 3/speed;
-		auxVelocity.Z *= 3/speed;
+    if(speed > max_velocity) {
+        auxVelocity.X *= max_velocity/speed;
+		auxVelocity.Z *= max_velocity/speed;
 		auxVelocity.setY(velY);
 		bt_body->SetLinearVelocity(auxVelocity);
     }
@@ -135,8 +138,18 @@ void Player::Jump(){
 
 void Player::ChangeHP(float HP){
 	if(m_HP + HP > 100) m_HP = 100;
-	else if(m_HP + HP < 0){ m_HP = 0; m_dead = true;}
+	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
+}
+
+bool Player::ChangeMP(float MP){
+	if(m_MP - MP < 0){
+		return false;
+	}
+	else{
+		m_MP -= MP;
+		return true;
+	}
 }
 
 void Player::Respawn(){
@@ -152,7 +165,7 @@ void Player::setPosition(float posX, float posY, float posZ){
 	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 	m_playerNode->updateAbsolutePosition();
 	bt_body->SetPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
-	engine->getActiveCamera()->setRotation(vector3df(0,0,0));
+	if(isPlayerOne)engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){
@@ -167,6 +180,8 @@ void Player::SetPosY(float posY){
 
 void Player::SetHP(float HP){ m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
+void Player::SetMaxVelocity(float max){ max_velocity = max; }
+
 bool Player::GetDead(){ return m_dead; }
 float Player::GetRotY(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
@@ -188,3 +203,5 @@ float Player::GetWidth(){ return m_dimensions.X; }
 float Player::GetHeight(){ return m_dimensions.Y; }
 float Player::GetLength(){ return m_dimensions.Z; }
 float Player::GetHP(){ return m_HP; }
+float Player::GetMP(){ return m_MP; }
+float Player::GetMaxVelocity(){ return max_velocity; }

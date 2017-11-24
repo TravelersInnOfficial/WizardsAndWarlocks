@@ -169,6 +169,18 @@ GGUIElement* GraphicEngine::createDebugWindowControl(){
 }
 
 // RECEIVER FUNCTIONS
+void GraphicEngine::UpdateReceiver(){
+    privateReceiver->Update();
+}
+
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){
-    return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
+    return privateReceiver->keyDown((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
+    return privateReceiver->keyPressed((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsLeftButtonPressed(){
+    return privateReceiver->leftMousePressed();
 }

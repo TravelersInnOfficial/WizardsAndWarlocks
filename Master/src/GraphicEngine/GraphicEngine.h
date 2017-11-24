@@ -14,6 +14,8 @@
 class GraphicEngine{
 
 public:
+    /// DEVICE FUNCTIONS
+
     /**
      * Returns Instance of the engine. If it not created, this method initializes it.
     */
@@ -40,6 +42,8 @@ public:
     */
     int getTime();
 
+    /// DRIVER FUNCTIONS
+
     /**
      * Application must call this method before performing any rendering.
     */
@@ -64,6 +68,8 @@ public:
     void setTextureToBody(GBody* body, int layer, std::string path);
     //
     void paintLineDebug(vector3df, vector3df, vector3df);
+
+    /// SMANAGER FUNCTIONS
 
     /**
      * Draws all the scene nodes.
@@ -138,6 +144,8 @@ public:
     //
     void addToDeletionQueue(irr::scene::ISceneNode*);
     
+    /// GUIENV FUNCTIONS
+
     /**
      * Draws all gui elements by traversing the GUI environment starting at the root node.
     */
@@ -158,16 +166,33 @@ public:
     */
     GGUIElement* createDebugWindowControl();
 
+    /// RECEIVER FUNCTIONS
+
     /**
      * Returns true is given code is pressed
     */
     bool IsKeyDown(TKEY_CODE code);
 
-    irr::IrrlichtDevice*        privateDevice;
+    /*
+     Updates the reciever so we can controll if a key is pressed down
+    */
+    void UpdateReceiver();
+
+    /**
+     * Returns true is given code is held down
+    */
+    bool IsKeyPressed(TKEY_CODE code);
+
+    /**
+     * Returns true is given code is held down
+    */
+    bool IsLeftButtonPressed();
+
 private:
     GraphicEngine();
 
     /** Irrlicht provisional devices*/
+    irr::IrrlichtDevice*        privateDevice;
     irr::video::IVideoDriver*   privateDriver;
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;

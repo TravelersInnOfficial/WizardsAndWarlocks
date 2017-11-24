@@ -4,7 +4,8 @@ ControlEffect* ControlEffect::instance = 0;
 
 ControlEffect::ControlEffect(){
 	timeStart = 0.0f;
-	deltaTime = 0.0f;
+	currentTime = 0.0f;
+	maxTime = 0.5f;
 }
 
 ControlEffect::~ControlEffect(){
@@ -35,29 +36,36 @@ void ControlEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 		effects[p] = new vector<Effect*>();
 	}
 	vector<Effect*>* currentV = effects.at(p);
-	currentV->push_back(CreateEffect(EFFECT));	
+	Effect* effect = CreateEffect(EFFECT);
+	effect->ApplyEffect(p);
+	currentV->push_back(effect);	
 }
 
 void ControlEffect::UpdateEffects(){
-	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
+	float deltaTime = GraphicEngine::getInstance()->getTime() * 0.001;
+	currentTime += deltaTime - timeStart;
+	timeStart = deltaTime;
+	//std::cout<<"current:"<<currentTime<<" delta:"<<deltaTime<<std::endl;
 
-	std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
-	for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
-		Player* p = it->first;						// Pillamos el jugador actual
-		std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
+	if(currentTime>=maxTime){
 
-		int size = currentV->size();
-		for(int i=0; i<size; i++){					// Recorremos todos los efectos del jugador
-			Effect* effect = currentV->at(i);
-			if(effect->CheckFinish(deltaTime)){		// Comprobamos si ha terminado el efecto
-				effect->RemoveEffect(p);
-			}
-			else{
+		std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
+		for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
+			Player* p = it->first;						// Pillamos el jugador actual
+			std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
+
+			int size = currentV->size();
+			for(int i=0; i<size; i++){					// Recorremos todos los efectos del jugador
+				Effect* effect = currentV->at(i);
 				effect->UpdateEffect(p);
+				if(effect->CheckFinish(currentTime)){		// Comprobamos si ha terminado el efecto
+					effect->RemoveEffect(p);
+					delete effect;
+					currentV->erase(currentV->begin()+i);
+				}
 			}
 		}
+		currentTime = 0.0f;
 	}
 }
 
@@ -65,12 +73,16 @@ Effect* ControlEffect::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
 		case EFFECT_BASIC:
-			e = new Effect();
+			e = new Effect(5.0f);
 			break;
+		case EFFECT_BURNED:
+			e = new Burned(6.0f, 10);
+		case EFFECT_SLOWEDDOWN:
+			e = new SlowedDown(6.0f, 10.0f);
 	}
 	return e;
 }
 
 void ControlEffect::StartTime(){
-	timeStart = GraphicEngine::getInstance()->getTime();
+	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 }

@@ -25,21 +25,15 @@ ControlHechizo* ControlHechizo::GetInstance(){
  * @return 		[Se ha asignado correctamente el hechizo]
  */
 bool ControlHechizo::AddHechizo(int num, Player* p, SPELLCODE type){
-	// Comprobamos si el numero de hechizo pasado es correcto
-	if(num>=0 && num<numHechizos){
-		// Nos guardamos el hechizo que habia antes guardado
-		Hechizo* h = hechizos[num][p];
+	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
 		if(h!=NULL){
-			// En el caso de que ya existiese un Hechizo guardado lo eliminamos
-			delete h;
+			delete h;							// En el caso de que ya existiese un Hechizo guardado lo eliminamos
 		}
-		// Anyadimos el nuevo hechizo
-		hechizos[num][p] = CrearHechizo(type);
-		// Hechizo asignado
-		return true;
+		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
+		return true;							// Hechizo asignado
 	}
-	// Hechizo no asignado
-	return false;
+	return false;								// Hechizo no asignado
 }
 
 /**
@@ -67,6 +61,7 @@ bool ControlHechizo::LanzarHechizo(int num, Player* p){
 		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 		if(h!=NULL){							// Comprobamos si realmente existe
 			if(h->ComprobarCast()){				// Empezamos a Castearlo
+				p->ChangeMP(h->GetMP());
 				h->Lanzar(p);					// Lanzamos el hechizo
 				return true;
 			}
@@ -75,14 +70,26 @@ bool ControlHechizo::LanzarHechizo(int num, Player* p){
 	return false;
 }
 
+void ControlHechizo::ResetHechizo(int num, Player* p){
+	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
+		if(h!=NULL){							// Comprobamos si realmente existe
+			int mana = p->GetMP();
+			if(h->CheckMP(mana)){
+				h->EmpezarCast();				// Lanzamos el hechizo
+			}
+		}
+	}
+}
+
 Hechizo* ControlHechizo::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo
-			h = new Hechizo();
+			h = new Hechizo(70, 2.0f, 5.0f);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil();
+			h = new HechizoProyectil(20, 2.0f, 5.0f);
 			break;
 	}
 	return h;

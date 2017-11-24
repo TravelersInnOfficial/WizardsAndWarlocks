@@ -130,11 +130,12 @@ bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(engine->IsKeyDown(KEY_ESCAPE)) {
+	if(engine->IsKeyPressed(KEY_ESCAPE)) {
 		DeleteMain();
 		end = true;
 	}
-	if(engine->IsKeyDown(KEY_KEY_Q)){ ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
+	if(engine->IsKeyPressed(KEY_KEY_Q)){ ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer); }
+	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
 	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer); }
 
 	if(engine->IsKeyDown(KEY_SPACE)){ physicPlayer->Jump(); }
@@ -178,9 +179,9 @@ int main() {
 	Player* physicPlayer = new Player(true);
 	masterSpell->AddHechizo(0, physicPlayer, SPELL_PROYECTIL);
 	masterSpell->AddHechizo(1, physicPlayer, SPELL_BASIC);
+	Player* al = new Player(false);
 
-
-	masterEffect->AddEffect(physicPlayer, EFFECT_BASIC);
+	masterEffect->AddEffect(physicPlayer, EFFECT_BURNED);
 	// Activacion del timer de ControlHechizo
 	masterSpell->StartTime();
 	masterEffect->StartTime();
@@ -189,10 +190,13 @@ int main() {
 	while(g_engine->run() && !end){
 		f_engine->UpdateWorld();
 		physicPlayer->Update();
+		al->Update();
 		masterBullet->Update();
 		masterSpell->UpdateCooldown();
 		masterEffect->UpdateEffects();
+
 		end = manageInputs(physicPlayer);
+		g_engine->UpdateReceiver();
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
 		g_engine->drawAll();

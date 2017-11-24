@@ -22,6 +22,7 @@ class Player: public Entidad{
 		void MoveZ(int);
 		void Jump();
 		void ChangeHP(float);
+		bool ChangeMP(float);
 		void Respawn();
 
 		float GetPosX();
@@ -32,15 +33,18 @@ class Player: public Entidad{
 		float GetHeight();
 		float GetLength();
 		float GetHP();
+		float GetMP();
 		bool GetDead();
 		float GetRotY();
 		vector3df GetRot();
+		float GetMaxVelocity();
 
 		void setPosition(float, float, float);
 		void SetPosX(float);
 		void SetPosY(float);
 		void SetHP(float);
 		void SetDead(bool);
+		void SetMaxVelocity(float);
 
 		~Player();
 
@@ -49,7 +53,10 @@ class Player: public Entidad{
 		vector3df m_position;
 		vector3df m_dimensions;
 
+		float max_velocity;
+
 		float m_HP;
+		float m_MP;
 		bool m_dead;
 		bool isPlayerOne;
 
@@ -61,7 +68,7 @@ class Player: public Entidad{
 		//irr::scene::IAnimatedMesh* m_playerMesh;
 		GBody* m_playerNode;
 
-		void setMaxVelocity();
+		void checkMaxVelocity();
 		void positionCamera();
 
 };

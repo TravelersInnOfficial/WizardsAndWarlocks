@@ -125,22 +125,17 @@ bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(engine->IsKeyDown(KEY_ESCAPE)) {
-		DeleteMain();
-		end = true;
-	}
-	if(engine->IsKeyDown(KEY_KEY_Q)){ ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
-	if(engine->IsKeyDown(KEY_SPACE)){ physicPlayer->Jump(); }
-	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
-	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
-	
-	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
-	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
-
-	if(engine->IsKeyDown(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
-	else if(engine->IsKeyDown(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
+	if(engine->IsKeyPressed(KEY_ESCAPE)) { DeleteMain(); end = true; }
+	if(engine->IsLeftButtonPressed()) ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer);
+	if(engine->IsKeyPressed(KEY_SPACE)) physicPlayer->Jump();
+	if(engine->IsKeyPressed(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
+	else if(engine->IsKeyPressed(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
 
 	if(engine->IsKeyDown(KEY_KEY_R)) physicPlayer->Respawn();
+	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
+	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
+	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
+	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
 	
 	return end;
 }
@@ -169,9 +164,8 @@ int main() {
 	masterSpell->AddHechizo(0, physicPlayer);
 
 	//GGUIElement* tab = g_engine->createDebugWindowControl();
-	//GGUIElement* lifeText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
-	irr::gui::IGUIElement* lifeText = g_engine->privateDevice->getGUIEnvironment()->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", irr::core::rect<irr::s32>(10,10,260,22), true);
-	//GGUIElement* manaText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
+	GGUIElement* lifeText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
+	GGUIElement* manaText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
 	
 
 	bool end = false;
@@ -179,7 +173,11 @@ int main() {
 		f_engine->UpdateWorld();
 		physicPlayer->Update();
 		masterBullet->Update();
+
+		// Leemos los inputs y despues los actualizamos
 		end = manageInputs(physicPlayer);
+		g_engine->UpdateReceiver();
+		
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
 		g_engine->drawAll();
