@@ -1,0 +1,33 @@
+{
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "type": "gdb",
+                "request": "launch",
+                "name": "Launch Program",
+                "target": "./bin/WizardsAndWarlocks",
+                "cwd": "${workspaceRoot}"
+            },
+            {
+                "name": "(gdb) Launch",
+                "type": "cppdbg",
+                "request": "launch",
+                "program": "${workspaceRoot}/bin/WizardsAndWarlocks",
+                "args": [],
+                "stopAtEntry": false,
+                "cwd": "${workspaceRoot}",
+                "environment": [],
+                "externalConsole": true,
+                "MIMode": "gdb",
+                "miDebuggerPath": "/usr/bin/gdb",
+                "setupCommands": [
+                    {
+                        "text": "run",
+                        "description": "Run target",
+                        "ignoreFailures": false
+                    }
+                ]
+                
+            }
+        ]
+    }
