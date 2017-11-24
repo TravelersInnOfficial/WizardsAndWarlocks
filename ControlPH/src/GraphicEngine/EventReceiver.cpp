@@ -32,11 +32,9 @@ bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] 
 void EventReceiver::Update(){
     for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
         if(keyState[i] == PRESSED) keyState[i] = DOWN;
-        if(keyState[i] == RELEASED) keyState[i] = UP;
     }
     for (int i = 0; i < numMouseButtons; i++){
         if(mouseButtonState[i] == PRESSED) mouseButtonState[i] = DOWN;
-        if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
     }
 }
 

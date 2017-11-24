@@ -1,7 +1,9 @@
 #include "HechizoProyectil.h"
 #include "./../ControlProyectil.h"
 
-HechizoProyectil::HechizoProyectil(){}
+HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown){
+	//Hechizo(costPM, tCast, tCoolDown);
+}
 
 void HechizoProyectil::Lanzar(Player* p){
 	//GraphicEngine* g = GraphicEngine::getInstance();

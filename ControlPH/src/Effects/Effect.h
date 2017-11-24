@@ -5,13 +5,13 @@
 
 class Effect{
 public:
-	Effect();
+	Effect(float time);
 	~Effect();
 	bool CheckFinish(float deltaTime);
-	void ApplyEffect(Player* p);
-	void UpdateEffect(Player* p);
-	void RemoveEffect(Player* p);
-private:
+	virtual void ApplyEffect(Player* p);
+	virtual void UpdateEffect(Player* p);
+	virtual void RemoveEffect(Player* p);
+protected:
 	float currentTime;
 };
 

@@ -181,7 +181,7 @@ int main() {
 	masterSpell->AddHechizo(1, physicPlayer, SPELL_BASIC);
 	Player* al = new Player(false);
 
-	masterEffect->AddEffect(physicPlayer, EFFECT_BASIC);
+	masterEffect->AddEffect(physicPlayer, EFFECT_BURNED);
 	// Activacion del timer de ControlHechizo
 	masterSpell->StartTime();
 	masterEffect->StartTime();

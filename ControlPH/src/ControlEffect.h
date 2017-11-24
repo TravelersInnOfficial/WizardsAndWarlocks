@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "./Effects/Effect.h"
+#include "./Effects/Burned.h"
 #include "./Player.h"
 
 #include "./Effects/EffectCodes.h"
@@ -24,7 +25,8 @@ private:
 	std::map<Player*, vector<Effect*>* > effects;
 
 	float timeStart;
-	float deltaTime;
+	float currentTime;
+	float maxTime;
 
 	ControlEffect();
 	static ControlEffect* instance;

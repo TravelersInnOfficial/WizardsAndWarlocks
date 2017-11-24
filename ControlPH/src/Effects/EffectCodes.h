@@ -3,7 +3,9 @@
 
 enum EFFECTCODE
 {
-	EFFECT_BASIC          	= 0x01
+	EFFECT_BASIC          	= 0x01,
+	EFFECT_BURNED			= 0x02,
+	EFFECT_SLOWEDDOWN		= 0x03
 };
 
 #endif

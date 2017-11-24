@@ -6,15 +6,18 @@
 
 class Hechizo{
 public:
-	Hechizo();
+	Hechizo(int costPM, float tCast, float tCoolDown);
 	void EmpezarCast();
 	bool ComprobarCast();
 	virtual void Lanzar(Player* p);
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
+	bool CheckMP(int MP);
+	int	GetMP();
 protected:
 	int 	costePM;
-	
+	bool	lanzable;
+
 	float	startTime;
 	float 	timeCasting;
 	float 	casting;
