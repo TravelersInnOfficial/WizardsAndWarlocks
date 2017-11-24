@@ -1,5 +1,6 @@
 #include "Proyectil.h"
 #include "./../ControlProyectil.h"
+#include "./../Player.h"
 
 Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
     direction = new vector3df(dir.X, dir.Y, dir.Z);
@@ -58,6 +59,9 @@ void Proyectil::Contact(void* punt, std::string tipo){
     if(tipo.compare("player")==0){
         ControlProyectil* c = ControlProyectil::GetInstance();
         c->AddToDeleteProyecil(this);
+
+        Player* p = (Player*)punt;
+        p->ChangeHP(-25.0f);
     }
 }
 

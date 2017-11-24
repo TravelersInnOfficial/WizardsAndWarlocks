@@ -92,25 +92,15 @@ void BulletEngine::CheckColisions(){
 		btPersistentManifold* contactManifold = m_dispatcher->getManifoldByIndexInternal(i);
 		const btCollisionObject* obA = contactManifold->getBody0();
 		const btCollisionObject* obB = contactManifold->getBody1();
+			
+		void* objetoA = obA->getUserPointer();
+		void* objetoB = obB->getUserPointer();
+		if(objetoA != 0 && objetoB != 0){
+			Entidad* a = (Entidad*)(obA->getUserPointer());
+			Entidad* b = (Entidad*)(obB->getUserPointer());
 
-		int numContacts = contactManifold->getNumContacts();
-		for(int j=0; j<numContacts; j++){
-			btManifoldPoint& pt = contactManifold->getContactPoint(j);
-			if(pt.getDistance() < 0.f){
-				//const btVector3& ptA = pt.getPositionWorldOnA();
-				//const btVector3& ptB = pt.getPositionWorldOnB();
-				//const btVector3& normalOnB = pt.m_normalWorldOnB;
-
-				void* objetoA = obA->getUserPointer();
-				void* objetoB = obB->getUserPointer();
-				if(objetoA != 0 && objetoB != 0){
-					Entidad* a = (Entidad*)(obA->getUserPointer());
-					Entidad* b = (Entidad*)(obB->getUserPointer());
-
-					a->Contact(objetoB, b->GetClase());
-					b->Contact(objetoA, a->GetClase());
-				}
-			}
+			a->Contact(objetoB, b->GetClase());
+			b->Contact(objetoA, a->GetClase());
 		}
 	}
 }

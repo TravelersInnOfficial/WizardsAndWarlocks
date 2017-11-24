@@ -75,6 +75,15 @@ bool ControlHechizo::LanzarHechizo(int num, Player* p){
 	return false;
 }
 
+void ControlHechizo::ResetHechizo(int num, Player* p){
+	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
+		if(h!=NULL){							// Comprobamos si realmente existe
+			h->EmpezarCast();					// Lanzamos el hechizo
+		}
+	}
+}
+
 Hechizo* ControlHechizo::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){

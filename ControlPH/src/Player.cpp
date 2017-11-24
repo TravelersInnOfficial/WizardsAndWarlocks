@@ -134,8 +134,9 @@ void Player::Jump(){
 }
 
 void Player::ChangeHP(float HP){
+	std::cout<<"ay"<<std::endl;
 	if(m_HP + HP > 100) m_HP = 100;
-	else if(m_HP + HP < 0){ m_HP = 0; m_dead = true;}
+	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
 }
 
@@ -152,7 +153,7 @@ void Player::setPosition(float posX, float posY, float posZ){
 	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 	m_playerNode->updateAbsolutePosition();
 	bt_body->SetPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
-	engine->getActiveCamera()->setRotation(vector3df(0,0,0));
+	if(isPlayerOne)engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){
