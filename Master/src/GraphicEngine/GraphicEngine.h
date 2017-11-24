@@ -132,9 +132,24 @@ public:
         bool pingpong = true);
     
     /**
-     * Returns true is given code is pressed
+     Updates the reciever so we can controll if a key is pressed down
+    */
+    void UpdateReceiver();
+
+    /**
+     * Returns true is given code is held down
     */
     bool IsKeyDown(TKEY_CODE code);
+
+    /**
+     * Returns true is given code is pressed
+    */
+    bool IsKeyPressed(TKEY_CODE code);
+
+    /**
+     * Returns true is given code is held down
+    */
+    bool IsLeftButtonPressed();
 
     /**
      * Returns active camera in scene

@@ -125,22 +125,17 @@ bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(engine->IsKeyDown(KEY_ESCAPE)) {
-		DeleteMain();
-		end = true;
-	}
-	if(engine->IsKeyDown(KEY_KEY_Q)){ ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
-	if(engine->IsKeyDown(KEY_SPACE)){ physicPlayer->Jump(); }
-	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
-	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
-	
-	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
-	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
-
-	if(engine->IsKeyDown(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
-	else if(engine->IsKeyDown(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
+	if(engine->IsKeyPressed(KEY_ESCAPE)) { DeleteMain(); end = true; }
+	if(engine->IsLeftButtonPressed()) ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer);
+	if(engine->IsKeyPressed(KEY_SPACE)) physicPlayer->Jump();
+	if(engine->IsKeyPressed(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
+	else if(engine->IsKeyPressed(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
 
 	if(engine->IsKeyDown(KEY_KEY_R)) physicPlayer->Respawn();
+	if(engine->IsKeyDown(KEY_KEY_W)) physicPlayer->MoveZ(1);
+	else if(engine->IsKeyDown(KEY_KEY_S)) physicPlayer->MoveZ(-1);
+	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
+	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
 	
 	return end;
 }
@@ -173,7 +168,11 @@ int main() {
 		f_engine->UpdateWorld();
 		physicPlayer->Update();
 		masterBullet->Update();
+
+		// Leemos los inputs y despues los actualizamos
 		end = manageInputs(physicPlayer);
+		g_engine->UpdateReceiver();
+		
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
 		g_engine->drawAll();
