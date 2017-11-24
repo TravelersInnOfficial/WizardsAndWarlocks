@@ -48,15 +48,11 @@ void GraphicEngine::setCursorVisible(bool visible){
     privateDevice->getCursorControl()->setVisible(visible);
 }
 
-GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
-    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed));
-    return privateCamera;
-}
-
 int GraphicEngine::getTime(){
     return privateDevice->getTimer()->getTime();
 }
 
+// DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
     return privateDriver->beginScene();
 }
@@ -69,12 +65,26 @@ bool GraphicEngine::endScene(){
     return privateDriver->endScene();
 }
 
-void GraphicEngine::drawAll(){
-    privateSManager->drawAll();
+void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
+    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
-void GraphicEngine::drawAllGUI(){
-    privateGUIEnv->drawAll();
+void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
+    irr::video::SColorf fromC;
+    fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
+
+    irr::core::vector3df from(f.X, f.Y, f.Z);
+    irr::core::vector3df to(t.X, t.Y, t.Z);
+
+    irr::core::matrix4 id;
+    id.makeIdentity();
+    privateDriver->setTransform(irr::video::ETS_WORLD, id);
+    privateDriver->draw3DLine(from, to, fromC.toSColor());
+}
+
+// SMANAGER FUNCTIONS
+void GraphicEngine::drawAll(){
+    privateSManager->drawAll();
 }
 
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
@@ -106,10 +116,6 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
     return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
 }
 
-void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
-    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
-}
-
 void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
     irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
         irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z), 
@@ -125,8 +131,9 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
     }
 }
 
-bool GraphicEngine::IsKeyDown(TKEY_CODE code){
-    return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
+GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
+    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed));
+    return privateCamera;
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
@@ -138,15 +145,30 @@ void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
     privateSManager->addToDeletionQueue(g);
 }
 
-void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-    irr::video::SColorf fromC;
-    fromC.set(c.X, c.Y, c.Z, 1.0f); //(r, g, b, a)
+// GUIENV FUNCTIONS
+void GraphicEngine::drawAllGUI(){
+    privateGUIEnv->drawAll();
+}
 
-    irr::core::vector3df from(f.X, f.Y, f.Z);
-    irr::core::vector3df to(t.X, t.Y, t.Z);
+GGUIElement* GraphicEngine::addStaticText(std::wstring text, vector4di p, bool border, bool wordWrap, GGUIElement * parent){
+    irr::gui::IGUIElement* elem = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0);
+    return new GGUIElement(elem);
+}
 
-    irr::core::matrix4 id;
-    id.makeIdentity();
-    privateDriver->setTransform(irr::video::ETS_WORLD, id);
-    privateDriver->draw3DLine(from, to, fromC.toSColor());
+GGUIElement* GraphicEngine::createDebugWindowControl(){
+    // create the toolbox window
+	irr::gui::IGUIWindow* wnd = privateGUIEnv->addWindow(irr::core::rect<irr::s32>(600,45,800,480),
+		false, L"Toolset", 0, 0x10000);
+
+	// create tab control and tabs
+	irr::gui::IGUITabControl* tab = privateGUIEnv->addTabControl(
+		irr::core::rect<irr::s32>(2,20,800-602,480-7), wnd, true, true);
+
+    irr::gui::IGUITab* t1 = tab->addTab(L"Config");
+	return new GGUIElement(t1);
+}
+
+// RECEIVER FUNCTIONS
+bool GraphicEngine::IsKeyDown(TKEY_CODE code){
+    return privateReceiver->IsKeyDown((irr::EKEY_CODE)code);
 }

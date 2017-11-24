@@ -32,7 +32,8 @@
         "tuple": "cpp",
         "utility": "cpp",
         "string": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "cstddef": "cpp"
     },
 
     "editor.quickSuggestions": {

@@ -168,6 +168,12 @@ int main() {
 	Player* physicPlayer = new Player(true);
 	masterSpell->AddHechizo(0, physicPlayer);
 
+	//GGUIElement* tab = g_engine->createDebugWindowControl();
+	//GGUIElement* lifeText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
+	irr::gui::IGUIElement* lifeText = g_engine->privateDevice->getGUIEnvironment()->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", irr::core::rect<irr::s32>(10,10,260,22), true);
+	//GGUIElement* manaText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
+	
+
 	bool end = false;
 	while(g_engine->run() && !end){
 		f_engine->UpdateWorld();
@@ -180,6 +186,8 @@ int main() {
 		f_engine->DebugDrawWorld();
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
 		g_engine->endScene();
+
+		g_engine->drawAllGUI();
 	}
 
 	f_engine->EraseWorld(); // END BULLET
