@@ -3,6 +3,7 @@
 
 #include "vector3d.h"
 #include "./PhysicsEngine/BT_GhostObject.h"
+#include "./GraphicEngine/GBody.h"
 #include "Entidad.h"
 #include "Player.h"
 
@@ -47,9 +48,9 @@ protected:
     bool m_deactivated;
     BT_GhostObject* m_body;
     //effect m_effect;
-    //string m_texturePath;
+    std::string m_texturePath;
     TrapEnum m_trapType;
-
+    GBody* g_body;
 };
 
 #endif

@@ -19,10 +19,10 @@ void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int t
 	Node->setScale(TScale);
 	Node->setMaterialFlag("lighting", false);
 
-	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
-	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
-	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
-	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
+	if(texture == 0) Node->setMaterialTexture("./../assets/textures/wall.bmp");
+	else if(texture == 1) Node->setMaterialTexture("./../assets/textures/stones.jpg");
+	else if(texture == 2) Node->setMaterialTexture("./../assets/textures/rockwall.jpg");
+	else if(texture == 3) Node->setMaterialTexture("./../assets/textures/pocion.png");
 
 	Node->setMaterialFlag("normalize", true);
 	Node->setAutomaticCulling();
@@ -43,10 +43,10 @@ void createBox(vector3df TPosition, vector3df TRotation, vector3df TScale, int t
 	GBody *Node = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	Node->setMaterialFlag("lighting", false);
 
-	if(texture == 0) Node->setMaterialTexture(0, "./../assets/textures/wall.bmp");
-	else if(texture == 1) Node->setMaterialTexture(0, "./../assets/textures/stones.jpg");
-	else if(texture == 2) Node->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
-	else if(texture == 3) Node->setMaterialTexture(0, "./../assets/textures/pocion.png");
+	if(texture == 0) Node->setMaterialTexture( "./../assets/textures/wall.bmp");
+	else if(texture == 1) Node->setMaterialTexture("./../assets/textures/stones.jpg");
+	else if(texture == 2) Node->setMaterialTexture("./../assets/textures/rockwall.jpg");
+	else if(texture == 3) Node->setMaterialTexture("./../assets/textures/pocion.png");
 
 	Node->setMaterialFlag("normalize", true);
 	Node->setAutomaticCulling();
@@ -114,8 +114,8 @@ void createScenery(){
 	TScale = vector3df(0.4,0.4,0.4);
 	createObj(TPosition, TRotation, TScale, 3);
 
-	Trap* trap = new Trap(vector3df(0,0,0),vector3df(1,1,1),TENUM_DEATH_CLAWS);
-	Trap* trap2 = new Trap(vector3df(0,0,0),vector3df(1,1,1),TENUM_SPIRITS);
+	Trap* trap = new Trap(vector3df(0,0,0),vector3df(1,0,1),TENUM_DEATH_CLAWS);
+	Trap* trap2 = new Trap(vector3df(5,0,0),vector3df(1,0,1),TENUM_SPIRITS);
 }
 
 bool manageInputs(Player* physicPlayer){

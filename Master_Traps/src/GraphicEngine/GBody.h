@@ -16,7 +16,7 @@ public:
      * layer: layer of texture
      * path: relative path of texture
     */
-    void setMaterialTexture(int layer, std::string path);
+    void setMaterialTexture(std::string path, int layer=0);
 
     /**
      * Set body flag texture

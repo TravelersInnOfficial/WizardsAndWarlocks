@@ -5,7 +5,7 @@ GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
 }
 
-void GBody::setMaterialTexture(int layer, std::string path){
+void GBody::setMaterialTexture(std::string path,int layer){
     GraphicEngine::getInstance()->setTextureToBody(this, layer, path);
 }
 
