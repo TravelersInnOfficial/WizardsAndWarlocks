@@ -4,6 +4,7 @@
 #include <bullet/btBulletDynamicsCommon.h>
 #include "./BulletDebug.h"
 #include "./../Entidad.h"
+#include "./../vector3d.h"
 
 class BulletEngine{
 public:
@@ -18,6 +19,8 @@ public:
     //
     void CheckColisions();
     void DebugDrawWorld();
+
+    void Raycast(vector3df Start, vector3df End);
 
 	virtual ~BulletEngine();
 

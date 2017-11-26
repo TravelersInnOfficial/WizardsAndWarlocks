@@ -24,6 +24,7 @@ class Player: public Entidad{
 		void ChangeHP(float);
 		bool ChangeMP(float);
 		void Respawn();
+		void Raycast();
 
 		float GetPosX();
 		float GetPosY();

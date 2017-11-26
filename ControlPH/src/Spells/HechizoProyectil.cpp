@@ -15,10 +15,11 @@ void HechizoProyectil::Lanzar(Player* p){
 	rot.X = -rot.X;
 
 	vector3df pos = p->GetPos();
-	pos.X = pos.X + sin(rot.Y)*cos(rot.X)*1;
-	pos.Y = pos.Y + sin(rot.X)*1;
-	pos.Z = pos.Z + cos(rot.Y)*cos(rot.X)*1;
+	float max = 1.2;
+	pos.X = pos.X + sin(rot.Y)*cos(rot.X)*max;
+	pos.Y = pos.Y + sin(rot.X)*max;
+	pos.Z = pos.Z + cos(rot.Y)*cos(rot.X)*max;
 
 	ControlProyectil* c = ControlProyectil::GetInstance();
-	c->AddProyectil(pos, vector3df( sin(rot.Y), sin(rot.X), cos(rot.Y)), 0.05f, 10.0f, BULLET_BASIC);
+	c->AddProyectil(pos, vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X)), 0.05f, 10.0f, BULLET_BASIC);
 }

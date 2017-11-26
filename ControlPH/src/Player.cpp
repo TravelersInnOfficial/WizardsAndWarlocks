@@ -1,4 +1,5 @@
 #include "./Player.h"
+#include "./PhysicsEngine/BulletEngine.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -83,7 +84,7 @@ void Player::positionCamera(){
 	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
-	engine->getActiveCamera()->setPosition(vector3df(m_position.X - 0.15 * sin(rot.Y), m_position.Y /*+ 0.5*/, m_position.Z - 0.15 * cos(rot.Y)));
+	engine->getActiveCamera()->setPosition(vector3df(m_position.X /*- 0.15 * sin(rot.Y)*/, m_position.Y /*+ 0.5*/, m_position.Z /*- 0.15 * cos(rot.Y)*/));
 	engine->getActiveCamera()->updateAbsolutePosition();
 	engine->getActiveCamera()->setRotation(newRotAux);
 }
@@ -156,6 +157,21 @@ void Player::Respawn(){
 	setPosition(0, 5, 0);
 	m_HP = 100;
 	m_dead = false;
+}
+
+void Player::Raycast(){
+	vector3df rot = GetRot();
+	rot.X = -rot.X;
+
+	vector3df Start = GetPos();
+	float max = 10;
+	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*max;
+	float EndY = Start.Y + sin(rot.X)*max;
+	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*max;
+
+	vector3df End(EndX, EndY, EndZ);
+
+	BulletEngine::GetInstance()->Raycast(Start, End);
 }
 
 void Player::setPosition(float posX, float posY, float posZ){

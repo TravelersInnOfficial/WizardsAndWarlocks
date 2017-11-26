@@ -6,6 +6,8 @@ void BulletDebug::drawLine( const btVector3& from, const btVector3& to, const bt
 	vector3df t(to.getX(), to.getY(), to.getZ());
 	vector3df c(color.getX(), color.getY(), color.getZ());
 
+	//std::cout<<from.getX()<<from.getY()<<from.getZ()<<std::endl;
+
     GraphicEngine::getInstance()->paintLineDebug(f, t, c);
 }
 

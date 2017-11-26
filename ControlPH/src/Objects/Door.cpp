@@ -9,6 +9,7 @@ Door::Door(){
     rotation.Y = 0;
     rotation.Z = 0;
     working = false;
+    clase = "puerta";
 }
 
 Door::~Door(){
@@ -36,6 +37,7 @@ void Door::CreateDoor(){
     //BULLET
 	bt_body = new BT_Body();
 	bt_body->CreateBox(vector3df(0,0,0), vector3df(1*0.5,1*0.5,1*0.5), 0, 2.3);
+    bt_body->AssignPointer(this);
 }
 
 void Door::Interact(){

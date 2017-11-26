@@ -11,6 +11,7 @@ public:
 	Entidad();
 	virtual void Update();
 	virtual void Contact(void* punt, string tipo);
+	virtual void Interact();
 	string GetClase();
 	~Entidad();
 protected:

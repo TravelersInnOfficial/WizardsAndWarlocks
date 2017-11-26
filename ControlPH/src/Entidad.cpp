@@ -14,3 +14,4 @@ string Entidad::GetClase(){
 
 void Entidad::Update(){}
 void Entidad::Contact(void* punt, string tipo){}
+void Entidad::Interact(){}

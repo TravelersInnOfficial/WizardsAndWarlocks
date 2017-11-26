@@ -3,10 +3,12 @@
 
 #include <iostream>
 
+#include "./../Entidad.h"
+
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-class Door{
+class Door: public Entidad{
 public:
 	Door();
 	~Door();

@@ -1,4 +1,6 @@
 #include "GraphicEngine.h"
+#include "./../Player.h"
+
 
 static GraphicEngine* instance;
 
@@ -152,7 +154,7 @@ void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
     irr::video::SColorf fromC;
-    fromC.set(c.X, c.Y, c.Z, 1.0f); //(r, g, b, a)
+    fromC.set(1.0f, c.X, c.Y, c.Z); //(r, g, b, a)
 
     irr::core::vector3df from(f.X, f.Y, f.Z);
     irr::core::vector3df to(t.X, t.Y, t.Z);

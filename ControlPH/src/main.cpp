@@ -136,10 +136,12 @@ bool manageInputs(Player* physicPlayer){
 		end = true;
 	}
 	if(engine->IsKeyPressed(KEY_KEY_Q)){ 
-		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer); 
+		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer);
 	}
-	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
-	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer); }
+	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); 
+	}
+	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer);
+	physicPlayer->Raycast(); }
 
 	if(engine->IsKeyDown(KEY_SPACE)){ 
 		physicPlayer->Jump(); 
@@ -214,6 +216,7 @@ int main() {
 
 		g_engine->drawAll();
 		f_engine->DebugDrawWorld();
+
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
 		g_engine->endScene();
 	}

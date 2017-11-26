@@ -1,4 +1,5 @@
 #include "BulletEngine.h"
+#include "./../GraphicEngine/GraphicEngine.h"
 
 static BulletEngine* instance;
 
@@ -92,21 +93,52 @@ void BulletEngine::CheckColisions(){
 		btPersistentManifold* contactManifold = m_dispatcher->getManifoldByIndexInternal(i);
 		const btCollisionObject* obA = contactManifold->getBody0();
 		const btCollisionObject* obB = contactManifold->getBody1();
-			
+		
 		void* objetoA = obA->getUserPointer();
 		void* objetoB = obB->getUserPointer();
-		if(objetoA != 0 && objetoB != 0){
-			Entidad* a = (Entidad*)(obA->getUserPointer());
-			Entidad* b = (Entidad*)(obB->getUserPointer());
 
-			a->Contact(objetoB, b->GetClase());
-			b->Contact(objetoA, a->GetClase());
-		}
+		int numContacts = contactManifold->getNumContacts();
+        for (int j = 0; j < numContacts; j++) {
+            btManifoldPoint& pt = contactManifold->getContactPoint(j);
+            if (pt.getDistance() < 0.f) {
+               	if(objetoA != 0 && objetoB != 0){
+					Entidad* a = (Entidad*)(obA->getUserPointer());
+					Entidad* b = (Entidad*)(obB->getUserPointer());
+
+					a->Contact(objetoB, b->GetClase());
+					b->Contact(objetoA, a->GetClase());
+					break;
+				}
+            }
+        }
 	}
 }
 
 void BulletEngine::DebugDrawWorld(){
 	m_dynamicsWorld->debugDrawWorld();
+}
+
+void BulletEngine::Raycast(vector3df S, vector3df E){
+
+	btVector3 Start(S.X, S.Y, S.Z);
+	btVector3 End(E.X, E.Y, E.Z);
+
+	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
+    //RayCallback.m_collisionFilterMask = FILTER_CAMERA;
+
+    m_dynamicsWorld->rayTest(Start, End, RayCallback);
+	
+    //GraphicEngine::getInstance()->paintLineDebug(S, E, vector3df(1.0f, 0.0f, 0.0f));
+
+    if(RayCallback.hasHit()) {
+
+        //End = RayCallback.m_hitPointWorld;
+        //Normal = RayCallback.m_hitNormalWorld;
+		if(RayCallback.m_collisionObject->getUserPointer()!=0){
+	        Entidad* h = (Entidad*)RayCallback.m_collisionObject->getUserPointer();
+	        h->Interact();
+   		}
+    }
 }
 
 BulletEngine::~BulletEngine(){}
