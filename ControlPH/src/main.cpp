@@ -135,7 +135,9 @@ bool manageInputs(Player* physicPlayer){
 		DeleteMain();
 		end = true;
 	}
-	if(engine->IsKeyPressed(KEY_KEY_Q)){ ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer); }
+	if(engine->IsKeyPressed(KEY_KEY_Q)){ 
+		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer); 
+	}
 	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); }
 	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer); }
 

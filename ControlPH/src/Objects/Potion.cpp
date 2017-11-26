@@ -43,6 +43,7 @@ void Potion::Interact(Player* p){
 }
 
 void Potion::Use(Player* p){
+	std::cout<<"me usan"<<std::endl;
 	p->ChangeHP(value);
 	// Eliminar la pocion
 }

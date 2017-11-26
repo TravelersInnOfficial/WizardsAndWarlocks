@@ -8,6 +8,8 @@
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
+class Player;
+
 class Potion{
 public:
 	Potion();
