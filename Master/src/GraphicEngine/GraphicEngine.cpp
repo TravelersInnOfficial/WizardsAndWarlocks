@@ -151,8 +151,7 @@ void GraphicEngine::drawAllGUI(){
 }
 
 GGUIElement* GraphicEngine::addStaticText(std::wstring text, vector4di p, bool border, bool wordWrap, GGUIElement * parent){
-    irr::gui::IGUIElement* elem = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0);
-    return new GGUIElement(elem);
+    return new GGUIElement(privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0));
 }
 
 GGUIElement* GraphicEngine::createDebugWindowControl(){

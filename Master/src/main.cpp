@@ -123,9 +123,8 @@ void createScenery(){
 
 bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	bool end = false;
 	
-	if(engine->IsKeyPressed(KEY_ESCAPE)) { DeleteMain(); end = true; }
+	if(engine->IsKeyPressed(KEY_ESCAPE)) { DeleteMain(); return true; }
 	if(engine->IsLeftButtonPressed()) ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer);
 	if(engine->IsKeyPressed(KEY_SPACE)) physicPlayer->Jump();
 	if(engine->IsKeyPressed(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
@@ -137,7 +136,7 @@ bool manageInputs(Player* physicPlayer){
 	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
 	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
 	
-	return end;
+	return false;
 }
 
 int main() {
@@ -165,7 +164,7 @@ int main() {
 
 	//GGUIElement* tab = g_engine->createDebugWindowControl();
 	GGUIElement* lifeText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
-	GGUIElement* manaText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
+	//GGUIElement* manaText = g_engine->addStaticText(L"Hello World! This is the Irrlicht Software renderer!", vector4di(10,10,260,22), true);
 	
 
 	bool end = false;
