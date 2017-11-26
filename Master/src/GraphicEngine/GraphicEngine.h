@@ -69,6 +69,11 @@ public:
     //
     void paintLineDebug(vector3df, vector3df, vector3df);
 
+    /**
+     * Draws aim hud
+    */
+    void drawAim();
+
     /// SMANAGER FUNCTIONS
 
     /**

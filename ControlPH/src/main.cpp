@@ -215,6 +215,7 @@ int main() {
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
 		g_engine->drawAll();
+		g_engine->drawAim();
 		f_engine->DebugDrawWorld();
 
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
