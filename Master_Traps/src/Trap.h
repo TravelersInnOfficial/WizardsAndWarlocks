@@ -4,6 +4,7 @@
 #include "vector3d.h"
 #include "./PhysicsEngine/BT_GhostObject.h"
 #include "Entidad.h"
+#include "Player.h"
 
 enum TrapEnum: int  {
     TENUM_DEATH_CLAWS = 0,
@@ -24,7 +25,7 @@ public:
     EntityEnum GetClase();
 
     void Deactivate();
-    void Activate();
+    void Activate(Player* player);
 
     void SetPosition(vector3df);
     void SetDimensions(vector3df);

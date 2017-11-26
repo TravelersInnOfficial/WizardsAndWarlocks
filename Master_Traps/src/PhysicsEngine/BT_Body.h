@@ -20,6 +20,7 @@ public:
 	void SetDimensions(vector3df);
 	void SetLinearVelocity(vector3df);
 	void SetMass(float);
+	void SetUserPtr(void*);
 
 	vector3df* GetPosition();
 	vector3df* GetDimensions();

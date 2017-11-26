@@ -23,11 +23,9 @@ void BT_GhostObject::CreateGhostBox(vector3df* position, vector3df* dimensions){
     BulletEngine::GetInstance()->AddGhostBody(m_body);
 }
 
-template <typename T>
-void BT_GhostObject::SetObjectPtr(T* object){
-    m_body->setUserPointer(object);
+void BT_GhostObject::SetObjectPtr(void* pointer){
+    m_body->setUserPointer(pointer);
 }
-template void BT_GhostObject::SetObjectPtr(Trap*);
 
 void BT_GhostObject::Erase(){
 

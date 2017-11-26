@@ -20,7 +20,10 @@ Trap::Trap(vector3df position, vector3df dimensions, TrapEnum trapType){
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
-    Activate();
+    if(tipo == EENUM_PLAYER){
+        Player* player = (Player*)(punt);
+        Activate(player);
+    }
 }
 
 EntityEnum Trap::GetClase(){
@@ -28,7 +31,10 @@ EntityEnum Trap::GetClase(){
 
 }
 
-void Trap::Activate(){
+void Trap::Activate(Player* player ){
+    std::cout<<"Something stepped on me!!!"<<std::endl;
+    player->ChangeHP(-1);
+    std::cout<<player->GetHP()<<std::endl;
 
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
