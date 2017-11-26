@@ -6,6 +6,14 @@ Switch::Switch(){
 	CreateSwitch();
 }
 
+Switch::~Switch(){
+    bt_body->Erase();
+    m_switchNode->Erase();
+
+    delete bt_body;
+    delete m_switchNode;
+}
+
 void Switch::CreateSwitch(){
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();

@@ -9,11 +9,20 @@
 class Door{
 public:
 	Door();
+	~Door();
 	void Interact();
 	void Update();
 private:
 	void CreateDoor();
+	void WorkDoor();
 	void UpdatePosShape();
+
+	bool working;
+	int min;
+	int max;
+	int increment;
+
+	vector3df rotation;
 
 	BT_Body*        bt_body;
     GBody*          m_doorNode;

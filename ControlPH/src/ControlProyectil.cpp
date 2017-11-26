@@ -4,6 +4,10 @@ ControlProyectil* ControlProyectil::instance = 0;
 
 ControlProyectil::ControlProyectil(){}
 
+ControlProyectil::~ControlProyectil(){
+	DeleteAllProyectiles();
+}
+
 ControlProyectil* ControlProyectil::GetInstance(){
 	if(instance==0){
 		instance = new ControlProyectil();

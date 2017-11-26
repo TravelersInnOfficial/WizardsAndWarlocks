@@ -12,6 +12,7 @@
 class Switch: public Entidad{
 public:
 	Switch();
+	~Switch();
 	void SetDoor(Door* d);
 	void Update();
 	void Contact(void* punt, string tipo);

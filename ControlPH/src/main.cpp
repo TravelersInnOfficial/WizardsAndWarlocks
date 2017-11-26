@@ -214,6 +214,10 @@ int main() {
 		g_engine->endScene();
 	}
 
+	delete masterObject;
+	delete masterBullet;
+	delete masterSpell;
+
 	f_engine->EraseWorld(); // END BULLET
 	g_engine->drop(); // END IRRLICHT
 

@@ -8,6 +8,17 @@ ControlHechizo::ControlHechizo(){
 	deltaTime = 0.0f;
 }
 
+ControlHechizo::~ControlHechizo(){
+	for(int i=0; i<numHechizos; i++){
+		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
+		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
+			Hechizo* h = it->second;			// Cargamos el hechizo
+			delete h;
+		}
+
+	}
+}
+
 ControlHechizo* ControlHechizo::GetInstance(){
 	if(instance==0){
 		instance = new ControlHechizo();

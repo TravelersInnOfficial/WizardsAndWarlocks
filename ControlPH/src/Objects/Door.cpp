@@ -2,6 +2,21 @@
 
 Door::Door(){
 	CreateDoor();
+    min = 0;
+    max = 90;
+    increment = -1;
+    rotation.X = 0;
+    rotation.Y = 0;
+    rotation.Z = 0;
+    working = false;
+}
+
+Door::~Door(){
+    bt_body->Erase();
+    m_doorNode->Erase();
+
+    delete bt_body;
+    delete m_doorNode;
 }
 
 void Door::CreateDoor(){
@@ -24,15 +39,31 @@ void Door::CreateDoor(){
 }
 
 void Door::Interact(){
-	std::cout<<"Open the Door"<<std::endl;
+    if(!working){
+        working = true;
+        increment = -increment;
+    }
 }
 
 void Door::Update(){
+    if(working){
+       WorkDoor();
+    }
 	UpdatePosShape();
+}
+
+void Door::WorkDoor(){
+    rotation.Y += increment;
+    bt_body->Rotate(rotation);
+
+    if(rotation.Y<=min || rotation.Y>=max){
+        working = false;
+    }
 }
 
 void Door::UpdatePosShape(){
 	bt_body->Update();
     vector3df* pos = bt_body->GetPosition();
     m_doorNode->setPosition(*pos);
+    m_doorNode->setRotation(rotation);
 }

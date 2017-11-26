@@ -11,6 +11,7 @@
 class ControlHechizo{
 public:
 	static ControlHechizo* GetInstance();
+	~ControlHechizo();
 
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
 	void UpdateCooldown();

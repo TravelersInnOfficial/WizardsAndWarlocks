@@ -4,6 +4,21 @@ ControlObject* ControlObject::instance = 0;
 
 ControlObject::ControlObject(){}
 
+ControlObject::~ControlObject(){
+	int size = doors.size();
+	for(int i=0; i<size; i++){
+		Door* d = doors[i];
+		delete d;
+	}
+	doors.clear();
+	size = switchs.size();
+	for(int i=0; i<size; i++){
+		Switch* s = switchs[i];
+		delete s;
+	}
+	switchs.clear();
+}
+
 ControlObject* ControlObject::GetInstance(){
 	if(instance==0){
 		instance = new ControlObject();

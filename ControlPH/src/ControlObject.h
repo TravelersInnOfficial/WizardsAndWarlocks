@@ -10,6 +10,7 @@
 class ControlObject{
 public:
 	static ControlObject* GetInstance();
+	~ControlObject();
 	Door* AddDoor();
 	Switch* AddSwitch(Door* d);
 	void Update();
