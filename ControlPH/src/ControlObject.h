@@ -6,6 +6,8 @@
 
 #include "./Objects/Door.h"
 #include "./Objects/Switch.h"
+#include "./Objects/Potion.h"
+#include "./Objects/Fountain.h"
 
 class ControlObject{
 public:
@@ -13,13 +15,19 @@ public:
 	~ControlObject();
 	Door* AddDoor();
 	Switch* AddSwitch(Door* d);
+	Potion* AddPotion();
+	Fountain* AddFountain();
 	void Update();
 private:
 	void UpdateDoors();
 	void UpdateSwitchs();
+	void UpdatePotions();
+	void UpdateFountains();
 
 	vector<Door*>		doors;
 	vector<Switch*>		switchs;
+	vector<Potion*>		potions;
+	vector<Fountain*>	fountains;
 
 
 	ControlObject();

@@ -181,6 +181,8 @@ int main() {
 	// START CONTROLOBJECT
 	ControlObject* masterObject = ControlObject::GetInstance();
 	masterObject->AddSwitch(masterObject->AddDoor());
+	masterObject->AddPotion();
+	masterObject->AddFountain();
 
 
 	// START JUGADOR
