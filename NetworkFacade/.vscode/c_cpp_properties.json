@@ -26,27 +26,22 @@
         {
             "name": "Linux",
             "includePath": [
-                "/usr/include/c++/7.1.1",
-                "/usr/include/c++/7.1.1/x86_64-pc-linux-gnu",
-                "/usr/include",
-                "/usr/local/include",
-                "/usr/include/linux/",
-                "/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include/",
-                "${workspaceRoot}",
                 "/usr/include/c++/7.2.0",
                 "/usr/include/c++/7.2.0/x86_64-pc-linux-gnu",
-                "/usr/include/bullet"
+                "/usr/include/linux",
+                "/usr/local/include/",
+                "/usr/include",
+                "${workspaceRoot}"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
             "browse": {
                 "path": [
-                    "/usr/include/c++/7.1.1",
-                    "/usr/include/c++/7.1.1/x86_64-pc-linux-gnu",
+                    "/usr/include/c++/7.2.0",
+                    "/usr/include/c++/7.2.0/x86_64-pc-linux-gnu",
+                    "/usr/include/linux",
+                    "/usr/local/include/",
                     "/usr/include",
-                    "/usr/local/include",
-                    "/usr/include/linux/",
-                    "/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include/",
                     "${workspaceRoot}"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
