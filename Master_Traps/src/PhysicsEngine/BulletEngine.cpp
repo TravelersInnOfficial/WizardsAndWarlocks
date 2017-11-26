@@ -1,6 +1,7 @@
 #include "BulletEngine.h"
 #include "BT_GhostObject.h"
 #include <iostream>
+#include "../Trap.h"
 
 static BulletEngine* instance;
 
@@ -103,7 +104,11 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
 			// do whatever you want to do with these pairs of colliding objects
 			std::cout<<"Something stepped on me!!!"<<std::endl;
 
-			std::cout<<ghostObject->getOverlappingObject(i)->getInternalType()<<std::endl;
+			//std::cout<<ghostObject->getUserPointer()<<std::endl;
+			Entidad* ghost = (Entidad*)(ghostObject->getUserPointer());
+			ghost->Contact(ghost, ghost->GetClase());
+
+			//std::cout<<ghostObject->getOverlappingObject(i)->getInternalType()<<std::endl;
 		}	
 	}
 }
@@ -115,6 +120,11 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
 
  void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
  	m_dynamicsWorld->removeRigidBody(rigidBody);
+ }
+
+ void BulletEngine::RemoveGhostObject(btGhostObject* ghostBody){
+	 m_dynamicsWorld->removeCollisionObject(ghostBody);
+
  }
 
 BulletEngine::~BulletEngine(){}

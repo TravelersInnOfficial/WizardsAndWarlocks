@@ -10,8 +10,10 @@ public:
 
     void CreateGhostBox(vector3df*, vector3df*);
 
-    ~BT_GhostObject();
+    template <typename T> void SetObjectPtr(T*);
 
+    void Erase();
+    ~BT_GhostObject();
 
 private:
 

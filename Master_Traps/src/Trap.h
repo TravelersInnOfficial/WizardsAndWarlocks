@@ -3,6 +3,7 @@
 
 #include "vector3d.h"
 #include "./PhysicsEngine/BT_GhostObject.h"
+#include "Entidad.h"
 
 enum TrapEnum: int  {
     TENUM_DEATH_CLAWS = 0,
@@ -12,12 +13,15 @@ enum TrapEnum: int  {
     TENUM_DISTURBANCE = 4
 };
 
-
-class Trap{
+class Trap : public Entidad{
 public:
 
     Trap();
     Trap(vector3df, vector3df,TrapEnum type);
+
+    //ENTITY METHODS
+    void Contact(void*, EntityEnum);
+    EntityEnum GetClase();
 
     void Deactivate();
     void Activate();
@@ -28,7 +32,7 @@ public:
 
     vector3df* GetPosition();
     vector3df* GetDimensions();
-    TrapEnum GetType();
+    TrapEnum GetTrapType();
 
    // virtual void SetEffect() = 0;
     

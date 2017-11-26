@@ -2,12 +2,12 @@
 #include <iostream>
 #include <bullet/btBulletDynamicsCommon.h>
 #include "BulletEngine.h"
+#include "../Trap.h"
 
 BT_GhostObject::BT_GhostObject(){
-     m_body = new  btGhostObject();
+     m_body = new btGhostObject();
      m_position = new vector3df(0,0,0);
      m_dimensions = new vector3df(0,0,0);
-
 }
 
 void BT_GhostObject::CreateGhostBox(vector3df* position, vector3df* dimensions){
@@ -21,7 +21,21 @@ void BT_GhostObject::CreateGhostBox(vector3df* position, vector3df* dimensions){
     transform.setOrigin(btVector3(m_position->X,m_position->Y,m_position->Z));
     m_body->setWorldTransform(transform);  
     BulletEngine::GetInstance()->AddGhostBody(m_body);
+}
 
+template <typename T>
+void BT_GhostObject::SetObjectPtr(T* object){
+    m_body->setUserPointer(object);
+}
+template void BT_GhostObject::SetObjectPtr(Trap*);
+
+void BT_GhostObject::Erase(){
+
+    BulletEngine::GetInstance()->RemoveGhostObject(m_body);
+    //delete m_body->getMotionState();
+    delete m_body->getCollisionShape();
+
+    delete m_body;
 }
 
 BT_GhostObject::~BT_GhostObject(){}

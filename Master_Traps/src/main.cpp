@@ -115,6 +115,7 @@ void createScenery(){
 	createObj(TPosition, TRotation, TScale, 3);
 
 	Trap* trap = new Trap(vector3df(0,0,0),vector3df(1,1,1),TENUM_DEATH_CLAWS);
+	Trap* trap2 = new Trap(vector3df(0,0,0),vector3df(1,1,1),TENUM_SPIRITS);
 }
 
 bool manageInputs(Player* physicPlayer){
