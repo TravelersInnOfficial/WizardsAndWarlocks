@@ -108,6 +108,10 @@ void BT_Body::SetMass(float mass){
 	m_Mass = mass;
 }
 
+void BT_Body::SetUserPtr(void* pointer){
+	m_RigidBody->setUserPointer(pointer);
+}
+
 vector3df* BT_Body::GetPosition(){
 	return m_position;
 }

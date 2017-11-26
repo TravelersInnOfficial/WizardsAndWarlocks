@@ -1,6 +1,7 @@
 #include "BulletEngine.h"
 #include "BT_GhostObject.h"
 #include <iostream>
+#include "../Trap.h"
 
 static BulletEngine* instance;
 
@@ -89,21 +90,21 @@ void BulletEngine::EraseWorld(){
 void BulletEngine::motorProcessCallback(btScalar timeStep){
 	btCollisionObjectArray WorldObjects = m_dynamicsWorld->getCollisionObjectArray();
 	for (int i = 0; i < WorldObjects.size(); i++) {
-		//btRigidBody *rigidBody = btRigidBody::upcast(WorldObjects[i]);
 		btGhostObject *ghostObject = btGhostObject::upcast(WorldObjects[i]);
-		//BT_GhostObject *ghostObject = BT_GhostObject::upcast(WorldObjects[i]);
                if (!ghostObject) {
                    continue;
                }
 		//TYPE 2 = RIGIDBODY; TYPE 4 = GHOSTBODY
-		std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
+		//std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
 
 		for(int i = 0; i < ghostObject->getNumOverlappingObjects(); i++){
 			btRigidBody *pRigidBody = dynamic_cast<btRigidBody *>(ghostObject->getOverlappingObject(i));
-			// do whatever you want to do with these pairs of colliding objects
-			std::cout<<"Something stepped on me!!!"<<std::endl;
 
-			std::cout<<ghostObject->getOverlappingObject(i)->getInternalType()<<std::endl;
+			Entidad* ghost = (Entidad*)(ghostObject->getUserPointer());
+			Entidad* OvObj = (Entidad*)(pRigidBody->getUserPointer());
+
+			ghost->Contact(pRigidBody->getUserPointer(), OvObj->GetClase());
+
 		}	
 	}
 }
@@ -115,6 +116,11 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
 
  void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
  	m_dynamicsWorld->removeRigidBody(rigidBody);
+ }
+
+ void BulletEngine::RemoveGhostObject(btGhostObject* ghostBody){
+	 m_dynamicsWorld->removeCollisionObject(ghostBody);
+
  }
 
 BulletEngine::~BulletEngine(){}

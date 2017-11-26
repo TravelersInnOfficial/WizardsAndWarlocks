@@ -13,12 +13,50 @@ Trap::Trap(vector3df position, vector3df dimensions, TrapEnum trapType){
     m_body = new BT_GhostObject();
     m_deactivated = false;
     m_trapType = trapType;
+    clase = EENUM_TRAP;
 
     m_body->CreateGhostBox(m_position, m_dimensions);
+    m_body->SetObjectPtr(this);
 }
 
-void Trap::Activate(){
+void Trap::Contact(void* punt, EntityEnum tipo){
+    if(tipo == EENUM_PLAYER){
+        Player* player = (Player*)(punt);
+        Activate(player);
+    }
+}
 
+EntityEnum Trap::GetClase(){
+    return clase;
+
+}
+
+void Trap::Activate(Player* player ){
+    std::cout<<"Something stepped on me!!!"<<std::endl;
+    player->ChangeHP(-1);
+    std::cout<<player->GetHP()<<std::endl;
+
+    switch(m_trapType){
+        case TENUM_DEATH_CLAWS:
+            std::cout<<"HI HOOMAMN IM TENUM_DEATH_CLAWS"<<std::endl;
+        break;
+
+        case TENUM_SPIRITS:
+            std::cout<<"HI HOOMAMN IM TENUM_SPIRITS"<<std::endl;
+        break;
+
+        case TENUM_SILENCE: 
+            std::cout<<"HI HOOMAMN IM TENUM_SILENCE"<<std::endl;
+        break;
+
+        case TENUM_TAXES:
+            std::cout<<"HI HOOMAMN IM TENUM_TAXES"<<std::endl;
+        break;
+        
+        case TENUM_DISTURBANCE: 
+            std::cout<<"HI HOOMAMN IM TENUM_DISTURBANCE"<<std::endl;
+        break;
+    }
 }
 
 void Trap::Deactivate(){
@@ -45,6 +83,6 @@ vector3df* Trap::GetDimensions(){
     return m_dimensions;
 }
 
-TrapEnum Trap::GetType(){
+TrapEnum Trap::GetTrapType(){
     return m_trapType;
 }

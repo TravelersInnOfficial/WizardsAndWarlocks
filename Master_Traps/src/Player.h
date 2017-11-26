@@ -5,8 +5,9 @@
 #include <math.h>
 #include "./PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
+#include "Entidad.h"
 
-class Player{
+class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);
@@ -14,6 +15,8 @@ class Player{
 		void CreatePlayer();
 		void DeletePlayer( );
 		void Update();
+
+		EntityEnum GetClase();
 		
 		void Move(float, float);
 		void MoveX(int);

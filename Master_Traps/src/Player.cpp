@@ -13,6 +13,7 @@ Player::Player(bool isPlayer1){
 }
 
 void Player::CreatePlayer(){
+
 	//IRRLICHT
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	// Cargamos el Cubo
@@ -31,6 +32,9 @@ void Player::CreatePlayer(){
 	
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3);
+
+	clase = EENUM_PLAYER;
+	bt_body->SetUserPtr(this);
 
 	Respawn();
 
@@ -66,6 +70,10 @@ void Player::Update(){
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
 	if(m_dead) Respawn();
+}
+
+EntityEnum Player::GetClase(){
+	return clase;
 }
 
 void Player::positionCamera(){

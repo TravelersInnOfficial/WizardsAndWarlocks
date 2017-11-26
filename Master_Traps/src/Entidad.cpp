@@ -8,9 +8,9 @@ Entidad::~Entidad(){
 	
 }
 
-std::string Entidad::GetClase(){
+EntityEnum Entidad::GetClase(){
 	return clase;
 }
 
 void Entidad::Update(){}
-void Entidad::Contact(void* punt, std::string tipo){}
+void Entidad::Contact(void* punt, EntityEnum tipo){}

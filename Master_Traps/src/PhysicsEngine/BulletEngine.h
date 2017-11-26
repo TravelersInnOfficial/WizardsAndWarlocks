@@ -12,9 +12,13 @@ public:
 	void CreateWorld();
     void UpdateWorld();
     void EraseWorld();
+
     void AddRigidBody(btRigidBody*);
 	void AddGhostBody(btGhostObject*);
+
     void RemoveRigidBody(btRigidBody*);
+	void RemoveGhostObject(btGhostObject*);
+
 	static void motorPreTickCallback(btDynamicsWorld*, btScalar);
 	void motorProcessCallback(btScalar);
 
