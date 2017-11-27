@@ -155,8 +155,6 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
-	std::cout<<"The world just ticked by "<<(float)timeStep<<" seconds\n"<<std::endl;
-
 	BulletEngine *w = static_cast<BulletEngine *>(world->getWorldUserInfo());
 	w->motorProcessCallback(timeStep);
 }
@@ -169,8 +167,6 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
                    continue;
                }
 		//TYPE 2 = RIGIDBODY; TYPE 4 = GHOSTBODY
-		//std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
-
 		for(int i = 0; i < ghostObject->getNumOverlappingObjects(); i++){
 			btRigidBody *pRigidBody = dynamic_cast<btRigidBody *>(ghostObject->getOverlappingObject(i));
 
