@@ -1,6 +1,8 @@
 #ifndef VECTOR3D_H
 #define VECTOR3D_H
 
+#include <iostream>
+
 template<typename T>
 class vector3d{
 
@@ -51,7 +53,14 @@ public:
     vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
     vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
     void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
+    friend std::ostream& operator << (std::ostream &o,const vector3d<float> &v);
 };
+
+//Print
+inline std::ostream& operator << (std::ostream &o,const vector3d<float> &v) {
+    o << "(" << v.X << ", " << v.Y << ", " << v.Z << ")";
+    return o;
+}
 
 typedef vector3d<float> vector3df;
 typedef vector3d<int> vector3di;
