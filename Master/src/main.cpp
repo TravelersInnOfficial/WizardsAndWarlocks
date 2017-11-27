@@ -17,6 +17,9 @@
 #include "./Spells/SpellCodes.h"
 #include "./Effects/EffectCodes.h"
 
+//Traps
+#include "Trap.h"
+
 void DeleteMain(){
 	ControlProyectil::GetInstance()->DeleteAllProyectiles();
 }
@@ -125,6 +128,10 @@ void createScenery(){
 	TRotation = vector3df(0,0,0);
 	TScale = vector3df(0.4,0.4,0.4);
 	createObj(TPosition, TRotation, TScale, 3);
+
+	//Traps
+	Trap* trap = new Trap(vector3df(0,-0.5,5),vector3df(1,0,1),TENUM_DEATH_CLAWS);
+	Trap* trap2 = new Trap(vector3df(5,-0.5,0),vector3df(1,0,1),TENUM_SPIRITS);
 }
 
 bool manageInputs(Player* physicPlayer){

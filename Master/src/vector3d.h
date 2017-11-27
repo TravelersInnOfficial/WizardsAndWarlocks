@@ -50,6 +50,7 @@ public:
     //Operators
     vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
     vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
+    void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
 };
 
 typedef vector3d<float> vector3df;

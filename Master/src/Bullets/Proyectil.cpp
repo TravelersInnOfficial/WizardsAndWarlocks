@@ -9,7 +9,7 @@ Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
     velocity = v;
 
     CreateProyectil(pos);
-    clase = "proyectil";
+    clase = EENUM_PROJECTILE;
 }
 
 Proyectil::~Proyectil(){

@@ -2,7 +2,7 @@
 
 Switch::Switch(){
     open = false;
-    clase = "switch";   
+    clase = EENUM_SWITCH;   
 	CreateSwitch();
 }
 
@@ -48,8 +48,8 @@ void Switch::UpdatePosShape(){
     m_switchNode->setPosition(*pos);
 }
 
-void Switch::Contact(void* punt, string tipo){
-    if(tipo.compare("proyectil")==0){
+void Switch::Contact(void* punt, EntityEnum tipo){
+    if(tipo == EENUM_PROJECTILE){
         open = true;
         actualDoor->Interact();
     }

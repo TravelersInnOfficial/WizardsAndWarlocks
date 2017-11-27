@@ -55,6 +55,9 @@ void BulletEngine::CreateWorld(){
     m_physicsDebug = new BulletDebug();
     m_dynamicsWorld->setDebugDrawer(m_physicsDebug);
 
+	//ADDS THE MOTOR TICK CALLBACK
+	m_dynamicsWorld->setInternalTickCallback(motorPreTickCallback,this ,true);
+
 }
 
 void BulletEngine::UpdateWorld(){
@@ -82,9 +85,19 @@ void BulletEngine::AddRigidBody(btRigidBody* rigidBody){
 	m_dynamicsWorld->addRigidBody(rigidBody);
 }
 
+void BulletEngine::AddGhostBody(btGhostObject* ghostBody){
+	m_dynamicsWorld->addCollisionObject(ghostBody);
+	m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+}
+
 void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
 	//m_dynamicsWorld->removeCollisionObject(rigidBody);
 	m_dynamicsWorld->removeRigidBody(rigidBody);
+}
+
+void BulletEngine::RemoveGhostObject(btGhostObject* ghostBody){
+	 m_dynamicsWorld->removeCollisionObject(ghostBody);
+
 }
 
 void BulletEngine::CheckColisions(){
@@ -139,6 +152,35 @@ void BulletEngine::Raycast(vector3df S, vector3df E){
 	        h->Interact();
    		}
     }
+}
+
+void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
+	std::cout<<"The world just ticked by "<<(float)timeStep<<" seconds\n"<<std::endl;
+
+	BulletEngine *w = static_cast<BulletEngine *>(world->getWorldUserInfo());
+	w->motorProcessCallback(timeStep);
+}
+
+void BulletEngine::motorProcessCallback(btScalar timeStep){
+	btCollisionObjectArray WorldObjects = m_dynamicsWorld->getCollisionObjectArray();
+	for (int i = 0; i < WorldObjects.size(); i++) {
+		btGhostObject *ghostObject = btGhostObject::upcast(WorldObjects[i]);
+               if (!ghostObject) {
+                   continue;
+               }
+		//TYPE 2 = RIGIDBODY; TYPE 4 = GHOSTBODY
+		//std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
+
+		for(int i = 0; i < ghostObject->getNumOverlappingObjects(); i++){
+			btRigidBody *pRigidBody = dynamic_cast<btRigidBody *>(ghostObject->getOverlappingObject(i));
+
+			Entidad* ghost = (Entidad*)(ghostObject->getUserPointer());
+			Entidad* OvObj = (Entidad*)(pRigidBody->getUserPointer());
+
+			ghost->Contact(pRigidBody->getUserPointer(), OvObj->GetClase());
+
+		}	
+	}
 }
 
 BulletEngine::~BulletEngine(){}

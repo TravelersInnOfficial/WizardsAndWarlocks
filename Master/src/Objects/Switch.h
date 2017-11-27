@@ -15,7 +15,7 @@ public:
 	~Switch();
 	void SetDoor(Door* d);
 	void Update();
-	void Contact(void* punt, string tipo);
+	void Contact(void* punt, EntityEnum tipo);
 private:
 	void CreateSwitch();
 	void UpdatePosShape();

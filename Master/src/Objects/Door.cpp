@@ -9,7 +9,7 @@ Door::Door(){
     rotation.Y = 0;
     rotation.Z = 0;
     working = false;
-    clase = "puerta";
+    clase = EENUM_DOOR;
 }
 
 Door::~Door(){

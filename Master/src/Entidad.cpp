@@ -8,10 +8,10 @@ Entidad::~Entidad(){
 	
 }
 
-string Entidad::GetClase(){
+EntityEnum Entidad::GetClase(){
 	return clase;
 }
 
 void Entidad::Update(){}
-void Entidad::Contact(void* punt, string tipo){}
+void Entidad::Contact(void* punt, EntityEnum tipo){}
 void Entidad::Interact(){}

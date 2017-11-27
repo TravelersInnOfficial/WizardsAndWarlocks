@@ -6,16 +6,24 @@
 
 using namespace std;
 
+enum EntityEnum{
+	EENUM_PLAYER = 0x01,
+	EENUM_PROJECTILE = 0x02,
+	EENUM_TRAP = 0x03,
+	EENUM_SWITCH = 0x04,
+	EENUM_DOOR = 0x05
+};
+
 class Entidad{
 public:
 	Entidad();
 	virtual void Update();
-	virtual void Contact(void* punt, string tipo);
+	virtual void Contact(void* punt, EntityEnum tipo);
 	virtual void Interact();
-	string GetClase();
+	EntityEnum GetClase();
 	~Entidad();
 protected:
-	string clase;
+	EntityEnum clase;
 private:
 
 };
