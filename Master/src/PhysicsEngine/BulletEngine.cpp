@@ -9,7 +9,6 @@ BulletEngine* BulletEngine::GetInstance() {
 }
 
 BulletEngine::BulletEngine(){
-
 	m_broadphase = NULL;
 	m_collisionConfiguration = NULL;
 	m_dispatcher = NULL;
@@ -155,6 +154,8 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
+	//std::cout<<"The world just ticked by "<<(float)timeStep<<" seconds\n"<<std::endl;
+
 	BulletEngine *w = static_cast<BulletEngine *>(world->getWorldUserInfo());
 	w->motorProcessCallback(timeStep);
 }
