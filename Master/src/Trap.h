@@ -7,22 +7,23 @@
 #include "Entidad.h"
 #include "Player.h"
 
-enum TrapEnum{
-    TENUM_DEATH_CLAWS = 0x00,
-    TENUM_SPIRITS = 0x01,
-    TENUM_SILENCE = 0x02,
-    TENUM_TAXES = 0x03,
-    TENUM_DISTURBANCE = 0x04
+enum TrapEnum: int  {
+    TENUM_DEATH_CLAWS = 0,
+    TENUM_SPIRITS = 1,
+    TENUM_SILENCE = 2,
+    TENUM_TAXES = 3,
+    TENUM_DISTURBANCE = 4
 };
 
 class Trap : public Entidad{
 public:
 
     Trap();
-    Trap(vector3df, vector3df, TrapEnum type);
+    Trap(vector3df, vector3df,TrapEnum type);
 
     //ENTITY METHODS
     void Contact(void*, EntityEnum);
+    EntityEnum GetClase();
 
     void Deactivate();
     void Activate(Player* player);
@@ -35,38 +36,21 @@ public:
     vector3df* GetDimensions();
     TrapEnum GetTrapType();
 
-    void Erase();
-    ~Trap();
+   // virtual void SetEffect() = 0;
     
 
 
-private:
+protected:
 
     vector3df* m_position;
     vector3df* m_dimensions;
-
-    BT_GhostObject* m_body;
-    GBody* g_body;
-
-    TrapEnum m_trapType;
-    std::string m_texturePath;
-
-    bool m_deactivated;
-
-    struct trapData{
-        float damage;
-        std::string effect;
-        float duration;
-    } m_trapData;
-
-    void InitializeTrapData();
-    void SetTrapData(float, std::string, float);
-    
     //clock m_deactivation;
+    bool m_deactivated;
+    BT_GhostObject* m_body;
     //effect m_effect;
-   
-
-
+    std::string m_texturePath;
+    TrapEnum m_trapType;
+    GBody* g_body;
 };
 
 #endif

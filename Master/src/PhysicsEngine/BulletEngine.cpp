@@ -9,6 +9,7 @@ BulletEngine* BulletEngine::GetInstance() {
 }
 
 BulletEngine::BulletEngine(){
+
 	m_broadphase = NULL;
 	m_collisionConfiguration = NULL;
 	m_dispatcher = NULL;
@@ -168,6 +169,8 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
                    continue;
                }
 		//TYPE 2 = RIGIDBODY; TYPE 4 = GHOSTBODY
+		//std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
+
 		for(int i = 0; i < ghostObject->getNumOverlappingObjects(); i++){
 			btRigidBody *pRigidBody = dynamic_cast<btRigidBody *>(ghostObject->getOverlappingObject(i));
 

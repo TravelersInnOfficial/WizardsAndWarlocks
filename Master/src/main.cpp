@@ -9,20 +9,10 @@
 
 #include "Player.h"
 //Controlers
-#include "ControlEffect.h"
-#include "ControlHechizo.h"
-#include "ControlProyectil.h"
-#include "ControlObject.h"
-//Enums
-#include "./Spells/SpellCodes.h"
-#include "./Effects/EffectCodes.h"
+#include "Game.h"
 
 //Traps
 #include "Trap.h"
-
-void DeleteMain(){
-	ControlProyectil::GetInstance()->DeleteAllProyectiles();
-}
 
 void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
 	GraphicEngine* engine = GraphicEngine::getInstance();
@@ -140,7 +130,6 @@ bool manageInputs(Player* physicPlayer){
 	
 	
 	if(engine->IsKeyPressed(KEY_ESCAPE)) {
-		DeleteMain();
 		end = true;
 	}
 	if(engine->IsLeftButtonPressed()){ 
@@ -186,44 +175,16 @@ int main() {
 
 	createScenery();
 
-	// START CONTROLHECHIZO
-	ControlHechizo* masterSpell = ControlHechizo::GetInstance();
-
-	// START CONTROLPROYECTIL
-	ControlProyectil* masterBullet = ControlProyectil::GetInstance();
-
-	// START CONTROLEFFECT
-	ControlEffect* masterEffect = ControlEffect::GetInstance();
-
-	// START CONTROLOBJECT
-	ControlObject* masterObject = ControlObject::GetInstance();
-	masterObject->AddSwitch(masterObject->AddDoor());
-	masterObject->AddPotion(vector3df(-2, 0, -2));
-	masterObject->AddFountain();
-
-
-	// START JUGADOR
-	Player* physicPlayer = new Player(true);
-	masterSpell->AddHechizo(0, physicPlayer, SPELL_PROYECTIL);
-	masterSpell->AddHechizo(1, physicPlayer, SPELL_BASIC);
-	Player* al = new Player(false);
-
-	masterEffect->AddEffect(physicPlayer, EFFECT_BURNED);
-	// Activacion del timer de ControlHechizo
-	masterSpell->StartTime();
-	masterEffect->StartTime();
+	Game* game = Game::GetInstance();
 
 	bool end = false;
 	while(g_engine->run() && !end){
 		f_engine->UpdateWorld();
-		physicPlayer->Update();
-		al->Update();
-		masterBullet->Update();
-		masterSpell->UpdateCooldown();
-		masterEffect->UpdateEffects();
-		masterObject->Update();
+		
+		
+		game->Update();
+		end = game->Input();
 
-		end = manageInputs(physicPlayer);
 		g_engine->UpdateReceiver();
 		g_engine->beginSceneDefault(); // Color de borrado en ARGB
 
@@ -234,10 +195,7 @@ int main() {
 		std::this_thread::sleep_for(std::chrono::milliseconds(7));
 		g_engine->endScene();
 	}
-
-	delete masterObject;
-	delete masterBullet;
-	delete masterSpell;
+	delete game;
 
 	f_engine->EraseWorld(); // END BULLET
 	g_engine->drop(); // END IRRLICHT
