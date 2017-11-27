@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "./../Entidad.h"
+#include "./../Player.h"
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -12,6 +13,7 @@ class Door: public Entidad{
 public:
 	Door();
 	~Door();
+	void Interact(Player* p);
 	void Interact();
 	void Update();
 private:

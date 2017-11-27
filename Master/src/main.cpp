@@ -138,17 +138,23 @@ bool manageInputs(Player* physicPlayer){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
+	
 	if(engine->IsKeyPressed(KEY_ESCAPE)) {
 		DeleteMain();
 		end = true;
 	}
 	if(engine->IsKeyPressed(KEY_KEY_Q)){ 
 		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer);
+		physicPlayer->DropObject();
 	}
 	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); 
 	}
-	if(engine->IsKeyDown(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer);
+	if(engine->IsKeyPressed(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer);
 	physicPlayer->Raycast(); }
+
+	if(engine->IsKeyPressed(KEY_KEY_Z)){
+		physicPlayer->UseObject();
+	}
 
 	if(engine->IsKeyDown(KEY_SPACE)){ 
 		physicPlayer->Jump(); 

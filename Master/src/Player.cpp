@@ -1,5 +1,8 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
+#include "./ControlObject.h"
+
+#include "./Objects/Potion.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -9,12 +12,18 @@ Player::Player(bool isPlayer1){
 
 	max_velocity = 3.0f;
 
+	potion = NULL;
+
 	m_HP = 100;
 	m_MP = 100;
 	m_dead = false;
 	isPlayerOne=isPlayer1;
 	clase = EENUM_PLAYER;
 	CreatePlayer();
+}
+
+Player::~Player(){
+
 }
 
 void Player::CreatePlayer(){
@@ -170,7 +179,30 @@ void Player::Raycast(){
 
 	vector3df End(EndX, EndY, EndZ);
 
-	BulletEngine::GetInstance()->Raycast(Start, End);
+	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
+	if(Object!=NULL){
+		Entidad* h = (Entidad*)Object;
+		h->Interact(this);
+	}
+}
+
+void Player::CatchObject(Potion* p){
+	potion = p;
+}
+
+void Player::DropObject(){
+	if(potion!=NULL){
+		potion->CreatePotion();
+		potion = NULL;
+	}
+}
+
+void Player::UseObject(){
+	if(potion!=NULL){
+		potion->Use(this);
+		ControlObject::GetInstance()->DeletePotion(potion);
+		potion = NULL;
+	}
 }
 
 void Player::setPosition(float posX, float posY, float posZ){

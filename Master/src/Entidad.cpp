@@ -14,4 +14,4 @@ EntityEnum Entidad::GetClase(){
 
 void Entidad::Update(){}
 void Entidad::Contact(void* punt, EntityEnum tipo){}
-void Entidad::Interact(){}
+void Entidad::Interact(Player* p){}

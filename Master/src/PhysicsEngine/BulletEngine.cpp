@@ -131,7 +131,7 @@ void BulletEngine::DebugDrawWorld(){
 	m_dynamicsWorld->debugDrawWorld();
 }
 
-void BulletEngine::Raycast(vector3df S, vector3df E){
+void* BulletEngine::Raycast(vector3df S, vector3df E){
 
 	btVector3 Start(S.X, S.Y, S.Z);
 	btVector3 End(E.X, E.Y, E.Z);
@@ -148,10 +148,10 @@ void BulletEngine::Raycast(vector3df S, vector3df E){
         //End = RayCallback.m_hitPointWorld;
         //Normal = RayCallback.m_hitNormalWorld;
 		if(RayCallback.m_collisionObject->getUserPointer()!=0){
-	        Entidad* h = (Entidad*)RayCallback.m_collisionObject->getUserPointer();
-	        h->Interact();
+			return RayCallback.m_collisionObject->getUserPointer();
    		}
     }
+    return NULL;
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
