@@ -17,6 +17,7 @@ public:
 	Switch* AddSwitch(Door* d);
 	Potion* AddPotion();
 	Fountain* AddFountain();
+	void DeletePotion(Potion* p);
 	void Update();
 private:
 	void UpdateDoors();

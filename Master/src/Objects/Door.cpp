@@ -40,6 +40,10 @@ void Door::CreateDoor(){
     bt_body->AssignPointer(this);
 }
 
+void Door::Interact(Player* p){
+    Interact();
+}
+
 void Door::Interact(){
     if(!working){
         working = true;

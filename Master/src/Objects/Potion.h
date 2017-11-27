@@ -10,17 +10,22 @@
 
 class Player;
 
-class Potion{
+class Potion:public Entidad{
 public:
 	Potion();
+	~Potion();
 	void Update();
 	void Interact(Player* p);
 	void Use(Player* p);
-private:
-	void UpdatePosShape();
 	void CreatePotion();
+private:
+	void DeletePotion();
+	void UpdatePosShape();
+	
 
 	int value;
+
+	bool cogida;
 
 	BT_Body*        bt_body;
     GBody*          m_potionNode;

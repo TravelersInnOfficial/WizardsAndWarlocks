@@ -3,10 +3,12 @@
 
 #include <iostream>
 #include <math.h>
-#include "Entidad.h"
+#include "./Entidad.h"
 
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
+
+class Potion;
 
 class Player: public Entidad{
 	public:
@@ -25,6 +27,10 @@ class Player: public Entidad{
 		bool ChangeMP(float);
 		void Respawn();
 		void Raycast();
+		// Functions Object
+		void CatchObject(Potion* p);
+		void DropObject();
+		void UseObject();
 
 		float GetPosX();
 		float GetPosY();
@@ -68,6 +74,8 @@ class Player: public Entidad{
 		float lastVerticalSpeed;
 		//irr::scene::IAnimatedMesh* m_playerMesh;
 		GBody* m_playerNode;
+
+		Potion* potion;
 
 		void checkMaxVelocity();
 		void positionCamera();

@@ -1,10 +1,20 @@
 #include "./Potion.h"
 
 Potion::Potion(){
-
+	cogida = false;
 	value = 20;
-
+	clase = EENUM_POTION;
 	CreatePotion();
+}
+
+Potion::~Potion(){
+	if(!cogida){
+		bt_body->Erase();
+    	m_potionNode->Erase();	
+	}
+
+    delete bt_body;
+    delete m_potionNode;
 }
 
 void Potion::CreatePotion(){
@@ -32,20 +42,30 @@ void Potion::CreatePotion(){
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,TMass,0);
 	bt_body->Rotate(TRotation);
+	bt_body->AssignPointer(this);
+	bt_body->SetCollisionFlags("no_contact");
+}
+
+void Potion::DeletePotion(){
+	bt_body->Erase();
+	m_potionNode->Erase();
 }
 
 void Potion::Update(){
-	UpdatePosShape();
+	if(!cogida){
+		UpdatePosShape();
+	}
 }
 
 void Potion::Interact(Player* p){
-	// Coger la pocion
+	cogida = true;
+	DeletePotion();
+	p->CatchObject(this);
 }
 
 void Potion::Use(Player* p){
-	std::cout<<"me usan"<<std::endl;
 	p->ChangeHP(value);
-	// Eliminar la pocion
+	std::cout<<"USING"<<std::endl;
 }
 
 void Potion::UpdatePosShape(){
