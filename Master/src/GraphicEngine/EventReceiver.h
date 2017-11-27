@@ -16,6 +16,7 @@ protected:
 public:
 
     bool leftMousePressed();
+    bool leftMouseDown();
     bool keyPressed(irr::EKEY_CODE keycode);
     bool keyDown(irr::EKEY_CODE keycode);
 

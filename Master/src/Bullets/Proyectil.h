@@ -15,7 +15,7 @@ public:
     Proyectil(vector3df pos, vector3df dir, float r, float v);
     ~Proyectil();
     void Update();
-    void Contact(void* punt, std::string tipo);
+    void Contact(void* punt, EntityEnum tipo);
 
     BT_Body* GetBody();
     GBody* GetShape();
@@ -28,6 +28,9 @@ private:
     vector3df*   	direction;	// La direccion que va a tomar el proyectil
     float			radio;		// Radio del proyectil
     float			velocity;	// Velocidad del proyectil
+
+    float           maxDistance;
+    vector3df       initPos;
 
     BT_Body*        bt_body;
     GBody*          m_proyectilNode;

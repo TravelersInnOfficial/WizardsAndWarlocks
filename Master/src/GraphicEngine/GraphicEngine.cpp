@@ -197,3 +197,7 @@ bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
 bool GraphicEngine::IsLeftButtonPressed(){
     return privateReceiver->leftMousePressed();
 }
+
+bool GraphicEngine::IsLeftButtonDown(){
+    return privateReceiver->leftMouseDown();
+}

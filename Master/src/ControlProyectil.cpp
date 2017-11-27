@@ -26,7 +26,7 @@ void ControlProyectil::AddProyectil(vector3df pos, vector3df dir, float r, float
 void ControlProyectil::Update(){
 	DeleteProyectiles();
 	int size = proyectiles.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		proyectiles[i]->Update();
 	}
 }

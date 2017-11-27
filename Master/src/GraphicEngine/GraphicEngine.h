@@ -189,6 +189,7 @@ public:
      * Returns true is given code is held down
     */
     bool IsLeftButtonPressed();
+    bool IsLeftButtonDown();
 
 private:
     GraphicEngine();

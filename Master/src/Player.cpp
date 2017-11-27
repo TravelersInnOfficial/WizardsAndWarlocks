@@ -10,6 +10,7 @@ Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(1,1,1);
 
+	raycastDistance = 1.0f;
 	max_velocity = 3.0f;
 
 	potion = NULL;
@@ -172,10 +173,9 @@ void Player::Raycast(){
 	rot.X = -rot.X;
 
 	vector3df Start = GetPos();
-	float max = 10;
-	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*max;
-	float EndY = Start.Y + sin(rot.X)*max;
-	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*max;
+	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
+	float EndY = Start.Y + sin(rot.X)*raycastDistance;
+	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
 
 	vector3df End(EndX, EndY, EndZ);
 
@@ -192,7 +192,7 @@ void Player::CatchObject(Potion* p){
 
 void Player::DropObject(){
 	if(potion!=NULL){
-		potion->CreatePotion();
+		potion->CreatePotion(m_position);
 		potion = NULL;
 	}
 }

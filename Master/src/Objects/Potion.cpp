@@ -1,10 +1,9 @@
 #include "./Potion.h"
 
-Potion::Potion(){
-	cogida = false;
+Potion::Potion(vector3df TPosition){
 	value = 20;
 	clase = EENUM_POTION;
-	CreatePotion();
+	CreatePotion(TPosition);
 }
 
 Potion::~Potion(){
@@ -17,14 +16,15 @@ Potion::~Potion(){
     delete m_potionNode;
 }
 
-void Potion::CreatePotion(){
-	vector3df TPosition(-2,0,-2);
-	vector3df TScale(1,1,1);
+void Potion::CreatePotion(vector3df TPosition){
+	cogida = false;
+
+	//vector3df TPosition(-2,0,-2);
+	vector3df TScale(0.5,0.5,0.5);
 	vector3df TRotation(0,0,0);
 
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	float TMass = 0;
 
 	// Create an Irrlicht cube
 	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
@@ -40,10 +40,10 @@ void Potion::CreatePotion(){
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(TPosition, HalfExtents,TMass,0);
+	bt_body->CreateBox(TPosition, HalfExtents,1,0);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
-	bt_body->SetCollisionFlags("no_contact");
+	//bt_body->SetCollisionFlags("no_contact");
 }
 
 void Potion::DeletePotion(){

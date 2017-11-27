@@ -26,6 +26,7 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
 }
 
 bool EventReceiver::leftMousePressed() { return (mouseButtonState[0] == PRESSED); }
+bool EventReceiver::leftMouseDown(){ return (mouseButtonState[0] == DOWN); }
 bool EventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
 bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
 

@@ -61,6 +61,7 @@ class Player: public Entidad{
 		vector3df m_dimensions;
 
 		float max_velocity;
+		float raycastDistance;
 
 		float m_HP;
 		float m_MP;

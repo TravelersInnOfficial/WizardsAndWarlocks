@@ -8,16 +8,22 @@ Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
     radio = r;
     velocity = v;
 
+    maxDistance = 10.0f;
+    initPos = pos;
+
     CreateProyectil(pos);
     clase = EENUM_PROJECTILE;
 }
 
 Proyectil::~Proyectil(){
+    delete direction;
+
     bt_body->Erase();
     m_proyectilNode->Erase();
 
     delete bt_body;
     delete m_proyectilNode;
+    std::cout<<"elm"<<std::endl;
 }
 
 void Proyectil::CreateProyectil(vector3df pos){
@@ -47,6 +53,20 @@ void Proyectil::Update(){
     vector3df vel(velocity*direction->X, velocity*direction->Y, velocity*direction->Z);
     bt_body->SetLinearVelocity(vel);
     UpdatePosShape();
+
+    //Comprobamos si ha llegado a la distancia maxima
+    vector3df* pos = bt_body->GetPosition();
+    vector3df vectorDistance;
+    vectorDistance.X = pos->X - initPos.X;
+    vectorDistance.Y = pos->Y - initPos.Y;
+    vectorDistance.Z = pos->Z - initPos.Z;
+
+    float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
+
+    if(currentDistance >= maxDistance){
+        ControlProyectil* c = ControlProyectil::GetInstance();
+        c->AddToDeleteProyecil(this);
+    }
 }
 
 void Proyectil::UpdatePosShape(){
@@ -55,8 +75,8 @@ void Proyectil::UpdatePosShape(){
     m_proyectilNode->setPosition(*pos);
 }
 
-void Proyectil::Contact(void* punt, std::string tipo){
-    if(tipo.compare("player")==0){
+void Proyectil::Contact(void* punt, EntityEnum tipo){
+    if(tipo==EENUM_PLAYER){
         Player* p = (Player*)punt;
         p->ChangeHP(-25.0f);
     }

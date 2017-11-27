@@ -143,11 +143,11 @@ bool manageInputs(Player* physicPlayer){
 		DeleteMain();
 		end = true;
 	}
-	if(engine->IsKeyPressed(KEY_KEY_Q)){ 
+	if(engine->IsLeftButtonPressed()){ 
 		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer);
 		physicPlayer->DropObject();
 	}
-	if(engine->IsKeyDown(KEY_KEY_Q)){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); 
+	if(engine->IsLeftButtonDown()){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); 
 	}
 	if(engine->IsKeyPressed(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer);
 	physicPlayer->Raycast(); }
@@ -165,8 +165,8 @@ bool manageInputs(Player* physicPlayer){
 	if(engine->IsKeyDown(KEY_KEY_A)) physicPlayer->MoveX(-1);
 	else if(engine->IsKeyDown(KEY_KEY_D)) physicPlayer->MoveX(1);
 
-	if(engine->IsKeyDown(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
-	else if(engine->IsKeyDown(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
+	if(engine->IsKeyPressed(KEY_KEY_P)) physicPlayer->ChangeHP(-5);
+	else if(engine->IsKeyPressed(KEY_KEY_O)) physicPlayer->ChangeHP(+3);
 
 	if(engine->IsKeyDown(KEY_KEY_R)) physicPlayer->Respawn();
 	
@@ -198,7 +198,7 @@ int main() {
 	// START CONTROLOBJECT
 	ControlObject* masterObject = ControlObject::GetInstance();
 	masterObject->AddSwitch(masterObject->AddDoor());
-	masterObject->AddPotion();
+	masterObject->AddPotion(vector3df(-2, 0, -2));
 	masterObject->AddFountain();
 
 

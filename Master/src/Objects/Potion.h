@@ -12,12 +12,12 @@ class Player;
 
 class Potion:public Entidad{
 public:
-	Potion();
+	Potion(vector3df pos);
 	~Potion();
 	void Update();
 	void Interact(Player* p);
 	void Use(Player* p);
-	void CreatePotion();
+	void CreatePotion(vector3df pos);
 private:
 	void DeletePotion();
 	void UpdatePosShape();

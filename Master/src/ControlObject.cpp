@@ -54,8 +54,8 @@ Switch* ControlObject::AddSwitch(Door* d){
 	return s;
 }
 
-Potion* ControlObject::AddPotion(){
-	Potion* p = new Potion();
+Potion* ControlObject::AddPotion(vector3df pos){
+	Potion* p = new Potion(pos);
 	potions.push_back(p);
 	return p;
 }

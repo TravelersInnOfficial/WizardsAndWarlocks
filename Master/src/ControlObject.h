@@ -15,7 +15,7 @@ public:
 	~ControlObject();
 	Door* AddDoor();
 	Switch* AddSwitch(Door* d);
-	Potion* AddPotion();
+	Potion* AddPotion(vector3df pos);
 	Fountain* AddFountain();
 	void DeletePotion(Potion* p);
 	void Update();
