@@ -7,12 +7,12 @@
 #include "Entidad.h"
 #include "Player.h"
 
-enum TrapEnum: int  {
-    TENUM_DEATH_CLAWS = 0,
-    TENUM_SPIRITS = 1,
-    TENUM_SILENCE = 2,
-    TENUM_TAXES = 3,
-    TENUM_DISTURBANCE = 4
+enum TrapEnum{
+    TENUM_DEATH_CLAWS = 0x00,
+    TENUM_SPIRITS = 0x01,
+    TENUM_SILENCE = 0x02,
+    TENUM_TAXES = 0x03,
+    TENUM_DISTURBANCE = 0x04
 };
 
 class Trap : public Entidad{

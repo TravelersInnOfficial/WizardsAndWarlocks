@@ -9,7 +9,6 @@ BulletEngine* BulletEngine::GetInstance() {
 }
 
 BulletEngine::BulletEngine(){
-
 	m_broadphase = NULL;
 	m_collisionConfiguration = NULL;
 	m_dispatcher = NULL;

@@ -23,7 +23,6 @@ Trap::Trap(vector3df position, vector3df dimensions, TrapEnum trapType){
     g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, vector3df(0,0,0), vector3df(m_dimensions->X,0.1,m_dimensions->Z));
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
-    //g_body->setMaterialFlag("lighting",true);
      
 }
 
