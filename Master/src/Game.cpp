@@ -8,12 +8,20 @@ Game::Game(){
 	masterEffect 	= ControlEffect::GetInstance();
 	masterObject	= ControlObject::GetInstance();
 	masterPlayer	= ControlPlayer::GetInstance();
+	masterTrap		= ControlTrap::GetInstance();
+
+	f_engine = BulletEngine::GetInstance();
+	g_engine = GraphicEngine::getInstance();
 
 	//Cosas Random--------------------------------------------------------
 	masterObject->AddSwitch(masterObject->AddDoor());
 	masterObject->AddPotion(vector3df(-2, 0, -2));
 	masterObject->AddFountain();
 	masterObject->AddGrial();
+
+	//Traps
+	masterTrap->AddTrap(vector3df(0,-0.5,5),vector3df(1,0,1),TENUM_DEATH_CLAWS);
+	masterTrap->AddTrap(vector3df(5,-0.5,0),vector3df(1,0,1),TENUM_SPIRITS);
 
 	// START JUGADOR
 	playerOne = masterPlayer->AddPlayer(true);
@@ -43,57 +51,60 @@ Game* Game::GetInstance(){
 }
 
 bool Game::Input(){
-	GraphicEngine* engine = GraphicEngine::getInstance();
 	bool end = false;
 	
-	if(engine->IsKeyPressed(KEY_ESCAPE)) {
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) {
 		end = true;
 	}
-	if(engine->IsLeftButtonPressed()){ 
+	if(g_engine->IsLeftButtonPressed()){ 
 		ControlHechizo::GetInstance()->ResetHechizo(0,playerOne);
 		playerOne->DropObject();
 	}
-	if(engine->IsLeftButtonDown()){  
+	if(g_engine->IsLeftButtonDown()){  
 		ControlHechizo::GetInstance()->LanzarHechizo(0,playerOne); 
 	}
-	if(engine->IsKeyPressed(KEY_KEY_E)){ 
+	if(g_engine->IsKeyPressed(KEY_KEY_E)){ 
 		ControlHechizo::GetInstance()->LanzarHechizo(1,playerOne);
 		playerOne->Raycast(); 
 	}
-	if(engine->IsKeyPressed(KEY_KEY_Z)){
+	if(g_engine->IsKeyPressed(KEY_KEY_Z)){
 		playerOne->UseObject();
 	}
 
-	if(engine->IsKeyDown(KEY_SPACE)){ 
+	if(g_engine->IsKeyDown(KEY_SPACE)){ 
 		playerOne->Jump(); 
 	}
-	if(engine->IsKeyDown(KEY_KEY_W)){ 
+	if(g_engine->IsKeyDown(KEY_KEY_W)){ 
 		playerOne->MoveZ(1); 
-	} else if(engine->IsKeyDown(KEY_KEY_S)){
+	} else if(g_engine->IsKeyDown(KEY_KEY_S)){
 		playerOne->MoveZ(-1);
 	}
 	
-	if(engine->IsKeyDown(KEY_KEY_A)){ 
+	if(g_engine->IsKeyDown(KEY_KEY_A)){ 
 		playerOne->MoveX(-1); 
 	}
-	else if(engine->IsKeyDown(KEY_KEY_D)){ 
+	else if(g_engine->IsKeyDown(KEY_KEY_D)){ 
 		playerOne->MoveX(1); 
 	}
 
-	if(engine->IsKeyPressed(KEY_KEY_P)){ 
+	if(g_engine->IsKeyPressed(KEY_KEY_P)){ 
 		playerOne->ChangeHP(-5); 
 	}
-	else if(engine->IsKeyPressed(KEY_KEY_O)){ 
+	else if(g_engine->IsKeyPressed(KEY_KEY_O)){ 
 		playerOne->ChangeHP(+3); 
 	}
 
-	if(engine->IsKeyDown(KEY_KEY_R)){ 
+	if(g_engine->IsKeyDown(KEY_KEY_R)){ 
 		playerOne->Respawn(); 
 	}
+
 	return end;
 }
 
 void Game::Update(){
+	g_engine->UpdateReceiver();
+	f_engine->UpdateWorld();
+
 	masterBullet->Update();
 	masterSpell->UpdateCooldown();
 	masterEffect->UpdateEffects();
@@ -101,4 +112,10 @@ void Game::Update(){
 	masterPlayer->UpdatePlayers();
 }
 
-void Game::Draw(){}
+void Game::Draw(){
+	g_engine->beginSceneDefault(); // Color de borrado en ARGB
+
+	g_engine->drawAll();
+	g_engine->drawAim();
+	f_engine->DebugDrawWorld();
+}

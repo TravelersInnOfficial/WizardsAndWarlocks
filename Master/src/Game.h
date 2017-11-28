@@ -10,8 +10,9 @@
 #include "./ControlEffect.h"
 #include "./ControlObject.h"
 #include "./ControlPlayer.h"
+#include "./ControlTrap.h"
 //Fachada
-#include "PhysicsEngine/BT_Body.h"
+#include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"
 //Enums
 #include "./Spells/SpellCodes.h"
@@ -31,6 +32,10 @@ private:
 	ControlEffect* 		masterEffect;
 	ControlObject*		masterObject;
 	ControlPlayer*		masterPlayer;
+	ControlTrap*		masterTrap;
+
+	GraphicEngine*		g_engine;
+	BulletEngine*		f_engine;
 
 	Player*				playerOne;
 

@@ -7,12 +7,9 @@
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
 
-#include "Player.h"
 //Controlers
 #include "Game.h"
 
-//Traps
-#include "Trap.h"
 
 void createObj(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
 	GraphicEngine* engine = GraphicEngine::getInstance();
@@ -118,10 +115,6 @@ void createScenery(){
 	TRotation = vector3df(0,0,0);
 	TScale = vector3df(0.4,0.4,0.4);
 	createObj(TPosition, TRotation, TScale, 3);
-
-	//Traps
-	Trap* trap = new Trap(vector3df(0,-0.5,5),vector3df(1,0,1),TENUM_DEATH_CLAWS);
-	Trap* trap2 = new Trap(vector3df(5,-0.5,0),vector3df(1,0,1),TENUM_SPIRITS);
 }
 
 bool manageInputs(Player* physicPlayer){
@@ -179,20 +172,12 @@ int main() {
 
 	bool end = false;
 	while(g_engine->run() && !end){
-		f_engine->UpdateWorld();
 		
-		
-		game->Update();
 		end = game->Input();
+		game->Update();
+		game->Draw();
 
-		g_engine->UpdateReceiver();
-		g_engine->beginSceneDefault(); // Color de borrado en ARGB
-
-		g_engine->drawAll();
-		g_engine->drawAim();
-		f_engine->DebugDrawWorld();
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(7));
+		//std::this_thread::sleep_for(std::chrono::milliseconds(7));
 		g_engine->endScene();
 	}
 	delete game;
