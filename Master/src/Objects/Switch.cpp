@@ -44,8 +44,8 @@ void Switch::Update(){
 
 void Switch::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_switchNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_switchNode->setPosition(pos);
 }
 
 void Switch::Contact(void* punt, EntityEnum tipo){

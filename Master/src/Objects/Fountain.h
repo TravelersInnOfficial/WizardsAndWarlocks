@@ -5,11 +5,12 @@
 #include <iostream>
 
 #include "./../Player.h"
+#include "./../Entidad.h"
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-class Fountain{
+class Fountain: public Entidad{
 public:
 	Fountain();
 	void Update();
@@ -23,10 +24,14 @@ private:
 
 	bool 		inUse;
 	Player* 	user;
-	int  		maxValue;
-	int 		value;
-	int 		incrementUse;
-	int 		incrementValue;
+
+	int 		maxValue;			//Valor maximo fuente
+	int 		value;				//Valor actual fuente
+	int 		incrementUse;		//Incremento Use
+	int 		incrementValue;		//Incremento Recover
+
+	float 		currentTime;
+	float		maxTime;
 
 	BT_Body*        bt_body;
     GBody*          m_fountainNode;

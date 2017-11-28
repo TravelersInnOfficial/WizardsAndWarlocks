@@ -59,9 +59,9 @@ void Player::DeletePlayer(){
 void Player::Update(){
 	if(m_position.Y < -50) Respawn();
 
-	m_position.X = bt_body->GetPosition()->X;
-	m_position.Y = bt_body->GetPosition()->Y;
-	m_position.Z = bt_body->GetPosition()->Z;
+	m_position.X = bt_body->GetPosition().X;
+	m_position.Y = bt_body->GetPosition().Y;
+	m_position.Z = bt_body->GetPosition().Z;
 
 	//BULLET
 	bt_body->Update();
@@ -141,7 +141,7 @@ void Player::Jump(){
 		velocity->setY(0);
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
-		m_position.Y = bt_body->GetPosition()->Y;
+		m_position.Y = bt_body->GetPosition().Y;
 		canJump = false;
 	}
 }
@@ -150,6 +150,8 @@ void Player::ChangeHP(float HP){
 	if(m_HP + HP > 100) m_HP = 100;
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
+
+	std::cout<<m_HP<<std::endl;
 }
 
 bool Player::ChangeMP(float MP){

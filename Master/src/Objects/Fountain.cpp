@@ -1,8 +1,18 @@
 #include "Fountain.h"
+#include "./../Game.h"
 
 Fountain::Fountain(){
 	inUse = false;
-	value = 20;
+	value = 100;
+	maxValue = 100;
+	incrementUse = 5;
+	incrementValue = 2;
+	
+
+	maxTime = 0.5f;
+	currentTime = 0.0f;
+
+	 clase = EENUM_FOUNTAIN;   
 	CreateFountain();
 }
 
@@ -31,16 +41,24 @@ void Fountain::CreateFountain(){
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,TMass,0);
 	bt_body->Rotate(TRotation);
+	bt_body->AssignPointer(this);
 }
 
 void Fountain::Update(){
 	UpdatePosShape();
-	if(inUse){
-		Use();
+
+	float deltaTime = Game::GetInstance()->GetDeltaTime();
+	currentTime += deltaTime;
+	if(currentTime >= maxTime){
+		if(inUse){
+			Use();
+		}
+		else{
+			Recover();
+		}
+		currentTime = 0.0f;
 	}
-	else{
-		Recover();
-	}
+	inUse = false;
 }
 
 void Fountain::SetFree(){
@@ -73,6 +91,6 @@ void Fountain::Interact(Player* p){
 
 void Fountain::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_fountainNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_fountainNode->setPosition(pos);
 }
