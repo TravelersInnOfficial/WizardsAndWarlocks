@@ -62,7 +62,6 @@ void SoundSystem::createSystem(string soundBanksPath){
     //The loadBankFile function needs a const char*, so we have to modify our string every time we load a new bank
     path = banksPath + string("Master Bank.bank");     //Make a string with the filename
     finalPath = path.c_str();                           //Convert to const char*
-    std::cout << finalPath << std::endl;
     ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank));   //Load the bank
 
     path = banksPath + string("Master Bank.strings.bank"); //Make a string with the filename
@@ -218,7 +217,6 @@ bool SoundEvent::isPlaying() {
         res = true;
     }
 
-    std::cout << "state " << state << " res " << res << std::endl; 
     return res;
 }
 
