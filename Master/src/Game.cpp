@@ -19,7 +19,7 @@ Game::Game(){
 	masterObject->AddSwitch(masterObject->AddDoor());
 	masterObject->AddPotion(vector3df(-2, 0, -2));
 	masterObject->AddFountain();
-	masterObject->AddGrial();
+	masterObject->AddGrail();
 
 	//Traps
 	masterTrap->AddTrap(vector3df(0,-0.5,5),vector3df(1,0,1),TENUM_DEATH_CLAWS);
@@ -65,6 +65,9 @@ bool Game::Input(){
 	}
 	if(g_engine->IsKeyPressed(KEY_KEY_E)){ 
 		ControlHechizo::GetInstance()->LanzarHechizo(1,playerOne);
+		playerOne->Raycast(); 
+	}
+	if(g_engine->IsKeyDown(KEY_KEY_E)){ 
 		playerOne->Raycast(); 
 	}
 	if(g_engine->IsKeyPressed(KEY_KEY_Z)){

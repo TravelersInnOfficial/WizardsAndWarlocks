@@ -8,21 +8,21 @@
 #include "./Objects/Switch.h"
 #include "./Objects/Potion.h"
 #include "./Objects/Fountain.h"
-#include "./Objects/Grial.h"
+#include "./Objects/Grail.h"
 
 class ControlObject{
 public:
 	static ControlObject* GetInstance();
 	~ControlObject();
 	Door* AddDoor();
-	Grial* AddGrial();
+	Grail* AddGrail();
 	Switch* AddSwitch(Door* d);
 	Potion* AddPotion(vector3df pos);
 	Fountain* AddFountain();
 	void DeletePotion(Potion* p);
 	void Update();
 private:
-	void UpdateGrial();
+	void UpdateGrail();
 	void UpdateDoors();
 	void UpdateSwitchs();
 	void UpdatePotions();
@@ -32,7 +32,7 @@ private:
 	vector<Switch*>		switchs;
 	vector<Potion*>		potions;
 	vector<Fountain*>	fountains;
-	Grial*				grial;
+	Grail*				grail;
 
 	ControlObject();
 	static ControlObject* instance; 
