@@ -35,7 +35,7 @@ void Grail::Interact(Player* p){
 }
 
 void Grail::CreateGrail(){
-	vector3df TPosition(-3,0,-3);
+	vector3df TPosition(-3,1,-3);
 	vector3df TScale(1,1,1);
 	vector3df TRotation(0,0,0);
 
@@ -43,14 +43,14 @@ void Grail::CreateGrail(){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	// Create an Irrlicht cube
-	m_grailNode = engine->addCube2Scene(TScale);
+	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj");
 	m_grailNode->setPosition(TPosition);
 	m_grailNode->setScale(TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
 		m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_grailNode->setMaterialTexture(0, "./../assets/textures/grail.png");
+        m_grailNode->setMaterialTexture(0, "./../assets/textures/gold.jpg");
     }
 
 	//Bullet Physics
