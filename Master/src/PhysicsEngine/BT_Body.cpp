@@ -38,7 +38,7 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 	btTransform Transform;
 	Transform.setIdentity();
 	Transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
-	
+
 	// Give it a default MotionState
 	m_MotionState = new btDefaultMotionState(Transform);
 
@@ -52,6 +52,49 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     m_RigidBody = new btRigidBody(m_ConstructionInfo);
     m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
 	m_RigidBody->setAngularFactor(btVector3(0,0,0));
+    BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
+}
+
+void BT_Body::CreateDoorBox(vector3df position,vector3df dimensions){
+	//ASSIGN VALUES TO LOCAL VARIABLES
+	m_position->X = position.X;
+	m_position->Y = position.Y;
+	m_position->Z = position.Z;
+
+	m_dimensions->X = dimensions.X; 
+	m_dimensions->Y = dimensions.Y; 
+	m_dimensions->Z = dimensions.Z; 
+
+	m_Mass = 0;
+	m_Friction = 2.5f;
+
+	//CREATES THE SHAPE (A BOX IN THIS CASE)
+	const btVector3 m_ShapeInfo(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
+	m_Shape = new btBoxShape(m_ShapeInfo);
+
+	//CREATE INITIAL MOTION STATE OF THE BOX
+	btTransform Transform;
+	Transform.setIdentity();
+	Transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
+
+	// Give it a default MotionState
+	m_MotionState = new btDefaultMotionState(Transform);
+
+    //CREATE BOX INFO
+    btVector3 m_Inertia(0, 0, 0);
+   	m_Shape->calculateLocalInertia(m_Mass, m_Inertia);
+   	btRigidBody::btRigidBodyConstructionInfo m_ConstructionInfo(m_Mass, m_MotionState, m_Shape, m_Inertia);
+	m_ConstructionInfo.m_friction = m_Friction;
+
+    //ADD PLAYER TO THE WORLD
+    m_RigidBody = new btRigidBody(m_ConstructionInfo);
+    m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
+	m_RigidBody->setAngularFactor(btVector3(0,0,0));
+
+	btTransform Transform2;
+	Transform2.setIdentity();
+	Transform2.setOrigin(btVector3(0,0,1));
+	m_RigidBody->setCenterOfMassTransform(Transform2);
     BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
 }
 
@@ -77,6 +120,32 @@ void BT_Body::Rotate(vector3df rotation){
 	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
 	tr.setRotation(quat);
 	tr.setOrigin(TPosition);
+	m_RigidBody->setCenterOfMassTransform(tr);
+}
+
+void BT_Body::RotatePos(vector3df rotation, vector3df position){
+	//PASAMOS EL ANGULO A RADIANES
+	rotation = rotation*M_PI/180;
+
+	btVector3 TPosition(m_position->X,m_position->Y,m_position->Z);
+
+
+	btTransform tr2;
+	tr2.setIdentity();
+	tr2.setOrigin(btVector3(0,0,0));
+
+	btTransform tr;
+	//tr = m_RigidBody->getWorldTransform();
+	//tr.setIdentity();
+	//m_RigidBody->setWorldTransform(tr);
+	
+	btQuaternion quat;
+	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
+	//std::cout<<vector3df(quat.getAxis().getX(), quat.getAxis().getY(), quat.getAxis().getZ())<<std::endl;
+	tr.setRotation(quat);
+	tr.setOrigin(btVector3(0,0,1));
+	tr = tr2*tr;
+	//tr.setOrigin(btVector3(0,0,1));
 	m_RigidBody->setCenterOfMassTransform(tr);
 }
 

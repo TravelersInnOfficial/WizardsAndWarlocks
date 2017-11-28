@@ -11,11 +11,13 @@ public:
 
 	BT_Body();
 	void CreateBox(vector3df position, vector3df dimensions, float, float);
+	void CreateDoorBox(vector3df,vector3df);
 
 	void Update();
 
 	void ApplyCentralImpulse(vector3df);
-	void Rotate(vector3df rotation);
+	void Rotate(vector3df );
+	void RotatePos(vector3df, vector3df);
 
 	void SetPosition(vector3df);
 	void SetDimensions(vector3df);
