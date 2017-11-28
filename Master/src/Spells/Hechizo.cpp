@@ -1,12 +1,12 @@
 #include "Hechizo.h"
 #include "./../ControlProyectil.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../Game.h"
 
 Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
 	costePM = costPM;
 	lanzable = false;
 
-	startTime = 0.0f;
 	timeCasting = 0.0f;
 	casting = tCast;
 
@@ -19,8 +19,7 @@ Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
  * @brief Pone las variables aptas para empezar el casteo
  */
 void Hechizo::EmpezarCast(){
-	startTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	timeCasting = 0;
+	timeCasting = 0.0f;
 	lanzable = true;
 }
  
@@ -29,10 +28,9 @@ void Hechizo::EmpezarCast(){
  * @return True->El casteo del hechizo se ha completado
  */
 bool Hechizo::ComprobarCast(){
-	if(lanzable && currentCooldown<=0){							// Comprobamos que realmente se pueda lanzar el hechizo
-		float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
-		timeCasting += currentTime - startTime;		// Le sumamos la diferencia entre la ultima vez que se llamo al metodo
-		startTime = currentTime;					// Nos guardamos cuando se llamo esta vez al metodo
+	if(lanzable && currentCooldown<=0){				// Comprobamos que realmente se pueda lanzar el hechizo
+		float deltaTime = Game::GetInstance()->GetDeltaTime();
+		timeCasting += deltaTime;					// Le sumamos la diferencia entre la ultima vez que se llamo al metodo
 
 		if(timeCasting>=casting){					// Comprobamos si el tiempo de casteo se ha completado
 			timeCasting = 0.0f;						// Reseteamos el tiempo de casteo

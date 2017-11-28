@@ -1,4 +1,5 @@
 #include "Trap.h"
+#include "./ControlTrap.h"
 
 Trap::Trap(){
     m_position = new vector3df(0,0,0);
@@ -86,7 +87,7 @@ void Trap::Activate(Player* player ){
     std::cout<<"Aplico: "<<m_trapData.effect<<" con "<<m_trapData.damage<<" de daño durante "<<m_trapData.duration<<" segundos."<<std::endl;
 
     player->Respawn();
-    Erase();
+    ControlTrap::GetInstance()->DeleteTrap(this);
     
 }
 

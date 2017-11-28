@@ -1,11 +1,11 @@
 #include "ControlEffect.h"
+#include "./Game.h"
 
 ControlEffect* ControlEffect::instance = 0;
 
 ControlEffect::ControlEffect(){
-	timeStart = 0.0f;
-	currentTime = 0.0f;
 	maxTime = 0.5f;
+	currentTime = 0.0f;
 }
 
 ControlEffect::~ControlEffect(){
@@ -42,10 +42,8 @@ void ControlEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 }
 
 void ControlEffect::UpdateEffects(){
-	float deltaTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	currentTime += deltaTime - timeStart;
-	timeStart = deltaTime;
-	//std::cout<<"current:"<<currentTime<<" delta:"<<deltaTime<<std::endl;
+	float deltaTime = Game::GetInstance()->GetDeltaTime();
+	currentTime += deltaTime;
 
 	if(currentTime>=maxTime){
 
@@ -81,8 +79,4 @@ Effect* ControlEffect::CreateEffect(EFFECTCODE EFFECT){
 			e = new SlowedDown(6.0f, 10.0f);
 	}
 	return e;
-}
-
-void ControlEffect::StartTime(){
-	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 }

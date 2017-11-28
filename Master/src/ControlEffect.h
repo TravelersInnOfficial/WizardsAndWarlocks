@@ -18,13 +18,11 @@ public:
 
 	void AddEffect(Player* p, EFFECTCODE e);
 	void UpdateEffects();
-	void StartTime();
 private:
 	Effect* CreateEffect(EFFECTCODE e);
 
 	std::map<Player*, vector<Effect*>* > effects;
 
-	float timeStart;
 	float currentTime;
 	float maxTime;
 

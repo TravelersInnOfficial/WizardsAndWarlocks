@@ -11,6 +11,7 @@ public:
 	static ControlTrap* GetInstance();
 	~ControlTrap();
 
+	void DeleteTrap(Trap* t);
 	Trap* AddTrap(vector3df pos, vector3df dim, TrapEnum type);
 private:
 	vector<Trap*> traps;

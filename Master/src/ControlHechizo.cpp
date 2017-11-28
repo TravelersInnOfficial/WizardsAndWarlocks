@@ -1,11 +1,11 @@
 #include "ControlHechizo.h"
 #include "./GraphicEngine/GraphicEngine.h"
+#include "./Game.h"
+
 
 ControlHechizo* ControlHechizo::instance = 0;
 
 ControlHechizo::ControlHechizo(){
-	timeStart = 0.0f;
-	deltaTime = 0.0f;
 }
 
 ControlHechizo::~ControlHechizo(){
@@ -52,9 +52,7 @@ bool ControlHechizo::AddHechizo(int num, Player* p, SPELLCODE type){
  * @details [long description]
  */
 void ControlHechizo::UpdateCooldown(){
-	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
+	float deltaTime = Game::GetInstance()->GetDeltaTime();
 
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
@@ -104,8 +102,4 @@ Hechizo* ControlHechizo::CrearHechizo(SPELLCODE type){
 			break;
 	}
 	return h;
-}
-
-void ControlHechizo::StartTime(){
-	timeStart = GraphicEngine::getInstance()->getTime();
 }

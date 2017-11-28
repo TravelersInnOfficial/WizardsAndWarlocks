@@ -13,6 +13,8 @@ Game::Game(){
 	f_engine = BulletEngine::GetInstance();
 	g_engine = GraphicEngine::getInstance();
 
+	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
+
 	//Cosas Random--------------------------------------------------------
 	masterObject->AddSwitch(masterObject->AddDoor());
 	masterObject->AddPotion(vector3df(-2, 0, -2));
@@ -31,8 +33,6 @@ Game::Game(){
 
 	masterEffect->AddEffect(playerOne, EFFECT_BURNED);
 	// Activacion del timer de ControlHechizo  (Para el deltaTime)
-	masterSpell->StartTime();
-	masterEffect->StartTime();
 }
 
 Game::~Game(){
@@ -118,4 +118,14 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	f_engine->DebugDrawWorld();
+}
+
+float Game::GetDeltaTime(){
+	return deltaTime;
+}
+
+void Game::UpdateDelta(){
+	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
+	deltaTime = currentTime - timeStart;
+	timeStart = currentTime;
 }

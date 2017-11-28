@@ -18,7 +18,6 @@ protected:
 	int 	costePM;
 	bool	lanzable;
 
-	float	startTime;
 	float 	timeCasting;
 	float 	casting;
 

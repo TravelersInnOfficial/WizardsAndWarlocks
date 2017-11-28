@@ -26,7 +26,14 @@ public:
 	bool Input();
 	void Update();
 	void Draw();
+
+	float GetDeltaTime();
+	void UpdateDelta();
 private:
+
+	float timeStart;
+	float deltaTime;
+
 	ControlHechizo* 	masterSpell;
 	ControlProyectil* 	masterBullet;
 	ControlEffect* 		masterEffect;

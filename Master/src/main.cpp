@@ -169,16 +169,15 @@ int main() {
 	createScenery();
 
 	Game* game = Game::GetInstance();
-
 	bool end = false;
 	while(g_engine->run() && !end){
-		
+		game->UpdateDelta();
 		end = game->Input();
 		game->Update();
 		game->Draw();
 
 		//std::this_thread::sleep_for(std::chrono::milliseconds(7));
-		g_engine->endScene();
+		g_engine->endScene();	
 	}
 	delete game;
 

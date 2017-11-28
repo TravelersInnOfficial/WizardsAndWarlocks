@@ -23,7 +23,6 @@ Proyectil::~Proyectil(){
 
     delete bt_body;
     delete m_proyectilNode;
-    std::cout<<"elm"<<std::endl;
 }
 
 void Proyectil::CreateProyectil(vector3df pos){
