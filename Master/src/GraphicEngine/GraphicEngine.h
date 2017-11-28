@@ -175,6 +175,16 @@ public:
     */
     bool IsKeyDown(TKEY_CODE code);
 
+    /**
+     * Returns true is given code is released
+    */
+    bool IsKeyReleased(TKEY_CODE code);
+
+    /**
+     * Returns true is given code is released
+    */
+    bool IsKeyUp(TKEY_CODE code);
+
     /*
      Updates the reciever so we can controll if a key is pressed down
     */

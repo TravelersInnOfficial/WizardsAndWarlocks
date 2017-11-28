@@ -1,126 +1,130 @@
-//
-//  SoundSystem.h
-//  vdrift
-//
-//  Created by Pierre on 20171022.
-//
-
 #ifndef SoundSystem_h
 #define SoundSystem_h
 
 #include <map>
 #include <string>
+#include <iostream>
+#include <vector>
 
 using namespace std;
 
-//#include "mathvector.h"
-#include <fmod/fmod_studio.h>
-#include <fmod/fmod_studio.hpp>
+#include <fmod_studio.hpp>
+#include <fmod_errors.h>
+
+struct Vector3 {
+	float x;
+	float y;
+	float z;
+};
 
 class SoundEvent;
 
 class SoundSystem {
 	
 public:
-    /**
-     *  Constructor
-     *  \param soundBanksPath ruta del directorio donde se encuentran los bancos generados con FMOD Studio
-     */
-	SoundSystem(string soundBanksPath);
-    
+	SoundSystem();    
 	~SoundSystem();
-	
-    /**
-     *  Método factoría que Construye un SoundEvent a partir del nombre de un evento de FMOD Studio, 
-     *  p. ej. "event:/Ambience/Country"
-     *
-     *  \param eventPath nombre del evento según la nomenclatura de FMOD Studio
-     */
-    SoundEvent* getEvent(string eventPath);
+
+    static SoundSystem* getInstance();
+
+	/******************************************************
+     *  Creates the system, loads the banks and insert them on SoundSystem maps
+     *  \param soundBanksPath directory path where are located the FMOD Studio generated banks
+     ******************************************************/
+    void createSystem(string soundBanksPath);
+    /******************************************************
+     * Factory method that constucts a SoundEvent by the name of the FMOD Studio event 
+     *  f. ex. "event:/Ambience/Country"
+     *  \param eventPath name of the event according FMOD Studio nomenclature
+     ******************************************************/
+    SoundEvent* getEvent(const char * eventPath);
     
-    /**
-     *  Modifica el volumen general del motor de sonido
-     */
+    /******************************************************
+     *  Modifies the general volume of the engine
+     ******************************************************/
     void setVolume(float vol);
     
-    /**
-     *  Modifica la posición del punto de escucha (en esta aplicación sólo hay uno)
-     */
-    //void setListernerPosition(Vec3 pos);
-    void setListernerPosition(float x, float y, float z);
+    /******************************************************
+     *  Modifies the position of the listening point
+     ******************************************************/
+    void setListenerPosition(Vector3 pos);
     
-    /**
-     *  Actualiza el motor de audio
-     *  \param paused indica si hay que pausar el motor de audio o no
-     */
-    void update(bool paused);
+    /******************************************************
+     *  Updates the audio engine
+     *  \param paused tells if has to pause the engine or not
+     ******************************************************/
+    void update();
+    
 private:
-    string banksPath;
-	FMOD::Studio::System*	system = NULL;
-	FMOD::System*			lowLevelSystem = NULL;
-	FMOD::Studio::Bank* masterBank = NULL;
-	FMOD::Studio::Bank* stringsBank = NULL;
+    const char * banksPath;
+	FMOD::Studio::System* system;
+	FMOD::System* lowLevelSystem;
+	FMOD::Studio::Bank* masterBank;
+	FMOD::Studio::Bank* stringsBank;
+    FMOD::Studio::Bus* busMaster;
     map<string, FMOD::Studio::Bank*> banks;
     map<string, FMOD::Studio::EventDescription*> eventDescriptions;
-    map<string, SoundEvent*> soundEvents;
-    
+    map<string, SoundEvent*> soundEvents;  
 };
 
 class SoundEvent {
 public:
     SoundEvent();
-    virtual ~SoundEvent() = 0; /**>  SoundEvent es una clase abstracta */
+     ~SoundEvent();
     
-    /**
-     *  Comienza a reproducir el evento
-     */
-    virtual void start();
+    /******************************************************
+     *  Starts to reproduce the event
+     ******************************************************/
+    void start();
     
-    /**
-     *  Detiene la reproducción del evento inmediatamente
-     */
+    /******************************************************
+     *  Stops the event reproduction inmediately
+     ******************************************************/
     void stop();
     
-    /**
-     *  Pausa la reproducción del evento. 
-     *  Para continuar la reproducción, usar start()
-     *  \sa start()
-     */
+    /******************************************************
+     *  Pauses the event reproduction
+     ******************************************************/
     void pause();
     
-    /**
-     *  Modifica el volumen del evento
-     *  \param vol volumen del evento: 0=silencio, 1=máximo volumen
-     */
+    /******************************************************
+     *  Modifies the sound event volume
+     *  \param vol event volume, 0 = silence, 1 = maximun volume
+     ******************************************************/
     void setVolume(float vol);
     
-    /**
-     *  Modifca el volumen del evento multiplicando por un factor de ganancia
-     *  \param gain factor de ganancia. 0=silencio, 1=mantener el volumen
-     */
-    void setGain(float gain);
+    /******************************************************
+     *  Modifies the event volume multiplying it with a gain factor
+     *  \param gain factor, 0 = silence, 1 = keep volume
+     ******************************************************/
+    void setGain(float  gain);
     
-    /**
-     *  Modifica la posición 3D del evento de sonido
-     *  \param pos nuevo vector de posición
-     */
-    //void setPosition(Vec3 pos);
-    void setPosition(float x, float y, float z);
+    /******************************************************
+     *  Modifies the 3D position of the sound event
+     *  \param x, y, and z, new 3D position
+     ******************************************************/
+    void setPosition(Vector3 pos);
     
-    /**
-     *  Consulta si el evento está sonando
-     *  \return devuelve cierto si el evento está sonando
-     */
+    /*******************************************************
+     * Checks if the sound is playing
+     *  \return returns true if the sound is playing
+     *******************************************************/
     bool isPlaying();
+
+    /*******************************************************
+     * Releases the event and destroys it after it has stopped
+     *******************************************************/
+    void release();
+
+    /******************************************************
+     * This method creates a SoundEvent corresponding to the event received by argument
+     ******************************************************/
+    SoundEvent* newSoundEvent(FMOD::Studio::EventInstance* eventInstance);
+
     
 protected:
     FMOD::Studio::EventInstance* soundInstance;
-    /**
-     * Este método crea un SoundEvent (EngineSound, WindSound, etc.) correspondiente
-     * al evento que recibe como argumento
-     */
-    virtual SoundEvent* newSoundEvent(FMOD::Studio::EventInstance*) = 0;
+    
 };
-
 
 #endif /* SoundSystem_h */

@@ -1,5 +1,6 @@
 #include "Game.h"
 
+
 Game* Game::instance = 0;
 
 Game::Game(){
@@ -12,6 +13,11 @@ Game::Game(){
 
 	f_engine = BulletEngine::GetInstance();
 	g_engine = GraphicEngine::getInstance();
+	s_engine = SoundSystem::getInstance();
+
+	//Start the sound engine
+	s_engine->createSystem("./../assets/banks/");
+	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
 
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 
@@ -81,7 +87,8 @@ bool Game::Input(){
 	}
 	
 	if(g_engine->IsKeyDown(KEY_KEY_A)){ 
-		playerOne->MoveX(-1); 
+		playerOne->MoveX(-1);
+		
 	}
 	else if(g_engine->IsKeyDown(KEY_KEY_D)){ 
 		playerOne->MoveX(1); 
@@ -98,12 +105,32 @@ bool Game::Input(){
 		playerOne->Respawn(); 
 	}
 
+	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D) ) {
+		
+			if(!footstepEvent->isPlaying()){
+				footstepEvent->start();
+				std::cout << "start sound" << std::endl;
+			}
+				
+			
+	}
+
+	if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D) ) {
+		
+		if(footstepEvent->isPlaying()) {
+			footstepEvent->stop();
+			std::cout << "end sound" << std::endl;
+		}
+				
+	}
+
 	return end;
 }
 
 void Game::Update(){
 	g_engine->UpdateReceiver();
 	f_engine->UpdateWorld();
+	s_engine->update();
 
 	masterBullet->Update();
 	masterSpell->UpdateCooldown();

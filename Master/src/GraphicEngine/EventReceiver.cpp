@@ -29,6 +29,8 @@ bool EventReceiver::leftMousePressed() { return (mouseButtonState[0] == PRESSED)
 bool EventReceiver::leftMouseDown(){ return (mouseButtonState[0] == DOWN); }
 bool EventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
 bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
+bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
+bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
 void EventReceiver::Update(){
     for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
@@ -36,6 +38,13 @@ void EventReceiver::Update(){
     }
     for (int i = 0; i < numMouseButtons; i++){
         if(mouseButtonState[i] == PRESSED) mouseButtonState[i] = DOWN;
+    }
+
+    for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
+        if(keyState[i] == RELEASED) keyState[i] = UP;
+    }
+    for (int i = 0; i < numMouseButtons; i++){
+        if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
     }
 }
 

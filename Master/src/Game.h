@@ -14,6 +14,7 @@
 //Fachada
 #include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"
+#include "SoundEngine/SoundSystem.h"
 //Enums
 #include "./Spells/SpellCodes.h"
 #include "./Effects/EffectCodes.h"
@@ -43,6 +44,8 @@ private:
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
+	SoundSystem*		s_engine;
+	SoundEvent*			footstepEvent;
 
 	Player*				playerOne;
 
