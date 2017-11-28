@@ -1,4 +1,5 @@
 #include <iostream>
+#include <unistd.h>
 #include <map>
 #include <string>
 #include "NetworkEngine/NetworkEngine.h"
@@ -16,17 +17,23 @@ int main() {
 	//################### SERVER ###################
 	if (isServer) {
 		networkEngine->StartServer();
-		//std::cout<< networkEngine->CreateNetworkObject() << std::endl;
-		while(1) networkEngine->GetServer()->RecievePackages();
+		//std::cout << networkEngine->GetServer()->CreateNetworkObject() << std::endl;
+		while(1){
+			//std::cin >> input;
+			networkEngine->GetServer()->RecievePackages();
+		}
 	}
 
 
 	//################### CLIENT ###################
 	else {
-		std::string ip;
+		/*std::string ip;
 		std::cout << "IP: "; std::cin >> ip;
-		networkEngine->SetIp(ip);
+		networkEngine->SetIp(ip);*/
 		networkEngine->StartClient();
+		//sleep(5);
+		//std::cout<<"Enviamos shutdown"<<std::endl;
+		//networkEngine->GetClient()->SendShutdown();
 		while(1) networkEngine->GetClient()->RecievePackages();
 	}
 
