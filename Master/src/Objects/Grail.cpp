@@ -35,7 +35,7 @@ void Grail::Interact(Player* p){
 }
 
 void Grail::CreateGrail(){
-	vector3df TPosition(-3,1,-3);
+	vector3df TPosition(-3,0,-3);
 	vector3df TScale(1,1,1);
 	vector3df TRotation(0,0,0);
 
@@ -45,7 +45,7 @@ void Grail::CreateGrail(){
 	// Create an Irrlicht cube
 	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj");
 	m_grailNode->setPosition(TPosition);
-	m_grailNode->setScale(TScale);
+	m_grailNode->setScale(TScale/2);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
@@ -63,6 +63,6 @@ void Grail::CreateGrail(){
 
 void Grail::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_grailNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_grailNode->setPosition(pos);
 }

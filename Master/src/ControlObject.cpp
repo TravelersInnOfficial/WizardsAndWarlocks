@@ -93,6 +93,7 @@ void ControlObject::Update(){
 	UpdateDoors();
 	UpdateSwitchs();
 	UpdatePotions();
+	UpdateFountains();
 }
 
 void ControlObject::UpdateGrail(){

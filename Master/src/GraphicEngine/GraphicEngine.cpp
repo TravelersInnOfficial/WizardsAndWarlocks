@@ -190,6 +190,14 @@ bool GraphicEngine::IsKeyDown(TKEY_CODE code){
     return privateReceiver->keyDown((irr::EKEY_CODE)code);
 }
 
+bool GraphicEngine::IsKeyReleased(TKEY_CODE code){
+    return privateReceiver->keyRelease((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsKeyUp(TKEY_CODE code){
+    return privateReceiver->keyUp((irr::EKEY_CODE)code);
+}
+
 bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
     return privateReceiver->keyPressed((irr::EKEY_CODE)code);
 }

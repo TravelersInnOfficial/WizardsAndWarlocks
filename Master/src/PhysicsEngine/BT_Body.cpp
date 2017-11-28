@@ -8,6 +8,7 @@
 BT_Body::BT_Body(){
 	m_position = new vector3df(0,0,0);
 	m_dimensions = new vector3df(0,0,0);
+	m_center = new vector3df(0,0,0);
 	m_Mass = 0;
 	m_Friction = 0;
 
@@ -16,7 +17,7 @@ BT_Body::BT_Body(){
 	m_RigidBody = NULL;
 }
 
-void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction){
+void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction, vector3df center){
 
 	//ASSIGN VALUES TO LOCAL VARIABLES
 	m_position->X = position.X;
@@ -25,7 +26,11 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 
 	m_dimensions->X = dimensions.X; 
 	m_dimensions->Y = dimensions.Y; 
-	m_dimensions->Z = dimensions.Z; 
+	m_dimensions->Z = dimensions.Z;
+
+	m_center->X = center.X;
+	m_center->Y = center.Y;
+	m_center->Z = center.Z;
 
 	m_Mass = mass;
 	m_Friction = friction;
@@ -52,49 +57,6 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     m_RigidBody = new btRigidBody(m_ConstructionInfo);
     m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
 	m_RigidBody->setAngularFactor(btVector3(0,0,0));
-    BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
-}
-
-void BT_Body::CreateDoorBox(vector3df position,vector3df dimensions){
-	//ASSIGN VALUES TO LOCAL VARIABLES
-	m_position->X = position.X;
-	m_position->Y = position.Y;
-	m_position->Z = position.Z;
-
-	m_dimensions->X = dimensions.X; 
-	m_dimensions->Y = dimensions.Y; 
-	m_dimensions->Z = dimensions.Z; 
-
-	m_Mass = 0;
-	m_Friction = 2.5f;
-
-	//CREATES THE SHAPE (A BOX IN THIS CASE)
-	const btVector3 m_ShapeInfo(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
-	m_Shape = new btBoxShape(m_ShapeInfo);
-
-	//CREATE INITIAL MOTION STATE OF THE BOX
-	btTransform Transform;
-	Transform.setIdentity();
-	Transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
-
-	// Give it a default MotionState
-	m_MotionState = new btDefaultMotionState(Transform);
-
-    //CREATE BOX INFO
-    btVector3 m_Inertia(0, 0, 0);
-   	m_Shape->calculateLocalInertia(m_Mass, m_Inertia);
-   	btRigidBody::btRigidBodyConstructionInfo m_ConstructionInfo(m_Mass, m_MotionState, m_Shape, m_Inertia);
-	m_ConstructionInfo.m_friction = m_Friction;
-
-    //ADD PLAYER TO THE WORLD
-    m_RigidBody = new btRigidBody(m_ConstructionInfo);
-    m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
-	m_RigidBody->setAngularFactor(btVector3(0,0,0));
-
-	btTransform Transform2;
-	Transform2.setIdentity();
-	Transform2.setOrigin(btVector3(0,0,1));
-	m_RigidBody->setCenterOfMassTransform(Transform2);
     BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
 }
 
@@ -127,26 +89,29 @@ void BT_Body::RotatePos(vector3df rotation, vector3df position){
 	//PASAMOS EL ANGULO A RADIANES
 	rotation = rotation*M_PI/180;
 
-	btVector3 TPosition(m_position->X,m_position->Y,m_position->Z);
-
-
-	btTransform tr2;
-	tr2.setIdentity();
-	tr2.setOrigin(btVector3(0,0,0));
+	btVector3 TPosition(m_position->X - m_center->X,m_position->Y - m_center->Y,m_position->Z - m_center->Z);
+	btVector3 TCenter(m_center->X, m_center->Y, m_center->Z);
 
 	btTransform tr;
-	//tr = m_RigidBody->getWorldTransform();
-	//tr.setIdentity();
-	//m_RigidBody->setWorldTransform(tr);
-	
+	tr.setIdentity();
+	tr.setOrigin(TCenter);
+
+	btTransform tr1;
 	btQuaternion quat;
 	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
-	//std::cout<<vector3df(quat.getAxis().getX(), quat.getAxis().getY(), quat.getAxis().getZ())<<std::endl;
-	tr.setRotation(quat);
-	tr.setOrigin(btVector3(0,0,1));
-	tr = tr2*tr;
-	//tr.setOrigin(btVector3(0,0,1));
+	tr1.setRotation(quat);
+	tr1.setOrigin(TPosition);
+
+
+	tr = tr1*tr;
+
 	m_RigidBody->setCenterOfMassTransform(tr);
+}
+
+void BT_Body::SetCenter(vector3df center){
+	m_center->X = center.X;
+	m_center->Y = center.Y;
+	m_center->Z = center.Z;
 }
 
 void BT_Body::SetPosition(vector3df position){
@@ -181,8 +146,9 @@ void BT_Body::SetGravity(vector3df gravity){
 	m_RigidBody->setGravity(btVector3(gravity.X, gravity.Y, gravity.Z));
 }
 
-vector3df* BT_Body::GetPosition(){
-	return m_position;
+vector3df BT_Body::GetPosition(){
+	vector3df pos(m_position->X - m_center->X, m_position->Y - m_center->Y, m_position->Z - m_center->Z);
+	return pos;
 }
 
 vector3df* BT_Body::GetDimensions(){
@@ -212,6 +178,10 @@ void BT_Body::Erase(){
     delete m_RigidBody;
 
     delete m_Shape;
+
+    delete m_position;
+	delete m_dimensions; 
+	delete m_center;
 }
 
 //DESTRUCTOR

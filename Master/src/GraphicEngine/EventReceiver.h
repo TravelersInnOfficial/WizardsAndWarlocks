@@ -19,6 +19,8 @@ public:
     bool leftMouseDown();
     bool keyPressed(irr::EKEY_CODE keycode);
     bool keyDown(irr::EKEY_CODE keycode);
+    bool keyRelease(irr::EKEY_CODE keycode);
+    bool keyUp(irr::EKEY_CODE keycode);
 
     void Update();
 

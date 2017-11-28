@@ -10,8 +10,7 @@ class BT_Body{
 public:
 
 	BT_Body();
-	void CreateBox(vector3df position, vector3df dimensions, float, float);
-	void CreateDoorBox(vector3df,vector3df);
+	void CreateBox(vector3df position, vector3df dimensions, float Tmass, float roz, vector3df center = vector3df(0.0f,0.0f,0.0f));
 
 	void Update();
 
@@ -19,6 +18,7 @@ public:
 	void Rotate(vector3df );
 	void RotatePos(vector3df, vector3df);
 
+	void SetCenter(vector3df);
 	void SetPosition(vector3df);
 	void SetDimensions(vector3df);
 	void SetLinearVelocity(vector3df);
@@ -26,7 +26,7 @@ public:
 	//
 	void SetGravity(vector3df);
 
-	vector3df* GetPosition();
+	vector3df GetPosition();
 	vector3df* GetDimensions();
 	vector3df* GetLinearVelocity();
 	float GetMass();
@@ -41,6 +41,7 @@ public:
 private:
 	vector3df* m_position;
 	vector3df* m_dimensions;
+	vector3df* m_center;
 	float m_Mass;
 	float m_Friction;
 

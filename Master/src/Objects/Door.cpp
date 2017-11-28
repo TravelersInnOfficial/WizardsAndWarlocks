@@ -21,11 +21,14 @@ Door::~Door(){
 }
 
 void Door::CreateDoor(){
+    vector3df TPosition(1,0,-1);
+    vector3df TScale(0.05, 1, 0.5);
+    vector3df TRotation(0,0,0);
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta2.obj");
+    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta.obj");
     m_doorNode->setPosition(vector3df(0,0,0));
     m_doorNode->setScale(vector3df(1,1,1));
 
@@ -36,8 +39,10 @@ void Door::CreateDoor(){
     }
 
     //BULLET
+    vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
-	bt_body->CreateDoorBox(vector3df(1,0,-1), vector3df(1*0.05,1*1,1*0.5));
+	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, vector3df(0,0,-TScale.Z));
+    bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
 }
 
@@ -63,8 +68,8 @@ void Door::WorkDoor(){
 
 void Door::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_doorNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_doorNode->setPosition(pos);
     m_doorNode->setRotation(rotation);
 }
 
