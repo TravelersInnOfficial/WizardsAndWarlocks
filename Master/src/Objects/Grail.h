@@ -1,5 +1,5 @@
-#ifndef GRIAL_H
-#define GRIAL_H
+#ifndef GRAIL_H
+#define GRAIL_H
 
 #include <iostream>
 
@@ -9,24 +9,23 @@
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-class Grial: public Entidad{
+class Grail: public Entidad{
 public:
-	Grial();
-	~Grial();
+	Grail();
+	~Grail();
 	void Update();
 	void Interact(Player* p);
 private:
 	bool casting;
 
-	float	startTime;
 	float 	timeCasting;
-	float 	currentCasting;
+	float 	maxCasting;
 
-	void CreateGrial();
+	void CreateGrail();
 	void UpdatePosShape();
 
 	BT_Body*        bt_body;
-    GBody*          m_grialNode;
+    GBody*          m_grailNode;
 };
 
 #endif

@@ -8,6 +8,7 @@
 BT_Body::BT_Body(){
 	m_position = new vector3df(0,0,0);
 	m_dimensions = new vector3df(0,0,0);
+	m_center = new vector3df(0,0,0);
 	m_Mass = 0;
 	m_Friction = 0;
 
@@ -16,7 +17,7 @@ BT_Body::BT_Body(){
 	m_RigidBody = NULL;
 }
 
-void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction){
+void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction, vector3df center){
 
 	//ASSIGN VALUES TO LOCAL VARIABLES
 	m_position->X = position.X;
@@ -25,7 +26,11 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 
 	m_dimensions->X = dimensions.X; 
 	m_dimensions->Y = dimensions.Y; 
-	m_dimensions->Z = dimensions.Z; 
+	m_dimensions->Z = dimensions.Z;
+
+	m_center->X = center.X;
+	m_center->Y = center.Y;
+	m_center->Z = center.Z;
 
 	m_Mass = mass;
 	m_Friction = friction;
@@ -38,7 +43,7 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
 	btTransform Transform;
 	Transform.setIdentity();
 	Transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
-	
+
 	// Give it a default MotionState
 	m_MotionState = new btDefaultMotionState(Transform);
 
@@ -80,6 +85,35 @@ void BT_Body::Rotate(vector3df rotation){
 	m_RigidBody->setCenterOfMassTransform(tr);
 }
 
+void BT_Body::RotatePos(vector3df rotation, vector3df position){
+	//PASAMOS EL ANGULO A RADIANES
+	rotation = rotation*M_PI/180;
+
+	btVector3 TPosition(m_position->X - m_center->X,m_position->Y - m_center->Y,m_position->Z - m_center->Z);
+	btVector3 TCenter(m_center->X, m_center->Y, m_center->Z);
+
+	btTransform tr;
+	tr.setIdentity();
+	tr.setOrigin(TCenter);
+
+	btTransform tr1;
+	btQuaternion quat;
+	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
+	tr1.setRotation(quat);
+	tr1.setOrigin(TPosition);
+
+
+	tr = tr1*tr;
+
+	m_RigidBody->setCenterOfMassTransform(tr);
+}
+
+void BT_Body::SetCenter(vector3df center){
+	m_center->X = center.X;
+	m_center->Y = center.Y;
+	m_center->Z = center.Z;
+}
+
 void BT_Body::SetPosition(vector3df position){
 	m_position->X = position.X;
 	m_position->Y = position.Y;
@@ -112,8 +146,9 @@ void BT_Body::SetGravity(vector3df gravity){
 	m_RigidBody->setGravity(btVector3(gravity.X, gravity.Y, gravity.Z));
 }
 
-vector3df* BT_Body::GetPosition(){
-	return m_position;
+vector3df BT_Body::GetPosition(){
+	vector3df pos(m_position->X - m_center->X, m_position->Y - m_center->Y, m_position->Z - m_center->Z);
+	return pos;
 }
 
 vector3df* BT_Body::GetDimensions(){
@@ -143,6 +178,10 @@ void BT_Body::Erase(){
     delete m_RigidBody;
 
     delete m_Shape;
+
+    delete m_position;
+	delete m_dimensions; 
+	delete m_center;
 }
 
 //DESTRUCTOR

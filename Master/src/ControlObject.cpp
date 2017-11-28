@@ -3,7 +3,7 @@
 ControlObject* ControlObject::instance = 0;
 
 ControlObject::ControlObject(){
-	grial = NULL;
+	grail = NULL;
 }
 
 ControlObject::~ControlObject(){
@@ -35,7 +35,7 @@ ControlObject::~ControlObject(){
 	}
 	fountains.clear();
 
-	delete grial;
+	delete grail;
 }
 
 ControlObject* ControlObject::GetInstance(){
@@ -51,11 +51,11 @@ Door* ControlObject::AddDoor(){
 	return d;
 }
 
-Grial* ControlObject::AddGrial(){
-	if(grial==NULL){
-		grial = new Grial();
+Grail* ControlObject::AddGrail(){
+	if(grail==NULL){
+		grail = new Grail();
 	}
-	return grial;
+	return grail;
 }
 
 Switch* ControlObject::AddSwitch(Door* d){
@@ -89,15 +89,16 @@ void ControlObject::DeletePotion(Potion* potion){
 }
 
 void ControlObject::Update(){
-	UpdateGrial();
+	UpdateGrail();
 	UpdateDoors();
 	UpdateSwitchs();
 	UpdatePotions();
+	UpdateFountains();
 }
 
-void ControlObject::UpdateGrial(){
-	if(grial!=NULL){
-		grial->Update();
+void ControlObject::UpdateGrail(){
+	if(grail!=NULL){
+		grail->Update();
 	}
 }
 

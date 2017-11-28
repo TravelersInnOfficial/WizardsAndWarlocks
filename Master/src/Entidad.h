@@ -12,7 +12,8 @@ enum EntityEnum{
 	EENUM_TRAP = 0x03,
 	EENUM_SWITCH = 0x04,
 	EENUM_DOOR = 0x05,
-	EENUM_POTION = 0x06
+	EENUM_POTION = 0x06,
+	EENUM_FOUNTAIN = 0x07
 };
 
 class Player;

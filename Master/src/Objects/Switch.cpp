@@ -30,7 +30,7 @@ void Switch::CreateSwitch(){
 
     //BULLET
 	bt_body = new BT_Body();
-	bt_body->CreateBox(vector3df(-1,1,-1), vector3df(1*0.5,1*0.5,1*0.5), 0, 2.3);
+	bt_body->CreateBox(vector3df(-1,0,-4), vector3df(1*0.5,1*0.5,1*0.5), 0, 2.3);
 }
 
 void Switch::SetDoor(Door* d){
@@ -44,8 +44,8 @@ void Switch::Update(){
 
 void Switch::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_switchNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_switchNode->setPosition(pos);
 }
 
 void Switch::Contact(void* punt, EntityEnum tipo){

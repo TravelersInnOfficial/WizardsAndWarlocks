@@ -70,6 +70,6 @@ void Potion::Use(Player* p){
 
 void Potion::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_potionNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_potionNode->setPosition(pos);
 }

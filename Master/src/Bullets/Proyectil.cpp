@@ -54,11 +54,11 @@ void Proyectil::Update(){
     UpdatePosShape();
 
     //Comprobamos si ha llegado a la distancia maxima
-    vector3df* pos = bt_body->GetPosition();
+    vector3df pos = bt_body->GetPosition();
     vector3df vectorDistance;
-    vectorDistance.X = pos->X - initPos.X;
-    vectorDistance.Y = pos->Y - initPos.Y;
-    vectorDistance.Z = pos->Z - initPos.Z;
+    vectorDistance.X = pos.X - initPos.X;
+    vectorDistance.Y = pos.Y - initPos.Y;
+    vectorDistance.Z = pos.Z - initPos.Z;
 
     float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
 
@@ -70,8 +70,8 @@ void Proyectil::Update(){
 
 void Proyectil::UpdatePosShape(){
     bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_proyectilNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_proyectilNode->setPosition(pos);
 }
 
 void Proyectil::Contact(void* punt, EntityEnum tipo){

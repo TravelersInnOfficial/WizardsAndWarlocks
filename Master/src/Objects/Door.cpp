@@ -21,11 +21,15 @@ Door::~Door(){
 }
 
 void Door::CreateDoor(){
+    vector3df TPosition(1,0,-1);
+    vector3df TScale(0.05, 1, 0.5);
+    vector3df TRotation(0,0,0);
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_doorNode = engine->addCube2Scene(vector3df(1,1,1));
+    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta2.obj");
+    m_doorNode->setPosition(vector3df(0,0,0));
     m_doorNode->setScale(vector3df(1,1,1));
 
     // Aplicamos Material unlit y Textura
@@ -35,8 +39,10 @@ void Door::CreateDoor(){
     }
 
     //BULLET
+    vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(vector3df(0,0,0), vector3df(1*0.5,1*0.5,1*0.5), 0, 2.3);
+	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, vector3df(0,0,TScale.Z));
+    bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
 }
 
@@ -51,16 +57,9 @@ void Door::Interact(){
     }
 }
 
-void Door::Update(){
-    if(working){
-       WorkDoor();
-    }
-	UpdatePosShape();
-}
-
 void Door::WorkDoor(){
     rotation.Y += increment;
-    bt_body->Rotate(rotation);
+    bt_body->RotatePos(rotation,vector3df(0,1,1));
 
     if(rotation.Y<=min || rotation.Y>=max){
         working = false;
@@ -69,7 +68,14 @@ void Door::WorkDoor(){
 
 void Door::UpdatePosShape(){
 	bt_body->Update();
-    vector3df* pos = bt_body->GetPosition();
-    m_doorNode->setPosition(*pos);
+    vector3df pos = bt_body->GetPosition();
+    m_doorNode->setPosition(pos);
     m_doorNode->setRotation(rotation);
+}
+
+void Door::Update(){
+    if(working){
+       WorkDoor();
+    }
+	UpdatePosShape();
 }
