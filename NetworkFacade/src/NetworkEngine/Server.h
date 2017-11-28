@@ -17,13 +17,28 @@ public:
 	~Server();
 
 	// Sends game-level packages
-	void SendPackage(RakNet::BitStream, PacketPriority, PacketReliability, RakNet::AddressOrGUID);
+	void SendPackage(RakNet::BitStream*, PacketPriority, PacketReliability, RakNet::AddressOrGUID, bool broadcast);
 
 	// Reads game-level packages
 	void RecievePackages();
 
-	// We create an object in the server and return its ID
-	int CreateNetworkObject();
+	// We manage the Object-Level packages
+	void ModifyObject(RakNet::BitStream* bitstream);
+
+	// We manage a network object and notify the clients
+	int CreateNetworkObject(ObjectType type);
+	void RemoveNetworkObject(int id);
+
+	// We manage the players connected
+	int AddPlayer(RakNet::RakNetGUID guid);
+	int RemovePlayer(RakNet::RakNetGUID guid);
+
+	// Send object state change
+	void SetObjectBool(		int objectId, ObjectVariable k, bool v,			bool expandClientChange);
+	void SetObjectInt(		int objectId, ObjectVariable k, int v,			bool expandClientChange);
+	void SetObjectFloat(	int objectId, ObjectVariable k, float v,		bool expandClientChange);
+	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v,	bool expandClientChange);
+	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v,	bool expandClientChange);
 
 private:
 	
