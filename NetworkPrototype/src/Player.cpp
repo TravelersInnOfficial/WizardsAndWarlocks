@@ -30,6 +30,7 @@ Player::~Player(){
 void Player::CreatePlayer(){
 	//IRRLICHT
 	GraphicEngine* engine = GraphicEngine::getInstance();
+
 	// Cargamos el Cubo
 	m_playerNode = engine->addCube2Scene(m_dimensions);
 	m_playerNode->setScale(vector3df(m_dimensions.X, m_dimensions.Y, m_dimensions.Z));
@@ -244,10 +245,10 @@ vector3df Player::GetRot(){
 	return rot;
 }
 
+vector3df Player::GetPos(){ return m_position; }
 float Player::GetPosX(){ return m_position.X; }
 float Player::GetPosY(){ return m_position.Y; }
 float Player::GetPosZ(){ return m_position.Z; }
-vector3df Player::GetPos(){ return m_position; }
 float Player::GetWidth(){ return m_dimensions.X; }
 float Player::GetHeight(){ return m_dimensions.Y; }
 float Player::GetLength(){ return m_dimensions.Z; }

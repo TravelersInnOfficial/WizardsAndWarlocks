@@ -134,7 +134,7 @@ int main(int argc, char* argv[]) {
 
 	g_engine->setCursorVisible(false);
 	if (!isServer) g_engine->addCameraSceneNodeFPS(120.f, 0.f);
-	else g_engine->addCameraSceneNodeFPS(120.f, 80.f);
+	else g_engine->addCameraSceneNodeFPS(120.f, .005f);
 
 	createScenery();
 

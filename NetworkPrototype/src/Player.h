@@ -7,6 +7,7 @@
 
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
+#include "NetworkEngine/NetworkEngine.h"
 
 class Potion;
 
@@ -16,7 +17,7 @@ class Player: public Entidad{
 		Player(bool isPlayer1);
 
 		void CreatePlayer();
-		void DeletePlayer( );
+		void DeletePlayer();
 		void Update();
 		
 		void Move(float, float);
@@ -27,11 +28,13 @@ class Player: public Entidad{
 		bool ChangeMP(float);
 		void Respawn();
 		void Raycast();
+
 		// Functions Object
 		void CatchObject(Potion* p);
 		void DropObject();
 		void UseObject();
 
+		// Getters
 		float GetPosX();
 		float GetPosY();
 		float GetPosZ();
@@ -46,6 +49,7 @@ class Player: public Entidad{
 		vector3df GetRot();
 		float GetMaxVelocity();
 
+		// Setters
 		void setPosition(float, float, float);
 		void SetPosX(float);
 		void SetPosY(float);
@@ -62,19 +66,18 @@ class Player: public Entidad{
 
 		float max_velocity;
 		float raycastDistance;
-
 		float m_HP;
 		float m_MP;
+		float lastVerticalSpeed;
+
 		bool m_dead;
 		bool isPlayerOne;
-
-		BT_Body* bt_body;
-
 		bool moving;
 		bool canJump;
-		float lastVerticalSpeed;
-		//irr::scene::IAnimatedMesh* m_playerMesh;
+
+		BT_Body* bt_body;
 		GBody* m_playerNode;
+		NetworkObject networkObject;
 
 		Potion* potion;
 
