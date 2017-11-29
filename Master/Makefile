@@ -14,7 +14,7 @@ SourcePath			:= $(shell find src -name '*.cpp')
 
 
 CXXFLAGS 			:= -O3 -ffast-math -g -Wall
-CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet
+CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I/usr/include/fmod
 LDFLAGS				:= -L./libs/fmod
 LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio
 
