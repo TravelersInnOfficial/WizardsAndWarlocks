@@ -1,6 +1,5 @@
 #include "Game.h"
 
-
 Game* Game::instance = 0;
 
 Game::Game(bool isServer){
@@ -10,6 +9,7 @@ Game::Game(bool isServer){
 	masterObject	= ControlObject::GetInstance();
 	masterPlayer	= ControlPlayer::GetInstance();
 	masterTrap		= ControlTrap::GetInstance();
+	masterNetwork	= ControlNetwork::GetInstance();
 
 	f_engine = BulletEngine::GetInstance();
 	g_engine = GraphicEngine::getInstance();
@@ -32,10 +32,11 @@ Game::Game(bool isServer){
 	masterTrap->AddTrap(vector3df(5,-0.5,0),vector3df(1,0,1),TENUM_SPIRITS);*/
 
 	// START JUGADOR
-	if (!isServer){
+	playerOne = NULL;
+	/*if (!isServer){
 		playerOne = masterPlayer->AddPlayer(true);
 		masterSpell->AddHechizo(0, playerOne, SPELL_PROYECTIL);
-	}
+	}*/
 	//masterSpell->AddHechizo(1, playerOne, SPELL_BASIC);
 	//masterPlayer->AddPlayer(false);
 
@@ -44,6 +45,7 @@ Game::Game(bool isServer){
 }
 
 Game::~Game(){
+	delete masterNetwork;
 	delete masterSpell;
 	delete masterBullet;
 	delete masterEffect;
@@ -64,21 +66,27 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) {
 		end = true;
 	}
-	if (!isServer){
+
+	if (!isServer && playerOne != NULL){
+
 		if(g_engine->IsLeftButtonPressed()){ 
 			ControlHechizo::GetInstance()->ResetHechizo(0,playerOne);
 			playerOne->DropObject();
 		}
+		
 		if(g_engine->IsLeftButtonDown()){  
 			ControlHechizo::GetInstance()->LanzarHechizo(0,playerOne); 
 		}
+		
 		if(g_engine->IsKeyPressed(KEY_KEY_E)){ 
 			ControlHechizo::GetInstance()->LanzarHechizo(1,playerOne);
 			playerOne->Raycast(); 
 		}
+		
 		if(g_engine->IsKeyDown(KEY_KEY_E)){ 
 			playerOne->Raycast(); 
 		}
+		
 		if(g_engine->IsKeyPressed(KEY_KEY_Z)){
 			playerOne->UseObject();
 		}
@@ -86,9 +94,12 @@ bool Game::Input(){
 		if(g_engine->IsKeyDown(KEY_SPACE)){ 
 			playerOne->Jump(); 
 		}
+		
 		if(g_engine->IsKeyDown(KEY_KEY_W)){ 
 			playerOne->MoveZ(1); 
-		} else if(g_engine->IsKeyDown(KEY_KEY_S)){
+		}
+		
+		else if(g_engine->IsKeyDown(KEY_KEY_S)){
 			playerOne->MoveZ(-1);
 		}
 		
@@ -96,6 +107,7 @@ bool Game::Input(){
 			playerOne->MoveX(-1);
 			
 		}
+
 		else if(g_engine->IsKeyDown(KEY_KEY_D)){ 
 			playerOne->MoveX(1); 
 		}
@@ -103,6 +115,7 @@ bool Game::Input(){
 		if(g_engine->IsKeyPressed(KEY_KEY_P)){ 
 			playerOne->ChangeHP(-5); 
 		}
+
 		else if(g_engine->IsKeyPressed(KEY_KEY_O)){ 
 			playerOne->ChangeHP(+3); 
 		}
@@ -115,15 +128,12 @@ bool Game::Input(){
 			if(!footstepEvent->isPlaying()){ //Start the footsteps sound
 				footstepEvent->start();
 			}
-					
-				
 		}
 
 		if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D) ) {
 			if(footstepEvent->isPlaying()) { //Stop the footstep sound
 				footstepEvent->stop();
 			}
-					
 		}
 	}
 
@@ -135,6 +145,7 @@ void Game::Update(){
 	f_engine->UpdateWorld();
 	s_engine->update();
 
+	masterNetwork->Update();
 	masterBullet->Update();
 	masterSpell->UpdateCooldown();
 	masterEffect->UpdateEffects();

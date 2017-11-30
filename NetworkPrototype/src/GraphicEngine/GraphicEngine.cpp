@@ -156,6 +156,13 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
     keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
     keyMap[3].KeyCode = irr::KEY_KEY_D;
 
+    irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
+    if (oldCamera){
+        privateSManager->setActiveCamera(0);
+        oldCamera->remove();
+        privateCamera = NULL;
+    }
+
     privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
     
     return privateCamera;

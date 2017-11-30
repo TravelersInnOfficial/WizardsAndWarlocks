@@ -13,7 +13,11 @@ public:
 
 	// We create a network object with an ID
 	NetworkObject(int id, ObjectType type);
+	NetworkObject();
 	~NetworkObject();
+
+	// Returns the type of the object
+	ObjectType GetObjType();
 
 	// Setters will send info to the server
 	void SetBoolVar(	ObjectVariable k, bool v,		bool notify, bool expandClientChanges);

@@ -35,7 +35,7 @@ private:
 	Grail*				grail;
 
 	ControlObject();
-	static ControlObject* instance; 
+	static ControlObject* instance;
 };
 
 #endif

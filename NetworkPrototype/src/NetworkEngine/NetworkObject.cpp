@@ -7,8 +7,17 @@ NetworkObject::NetworkObject(int id, ObjectType type){
 	objectType = type;
 }
 
+NetworkObject::NetworkObject(){
+	objectId = -1;
+	objectType = ID_NO_OBJ;
+}
+
 NetworkObject::~NetworkObject(){
 
+}
+
+ObjectType NetworkObject::GetObjType(){
+	return(objectType);
 }
 
 void NetworkObject::SetBoolVar(ObjectVariable k, bool v, bool notify, bool expandClientChange){

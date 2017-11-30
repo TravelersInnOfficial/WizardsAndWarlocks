@@ -1,7 +1,6 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
 #include "./ControlObject.h"
-
 #include "./Objects/Potion.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();

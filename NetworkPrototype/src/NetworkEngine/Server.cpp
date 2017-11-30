@@ -61,8 +61,8 @@ void Server::RecievePackages(){
 					SendPackage(&updateNewPlayerObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 				}
 
-				//int objId = CreateNetworkObject(ID_PLAYER_O);
-				//networkObjects[objId]->SetBoolVar(PLAYER_ACTIVATED, true, true, false);
+				int objId = CreateNetworkObject(ID_PLAYER_O);
+				networkObjects[objId]->SetBoolVar(PLAYER_ACTIVATED, true, true, false);
 
 				break;
 			}
@@ -172,6 +172,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 int Server::CreateNetworkObject(ObjectType type){
 	lastObjectId += 1;
 	networkObjects[lastObjectId] = new NetworkObject(lastObjectId, type);
+	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
 
 	// We create the object on the server
 	RakNet::BitStream bitstream;
@@ -212,6 +213,17 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 		}
 	}
 	return(id);
+}
+
+std::map<int, NetworkObject*> Server::GetNetworkObjects(){
+	return(networkObjects);
+}
+
+std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
+	std::map<int, NetworkObject*> toRet = newNetworkObjects;
+	std::map<int, NetworkObject*> emptyMap;
+	newNetworkObjects = emptyMap;
+	return(toRet);
 }
 
 // Object variable messages

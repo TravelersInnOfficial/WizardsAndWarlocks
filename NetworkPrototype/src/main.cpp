@@ -118,11 +118,11 @@ void createScenery(){
 int main(int argc, char* argv[]) {
 
 	// NETWORK #################################################################
-	NetworkEngine* networkEngine = NetworkEngine::GetInstance();
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isServer = false;
 	if(argc > 1 && strcmp(argv[1],"-s") == 0) { isServer = true; std::cout<<"STARTING SERVER"<<std::endl;}
-	if (isServer) networkEngine->StartServer();
-	else networkEngine->StartClient();
+	if (isServer) n_engine->StartServer();
+	else n_engine->StartClient();
 	// NETWORK #################################################################
 
 	// START PhysicsEngine
@@ -133,8 +133,9 @@ int main(int argc, char* argv[]) {
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	g_engine->setCursorVisible(false);
-	if (!isServer) g_engine->addCameraSceneNodeFPS(120.f, 0.f);
-	else g_engine->addCameraSceneNodeFPS(120.f, .005f);
+	//if (!isServer) g_engine->addCameraSceneNodeFPS(120.f, 0.f);
+	//else g_engine->addCameraSceneNodeFPS(120.f, .005f);
+	g_engine->addCameraSceneNodeFPS(120.f, .005f);
 
 	createScenery();
 
@@ -143,8 +144,8 @@ int main(int argc, char* argv[]) {
 	while(g_engine->run() && !end){
 
 		// NETWORK #################################################################
-		if (isServer) networkEngine->GetServer()->RecievePackages();
-		else networkEngine->GetClient()->RecievePackages();
+		if (isServer) n_engine->GetServer()->RecievePackages();
+		else n_engine->GetClient()->RecievePackages();
 		// NETWORK #################################################################
 
 		game->UpdateDelta();
@@ -157,8 +158,9 @@ int main(int argc, char* argv[]) {
 	}
 	delete game;
 
+	n_engine->EndService();	// END RACKNET
 	f_engine->EraseWorld(); // END BULLET
-	g_engine->drop(); // END IRRLICHT
+	g_engine->drop();		// END IRRLICHT
 
 	return 0;
 }

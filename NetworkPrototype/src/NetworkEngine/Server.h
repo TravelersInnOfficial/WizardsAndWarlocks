@@ -33,6 +33,9 @@ public:
 	int AddPlayer(RakNet::RakNetGUID guid);
 	int RemovePlayer(RakNet::RakNetGUID guid);
 
+	std::map<int, NetworkObject*> GetNetworkObjects();
+	std::map<int, NetworkObject*> GetNewNetworkObjects();
+
 	// Send object state change
 	void SetObjectBool(		int objectId, ObjectVariable k, bool v,			bool expandClientChange);
 	void SetObjectInt(		int objectId, ObjectVariable k, int v,			bool expandClientChange);
@@ -44,6 +47,7 @@ private:
 	
 	int lastObjectId = -1;								// ID of the last object created on the server
 	std::map<int, NetworkObject*> networkObjects;		// Vector of Network Objects on the server
+	std::map<int, NetworkObject*> newNetworkObjects;	// Vector of Network Objects on the server that haven't been retrieved
 
 	int lastPlayerId = -1;								// ID of the last player connected to the server
 	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Vector of Players conected to the server

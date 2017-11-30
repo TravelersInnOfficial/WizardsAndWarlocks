@@ -179,11 +179,25 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 			break;
 		}
 	}
-	if(!exsits) networkObjects[id] = new NetworkObject(id, type);
+	if(!exsits){
+		networkObjects[id] = new NetworkObject(id, type);
+		newNetworkObjects[id] = networkObjects[id];
+	}
 }
 
 void Client::RemoveNetworkObject(int id){
 	networkObjects.erase(id);
+}
+
+std::map<int, NetworkObject*> Client::GetNetworkObjects(){
+	return(networkObjects);
+}
+
+std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
+	std::map<int, NetworkObject*> toRet = newNetworkObjects;
+	std::map<int, NetworkObject*> emptyMap;
+	newNetworkObjects = emptyMap;
+	return(toRet);
 }
 
 // Object variable messages

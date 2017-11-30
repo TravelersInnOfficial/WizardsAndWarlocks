@@ -34,6 +34,10 @@ public:
 	void SetPort(int newPort);
 	int GetPort();
 
+	// We return the server/clietn started status
+	bool IsServerInit();
+	bool IsClientInit();
+
 	// We end the Server or Client service
 	void EndService();
 
@@ -43,6 +47,8 @@ private:
 
 	std::string serverIp;				// IP to connect to (LAN Broadcast by default)
 	int serverPort;						// Port to lisen and talk to (60000 by default)
+	bool isServer;
+	bool isClient;
 
 	Server* server;						// Server variable (uninitialized)
 	Client* client;						// Client variable (uninitialized)

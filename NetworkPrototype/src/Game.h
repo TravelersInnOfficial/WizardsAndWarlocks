@@ -2,19 +2,22 @@
 #define GAME_H
 
 #include <iostream>
-
 #include "./Player.h"
 
+//Controllers
 #include "./ControlHechizo.h"
 #include "./ControlProyectil.h"
 #include "./ControlEffect.h"
 #include "./ControlObject.h"
 #include "./ControlPlayer.h"
 #include "./ControlTrap.h"
+#include "./ControlNetwork.h"
+
 //Fachada
 #include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"
 #include "SoundEngine/SoundSystem.h"
+
 //Enums
 #include "./Spells/SpellCodes.h"
 #include "./Effects/EffectCodes.h"
@@ -36,6 +39,7 @@ private:
 	float deltaTime;
 	bool isServer;
 
+	ControlNetwork*		masterNetwork;
 	ControlHechizo* 	masterSpell;
 	ControlProyectil* 	masterBullet;
 	ControlEffect* 		masterEffect;

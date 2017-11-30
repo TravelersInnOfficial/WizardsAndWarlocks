@@ -25,9 +25,10 @@ enum VariableMapID{
 // ####################### GAME SPECIFIC MESSAGES #######################
 
 enum ObjectType{
+	ID_NO_OBJ 			= -1,
 	ID_PLAYER_O			= 1,
 	ID_POTION_O			= 2,
-	ID_FOUNTAINS_O 		= 3,
+	ID_FOUNTAIN_O 		= 3,
 	ID_DOOR_O 			= 4,
 	ID_SWITCH_O 		= 5,
 	ID_GRAIL_O 			= 6,
