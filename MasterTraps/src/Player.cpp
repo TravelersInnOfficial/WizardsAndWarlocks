@@ -1,8 +1,8 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
 #include "./ControlObject.h"
-
 #include "./Objects/Potion.h"
+#include "./ControlTrap.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -203,6 +203,21 @@ void Player::UseObject(){
 		ControlObject::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
+}
+
+void Player::DeployTrap(){
+
+	vector3df rot = GetRot();
+	rot.X = -rot.X;
+
+	vector3df Start = GetPos();
+	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
+	float EndY = Start.Y + sin(rot.X)*raycastDistance;
+	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
+
+	vector3df End(EndX, EndY, EndZ);
+
+	ControlTrap::GetInstance()->AddTrap(End,TENUM_DEATH_CLAWS);
 }
 
 void Player::setPosition(float posX, float posY, float posZ){

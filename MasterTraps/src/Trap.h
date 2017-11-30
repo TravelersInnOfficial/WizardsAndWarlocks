@@ -19,7 +19,7 @@ class Trap : public Entidad{
 public:
 
     Trap();
-    Trap(vector3df, vector3df, TrapEnum type);
+    Trap(vector3df, TrapEnum type);
 
     //ENTITY METHODS
     void Contact(void*, EntityEnum);
@@ -42,36 +42,24 @@ public:
 
 
 private:
+    TrapEnum m_trapType;
 
     vector3df* m_position;
     vector3df* m_dimensions;
+
+    std::string m_texturePath;
+    std::string m_effect;
 
     BT_GhostObject* m_body;
     BT_Body* m_rigidBody;
     GBody* g_body;
 
-    TrapEnum m_trapType;
-    std::string m_texturePath;
-
-    bool m_deactivated;
     float m_current_time;
     float m_deactivation_time;
     float m_world_time;
 
-    struct trapData{
-        float damage;
-        std::string effect;
-        float duration;
-    } m_trapData;
-
     void InitializeTrapData();
-    void SetTrapData(float, std::string, float);
-    
-    //clock m_deactivation;
-    //effect m_effect;
-   
-
-
+    void SetTrapData(vector3df, std::string, std::string);
 };
 
 #endif

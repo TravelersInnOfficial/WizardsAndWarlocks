@@ -22,8 +22,8 @@ Game::Game(){
 	masterObject->AddGrail();
 
 	//Traps
-	masterTrap->AddTrap(vector3df(0,0,5),vector3df(0.5,0.5,0.5),TENUM_DEATH_CLAWS);
-	masterTrap->AddTrap(vector3df(5,0,0),vector3df(0.5,0.5,0.5),TENUM_SPIRITS);
+	masterTrap->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
+	masterTrap->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
 
 	// START JUGADOR
 	playerOne = masterPlayer->AddPlayer(true);
@@ -73,6 +73,10 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_Z)){
 		playerOne->UseObject();
 	}
+	if(g_engine->IsKeyPressed(KEY_KEY_F)){
+		playerOne->DeployTrap();
+	}
+
 
 	if(g_engine->IsKeyDown(KEY_SPACE)){ 
 		playerOne->Jump(); 

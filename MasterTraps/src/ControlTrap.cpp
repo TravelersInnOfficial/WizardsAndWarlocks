@@ -20,8 +20,8 @@ ControlTrap::~ControlTrap(){
 	traps.clear();
 }
 
-Trap* ControlTrap::AddTrap(vector3df pos, vector3df dim, TrapEnum type){
-	Trap* t = new Trap(pos, dim, type);
+Trap* ControlTrap::AddTrap(vector3df pos,TrapEnum type){
+	Trap* t = new Trap(vector3df(pos.X,-0.49,pos.Z), type);
 	traps.push_back(t);
 	return t;
 }
