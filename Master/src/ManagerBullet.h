@@ -1,5 +1,5 @@
-#ifndef CONTROLPROYECTIL_H
-#define CONTROLPROYECTIL_H
+#ifndef MANAGERBULLET_H
+#define MANAGERBULLET_H
 
 #include <vector>
 #include <string>
@@ -10,10 +10,10 @@
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
 
-class ControlProyectil{
+class ManagerBullet{
 public:
-	static ControlProyectil* GetInstance();
-	~ControlProyectil();
+	static ManagerBullet* GetInstance();
+	~ManagerBullet();
 
 	void AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b);
 	void AddToDeleteProyecil(Proyectil* pro);
@@ -25,8 +25,8 @@ private:
 	vector<Proyectil*> proyectiles;
 	vector<Proyectil*> proyectilesToDelete;
 
-	ControlProyectil();
-	static ControlProyectil* instance;
+	ManagerBullet();
+	static ManagerBullet* instance;
 };
 
 

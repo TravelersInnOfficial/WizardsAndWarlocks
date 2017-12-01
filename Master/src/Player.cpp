@@ -1,6 +1,6 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
-#include "./ControlObject.h"
+#include "./ManagerObject.h"
 
 #include "./Objects/Potion.h"
 
@@ -202,7 +202,7 @@ void Player::DropObject(){
 void Player::UseObject(){
 	if(potion!=NULL){
 		potion->Use(this);
-		ControlObject::GetInstance()->DeletePotion(potion);
+		ManagerObject::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
 }

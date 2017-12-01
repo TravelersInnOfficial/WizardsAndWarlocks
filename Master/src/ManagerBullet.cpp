@@ -1,21 +1,21 @@
-#include "ControlProyectil.h"
+#include "ManagerBullet.h"
 
-ControlProyectil* ControlProyectil::instance = 0;
+ManagerBullet* ManagerBullet::instance = 0;
 
-ControlProyectil::ControlProyectil(){}
+ManagerBullet::ManagerBullet(){}
 
-ControlProyectil::~ControlProyectil(){
+ManagerBullet::~ManagerBullet(){
 	DeleteAllProyectiles();
 }
 
-ControlProyectil* ControlProyectil::GetInstance(){
+ManagerBullet* ManagerBullet::GetInstance(){
 	if(instance==0){
-		instance = new ControlProyectil();
+		instance = new ManagerBullet();
 	}
 	return instance;
 }
 
-void ControlProyectil::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
+void ManagerBullet::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
 	switch(b){
 		case BULLET_BASIC:
 			proyectiles.push_back(new Proyectil(pos, dir, r, v));
@@ -23,7 +23,7 @@ void ControlProyectil::AddProyectil(vector3df pos, vector3df dir, float r, float
 	}
 }
 
-void ControlProyectil::Update(){
+void ManagerBullet::Update(){
 	DeleteProyectiles();
 	int size = proyectiles.size();
 	for(int i=size-1; i>=0; i--){
@@ -35,7 +35,7 @@ void ControlProyectil::Update(){
  * @brief [Mueve los objetos proyectil del vector de Update al de delete]
  * @details [long description]
  */
-void ControlProyectil::AddToDeleteProyecil(Proyectil* pro){
+void ManagerBullet::AddToDeleteProyecil(Proyectil* pro){
 	// Comprueba que el proyectil no sea NULL
 	if(pro!=NULL){
 		// Nos guardamos el tamanyo el vector
@@ -59,7 +59,7 @@ void ControlProyectil::AddToDeleteProyecil(Proyectil* pro){
  * @brief [Eliminamos todos los proyectiles que esten en el vector]
  * @details [long description]
  */
-void ControlProyectil::DeleteProyectiles(){
+void ManagerBullet::DeleteProyectiles(){
 	// Nos guardamos el tamanyo del vector
 	int size = proyectilesToDelete.size();
 	// Recorremos el vector de proyectiles por eliminar
@@ -74,7 +74,7 @@ void ControlProyectil::DeleteProyectiles(){
 	proyectilesToDelete.clear();
 }
 
-void ControlProyectil::DeleteAllProyectiles(){
+void ManagerBullet::DeleteAllProyectiles(){
 	// =====================================
 	//  PROYECTILES
 	// =====================================

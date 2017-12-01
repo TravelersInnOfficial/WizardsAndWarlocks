@@ -1,23 +1,23 @@
-#ifndef CONTROLTRAP_H
-#define CONTROLTRAP_H
+#ifndef MANAGERTRAP_H
+#define MANAGERTRAP_H
 
 #include <iostream>
 #include <vector>
 
 #include "Trap.h"
 
-class ControlTrap{
+class ManagerTrap{
 public:
-	static ControlTrap* GetInstance();
-	~ControlTrap();
+	static ManagerTrap* GetInstance();
+	~ManagerTrap();
 
 	void DeleteTrap(Trap* t);
 	Trap* AddTrap(vector3df pos, vector3df dim, TrapEnum type);
 private:
 	vector<Trap*> traps;
 
-	ControlTrap();
-	static ControlTrap* instance;
+	ManagerTrap();
+	static ManagerTrap* instance;
 };
 
 #endif

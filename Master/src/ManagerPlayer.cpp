@@ -1,17 +1,17 @@
-#include "ControlPlayer.h"
+#include "ManagerPlayer.h"
 
-ControlPlayer* ControlPlayer::instance = 0;
+ManagerPlayer* ManagerPlayer::instance = 0;
 
-ControlPlayer* ControlPlayer::GetInstance(){
+ManagerPlayer* ManagerPlayer::GetInstance(){
 	if(instance==0){
-		instance = new ControlPlayer();
+		instance = new ManagerPlayer();
 	}
 	return instance;
 }
 
-ControlPlayer::ControlPlayer(){}
+ManagerPlayer::ManagerPlayer(){}
 
-ControlPlayer::~ControlPlayer(){
+ManagerPlayer::~ManagerPlayer(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
@@ -20,13 +20,13 @@ ControlPlayer::~ControlPlayer(){
 	players.clear();
 }
 
-Player* ControlPlayer::AddPlayer(bool one){
+Player* ManagerPlayer::AddPlayer(bool one){
 	Player* p = new Player(one);
 	players.push_back(p);
 	return p;
 }
 
-void ControlPlayer::UpdatePlayers(){
+void ManagerPlayer::UpdatePlayers(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];

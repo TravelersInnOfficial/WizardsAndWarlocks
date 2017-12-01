@@ -1,5 +1,5 @@
-#ifndef CONTROLEFFECT_H
-#define CONTROLEFFECT_H
+#ifndef MANAGEREFFECT_H
+#define MANAGEREFFECT_H
 
 #include <iostream>
 #include <map>
@@ -11,10 +11,10 @@
 
 #include "./Effects/EffectCodes.h"
 
-class ControlEffect{
+class ManagerEffect{
 public:
-	static ControlEffect* GetInstance();
-	~ControlEffect();
+	static ManagerEffect* GetInstance();
+	~ManagerEffect();
 
 	void AddEffect(Player* p, EFFECTCODE e);
 	void UpdateEffects();
@@ -26,8 +26,8 @@ private:
 	float currentTime;
 	float maxTime;
 
-	ControlEffect();
-	static ControlEffect* instance;
+	ManagerEffect();
+	static ManagerEffect* instance;
 };
 
 #endif

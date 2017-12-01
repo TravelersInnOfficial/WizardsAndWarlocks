@@ -1,5 +1,5 @@
-#ifndef CONTROLOBJECT_H
-#define CONTROLOBJECT_H
+#ifndef MANAGEROBJECT_H
+#define MANAGEROBJECT_H
 
 #include <iostream>
 #include <vector>
@@ -10,10 +10,10 @@
 #include "./Objects/Fountain.h"
 #include "./Objects/Grail.h"
 
-class ControlObject{
+class ManagerObject{
 public:
-	static ControlObject* GetInstance();
-	~ControlObject();
+	static ManagerObject* GetInstance();
+	~ManagerObject();
 	Door* AddDoor();
 	Grail* AddGrail();
 	Switch* AddSwitch(Door* d);
@@ -34,8 +34,8 @@ private:
 	vector<Fountain*>	fountains;
 	Grail*				grail;
 
-	ControlObject();
-	static ControlObject* instance; 
+	ManagerObject();
+	static ManagerObject* instance; 
 };
 
 #endif

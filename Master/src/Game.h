@@ -5,12 +5,12 @@
 
 #include "./Player.h"
 
-#include "./ControlHechizo.h"
-#include "./ControlProyectil.h"
-#include "./ControlEffect.h"
-#include "./ControlObject.h"
-#include "./ControlPlayer.h"
-#include "./ControlTrap.h"
+#include "./ManagerSpell.h"
+#include "./ManagerBullet.h"
+#include "./ManagerEffect.h"
+#include "./ManagerObject.h"
+#include "./ManagerPlayer.h"
+#include "./ManagerTrap.h"
 //Fachada
 #include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"
@@ -35,12 +35,12 @@ private:
 	float timeStart;
 	float deltaTime;
 
-	ControlHechizo* 	masterSpell;
-	ControlProyectil* 	masterBullet;
-	ControlEffect* 		masterEffect;
-	ControlObject*		masterObject;
-	ControlPlayer*		masterPlayer;
-	ControlTrap*		masterTrap;
+	ManagerSpell* 		masterSpell;
+	ManagerBullet* 		masterBullet;
+	ManagerEffect* 		masterEffect;
+	ManagerObject*		masterObject;
+	ManagerPlayer*		masterPlayer;
+	ManagerTrap*		masterTrap;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;

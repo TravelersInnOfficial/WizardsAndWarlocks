@@ -4,12 +4,12 @@
 Game* Game::instance = 0;
 
 Game::Game(){
-	masterSpell 	= ControlHechizo::GetInstance();
-	masterBullet 	= ControlProyectil::GetInstance();
-	masterEffect 	= ControlEffect::GetInstance();
-	masterObject	= ControlObject::GetInstance();
-	masterPlayer	= ControlPlayer::GetInstance();
-	masterTrap		= ControlTrap::GetInstance();
+	masterSpell 	= ManagerSpell::GetInstance();
+	masterBullet 	= ManagerBullet::GetInstance();
+	masterEffect 	= ManagerEffect::GetInstance();
+	masterObject	= ManagerObject::GetInstance();
+	masterPlayer	= ManagerPlayer::GetInstance();
+	masterTrap		= ManagerTrap::GetInstance();
 
 	f_engine = BulletEngine::GetInstance();
 	g_engine = GraphicEngine::getInstance();
@@ -63,14 +63,14 @@ bool Game::Input(){
 		end = true;
 	}
 	if(g_engine->IsLeftButtonPressed()){ 
-		ControlHechizo::GetInstance()->ResetHechizo(0,playerOne);
+		ManagerSpell::GetInstance()->ResetHechizo(0,playerOne);
 		playerOne->DropObject();
 	}
 	if(g_engine->IsLeftButtonDown()){  
-		ControlHechizo::GetInstance()->LanzarHechizo(0,playerOne); 
+		ManagerSpell::GetInstance()->LanzarHechizo(0,playerOne); 
 	}
 	if(g_engine->IsKeyPressed(KEY_KEY_E)){ 
-		ControlHechizo::GetInstance()->LanzarHechizo(1,playerOne);
+		ManagerSpell::GetInstance()->LanzarHechizo(1,playerOne);
 		playerOne->Raycast(); 
 	}
 	if(g_engine->IsKeyDown(KEY_KEY_E)){ 

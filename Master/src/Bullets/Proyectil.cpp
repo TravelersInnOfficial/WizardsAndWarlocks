@@ -1,5 +1,5 @@
 #include "Proyectil.h"
-#include "./../ControlProyectil.h"
+#include "./../ManagerBullet.h"
 #include "./../Player.h"
 
 Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
@@ -63,7 +63,7 @@ void Proyectil::Update(){
     float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
 
     if(currentDistance >= maxDistance){
-        ControlProyectil* c = ControlProyectil::GetInstance();
+        ManagerBullet* c = ManagerBullet::GetInstance();
         c->AddToDeleteProyecil(this);
     }
 }
@@ -79,7 +79,7 @@ void Proyectil::Contact(void* punt, EntityEnum tipo){
         Player* p = (Player*)punt;
         p->ChangeHP(-25.0f);
     }
-    ControlProyectil* c = ControlProyectil::GetInstance();
+    ManagerBullet* c = ManagerBullet::GetInstance();
     c->AddToDeleteProyecil(this);
 }
 

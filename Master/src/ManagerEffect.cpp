@@ -1,14 +1,14 @@
-#include "ControlEffect.h"
+#include "ManagerEffect.h"
 #include "./Game.h"
 
-ControlEffect* ControlEffect::instance = 0;
+ManagerEffect* ManagerEffect::instance = 0;
 
-ControlEffect::ControlEffect(){
+ManagerEffect::ManagerEffect(){
 	maxTime = 0.5f;
 	currentTime = 0.0f;
 }
 
-ControlEffect::~ControlEffect(){
+ManagerEffect::~ManagerEffect(){
 	std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
 	for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 		std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
@@ -22,14 +22,14 @@ ControlEffect::~ControlEffect(){
 	}
 }
 
-ControlEffect* ControlEffect::GetInstance(){
+ManagerEffect* ManagerEffect::GetInstance(){
 	if(instance==0){
-		instance = new ControlEffect();
+		instance = new ManagerEffect();
 	}
 	return instance;
 }
 
-void ControlEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
+void ManagerEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it == effects.end()){
@@ -41,7 +41,7 @@ void ControlEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 	currentV->push_back(effect);	
 }
 
-void ControlEffect::UpdateEffects(){
+void ManagerEffect::UpdateEffects(){
 	float deltaTime = Game::GetInstance()->GetDeltaTime();
 	currentTime += deltaTime;
 
@@ -67,7 +67,7 @@ void ControlEffect::UpdateEffects(){
 	}
 }
 
-Effect* ControlEffect::CreateEffect(EFFECTCODE EFFECT){
+Effect* ManagerEffect::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
 		case EFFECT_BASIC:

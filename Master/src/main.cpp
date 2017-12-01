@@ -126,12 +126,12 @@ bool manageInputs(Player* physicPlayer){
 		end = true;
 	}
 	if(engine->IsLeftButtonPressed()){ 
-		ControlHechizo::GetInstance()->ResetHechizo(0,physicPlayer);
+		ManagerSpell::GetInstance()->ResetHechizo(0,physicPlayer);
 		physicPlayer->DropObject();
 	}
-	if(engine->IsLeftButtonDown()){  ControlHechizo::GetInstance()->LanzarHechizo(0,physicPlayer); 
+	if(engine->IsLeftButtonDown()){  ManagerSpell::GetInstance()->LanzarHechizo(0,physicPlayer); 
 	}
-	if(engine->IsKeyPressed(KEY_KEY_E)){ ControlHechizo::GetInstance()->LanzarHechizo(1,physicPlayer);
+	if(engine->IsKeyPressed(KEY_KEY_E)){ ManagerSpell::GetInstance()->LanzarHechizo(1,physicPlayer);
 	physicPlayer->Raycast(); }
 
 	if(engine->IsKeyPressed(KEY_KEY_Z)){
