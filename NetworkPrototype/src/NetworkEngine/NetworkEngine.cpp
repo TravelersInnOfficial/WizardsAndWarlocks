@@ -48,7 +48,7 @@ bool NetworkEngine::IsClientInit(){
 }
 
 void NetworkEngine::EndService(){
-	std::cout << "# Disconnecting #"<<std::endl;
+	//std::cout << "# Disconnecting #"<<std::endl;
 	if(client != NULL) delete client;
 	if(server != NULL) delete server;
 }

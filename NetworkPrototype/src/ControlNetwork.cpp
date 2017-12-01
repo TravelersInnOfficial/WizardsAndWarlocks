@@ -36,45 +36,37 @@ void ControlNetwork::RetrieveObjects(){
 }
 
 void ControlNetwork::SpawnNewObjects(){
-	for (auto &row : newNetworkObjects) {
-		std::cout<<"ENTRAMOS EN EL BUCLE"<<std::endl;
-		switch(row.second->GetObjType()){
+	  std::map<int, NetworkObject*>::reverse_iterator row;
+	  for (row = newNetworkObjects.rbegin(); row != newNetworkObjects.rend(); row++){
+		switch(row->second->GetObjType()){
 			case ID_NO_OBJ:{
 				continue;
 				break;
 			}
 			case ID_PLAYER_O:{
-				std::cout<<"SPAWNEAR JUGADOR!!!!"<<std::endl;
 				Game* gameInstance = Game::GetInstance();
-				gameInstance->SetPlayerOne(row.second);
+				gameInstance->SetPlayerOne(row->second);
 				break;
 			}
 			case ID_POTION_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_FOUNTAIN_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_DOOR_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_SWITCH_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_GRAIL_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_TRAP_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 			case ID_PROYECTIL_O:{
-				std::cout<<"SPAWNEAR OTRO OBJ!!!!"<<std::endl;
 				break;
 			}
 		}

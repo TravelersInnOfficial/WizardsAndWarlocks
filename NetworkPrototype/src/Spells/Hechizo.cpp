@@ -48,7 +48,7 @@ bool Hechizo::ComprobarCast(){
  * @param p Jugador que lanza el hechizo
  */
 void Hechizo::Lanzar(Player* p){
-	std::cout<<"Hey Lanzaste un hechizo normal"<<std::endl;
+	//std::cout<<"Hey Lanzaste un hechizo normal"<<std::endl;
 }
 
 /**

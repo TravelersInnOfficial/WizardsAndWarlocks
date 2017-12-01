@@ -13,7 +13,7 @@ BT_GhostObject::BT_GhostObject(){
 void BT_GhostObject::CreateGhostBox(vector3df* position, vector3df* dimensions){
     m_position = position;
     m_dimensions = dimensions;
-    std::cout<<m_position->X<<position->X<<m_position->Y<<position->Y<<m_position->Z<<position->Z<<std::endl;
+    //std::cout<<m_position->X<<position->X<<m_position->Y<<position->Y<<m_position->Z<<position->Z<<std::endl;
 
     m_body->setCollisionShape(new btBoxShape(btVector3(m_dimensions->X, m_dimensions->Y,m_dimensions->Z)));
     btTransform transform;

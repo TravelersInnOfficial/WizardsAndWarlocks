@@ -4,154 +4,20 @@ Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
 	peer->Startup(1, &descriptor, 1);
 	peer->Connect(serverIp.c_str(), serverPort, 0, 0);
-	std::cout << "# Client Started #"<<std::endl;
 }
 
 Client::~Client(){
-	std::cout << "# Disconnecting Client #"<<std::endl;
-
 	// Delete all network objects
 	std::map<int, NetworkObject*>::iterator i = networkObjects.begin();
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
-	SendShutdown();
-
 	// Destroy the PEER interface
+	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }
 
 void Client::SendPackage(RakNet::BitStream* bitstream, PacketPriority priority, PacketReliability reliability){
 	peer->Send(bitstream, priority, reliability, 0, RakNet::UNASSIGNED_RAKNET_GUID, true);
-}
-
-void Client::RecievePackages(){
-
-	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
-		switch (packet->data[0]) {
-			case ID_PLAYER_JOIN:
-			case ID_EXISTING_PLAYER:{
-				std::cout << "# Nuevo Jugador Conectado #" << std::endl;
-				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				int id;
-				RakNet::RakNetGUID guid;
-				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
-				bitstream.Read(id);
-				bitstream.Read(guid);
-				AddPlayer(id,guid);
-				break;
-			}
-			case ID_PLAYER_DISCONNECT: {
-				std::cout << "# Jugador Desconectado #" << std::endl;
-				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				int id;
-				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
-				bitstream.Read(id);
-				RemovePlayer(id);
-				break;
-			}
-			case ID_CONNECTION_LOST: {
-				std::cout << "# Conexion Perdida #" << std::endl;
-				exit(0);
-				break;
-			}
-			case ID_OBJECT_STATUS_CHAGED: {
-				std::cout << "# Estado de Objeto Cambiado #" << std::endl;
-				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				ModifyObject(&bitstream);
-				break;
-			}
-		}
-	}
-}
-
-void Client::ModifyObject(RakNet::BitStream* bitstream){
-	VariableMapID messageSubId;
-	bitstream->IgnoreBytes(sizeof(RakNet::MessageID));
-	bitstream->Read(messageSubId);
-
-	switch (messageSubId) {
-		case ID_CREATE: {
-			std::cout<<"Creamos el objeto"<<std::endl;
-			int k = -1;
-			ObjectType o;
-			bitstream->Read(k);
-			bitstream->Read(o);
-			CreateNetworkObject(k, o);
-			break;
-		}
-		case ID_EXISTING_OBJECT: {
-			std::cout<<"Creamos el objeto existente"<<std::endl;
-			int k = -1;
-			ObjectType o;
-			bitstream->Read(k);
-			bitstream->Read(o);
-			CreateNetworkObject(k, o);
-			break;
-		}
-		case ID_REMOVE: {
-			std::cout<<"Eliminamos el objeto"<<std::endl;
-			int k = -1;
-			bitstream->Read(k);
-			RemoveNetworkObject(k);
-			break;
-		}
-		case ID_CHANGE_BOOL: {
-			std::cout<<"Bool Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			bool v = false;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetBoolVar(k_var, v, false, false);
-			break;
-		}
-		case ID_CHANGE_INT: {
-			std::cout<<"Int Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			int v = -1;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetIntVar(k_var, v, false, false);
-			break;
-		}
-		case ID_CHANGE_FLOAT: {
-			std::cout<<"Float Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			float v = -1;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetFloatVar(k_var, v, false, false);
-			break;
-		}
-		case ID_CHANGE_VECINT: {
-			std::cout<<"Vec Int Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			vector3di v;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetVecIVar(k_var, v, false, false);
-			break;
-		}
-		case ID_CHANGE_VECFLOAT: {
-			std::cout<<"Vec Float Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			vector3df v;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetVecFVar(k_var, v, false, false);
-			break;
-		}
-	}
-
 }
 
 void Client::SendShutdown(){
@@ -174,17 +40,7 @@ void Client::RemovePlayer(int id){
 }
 
 void Client::CreateNetworkObject(int id, ObjectType type){
-	bool exsits = false;
-	for (auto &row : networkObjects) {
-		if(row.first == id) {
-			exsits = true;
-			break;
-		}
-	}
-	if(!exsits){
-		networkObjects[id] = new NetworkObject(id, type);
-		newNetworkObjects[id] = networkObjects[id];
-	}
+	networkObjects[id] = newNetworkObjects[id] = new NetworkObject(id, type);
 }
 
 void Client::RemoveNetworkObject(int id){
@@ -200,6 +56,142 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 	std::map<int, NetworkObject*> emptyMap;
 	newNetworkObjects = emptyMap;
 	return(toRet);
+}
+
+void Client::RecievePackages(){
+
+	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
+		switch (packet->data[0]) {
+
+			// CUANDO UN JUGADOR SE CONECTA
+			case ID_PLAYER_JOIN:
+			case ID_EXISTING_PLAYER:{
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int id;
+				RakNet::RakNetGUID guid;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(id);
+				bitstream.Read(guid);
+				AddPlayer(id,guid);
+				break;
+			}
+
+			// CUANDO UN JUGADOR SE DESCONECTA
+			case ID_PLAYER_DISCONNECT: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int id;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(id);
+				RemovePlayer(id);
+				break;
+			}
+
+			// CUANDO SE PIERDE LA CONEXION CON EL SERVER
+			case ID_CONNECTION_LOST: {
+				exit(0);
+				break;
+			}
+
+			// CUANDO SE CREA/ELIMINA/MODIFICA UN OBJETO
+			case ID_OBJECT_STATUS_CHAGED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				ModifyObject(&bitstream);
+				break;
+			}
+		}
+	}
+}
+
+void Client::ModifyObject(RakNet::BitStream* bitstream){
+	VariableMapID messageSubId;
+	bitstream->IgnoreBytes(sizeof(RakNet::MessageID));
+	bitstream->Read(messageSubId);
+
+	switch (messageSubId) {
+		case ID_CREATE: {
+			int k = -1;
+			ObjectType o = ID_NO_OBJ;
+			bitstream->Read(k);
+			bitstream->Read(o);
+			CreateNetworkObject(k, o);
+			break;
+		}
+		case ID_EXISTING_OBJECT: {
+			int k = -1;
+			ObjectType o = ID_NO_OBJ;
+			bitstream->Read(k);
+			bitstream->Read(o);
+			CreateNetworkObject(k, o);
+			break;
+		}
+		case ID_REMOVE: {
+			int k = -1;
+			bitstream->Read(k);
+			RemoveNetworkObject(k);
+			break;
+		}
+		case ID_CHANGE_BOOL: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			bool v = false;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			if(networkObjects[k] != NULL){
+				networkObjects[k]->SetBoolVar(k_var, v, false, false);
+			}
+			break;
+		}
+		case ID_CHANGE_INT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			int v = -1;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			if(networkObjects[k] != NULL){
+				networkObjects[k]->SetIntVar(k_var, v, false, false);
+			}
+			break;
+		}
+		case ID_CHANGE_FLOAT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			float v = -1;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			if(networkObjects[k] != NULL){
+				networkObjects[k]->SetFloatVar(k_var, v, false, false);
+			}
+			break;
+		}
+		case ID_CHANGE_VECINT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			vector3di v;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			if(networkObjects[k] != NULL){
+				networkObjects[k]->SetVecIVar(k_var, v, false, false);
+			}
+			break;
+		}
+		case ID_CHANGE_VECFLOAT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			vector3df v;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			if(networkObjects[k] != NULL){
+				networkObjects[k]->SetVecFVar(k_var, v, false, false);
+			}
+			break;
+		}
+	}
+
 }
 
 // Object variable messages

@@ -153,7 +153,7 @@ void Player::ChangeHP(float HP){
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
 
-	std::cout<<m_HP<<std::endl;
+	//std::cout<<m_HP<<std::endl;
 }
 
 bool Player::ChangeMP(float MP){

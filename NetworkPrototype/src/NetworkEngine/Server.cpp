@@ -6,19 +6,15 @@ Server::Server(int serverPort, int maxClients){
 	descriptor = RakNet::SocketDescriptor(serverPort, 0);
 	peer->Startup(maxClients, &descriptor, 1);
 	peer->SetMaximumIncomingConnections(maxClients);
-	std::cout << "# Server started #"<<std::endl;
 }
 
 Server::~Server(){
-	std::cout << "# Disconnecting Server #"<<std::endl;
-
 	// Delete all network objects
 	std::map<int, NetworkObject*>::iterator i = networkObjects.begin();
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
-	SendShutdown();
-
 	// Destroy the PEER interface
+	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }
 
@@ -28,150 +24,6 @@ void Server::SendShutdown(){
 
 void Server::SendPackage(RakNet::BitStream* bitstream, PacketPriority priority, PacketReliability reliability, RakNet::AddressOrGUID guid, bool broadcast){
 	peer->Send(bitstream, priority, reliability, 0, guid, broadcast);
-}
-
-void Server::RecievePackages(){
-
-	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
-		switch (packet->data[0]) {
-			case ID_NEW_INCOMING_CONNECTION: {
-				std::cout << "# Cliente Conectado #"<<std::endl;
-
-				// Nos guardamos el nuevo jugador
-				int id = AddPlayer(packet->guid);
-
-				// Notificamos a todos los usuarios de que se ha conectado un player
-				RakNet::BitStream bitstream;
-				bitstream.Write((RakNet::MessageID)ID_PLAYER_JOIN);
-				bitstream.Write(id);
-				bitstream.Write(packet->guid);
-				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED,  RakNet::UNASSIGNED_RAKNET_GUID, true);
-
-				// Notificamos a los jugadores de todos los jugadores existentes hasta el momento
-				// El objetivo es que todos los jugadores MENOS EL NUEVO ignoren estos mensajes
-				for (auto &rowClient : networkPlayers) {
-					if (rowClient.second != packet->guid){
-						RakNet::BitStream updateNewPlayerPlayers;
-						updateNewPlayerPlayers.Write((RakNet::MessageID)ID_EXISTING_PLAYER);
-						updateNewPlayerPlayers.Write(rowClient.first);
-						updateNewPlayerPlayers.Write(rowClient.second);
-						SendPackage(&updateNewPlayerPlayers, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
-					}
-				}
-
-				for (auto &rowObj : networkObjects) {
-					RakNet::BitStream updateNewPlayerObjects;
-					updateNewPlayerObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
-					updateNewPlayerObjects.Write(ID_EXISTING_OBJECT);
-					updateNewPlayerObjects.Write(rowObj.first);
-					SendPackage(&updateNewPlayerObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
-				}
-
-				int objId = CreateNetworkObject(ID_PLAYER_O);
-
-				break;
-			}
-			case ID_CONNECTION_LOST: 
-			case ID_DISCONNECTION_NOTIFICATION: {
-				std::cout << "# Cliente Desconectado #"<<std::endl;
-
-				// Delete the player from the server
-				int id = RemovePlayer(packet->guid);
-
-				// Send the disconnect message to all users
-				RakNet::BitStream bitstream;
-				bitstream.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
-				bitstream.Write(id);
-				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
-
-				break;
-			}
-			case ID_OBJECT_STATUS_CHAGED: {
-				std::cout << "# Estado de Objeto Cambiado #" << std::endl;
-				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				ModifyObject(&bitstream);
-
-				break;
-			}
-		}
-	}
-}
-
-void Server::ModifyObject(RakNet::BitStream* bitstream){
-	VariableMapID messageSubId;
-	bitstream->IgnoreBytes(sizeof(RakNet::MessageID));
-	bitstream->Read(messageSubId);
-
-	switch (messageSubId) {
-		case ID_CREATE: {
-			std::cout<<"Creamos el objeto"<<std::endl;
-			break;
-		}
-		case ID_EXISTING_OBJECT: {
-			std::cout<<"Creamos el objeto existente"<<std::endl;
-			break;
-		}
-		case ID_REMOVE: {
-			std::cout<<"Eliminamos el objeto"<<std::endl;
-			break;
-		}
-		case ID_CHANGE_BOOL: {
-			std::cout<<"Bool Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			bool v = false;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetBoolVar(k_var, v, true, true);
-			break;
-		}
-		case ID_CHANGE_INT: {
-			std::cout<<"Int Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			int v = -1;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetIntVar(k_var, v, true, true);
-			break;
-		}
-		case ID_CHANGE_FLOAT: {
-			std::cout<<"Float Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			float v = -1;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetFloatVar(k_var, v, true, true);
-			break;
-		}
-		case ID_CHANGE_VECINT: {
-			std::cout<<"Vec Int Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			vector3di v;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetVecIVar(k_var, v, true, true);
-			break;
-		}
-		case ID_CHANGE_VECFLOAT: {
-			std::cout<<"Vec Float Changed"<<std::endl;
-			int k = -1;
-			ObjectVariable k_var = ID_NO_VAR;
-			vector3df v;
-			bitstream->Read(k);
-			bitstream->Read(k_var);
-			bitstream->Read(v);
-			networkObjects[k]->SetVecFVar(k_var, v, true, true);
-			break;
-		}
-	}
-
 }
 
 int Server::CreateNetworkObject(ObjectType type){
@@ -229,6 +81,147 @@ std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 	std::map<int, NetworkObject*> emptyMap;
 	newNetworkObjects = emptyMap;
 	return(toRet);
+}
+
+void Server::RecievePackages(){
+
+	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
+		switch (packet->data[0]) {
+
+			// CUANDO SE CONECTA UN CLIENTE
+			case ID_NEW_INCOMING_CONNECTION: {
+				// Nos guardamos el nuevo cliente
+				int id = AddPlayer(packet->guid);
+
+				// Notificamos a todos los usuarios de que se ha conectado un player
+				RakNet::BitStream bitstream;
+				bitstream.Write((RakNet::MessageID)ID_PLAYER_JOIN);
+				bitstream.Write(id);
+				bitstream.Write(packet->guid);
+				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED,  RakNet::UNASSIGNED_RAKNET_GUID, true);
+
+				// Creamos el nuevo jugador y lo enviamos a todos los clientes
+				int newPlayerId = CreateNetworkObject(ID_PLAYER_O);
+
+				// Notificamos al nuevo jugador de todos los jugadores existentes hasta el momento
+				for (auto &rowClient : networkPlayers) {
+					if (rowClient.second != packet->guid){
+						RakNet::BitStream updateNewPlayerPlayers;
+						updateNewPlayerPlayers.Write((RakNet::MessageID)ID_EXISTING_PLAYER);
+						updateNewPlayerPlayers.Write(rowClient.first);
+						updateNewPlayerPlayers.Write(rowClient.second);
+						SendPackage(&updateNewPlayerPlayers, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				// Notificamos al nuevo jugador de todos los elementos existentes hasta el momento
+				for (auto &rowObj : networkObjects) {
+					if(rowObj.first != newPlayerId){
+						RakNet::BitStream updateNewPlayerObjects;
+						updateNewPlayerObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+						updateNewPlayerObjects.Write(ID_EXISTING_OBJECT);
+						updateNewPlayerObjects.Write(rowObj.first);
+						updateNewPlayerObjects.Write(rowObj.second->GetObjType());
+						SendPackage(&updateNewPlayerObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				break;
+			}
+
+			// CUANDO SE DESCONECTA UN CLIENTE
+			case ID_CONNECTION_LOST: 
+			case ID_DISCONNECTION_NOTIFICATION: {
+				// Delete the player from the server
+				int id = RemovePlayer(packet->guid);
+
+				// Send the disconnect message to all users
+				RakNet::BitStream bitstream;
+				bitstream.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
+				bitstream.Write(id);
+				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+
+				break;
+			}
+
+			// CUANDO SE CREA/ELIMINA/MODIFICA UN OBJETO
+			case ID_OBJECT_STATUS_CHAGED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				ModifyObject(&bitstream);
+
+				break;
+			}
+		}
+	}
+}
+
+void Server::ModifyObject(RakNet::BitStream* bitstream){
+	VariableMapID messageSubId;
+	bitstream->IgnoreBytes(sizeof(RakNet::MessageID));
+	bitstream->Read(messageSubId);
+
+	switch (messageSubId) {
+		case ID_CREATE: {
+			break;
+		}
+		case ID_EXISTING_OBJECT: {
+			break;
+		}
+		case ID_REMOVE: {
+			break;
+		}
+		case ID_CHANGE_BOOL: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			bool v = false;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			networkObjects[k]->SetBoolVar(k_var, v, true, true);
+			break;
+		}
+		case ID_CHANGE_INT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			int v = -1;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			networkObjects[k]->SetIntVar(k_var, v, true, true);
+			break;
+		}
+		case ID_CHANGE_FLOAT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			float v = -1;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			networkObjects[k]->SetFloatVar(k_var, v, true, true);
+			break;
+		}
+		case ID_CHANGE_VECINT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			vector3di v;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			networkObjects[k]->SetVecIVar(k_var, v, true, true);
+			break;
+		}
+		case ID_CHANGE_VECFLOAT: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			vector3df v;
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(v);
+			networkObjects[k]->SetVecFVar(k_var, v, true, true);
+			break;
+		}
+	}
+
 }
 
 // Object variable messages

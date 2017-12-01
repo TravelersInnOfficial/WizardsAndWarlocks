@@ -39,27 +39,27 @@ void Trap::InitializeTrapData(){
 
         switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            std::cout<<"IM TENUM_DEATH_CLAWS"<<std::endl;
+            //std::cout<<"IM TENUM_DEATH_CLAWS"<<std::endl;
             SetTrapData(-3,"Inmovilizacion mortal",7);
         break;
 
         case TENUM_SPIRITS:
-            std::cout<<"IM TENUM_SPIRITS"<<std::endl;
+            //std::cout<<"IM TENUM_SPIRITS"<<std::endl;
             SetTrapData(0,"Distorsion fantasmal",5);
         break;
 
         case TENUM_SILENCE: 
-            std::cout<<"IM TENUM_SILENCE"<<std::endl;
+            //std::cout<<"IM TENUM_SILENCE"<<std::endl;
             SetTrapData(0,"Silenciar",5);
         break;
 
         case TENUM_TAXES:
-            std::cout<<"IM TENUM_TAXES"<<std::endl;
+            //std::cout<<"IM TENUM_TAXES"<<std::endl;
             SetTrapData(0,"Te quita la poción que lleves encima",1);
         break;
         
         case TENUM_DISTURBANCE: 
-            std::cout<<"IM TENUM_DISTURBANCE"<<std::endl;
+            //std::cout<<"IM TENUM_DISTURBANCE"<<std::endl;
             SetTrapData(0,"Locura",5);
         break;
 
@@ -81,10 +81,10 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 
 void Trap::Activate(Player* player ){
     //std::cout<<"Something stepped on me!!!"<<std::endl;
-    //player->ChangeHP(-1);
+    player->ChangeHP(-1);
     //std::cout<<player->GetHP()<<std::endl;
 
-    std::cout<<"Aplico: "<<m_trapData.effect<<" con "<<m_trapData.damage<<" de daño durante "<<m_trapData.duration<<" segundos."<<std::endl;
+    //std::cout<<"Aplico: "<<m_trapData.effect<<" con "<<m_trapData.damage<<" de daño durante "<<m_trapData.duration<<" segundos."<<std::endl;
 
     player->Respawn();
     ControlTrap::GetInstance()->DeleteTrap(this);

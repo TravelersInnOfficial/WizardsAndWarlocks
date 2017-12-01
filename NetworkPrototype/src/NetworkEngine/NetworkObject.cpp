@@ -20,6 +20,10 @@ ObjectType NetworkObject::GetObjType(){
 	return(objectType);
 }
 
+int NetworkObject::GetObjId(){
+	return(objectId);
+}
+
 void NetworkObject::SetBoolVar(ObjectVariable k, bool v, bool notify, bool expandClientChange){
 	boolVariables[k] = v;
 	if(notify){

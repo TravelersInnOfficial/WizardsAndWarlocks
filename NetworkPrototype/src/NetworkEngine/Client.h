@@ -14,7 +14,7 @@ public:
 
 	// We pass the IP we're gonna connect to 
 	// And the port we're talking to
-	Client(std::string serverIp, int serverPort);
+	Client(std::string serverIp = "127.0.0.1", int serverPort = 6000);
 	~Client();
 
 	// Sends game-level packages

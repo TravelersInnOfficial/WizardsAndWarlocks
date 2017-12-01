@@ -18,6 +18,7 @@ public:
 
 	// Returns the type of the object
 	ObjectType GetObjType();
+	int GetObjId();
 
 	// Setters will send info to the server
 	void SetBoolVar(	ObjectVariable k, bool v,		bool notify, bool expandClientChanges);

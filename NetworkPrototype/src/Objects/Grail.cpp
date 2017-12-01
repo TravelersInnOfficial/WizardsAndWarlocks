@@ -27,7 +27,7 @@ void Grail::Interact(Player* p){
 	float deltaTime = Game::GetInstance()->GetDeltaTime();
 	timeCasting+=deltaTime;
 	if(timeCasting>=maxCasting){
-		std::cout<<"YOU WIN"<<std::endl;
+		//std::cout<<"YOU WIN"<<std::endl;
 		timeCasting=0.0f;
 	}
 

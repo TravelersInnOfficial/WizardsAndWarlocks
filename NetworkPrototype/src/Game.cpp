@@ -172,15 +172,19 @@ void Game::UpdateDelta(){
 }
 
 void Game::SetPlayerOne(NetworkObject* nObject){
+	//std::cout<<"Voy a crear jugadores"<<std::endl;
 	if(!isServer && playerOne == NULL) {
+		std::cout<<"Creo JUGADOR 1"<<std::endl;
 		playerOne = masterPlayer->AddPlayer(true);
 		playerOne->SetNetworkObject(nObject);
 		masterSpell->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
 	}
 	else{
+		std::cout<<"Creo JUGADOR 2"<<std::endl;
 		Player* newPlayer = masterPlayer->AddPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
 		masterSpell->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
 	}
+	std::cout<<"El nuevo jugador tiene la ID: "<<nObject->GetObjId()<<std::endl;
 }
