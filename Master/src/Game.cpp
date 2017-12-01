@@ -28,8 +28,8 @@ Game::Game(){
 	masterObject->AddGrail();
 
 	//Traps
-	masterTrap->AddTrap(vector3df(0,-0.5,5),vector3df(1,0,1),TENUM_DEATH_CLAWS);
-	masterTrap->AddTrap(vector3df(5,-0.5,0),vector3df(1,0,1),TENUM_SPIRITS);
+	masterTrap->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
+	masterTrap->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
 
 	// START JUGADOR
 	playerOne = masterPlayer->AddPlayer(true);
@@ -78,6 +78,9 @@ bool Game::Input(){
 	}
 	if(g_engine->IsKeyPressed(KEY_KEY_Z)){
 		playerOne->UseObject();
+	}
+	if(g_engine->IsKeyPressed(KEY_KEY_F)){
+		playerOne->DeployTrap();
 	}
 
 	if(g_engine->IsKeyDown(KEY_SPACE)){ 
@@ -144,6 +147,10 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	f_engine->DebugDrawWorld();
+}
+
+float Game::GetTotalTime(){
+	return GraphicEngine::getInstance()->getTime();
 }
 
 float Game::GetDeltaTime(){

@@ -12,7 +12,7 @@ public:
 	~ManagerTrap();
 
 	void DeleteTrap(Trap* t);
-	Trap* AddTrap(vector3df pos, vector3df dim, TrapEnum type);
+	Trap* AddTrap(vector3df pos,TrapEnum type);
 private:
 	vector<Trap*> traps;
 

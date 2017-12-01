@@ -28,6 +28,7 @@ public:
 	void Update();
 	void Draw();
 
+	float GetTotalTime();
 	float GetDeltaTime();
 	void UpdateDelta();
 private:

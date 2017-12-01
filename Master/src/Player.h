@@ -32,6 +32,8 @@ class Player: public Entidad{
 		void DropObject();
 		void UseObject();
 
+		void DeployTrap();
+
 		float GetPosX();
 		float GetPosY();
 		float GetPosZ();

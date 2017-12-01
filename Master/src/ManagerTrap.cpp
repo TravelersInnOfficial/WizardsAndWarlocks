@@ -20,8 +20,8 @@ ManagerTrap::~ManagerTrap(){
 	traps.clear();
 }
 
-Trap* ManagerTrap::AddTrap(vector3df pos, vector3df dim, TrapEnum type){
-	Trap* t = new Trap(pos, dim, type);
+Trap* ManagerTrap::AddTrap(vector3df pos, TrapEnum type){
+	Trap* t = new Trap(pos, type);
 	traps.push_back(t);
 	return t;
 }
