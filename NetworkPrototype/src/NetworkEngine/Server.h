@@ -16,6 +16,8 @@ public:
 	Server(int serverPort, int maxClients);
 	~Server();
 
+	void SendShutdown();
+
 	// Sends game-level packages
 	void SendPackage(RakNet::BitStream*, PacketPriority, PacketReliability, RakNet::AddressOrGUID, bool broadcast);
 

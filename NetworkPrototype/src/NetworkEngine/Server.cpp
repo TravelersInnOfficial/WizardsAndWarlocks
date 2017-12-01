@@ -16,8 +16,14 @@ Server::~Server(){
 	std::map<int, NetworkObject*>::iterator i = networkObjects.begin();
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
+	SendShutdown();
+
 	// Destroy the PEER interface
 	RakNet::RakPeerInterface::DestroyInstance(peer);
+}
+
+void Server::SendShutdown(){
+	peer->Shutdown(300);
 }
 
 void Server::SendPackage(RakNet::BitStream* bitstream, PacketPriority priority, PacketReliability reliability, RakNet::AddressOrGUID guid, bool broadcast){
@@ -62,7 +68,6 @@ void Server::RecievePackages(){
 				}
 
 				int objId = CreateNetworkObject(ID_PLAYER_O);
-				networkObjects[objId]->SetBoolVar(PLAYER_ACTIVATED, true, true, false);
 
 				break;
 			}

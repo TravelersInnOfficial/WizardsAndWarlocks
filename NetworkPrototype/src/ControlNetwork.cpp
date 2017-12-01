@@ -1,4 +1,5 @@
 #include "ControlNetwork.h"
+#include "./Game.h"
 
 ControlNetwork* ControlNetwork::instance = 0;
 
@@ -44,6 +45,8 @@ void ControlNetwork::SpawnNewObjects(){
 			}
 			case ID_PLAYER_O:{
 				std::cout<<"SPAWNEAR JUGADOR!!!!"<<std::endl;
+				Game* gameInstance = Game::GetInstance();
+				gameInstance->SetPlayerOne(row.second);
 				break;
 			}
 			case ID_POTION_O:{

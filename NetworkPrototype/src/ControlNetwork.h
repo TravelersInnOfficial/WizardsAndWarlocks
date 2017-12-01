@@ -8,6 +8,7 @@
 #include "NetworkEngine/NetworkStructs.h"
 #include "NetworkEngine/Server.h"
 #include "NetworkEngine/Client.h"
+#include "./Player.h"
 
 
 class ControlNetwork{

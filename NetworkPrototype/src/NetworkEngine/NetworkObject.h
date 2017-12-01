@@ -11,9 +11,9 @@ class NetworkObject{
 
 public:
 
-	// We create a network object with an ID
-	NetworkObject(int id, ObjectType type);
+	// We create a network object with an ID and a type
 	NetworkObject();
+	NetworkObject(int id, ObjectType type);
 	~NetworkObject();
 
 	// Returns the type of the object

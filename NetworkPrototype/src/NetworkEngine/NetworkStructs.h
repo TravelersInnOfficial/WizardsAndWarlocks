@@ -36,12 +36,12 @@ enum ObjectType{
 	ID_PROYECTIL_O		= 8
 };
 
+// 0 == NULL
 enum ObjectVariable{
 	ID_NO_VAR = -1,
 
 	// ######################### PLAYER #########################
 	//BOOL
-	PLAYER_ACTIVATED = 1,
 	//INT
 	//FLOAT
 	//VI
@@ -49,13 +49,6 @@ enum ObjectVariable{
 	PLAYER_POSITION = 1
 
 	// ######################### POTION #########################
-	//BOOL
-	//INT
-	//FLOAT
-	//VI
-	//VF
-	
-	// ######################### PROYECTIL #########################
 	//BOOL
 	//INT
 	//FLOAT

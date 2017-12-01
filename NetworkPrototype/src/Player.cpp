@@ -52,20 +52,18 @@ void Player::CreatePlayer(){
 }
 
 void Player::DeletePlayer(){
-	//BULLET
 	bt_body->Erase();
 }
 
-void Player::Update(){
-	if(m_position.Y < -50) Respawn();
+void Player::Update(){	
+	if(!isPlayerOne){
+		m_position = networkObject->GetVecFVar(PLAYER_POSITION);
+		bt_body->SetPosition(m_position);
+	}
+	else m_position = bt_body->GetPosition();
 
-	m_position.X = bt_body->GetPosition().X;
-	m_position.Y = bt_body->GetPosition().Y;
-	m_position.Z = bt_body->GetPosition().Z;
-
-	//BULLET
 	bt_body->Update();
-	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
+	m_playerNode->setPosition(m_position);
 
 	checkMaxVelocity();
 	if(isPlayerOne) positionCamera();
@@ -80,7 +78,11 @@ void Player::Update(){
 
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
+	
 	if(m_dead) Respawn();
+	if(m_position.Y < -50) Respawn();
+	
+	if(isPlayerOne) networkObject->SetVecFVar(PLAYER_POSITION, m_position, true, false);
 }
 
 void Player::positionCamera(){
@@ -230,6 +232,10 @@ void Player::SetPosY(float posY){
 void Player::SetHP(float HP){ m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
+
+void Player::SetNetworkObject(NetworkObject* newNetworkObject){
+	networkObject = newNetworkObject;
+}
 
 bool Player::GetDead(){ return m_dead; }
 float Player::GetRotY(){

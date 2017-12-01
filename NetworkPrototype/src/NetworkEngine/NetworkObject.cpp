@@ -2,14 +2,14 @@
 #include "NetworkEngine.h"
 #include "Server.h"
 
-NetworkObject::NetworkObject(int id, ObjectType type){
-	objectId = id;
-	objectType = type;
-}
-
 NetworkObject::NetworkObject(){
 	objectId = -1;
 	objectType = ID_NO_OBJ;
+}
+
+NetworkObject::NetworkObject(int id, ObjectType type){
+	objectId = id;
+	objectType = type;
 }
 
 NetworkObject::~NetworkObject(){
@@ -72,7 +72,9 @@ void NetworkObject::SetVecFVar(ObjectVariable k, vector3df v, bool notify, bool 
 	v3fVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL) server->SetObjectFloatVec(objectId, k, v, expandClientChange);
+		if(server != NULL){
+			server->SetObjectFloatVec(objectId, k, v, expandClientChange);
+		}
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
 			if(client != NULL) client->SetObjectFloatVec(objectId, k, v);
@@ -111,6 +113,6 @@ vector3di NetworkObject::GetVecIVar(ObjectVariable k){
 vector3df NetworkObject::GetVecFVar(ObjectVariable k){
 	vector3df toRet = vector3df(-1, -1,-1);
 	std::map<int, vector3df>::iterator i = v3fVariables.find(k);
-	if (i != v3fVariables.end()) toRet = i->second;
+	if (i != v3fVariables.end()) toRet = i->second;	
 	return(toRet);
 }

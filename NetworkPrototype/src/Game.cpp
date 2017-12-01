@@ -170,3 +170,17 @@ void Game::UpdateDelta(){
 	deltaTime = currentTime - timeStart;
 	timeStart = currentTime;
 }
+
+void Game::SetPlayerOne(NetworkObject* nObject){
+	if(!isServer && playerOne == NULL) {
+		playerOne = masterPlayer->AddPlayer(true);
+		playerOne->SetNetworkObject(nObject);
+		masterSpell->AddHechizo(0, playerOne, SPELL_PROYECTIL);
+		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
+	}
+	else{
+		Player* newPlayer = masterPlayer->AddPlayer(false);
+		newPlayer->SetNetworkObject(nObject);
+		masterSpell->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
+	}
+}

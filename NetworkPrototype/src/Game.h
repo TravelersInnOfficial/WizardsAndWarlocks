@@ -33,6 +33,9 @@ public:
 
 	float GetDeltaTime();
 	void UpdateDelta();
+
+	void SetPlayerOne(NetworkObject* nObject);
+
 private:
 
 	float timeStart;

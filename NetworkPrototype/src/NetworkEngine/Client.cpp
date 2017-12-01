@@ -14,6 +14,8 @@ Client::~Client(){
 	std::map<int, NetworkObject*>::iterator i = networkObjects.begin();
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
+	SendShutdown();
+
 	// Destroy the PEER interface
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }

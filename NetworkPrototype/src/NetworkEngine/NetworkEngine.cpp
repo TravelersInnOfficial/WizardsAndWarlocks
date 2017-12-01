@@ -7,6 +7,8 @@ NetworkEngine::NetworkEngine(){
 	serverPort = 60000;
 	isServer = false;
 	isClient = false;
+	server = NULL;
+	client = NULL;
 }
 
 NetworkEngine* NetworkEngine::GetInstance(){

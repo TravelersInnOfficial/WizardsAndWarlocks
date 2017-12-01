@@ -56,6 +56,7 @@ class Player: public Entidad{
 		void SetHP(float);
 		void SetDead(bool);
 		void SetMaxVelocity(float);
+		void SetNetworkObject(NetworkObject* newNetworkObject);
 
 		~Player();
 
@@ -77,7 +78,7 @@ class Player: public Entidad{
 
 		BT_Body* bt_body;
 		GBody* m_playerNode;
-		NetworkObject networkObject;
+		NetworkObject* networkObject;
 
 		Potion* potion;
 
