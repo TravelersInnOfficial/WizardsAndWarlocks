@@ -77,6 +77,8 @@ Effect* ManagerEffect::CreateEffect(EFFECTCODE EFFECT){
 			e = new Burned(6.0f, 10);
 		case EFFECT_SLOWEDDOWN:
 			e = new SlowedDown(6.0f, 10.0f);
+		default:
+			e = new Effect(5.0f);
 	}
 	return e;
 }

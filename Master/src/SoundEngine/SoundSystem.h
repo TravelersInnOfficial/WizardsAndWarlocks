@@ -8,8 +8,8 @@
 
 using namespace std;
 
-#include <fmod_studio.hpp>
-#include <fmod_errors.h>
+#include <fmod/fmod_studio.hpp>
+#include <fmod/fmod_errors.h>
 
 struct Vector3 {
 	float x;

@@ -11,7 +11,8 @@ class GBody: public GEntity{
 public:
 
     GBody();
-    
+    ~GBody();
+
     /**
      * Set body texture
      * layer: layer of texture

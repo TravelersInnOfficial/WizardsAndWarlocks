@@ -6,7 +6,7 @@
 class Effect{
 public:
 	Effect(float time);
-	~Effect();
+	virtual ~Effect();
 	bool CheckFinish(float deltaTime);
 	virtual void ApplyEffect(Player* p);
 	virtual void UpdateEffect(Player* p);

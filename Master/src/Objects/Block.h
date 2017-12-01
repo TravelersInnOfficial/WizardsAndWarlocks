@@ -1,0 +1,27 @@
+#ifndef BLOCK_H
+#define BLOCK_H
+
+#include "../vector3d.h"
+#include "../Entidad.h"
+#include "../GraphicEngine/GBody.h"
+#include "../PhysicsEngine/BT_Body.h"
+
+class Block : public Entidad{
+
+public:
+
+    Block();
+    ~Block();
+    
+    Block(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture);  
+
+    void Update();
+
+private:
+    void UpdatePosShape();
+
+    GBody*      graphBody;
+    BT_Body*    physBody;
+};
+
+#endif

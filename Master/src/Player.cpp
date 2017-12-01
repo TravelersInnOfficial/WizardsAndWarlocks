@@ -88,7 +88,7 @@ void Player::Update(){
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
 	vector3df newRotAux = engine->getActiveCamera()->getRotation();
-	vector3df rot = newRot * irr::core::PI / 180.0;	
+	//vector3df rot = newRot * irr::core::PI / 180.0;	
 	
 	// Poner rotacion de personaje
 	newRot.X = 0; newRot.Z = 0;

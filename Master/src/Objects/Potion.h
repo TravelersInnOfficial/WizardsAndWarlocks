@@ -22,7 +22,6 @@ private:
 	void DeletePotion();
 	void UpdatePosShape();
 	
-
 	int value;
 
 	bool cogida;

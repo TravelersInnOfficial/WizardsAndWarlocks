@@ -14,6 +14,9 @@ Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
 	cooldown = tCoolDown;
 }
 
+Hechizo::~Hechizo(){
+	
+}
 
 /**
  * @brief Pone las variables aptas para empezar el casteo

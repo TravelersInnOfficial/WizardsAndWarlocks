@@ -7,6 +7,8 @@
 class Hechizo{
 public:
 	Hechizo(int costPM, float tCast, float tCoolDown);
+	virtual ~Hechizo();
+
 	void EmpezarCast();
 	bool ComprobarCast();
 	virtual void Lanzar(Player* p);

@@ -5,6 +5,9 @@ GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
 }
 
+GBody::~GBody(){
+}
+
 void GBody::setMaterialTexture(int layer, std::string path){
     GraphicEngine::getInstance()->setTextureToBody(this, layer, path);
     privateNode->setMaterialType(irr::video::EMT_SOLID);

@@ -7,7 +7,14 @@ ManagerObject::ManagerObject(){
 }
 
 ManagerObject::~ManagerObject(){
-	int size = doors.size();
+	int size = blocks.size();
+	for(int i=0; i<size; i++){
+		Block* b = blocks[i];
+		delete b;
+	}
+	doors.clear();
+	
+	size = doors.size();
 	for(int i=0; i<size; i++){
 		Door* d = doors[i];
 		delete d;
@@ -43,6 +50,12 @@ ManagerObject* ManagerObject::GetInstance(){
 		instance = new ManagerObject();
 	}
 	return instance;
+}
+
+Block* ManagerObject::AddBlock(vector3df pos, vector3df size, vector3df rot, int texture){
+	Block* b = new Block(pos, rot, size, texture);
+	blocks.push_back(b);
+	return b;
 }
 
 Door* ManagerObject::AddDoor(){
@@ -94,6 +107,7 @@ void ManagerObject::Update(){
 	UpdateSwitchs();
 	UpdatePotions();
 	UpdateFountains();
+	UpdateBlocks();
 }
 
 void ManagerObject::UpdateGrail(){
@@ -131,5 +145,13 @@ void ManagerObject::UpdateFountains(){
 	for(int i=0; i<size; i++){
 		Fountain* f = fountains[i];
 		f->Update();
+	}
+}
+
+void ManagerObject::UpdateBlocks(){
+	int size = blocks.size();
+	for(int i=0; i<size; i++){
+		Block* b = blocks[i];
+		b->Update();
 	}
 }

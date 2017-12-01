@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 
+#include "./Objects/Block.h"
 #include "./Objects/Door.h"
 #include "./Objects/Switch.h"
 #include "./Objects/Potion.h"
@@ -14,6 +15,9 @@ class ManagerObject{
 public:
 	static ManagerObject* GetInstance();
 	~ManagerObject();
+
+	// Create Block and adds to vector
+	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), int texture=0);
 	Door* AddDoor();
 	Grail* AddGrail();
 	Switch* AddSwitch(Door* d);
@@ -27,7 +31,9 @@ private:
 	void UpdateSwitchs();
 	void UpdatePotions();
 	void UpdateFountains();
+	void UpdateBlocks();
 
+	vector<Block*>		blocks;
 	vector<Door*>		doors;
 	vector<Switch*>		switchs;
 	vector<Potion*>		potions;
