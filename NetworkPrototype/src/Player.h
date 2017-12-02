@@ -48,6 +48,7 @@ class Player: public Entidad{
 		float GetRotY();
 		vector3df GetRot();
 		float GetMaxVelocity();
+		NetworkObject* GetNetworkObject();
 
 		// Setters
 		void setPosition(float, float, float);

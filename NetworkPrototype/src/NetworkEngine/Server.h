@@ -37,6 +37,7 @@ public:
 
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
+	std::map<int, NetworkObject*> GetToEraseNetworkObjects();
 
 	// Send object state change
 	void SetObjectBool(		int objectId, ObjectVariable k, bool v,			bool expandClientChange);
@@ -47,12 +48,16 @@ public:
 
 private:
 	
-	int lastObjectId = -1;								// ID of the last object created on the server
-	std::map<int, NetworkObject*> networkObjects;		// Vector of Network Objects on the server
-	std::map<int, NetworkObject*> newNetworkObjects;	// Vector of Network Objects on the server that haven't been retrieved
+	int lastObjectId = -1;									// ID of the last object created on the server
+	std::map<int, NetworkObject*> networkObjects;			// Map of Network Objects on the server
+	std::map<int, NetworkObject*> newNetworkObjects;		// Map of Network Objects on the server that haven't been retrieved
+	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of NO Objects to be erased
 
 	int lastPlayerId = -1;								// ID of the last player connected to the server
-	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Vector of Players conected to the server
+	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Map of Players conected to the server
+	
+
+	std::map<int, int> clientToPlayer;					// Client(k) To Player object(v) map
 
 	RakNet::RakPeerInterface *peer;						// Peer Interface
 	RakNet::Packet *packet;								// Packet to send and recieve

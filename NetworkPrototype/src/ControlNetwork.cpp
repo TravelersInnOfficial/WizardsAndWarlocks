@@ -19,6 +19,7 @@ ControlNetwork::~ControlNetwork(){
 void ControlNetwork::Update(){
 	RetrieveObjects();
 	SpawnNewObjects();
+	EraseObjects();
 }
 
 void ControlNetwork::RetrieveObjects(){
@@ -27,11 +28,13 @@ void ControlNetwork::RetrieveObjects(){
 	if(n_engine->IsServerInit()){
 		networkObjects = n_engine->GetServer()->GetNetworkObjects();
 		newNetworkObjects = n_engine->GetServer()->GetNewNetworkObjects();
+		toEraseNetworkObjects = n_engine->GetServer()->GetToEraseNetworkObjects();
 	}
 
 	else if(n_engine->IsClientInit()){
 		networkObjects = n_engine->GetClient()->GetNetworkObjects();
 		newNetworkObjects = n_engine->GetClient()->GetNewNetworkObjects();
+		toEraseNetworkObjects = n_engine->GetClient()->GetToEraseNetworkObjects();
 	}
 }
 
@@ -73,4 +76,43 @@ void ControlNetwork::SpawnNewObjects(){
 	}
 	std::map<int, NetworkObject*> emptyMap;
 	newNetworkObjects = emptyMap;
+}
+
+void ControlNetwork::EraseObjects(){
+	  std::map<int, NetworkObject*>::reverse_iterator row;
+	  for (row = toEraseNetworkObjects.rbegin(); row != toEraseNetworkObjects.rend(); row++){
+		switch(row->second->GetObjType()){
+			case ID_NO_OBJ:{
+				continue;
+				break;
+			}
+			case ID_PLAYER_O:{
+				ControlPlayer::GetInstance()->ErasePlayer(row->second->GetObjId());
+				break;
+			}
+			case ID_POTION_O:{
+				break;
+			}
+			case ID_FOUNTAIN_O:{
+				break;
+			}
+			case ID_DOOR_O:{
+				break;
+			}
+			case ID_SWITCH_O:{
+				break;
+			}
+			case ID_GRAIL_O:{
+				break;
+			}
+			case ID_TRAP_O:{
+				break;
+			}
+			case ID_PROYECTIL_O:{
+				break;
+			}
+		}
+	}
+	std::map<int, NetworkObject*> emptyMap;
+	toEraseNetworkObjects = emptyMap;
 }

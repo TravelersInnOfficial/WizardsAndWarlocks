@@ -260,3 +260,7 @@ float Player::GetLength(){ return m_dimensions.Z; }
 float Player::GetHP(){ return m_HP; }
 float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
+
+NetworkObject* Player::GetNetworkObject(){
+	return (networkObject);
+}

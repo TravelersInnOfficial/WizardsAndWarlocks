@@ -44,11 +44,19 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 }
 
 void Client::RemoveNetworkObject(int id){
+	toEraseNetworkObjects[id] = networkObjects[id];
 	networkObjects.erase(id);
 }
 
 std::map<int, NetworkObject*> Client::GetNetworkObjects(){
 	return(networkObjects);
+}
+
+std::map<int, NetworkObject*> Client::GetToEraseNetworkObjects(){
+	std::map<int, NetworkObject*> toRet = toEraseNetworkObjects;
+	std::map<int, NetworkObject*> emptyMap;
+	newNetworkObjects = emptyMap;
+	return(toRet);
 }
 
 std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){

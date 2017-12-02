@@ -14,7 +14,7 @@ Server::~Server(){
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
 	// Destroy the PEER interface
-	SendShutdown();
+	// SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }
 
@@ -51,6 +51,7 @@ void Server::RemoveNetworkObject(int id){
 	SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 
 	// Eliminamos el local
+	toEraseNetworkObjects[id] = networkObjects[id];
 	networkObjects.erase(id);
 }
 
@@ -74,6 +75,13 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 
 std::map<int, NetworkObject*> Server::GetNetworkObjects(){
 	return(networkObjects);
+}
+
+std::map<int, NetworkObject*> Server::GetToEraseNetworkObjects(){
+	std::map<int, NetworkObject*> toRet = toEraseNetworkObjects;
+	std::map<int, NetworkObject*> emptyMap;
+	newNetworkObjects = emptyMap;
+	return(toRet);
 }
 
 std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
@@ -102,6 +110,9 @@ void Server::RecievePackages(){
 
 				// Creamos el nuevo jugador y lo enviamos a todos los clientes
 				int newPlayerId = CreateNetworkObject(ID_PLAYER_O);
+				
+				// We save the correspondency client to player
+				clientToPlayer[id] = newPlayerId;
 
 				// Notificamos al nuevo jugador de todos los jugadores existentes hasta el momento
 				for (auto &rowClient : networkPlayers) {
@@ -132,14 +143,25 @@ void Server::RecievePackages(){
 			// CUANDO SE DESCONECTA UN CLIENTE
 			case ID_CONNECTION_LOST: 
 			case ID_DISCONNECTION_NOTIFICATION: {
+
 				// Delete the player from the server
 				int id = RemovePlayer(packet->guid);
 
+				// Delete the player obj from the world
+				std::map<int,int>::iterator i = clientToPlayer.find(id);
+				if(i != clientToPlayer.end()){
+					RakNet::BitStream deleteWorldPlayer;
+					deleteWorldPlayer.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+					deleteWorldPlayer.Write(ID_REMOVE);
+					deleteWorldPlayer.Write(i->second);
+					SendPackage(&deleteWorldPlayer, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+				}
+
 				// Send the disconnect message to all users
-				RakNet::BitStream bitstream;
-				bitstream.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
-				bitstream.Write(id);
-				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+				RakNet::BitStream disconnectClient;
+				disconnectClient.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
+				disconnectClient.Write(id);
+				SendPackage(&disconnectClient, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 
 				break;
 			}

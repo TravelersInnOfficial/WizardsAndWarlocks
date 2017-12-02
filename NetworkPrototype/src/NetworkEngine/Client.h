@@ -39,6 +39,7 @@ public:
 
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
+	std::map<int, NetworkObject*> GetToEraseNetworkObjects();
 
 	// Send object state change
 	void SetObjectBool(		int objectId, ObjectVariable k, bool v);
@@ -49,8 +50,10 @@ public:
 
 private:
 	
-	std::map<int, NetworkObject*> networkObjects;		// Vector of Network Objects on the Client
-	std::map<int, NetworkObject*> newNetworkObjects;	// Vector of Network Objects on the Client that haven't been retrieved
+	std::map<int, NetworkObject*> networkObjects;			// Vector of Network Objects on the Client
+	std::map<int, NetworkObject*> newNetworkObjects;		// Vector of Network Objects on the Client that haven't been retrieved
+	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of NO Objects to be erased
+
 	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Vector of Players conected to the Server
 	int player_id;										// Our PLAYER_ID
 	

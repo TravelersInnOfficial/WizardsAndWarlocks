@@ -13,6 +13,8 @@ public:
 
 	Player* AddPlayer(bool);
 	void UpdatePlayers();
+	void ErasePlayer(int networkId);
+
 private:
 
 	vector<Player*>	players;
