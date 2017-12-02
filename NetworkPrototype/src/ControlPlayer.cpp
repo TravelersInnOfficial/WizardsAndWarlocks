@@ -37,12 +37,12 @@ void ControlPlayer::UpdatePlayers(){
 
 void ControlPlayer::ErasePlayer(int networkId){
 	int size = players.size();
-	std::cout<<"Intento eliminar jugador de ID: "<<networkId<<std::endl;
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		if (p->GetNetworkObject()->GetObjId() == networkId){
-			std::cout<<"ELIMINO EL JUGADOR"<<std::endl;
+			std::cout<<"VOY A ELIMINAR PJ"<<std::endl;
 			delete p;
+			std::cout<<"HE ELIMINADO PJ"<<std::endl;
 		}
 	}
 }

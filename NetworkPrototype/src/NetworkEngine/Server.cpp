@@ -154,6 +154,7 @@ void Server::RecievePackages(){
 					deleteWorldPlayer.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
 					deleteWorldPlayer.Write(ID_REMOVE);
 					deleteWorldPlayer.Write(i->second);
+					RemoveNetworkObject(i->second);
 					SendPackage(&deleteWorldPlayer, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 				}
 
