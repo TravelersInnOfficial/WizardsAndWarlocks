@@ -87,7 +87,7 @@ void ControlNetwork::EraseObjects(){
 				break;
 			}
 			case ID_PLAYER_O:{
-				ControlPlayer::GetInstance()->ErasePlayer(row->second->GetObjId());
+				ControlPlayer::GetInstance()->AddToDeletePlayer(row->second->GetObjId());
 				break;
 			}
 			case ID_POTION_O:{

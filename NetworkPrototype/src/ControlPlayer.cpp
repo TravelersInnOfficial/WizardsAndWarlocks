@@ -28,6 +28,7 @@ Player* ControlPlayer::AddPlayer(bool one){
 }
 
 void ControlPlayer::UpdatePlayers(){
+	DeletePlayers();
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
@@ -35,14 +36,23 @@ void ControlPlayer::UpdatePlayers(){
 	}
 }
 
-void ControlPlayer::ErasePlayer(int networkId){
+void ControlPlayer::AddToDeletePlayer(int networkId){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
-		if (p->GetNetworkObject()->GetObjId() == networkId){
-			std::cout<<"VOY A ELIMINAR PJ"<<std::endl;
-			delete p;
-			std::cout<<"HE ELIMINADO PJ"<<std::endl;
+		if(p->GetNetworkObject()->GetObjId() == networkId){
+			players.erase(players.begin()+i);
+			playersToDelete.push_back(p);
+			break;
 		}
 	}
+}
+
+void ControlPlayer::DeletePlayers(){
+	int size = playersToDelete.size();
+	for(int i=0; i<size; i++){
+		Player* p = playersToDelete[i];
+		delete p;
+	}
+	playersToDelete.clear();
 }

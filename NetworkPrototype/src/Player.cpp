@@ -23,7 +23,7 @@ Player::Player(bool isPlayer1){
 }
 
 Player::~Player(){
-
+	DeletePlayer();
 }
 
 void Player::CreatePlayer(){
@@ -52,7 +52,11 @@ void Player::CreatePlayer(){
 }
 
 void Player::DeletePlayer(){
-	bt_body->Erase();
+    bt_body->Erase();
+    m_playerNode->Erase();
+
+    delete bt_body;
+    delete m_playerNode;
 }
 
 void Player::Update(){	

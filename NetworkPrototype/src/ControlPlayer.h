@@ -13,11 +13,13 @@ public:
 
 	Player* AddPlayer(bool);
 	void UpdatePlayers();
-	void ErasePlayer(int networkId);
+	void AddToDeletePlayer(int networkId);
+	void DeletePlayers();
 
 private:
 
 	vector<Player*>	players;
+	vector<Player*> playersToDelete;
 
 	ControlPlayer();
 	static ControlPlayer* instance;
