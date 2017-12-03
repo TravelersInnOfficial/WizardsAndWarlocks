@@ -44,8 +44,10 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 }
 
 void Client::RemoveNetworkObject(int id){
-	toEraseNetworkObjects[id] = networkObjects[id];
-	networkObjects.erase(id);
+	if(networkObjects[id] != NULL){
+		toEraseNetworkObjects[id] = networkObjects[id];
+		networkObjects.erase(id);
+	}
 }
 
 std::map<int, NetworkObject*> Client::GetNetworkObjects(){
@@ -54,15 +56,13 @@ std::map<int, NetworkObject*> Client::GetNetworkObjects(){
 
 std::map<int, NetworkObject*> Client::GetToEraseNetworkObjects(){
 	std::map<int, NetworkObject*> toRet = toEraseNetworkObjects;
-	std::map<int, NetworkObject*> emptyMap;
-	newNetworkObjects = emptyMap;
+	toEraseNetworkObjects.clear();
 	return(toRet);
 }
 
 std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 	std::map<int, NetworkObject*> toRet = newNetworkObjects;
-	std::map<int, NetworkObject*> emptyMap;
-	newNetworkObjects = emptyMap;
+	newNetworkObjects.clear();
 	return(toRet);
 }
 
@@ -90,7 +90,7 @@ void Client::RecievePackages(){
 				int id;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(id);
-				RemovePlayer(id);
+				//RemovePlayer(id);
 				break;
 			}
 
@@ -145,9 +145,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL){
-				networkObjects[k]->SetBoolVar(k_var, v, false, false);
-			}
+			if(networkObjects[k] != NULL) networkObjects[k]->SetBoolVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_INT: {
@@ -157,9 +155,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL){
-				networkObjects[k]->SetIntVar(k_var, v, false, false);
-			}
+			if(networkObjects[k] != NULL) networkObjects[k]->SetIntVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_FLOAT: {
@@ -169,9 +165,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL){
-				networkObjects[k]->SetFloatVar(k_var, v, false, false);
-			}
+			if(networkObjects[k] != NULL) networkObjects[k]->SetFloatVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_VECINT: {
@@ -181,9 +175,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL){
-				networkObjects[k]->SetVecIVar(k_var, v, false, false);
-			}
+			if(networkObjects[k] != NULL) networkObjects[k]->SetVecIVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_VECFLOAT: {
@@ -193,9 +185,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL){
-				networkObjects[k]->SetVecFVar(k_var, v, false, false);
-			}
+			if(networkObjects[k] != NULL) networkObjects[k]->SetVecFVar(k_var, v, false, false);
 			break;
 		}
 	}

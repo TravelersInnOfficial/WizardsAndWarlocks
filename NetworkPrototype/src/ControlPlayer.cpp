@@ -23,7 +23,6 @@ ControlPlayer::~ControlPlayer(){
 Player* ControlPlayer::AddPlayer(bool one){
 	Player* p = new Player(one);
 	players.push_back(p);
-	//std::cout<<"Creo el objeto visible"<<std::endl;
 	return p;
 }
 

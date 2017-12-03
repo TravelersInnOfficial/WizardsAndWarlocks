@@ -79,14 +79,16 @@ void ControlNetwork::SpawnNewObjects(){
 }
 
 void ControlNetwork::EraseObjects(){
-	  std::map<int, NetworkObject*>::reverse_iterator row;
-	  for (row = toEraseNetworkObjects.rbegin(); row != toEraseNetworkObjects.rend(); row++){
+	std::map<int, NetworkObject*>::reverse_iterator row;
+	for (row = toEraseNetworkObjects.rbegin(); row != toEraseNetworkObjects.rend(); row++){
+		if(row->second == NULL) continue;
 		switch(row->second->GetObjType()){
 			case ID_NO_OBJ:{
 				continue;
 				break;
 			}
 			case ID_PLAYER_O:{
+				std::cout<<"RECIBIMOS MENSAJE BORRAR"<<std::endl;
 				ControlPlayer::GetInstance()->AddToDeletePlayer(row->second->GetObjId());
 				break;
 			}
@@ -113,6 +115,5 @@ void ControlNetwork::EraseObjects(){
 			}
 		}
 	}
-	std::map<int, NetworkObject*> emptyMap;
-	toEraseNetworkObjects = emptyMap;
+	toEraseNetworkObjects.clear();
 }

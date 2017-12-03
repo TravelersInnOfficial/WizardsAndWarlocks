@@ -123,10 +123,10 @@ int main(int argc, char* argv[]) {
 	if(argc > 1 && strcmp(argv[1],"-s") == 0) { isServer = true; std::cout<<"STARTING SERVER"<<std::endl;}
 	if (isServer) n_engine->StartServer();
 	else {
-		/*std::string ip;
+		std::string ip;
 		std::cout<<"Introduce IP de Servidor: ";
 		std::cin>>ip;
-		n_engine->SetIp(ip);*/
+		n_engine->SetIp(ip);
 		n_engine->StartClient();
 	}
 	// NETWORK #################################################################

@@ -29,7 +29,7 @@ public:
 
 	// We manage a network object and notify the clients
 	int CreateNetworkObject(ObjectType type);
-	void RemoveNetworkObject(int id);
+	void RemoveNetworkObject(int id, bool broadcast = true);
 
 	// We manage the players connected
 	int AddPlayer(RakNet::RakNetGUID guid);

@@ -42,13 +42,15 @@ int Server::CreateNetworkObject(ObjectType type){
 	return (lastObjectId);
 }
 
-void Server::RemoveNetworkObject(int id){
+void Server::RemoveNetworkObject(int id, bool broadcast){
 	// We delete the object on the server
-	RakNet::BitStream bitstream;
-	bitstream.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
-	bitstream.Write(ID_REMOVE);
-	bitstream.Write(id);
-	SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+	if(broadcast){
+		RakNet::BitStream bitstream;
+		bitstream.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+		bitstream.Write(ID_REMOVE);
+		bitstream.Write(id);
+		SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+	}
 
 	// Eliminamos el local
 	toEraseNetworkObjects[id] = networkObjects[id];
@@ -79,15 +81,13 @@ std::map<int, NetworkObject*> Server::GetNetworkObjects(){
 
 std::map<int, NetworkObject*> Server::GetToEraseNetworkObjects(){
 	std::map<int, NetworkObject*> toRet = toEraseNetworkObjects;
-	std::map<int, NetworkObject*> emptyMap;
-	newNetworkObjects = emptyMap;
+	toEraseNetworkObjects.clear();
 	return(toRet);
 }
 
 std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 	std::map<int, NetworkObject*> toRet = newNetworkObjects;
-	std::map<int, NetworkObject*> emptyMap;
-	newNetworkObjects = emptyMap;
+	newNetworkObjects.clear();
 	return(toRet);
 }
 
