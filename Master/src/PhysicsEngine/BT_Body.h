@@ -2,7 +2,7 @@
 #define BT_BODY_H
 
 #include "BulletEngine.h"
-#include "../vector3d.h"
+#include <vector3d.h>
 #include <math.h>
 #include <iostream>
 

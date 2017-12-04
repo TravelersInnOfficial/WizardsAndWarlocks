@@ -1,10 +1,10 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "../vector3d.h"
 #include "../Entidad.h"
 #include "../GraphicEngine/GBody.h"
 #include "../PhysicsEngine/BT_Body.h"
+#include <vector3d.h>
 
 class Block : public Entidad{
 

@@ -1,8 +1,8 @@
 #ifndef BT_GHOSTOBJECT_H
 #define BT_GHOSTOBJECT_H
 
-#include "../vector3d.h"
 #include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <vector3d.h>
 
 class BT_GhostObject{
 public:

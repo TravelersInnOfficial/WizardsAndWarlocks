@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include "GEntity.h"
-#include "MaterialTypes.h"
-#include "MaterialFlags.h"
+#include <MaterialTypes.h>
+#include <MaterialFlags.h>
 
 class GBody: public GEntity{
 

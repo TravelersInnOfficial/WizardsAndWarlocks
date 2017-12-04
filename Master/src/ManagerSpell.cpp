@@ -100,6 +100,8 @@ Hechizo* ManagerSpell::CrearHechizo(SPELLCODE type){
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
 			h = new HechizoProyectil(0, 0.0f, 1.0f);
 			break;
+		default:
+			h = 0;
 	}
 	return h;
 }

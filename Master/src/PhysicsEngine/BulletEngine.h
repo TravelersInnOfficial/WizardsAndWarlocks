@@ -5,7 +5,7 @@
 #include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 #include "./BulletDebug.h"
 #include "./../Entidad.h"
-#include "./../vector3d.h"
+#include <vector3d.h>
 
 class BulletEngine{
 public:

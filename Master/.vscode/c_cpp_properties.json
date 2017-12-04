@@ -31,7 +31,8 @@
                 "/usr/include/linux",
                 "/usr/local/include/",
                 "/usr/include",
-                "${workspaceRoot}"
+                "${workspaceRoot}",
+                "${workspaceRoot}/src/Includes"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -42,7 +43,8 @@
                     "/usr/include/linux",
                     "/usr/local/include/",
                     "/usr/include",
-                    "${workspaceRoot}"
+                    "${workspaceRoot}",
+                    "${workspaceRoot}/src/Includes"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

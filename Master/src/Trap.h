@@ -1,11 +1,11 @@
 #ifndef TRAP_H
 #define TRAP_H
 
-#include "vector3d.h"
 #include "./PhysicsEngine/BT_GhostObject.h"
 #include "./GraphicEngine/GBody.h"
 #include "Entidad.h"
 #include "Player.h"
+#include <vector3d.h>
 
 enum TrapEnum{
     TENUM_DEATH_CLAWS = 0x00,

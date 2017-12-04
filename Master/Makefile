@@ -3,18 +3,11 @@ Target := WizardsAndWarlocks
 
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
-PhysicsEnginePath 	:= ./obj/PhysicsEngine
-GraphicsEnginePath 	:= ./obj/GraphicEngine
-SoundEnginePath		:= ./obj/SoundEngine
-SpellPath			:= ./obj/Spells
-BulletPath			:= ./obj/Bullets
-EffectPath			:= ./obj/Effects
-ObjectPath			:= ./obj/Objects
+SOURCE_DIRS			:= $(shell find ./src -maxdepth 1 -type d -not -path "./src/.vscode" -not -path "./src" -printf '$(BuildPath)/%f ')
 SourcePath			:= $(shell find src -name '*.cpp')
 
-
 CXXFLAGS 			:= -O3 -ffast-math -g -Wall
-CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I/usr/include/fmod
+CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes
 LDFLAGS				:= -L./libs/fmod
 LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio
 
@@ -26,29 +19,29 @@ OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
 .PHONY: all clean
 
 all: prepare $(OBJ)
-	$(info Creando ejecutable $(Target)...)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+	$(info ----------------------------------------------)
+	$(info Linking executable $(Target)...)
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+	$(info ----------------------------------------------)	
+	$(info Done)
 
 obj/%.o: src/%.cpp
-	$(warning Creando el binario $@...)
-	$(CC) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+	$(info Compiling-> $@)
+	@$(CC) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 prepare:
-	$(warning Creando la estructura de carpetas)
-	mkdir -p $(BinPath)
-	mkdir -p $(BuildPath)
-	mkdir -p $(PhysicsEnginePath)
-	mkdir -p $(GraphicsEnginePath)
-	mkdir -p $(SoundEnginePath)
-	mkdir -p $(SpellPath)
-	mkdir -p $(BulletPath)
-	mkdir -p $(EffectPath)
-	mkdir -p $(ObjectPath)
+	$(info ==============================================)
+	$(info Creating folder structure)
+	$(info ==============================================)
+	@mkdir -p $(BinPath)
+	@mkdir -p $(SOURCE_DIRS)
 
 clean:
-	$(warning Cleaning...)
-	@$(RM) $(EXECUTABLE)
+	$(info ==============================================)
+	$(info Cleaning Objects and Binaries... )
+	$(info ==============================================)
 	@$(RM) $(OBJ)
+	@$(RM) $(EXECUTABLE)
 
 	
 

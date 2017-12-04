@@ -7,9 +7,9 @@
 #include "GEntity.h"
 #include "GGUIElement.h"
 #include "EventReceiver.h"
-#include "Keycodes.h"
-#include "../vector3d.h"
-#include "../vector4d.h"
+#include <Keycodes.h>
+#include <vector3d.h>
+#include <vector4d.h>
 
 class GraphicEngine{
 

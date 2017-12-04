@@ -2,8 +2,7 @@
 #define GENTITY_H
 
 #include <irrlicht/irrlicht.h>
-#include "../vector3d.h"
-
+#include <vector3d.h>
 class GEntity{
 
 public:
