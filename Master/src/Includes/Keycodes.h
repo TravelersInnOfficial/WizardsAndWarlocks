@@ -7,8 +7,8 @@
 
 enum TKEY_CODE
 {
-	KEY_LBUTTON          = 0x01,  // Left mouse button
-	KEY_RBUTTON          = 0x02,  // Right mouse button
+	KEY_LBUTTON          = 0x00,  // Left mouse button
+	KEY_RBUTTON          = 0x01,  // Right mouse button
 	KEY_CANCEL           = 0x03,  // Control-break processing
 	KEY_MBUTTON          = 0x04,  // Middle mouse button (three-button mouse)
 	KEY_XBUTTON1         = 0x05,  // Windows 2000/XP: X1 mouse button
