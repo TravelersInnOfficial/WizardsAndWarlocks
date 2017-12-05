@@ -5,12 +5,12 @@
 
 #include "./Player.h"
 
-#include "./ManagerSpell.h"
-#include "./ManagerBullet.h"
-#include "./ManagerEffect.h"
-#include "./ManagerObject.h"
-#include "./ManagerPlayer.h"
-#include "./ManagerTrap.h"
+#include "./Managers/ManagerSpell.h"
+#include "./Managers/ManagerBullet.h"
+#include "./Managers/ManagerEffect.h"
+#include "./Managers/ManagerObject.h"
+#include "./Managers/ManagerPlayer.h"
+#include "./Managers/ManagerTrap.h"
 //Fachada
 #include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"

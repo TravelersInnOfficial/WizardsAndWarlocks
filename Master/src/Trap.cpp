@@ -1,5 +1,5 @@
 #include "Trap.h"
-#include "./ManagerTrap.h"
+#include "./Managers/ManagerTrap.h"
 #include "Game.h"
 
 Trap::Trap(){

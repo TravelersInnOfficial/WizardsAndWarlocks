@@ -1,5 +1,5 @@
 #include "ManagerEffect.h"
-#include "./Game.h"
+#include "./../Game.h"
 
 ManagerEffect* ManagerEffect::instance = 0;
 

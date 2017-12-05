@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#include "Player.h"
+#include "./../Player.h"
 
 class ManagerPlayer{
 public:

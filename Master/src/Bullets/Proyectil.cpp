@@ -1,5 +1,5 @@
 #include "Proyectil.h"
-#include "./../ManagerBullet.h"
+#include "./../Managers/ManagerBullet.h"
 #include "./../Player.h"
 
 Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){

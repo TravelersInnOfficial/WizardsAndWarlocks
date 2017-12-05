@@ -4,12 +4,12 @@
 #include <iostream>
 #include <vector>
 
-#include "./Objects/Block.h"
-#include "./Objects/Door.h"
-#include "./Objects/Switch.h"
-#include "./Objects/Potion.h"
-#include "./Objects/Fountain.h"
-#include "./Objects/Grail.h"
+#include "./../Objects/Block.h"
+#include "./../Objects/Door.h"
+#include "./../Objects/Switch.h"
+#include "./../Objects/Potion.h"
+#include "./../Objects/Fountain.h"
+#include "./../Objects/Grail.h"
 
 class ManagerObject{
 public:

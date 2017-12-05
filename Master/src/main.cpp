@@ -8,8 +8,8 @@
 #include <vector3d.h>
 
 //Controlers
-#include "Game.h"
-#include "ManagerObject.h"
+#include "./Game.h"
+#include "./Managers/ManagerObject.h"
 
 void createScenery(){
 	ManagerObject* objman = ManagerObject::GetInstance(); 

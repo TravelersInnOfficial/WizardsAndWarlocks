@@ -3,12 +3,10 @@
 
 #include <vector>
 #include <string>
-#include "./Bullets/Proyectil.h"
-
-#include "./Bullets/BulletCodes.h"
-
-#include "PhysicsEngine/BT_Body.h"
-#include "GraphicEngine/GraphicEngine.h"
+#include "./../Bullets/Proyectil.h"
+#include "./../Bullets/BulletCodes.h"
+#include "./../PhysicsEngine/BT_Body.h"
+#include "./../GraphicEngine/GraphicEngine.h"
 
 class ManagerBullet{
 public:

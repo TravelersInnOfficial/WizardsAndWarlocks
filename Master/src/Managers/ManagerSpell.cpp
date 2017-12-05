@@ -1,6 +1,6 @@
 #include "ManagerSpell.h"
-#include "./GraphicEngine/GraphicEngine.h"
-#include "./Game.h"
+#include "./../GraphicEngine/GraphicEngine.h"
+#include "./../Game.h"
 
 
 ManagerSpell* ManagerSpell::instance = 0;

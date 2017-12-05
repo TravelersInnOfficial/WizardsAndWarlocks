@@ -1,7 +1,7 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
-#include "./ManagerObject.h"
-#include "./ManagerTrap.h"
+#include "./Managers/ManagerObject.h"
+#include "./Managers/ManagerTrap.h"
 
 #include "./Objects/Potion.h"
 #include "./Trap.h"

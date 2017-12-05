@@ -3,8 +3,7 @@
 
 #include <iostream>
 #include <vector>
-
-#include "Trap.h"
+#include "./../Trap.h"
 
 class ManagerTrap{
 public:

@@ -3,10 +3,10 @@
 
 #include <iostream>
 #include <map>
-#include "./Spells/Hechizo.h"
-#include "./Spells/HechizoProyectil.h"
-#include "./Spells/SpellCodes.h"
-#include "Player.h"
+#include "./../Spells/Hechizo.h"
+#include "./../Spells/HechizoProyectil.h"
+#include "./../Spells/SpellCodes.h"
+#include "./../Player.h"
 
 class ManagerSpell{
 public:
