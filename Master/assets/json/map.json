@@ -23,7 +23,8 @@
                 "Interact": false,
                 "Texture": "",
                 "3DModel": ""
-            }
+            },
+            "Type": "Block"
         },
         {
             "ID": -1,

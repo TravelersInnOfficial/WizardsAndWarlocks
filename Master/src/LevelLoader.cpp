@@ -42,7 +42,21 @@ bool LevelLoader::readJson(std::string jsonPath){
         bool interact = ptr["Interact"];
 
         //create object
-        objManager->AddBlock(position, size, rotation, texture);
+        if(j["Objects"][i]["Type"] == "Block"){
+            objManager->AddBlock(position, size, rotation, texture);
+        }
+        else if(j["Objects"][i]["Type"] == "Door"){
+            //objManager->AddDoor(position, size, rotation);
+        }
+        else if(j["Objects"][i]["Type"] == "Switch"){
+            //objManager->AddSwitch(door, position, size, rotation);
+        }
+        else if(j["Objects"][i]["Type"] == "Grail"){
+            //objManager->AddGrail(position, size, rotation);
+        }
+        else if(j["Objects"][i]["Type"] == "Fountain"){
+            //objManager->AddFountain(position, size, rotation);
+        }
     }
 
     return true;
