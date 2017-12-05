@@ -13,7 +13,7 @@ public:
     Block();
     ~Block();
     
-    Block(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture);  
+    Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture);  
 
     void Update();
 

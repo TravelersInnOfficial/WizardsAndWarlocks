@@ -52,7 +52,7 @@ ManagerObject* ManagerObject::GetInstance(){
 	return instance;
 }
 
-Block* ManagerObject::AddBlock(vector3df pos, vector3df size, vector3df rot, int texture){
+Block* ManagerObject::AddBlock(vector3df pos, vector3df size, vector3df rot, std::string texture){
 	Block* b = new Block(pos, rot, size, texture);
 	blocks.push_back(b);
 	return b;

@@ -6,7 +6,8 @@ BuildPath 			:= ./obj
 SOURCE_DIRS			:= $(shell find ./src -maxdepth 1 -type d -not -path "./src/.vscode" -not -path "./src" -printf '$(BuildPath)/%f ')
 SourcePath			:= $(shell find src -name '*.cpp')
 
-CXXFLAGS 			:= -O3 -ffast-math -g -Wall
+CXX					:= clang++
+CXXFLAGS 			:= -O3 -ffast-math -g -Wall -std=c++11
 CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes
 LDFLAGS				:= -L./libs/fmod
 LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio
@@ -23,11 +24,11 @@ all: prepare $(OBJ)
 	$(info Linking executable $(Target)...)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
 	$(info ----------------------------------------------)	
-	$(info Done)
+	$(info Compile OK)
 
 obj/%.o: src/%.cpp
 	$(info Compiling-> $@)
-	@$(CC) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
 
 prepare:
 	$(info ==============================================)

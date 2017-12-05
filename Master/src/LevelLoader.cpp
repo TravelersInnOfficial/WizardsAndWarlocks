@@ -1,12 +1,49 @@
 #include "LevelLoader.h"
+#include "Objects/Block.h"
+#include "Managers/ManagerObject.h"
+#include <vector3d.h>
 #include <json.hpp>
+#include <fstream>
 
 LevelLoader::LevelLoader(){
 
 }
 
-bool loadLobby()
-{
+bool LevelLoader::loadLobby()
+{   
+    return readJson("../assets/json/map.json");
+}
+
+bool LevelLoader::readJson(std::string jsonPath){
+    ManagerObject* objManager = ManagerObject::GetInstance();
     
-    return false;
+    //Takes path from binary location (/bin)
+    std::ifstream i(jsonPath);
+    nlohmann::json j;
+    i >> j;
+
+    //iterates objects
+    for(int i = 0; !j["Objects"][i].is_null(); i++){
+        //pointer to object body
+        auto ptr = j["Objects"][i]["Body"];
+        //unity transform
+        vector3df position = vector3df(ptr["Position"][0], ptr["Position"][1], ptr["Position"][2]);
+        vector3df rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
+        vector3df size =     vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
+
+        //Textures and objects
+        std::string texture = ptr["Texture"];
+        std::string model = ptr["3DModel"];
+
+        //aditional variables
+        vector3df axis = ptr["AxisCoord"].empty()? vector3df() : 
+        vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
+        
+        bool interact = ptr["Interact"];
+
+        //create object
+        objManager->AddBlock(position, size, rotation, texture);
+    }
+
+    return true;
 }

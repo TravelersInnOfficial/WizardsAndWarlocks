@@ -17,7 +17,7 @@ public:
 	~ManagerObject();
 
 	// Create Block and adds to vector
-	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), int texture=0);
+	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture=0);
 	Door* AddDoor();
 	Grail* AddGrail();
 	Switch* AddSwitch(Door* d);

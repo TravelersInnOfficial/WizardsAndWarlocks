@@ -13,7 +13,7 @@ Block::~Block(){
 	delete physBody;
 }
 
-Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, int texture){
+Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	
 	float TMass = 0;
@@ -22,9 +22,8 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, int tex
 	graphBody = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
-	if(texture == 0) graphBody->setMaterialTexture(0, "./../assets/textures/wall.bmp");
-	else if(texture == 1) graphBody->setMaterialTexture(0, "./../assets/textures/stones.jpg");
-	else if(texture == 2) graphBody->setMaterialTexture(0, "./../assets/textures/rockwall.jpg");
+	if(texture == "") graphBody->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+	else graphBody->setMaterialTexture(0, texture);
 
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 	graphBody->setAutomaticCulling();
