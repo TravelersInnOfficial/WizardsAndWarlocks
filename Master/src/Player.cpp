@@ -2,6 +2,7 @@
 #include "./PhysicsEngine/BulletEngine.h"
 #include "./Managers/ManagerObject.h"
 #include "./Managers/ManagerTrap.h"
+#include "./Managers/ManagerSpell.h"
 
 #include "./Objects/Potion.h"
 #include "./Trap.h"
@@ -22,11 +23,26 @@ Player::Player(bool isPlayer1){
 	m_dead = false;
 	isPlayerOne=isPlayer1;
 	clase = EENUM_PLAYER;
+
+	controller = new ControllerPlayer();
+	DeclareInput();
+
 	CreatePlayer();
 }
 
 Player::~Player(){
+	delete controller;
+}
 
+void Player::DeclareInput(){
+	controller->AddAction(KEY_KEY_W, "move up");
+	controller->AddAction(KEY_KEY_S, "move down");
+	controller->AddAction(KEY_KEY_A, "move left");
+	controller->AddAction(KEY_KEY_D, "move right");
+	controller->AddAction(KEY_KEY_E, "raycast");
+	controller->AddAction(KEY_SPACE, "jump");
+	controller->AddAction(KEY_KEY_Z, "use object");
+	controller->AddAction(KEY_LBUTTON, "disparar");
 }
 
 void Player::CreatePlayer(){
@@ -59,6 +75,8 @@ void Player::DeletePlayer(){
 }
 
 void Player::Update(){
+	CheckInput();
+
 	if(m_position.Y < -50) Respawn();
 
 	m_position.X = bt_body->GetPosition().X;
@@ -83,6 +101,25 @@ void Player::Update(){
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
 	if(m_dead) Respawn();
+}
+
+void Player::UpdateInput(){
+	controller->Update();
+}
+
+void Player::CheckInput(){
+	if(controller->IsKeyPressed("move left")){ this->MoveX(-1); }
+	if(controller->IsKeyPressed("move down")){ this->MoveZ(-1); }
+	if(controller->IsKeyPressed("move right")){ this->MoveX(1); }
+	if(controller->IsKeyPressed("move up")){ this->MoveZ(1); }
+	if(controller->IsKeyPressed("raycast")){ this->Raycast(); }
+	if(controller->IsKeyDown("jump")){ this->Jump(); }
+	if(controller->IsKeyDown("use object")){ this->UseObject(); }
+	if(controller->IsKeyDown("disparar")){ 
+		ManagerSpell::GetInstance()->ResetHechizo(0,this); 
+		this->DropObject();
+	}
+	if(controller->IsKeyPressed("disparar")){ ManagerSpell::GetInstance()->LanzarHechizo(0,this); }
 }
 
 void Player::positionCamera(){

@@ -59,46 +59,17 @@ Game* Game::GetInstance(){
 bool Game::Input(){
 	bool end = false;
 	
+	playerOne->UpdateInput();
+	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) {
 		end = true;
 	}
-	if(g_engine->IsLeftButtonPressed()){ 
-		ManagerSpell::GetInstance()->ResetHechizo(0,playerOne);
-		playerOne->DropObject();
-	}
-	if(g_engine->IsLeftButtonDown()){  
-		ManagerSpell::GetInstance()->LanzarHechizo(0,playerOne); 
-	}
-	if(g_engine->IsKeyPressed(KEY_KEY_E)){ 
-		ManagerSpell::GetInstance()->LanzarHechizo(1,playerOne);
-		playerOne->Raycast(); 
-	}
-	if(g_engine->IsKeyDown(KEY_KEY_E)){ 
-		playerOne->Raycast(); 
-	}
-	if(g_engine->IsKeyPressed(KEY_KEY_Z)){
-		playerOne->UseObject();
-	}
+	
+	
 	if(g_engine->IsKeyPressed(KEY_KEY_F)){
 		playerOne->DeployTrap();
 	}
 
-	if(g_engine->IsKeyDown(KEY_SPACE)){ 
-		playerOne->Jump(); 
-	}
-	if(g_engine->IsKeyDown(KEY_KEY_W)){ 
-		playerOne->MoveZ(1); 
-	} else if(g_engine->IsKeyDown(KEY_KEY_S)){
-		playerOne->MoveZ(-1);
-	}
-	
-	if(g_engine->IsKeyDown(KEY_KEY_A)){ 
-		playerOne->MoveX(-1);
-		
-	}
-	else if(g_engine->IsKeyDown(KEY_KEY_D)){ 
-		playerOne->MoveX(1); 
-	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_P)){ 
 		playerOne->ChangeHP(-5); 

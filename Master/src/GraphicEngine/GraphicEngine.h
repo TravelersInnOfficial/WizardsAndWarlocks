@@ -195,6 +195,10 @@ public:
     */
     bool IsKeyPressed(TKEY_CODE code);
 
+    keyStatesENUM GetKeyStatus(TKEY_CODE code);
+
+    keyStatesENUM GetMouseStatus(TKEY_CODE code);
+
     /**
      * Returns true is given code is held down
     */

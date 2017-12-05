@@ -4,6 +4,7 @@
 #include <iostream>
 #include <math.h>
 #include "./Entidad.h"
+#include "./ControllerPlayer.h"
 
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
@@ -16,8 +17,11 @@ class Player: public Entidad{
 		Player(bool isPlayer1);
 
 		void CreatePlayer();
-		void DeletePlayer( );
+		void DeletePlayer();
+		void DeclareInput();
 		void Update();
+		void UpdateInput();
+		void CheckInput();
 		
 		void Move(float, float);
 		void MoveX(int);
@@ -79,6 +83,8 @@ class Player: public Entidad{
 		GBody* m_playerNode;
 
 		Potion* potion;
+
+		ControllerPlayer* controller;
 
 		void checkMaxVelocity();
 		void positionCamera();

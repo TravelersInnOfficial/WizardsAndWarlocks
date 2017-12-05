@@ -1,4 +1,5 @@
 #include "EventReceiver.h"
+#include "Keycodes.h"
 
 bool EventReceiver::OnEvent(const irr::SEvent& event) {
 
@@ -13,13 +14,22 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
     }
 
     if (event.EventType == irr::EET_MOUSE_INPUT_EVENT){
+        //LeftButton
         if (event.MouseInput.Event == irr::EMIE_LMOUSE_PRESSED_DOWN){
-            if (mouseButtonState[0] == UP || mouseButtonState[0] == RELEASED) mouseButtonState[0] = PRESSED;
-            else mouseButtonState[0] = DOWN;
+            if (mouseButtonState[KEY_LBUTTON] == UP || mouseButtonState[KEY_LBUTTON] == RELEASED) mouseButtonState[0] = PRESSED;
+            else mouseButtonState[KEY_LBUTTON] = DOWN;
         }
         if (event.MouseInput.Event == irr::EMIE_LMOUSE_LEFT_UP){
-            if (mouseButtonState[0] != UP) mouseButtonState[0] = RELEASED;
+            if (mouseButtonState[KEY_LBUTTON] != UP) mouseButtonState[KEY_LBUTTON] = RELEASED;
         }
+        //RightButton
+         if (event.MouseInput.Event == irr::EMIE_RMOUSE_PRESSED_DOWN){
+            if (mouseButtonState[KEY_RBUTTON] == UP || mouseButtonState[KEY_RBUTTON] == RELEASED) mouseButtonState[1] = PRESSED;
+            else mouseButtonState[KEY_RBUTTON] = DOWN;
+        }
+        if (event.MouseInput.Event == irr::EMIE_RMOUSE_LEFT_UP){
+            if (mouseButtonState[KEY_RBUTTON] != UP) mouseButtonState[KEY_RBUTTON] = RELEASED;
+        } 
     }
 
     return false;
@@ -32,19 +42,23 @@ bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] 
 bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
 bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
+keyStatesENUM EventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
+    return keyState[keycode];
+}
+
+keyStatesENUM EventReceiver::GetMouseStatus(int n){
+    return mouseButtonState[n];
+}
+
 void EventReceiver::Update(){
+
     for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
         if(keyState[i] == PRESSED) keyState[i] = DOWN;
+        else if(keyState[i] == RELEASED) keyState[i] = UP;
     }
     for (int i = 0; i < numMouseButtons; i++){
         if(mouseButtonState[i] == PRESSED) mouseButtonState[i] = DOWN;
-    }
-
-    for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
-        if(keyState[i] == RELEASED) keyState[i] = UP;
-    }
-    for (int i = 0; i < numMouseButtons; i++){
-        if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
+        else if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
     }
 }
 

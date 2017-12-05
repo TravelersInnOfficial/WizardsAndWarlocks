@@ -209,3 +209,12 @@ bool GraphicEngine::IsLeftButtonPressed(){
 bool GraphicEngine::IsLeftButtonDown(){
     return privateReceiver->leftMouseDown();
 }
+
+keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
+    return privateReceiver->GetKeyStatus((irr::EKEY_CODE)code);
+}
+
+keyStatesENUM GraphicEngine::GetMouseStatus(TKEY_CODE code){
+    return privateReceiver->GetMouseStatus((int)code);
+}
+

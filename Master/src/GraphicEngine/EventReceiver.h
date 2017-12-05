@@ -1,11 +1,12 @@
 #include <iostream>
 #include "./irrlicht/irrlicht.h"
 
+enum keyStatesENUM {UP, DOWN, PRESSED, RELEASED};
+
 class EventReceiver : public irr::IEventReceiver {
 
 protected:
 
-    enum keyStatesENUM {UP, DOWN, PRESSED, RELEASED};
     keyStatesENUM keyState[irr::KEY_KEY_CODES_COUNT];
     
     static const int numMouseButtons = 1;
@@ -21,6 +22,9 @@ public:
     bool keyDown(irr::EKEY_CODE keycode);
     bool keyRelease(irr::EKEY_CODE keycode);
     bool keyUp(irr::EKEY_CODE keycode);
+
+    keyStatesENUM GetKeyStatus(irr::EKEY_CODE keycode);
+    keyStatesENUM GetMouseStatus(int n);
 
     void Update();
 
