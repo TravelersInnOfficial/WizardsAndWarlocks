@@ -5,7 +5,8 @@ LevelLoader::LevelLoader(){
 
 }
 
-bool loadLobby(){
-
+bool loadLobby()
+{
+    
     return false;
 }
