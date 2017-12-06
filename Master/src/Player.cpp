@@ -33,6 +33,7 @@ Player::Player(bool isPlayer1){
 
 Player::~Player(){
 	delete controller;
+	DeletePlayer();
 }
 
 void Player::DeclareInput(){
@@ -71,8 +72,11 @@ void Player::CreatePlayer(){
 }
 
 void Player::DeletePlayer(){
-	//BULLET
 	bt_body->Erase();
+    m_playerNode->Erase();
+
+    delete bt_body;
+    delete m_playerNode;
 }
 
 void Player::Update(){

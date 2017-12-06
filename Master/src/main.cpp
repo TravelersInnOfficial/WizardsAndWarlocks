@@ -57,7 +57,7 @@ int main(int argc, char* argv[]) {
 
 	// Network Game State
 	else{
-		NetGame* game = new NetGame();
+		NetGame* game = NetGame::GetInstance();
 		bool end = false;
 		while(g_engine->run() && !end){
 			end = game->Input();

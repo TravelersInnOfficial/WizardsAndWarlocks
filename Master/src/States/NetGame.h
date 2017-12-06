@@ -11,21 +11,20 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
+#include "./../Managers/NetworkManager.h"
 
-//Fachada
 #include "./../PhysicsEngine/BulletEngine.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../SoundEngine/SoundSystem.h"
 #include "./../NetworkEngine/NetworkEngine.h"
 
-//Enums
 #include <SpellCodes.h>
 #include <EffectCodes.h>
 
 class NetGame{
 public:
 
-	NetGame();
+	static NetGame* GetInstance();
 	~NetGame();
 	bool Input();
 	void Update();
@@ -35,11 +34,16 @@ public:
 	float GetDeltaTime();
 	void UpdateDelta();
 
+	void SetPlayerOne(NetworkObject* nObject);
+
 private:
 
+	static NetGame* instance;
 	float timeStart;
 	float deltaTime;
 	bool isServer;
+	SoundEvent*			footstepEvent;
+	Player*				playerOne;
 
 	SpellManager* 		spellManager;
 	BulletManager* 		bulletManager;
@@ -47,17 +51,14 @@ private:
 	ObjectManager*		objectManager;
 	PlayerManager*		playerManager;
 	TrapManager*		trapManager;
+	NetworkManager*		networkManager;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
 	NetworkEngine*		n_engine;
 
-	SoundEvent*			footstepEvent;
-
-	Player*				playerOne;
-
-	void SetPlayerOne(NetworkObject* nObject);
+	NetGame();
 
 };
 

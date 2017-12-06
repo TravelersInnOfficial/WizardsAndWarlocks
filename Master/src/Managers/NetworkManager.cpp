@@ -1,4 +1,5 @@
 #include "NetworkManager.h"
+#include "./../States/NetGame.h"
 
 NetworkManager* NetworkManager::instance = 0;
 
@@ -7,13 +8,9 @@ NetworkManager* NetworkManager::GetInstance(){
 	return instance;
 }
 
-NetworkManager::NetworkManager(){
+NetworkManager::NetworkManager(){ }
 
-}
-
-NetworkManager::~NetworkManager(){
-
-}
+NetworkManager::~NetworkManager(){ }
 
 void NetworkManager::Update(){
 	RetrieveObjects();
@@ -46,8 +43,8 @@ void NetworkManager::SpawnNewObjects(){
 				break;
 			}
 			case ID_PLAYER_O:{
-				//Game* gameInstance = Game::GetInstance();
-				//gameInstance->SetPlayerOne(row->second);
+				NetGame* gameInstance = NetGame::GetInstance();
+				gameInstance->SetPlayerOne(row->second);
 				break;
 			}
 			case ID_POTION_O:{
@@ -87,8 +84,7 @@ void NetworkManager::EraseObjects(){
 				break;
 			}
 			case ID_PLAYER_O:{
-				std::cout<<"RECIBIMOS MENSAJE BORRAR"<<std::endl;
-				//PlayerManager::GetInstance()->AddToDeletePlayer(row->second->GetObjId());
+				PlayerManager::GetInstance()->AddToDeletePlayer(row->second->GetObjId());
 				break;
 			}
 			case ID_POTION_O:{

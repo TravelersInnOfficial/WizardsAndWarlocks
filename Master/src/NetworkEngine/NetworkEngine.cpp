@@ -17,8 +17,8 @@ NetworkEngine* NetworkEngine::GetInstance(){
 }
 
 void NetworkEngine::Update(){
-	if (server != NULL) server->RecievePackages();
-	else client->RecievePackages();
+	if (isServer && server != NULL) server->RecievePackages();
+	if (isClient && client != NULL) client->RecievePackages();
 }
 
 void NetworkEngine::StartServer(){
@@ -44,16 +44,10 @@ int NetworkEngine::GetPort(){ return(serverPort); }
 void NetworkEngine::SetIp(std::string newIp){ serverIp = newIp; }
 std::string NetworkEngine::GetIp(){ return(serverIp); }
 
-bool NetworkEngine::IsServerInit(){
-	return(isServer);
-}
-
-bool NetworkEngine::IsClientInit(){
-	return(isClient);
-}
+bool NetworkEngine::IsServerInit(){ return(isServer); }
+bool NetworkEngine::IsClientInit(){ return(isClient); }
 
 void NetworkEngine::EndService(){
-	//std::cout << "# Disconnecting #"<<std::endl;
 	if(client != NULL) delete client;
 	if(server != NULL) delete server;
 }

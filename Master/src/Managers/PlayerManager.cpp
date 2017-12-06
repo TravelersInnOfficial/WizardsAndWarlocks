@@ -33,3 +33,24 @@ void PlayerManager::UpdatePlayers(){
 		p->Update();
 	}
 }
+
+void PlayerManager::AddToDeletePlayer(int networkId){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		if(p->GetNetworkObject()->GetObjId() == networkId){
+			players.erase(players.begin()+i);
+			playersToDelete.push_back(p);
+			break;
+		}
+	}
+}
+
+void PlayerManager::DeletePlayers(){
+	int size = playersToDelete.size();
+	for(int i=0; i<size; i++){
+		Player* p = playersToDelete[i];
+		delete p;
+	}
+	playersToDelete.clear();
+}
