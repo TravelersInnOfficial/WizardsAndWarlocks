@@ -1,14 +1,14 @@
-#include "ManagerEffect.h"
+#include "EffectManager.h"
 #include "./../Game.h"
 
-ManagerEffect* ManagerEffect::instance = 0;
+EffectManager* EffectManager::instance = 0;
 
-ManagerEffect::ManagerEffect(){
+EffectManager::EffectManager(){
 	maxTime = 0.5f;
 	currentTime = 0.0f;
 }
 
-ManagerEffect::~ManagerEffect(){
+EffectManager::~EffectManager(){
 	std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
 	for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 		std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
@@ -22,14 +22,14 @@ ManagerEffect::~ManagerEffect(){
 	}
 }
 
-ManagerEffect* ManagerEffect::GetInstance(){
+EffectManager* EffectManager::GetInstance(){
 	if(instance==0){
-		instance = new ManagerEffect();
+		instance = new EffectManager();
 	}
 	return instance;
 }
 
-void ManagerEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
+void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT){
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it == effects.end()){
@@ -41,7 +41,7 @@ void ManagerEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 	currentV->push_back(effect);	
 }
 
-void ManagerEffect::CleanEffects(Player* p){
+void EffectManager::CleanEffects(Player* p){
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it != effects.end()){
@@ -56,7 +56,7 @@ void ManagerEffect::CleanEffects(Player* p){
 	}
 }
 
-void ManagerEffect::UpdateEffects(){
+void EffectManager::UpdateEffects(){
 	float deltaTime = Game::GetInstance()->GetDeltaTime();
 	currentTime += deltaTime;
 
@@ -81,7 +81,7 @@ void ManagerEffect::UpdateEffects(){
 	}
 }
 
-Effect* ManagerEffect::CreateEffect(EFFECTCODE EFFECT){
+Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
 		case EFFECT_BASIC:

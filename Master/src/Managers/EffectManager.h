@@ -1,5 +1,5 @@
-#ifndef MANAGEREFFECT_H
-#define MANAGEREFFECT_H
+#ifndef EFFECTMANAGER_H
+#define EFFECTMANAGER_H
 
 #include <iostream>
 #include <map>
@@ -10,10 +10,10 @@
 #include "./../Player.h"
 #include <EffectCodes.h>
 
-class ManagerEffect{
+class EffectManager{
 public:
-	static ManagerEffect* GetInstance();
-	~ManagerEffect();
+	static EffectManager* GetInstance();
+	~EffectManager();
 
 	void AddEffect(Player* p, EFFECTCODE e);
 	void CleanEffects(Player* p);
@@ -26,8 +26,8 @@ private:
 	float currentTime;
 	float maxTime;
 
-	ManagerEffect();
-	static ManagerEffect* instance;
+	EffectManager();
+	static EffectManager* instance;
 };
 
 #endif

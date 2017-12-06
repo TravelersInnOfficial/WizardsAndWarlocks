@@ -9,7 +9,7 @@
 
 //Controlers
 #include "./Game.h"
-#include "./Managers/ManagerObject.h"
+#include "./Managers/ObjectManager.h"
 #include "./LevelLoader.h"
 
 bool manageInputs(Player* physicPlayer){
@@ -21,12 +21,12 @@ bool manageInputs(Player* physicPlayer){
 		end = true;
 	}
 	if(engine->IsLeftButtonPressed()){ 
-		ManagerSpell::GetInstance()->ResetHechizo(0,physicPlayer);
+		SpellManager::GetInstance()->ResetHechizo(0,physicPlayer);
 		physicPlayer->DropObject();
 	}
-	if(engine->IsLeftButtonDown()){  ManagerSpell::GetInstance()->LanzarHechizo(0,physicPlayer); 
+	if(engine->IsLeftButtonDown()){  SpellManager::GetInstance()->LanzarHechizo(0,physicPlayer); 
 	}
-	if(engine->IsKeyPressed(KEY_KEY_E)){ ManagerSpell::GetInstance()->LanzarHechizo(1,physicPlayer);
+	if(engine->IsKeyPressed(KEY_KEY_E)){ SpellManager::GetInstance()->LanzarHechizo(1,physicPlayer);
 	physicPlayer->Raycast(); }
 
 	if(engine->IsKeyPressed(KEY_KEY_Z)){

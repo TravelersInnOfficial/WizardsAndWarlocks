@@ -1,6 +1,6 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
-#include "Managers/ManagerObject.h"
+#include "Managers/ObjectManager.h"
 #include <vector3d.h>
 #include <json.hpp>
 #include <fstream>
@@ -15,7 +15,7 @@ bool LevelLoader::loadLobby()
 }
 
 bool LevelLoader::readJson(std::string jsonPath){
-    ManagerObject* objManager = ManagerObject::GetInstance();
+    ObjectManager* objManager = ObjectManager::GetInstance();
     
     //Takes path from binary location (/bin)
     std::ifstream i(jsonPath);

@@ -1,5 +1,5 @@
 #include "Hechizo.h"
-#include "./../Managers/ManagerBullet.h"
+#include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../Game.h"
 

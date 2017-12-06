@@ -4,12 +4,12 @@
 Game* Game::instance = 0;
 
 Game::Game(){
-	masterSpell 	= ManagerSpell::GetInstance();
-	masterBullet 	= ManagerBullet::GetInstance();
-	masterEffect 	= ManagerEffect::GetInstance();
-	masterObject	= ManagerObject::GetInstance();
-	masterPlayer	= ManagerPlayer::GetInstance();
-	masterTrap		= ManagerTrap::GetInstance();
+	spellManager 	= SpellManager::GetInstance();
+	bulletManager 	= BulletManager::GetInstance();
+	effectManager 	= EffectManager::GetInstance();
+	objectManager	= ObjectManager::GetInstance();
+	playerManager	= PlayerManager::GetInstance();
+	trapManager		= TrapManager::GetInstance();
 
 	f_engine = BulletEngine::GetInstance();
 	g_engine = GraphicEngine::getInstance();
@@ -22,34 +22,34 @@ Game::Game(){
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 
 	//Cosas Random--------------------------------------------------------
-	masterObject->AddSwitch(
-		masterObject->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
+	objectManager->AddSwitch(
+		objectManager->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
 		vector3df(-1, 0, -4), vector3df(1,1,1), vector3df(0,0,0), vector3df(0,0,0)
 		);
-	masterObject->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
-	masterObject->AddFountain();
-	masterObject->AddGrail();
+	objectManager->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
+	objectManager->AddFountain();
+	objectManager->AddGrail();
 
 	//Traps
-	masterTrap->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
-	masterTrap->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
+	trapManager->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
+	trapManager->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
 
 	// START JUGADOR
-	playerOne = masterPlayer->AddPlayer(true);
-	masterSpell->AddHechizo(0, playerOne, SPELL_PROYECTIL);
-	masterSpell->AddHechizo(1, playerOne, SPELL_BASIC);
-	masterPlayer->AddPlayer(false);
+	playerOne = playerManager->AddPlayer(true);
+	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
+	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
+	playerManager->AddPlayer(false);
 
-	//masterEffect->AddEffect(playerOne, EFFECT_BURNED);
+	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 	// Activacion del timer de ControlHechizo  (Para el deltaTime)
 }
 
 Game::~Game(){
-	delete masterSpell;
-	delete masterBullet;
-	delete masterEffect;
-	delete masterObject;
-	delete masterPlayer;
+	delete spellManager;
+	delete bulletManager;
+	delete effectManager;
+	delete objectManager;
+	delete playerManager;
 }
 
 Game* Game::GetInstance(){
@@ -108,11 +108,11 @@ void Game::Update(){
 	f_engine->UpdateWorld();
 	s_engine->update();
 
-	masterBullet->Update();
-	masterSpell->UpdateCooldown();
-	masterEffect->UpdateEffects();
-	masterObject->Update();
-	masterPlayer->UpdatePlayers();
+	bulletManager->Update();
+	spellManager->UpdateCooldown();
+	effectManager->UpdateEffects();
+	objectManager->Update();
+	playerManager->UpdatePlayers();
 }
 
 void Game::Draw(){

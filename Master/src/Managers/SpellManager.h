@@ -1,5 +1,5 @@
-#ifndef MANAGERSPELL_H
-#define MANAGERSPELL_H
+#ifndef SPELLMANAGER_H
+#define SPELLMANAGER_H
 
 #include <iostream>
 #include <map>
@@ -8,10 +8,10 @@
 #include <SpellCodes.h>
 #include "./../Player.h"
 
-class ManagerSpell{
+class SpellManager{
 public:
-	static ManagerSpell* GetInstance();
-	~ManagerSpell();
+	static SpellManager* GetInstance();
+	~SpellManager();
 
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
 	void UpdateCooldown();
@@ -24,8 +24,8 @@ private:
 	std::map<Player*, Hechizo*> hechizos[4];
 	int numHechizos = 4;
 
-	ManagerSpell();
-	static ManagerSpell* instance;
+	SpellManager();
+	static SpellManager* instance;
 };
 
 #endif

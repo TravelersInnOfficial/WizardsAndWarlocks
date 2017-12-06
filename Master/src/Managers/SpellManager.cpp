@@ -1,14 +1,14 @@
-#include "ManagerSpell.h"
+#include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../Game.h"
 
 
-ManagerSpell* ManagerSpell::instance = 0;
+SpellManager* SpellManager::instance = 0;
 
-ManagerSpell::ManagerSpell(){
+SpellManager::SpellManager(){
 }
 
-ManagerSpell::~ManagerSpell(){
+SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
 		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
@@ -19,9 +19,9 @@ ManagerSpell::~ManagerSpell(){
 	}
 }
 
-ManagerSpell* ManagerSpell::GetInstance(){
+SpellManager* SpellManager::GetInstance(){
 	if(instance==0){
-		instance = new ManagerSpell();
+		instance = new SpellManager();
 	}
 	return instance;
 }
@@ -35,7 +35,7 @@ ManagerSpell* ManagerSpell::GetInstance(){
  * 
  * @return 		[Se ha asignado correctamente el hechizo]
  */
-bool ManagerSpell::AddHechizo(int num, Player* p, SPELLCODE type){
+bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
 		if(h!=NULL){
@@ -51,7 +51,7 @@ bool ManagerSpell::AddHechizo(int num, Player* p, SPELLCODE type){
  * @brief [Actualiza los valores de Cooldown de los hechizos]
  * @details [long description]
  */
-void ManagerSpell::UpdateCooldown(){
+void SpellManager::UpdateCooldown(){
 	float deltaTime = Game::GetInstance()->GetDeltaTime();
 
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
@@ -65,7 +65,7 @@ void ManagerSpell::UpdateCooldown(){
 	}	
 }
 
-bool ManagerSpell::LanzarHechizo(int num, Player* p){
+bool SpellManager::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 		if(h!=NULL){							// Comprobamos si realmente existe
@@ -79,7 +79,7 @@ bool ManagerSpell::LanzarHechizo(int num, Player* p){
 	return false;
 }
 
-void ManagerSpell::ResetHechizo(int num, Player* p){
+void SpellManager::ResetHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 		if(h!=NULL){							// Comprobamos si realmente existe
@@ -91,7 +91,7 @@ void ManagerSpell::ResetHechizo(int num, Player* p){
 	}
 }
 
-Hechizo* ManagerSpell::CrearHechizo(SPELLCODE type){
+Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo

@@ -1,21 +1,21 @@
-#include "ManagerBullet.h"
+#include "BulletManager.h"
 
-ManagerBullet* ManagerBullet::instance = 0;
+BulletManager* BulletManager::instance = 0;
 
-ManagerBullet::ManagerBullet(){}
+BulletManager::BulletManager(){}
 
-ManagerBullet::~ManagerBullet(){
+BulletManager::~BulletManager(){
 	DeleteAllProyectiles();
 }
 
-ManagerBullet* ManagerBullet::GetInstance(){
+BulletManager* BulletManager::GetInstance(){
 	if(instance==0){
-		instance = new ManagerBullet();
+		instance = new BulletManager();
 	}
 	return instance;
 }
 
-void ManagerBullet::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
+void BulletManager::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
 	switch(b){
 		case BULLET_BASIC:
 			proyectiles.push_back(new Proyectil(pos, dir, r, v));
@@ -23,7 +23,7 @@ void ManagerBullet::AddProyectil(vector3df pos, vector3df dir, float r, float v,
 	}
 }
 
-void ManagerBullet::Update(){
+void BulletManager::Update(){
 	DeleteProyectiles();
 	int size = proyectiles.size();
 	for(int i=size-1; i>=0; i--){
@@ -35,7 +35,7 @@ void ManagerBullet::Update(){
  * @brief [Mueve los objetos proyectil del vector de Update al de delete]
  * @details [long description]
  */
-void ManagerBullet::AddToDeleteProyecil(Proyectil* pro){
+void BulletManager::AddToDeleteProyecil(Proyectil* pro){
 	// Comprueba que el proyectil no sea NULL
 	if(pro!=NULL){
 		// Nos guardamos el tamanyo el vector
@@ -59,7 +59,7 @@ void ManagerBullet::AddToDeleteProyecil(Proyectil* pro){
  * @brief [Eliminamos todos los proyectiles que esten en el vector]
  * @details [long description]
  */
-void ManagerBullet::DeleteProyectiles(){
+void BulletManager::DeleteProyectiles(){
 	// Nos guardamos el tamanyo del vector
 	int size = proyectilesToDelete.size();
 	// Recorremos el vector de proyectiles por eliminar
@@ -74,7 +74,7 @@ void ManagerBullet::DeleteProyectiles(){
 	proyectilesToDelete.clear();
 }
 
-void ManagerBullet::DeleteAllProyectiles(){
+void BulletManager::DeleteAllProyectiles(){
 	// =====================================
 	//  PROYECTILES
 	// =====================================

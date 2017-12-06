@@ -1,5 +1,5 @@
 #include "Trap.h"
-#include "./Managers/ManagerTrap.h"
+#include "./Managers/TrapManager.h"
 #include "Game.h"
 
 Trap::Trap(){
@@ -93,7 +93,7 @@ void Trap::Contact(void* punt, EntityEnum tipo){
         Activate(player);
     }
     if(tipo == EENUM_PROJECTILE){
-        ManagerTrap::GetInstance()->DeleteTrap(this);
+        TrapManager::GetInstance()->DeleteTrap(this);
     }
 }
 
@@ -108,7 +108,7 @@ void Trap::Activate(Player* player ){
     std::cout<<"Aplico: "<<m_effect<<std::endl;
 
     player->Respawn();
-    ManagerTrap::GetInstance()->DeleteTrap(this);
+    TrapManager::GetInstance()->DeleteTrap(this);
     
 }
 
@@ -122,7 +122,7 @@ void Trap::Deactivate(){
     std::cout<<"CURRENT TIME: "<<m_current_time<<std::endl;
 
 	if(m_current_time>=m_deactivation_time){
-		ManagerTrap::GetInstance()->DeleteTrap(this);
+		TrapManager::GetInstance()->DeleteTrap(this);
 		m_current_time=0.0f;
 	}
 }

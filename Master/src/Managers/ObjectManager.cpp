@@ -1,12 +1,12 @@
-#include "ManagerObject.h"
+#include "ObjectManager.h"
 
-ManagerObject* ManagerObject::instance = 0;
+ObjectManager* ObjectManager::instance = 0;
 
-ManagerObject::ManagerObject(){
+ObjectManager::ObjectManager(){
 	grail = NULL;
 }
 
-ManagerObject::~ManagerObject(){
+ObjectManager::~ObjectManager(){
 	int size = blocks.size();
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
@@ -45,58 +45,58 @@ ManagerObject::~ManagerObject(){
 	delete grail;
 }
 
-ManagerObject* ManagerObject::GetInstance(){
+ObjectManager* ObjectManager::GetInstance(){
 	if(instance==0){
-		instance = new ManagerObject();
+		instance = new ObjectManager();
 	}
 	return instance;
 }
 
-Block* ManagerObject::AddBlock(vector3df pos, vector3df size, vector3df rot, std::string texture){
+Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std::string texture){
 	Block* b = new Block(pos, rot, size, texture);
 	blocks.push_back(b);
 	return b;
 }
 
-Door* ManagerObject::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	Door* d = new Door(TPosition, TScale, TRotation, TCenter);
 	doors.push_back(d);
 	return d;
 }
 
-Grail* ManagerObject::AddGrail(){
+Grail* ObjectManager::AddGrail(){
 	if(grail==NULL){
 		grail = new Grail();
 	}
 	return grail;
 }
 
-Switch* ManagerObject::AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+Switch* ObjectManager::AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	Switch* s = new Switch(TPosition, TScale, TRotation, TCenter);
 	s->SetDoor(d);
 	switchs.push_back(s);
 	return s;
 }
 
-Switch* ManagerObject::AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+Switch* ObjectManager::AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	Switch* s = new Switch(TPosition, TScale, TRotation, TCenter);
 	switchs.push_back(s);
 	return s;
 }
 
-Potion* ManagerObject::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation){
+Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	Potion* p = new Potion(TPosition, TScale, TRotation);
 	potions.push_back(p);
 	return p;
 }
 
-Fountain* ManagerObject::AddFountain(){
+Fountain* ObjectManager::AddFountain(){
 	Fountain* f = new Fountain();
 	fountains.push_back(f);
 	return f;
 }
 
-void ManagerObject::DeletePotion(Potion* potion){
+void ObjectManager::DeletePotion(Potion* potion){
 	int size = potions.size();
 	for(int i=0; i<size; i++){
 		Potion* p = potions[i];
@@ -107,7 +107,7 @@ void ManagerObject::DeletePotion(Potion* potion){
 	}
 }
 
-void ManagerObject::Update(){
+void ObjectManager::Update(){
 	UpdateGrail();
 	UpdateDoors();
 	UpdateSwitchs();
@@ -116,13 +116,13 @@ void ManagerObject::Update(){
 	UpdateBlocks();
 }
 
-void ManagerObject::UpdateGrail(){
+void ObjectManager::UpdateGrail(){
 	if(grail!=NULL){
 		grail->Update();
 	}
 }
 
-void ManagerObject::UpdateDoors(){
+void ObjectManager::UpdateDoors(){
 	int size = doors.size();
 	for(int i=0; i<size; i++){
 		Door* d = doors[i];
@@ -130,7 +130,7 @@ void ManagerObject::UpdateDoors(){
 	}
 }
 
-void ManagerObject::UpdateSwitchs(){
+void ObjectManager::UpdateSwitchs(){
 	int size = switchs.size();
 	for(int i=0; i<size; i++){
 		Switch* s = switchs[i];
@@ -138,7 +138,7 @@ void ManagerObject::UpdateSwitchs(){
 	}
 }
 
-void ManagerObject::UpdatePotions(){
+void ObjectManager::UpdatePotions(){
 	int size = potions.size();
 	for(int i=0; i<size; i++){
 		Potion* p = potions[i];
@@ -146,7 +146,7 @@ void ManagerObject::UpdatePotions(){
 	}
 }
 
-void ManagerObject::UpdateFountains(){
+void ObjectManager::UpdateFountains(){
 	int size = fountains.size();
 	for(int i=0; i<size; i++){
 		Fountain* f = fountains[i];
@@ -154,7 +154,7 @@ void ManagerObject::UpdateFountains(){
 	}
 }
 
-void ManagerObject::UpdateBlocks(){
+void ObjectManager::UpdateBlocks(){
 	int size = blocks.size();
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];

@@ -1,9 +1,9 @@
 #include "./Player.h"
 #include "./PhysicsEngine/BulletEngine.h"
-#include "./Managers/ManagerObject.h"
-#include "./Managers/ManagerTrap.h"
-#include "./Managers/ManagerSpell.h"
-#include "./Managers/ManagerEffect.h"
+#include "./Managers/ObjectManager.h"
+#include "./Managers/TrapManager.h"
+#include "./Managers/SpellManager.h"
+#include "./Managers/EffectManager.h"
 
 #include "./Objects/Potion.h"
 #include "./Trap.h"
@@ -117,10 +117,10 @@ void Player::CheckInput(){
 	if(controller->IsKeyDown(ACTION_JUMP)){ this->Jump(); }
 	if(controller->IsKeyDown(ACTION_USE_OBJECT)){ this->UseObject(); }
 	if(controller->IsKeyDown(ACTION_SHOOT)){ 
-		ManagerSpell::GetInstance()->ResetHechizo(0,this); 
+		SpellManager::GetInstance()->ResetHechizo(0,this); 
 		this->DropObject();
 	}
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ ManagerSpell::GetInstance()->LanzarHechizo(0,this); }
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
 }
 
 void Player::positionCamera(){
@@ -229,7 +229,7 @@ void Player::Raycast(){
 }
 
 void Player::Die(){
-	ManagerEffect::GetInstance()->CleanEffects(this);
+	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
 
@@ -247,7 +247,7 @@ void Player::DropObject(){
 void Player::UseObject(){
 	if(potion!=NULL){
 		potion->Use(this);
-		ManagerObject::GetInstance()->DeletePotion(potion);
+		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
 }
@@ -264,7 +264,7 @@ void Player::DeployTrap(){
 
 	vector3df End(EndX, EndY, EndZ);
 
-	ManagerTrap::GetInstance()->AddTrap(End,TENUM_DEATH_CLAWS);
+	TrapManager::GetInstance()->AddTrap(End,TENUM_DEATH_CLAWS);
 }
 
 void Player::setPosition(float posX, float posY, float posZ){

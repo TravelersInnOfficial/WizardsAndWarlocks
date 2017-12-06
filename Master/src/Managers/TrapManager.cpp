@@ -1,17 +1,17 @@
-#include "ManagerTrap.h"
+#include "TrapManager.h"
 
-ManagerTrap* ManagerTrap::instance = 0;
+TrapManager* TrapManager::instance = 0;
 
-ManagerTrap* ManagerTrap::GetInstance(){
+TrapManager* TrapManager::GetInstance(){
 	if(instance==0){
-		instance = new ManagerTrap();
+		instance = new TrapManager();
 	}
 	return instance;
 }
 
-ManagerTrap::ManagerTrap(){}
+TrapManager::TrapManager(){}
 
-ManagerTrap::~ManagerTrap(){
+TrapManager::~TrapManager(){
 	int size = traps.size();
 	for(int i=0; i<size; i++){
 		Trap* t = traps[i];
@@ -20,13 +20,13 @@ ManagerTrap::~ManagerTrap(){
 	traps.clear();
 }
 
-Trap* ManagerTrap::AddTrap(vector3df pos, TrapEnum type){
+Trap* TrapManager::AddTrap(vector3df pos, TrapEnum type){
 	Trap* t = new Trap(pos, type);
 	traps.push_back(t);
 	return t;
 }
 
-void ManagerTrap::DeleteTrap(Trap* trap){
+void TrapManager::DeleteTrap(Trap* trap){
 	int size = traps.size();
 	for(int i=0; i<size; i++){
 		Trap* t = traps[i];

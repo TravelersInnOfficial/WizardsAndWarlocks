@@ -5,12 +5,12 @@
 
 #include "./Player.h"
 
-#include "./Managers/ManagerSpell.h"
-#include "./Managers/ManagerBullet.h"
-#include "./Managers/ManagerEffect.h"
-#include "./Managers/ManagerObject.h"
-#include "./Managers/ManagerPlayer.h"
-#include "./Managers/ManagerTrap.h"
+#include "./Managers/SpellManager.h"
+#include "./Managers/BulletManager.h"
+#include "./Managers/EffectManager.h"
+#include "./Managers/ObjectManager.h"
+#include "./Managers/PlayerManager.h"
+#include "./Managers/TrapManager.h"
 //Fachada
 #include "PhysicsEngine/BulletEngine.h"
 #include "GraphicEngine/GraphicEngine.h"
@@ -36,12 +36,12 @@ private:
 	float timeStart;
 	float deltaTime;
 
-	ManagerSpell* 		masterSpell;
-	ManagerBullet* 		masterBullet;
-	ManagerEffect* 		masterEffect;
-	ManagerObject*		masterObject;
-	ManagerPlayer*		masterPlayer;
-	ManagerTrap*		masterTrap;
+	SpellManager* 		spellManager;
+	BulletManager* 		bulletManager;
+	EffectManager* 		effectManager;
+	ObjectManager*		objectManager;
+	PlayerManager*		playerManager;
+	TrapManager*		trapManager;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;

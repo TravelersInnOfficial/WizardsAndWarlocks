@@ -1,5 +1,5 @@
-#ifndef MANAGEROBJECT_H
-#define MANAGEROBJECT_H
+#ifndef OBJECTMANAGER_H
+#define OBJECTMANAGER_H
 
 #include <iostream>
 #include <vector>
@@ -11,10 +11,10 @@
 #include "./../Objects/Fountain.h"
 #include "./../Objects/Grail.h"
 
-class ManagerObject{
+class ObjectManager{
 public:
-	static ManagerObject* GetInstance();
-	~ManagerObject();
+	static ObjectManager* GetInstance();
+	~ObjectManager();
 
 	// Create Block and adds to vector
 	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture=0);
@@ -41,8 +41,8 @@ private:
 	vector<Fountain*>	fountains;
 	Grail*				grail;
 
-	ManagerObject();
-	static ManagerObject* instance; 
+	ObjectManager();
+	static ObjectManager* instance; 
 };
 
 #endif
