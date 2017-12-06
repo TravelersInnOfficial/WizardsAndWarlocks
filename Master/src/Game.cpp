@@ -8,7 +8,7 @@ Game::Game(){
 	effectManager 	= EffectManager::GetInstance();
 	objectManager	= ObjectManager::GetInstance();
 	playerManager	= PlayerManager::GetInstance();
-	trapManager		= TrapManager::GetInstance();7
+	trapManager		= TrapManager::GetInstance();
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
