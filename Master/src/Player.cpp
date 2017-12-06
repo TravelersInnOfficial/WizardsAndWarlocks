@@ -76,15 +76,17 @@ void Player::DeletePlayer(){
 }
 
 void Player::Update(){
+	/*
+	if(!isPlayerOne){
+		m_position = networkObject->GetVecFVar(PLAYER_POSITION);
+		bt_body->SetPosition(m_position);
+	}
+	else m_position = bt_body->GetPosition();
+	*/
+
 	CheckInput();
-
 	if(m_position.Y < -50) Respawn();
-
-	m_position.X = bt_body->GetPosition().X;
-	m_position.Y = bt_body->GetPosition().Y;
-	m_position.Z = bt_body->GetPosition().Z;
-
-	//BULLET
+	m_position = bt_body->GetPosition();
 	bt_body->Update();
 	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
 
@@ -102,6 +104,8 @@ void Player::Update(){
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
 	if(m_dead) Die();
+
+	// if(isPlayerOne) networkObject->SetVecFVar(PLAYER_POSITION, m_position, true, false);
 }
 
 void Player::UpdateInput(){
@@ -290,6 +294,7 @@ void Player::SetPosY(float posY){
 void Player::SetHP(float HP){ m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
+void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
 bool Player::GetDead(){ return m_dead; }
 float Player::GetRotY(){
@@ -314,3 +319,4 @@ float Player::GetLength(){ return m_dimensions.Z; }
 float Player::GetHP(){ return m_HP; }
 float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
+NetworkObject* Player::GetNetworkObject(){ return (networkObject); }

@@ -25,6 +25,9 @@ public:
 	Server* GetServer();
 	Client* GetClient();
 
+	// We recieve the packages of our peer
+	void Update();
+
 	// Manage the IP we're going to send the packages to
 	// "127.0.0.1" format
 	void SetIp(std::string newIp);

@@ -16,6 +16,11 @@ NetworkEngine* NetworkEngine::GetInstance(){
 	return instance;
 }
 
+void NetworkEngine::Update(){
+	if (server != NULL) server->RecievePackages();
+	else client->RecievePackages();
+}
+
 void NetworkEngine::StartServer(){
 	if(!isClient){
 		isServer = true;

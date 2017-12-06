@@ -25,8 +25,6 @@ NetGame::NetGame(){
 
 	// Jugador
 	playerOne = NULL;
-	/*playerOne = playerManager->AddPlayer(true);
-	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);*/
 }
 
 NetGame::~NetGame(){
@@ -63,6 +61,7 @@ bool NetGame::Input(){
 void NetGame::Update(){
 	UpdateDelta();
 
+	n_engine->Update();
 	g_engine->UpdateReceiver();
 	f_engine->UpdateWorld();
 	s_engine->update();
@@ -71,8 +70,9 @@ void NetGame::Update(){
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
-	playerManager->UpdatePlayers();
 	trapManager->Update(deltaTime);
+
+	playerManager->UpdatePlayers();
 }
 
 void NetGame::Draw(){
@@ -92,7 +92,7 @@ void NetGame::UpdateDelta(){
 }
 
 void NetGame::SetPlayerOne(NetworkObject* nObject){
-	/*if(!isServer && playerOne == NULL) {
+	if(!isServer && playerOne == NULL) {
 		playerOne = playerManager->AddPlayer(true);
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
@@ -102,5 +102,5 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		Player* newPlayer = playerManager->AddPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
-	}*/
+	}
 }
