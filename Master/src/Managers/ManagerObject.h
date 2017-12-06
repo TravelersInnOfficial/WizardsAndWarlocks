@@ -18,10 +18,11 @@ public:
 
 	// Create Block and adds to vector
 	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture=0);
-	Door* AddDoor();
+	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Grail* AddGrail();
-	Switch* AddSwitch(Door* d);
-	Potion* AddPotion(vector3df pos);
+	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Switch* AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Fountain* AddFountain();
 	void DeletePotion(Potion* p);
 	void Update();

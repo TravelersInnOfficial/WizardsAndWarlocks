@@ -11,13 +11,13 @@
 
 class Door: public Entidad{
 public:
-	Door();
+	Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	~Door();
 	void Interact(Player* p);
 	void Interact();
 	void Update();
 private:
-	void CreateDoor();
+	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void WorkDoor();
 	void UpdatePosShape();
 

@@ -12,12 +12,12 @@ class Player;
 
 class Potion:public Entidad{
 public:
-	Potion(vector3df pos);
+	Potion(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~Potion();
 	void Update();
 	void Interact(Player* p);
 	void Use(Player* p);
-	void CreatePotion(vector3df pos);
+	void CreatePotion(vector3df TPosition, vector3df TRotation);
 private:
 	void DeletePotion();
 	void UpdatePosShape();
@@ -25,6 +25,8 @@ private:
 	int value;
 
 	bool cogida;
+
+	vector3df 		scale;			// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
 
 	BT_Body*        bt_body;
     GBody*          m_potionNode;

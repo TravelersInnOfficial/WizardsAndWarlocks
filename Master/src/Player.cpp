@@ -3,6 +3,7 @@
 #include "./Managers/ManagerObject.h"
 #include "./Managers/ManagerTrap.h"
 #include "./Managers/ManagerSpell.h"
+#include "./Managers/ManagerEffect.h"
 
 #include "./Objects/Potion.h"
 #include "./Trap.h"
@@ -13,7 +14,7 @@ Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(1,1,1);
 
-	raycastDistance = 1.0f;
+	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
 
 	potion = NULL;
@@ -35,14 +36,14 @@ Player::~Player(){
 }
 
 void Player::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, "move up");
-	controller->AddAction(KEY_KEY_S, "move down");
-	controller->AddAction(KEY_KEY_A, "move left");
-	controller->AddAction(KEY_KEY_D, "move right");
-	controller->AddAction(KEY_KEY_E, "raycast");
-	controller->AddAction(KEY_SPACE, "jump");
-	controller->AddAction(KEY_KEY_Z, "use object");
-	controller->AddAction(KEY_LBUTTON, "disparar");
+	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
+	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
+	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
+	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
+	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
+	controller->AddAction(KEY_SPACE, ACTION_JUMP);
+	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
 }
 
 void Player::CreatePlayer(){
@@ -100,7 +101,7 @@ void Player::Update(){
 
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
-	if(m_dead) Respawn();
+	if(m_dead) Die();
 }
 
 void Player::UpdateInput(){
@@ -108,18 +109,18 @@ void Player::UpdateInput(){
 }
 
 void Player::CheckInput(){
-	if(controller->IsKeyPressed("move left")){ this->MoveX(-1); }
-	if(controller->IsKeyPressed("move down")){ this->MoveZ(-1); }
-	if(controller->IsKeyPressed("move right")){ this->MoveX(1); }
-	if(controller->IsKeyPressed("move up")){ this->MoveZ(1); }
-	if(controller->IsKeyPressed("raycast")){ this->Raycast(); }
-	if(controller->IsKeyDown("jump")){ this->Jump(); }
-	if(controller->IsKeyDown("use object")){ this->UseObject(); }
-	if(controller->IsKeyDown("disparar")){ 
+	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+	if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+	if(controller->IsKeyPressed(ACTION_MOVE_UP)){ this->MoveZ(1); }
+	if(controller->IsKeyPressed(ACTION_RAYCAST)){ this->Raycast(); }
+	if(controller->IsKeyDown(ACTION_JUMP)){ this->Jump(); }
+	if(controller->IsKeyDown(ACTION_USE_OBJECT)){ this->UseObject(); }
+	if(controller->IsKeyDown(ACTION_SHOOT)){ 
 		ManagerSpell::GetInstance()->ResetHechizo(0,this); 
 		this->DropObject();
 	}
-	if(controller->IsKeyPressed("disparar")){ ManagerSpell::GetInstance()->LanzarHechizo(0,this); }
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ ManagerSpell::GetInstance()->LanzarHechizo(0,this); }
 }
 
 void Player::positionCamera(){
@@ -227,13 +228,18 @@ void Player::Raycast(){
 	}
 }
 
+void Player::Die(){
+	ManagerEffect::GetInstance()->CleanEffects(this);
+	Respawn();
+}
+
 void Player::CatchObject(Potion* p){
 	potion = p;
 }
 
 void Player::DropObject(){
 	if(potion!=NULL){
-		potion->CreatePotion(m_position);
+		potion->CreatePotion(m_position, vector3df(0,0,0));		//rotacion de la pocion fija?
 		potion = NULL;
 	}
 }

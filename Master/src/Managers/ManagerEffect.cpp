@@ -41,12 +41,26 @@ void ManagerEffect::AddEffect(Player* p, EFFECTCODE EFFECT){
 	currentV->push_back(effect);	
 }
 
+void ManagerEffect::CleanEffects(Player* p){
+	std::map<Player*, vector<Effect*>* >::iterator it;
+	it = effects.find(p);
+	if(it != effects.end()){
+		vector<Effect*>* currentV = effects.at(p);
+		int size = currentV->size();
+		for(int i=0; i<size; i++){
+			Effect* effect = currentV->at(i);
+			effect->RemoveEffect(p);
+			delete effect;
+		}
+		currentV->clear();
+	}
+}
+
 void ManagerEffect::UpdateEffects(){
 	float deltaTime = Game::GetInstance()->GetDeltaTime();
 	currentTime += deltaTime;
 
 	if(currentTime>=maxTime){
-
 		std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
 		for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 			Player* p = it->first;						// Pillamos el jugador actual
@@ -75,8 +89,10 @@ Effect* ManagerEffect::CreateEffect(EFFECTCODE EFFECT){
 			break;
 		case EFFECT_BURNED:
 			e = new Burned(6.0f, 10);
+			break;
 		case EFFECT_SLOWEDDOWN:
 			e = new SlowedDown(6.0f, 10.0f);
+			break;
 		default:
 			e = new Effect(5.0f);
 	}

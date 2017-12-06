@@ -11,13 +11,13 @@
 
 class Switch: public Entidad{
 public:
-	Switch();
+	Switch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	~Switch();
 	void SetDoor(Door* d);
 	void Update();
 	void Contact(void* punt, EntityEnum tipo);
 private:
-	void CreateSwitch();
+	void CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void UpdatePosShape();
 
 	Door*			actualDoor;

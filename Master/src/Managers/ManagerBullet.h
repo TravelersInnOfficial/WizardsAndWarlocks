@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 #include "./../Bullets/Proyectil.h"
-#include "./../Bullets/BulletCodes.h"
+#include <BulletCodes.h>
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 

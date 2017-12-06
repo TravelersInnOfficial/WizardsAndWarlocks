@@ -5,7 +5,7 @@
 #include <map>
 #include "./../Spells/Hechizo.h"
 #include "./../Spells/HechizoProyectil.h"
-#include "./../Spells/SpellCodes.h"
+#include <SpellCodes.h>
 #include "./../Player.h"
 
 class ManagerSpell{

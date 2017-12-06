@@ -16,8 +16,8 @@
 #include "GraphicEngine/GraphicEngine.h"
 #include "SoundEngine/SoundSystem.h"
 //Enums
-#include "./Spells/SpellCodes.h"
-#include "./Effects/EffectCodes.h"
+#include <SpellCodes.h>
+#include <EffectCodes.h>
 
 class Game{
 public:

@@ -22,8 +22,11 @@ Game::Game(){
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 
 	//Cosas Random--------------------------------------------------------
-	masterObject->AddSwitch(masterObject->AddDoor());
-	masterObject->AddPotion(vector3df(-2, 0, -2));
+	masterObject->AddSwitch(
+		masterObject->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
+		vector3df(-1, 0, -4), vector3df(1,1,1), vector3df(0,0,0), vector3df(0,0,0)
+		);
+	masterObject->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
 	masterObject->AddFountain();
 	masterObject->AddGrail();
 
@@ -37,7 +40,7 @@ Game::Game(){
 	masterSpell->AddHechizo(1, playerOne, SPELL_BASIC);
 	masterPlayer->AddPlayer(false);
 
-	masterEffect->AddEffect(playerOne, EFFECT_BURNED);
+	//masterEffect->AddEffect(playerOne, EFFECT_BURNED);
 	// Activacion del timer de ControlHechizo  (Para el deltaTime)
 }
 

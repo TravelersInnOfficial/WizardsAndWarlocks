@@ -1,6 +1,6 @@
 #include "ControllerPlayer.h"
 
-Key_player::Key_player(TKEY_CODE k, std::string a){
+Key_player::Key_player(TKEY_CODE k, ACTION_ENUM a){
 	key = k;
 	status = UP;
 	action = a;
@@ -14,7 +14,7 @@ TKEY_CODE Key_player::GetKey(){
 	return key;
 }
 
-std::string Key_player::GetAction(){
+ACTION_ENUM Key_player::GetAction(){
 	return action;
 }
 
@@ -47,7 +47,7 @@ ControllerPlayer::ControllerPlayer(){}
  * 
  * @return - Si se ha podido crear bien la accion (No permite dos acciones con la misma tecla)
  */
-bool ControllerPlayer::AddAction(TKEY_CODE key, std::string ac){
+bool ControllerPlayer::AddAction(TKEY_CODE key, ACTION_ENUM ac){
 	int size = keys.size();						
 	for(int i=0; i<size; i++){					// Recorremos todas las acciones actuales
 		Key_player* k = keys[i];		
@@ -78,14 +78,14 @@ bool ControllerPlayer::IsKeyDown(int num){
 /**
  * Comprueba si una tecla esta pulsada
  * 
- * @param a - Nombre de la accion
+ * @param action - Nombre de la accion
  * @return  True->Se ha pulsado
  */
-bool ControllerPlayer::IsKeyDown(std::string a){
+bool ControllerPlayer::IsKeyDown(ACTION_ENUM action){
 	int size = keys.size();
 	for(int i=0; i<size; i++){				// Recorremos todos el vector de teclas
 		Key_player* k = keys[i];
-		if(a.compare(k->GetAction())==0){	// Miramos si se corresponde con la accion pasada
+		if(action == k->GetAction()){	// Miramos si se corresponde con la accion pasada
 			if(k->GetStatus()==DOWN){		// Comprobamos que el Status sea el correspondiente
 				return true;
 			}
@@ -114,14 +114,14 @@ bool ControllerPlayer::IsKeyPressed(int num){
 /**
  * Comprueba si una tecla esta siendo pulsada
  * 
- * @a - Nombre de la accion
+ * @action - Nombre de la accion
  * @return  True->La tecla esta siendo pulsada
  */
-bool ControllerPlayer::IsKeyPressed(std::string a){
+bool ControllerPlayer::IsKeyPressed(ACTION_ENUM action){
 	int size = keys.size();
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
-		if(a.compare(k->GetAction())==0){
+		if(action == k->GetAction()){
 			if(k->GetStatus()==DOWN || k->GetStatus()==PRESSED || k->GetStatus()==RELEASED){
 				return true;
 			}

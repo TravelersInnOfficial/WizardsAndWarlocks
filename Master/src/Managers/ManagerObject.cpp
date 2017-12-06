@@ -58,8 +58,8 @@ Block* ManagerObject::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 	return b;
 }
 
-Door* ManagerObject::AddDoor(){
-	Door* d = new Door();
+Door* ManagerObject::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+	Door* d = new Door(TPosition, TScale, TRotation, TCenter);
 	doors.push_back(d);
 	return d;
 }
@@ -71,15 +71,21 @@ Grail* ManagerObject::AddGrail(){
 	return grail;
 }
 
-Switch* ManagerObject::AddSwitch(Door* d){
-	Switch* s = new Switch();
+Switch* ManagerObject::AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+	Switch* s = new Switch(TPosition, TScale, TRotation, TCenter);
 	s->SetDoor(d);
 	switchs.push_back(s);
 	return s;
 }
 
-Potion* ManagerObject::AddPotion(vector3df pos){
-	Potion* p = new Potion(pos);
+Switch* ManagerObject::AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+	Switch* s = new Switch(TPosition, TScale, TRotation, TCenter);
+	switchs.push_back(s);
+	return s;
+}
+
+Potion* ManagerObject::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation){
+	Potion* p = new Potion(TPosition, TScale, TRotation);
 	potions.push_back(p);
 	return p;
 }

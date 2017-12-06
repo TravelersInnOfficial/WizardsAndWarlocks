@@ -13,13 +13,19 @@ BT_GhostObject::BT_GhostObject(){
 void BT_GhostObject::CreateGhostBox(vector3df* position, vector3df* dimensions){
     m_position = position;
     m_dimensions = dimensions;
-    std::cout<<m_position->X<<position->X<<m_position->Y<<position->Y<<m_position->Z<<position->Z<<std::endl;
+   
+    //std::cout<<"PositionX: "<<position->X<<" PositionsY: "<<position->Y<<" PositionsZ: "<<position->Z<<std::endl;
+    //std::cout<<"DimensionX: "<<dimensions->X<<" DimensionY: "<<dimensions->Y<<" DimensionZ: "<<dimensions->Z<<std::endl;
 
     m_body->setCollisionShape(new btBoxShape(btVector3(m_dimensions->X, m_dimensions->Y,m_dimensions->Z)));
     btTransform transform;
-	//transform.setIdentity();
+    //transform.setIdentity();
     transform.setOrigin(btVector3(m_position->X,m_position->Y,m_position->Z));
     m_body->setWorldTransform(transform);  
+   
+    //m_body->setCollisionShape(new btSphereShape(0.5));
+    //m_body->setWorldTransform(btTransform(btQuaternion(0,0,0,1), btVector3(position->X,position->Y,position->Z)));
+   
     BulletEngine::GetInstance()->AddGhostBody(m_body);
 }
 

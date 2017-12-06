@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <Actions.h>
 #include "./Entidad.h"
 #include "./ControllerPlayer.h"
 
@@ -31,6 +32,7 @@ class Player: public Entidad{
 		bool ChangeMP(float);
 		void Respawn();
 		void Raycast();
+		void Die();
 		// Functions Object
 		void CatchObject(Potion* p);
 		void DropObject();

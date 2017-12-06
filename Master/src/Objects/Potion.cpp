@@ -1,9 +1,10 @@
 #include "./Potion.h"
 
-Potion::Potion(vector3df TPosition){
+Potion::Potion(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	value = 20;
 	clase = EENUM_POTION;
-	CreatePotion(TPosition);
+	scale = TScale;
+	CreatePotion(TPosition, TRotation);
 }
 
 Potion::~Potion(){
@@ -16,20 +17,15 @@ Potion::~Potion(){
     delete m_potionNode;
 }
 
-void Potion::CreatePotion(vector3df TPosition){
+void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	cogida = false;
-
-	//vector3df TPosition(-2,0,-2);
-	vector3df TScale(0.5,0.5,0.5);
-	vector3df TRotation(0,0,0);
-
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	// Create an Irrlicht cube
 	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
 	m_potionNode->setPosition(TPosition);
-	m_potionNode->setScale(TScale);
+	m_potionNode->setScale(scale);
 	m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_potionNode) {
@@ -38,7 +34,7 @@ void Potion::CreatePotion(vector3df TPosition){
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
+	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 0.5f, scale.Z * 0.5f);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,1,0);
 	bt_body->Rotate(TRotation);

@@ -3,7 +3,7 @@
 
 #include "Hechizo.h"
 #include "./../Player.h"
-#include "./../Bullets/BulletCodes.h"
+#include <BulletCodes.h>
 
 class HechizoProyectil: public Hechizo{
 public:

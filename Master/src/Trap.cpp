@@ -35,7 +35,7 @@ Trap::Trap(vector3df position, TrapEnum trapType){
     m_body->CreateGhostBox(m_position, m_dimensions);
     m_body->SetObjectPtr(this);
 
-    m_rigidBody->CreateBox(*m_position, *m_dimensions*0.5,0,0);
+    m_rigidBody->CreateBox(*m_position, (*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
 
     g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, vector3df(0,0,0), vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
@@ -86,6 +86,8 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
+    std::cout<<tipo<<std::endl;
+
     if(tipo == EENUM_PLAYER){
         Player* player = (Player*)(punt);
         Activate(player);
