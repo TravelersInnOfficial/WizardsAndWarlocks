@@ -1,7 +1,6 @@
 #include "Hechizo.h"
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
-#include "./../Game.h"
 
 Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
 	costePM = costPM;
