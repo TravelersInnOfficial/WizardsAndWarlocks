@@ -146,7 +146,25 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 }
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
-    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed));
+    irr::SKeyMap keyMap[4];
+    keyMap[0].Action = irr::EKA_MOVE_FORWARD;
+    keyMap[0].KeyCode = irr::KEY_KEY_W;
+    keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
+    keyMap[1].KeyCode = irr::KEY_KEY_S;
+    keyMap[2].Action = irr::EKA_STRAFE_LEFT;
+    keyMap[2].KeyCode = irr::KEY_KEY_A;
+    keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
+    keyMap[3].KeyCode = irr::KEY_KEY_D;
+
+    irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
+    if (oldCamera){
+        privateSManager->setActiveCamera(0);
+        oldCamera->remove();
+        privateCamera = NULL;
+    }
+
+    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
+    
     return privateCamera;
 }
 

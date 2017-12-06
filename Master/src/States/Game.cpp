@@ -16,7 +16,9 @@ Game::Game(){
 	s_engine->createSystem("./../assets/banks/");
 	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
 
+	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
+	g_engine->addCameraSceneNodeFPS(120.f, 0.0f);
 
 	// Otras Cosas
 	objectManager->AddSwitch(

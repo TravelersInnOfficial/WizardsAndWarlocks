@@ -36,7 +36,6 @@ int main(int argc, char* argv[]) {
 	f_engine->CreateWorld();
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(false);
-	g_engine->addCameraSceneNodeFPS(120.f, 0.f);
 
 	// Level
 	LevelLoader loader;
@@ -50,7 +49,7 @@ int main(int argc, char* argv[]) {
 			end = game->Input();
 			game->Update();
 			game->Draw();
-			//std::this_thread::sleep_for(std::chrono::milliseconds(7));
+			std::this_thread::sleep_for(std::chrono::milliseconds(7));
 			g_engine->endScene();	
 		}
 		delete game;
@@ -64,7 +63,7 @@ int main(int argc, char* argv[]) {
 			end = game->Input();
 			game->Update();
 			game->Draw();
-			//std::this_thread::sleep_for(std::chrono::milliseconds(7));
+			std::this_thread::sleep_for(std::chrono::milliseconds(7));
 			g_engine->endScene();	
 		}
 		delete game;
