@@ -32,12 +32,15 @@ Trap::Trap(vector3df position, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    m_body->CreateGhostBox(m_position, m_dimensions);
+    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
+    m_body->CreateGhostBox(m_position, &aux_dimensions);
     m_body->SetObjectPtr(this);
 
+    std::cout<<"m_dimensionsX: "<<m_dimensions->X<<" m_dimensionsY: "<<m_dimensions->Y<<" m_dimensionsZ: "<<m_dimensions->Z<<std::endl;
     m_rigidBody->CreateBox(*m_position, (*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
 
+    std::cout<<"m_dimensionsX: "<<m_dimensions->X<<" m_dimensionsY: "<<m_dimensions->Y<<" m_dimensionsZ: "<<m_dimensions->Z<<std::endl;
     g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, vector3df(0,0,0), vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
