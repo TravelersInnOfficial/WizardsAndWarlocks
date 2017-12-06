@@ -13,19 +13,16 @@ Grail::Grail(){
 
 Grail::~Grail(){}
 
-void Grail::Update(){
-	if(casting){
-		casting = false;
-	}
-	else{
-		timeCasting = 0.0f;
-	}
+void Grail::Update(float deltaTime){
+	this->deltaTime = deltaTime;
+	if(casting) casting = false;
+	else timeCasting = 0.0f;
 	UpdatePosShape();
 }
 
 void Grail::Interact(Player* p){
-	float deltaTime = Game::GetInstance()->GetDeltaTime();
-	timeCasting+=deltaTime;
+	timeCasting += deltaTime;
+
 	if(timeCasting>=maxCasting){
 		std::cout<<"YOU WIN"<<std::endl;
 		timeCasting=0.0f;

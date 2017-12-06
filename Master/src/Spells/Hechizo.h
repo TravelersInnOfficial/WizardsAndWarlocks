@@ -10,7 +10,7 @@ public:
 	virtual ~Hechizo();
 
 	void EmpezarCast();
-	bool ComprobarCast();
+	bool ComprobarCast(float deltaTime);
 	virtual void Lanzar(Player* p);
 	float GetCurrentCooldown();
 	void DecCooldown(float time);

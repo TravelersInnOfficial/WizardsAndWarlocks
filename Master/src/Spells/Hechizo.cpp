@@ -30,11 +30,9 @@ void Hechizo::EmpezarCast(){
  * @brief Comprueba si el casteo del hechizo se ha completado
  * @return True->El casteo del hechizo se ha completado
  */
-bool Hechizo::ComprobarCast(){
+bool Hechizo::ComprobarCast(float deltaTime){
 	if(lanzable && currentCooldown<=0){				// Comprobamos que realmente se pueda lanzar el hechizo
-		float deltaTime = Game::GetInstance()->GetDeltaTime();
 		timeCasting += deltaTime;					// Le sumamos la diferencia entre la ultima vez que se llamo al metodo
-
 		if(timeCasting>=casting){					// Comprobamos si el tiempo de casteo se ha completado
 			timeCasting = 0.0f;						// Reseteamos el tiempo de casteo
 			currentCooldown = cooldown;				// Ponemos el tiempo de cooldown

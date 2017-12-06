@@ -17,7 +17,7 @@ public:
 
 	void AddEffect(Player* p, EFFECTCODE e);
 	void CleanEffects(Player* p);
-	void UpdateEffects();
+	void UpdateEffects(float deltaTime);
 private:
 	Effect* CreateEffect(EFFECTCODE e);
 

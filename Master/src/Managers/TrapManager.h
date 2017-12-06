@@ -10,8 +10,12 @@ public:
 	static TrapManager* GetInstance();
 	~TrapManager();
 
+	void Update(float deltaTime);
+
 	void DeleteTrap(Trap* t);
 	Trap* AddTrap(vector3df pos,TrapEnum type);
+	void UpdateTrap(float deltaTime);
+
 private:
 	vector<Trap*> traps;
 

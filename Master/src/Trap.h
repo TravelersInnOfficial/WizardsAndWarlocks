@@ -21,11 +21,13 @@ public:
     Trap();
     Trap(vector3df, TrapEnum type);
 
+    void Update(float deltaTime);
+
     //ENTITY METHODS
     void Contact(void*, EntityEnum);
     void Interact(Player*);
 
-    void Deactivate();
+    void Deactivate(float deltaTime);
     void Activate(Player* player);
 
     void SetPosition(vector3df);
@@ -54,6 +56,7 @@ private:
     BT_Body* m_rigidBody;
     GBody* g_body;
 
+    float deltaTime;
     float m_current_time;
     float m_deactivation_time;
     float m_world_time;

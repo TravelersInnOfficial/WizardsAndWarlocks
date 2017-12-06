@@ -14,7 +14,7 @@ public:
 	~SpellManager();
 
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
-	void UpdateCooldown();
+	void UpdateCooldown(float deltaTime);
 	bool LanzarHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
 
@@ -23,6 +23,7 @@ private:
 	//Por cada hechizo que pueda tener el jugador un hastable
 	std::map<Player*, Hechizo*> hechizos[4];
 	int numHechizos = 4;
+	float deltaTime;
 
 	SpellManager();
 	static SpellManager* instance;

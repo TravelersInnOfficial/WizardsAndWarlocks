@@ -25,13 +25,13 @@ public:
 	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Fountain* AddFountain();
 	void DeletePotion(Potion* p);
-	void Update();
+	void Update(float deltaTime);
 private:
-	void UpdateGrail();
+	void UpdateGrail(float deltaTime);
 	void UpdateDoors();
 	void UpdateSwitchs();
 	void UpdatePotions();
-	void UpdateFountains();
+	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
 
 	vector<Block*>		blocks;

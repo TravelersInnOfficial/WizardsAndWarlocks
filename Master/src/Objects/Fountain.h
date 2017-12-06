@@ -13,7 +13,7 @@
 class Fountain: public Entidad{
 public:
 	Fountain();
-	void Update();
+	void Update(float deltaTime);
 	void Interact(Player* p);
 	void SetFree();
 private:

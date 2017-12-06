@@ -38,7 +38,7 @@ Trap::Trap(vector3df position, TrapEnum trapType){
 
     m_rigidBody->CreateBox(*m_position, (*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
-    
+
     g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, vector3df(0,0,0), vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
@@ -47,6 +47,10 @@ Trap::Trap(vector3df position, TrapEnum trapType){
 
 Trap::~Trap(){
     Erase();
+}
+
+void Trap::Update(float deltaTime){
+    this->deltaTime = deltaTime;
 }
 
 void Trap::InitializeTrapData(){
@@ -99,9 +103,9 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 }
 
 void Trap::Interact(Player* p){
-    if(m_world_time - Game::GetInstance()->GetTotalTime()*0.001 < -0.1) m_current_time = 0;
+    if(m_world_time - deltaTime*0.001 < -0.1) m_current_time = 0;
     //std::cout<<m_world_time - Game::GetInstance()->GetTotalTime()*0.001<<std::endl;
-    Deactivate();
+    Deactivate(deltaTime);
 }
 
 void Trap::Activate(Player* player ){
@@ -113,15 +117,13 @@ void Trap::Activate(Player* player ){
     
 }
 
-void Trap::Deactivate(){
+void Trap::Deactivate(float deltaTime){
     std::cout<<"INNER TIME: "<<m_world_time<<std::endl;
-    m_world_time = Game::GetInstance()->GetTotalTime()*0.001;
-    std::cout<<"TOTAL TIME: "<<Game::GetInstance()->GetTotalTime()*0.001<<std::endl;
-    
-    std::cout<<"DELTA TIME: "<<Game::GetInstance()->GetDeltaTime()<<std::endl;
-	m_current_time += Game::GetInstance()->GetDeltaTime();
+    m_world_time = deltaTime*0.001;
+    std::cout<<"TOTAL TIME: "<<deltaTime*0.001<<std::endl;
+    std::cout<<"DELTA TIME: "<<deltaTime<<std::endl;
+	m_current_time += deltaTime;
     std::cout<<"CURRENT TIME: "<<m_current_time<<std::endl;
-
 	if(m_current_time>=m_deactivation_time){
 		TrapManager::GetInstance()->DeleteTrap(this);
 		m_current_time=0.0f;

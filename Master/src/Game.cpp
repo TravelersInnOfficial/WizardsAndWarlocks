@@ -84,10 +84,11 @@ void Game::Update(){
 	s_engine->update();
 
 	bulletManager->Update();
-	spellManager->UpdateCooldown();
-	effectManager->UpdateEffects();
-	objectManager->Update();
+	spellManager->UpdateCooldown(deltaTime);
+	effectManager->UpdateEffects(deltaTime);
+	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
+	trapManager->Update(deltaTime);
 }
 
 void Game::Draw(){

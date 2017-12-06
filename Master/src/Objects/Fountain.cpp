@@ -44,20 +44,16 @@ void Fountain::CreateFountain(){
 	bt_body->AssignPointer(this);
 }
 
-void Fountain::Update(){
+void Fountain::Update(float deltaTime){
 	UpdatePosShape();
-
-	float deltaTime = Game::GetInstance()->GetDeltaTime();
 	currentTime += deltaTime;
+
 	if(currentTime >= maxTime){
-		if(inUse){
-			Use();
-		}
-		else{
-			Recover();
-		}
+		if(inUse) Use();
+		else Recover();
 		currentTime = 0.0f;
 	}
+	
 	inUse = false;
 }
 

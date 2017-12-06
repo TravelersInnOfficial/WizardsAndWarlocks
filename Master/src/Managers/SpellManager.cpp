@@ -15,14 +15,11 @@ SpellManager::~SpellManager(){
 			Hechizo* h = it->second;			// Cargamos el hechizo
 			delete h;
 		}
-
 	}
 }
 
 SpellManager* SpellManager::GetInstance(){
-	if(instance==0){
-		instance = new SpellManager();
-	}
+	if(instance==0) instance = new SpellManager();
 	return instance;
 }
 
@@ -38,9 +35,7 @@ SpellManager* SpellManager::GetInstance(){
 bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
-		if(h!=NULL){
-			delete h;							// En el caso de que ya existiese un Hechizo guardado lo eliminamos
-		}
+		if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
 		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
 		return true;							// Hechizo asignado
 	}
@@ -51,15 +46,14 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
  * @brief [Actualiza los valores de Cooldown de los hechizos]
  * @details [long description]
  */
-void SpellManager::UpdateCooldown(){
-	float deltaTime = Game::GetInstance()->GetDeltaTime();
-
+void SpellManager::UpdateCooldown(float deltaTime){
+	this->deltaTime = deltaTime;					// Hacemos update de nuestro deltaTime
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
 		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
 			Hechizo* h = it->second;			// Cargamos el hechizo
 			if(h->GetCurrentCooldown()>0){	 	// Comprobamos si esta en cooldown
-				h->DecCooldown(deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
+				h->DecCooldown(this->deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
 			}
 		}
 	}	
@@ -69,7 +63,7 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 		if(h!=NULL){							// Comprobamos si realmente existe
-			if(h->ComprobarCast()){				// Empezamos a Castearlo
+			if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
 				p->ChangeMP(h->GetMP());
 				h->Lanzar(p);					// Lanzamos el hechizo
 				return true;

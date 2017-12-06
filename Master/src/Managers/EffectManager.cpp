@@ -56,8 +56,7 @@ void EffectManager::CleanEffects(Player* p){
 	}
 }
 
-void EffectManager::UpdateEffects(){
-	float deltaTime = Game::GetInstance()->GetDeltaTime();
+void EffectManager::UpdateEffects(float deltaTime){
 	currentTime += deltaTime;
 
 	if(currentTime>=maxTime){

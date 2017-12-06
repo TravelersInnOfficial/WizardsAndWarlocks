@@ -9,6 +9,10 @@ TrapManager* TrapManager::GetInstance(){
 	return instance;
 }
 
+void TrapManager::Update(float deltaTime){
+	UpdateTrap(deltaTime);
+}
+
 TrapManager::TrapManager(){}
 
 TrapManager::~TrapManager(){
@@ -34,5 +38,13 @@ void TrapManager::DeleteTrap(Trap* trap){
 			traps.erase(traps.begin() + i);
 			delete t;
 		}
+	}
+}
+
+void TrapManager::UpdateTrap(float deltaTime){
+	int size = traps.size();
+	for(int i=0; i<size; i++){
+		Trap* t = traps[i];
+		t->Update(deltaTime);
 	}
 }

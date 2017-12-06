@@ -46,9 +46,7 @@ ObjectManager::~ObjectManager(){
 }
 
 ObjectManager* ObjectManager::GetInstance(){
-	if(instance==0){
-		instance = new ObjectManager();
-	}
+	if(instance==0) instance = new ObjectManager();
 	return instance;
 }
 
@@ -65,9 +63,7 @@ Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TR
 }
 
 Grail* ObjectManager::AddGrail(){
-	if(grail==NULL){
-		grail = new Grail();
-	}
+	if(grail==NULL) grail = new Grail();
 	return grail;
 }
 
@@ -107,19 +103,17 @@ void ObjectManager::DeletePotion(Potion* potion){
 	}
 }
 
-void ObjectManager::Update(){
-	UpdateGrail();
+void ObjectManager::Update(float deltaTime){
+	UpdateGrail(deltaTime);
 	UpdateDoors();
 	UpdateSwitchs();
 	UpdatePotions();
-	UpdateFountains();
+	UpdateFountains(deltaTime);
 	UpdateBlocks();
 }
 
-void ObjectManager::UpdateGrail(){
-	if(grail!=NULL){
-		grail->Update();
-	}
+void ObjectManager::UpdateGrail(float deltaTime){
+	if(grail!=NULL) grail->Update(deltaTime);
 }
 
 void ObjectManager::UpdateDoors(){
@@ -146,11 +140,11 @@ void ObjectManager::UpdatePotions(){
 	}
 }
 
-void ObjectManager::UpdateFountains(){
+void ObjectManager::UpdateFountains(float deltaTime){
 	int size = fountains.size();
 	for(int i=0; i<size; i++){
 		Fountain* f = fountains[i];
-		f->Update();
+		f->Update(deltaTime);
 	}
 }
 
