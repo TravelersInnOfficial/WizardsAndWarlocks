@@ -1,6 +1,5 @@
 #include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
-#include "./../Game.h"
 
 
 SpellManager* SpellManager::instance = 0;

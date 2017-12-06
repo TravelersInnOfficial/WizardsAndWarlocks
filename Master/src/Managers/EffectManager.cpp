@@ -1,5 +1,4 @@
 #include "EffectManager.h"
-#include "./../Game.h"
 
 EffectManager* EffectManager::instance = 0;
 

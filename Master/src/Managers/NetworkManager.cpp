@@ -1,5 +1,4 @@
 #include "NetworkManager.h"
-#include "./../Game.h"
 
 NetworkManager* NetworkManager::instance = 0;
 
@@ -47,7 +46,7 @@ void NetworkManager::SpawnNewObjects(){
 				break;
 			}
 			case ID_PLAYER_O:{
-				Game* gameInstance = Game::GetInstance();
+				//Game* gameInstance = Game::GetInstance();
 				//gameInstance->SetPlayerOne(row->second);
 				break;
 			}

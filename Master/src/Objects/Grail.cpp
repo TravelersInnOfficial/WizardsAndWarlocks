@@ -1,5 +1,4 @@
 #include "Grail.h"
-#include "./../Game.h"
 
 Grail::Grail(){
 	casting = false;

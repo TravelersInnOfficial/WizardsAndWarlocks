@@ -1,5 +1,4 @@
 #include "Fountain.h"
-#include "./../Game.h"
 
 Fountain::Fountain(){
 	inUse = false;

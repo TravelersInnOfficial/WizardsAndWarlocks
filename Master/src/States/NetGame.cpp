@@ -1,8 +1,6 @@
-#include "Game.h"
+#include "NetGame.h"
 
-Game* Game::instance = 0;
-
-Game::Game(){
+NetGame::NetGame(){
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -42,7 +40,7 @@ Game::Game(){
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
 
-Game::~Game(){
+NetGame::~NetGame(){
 	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
@@ -50,12 +48,7 @@ Game::~Game(){
 	delete playerManager;
 }
 
-Game* Game::GetInstance(){
-	if(instance==0) instance = new Game();
-	return instance;
-}
-
-bool Game::Input(){
+bool NetGame::Input(){
 	bool end = false;
 	
 	playerOne->UpdateInput();
@@ -76,7 +69,7 @@ bool Game::Input(){
 	return end;
 }
 
-void Game::Update(){
+void NetGame::Update(){
 	UpdateDelta();
 
 	g_engine->UpdateReceiver();
@@ -91,18 +84,18 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 }
 
-void Game::Draw(){
+void NetGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim();
 	f_engine->DebugDrawWorld();
 }
 
-float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
+float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
 
-float Game::GetDeltaTime(){ return deltaTime; }
+float NetGame::GetDeltaTime(){ return deltaTime; }
 
-void Game::UpdateDelta(){
+void NetGame::UpdateDelta(){
 	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
 	deltaTime = currentTime - timeStart;
 	timeStart = currentTime;

@@ -1,6 +1,5 @@
 #include "Trap.h"
 #include "./Managers/TrapManager.h"
-#include "Game.h"
 
 Trap::Trap(){
    // m_trapType = 0;
@@ -104,7 +103,6 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 
 void Trap::Interact(Player* p){
     if(m_world_time - deltaTime*0.001 < -0.1) m_current_time = 0;
-    //std::cout<<m_world_time - Game::GetInstance()->GetTotalTime()*0.001<<std::endl;
     Deactivate(deltaTime);
 }
 
