@@ -1,6 +1,8 @@
 #ifndef VECTOR4d_H
 #define VECTOR4d_H
 
+#include <iostream>
+
 template<typename T>
 class vector4d{
 
@@ -56,7 +58,14 @@ public:
     //Operators
     vector4d<T> operator*(const T v) const { return vector4d<T>(X * v, Y * v, X2 * v, Y2 * v); }
     vector4d<T> operator/(const T v) const { return vector4d<T>(X / v, Y / v, X2 / v, Y2 / v); }
+
+
+    friend inline std::ostream& operator << (std::ostream &o,const vector4d<T> &v){
+        o << "(" << v.X << ", " << v.Y << ", " << v.X2 << ", " << v.Y2 << ")";
+        return o;
+    }
 };
+
 
 typedef vector4d<float> vector4df;
 typedef vector4d<int> vector4di;

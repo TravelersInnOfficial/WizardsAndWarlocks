@@ -69,6 +69,9 @@ public:
     //
     void paintLineDebug(vector3df, vector3df, vector3df);
 
+    /**
+     * Draws hud aiming square
+    */
     void drawAim();
 
     /// SMANAGER FUNCTIONS
@@ -152,6 +155,11 @@ public:
      * Draws all gui elements by traversing the GUI environment starting at the root node.
     */
     void drawAllGUI();
+    
+    /**
+     * Initializes font and gui stuff
+    */
+    void initializeGUI();
 
     /**
      * Adds a static text
@@ -164,9 +172,25 @@ public:
     GGUIElement* addStaticText(std::wstring text, vector4di position, bool border = false, bool wordWrap = true, GGUIElement * parent = 0);
     
     /**
-     * Creates a window at the right of the screen
+     * Adds a button to hud
+     * p: position (x, y) and size (x2,y2) of the button
+     * text: text to be displayed
+     * infoText: text to help the user
+     * id: id to easily access the button
     */
-    GGUIElement* createDebugWindowControl();
+    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1);
+
+    /**
+     * Adds an editable text box to given position
+     * p: position (x, y) and size (x2,y2) of the button
+     * text: text to initally display in the box
+    */
+    void addEditBox(vector4di p, std::wstring text = L"");
+    
+    /**
+     * Sets Max transparency (255) to all elements in gui
+    */
+    void setMaxSkinTransparency();
 
     /// RECEIVER FUNCTIONS
 
@@ -195,14 +219,20 @@ public:
     */
     bool IsKeyPressed(TKEY_CODE code);
 
+    //
     keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
+    //
     keyStatesENUM GetMouseStatus(TKEY_CODE code);
 
     /**
-     * Returns true is given code is held down
+     * Returns true if left button is held down
     */
     bool IsLeftButtonPressed();
+
+    /**
+     * Returns true the exact moment left button is held down
+    */
     bool IsLeftButtonDown();
 
 private:

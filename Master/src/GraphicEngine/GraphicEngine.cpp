@@ -168,17 +168,40 @@ GGUIElement* GraphicEngine::addStaticText(std::wstring text, vector4di p, bool b
     return new GGUIElement(privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0));
 }
 
-GGUIElement* GraphicEngine::createDebugWindowControl(){
-    // create the toolbox window
-    irr::gui::IGUIWindow* wnd = privateGUIEnv->addWindow(irr::core::rect<irr::s32>(600,45,800,480),
-        false, L"Toolset", 0, 0x10000);
+void GraphicEngine::initializeGUI(){
 
-    // create tab control and tabs
-    irr::gui::IGUITabControl* tab = privateGUIEnv->addTabControl(
-        irr::core::rect<irr::s32>(2,20,800-602,480-7), wnd, true, true);
+    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+//	irr::gui::IGUIFont* font = privateGUIEnv->getFont("");
+//	if (font){
+//		skin->setFont(font);
+//        std::cout<<"carga bien la fuente";
+//    }
+	skin->setFont(privateGUIEnv->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
+}
 
-    irr::gui::IGUITab* t1 = tab->addTab(L"Config");
-    return new GGUIElement(t1);
+void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){	      
+    privateGUIEnv->addButton(
+        irr::core::rect<irr::s32>(0 + p.X, 0 + p.Y, 0 - p.X2, 0 - p.Y2),     //position
+        0,                                                  //parent
+        id,                                                 //id
+        text.c_str(),                                       //display text
+        infoText.c_str()                                    //tooltip text
+    );
+}
+
+void GraphicEngine::addEditBox(vector4di p, std::wstring text){
+	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2));
+}
+
+void GraphicEngine::setMaxSkinTransparency(){
+    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+    
+    for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
+	{
+		irr::video::SColor col = skin->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+		col.setAlpha(255);
+		skin->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+	}
 }
 
 // RECEIVER FUNCTIONS
