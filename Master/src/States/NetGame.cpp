@@ -83,7 +83,7 @@ void NetGame::Update(){
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
 
-	playerManager->UpdatePlayers();
+	playerManager->UpdatePlayers(true);
 }
 
 void NetGame::Draw(){

@@ -43,10 +43,17 @@ enum ObjectVariable{
 	// ######################### PLAYER #########################
 	//BOOL
 	//INT
+	MOVE_UP		= 1,
+	MOVE_DOWN	= 2,
+	MOVE_LEFT	= 3,
+	MOVE_RIGHT	= 4,
+	RAYCAST		= 5,
+	JUMP		= 6,
+	USE_OBJECT	= 7,
+	SHOOT		= 8
 	//FLOAT
 	//VI
 	//VF
-	PLAYER_POSITION = 1
 
 	// ######################### POTION #########################
 	//BOOL

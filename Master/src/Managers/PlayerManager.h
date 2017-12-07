@@ -15,7 +15,7 @@ public:
 
 	Player* AddHumanPlayer(bool isPlayer1 = true);
 	Player* AddAIPlayer();
-	void UpdatePlayers();
+	void UpdatePlayers(bool isNetGame = false);
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
 

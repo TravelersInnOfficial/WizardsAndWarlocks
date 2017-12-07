@@ -26,6 +26,66 @@ void HumanPlayer::UpdateInput(){
 	controller->Update();
 }
 
+void HumanPlayer::SetNetInput(){
+	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(MOVE_LEFT, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(MOVE_LEFT, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)) networkObject->SetIntVar(MOVE_DOWN, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_MOVE_DOWN)) networkObject->SetIntVar(MOVE_DOWN, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(MOVE_RIGHT, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(MOVE_RIGHT, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_MOVE_UP)) networkObject->SetIntVar(MOVE_UP, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_MOVE_UP)) networkObject->SetIntVar(MOVE_UP, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(RAYCAST, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_RAYCAST)) networkObject->SetIntVar(RAYCAST, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_JUMP)) networkObject->SetIntVar(JUMP, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_JUMP)) networkObject->SetIntVar(JUMP, 4, true, false);
+
+	if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(USE_OBJECT, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(USE_OBJECT, 4, true, false);
+
+	if(controller->IsKeyDown(ACTION_SHOOT)) networkObject->SetIntVar(SHOOT, 3, true, false);
+	else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(SHOOT, 4, true, false);
+}
+
+void HumanPlayer::GetNetInput(){
+	int keystate = 0;
+	keystate = networkObject->GetIntVar(MOVE_LEFT);
+	if(keystate != 0) controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(MOVE_RIGHT);
+	if(keystate != 0) controller->SetStatus(ACTION_MOVE_RIGHT, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(MOVE_UP);
+	if(keystate != 0) controller->SetStatus(ACTION_MOVE_UP, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(MOVE_DOWN);
+	if(keystate != 0) controller->SetStatus(ACTION_MOVE_DOWN, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(RAYCAST);
+	if(keystate != 0) controller->SetStatus(ACTION_RAYCAST, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(JUMP);
+	if(keystate != 0) controller->SetStatus(ACTION_JUMP, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(USE_OBJECT);
+	if(keystate != 0) controller->SetStatus(ACTION_USE_OBJECT, (keyStatesENUM)keystate);
+
+	keystate = 0;
+	keystate = networkObject->GetIntVar(SHOOT);
+	if(keystate != 0) controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
+}
+
 void HumanPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
 	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
@@ -42,16 +102,6 @@ void HumanPlayer::CheckInput(){
 }
 
 void HumanPlayer::Update(){
-	/*
-	if(!isPlayerOne){
-		m_position = networkObject->GetVecFVar(PLAYER_POSITION);
-		bt_body->SetPosition(m_position);
-	}
-	else m_position = bt_body->GetPosition();
-	*/
-
 	CheckInput();
 	Player::Update();
-
-	// if(isPlayerOne) networkObject->SetVecFVar(PLAYER_POSITION, m_position, true, false);
 }

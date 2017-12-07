@@ -9,6 +9,7 @@
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
 #include "NetworkEngine/NetworkEngine.h"
+#include "./NetworkEngine/NetworkStructs.h"
 
 class Potion;
 
@@ -35,6 +36,7 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 
+		bool IsPlayerOne();
 		float GetPosX();
 		float GetPosY();
 		float GetPosZ();

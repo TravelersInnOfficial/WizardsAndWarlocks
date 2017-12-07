@@ -30,11 +30,16 @@ Player* PlayerManager::AddAIPlayer(){
 	return p;
 }
 
-void PlayerManager::UpdatePlayers(){
+void PlayerManager::UpdatePlayers(bool isNetGame){
 	DeletePlayers();
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
+		if(isNetGame) {
+			HumanPlayer* hp = (HumanPlayer*) players[i];
+			if(p->IsPlayerOne()) hp->SetNetInput();
+			else hp->GetNetInput();
+		}
 		p->Update();
 	}
 }

@@ -1,7 +1,6 @@
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 
-
 #include "./PlayerController.h"
 #include "Player.h"
 
@@ -12,6 +11,9 @@ public:
 
 	void UpdateInput();
 	void CheckInput();
+
+	void GetNetInput();
+	void SetNetInput();
 
 	void Update();
 

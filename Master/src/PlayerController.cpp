@@ -152,6 +152,42 @@ bool PlayerController::IsKeyPressed(ACTION_ENUM action){
 }
 
 /**
+ * Comprueba si una tecla esta siendo soltada
+ * 
+ * @num - Posicion de la tecla n el vector
+ * @return  True->La tecla esta siendo pulsada
+ */
+bool PlayerController::IsKeyReleased(int num){
+	if(num < keys.size()){
+		Key_player* k = keys[num];
+		if(k->GetStatus()==RELEASED){
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Comprueba si una tecla esta siendo soltada
+ * 
+ * @action - Nombre de la accion
+ * @return  True->La tecla esta siendo pulsada
+ */
+bool PlayerController::IsKeyReleased(ACTION_ENUM action){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(action == k->GetAction()){
+			if(k->GetStatus()==RELEASED){
+				return true;
+			}
+			return false;
+		}
+	}
+	return false;
+}
+
+/**
  * Actualizacion de los Status de las teclas del vector
  */
 void PlayerController::Update(){

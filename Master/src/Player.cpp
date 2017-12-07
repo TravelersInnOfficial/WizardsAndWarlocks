@@ -249,7 +249,6 @@ void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
-bool Player::GetDead(){ return m_dead; }
 float Player::GetRotY(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
 	vector3df rot = newRot * irr::core::PI / 180.0;	
@@ -262,6 +261,8 @@ vector3df Player::GetRot(){
 	return rot;
 }
 
+bool Player::IsPlayerOne(){ return(isPlayerOne); }
+bool Player::GetDead(){ return m_dead; }
 float Player::GetPosX(){ return m_position.X; }
 float Player::GetPosY(){ return m_position.Y; }
 float Player::GetPosZ(){ return m_position.Z; }
