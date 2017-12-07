@@ -48,7 +48,7 @@ void HumanPlayer::SetNetInput(){
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(USE_OBJECT, 3, true, false);
 	else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(USE_OBJECT, 4, true, false);
 
-	if(controller->IsKeyDown(ACTION_SHOOT)) networkObject->SetIntVar(SHOOT, 3, true, false);
+	if(controller->IsKeyPressed(ACTION_SHOOT)) networkObject->SetIntVar(SHOOT, 3, true, false);
 	else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(SHOOT, 4, true, false);
 }
 
@@ -87,18 +87,18 @@ void HumanPlayer::GetNetInput(){
 }
 
 void HumanPlayer::CheckInput(){
-	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_UP)){ this->MoveZ(1); }
-	if(controller->IsKeyPressed(ACTION_RAYCAST)){ this->Raycast(); }
-	if(controller->IsKeyDown(ACTION_JUMP)){ this->Jump(); }
-	if(controller->IsKeyDown(ACTION_USE_OBJECT)){ this->UseObject(); }
-	if(controller->IsKeyDown(ACTION_SHOOT)){ 
+	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
+	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject(); }
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
 		SpellManager::GetInstance()->ResetHechizo(0,this); 
 		this->DropObject();
 	}
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
+	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
 }
 
 void HumanPlayer::Update(){
