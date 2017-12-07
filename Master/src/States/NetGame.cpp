@@ -103,18 +103,17 @@ void NetGame::UpdateDelta(){
 }
 
 void NetGame::SetPlayerOne(NetworkObject* nObject){
-	std::cout<<"CREAMOS PLAYER"<<std::endl;
 	if(!isServer && playerOne == NULL) {
-		std::cout<<"ES PLAYER ONE"<<std::endl;
+		std::cout<<"ADD P1"<<std::endl;
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
 	}
 	else{
-		std::cout<<"ES PLAYER TWO"<<std::endl;
-		//Player* newPlayer = playerManager->AddPlayer(false);
-		//newPlayer->SetNetworkObject(nObject);
-		//spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
+		std::cout<<"ADD P2"<<std::endl;
+		Player* newPlayer = playerManager->AddHumanPlayer(false);
+		newPlayer->SetNetworkObject(nObject);
+		spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
 	}
 }

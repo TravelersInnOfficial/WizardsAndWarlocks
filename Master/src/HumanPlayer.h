@@ -2,12 +2,12 @@
 #define HUMANPLAYER_H
 
 
-#include "./ControllerPlayer.h"
+#include "./PlayerController.h"
 #include "Player.h"
 
 class HumanPlayer: public Player{
 public:
-	HumanPlayer();
+	HumanPlayer(bool isPlayer1 = true);
 	~HumanPlayer();
 
 	void UpdateInput();
@@ -18,7 +18,7 @@ public:
 private:
 	void DeclareInput();
 	
-	ControllerPlayer* controller;
+	PlayerController* controller;
 
 };
 

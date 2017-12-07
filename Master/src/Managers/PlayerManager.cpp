@@ -3,9 +3,7 @@
 PlayerManager* PlayerManager::instance = 0;
 
 PlayerManager* PlayerManager::GetInstance(){
-	if(instance==0){
-		instance = new PlayerManager();
-	}
+	if(instance==0) instance = new PlayerManager();
 	return instance;
 }
 
@@ -20,8 +18,8 @@ PlayerManager::~PlayerManager(){
 	players.clear();
 }
 
-Player* PlayerManager::AddHumanPlayer(){
-	Player* p = new HumanPlayer();
+Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
+	Player* p = new HumanPlayer(isPlayer1);
 	players.push_back(p);
 	return p;
 }

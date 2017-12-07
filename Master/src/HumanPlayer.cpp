@@ -2,8 +2,8 @@
 
 #include "./Managers/SpellManager.h"
 
-HumanPlayer::HumanPlayer():Player(true){
-	controller = new ControllerPlayer();
+HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
+	controller = new PlayerController();
 	DeclareInput();
 }
 

@@ -13,7 +13,7 @@ public:
 	static PlayerManager* GetInstance();
 	~PlayerManager();
 
-	Player* AddHumanPlayer();
+	Player* AddHumanPlayer(bool isPlayer1 = true);
 	Player* AddAIPlayer();
 	void UpdatePlayers();
 	void AddToDeletePlayer(int networkId);

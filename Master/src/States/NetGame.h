@@ -43,7 +43,7 @@ private:
 	float deltaTime;
 	bool isServer;
 	SoundEvent*			footstepEvent;
-	HumanPlayer*				playerOne;
+	HumanPlayer*		playerOne;
 
 	SpellManager* 		spellManager;
 	BulletManager* 		bulletManager;

@@ -231,7 +231,7 @@ void Player::setPosition(float posX, float posY, float posZ){
 	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 	m_playerNode->updateAbsolutePosition();
 	bt_body->SetPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
-	if(isPlayerOne)engine->getActiveCamera()->setRotation(vector3df(0,0,0));
+	if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){

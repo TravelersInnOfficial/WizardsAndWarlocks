@@ -1,5 +1,5 @@
-#ifndef CONTROLLERPLAYER_H
-#define CONTROLLERPLAYER_H
+#ifndef PLAYERCONTROLLER_H
+#define PLAYERCONTROLLER_H
 
 #include <iostream>
 #include <vector>
@@ -22,10 +22,10 @@ private:
 	ACTION_ENUM action;
 };
 
-class ControllerPlayer{
+class PlayerController{
 public:
-	ControllerPlayer();
-	~ControllerPlayer();
+	PlayerController();
+	~PlayerController();
 	bool AddAction(TKEY_CODE key, ACTION_ENUM ac);
 	bool IsKeyDown(int n);
 	bool IsKeyDown(ACTION_ENUM a);

@@ -1,4 +1,4 @@
-#include "ControllerPlayer.h"
+#include "PlayerController.h"
 
 Key_player::Key_player(TKEY_CODE k, ACTION_ENUM a){
 	key = k;
@@ -28,7 +28,7 @@ Key_player::~Key_player(){
 
 //-----------------------------------------------------------------------------------------------
 
-ControllerPlayer::~ControllerPlayer(){
+PlayerController::~PlayerController(){
 	int size = keys.size();
 	for(int i = 0; i<size; i++){
 		Key_player* k = keys[i];
@@ -37,7 +37,7 @@ ControllerPlayer::~ControllerPlayer(){
 	keys.clear();
 }
 
-ControllerPlayer::ControllerPlayer(){}
+PlayerController::PlayerController(){}
 
 /**
  * Anyade una nueva accion (tecla) al controlador
@@ -47,7 +47,7 @@ ControllerPlayer::ControllerPlayer(){}
  * 
  * @return - Si se ha podido crear bien la accion (No permite dos acciones con la misma tecla)
  */
-bool ControllerPlayer::AddAction(TKEY_CODE key, ACTION_ENUM ac){
+bool PlayerController::AddAction(TKEY_CODE key, ACTION_ENUM ac){
 	int size = keys.size();						
 	for(int i=0; i<size; i++){					// Recorremos todas las acciones actuales
 		Key_player* k = keys[i];		
@@ -65,7 +65,7 @@ bool ControllerPlayer::AddAction(TKEY_CODE key, ACTION_ENUM ac){
  * @num - Posicion de la tecla en el vector
  * @return  True->Se ha pulsado
  */
-bool ControllerPlayer::IsKeyDown(int num){
+bool PlayerController::IsKeyDown(int num){
 	if(num < keys.size()){				// Comprueba que el numero no se salga del vector
 		Key_player* k = keys[num];
 		if(k->GetStatus()==DOWN){		// Comprueba si el Status de la tecla es el correcto
@@ -81,7 +81,7 @@ bool ControllerPlayer::IsKeyDown(int num){
  * @param action - Nombre de la accion
  * @return  True->Se ha pulsado
  */
-bool ControllerPlayer::IsKeyDown(ACTION_ENUM action){
+bool PlayerController::IsKeyDown(ACTION_ENUM action){
 	int size = keys.size();
 	for(int i=0; i<size; i++){				// Recorremos todos el vector de teclas
 		Key_player* k = keys[i];
@@ -101,7 +101,7 @@ bool ControllerPlayer::IsKeyDown(ACTION_ENUM action){
  * @num - Posicion de la tecla n el vector
  * @return  True->La tecla esta siendo pulsada
  */
-bool ControllerPlayer::IsKeyPressed(int num){
+bool PlayerController::IsKeyPressed(int num){
 	if(num < keys.size()){
 		Key_player* k = keys[num];
 		if(k->GetStatus()==DOWN || k->GetStatus()==PRESSED || k->GetStatus()==RELEASED){
@@ -117,7 +117,7 @@ bool ControllerPlayer::IsKeyPressed(int num){
  * @action - Nombre de la accion
  * @return  True->La tecla esta siendo pulsada
  */
-bool ControllerPlayer::IsKeyPressed(ACTION_ENUM action){
+bool PlayerController::IsKeyPressed(ACTION_ENUM action){
 	int size = keys.size();
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
@@ -134,7 +134,7 @@ bool ControllerPlayer::IsKeyPressed(ACTION_ENUM action){
 /**
  * Actualizacion de los Status de las teclas del vector
  */
-void ControllerPlayer::Update(){
+void PlayerController::Update(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	int size = keys.size();
