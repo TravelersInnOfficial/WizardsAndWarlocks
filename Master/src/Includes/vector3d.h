@@ -32,6 +32,24 @@ public:
     float length(){return sqrtf(X*X + Y*Y + Z*Z);}
 
     /**
+     * normalize the vector
+     */
+
+    void normalize(){
+        float l = length();
+        if(l==0){
+            X = 0;
+            Y = 0;
+            Z = 0;
+        }
+        else{
+            X = X/l;
+            Y = Y/l;
+            Z = Z/l;
+        }
+    }
+
+    /**
      * Sets X Value
     */
 
@@ -52,7 +70,9 @@ public:
     //Operators
     vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
     vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
+    vector3d<T> operator-(vector3d<T> v) const { return vector3d<T>(X-v.X, Y-v.Y, Z-v.Z); }
     void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
+    void operator*=(const T v) { X = X*v; Y = Y*v; Z = Z*v; }
 
     friend inline std::ostream& operator << (std::ostream &o,const vector3d<T> &v){
         o << "(" << v.X << ", " << v.Y << ", " << v.Z << ")";

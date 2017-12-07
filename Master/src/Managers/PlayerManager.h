@@ -19,6 +19,8 @@ public:
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
 
+	Player* GetOne(){return players[0];}
+
 private:
 
 	vector<Player*>	players;

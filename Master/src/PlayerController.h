@@ -27,6 +27,7 @@ public:
 	PlayerController();
 	~PlayerController();
 	bool AddAction(TKEY_CODE key, ACTION_ENUM ac);
+	bool SetStatus(ACTION_ENUM ac, keyStatesENUM st);
 	bool IsKeyDown(int n);
 	bool IsKeyDown(ACTION_ENUM a);
 	bool IsKeyPressed(int n);

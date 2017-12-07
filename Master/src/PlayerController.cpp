@@ -60,6 +60,26 @@ bool PlayerController::AddAction(TKEY_CODE key, ACTION_ENUM ac){
 }
 
 /**
+ * Pone el status de una accion
+ * 
+ * @ac - Nombre de la accion
+ * @st - Status de la accion
+ * 
+ * @return - True->Se ha cambiado el status
+ */
+bool PlayerController::SetStatus(ACTION_ENUM ac, keyStatesENUM st){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(k->GetAction() == ac){
+			k->SetStatus(st);
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
  * Comprueba si una tecla esta pulsada
  * 
  * @num - Posicion de la tecla en el vector

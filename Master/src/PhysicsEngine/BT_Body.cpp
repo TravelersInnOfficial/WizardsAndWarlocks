@@ -70,6 +70,10 @@ void BT_Body::ApplyCentralImpulse(vector3df force){
 	m_RigidBody->applyCentralImpulse(btVector3(force.X,force.Y,force.Z));
 }
 
+void BT_Body::ApplyCentralForce(vector3df force){
+	m_RigidBody->applyCentralForce(btVector3(force.X, force.Y, force.Z));
+}
+
 void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
 	rotation = rotation*M_PI/180;
