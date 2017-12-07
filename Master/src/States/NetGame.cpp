@@ -90,6 +90,7 @@ void NetGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim();
+	f_engine->DebugDrawWorld();
 }
 
 float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
@@ -104,14 +105,12 @@ void NetGame::UpdateDelta(){
 
 void NetGame::SetPlayerOne(NetworkObject* nObject){
 	if(!isServer && playerOne == NULL) {
-		std::cout<<"ADD P1"<<std::endl;
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
 	}
 	else{
-		std::cout<<"ADD P2"<<std::endl;
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
