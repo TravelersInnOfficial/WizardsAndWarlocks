@@ -20,8 +20,14 @@ PlayerManager::~PlayerManager(){
 	players.clear();
 }
 
-Player* PlayerManager::AddPlayer(bool one){
-	Player* p = new Player(one);
+Player* PlayerManager::AddHumanPlayer(){
+	Player* p = new HumanPlayer();
+	players.push_back(p);
+	return p;
+}
+
+Player* PlayerManager::AddAIPlayer(){
+	Player* p = new AIPlayer();
 	players.push_back(p);
 	return p;
 }

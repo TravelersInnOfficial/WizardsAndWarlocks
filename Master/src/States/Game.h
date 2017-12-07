@@ -2,7 +2,7 @@
 #define GAME_H
 #include <iostream>
 
-#include "./../Player.h"
+#include "./../HumanPlayer.h"
 
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
@@ -47,7 +47,7 @@ private:
 	SoundSystem*		s_engine;
 	SoundEvent*			footstepEvent;
 
-	Player*				playerOne;
+	HumanPlayer*				playerOne;
 };
 
 #endif

@@ -5,13 +5,16 @@
 #include <vector>
 
 #include "./../Player.h"
+#include "./../HumanPlayer.h"
+#include "./../AIPlayer.h"
 
 class PlayerManager{
 public:
 	static PlayerManager* GetInstance();
 	~PlayerManager();
 
-	Player* AddPlayer(bool);
+	Player* AddHumanPlayer();
+	Player* AddAIPlayer();
 	void UpdatePlayers();
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();

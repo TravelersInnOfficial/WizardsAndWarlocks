@@ -25,26 +25,15 @@ Player::Player(bool isPlayer1){
 	isPlayerOne=isPlayer1;
 	clase = EENUM_PLAYER;
 
-	controller = new ControllerPlayer();
-	DeclareInput();
-
 	CreatePlayer();
 }
 
 Player::~Player(){
-	delete controller;
-	DeletePlayer();
-}
+	bt_body->Erase();
+    m_playerNode->Erase();	
 
-void Player::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+	delete m_playerNode;
+	delete bt_body;
 }
 
 void Player::CreatePlayer(){
@@ -71,28 +60,9 @@ void Player::CreatePlayer(){
 
 }
 
-void Player::DeletePlayer(){
-	bt_body->Erase();
-    m_playerNode->Erase();
-
-    delete bt_body;
-    delete m_playerNode;
-}
-
 void Player::Update(){
-	/*
-	if(!isPlayerOne){
-		m_position = networkObject->GetVecFVar(PLAYER_POSITION);
-		bt_body->SetPosition(m_position);
-	}
-	else m_position = bt_body->GetPosition();
-	*/
-
-	CheckInput();
 	if(m_position.Y < -50) Respawn();
-	m_position = bt_body->GetPosition();
-	bt_body->Update();
-	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
+	UpdatePosShape();
 
 	checkMaxVelocity();
 	if(isPlayerOne) positionCamera();
@@ -108,27 +78,6 @@ void Player::Update(){
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
 	if(m_dead) Die();
-
-	// if(isPlayerOne) networkObject->SetVecFVar(PLAYER_POSITION, m_position, true, false);
-}
-
-void Player::UpdateInput(){
-	controller->Update();
-}
-
-void Player::CheckInput(){
-	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-	if(controller->IsKeyPressed(ACTION_MOVE_UP)){ this->MoveZ(1); }
-	if(controller->IsKeyPressed(ACTION_RAYCAST)){ this->Raycast(); }
-	if(controller->IsKeyDown(ACTION_JUMP)){ this->Jump(); }
-	if(controller->IsKeyDown(ACTION_USE_OBJECT)){ this->UseObject(); }
-	if(controller->IsKeyDown(ACTION_SHOOT)){ 
-		SpellManager::GetInstance()->ResetHechizo(0,this); 
-		this->DropObject();
-	}
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
 }
 
 void Player::positionCamera(){
@@ -324,3 +273,9 @@ float Player::GetHP(){ return m_HP; }
 float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+
+void Player::UpdatePosShape(){
+	m_position = bt_body->GetPosition();
+	bt_body->Update();
+	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
+}

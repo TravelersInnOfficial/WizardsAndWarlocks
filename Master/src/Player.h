@@ -5,7 +5,6 @@
 #include <math.h>
 #include <Actions.h>
 #include "./Entidad.h"
-#include "./ControllerPlayer.h"
 
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
@@ -17,13 +16,8 @@ class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);
-
 		void CreatePlayer();
-		void DeletePlayer();
-		void DeclareInput();
-		void Update();
-		void UpdateInput();
-		void CheckInput();
+		virtual void Update();
 		
 		void Move(float, float);
 		void MoveX(int);
@@ -64,9 +58,9 @@ class Player: public Entidad{
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
 
-		~Player();
+		virtual ~Player();
 
-	private:
+	protected:
 
 		vector3df m_position;
 		vector3df m_dimensions;
@@ -88,10 +82,10 @@ class Player: public Entidad{
 		float lastVerticalSpeed;
 
 		Potion* potion;
-		ControllerPlayer* controller;
 
 		void checkMaxVelocity();
 		void positionCamera();
+		void UpdatePosShape();
 
 };
 

@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./../Player.h"
+#include "./../HumanPlayer.h"
 
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
@@ -43,7 +43,7 @@ private:
 	float deltaTime;
 	bool isServer;
 	SoundEvent*			footstepEvent;
-	Player*				playerOne;
+	HumanPlayer*				playerOne;
 
 	SpellManager* 		spellManager;
 	BulletManager* 		bulletManager;
