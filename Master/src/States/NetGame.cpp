@@ -32,6 +32,14 @@ NetGame::NetGame(){
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 	g_engine->addCameraSceneNodeFPS(120.f, 0.005);
 
+	// Otras Cosas
+	objectManager->AddFountain();
+	objectManager->AddGrail();
+
+	// Trampas
+	trapManager->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
+	trapManager->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
+
 	// Jugador
 	playerOne = NULL;
 }

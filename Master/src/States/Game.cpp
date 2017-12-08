@@ -22,11 +22,6 @@ Game::Game(){
 	g_engine->addCameraSceneNodeFPS(120.f, 0.0f);
 
 	// Otras Cosas
-	objectManager->AddSwitch(
-		objectManager->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
-		vector3df(-1, 0, -4), vector3df(1,1,1), vector3df(0,0,0), vector3df(0,0,0)
-		);
-	objectManager->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
 	objectManager->AddFountain();
 	objectManager->AddGrail();
 

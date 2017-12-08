@@ -58,7 +58,8 @@ public:
     //Operators
     vector4d<T> operator*(const T v) const { return vector4d<T>(X * v, Y * v, X2 * v, Y2 * v); }
     vector4d<T> operator/(const T v) const { return vector4d<T>(X / v, Y / v, X2 / v, Y2 / v); }
-
+    vector4d<T> operator-(vector4d<T> v) const { return vector4d<T>(X-v.X, Y-v.Y, X2-v.X2, Y2-v.Y2); }
+    vector4d<T> operator+(vector4d<T> v) const { return vector4d<T>(X+v.X, Y+v.Y, X2+v.X2, Y2+v.Y2); }
 
     friend inline std::ostream& operator << (std::ostream &o,const vector4d<T> &v){
         o << "(" << v.X << ", " << v.Y << ", " << v.X2 << ", " << v.Y2 << ")";
