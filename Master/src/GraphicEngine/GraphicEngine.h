@@ -151,7 +151,7 @@ public:
     //
     void addToDeletionQueue(irr::scene::ISceneNode*);
     
-    /// GUIENV FUNCTIONS
+        /// GUIENV FUNCTIONS
 
     /**
      * Draws all gui elements by traversing the GUI environment starting at the root node.
@@ -171,7 +171,7 @@ public:
      * wordWrap: Enable if the text should wrap into multiple lines
      * parent: Parent item of the element
     */
-    GGUIElement* addStaticText(std::wstring text, vector4di position, bool border = false, bool wordWrap = true, GGUIElement * parent = 0);
+    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true);
     
     /**
      * Adds a button to hud

@@ -182,43 +182,43 @@ void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
 
 // GUIENV FUNCTIONS
 void GraphicEngine::drawAllGUI(){
-    privateGUIEnv->drawAll();
+	privateGUIEnv->drawAll();
 }
 
-GGUIElement* GraphicEngine::addStaticText(std::wstring text, vector4di p, bool border, bool wordWrap, GGUIElement * parent){
-    return new GGUIElement(privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0));
+void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
+	privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
 }
 
 void GraphicEngine::initializeGUI(){
-
-    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
-//	irr::gui::IGUIFont* font = privateGUIEnv->getFont("");
-//	if (font){
-//		skin->setFont(font);
-//        std::cout<<"carga bien la fuente";
-//    }
+	irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+	/*
+	irr::gui::IGUIFont* font = privateGUIEnv->getFont("");
+	if (font){
+		skin->setFont(font);
+        std::cout<<"carga bien la fuente";
+    }
+	*/
 	skin->setFont(privateGUIEnv->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
 }
 
 void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){	      
-    privateGUIEnv->addButton(
-        irr::core::rect<irr::s32>(0 + p.X, 0 + p.Y, 0 - p.X2, 0 - p.Y2),     //position
-        0,                                                  //parent
-        id,                                                 //id
-        text.c_str(),                                       //display text
-        infoText.c_str()                                    //tooltip text
-    );
+	privateGUIEnv->addButton(
+		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),	//position
+		0,													//parent
+		id,													//id
+		text.c_str(),										//display text
+		infoText.c_str()									//tooltip text
+	);
 }
 
 void GraphicEngine::addEditBox(vector4di p, std::wstring text){
-	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2));
+	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2));
 }
 
 void GraphicEngine::setMaxSkinTransparency(){
-    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
-    
-    for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
-	{
+	irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+	
+	for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i) {
 		irr::video::SColor col = skin->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
 		col.setAlpha(255);
 		skin->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);

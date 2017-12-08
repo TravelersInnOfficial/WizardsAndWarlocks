@@ -12,6 +12,36 @@
 #include "./Managers/ObjectManager.h"
 #include "./LevelLoader.h"
 
+NetworkEngine* CreateMenu(){
+	NetworkEngine* n_engine = NULL;
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	vector4di rect = vector4di(100,200,200,200);
+	g_engine->addButton(rect, L"Single Player");
+
+	rect = vector4di(575,160,100,20);
+	g_engine->addStaticText(rect, L"Multi Player", true, false);
+
+	rect = vector4di(400,200,200,200);
+	g_engine->addButton(rect, L"Client");
+
+	rect = vector4di(650,200,200,200);
+	g_engine->addButton(rect, L"Server");
+
+	rect = vector4di(400,420,200,20);
+	g_engine->addEditBox(rect, L"Server IP");
+
+	int draw = 120;
+	while(draw > 0){
+		g_engine->beginSceneDefault();
+		g_engine->drawAllGUI();
+		g_engine->endScene();
+		draw--;
+	}
+
+	return (n_engine);
+}
+
 NetworkEngine* manageArguments(int argc, char* argv[]){
 	NetworkEngine* n_engine = NULL;
 	if(argc > 1){
@@ -35,6 +65,9 @@ int main(int argc, char* argv[]) {
 	BulletEngine* f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	// GUI
+	NetworkEngine* n_engine2 = CreateMenu();
 	g_engine->setCursorVisible(false);
 
 	// Level
