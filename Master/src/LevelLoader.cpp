@@ -11,7 +11,7 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::loadLobby()
 {   
-    return readJson("../assets/json/level1.json");
+    return readJson("../assets/json/level2.json");
 }
 
 bool LevelLoader::readJson(std::string jsonPath){
@@ -44,15 +44,20 @@ bool LevelLoader::readJson(std::string jsonPath){
         
         //create object
         if(j["Objects"][i]["Type"] == "Block"){
-            //std::cout<<"Block, pos: "<<position<<std::endl;                    
-            objManager->AddBlock(position, size, rotation, texture);
+            objManager->AddBlock(position, size, rotation, texture);           
         }
         else if(j["Objects"][i]["Type"] == "Door"){
-            //objManager->AddDoor(position, size, rotation);
+            objManager->AddDoor(position, size, rotation, axis);
         }
         else if(j["Objects"][i]["Type"] == "Switch"){
             //objManager->AddSwitch(door, position, size, rotation);
         }
+
+        else if(j["Objects"][i]["Type"] == "Spawner"){
+            //objManager->AddSwitch(door, position, size, rotation);
+            objManager->AddPotion(position, size, rotation);
+        }
+
         else if(j["Objects"][i]["Type"] == "Grail"){
             //objManager->AddGrail(position, size, rotation);
         }
@@ -63,7 +68,7 @@ bool LevelLoader::readJson(std::string jsonPath){
             //std::cout<<"MainCamera, pos: "<<position<<std::endl;        
         }
         else{
-            std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;
+            //std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;
         }
     }
 

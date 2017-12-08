@@ -32,12 +32,7 @@ NetGame::NetGame(){
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
 	g_engine->addCameraSceneNodeFPS(120.f, 0.005);
 
-	// Elementos del Nivel
-	objectManager->AddSwitch(
-		objectManager->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
-		vector3df(-1, 0, -4), vector3df(1,1,1), vector3df(0,0,0), vector3df(0,0,0)
-		);
-	objectManager->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
+	// Otras Cosas
 	objectManager->AddFountain();
 	objectManager->AddGrail();
 	trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);

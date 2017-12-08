@@ -34,7 +34,23 @@
         "string": "cpp",
         "vector": "cpp",
         "fstream": "cpp",
-        "cstddef": "cpp"
+        "cstddef": "cpp",
+        "cmath": "cpp",
+        "csignal": "cpp",
+        "cstdarg": "cpp",
+        "cstring": "cpp",
+        "atomic": "cpp",
+        "strstream": "cpp",
+        "bitset": "cpp",
+        "codecvt": "cpp",
+        "complex": "cpp",
+        "condition_variable": "cpp",
+        "functional": "cpp",
+        "iomanip": "cpp",
+        "mutex": "cpp",
+        "numeric": "cpp",
+        "sstream": "cpp",
+        "valarray": "cpp"
     },
 
     "editor.quickSuggestions": {

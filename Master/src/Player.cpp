@@ -12,7 +12,7 @@ GraphicEngine* engine = GraphicEngine::getInstance();
 
 Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
-	m_dimensions = vector3df(1,1,1);
+	m_dimensions = vector3df(0.6,1,0.6);
 
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;

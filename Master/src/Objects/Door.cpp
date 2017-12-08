@@ -25,12 +25,21 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     //vector3df TScale(0.05, 1, 0.5);
     //vector3df TRotation(0,0,0);
     //vector3df TCenter(0,0,-TScale.Z)
+
+    TScale.X *= 0.05;
+    TScale.Y *= 1;
+    TScale.Z *= 0.5;
+    TCenter.X *= TScale.X;
+    TCenter.Y *= TScale.Y;
+    TCenter.Z *= TScale.Z;
+
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
     m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta.obj");
     m_doorNode->setPosition(TPosition);
+    m_doorNode->setRotation(TRotation);
     m_doorNode->setScale(vector3df(1,1,1));
 
     // Aplicamos Material unlit y Textura
