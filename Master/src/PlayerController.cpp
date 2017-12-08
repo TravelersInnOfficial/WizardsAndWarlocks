@@ -212,17 +212,17 @@ void PlayerController::Update(){
  * Actualiza el status a DOWN o UP de las teclas
  */
 void PlayerController::UpdateOwnStatus(){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	//GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	int size = keys.size();
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		if(k->GetStatus() == PRESSED){
 			k->SetStatus(DOWN);
-			g_engine->SetKeyStatus(k->GetKey(), DOWN);
+			//g_engine->SetKeyStatus(k->GetKey(), DOWN);
 		} else if(k->GetStatus() == RELEASED){
 			k->SetStatus(UP);
-			g_engine->SetKeyStatus(k->GetKey(), UP);
+			//g_engine->SetKeyStatus(k->GetKey(), UP);
 		}
 	}
 }

@@ -82,6 +82,8 @@ void Game::Update(){
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
 	trapManager->Update(deltaTime);
+
+	g_engine->UpdateReceiver();
 }
 
 void Game::Draw(){
