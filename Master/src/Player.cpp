@@ -119,8 +119,6 @@ void Player::MoveX(int dir){
 	float impulse = 30;
 	impulse *= dir;
 	vector3df rot = this->rotation;
-	rot = rot*M_PI/180;
-	std::cout<<this->rotation.Y<<std::endl;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 	moving = true;
 }
@@ -129,8 +127,6 @@ void Player::MoveZ(int dir){
 	float impulse = 30;
 	impulse *= dir;
 	vector3df rot = this->rotation;
-	rot = rot*M_PI/180;
-	std::cout<<this->rotation.Y<<std::endl;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 	moving = true;
 }
