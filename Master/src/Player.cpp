@@ -61,11 +61,16 @@ void Player::CreatePlayer(){
 }
 
 void Player::Update(){
-	if(m_position.Y < -50) Respawn();
 	UpdatePosShape();
 
+	if(isPlayerOne){
+		vector3df newRot = engine->getActiveCamera()->getRotation();
+		vector3df rot = newRot * irr::core::PI / 180.0;	
+		SetRotation(rot);
+		positionCamera();
+	}
+
 	checkMaxVelocity();
-	if(isPlayerOne) positionCamera();
 	vector3df* velocity = bt_body->GetLinearVelocity();
 
 	if(!canJump){
@@ -77,17 +82,13 @@ void Player::Update(){
 
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
-	if(m_dead) Die();
+
+	if(m_dead || m_position.Y < -50) Die();
 }
 
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
 	vector3df newRotAux = engine->getActiveCamera()->getRotation();
-	//vector3df rot = newRot * irr::core::PI / 180.0;	
-	
-	// Poner rotacion de personaje
-	newRot.X = 0; newRot.Z = 0;
-	m_playerNode->setRotation(newRot);
 
 	// Poner posicion de camara
 	engine->getActiveCamera()->setPosition(vector3df(m_position.X /*- 0.15 * sin(rot.Y)*/, m_position.Y /*+ 0.5*/, m_position.Z /*- 0.15 * cos(rot.Y)*/));
@@ -117,8 +118,9 @@ void Player::Move(float posX, float posY){
 void Player::MoveX(int dir){
 	float impulse = 30;
 	impulse *= dir;
-	vector3df rot = engine->getActiveCamera()->getRotation();
+	vector3df rot = this->rotation;
 	rot = rot*M_PI/180;
+	std::cout<<this->rotation.Y<<std::endl;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 	moving = true;
 }
@@ -126,8 +128,9 @@ void Player::MoveX(int dir){
 void Player::MoveZ(int dir){
 	float impulse = 30;
 	impulse *= dir;
-	vector3df rot = engine->getActiveCamera()->getRotation();
+	vector3df rot = this->rotation;
 	rot = rot*M_PI/180;
+	std::cout<<this->rotation.Y<<std::endl;
 	bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 	moving = true;
 }
@@ -152,9 +155,7 @@ void Player::ChangeHP(float HP){
 }
 
 bool Player::ChangeMP(float MP){
-	if(m_MP - MP < 0){
-		return false;
-	}
+	if(m_MP - MP < 0) return false;
 	else{
 		m_MP -= MP;
 		return true;
@@ -228,10 +229,18 @@ void Player::setPosition(float posX, float posY, float posZ){
 	m_position.X = posX;
 	m_position.Y = posY;
 	m_position.Z = posZ;
-	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
+	m_playerNode->setPosition(m_position);
 	m_playerNode->updateAbsolutePosition();
-	bt_body->SetPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
-	if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
+	bt_body->SetPosition(m_position);
+	//if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
+}
+
+void Player::SetPosition(vector3df pos){
+	m_position = pos;
+	m_playerNode->setPosition(pos);
+	m_playerNode->updateAbsolutePosition();
+	bt_body->SetPosition(pos);
+	//if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){
@@ -244,21 +253,24 @@ void Player::SetPosY(float posY){
 	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 }
 
+void Player::SetRotation(vector3df rotation){
+	this->rotation = rotation;
+	vector3df newRot = this->rotation;
+	newRot.X = 0; newRot.Z = 0;
+	m_playerNode->setRotation(newRot);
+}
+
 void Player::SetHP(float HP){ m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
 float Player::GetRotY(){
-	vector3df newRot = engine->getActiveCamera()->getRotation();
-	vector3df rot = newRot * irr::core::PI / 180.0;	
-	return rot.Y;
+	return rotation.Y;
 }
 
 vector3df Player::GetRot(){
-	vector3df newRot = engine->getActiveCamera()->getRotation();
-	vector3df rot = newRot * irr::core::PI / 180.0;	
-	return rot;
+	return rotation;
 }
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }

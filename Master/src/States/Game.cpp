@@ -1,6 +1,7 @@
 #include "Game.h"
 
 Game::Game(){
+
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -39,7 +40,6 @@ Game::Game(){
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 
 	playerManager->AddAIPlayer();
-
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
 

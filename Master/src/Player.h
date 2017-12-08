@@ -53,8 +53,10 @@ class Player: public Entidad{
 		NetworkObject* GetNetworkObject();
 
 		void setPosition(float, float, float);
+		void SetPosition(vector3df);
 		void SetPosX(float);
 		void SetPosY(float);
+		void SetRotation(vector3df rotation);
 		void SetHP(float);
 		void SetDead(bool);
 		void SetMaxVelocity(float);
@@ -66,6 +68,7 @@ class Player: public Entidad{
 
 		vector3df m_position;
 		vector3df m_dimensions;
+		vector3df rotation;
 
 		float max_velocity;
 		float raycastDistance;
