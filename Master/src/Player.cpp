@@ -228,7 +228,6 @@ void Player::setPosition(float posX, float posY, float posZ){
 	m_playerNode->setPosition(m_position);
 	m_playerNode->updateAbsolutePosition();
 	bt_body->SetPosition(m_position);
-	//if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosition(vector3df pos){
@@ -236,7 +235,6 @@ void Player::SetPosition(vector3df pos){
 	m_playerNode->setPosition(pos);
 	m_playerNode->updateAbsolutePosition();
 	bt_body->SetPosition(pos);
-	//if(isPlayerOne) engine->getActiveCamera()->setRotation(vector3df(0,0,0));
 }
 
 void Player::SetPosX(float posX){
@@ -253,6 +251,7 @@ void Player::SetRotation(vector3df rotation){
 	this->rotation = rotation;
 	vector3df newRot = this->rotation;
 	newRot.X = 0; newRot.Z = 0;
+	newRot = newRot * 180 / irr::core::PI;
 	m_playerNode->setRotation(newRot);
 }
 
