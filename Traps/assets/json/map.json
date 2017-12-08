@@ -1,0 +1,134 @@
+{
+    "Objects":[
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [0,-1,0],
+                "Rotation": [0,0,0],
+                "Scale": [20, 1, 20],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [0,0,3],
+                "Rotation": [0,0,0],
+                "Scale": [1, 1, 1],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [3,0.5,3],
+                "Rotation": [0,0,0],
+                "Scale": [2,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [5,4,3],
+                "Rotation": [0,0,0],
+                "Scale": [2,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [1.5,1,7],
+                "Rotation": [0,0,0],
+                "Scale": [3,3,3],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [5,1.5,7],
+                "Rotation": [0,0,0],
+                "Scale": [5,5,5],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [-5,-1,2.5],
+                "Rotation": [45,0,0],
+                "Scale": [3,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [-5,-1,4.5],
+                "Rotation": [45,0,0],
+                "Scale": [3,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [-5,-1,6.5],
+                "Rotation": [45,0,0],
+                "Scale": [3,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        },
+        {
+            "ID": -1,
+            "Body": {
+                "Position": [-5,-1,8.5],
+                "Rotation": [45,0,0],
+                "Scale": [3,2,2],
+                "AxisCoord": [],
+                "Interact": false,
+                "Texture": "",
+                "3DModel": ""
+            },
+            "Type": "Block"
+        }
+    ]
+}

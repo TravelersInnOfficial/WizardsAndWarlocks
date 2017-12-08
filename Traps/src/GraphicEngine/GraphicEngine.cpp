@@ -1,0 +1,342 @@
+#include "GraphicEngine.h"
+#include "./../Managers/TrapManager.h"
+
+static GraphicEngine* instance;
+
+GraphicEngine::GraphicEngine(){
+    privateReceiver = new EventReceiver();
+
+    irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+    irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
+    nulldevice -> drop();
+
+    privateDevice = irr::createDevice(
+        irr::video::EDT_OPENGL,
+        irr::core::dimension2d<unsigned int>(900,600),
+        16,
+        false,
+        false,
+        true,
+        privateReceiver
+    );
+
+    if(!privateDevice)
+        exit(1);
+
+    privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
+
+    privateDriver = privateDevice->getVideoDriver();
+    privateSManager = privateDevice->getSceneManager();
+    privateGUIEnv = privateDevice->getGUIEnvironment();
+}
+
+GraphicEngine* GraphicEngine::getInstance(){
+    if(instance == 0){
+        instance = new GraphicEngine();
+    }
+    return instance;
+}
+
+bool GraphicEngine::run(){
+    return privateDevice->run();
+}
+
+bool GraphicEngine::drop(){
+    return privateDevice->drop();
+}
+
+void GraphicEngine::setCursorVisible(bool visible){
+    privateDevice->getCursorControl()->setVisible(visible);
+}
+
+int GraphicEngine::getTime(){
+    return privateDevice->getTimer()->getTime();
+}
+
+// DRIVER FUNCTIONS
+bool GraphicEngine::beginScene(){
+    return privateDriver->beginScene();
+}
+
+bool GraphicEngine::beginSceneDefault(){
+    return privateDriver->beginScene(true, true, irr::video::SColor(255,113,113,255));
+}
+
+bool GraphicEngine::endScene(){
+    return privateDriver->endScene();
+}
+
+void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
+    body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
+}
+
+void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
+    irr::video::SColorf fromC;
+    fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
+
+    irr::core::vector3df from(f.X, f.Y, f.Z);
+    irr::core::vector3df to(t.X, t.Y, t.Z);
+
+    irr::core::matrix4 id;
+    id.makeIdentity();
+    privateDriver->setTransform(irr::video::ETS_WORLD, id);
+    privateDriver->draw3DLine(from, to, fromC.toSColor());
+}
+
+void GraphicEngine::drawAim(){
+    irr::video::SColor color = irr::video::SColor(255, 255, 0, 0);
+    irr::u32 size = 15;
+    irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
+    irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
+
+    //Draw crosshair
+    privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - size, cenW + 1, cenH - 4)); //above
+    privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + 4, cenH - 1, cenW + size, cenH + 1)); //right
+    privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH + 4, cenW + 1, cenH + size)); //down
+    privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - size, cenH - 1, cenW - 4, cenH + 1)); //left
+    privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+}
+
+// SMANAGER FUNCTIONS
+void GraphicEngine::drawAll(){
+    privateSManager->drawAll();
+}
+
+GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
+    return new GBody(
+        privateSManager->addCubeSceneNode(
+            size,   //size
+            0,      //parent
+            id,     //id
+            irr::core::vector3df(p.X, p.Y, p.Z),    //position
+            irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
+            irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+    ));
+}
+
+GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
+    return new GBody(
+        privateSManager->addSphereSceneNode(
+            radius,     //size
+            16,         //polycount
+            0,          //parent
+            id,         //id
+            irr::core::vector3df(p.X, p.Y, p.Z),    //position
+            irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
+            irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+    ));
+}
+
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
+    return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+}
+
+void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
+    irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
+        irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z), 
+        irr::core::vector3df(  finalPos.X,   finalPos.Y,   finalPos.Z), 
+        time, 
+        loop, 
+        pingpong);
+    
+    if (anim)
+    {
+        body->privateNode->addAnimator(anim);
+        anim->drop();
+    }
+}
+
+GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
+    irr::SKeyMap keyMap[4];
+    keyMap[0].Action = irr::EKA_MOVE_FORWARD;
+    keyMap[0].KeyCode = irr::KEY_KEY_W;
+    keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
+    keyMap[1].KeyCode = irr::KEY_KEY_S;
+    keyMap[2].Action = irr::EKA_STRAFE_LEFT;
+    keyMap[2].KeyCode = irr::KEY_KEY_A;
+    keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
+    keyMap[3].KeyCode = irr::KEY_KEY_D;
+
+    irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
+    if (oldCamera){
+        privateSManager->setActiveCamera(0);
+        oldCamera->remove();
+        privateCamera = NULL;
+    }
+
+    privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
+    
+    return privateCamera;
+}
+
+GCamera* GraphicEngine::getActiveCamera(){
+    privateCamera->privateNode = privateSManager->getActiveCamera();
+    return privateCamera;
+}
+
+void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
+    privateSManager->addToDeletionQueue(g);
+}
+
+// GUIENV FUNCTIONS
+void GraphicEngine::drawAllGUI(){
+    privateGUIEnv->drawAll();
+}
+
+GGUIElement* GraphicEngine::addStaticText(std::wstring text, vector4di p, bool border, bool wordWrap, GGUIElement * parent){
+    return new GGUIElement(privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2), border, wordWrap, parent!=0? parent->privateElement: 0));
+}
+
+void GraphicEngine::initializeGUI(){
+
+    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+//	irr::gui::IGUIFont* font = privateGUIEnv->getFont("");
+//	if (font){
+//		skin->setFont(font);
+//        std::cout<<"carga bien la fuente";
+//    }
+	skin->setFont(privateGUIEnv->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
+}
+
+void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){	      
+    privateGUIEnv->addButton(
+        irr::core::rect<irr::s32>(0 + p.X, 0 + p.Y, 0 - p.X2, 0 - p.Y2),     //position
+        0,                                                  //parent
+        id,                                                 //id
+        text.c_str(),                                       //display text
+        infoText.c_str()                                    //tooltip text
+    );
+}
+
+void GraphicEngine::addEditBox(vector4di p, std::wstring text){
+	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X2, p.Y2));
+}
+
+void GraphicEngine::setMaxSkinTransparency(){
+    irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
+    
+    for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i)
+	{
+		irr::video::SColor col = skin->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+		col.setAlpha(255);
+		skin->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+	}
+}
+
+// RECEIVER FUNCTIONS
+void GraphicEngine::UpdateReceiver(){
+    privateReceiver->Update();
+}
+
+bool GraphicEngine::IsKeyDown(TKEY_CODE code){
+    return privateReceiver->keyDown((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsKeyReleased(TKEY_CODE code){
+    return privateReceiver->keyRelease((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsKeyUp(TKEY_CODE code){
+    return privateReceiver->keyUp((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
+    return privateReceiver->keyPressed((irr::EKEY_CODE)code);
+}
+
+bool GraphicEngine::IsLeftButtonPressed(){
+    return privateReceiver->leftMousePressed();
+}
+
+bool GraphicEngine::IsLeftButtonDown(){
+    return privateReceiver->leftMouseDown();
+}
+
+keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
+    return privateReceiver->GetKeyStatus((irr::EKEY_CODE)code);
+}
+
+keyStatesENUM GraphicEngine::GetMouseStatus(TKEY_CODE code){
+    return privateReceiver->GetMouseStatus((int)code);
+}
+
+irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){
+    //privateSManager->createTriangleSelectorFromBoundingBox(node);
+    irr::scene::ITriangleSelector* selector = privateSManager->createTriangleSelectorFromBoundingBox(node);
+    return selector;
+}
+
+std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
+    std::map<int,vector<vector3df>> NodePointData;
+    std::vector<vector3df> PointData;
+
+    irr::core::vector3df point;
+    irr::core::triangle3df triangle;
+    irr::scene::ISceneNode *node = 0;
+    irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
+    irr::scene::ITriangleSelector* selector = 0;
+
+    //First we need to get the cursor position in the 2D space
+    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    // we need to get the 3D vector from it.
+    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
+        node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
+        selector = node->getTriangleSelector();
+    }
+    if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
+        irr::core::vector3df triangleN = triangle.getNormal().getHorizontalAngle();
+        vector3df collisionPoint(point.X,point.Y,point.Z);
+        vector3df normalVector(triangleN.X, triangleN.Y, triangleN.Z);
+
+        int nodeID = node->getID();
+        PointData.push_back(normalVector);
+        PointData.push_back(collisionPoint);
+
+        NodePointData.insert(std::pair<int,vector<vector3df>>(nodeID, PointData));
+    }
+    
+    return NodePointData;
+}
+
+
+/*
+void GraphicEngine::Raycast(){
+
+    irr::core::vector3df point;
+    irr::core::triangle3df triangle;
+    irr::scene::ISceneNode *node = 0;
+    irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
+    irr::scene::ITriangleSelector* selector = 0;
+
+    //First we need to get the cursor position in the 2D space
+    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    // we need to get the 3D vector from it.
+    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
+        std::cout<<"getSceneNodeAndCollisionPointFromRay"<<std::endl;
+        node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
+        selector = node->getTriangleSelector();
+        std::cout<<"Node Position x: "<< node->getPosition().X<<" Y: " <<node->getPosition().Y<< " Z: "<<node->getPosition().Z<<std::endl;
+        std::cout<<"point X: "<<point.X<<" Y: "<<point.Y<<" Z: "<<point.Z<<std::endl;
+    }
+    if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
+        std::cout<<" RAY POINT COLLISION "<<std::endl;
+        std::cout<<"point X: "<<point.X<<" Y: "<<point.Y<<" Z: "<<point.Z<<std::endl;
+        //triangle.getNormal();
+        if(!(triangle.getNormal().getHorizontalAngle().X == 0 && 
+            triangle.getNormal().getHorizontalAngle().Y != 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            && !(triangle.getNormal().getHorizontalAngle().X == 0 &&
+            triangle.getNormal().getHorizontalAngle().Y == 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            && !(triangle.getNormal().getHorizontalAngle().X == 90 &&
+            triangle.getNormal().getHorizontalAngle().Y == 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            ){
+            TrapManager::GetInstance()->AddTrap(vector3df(point.X,point.Y,point.Z),vector3df(-triangle.getNormal().getHorizontalAngle().X, -triangle.getNormal().getHorizontalAngle().Y, -triangle.getNormal().getHorizontalAngle().Z),TENUM_DEATH_CLAWS);
+        }
+    }
+}*/

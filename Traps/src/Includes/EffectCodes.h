@@ -1,0 +1,11 @@
+#ifndef EFFECTCODES_H
+#define EFFECTCODES_H
+
+enum EFFECTCODE
+{
+	EFFECT_BASIC          	= 0x01,
+	EFFECT_BURNED			= 0x02,
+	EFFECT_SLOWEDDOWN		= 0x03
+};
+
+#endif

@@ -1,0 +1,16 @@
+#ifndef ACTIONS_H
+#define ACTIONS_H
+
+enum ACTION_ENUM
+{
+	ACTION_MOVE_UP         	= 0x00,  
+	ACTION_MOVE_DOWN 		= 0x01,
+	ACTION_MOVE_LEFT		= 0x02,
+	ACTION_MOVE_RIGHT		= 0x03,
+	ACTION_RAYCAST			= 0x04,
+	ACTION_JUMP				= 0x05,
+	ACTION_USE_OBJECT		= 0x06,
+	ACTION_SHOOT			= 0x07
+};
+
+#endif
