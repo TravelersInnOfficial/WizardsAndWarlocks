@@ -31,8 +31,8 @@ Game::Game(){
 	objectManager->AddGrail();
 
 	// Trampas
-	trapManager->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
-	trapManager->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
+	trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);
+	trapManager->AddTrap(vector3df(5,-0.49,0),vector3df(0,0,0),TENUM_SPIRITS);
 
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();

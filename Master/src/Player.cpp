@@ -207,7 +207,6 @@ void Player::UseObject(){
 }
 
 void Player::DeployTrap(){
-
 	vector3df rot = GetRot();
 	rot.X = -rot.X;
 
@@ -218,7 +217,15 @@ void Player::DeployTrap(){
 
 	vector3df End(EndX, EndY, EndZ);
 
-	TrapManager::GetInstance()->AddTrap(End,TENUM_DEATH_CLAWS);
+	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
+	if(Object!=NULL){
+		Entidad* h = (Entidad*)Object;
+		std::cout<<"Entidad tipo: "<<h->GetClase()<<std::endl;
+		if(h->GetClase() == EENUM_FLOOR){
+			std::cout<<"Entidad tipo: suelo"<<std::endl;
+			TrapManager::GetInstance()->DeployTrap(TENUM_DEATH_CLAWS);
+		}
+	}
 }
 
 void Player::setPosition(float posX, float posY, float posZ){

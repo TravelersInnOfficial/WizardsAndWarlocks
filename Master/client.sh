@@ -3,4 +3,4 @@ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../libs/irrlicht
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../libs/bullet
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:../libs/raknet
 cd bin/
-./WizardsAndWarlocks -c 127.0.0.1
+./WizardsAndWarlocks -c 192.168.1.140

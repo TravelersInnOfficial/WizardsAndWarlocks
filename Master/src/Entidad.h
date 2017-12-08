@@ -13,7 +13,8 @@ enum EntityEnum{
 	EENUM_SWITCH = 0x04,
 	EENUM_DOOR = 0x05,
 	EENUM_POTION = 0x06,
-	EENUM_FOUNTAIN = 0x07
+	EENUM_FOUNTAIN = 0x07,
+	EENUM_FLOOR = 0x08
 };
 
 class Player;

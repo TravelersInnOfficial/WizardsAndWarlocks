@@ -225,6 +225,45 @@ void GraphicEngine::setMaxSkinTransparency(){
 	}
 }
 
+irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){
+    irr::scene::ITriangleSelector* selector = privateSManager->createTriangleSelectorFromBoundingBox(node);
+    return selector;
+}
+
+std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
+    std::map<int,std::vector<vector3df>> NodePointData;
+    std::vector<vector3df> PointData;
+
+    irr::core::vector3df point;
+    irr::core::triangle3df triangle;
+    irr::scene::ISceneNode *node = 0;
+    irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
+    irr::scene::ITriangleSelector* selector = 0;
+
+    //First we need to get the cursor position in the 2D space
+    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    // we need to get the 3D vector from it.
+    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
+        node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
+        selector = node->getTriangleSelector();
+    }
+    if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
+        irr::core::vector3df triangleN = triangle.getNormal().getHorizontalAngle();
+        vector3df collisionPoint(point.X,point.Y,point.Z);
+        vector3df normalVector(triangleN.X, triangleN.Y, triangleN.Z);
+
+        int nodeID = node->getID();
+        PointData.push_back(normalVector);
+        PointData.push_back(collisionPoint);
+
+        NodePointData.insert(std::pair<int,std::vector<vector3df>>(nodeID, PointData));
+    }
+    
+    return NodePointData;
+}
+
 // RECEIVER FUNCTIONS
 void GraphicEngine::UpdateReceiver(){
     privateReceiver->Update();

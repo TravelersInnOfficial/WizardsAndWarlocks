@@ -20,6 +20,8 @@ void HumanPlayer::DeclareInput(){
 	controller->AddAction(KEY_SPACE, ACTION_JUMP);
 	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
 	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+
+	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 }
 
 void HumanPlayer::UpdateInput(){
@@ -51,6 +53,9 @@ void HumanPlayer::SetNetInput(){
 
 	if(controller->IsKeyPressed(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 3, true, false);
+
+	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
+	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
@@ -115,6 +120,13 @@ void HumanPlayer::GetNetInput(){
 		keystate = -1;
 		networkObject->SetIntVar(PLAYER_SHOOT, keystate, false, false);
 	}
+
+	keystate = networkObject->GetIntVar(PLAYER_DEPLOY_TRAP);
+	if(keystate != -1){
+		controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
+	}
 	
 	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
 	if(objstate.X != 99999){
@@ -146,7 +158,7 @@ void HumanPlayer::CheckInput(){
 		this->DropObject();
 	}
 	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
-
+	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){this->DeployTrap();}
 }
 
 void HumanPlayer::Update(){

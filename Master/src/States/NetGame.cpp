@@ -40,8 +40,8 @@ NetGame::NetGame(){
 	objectManager->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
 	objectManager->AddFountain();
 	objectManager->AddGrail();
-	trapManager->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
-	trapManager->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
+	trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);
+	trapManager->AddTrap(vector3df(5,-0.49,0),vector3df(0,0,0),TENUM_SPIRITS);
 
 	// Jugador
 	playerOne = NULL;

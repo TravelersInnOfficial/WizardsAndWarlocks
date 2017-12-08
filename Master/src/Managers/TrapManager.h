@@ -13,7 +13,8 @@ public:
 	void Update(float deltaTime);
 
 	void DeleteTrap(Trap* t);
-	Trap* AddTrap(vector3df pos,TrapEnum type);
+	Trap* AddTrap(vector3df pos,vector3df normal, TrapEnum type);
+	void DeployTrap(TrapEnum type);
 	void UpdateTrap(float deltaTime);
 
 private:

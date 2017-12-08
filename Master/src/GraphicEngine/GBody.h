@@ -33,6 +33,8 @@ public:
     */
     void setMaterialType(MATERIAL_TYPE type);
 
+    void setTriangleSelector();
+
     friend class GraphicEngine;
 
 private:

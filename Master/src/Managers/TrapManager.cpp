@@ -1,4 +1,5 @@
 #include "TrapManager.h"
+#include "./../Includes/vector3d.h"
 
 TrapManager* TrapManager::instance = 0;
 
@@ -24,11 +25,37 @@ TrapManager::~TrapManager(){
 	traps.clear();
 }
 
-Trap* TrapManager::AddTrap(vector3df pos, TrapEnum type){
-	Trap* t = new Trap(pos, type);
+Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
+	Trap* t = new Trap(pos,normal, type);
 	traps.push_back(t);
 	return t;
 }
+
+void TrapManager::DeployTrap(TrapEnum type){
+	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast();
+	int ID = 0;
+	vector3df point(0,0,0);
+	vector3df normal(0,0,0);
+
+	std::map<int,std::vector<vector3df>>::iterator it = NodePointData.begin();
+	for(; it != NodePointData.end(); ++it){
+		ID = it->first;
+		std::vector<vector3df> PointData = it->second;
+		std::vector<vector3df>::iterator pointIt = PointData.begin();
+		for (; pointIt != PointData.end(); ++pointIt){
+			normal = PointData.at(0);
+			point = PointData.at(1);
+		}
+	}
+
+	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0)
+	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
+	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
+	){
+		AddTrap(point,vector3df(-normal.X,-normal.Y,-normal.Z),type);
+	}
+}
+
 
 void TrapManager::DeleteTrap(Trap* trap){
 	int size = traps.size();

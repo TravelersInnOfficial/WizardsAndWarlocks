@@ -19,7 +19,7 @@ class Trap : public Entidad{
 public:
 
     Trap();
-    Trap(vector3df, TrapEnum type);
+    Trap(vector3df, vector3df normal, TrapEnum type);
 
     void Update(float deltaTime);
 
@@ -48,6 +48,7 @@ private:
 
     vector3df* m_position;
     vector3df* m_dimensions;
+    vector3df* m_rotation;
 
     std::string m_texturePath;
     std::string m_effect;

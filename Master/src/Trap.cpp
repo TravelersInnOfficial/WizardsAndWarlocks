@@ -18,11 +18,18 @@ Trap::Trap(){
     m_world_time = 0;
 }
 
-Trap::Trap(vector3df position, TrapEnum trapType){
+Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
     m_position = &position;
+    m_rotation = new vector3df(normal.X,normal.Y,normal.Z);
     m_trapType = trapType;
     InitializeTrapData();
+
+    m_position->Y +=0.01; 
+
+    if(m_rotation->X == -270) m_rotation->X = 0;
+    if(m_rotation->Y == -270) m_rotation->Y = 0;
+    if(m_rotation->Z == -270) m_rotation->Z = 0;
  
     m_body = new BT_GhostObject();
     m_rigidBody = new BT_Body();
@@ -31,17 +38,20 @@ Trap::Trap(vector3df position, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
-    m_body->CreateGhostBox(m_position, &aux_dimensions);
-    m_body->SetObjectPtr(this);
+    std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
+    std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
 
-    m_rigidBody->CreateBox(*m_position, (*m_dimensions)*0.5,0,0);
+    m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
+    m_rigidBody->Rotate(*m_rotation);
 
-    g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, vector3df(0,0,0), vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
+    g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, *m_rotation, vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
+    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
+    m_body->CreateGhostBox(m_position,m_rotation,&aux_dimensions);
+    m_body->SetObjectPtr(this);
 }
 
 Trap::~Trap(){
@@ -116,12 +126,8 @@ void Trap::Activate(Player* player ){
 }
 
 void Trap::Deactivate(float deltaTime){
-    std::cout<<"INNER TIME: "<<m_world_time<<std::endl;
     m_world_time = deltaTime*0.001;
-    std::cout<<"TOTAL TIME: "<<deltaTime*0.001<<std::endl;
-    std::cout<<"DELTA TIME: "<<deltaTime<<std::endl;
 	m_current_time += deltaTime;
-    std::cout<<"CURRENT TIME: "<<m_current_time<<std::endl;
 	if(m_current_time>=m_deactivation_time){
 		TrapManager::GetInstance()->DeleteTrap(this);
 		m_current_time=0.0f;
