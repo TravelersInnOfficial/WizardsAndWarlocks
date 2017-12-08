@@ -223,20 +223,7 @@ public:
     keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
     //
-    keyStatesENUM GetMouseStatus(TKEY_CODE code);
-
-    //
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
-
-    /**
-     * Returns true if left button is held down
-    */
-    bool IsLeftButtonPressed();
-
-    /**
-     * Returns true the exact moment left button is held down
-    */
-    bool IsLeftButtonDown();
 
 private:
     GraphicEngine();

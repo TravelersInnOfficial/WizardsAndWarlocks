@@ -40,19 +40,14 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
     return false;
 }
 
-bool EventReceiver::leftMousePressed() { return (mouseButtonState[KEY_LBUTTON] == PRESSED); }
-bool EventReceiver::leftMouseDown(){ return (mouseButtonState[KEY_LBUTTON] == DOWN); }
 bool EventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
 bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
 bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
 bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
 keyStatesENUM EventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
-    return keyState[keycode];
-}
-
-keyStatesENUM EventReceiver::GetMouseStatus(int n){
-    return mouseButtonState[n];
+    if(keycode > 2) return keyState[keycode];
+    else return mouseButtonState[keycode];
 }
 
 void EventReceiver::Update(){
@@ -69,11 +64,6 @@ void EventReceiver::Update(){
 }
 
 void EventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
-    if(keycode > 2){    // Teclas que no son del raton
-        keyState[keycode] = state;
-    }
-    else{
-        mouseButtonState[keycode] = state;
-    }
-    
+    if(keycode > 2) keyState[keycode] = state;
+    else mouseButtonState[keycode] = state;
 }

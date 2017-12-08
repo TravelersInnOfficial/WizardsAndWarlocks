@@ -189,10 +189,7 @@ void PlayerController::Update(){
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		keyStatesENUM status;
-		
-		if(k->GetKey() < 2) status = g_engine->GetMouseStatus(k->GetKey());
-		else status = g_engine->GetKeyStatus(k->GetKey());
-		
+		status = g_engine->GetKeyStatus(k->GetKey());
 		if(status == PRESSED || status == RELEASED) k->SetStatus(status);
 	}
 }

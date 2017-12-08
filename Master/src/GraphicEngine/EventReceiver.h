@@ -16,17 +16,13 @@ protected:
 
 public:
 
-    bool leftMousePressed();
-    bool leftMouseDown();
     bool keyPressed(irr::EKEY_CODE keycode);
     bool keyDown(irr::EKEY_CODE keycode);
     bool keyRelease(irr::EKEY_CODE keycode);
     bool keyUp(irr::EKEY_CODE keycode);
+    
     void setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state);
-
-
     keyStatesENUM GetKeyStatus(irr::EKEY_CODE keycode);
-    keyStatesENUM GetMouseStatus(int n);
 
     void Update();
 
