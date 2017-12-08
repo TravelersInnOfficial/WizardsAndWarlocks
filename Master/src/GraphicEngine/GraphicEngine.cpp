@@ -5,13 +5,13 @@ static GraphicEngine* instance;
 GraphicEngine::GraphicEngine(){
     privateReceiver = new EventReceiver();
 
-    irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+    /*irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
     irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
-    nulldevice -> drop();
+    nulldevice -> drop();*/
 
     privateDevice = irr::createDevice(
         irr::video::EDT_OPENGL,                             //Driver
-        irr::core::dimension2d<unsigned int>(450,300),      //Size of window
+        irr::core::dimension2d<unsigned int>(900,600),      //Size of window
         16,                                                 //bits
         false,                                              //fullscreen
         false,                                              //stencil buffer
