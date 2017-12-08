@@ -1,11 +1,6 @@
 #include "EventReceiver.h"
 #include "Keycodes.h"
 
-EventReceiver::EventReceiver() {
-    for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++) keyState[i] = UP;
-    for (int i = 0; i < numMouseButtons; i++) mouseButtonState[i] = UP;
-}
-
 bool EventReceiver::OnEvent(const irr::SEvent& event) {
 
     if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
@@ -40,14 +35,19 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
     return false;
 }
 
+bool EventReceiver::leftMousePressed() { return (mouseButtonState[0] == PRESSED); }
+bool EventReceiver::leftMouseDown(){ return (mouseButtonState[0] == DOWN); }
 bool EventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
 bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
 bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
 bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
 keyStatesENUM EventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
-    if(keycode > 2) return keyState[keycode];
-    else return mouseButtonState[keycode];
+    return keyState[keycode];
+}
+
+keyStatesENUM EventReceiver::GetMouseStatus(int n){
+    return mouseButtonState[n];
 }
 
 void EventReceiver::Update(){
@@ -60,10 +60,9 @@ void EventReceiver::Update(){
         if(mouseButtonState[i] == PRESSED) mouseButtonState[i] = DOWN;
         else if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
     }
-    
 }
 
-void EventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
-    if(keycode > 2) keyState[keycode] = state;
-    else mouseButtonState[keycode] = state;
+EventReceiver::EventReceiver() {
+    for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++) keyState[i] = UP;
+    for (int i = 0; i < numMouseButtons; i++) mouseButtonState[i] = UP;
 }

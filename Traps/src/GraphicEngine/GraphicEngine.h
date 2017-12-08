@@ -10,6 +10,8 @@
 #include <Keycodes.h>
 #include <vector3d.h>
 #include <vector4d.h>
+#include <map>
+#include <vector>
 
 class GraphicEngine{
 
@@ -223,7 +225,30 @@ public:
     keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
     //
-    void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
+    keyStatesENUM GetMouseStatus(TKEY_CODE code);
+
+    /**
+     * Returns true if left button is held down
+    */
+    bool IsLeftButtonPressed();
+
+    /**
+     * Returns true the exact moment left button is held down
+    */
+    bool IsLeftButtonDown();
+
+    /**
+     * Returns a triangle selector for applying to a node
+     * */
+    irr::scene::ITriangleSelector* AddTriangleSelector(irr::scene::ISceneNode*);
+
+    /**
+     * Detects Irrlicht collisions with node triangles. 
+     * Returns:
+     *      - the node ID
+     *      - vector(raycast collision point, normal vector of the triangle hitted)
+     */
+    std::map<int,std::vector<vector3df>> Raycast();
 
 private:
     GraphicEngine();

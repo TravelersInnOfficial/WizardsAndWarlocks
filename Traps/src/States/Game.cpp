@@ -1,7 +1,6 @@
 #include "Game.h"
 
 Game::Game(){
-
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -22,19 +21,24 @@ Game::Game(){
 	g_engine->addCameraSceneNodeFPS(120.f, 0.0f);
 
 	// Otras Cosas
+	objectManager->AddSwitch(
+		objectManager->AddDoor(vector3df(1,0,-1), vector3df(0.05, 1, 0.5), vector3df(0,0,0), vector3df(0,0,-0.5)),
+		vector3df(-1, 0, -4), vector3df(1,1,1), vector3df(0,0,0), vector3df(0,0,0)
+		);
+	objectManager->AddPotion(vector3df(-2, 0, -2), vector3df(0.5, 0.5, 0.5), vector3df(0,0,0));
 	objectManager->AddFountain();
 	objectManager->AddGrail();
 
 	// Trampas
-	trapManager->AddTrap(vector3df(0,-0.49,5),TENUM_DEATH_CLAWS);
-	trapManager->AddTrap(vector3df(5,-0.49,0),TENUM_SPIRITS);
+	trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);
+	trapManager->AddTrap(vector3df(5,-0.49,0),vector3df(0,0,0),TENUM_SPIRITS);
 
 	// Jugador
-	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
+	playerOne = playerManager->AddPlayer(true);
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
+	playerManager->AddPlayer(false);
 
-	playerManager->AddAIPlayer();
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
 
@@ -49,11 +53,13 @@ Game::~Game(){
 bool Game::Input(){
 	bool end = false;
 	
+	playerOne->UpdateInput();
+	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
 	if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
-	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
+	if(g_engine->IsKeyDown(KEY_KEY_R)) playerOne->Respawn();
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()) footstepEvent->start();
@@ -68,6 +74,7 @@ bool Game::Input(){
 void Game::Update(){
 	UpdateDelta();
 
+	g_engine->UpdateReceiver();
 	f_engine->UpdateWorld();
 	s_engine->update();
 
@@ -77,8 +84,6 @@ void Game::Update(){
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
 	trapManager->Update(deltaTime);
-
-	g_engine->UpdateReceiver();
 }
 
 void Game::Draw(){

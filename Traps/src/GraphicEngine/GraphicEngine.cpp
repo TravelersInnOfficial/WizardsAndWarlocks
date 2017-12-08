@@ -1,38 +1,36 @@
 #include "GraphicEngine.h"
+#include "./../Managers/TrapManager.h"
 
 static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
     privateReceiver = new EventReceiver();
 
-    /*irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+    irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
     irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
-    nulldevice -> drop();*/
+    nulldevice -> drop();
 
     privateDevice = irr::createDevice(
-        irr::video::EDT_OPENGL,                             //Driver
-        irr::core::dimension2d<unsigned int>(900,600),      //Size of window
-        16,                                                 //bits
-        false,                                              //fullscreen
-        false,                                              //stencil buffer
-        true,                                               //vsync
-        privateReceiver                                     //event receiver
+        irr::video::EDT_OPENGL,
+        irr::core::dimension2d<unsigned int>(900,600),
+        16,
+        false,
+        false,
+        true,
+        privateReceiver
     );
 
     if(!privateDevice)
         exit(1);
 
-    //caption of the window
     privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
 
-    //Initialize private pointers
     privateDriver = privateDevice->getVideoDriver();
     privateSManager = privateDevice->getSceneManager();
     privateGUIEnv = privateDevice->getGUIEnvironment();
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
-    //singleton constructor
     if(instance == 0){
         instance = new GraphicEngine();
     }
@@ -246,11 +244,99 @@ bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
     return privateReceiver->keyPressed((irr::EKEY_CODE)code);
 }
 
+bool GraphicEngine::IsLeftButtonPressed(){
+    return privateReceiver->leftMousePressed();
+}
+
+bool GraphicEngine::IsLeftButtonDown(){
+    return privateReceiver->leftMouseDown();
+}
+
 keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
     return privateReceiver->GetKeyStatus((irr::EKEY_CODE)code);
 }
 
-void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
-    privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
+keyStatesENUM GraphicEngine::GetMouseStatus(TKEY_CODE code){
+    return privateReceiver->GetMouseStatus((int)code);
 }
 
+irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){
+    //privateSManager->createTriangleSelectorFromBoundingBox(node);
+    irr::scene::ITriangleSelector* selector = privateSManager->createTriangleSelectorFromBoundingBox(node);
+    return selector;
+}
+
+std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
+    std::map<int,vector<vector3df>> NodePointData;
+    std::vector<vector3df> PointData;
+
+    irr::core::vector3df point;
+    irr::core::triangle3df triangle;
+    irr::scene::ISceneNode *node = 0;
+    irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
+    irr::scene::ITriangleSelector* selector = 0;
+
+    //First we need to get the cursor position in the 2D space
+    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    // we need to get the 3D vector from it.
+    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
+        node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
+        selector = node->getTriangleSelector();
+    }
+    if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
+        irr::core::vector3df triangleN = triangle.getNormal().getHorizontalAngle();
+        vector3df collisionPoint(point.X,point.Y,point.Z);
+        vector3df normalVector(triangleN.X, triangleN.Y, triangleN.Z);
+
+        int nodeID = node->getID();
+        PointData.push_back(normalVector);
+        PointData.push_back(collisionPoint);
+
+        NodePointData.insert(std::pair<int,vector<vector3df>>(nodeID, PointData));
+    }
+    
+    return NodePointData;
+}
+
+
+/*
+void GraphicEngine::Raycast(){
+
+    irr::core::vector3df point;
+    irr::core::triangle3df triangle;
+    irr::scene::ISceneNode *node = 0;
+    irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
+    irr::scene::ITriangleSelector* selector = 0;
+
+    //First we need to get the cursor position in the 2D space
+    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    // we need to get the 3D vector from it.
+    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
+        std::cout<<"getSceneNodeAndCollisionPointFromRay"<<std::endl;
+        node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
+        selector = node->getTriangleSelector();
+        std::cout<<"Node Position x: "<< node->getPosition().X<<" Y: " <<node->getPosition().Y<< " Z: "<<node->getPosition().Z<<std::endl;
+        std::cout<<"point X: "<<point.X<<" Y: "<<point.Y<<" Z: "<<point.Z<<std::endl;
+    }
+    if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
+        std::cout<<" RAY POINT COLLISION "<<std::endl;
+        std::cout<<"point X: "<<point.X<<" Y: "<<point.Y<<" Z: "<<point.Z<<std::endl;
+        //triangle.getNormal();
+        if(!(triangle.getNormal().getHorizontalAngle().X == 0 && 
+            triangle.getNormal().getHorizontalAngle().Y != 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            && !(triangle.getNormal().getHorizontalAngle().X == 0 &&
+            triangle.getNormal().getHorizontalAngle().Y == 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            && !(triangle.getNormal().getHorizontalAngle().X == 90 &&
+            triangle.getNormal().getHorizontalAngle().Y == 0 &&
+            triangle.getNormal().getHorizontalAngle().Z == 0)
+            ){
+            TrapManager::GetInstance()->AddTrap(vector3df(point.X,point.Y,point.Z),vector3df(-triangle.getNormal().getHorizontalAngle().X, -triangle.getNormal().getHorizontalAngle().Y, -triangle.getNormal().getHorizontalAngle().Z),TENUM_DEATH_CLAWS);
+        }
+    }
+}*/

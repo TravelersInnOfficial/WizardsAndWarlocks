@@ -86,7 +86,7 @@ bool PlayerController::SetStatus(ACTION_ENUM ac, keyStatesENUM st){
  * @return  True->Se ha pulsado
  */
 bool PlayerController::IsKeyDown(int num){
-	if(num < keys.size()){				// Comprueba que el numero no se salga del vector
+	if(num < keys.size()){											// Comprueba que el numero no se salga del vector
 		Key_player* k = keys[num];
 		if(k->GetStatus()==DOWN || k->GetStatus()==PRESSED){		// Comprueba si el Status de la tecla es el correcto
 			return true;
@@ -103,9 +103,9 @@ bool PlayerController::IsKeyDown(int num){
  */
 bool PlayerController::IsKeyDown(ACTION_ENUM action){
 	int size = keys.size();
-	for(int i=0; i<size; i++){				// Recorremos todos el vector de teclas
+	for(int i=0; i<size; i++){											// Recorremos todos el vector de teclas
 		Key_player* k = keys[i];
-		if(action == k->GetAction()){		// Miramos si se corresponde con la accion pasada
+		if(action == k->GetAction()){									// Miramos si se corresponde con la accion pasada
 			if(k->GetStatus()==DOWN || k->GetStatus()==PRESSED){		// Comprobamos que el Status sea el correspondiente
 				return true;
 			}
@@ -124,9 +124,7 @@ bool PlayerController::IsKeyDown(ACTION_ENUM action){
 bool PlayerController::IsKeyPressed(int num){
 	if(num < keys.size()){
 		Key_player* k = keys[num];
-		if(k->GetStatus()==PRESSED){
-			return true;
-		}
+		if(k->GetStatus()==PRESSED) return true;
 	}
 	return false;
 }
@@ -142,9 +140,7 @@ bool PlayerController::IsKeyPressed(ACTION_ENUM action){
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		if(action == k->GetAction()){
-			if(k->GetStatus()==PRESSED){
-				return true;
-			}
+			if(k->GetStatus()==PRESSED) return true;
 			return false;
 		}
 	}
@@ -160,9 +156,7 @@ bool PlayerController::IsKeyPressed(ACTION_ENUM action){
 bool PlayerController::IsKeyReleased(int num){
 	if(num < keys.size()){
 		Key_player* k = keys[num];
-		if(k->GetStatus()==RELEASED){
-			return true;
-		}
+		if(k->GetStatus()==RELEASED) return true;
 	}
 	return false;
 }
@@ -178,9 +172,39 @@ bool PlayerController::IsKeyReleased(ACTION_ENUM action){
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		if(action == k->GetAction()){
-			if(k->GetStatus()==RELEASED){
-				return true;
-			}
+			if(k->GetStatus()==RELEASED) return true;
+			return false;
+		}
+	}
+	return false;
+}
+
+/**
+ * Comprueba si una tecla esta suelta
+ * 
+ * @num - Posicion de la tecla n el vector
+ * @return  True->La tecla esta siendo pulsada
+ */
+bool PlayerController::IsKeyUp(int num){
+	if(num < keys.size()){
+		Key_player* k = keys[num];
+		if(k->GetStatus()==UP) return true;
+	}
+	return false;
+}
+
+/**
+ * Comprueba si una tecla esta suelta
+ * 
+ * @action - Nombre de la accion
+ * @return  True->La tecla esta siendo pulsada
+ */
+bool PlayerController::IsKeyUp(ACTION_ENUM action){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(action == k->GetAction()){
+			if(k->GetStatus()==UP) return true;
 			return false;
 		}
 	}
@@ -197,12 +221,19 @@ void PlayerController::Update(){
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		keyStatesENUM status;
-		if(k->GetKey() < 2){
-			status = g_engine->GetMouseStatus(k->GetKey());
-		} else {
-			status = g_engine->GetKeyStatus(k->GetKey());
-		}
-		k->SetStatus(status);
+		status = g_engine->GetKeyStatus(k->GetKey());
+		if(status == PRESSED || status == RELEASED) k->SetStatus(status);
 	}
 }
 
+/**
+ * Actualiza el status a DOWN o UP de las teclas
+ */
+void PlayerController::UpdateOwnStatus(){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(k->GetStatus() == PRESSED) k->SetStatus(DOWN);
+		else if(k->GetStatus() == RELEASED) k->SetStatus(UP);
+	}
+}
