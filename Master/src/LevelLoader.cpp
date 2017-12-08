@@ -11,7 +11,7 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::loadLobby()
 {   
-    return readJson("../assets/json/map.json");
+    return readJson("../assets/json/level1.json");
 }
 
 bool LevelLoader::readJson(std::string jsonPath){
@@ -19,6 +19,7 @@ bool LevelLoader::readJson(std::string jsonPath){
     
     //Takes path from binary location (/bin)
     std::ifstream i(jsonPath);
+    std::cout<<"Encuentra el json"<<std::endl;
     nlohmann::json j;
     i >> j;
 
@@ -32,17 +33,18 @@ bool LevelLoader::readJson(std::string jsonPath){
         vector3df size =     vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
 
         //Textures and objects
-        std::string texture = ptr["Texture"];
+        //std::string texture = "../";
+        std::string texture;        
+        texture = ptr["Texture"];
         std::string model = ptr["3DModel"];
 
         //aditional variables
         vector3df axis = ptr["AxisCoord"].empty()? vector3df() : 
         vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
         
-        bool interact = ptr["Interact"];
-
         //create object
         if(j["Objects"][i]["Type"] == "Block"){
+            //std::cout<<"Block, pos: "<<position<<std::endl;                    
             objManager->AddBlock(position, size, rotation, texture);
         }
         else if(j["Objects"][i]["Type"] == "Door"){
@@ -56,6 +58,12 @@ bool LevelLoader::readJson(std::string jsonPath){
         }
         else if(j["Objects"][i]["Type"] == "Fountain"){
             //objManager->AddFountain(position, size, rotation);
+        }
+        else if(j["Objects"][i]["Type"] == "MainCamera"){
+            //std::cout<<"MainCamera, pos: "<<position<<std::endl;        
+        }
+        else{
+            std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;
         }
     }
 

@@ -10,26 +10,29 @@ GraphicEngine::GraphicEngine(){
     nulldevice -> drop();
 
     privateDevice = irr::createDevice(
-        irr::video::EDT_OPENGL,
-        irr::core::dimension2d<unsigned int>(900,600),
-        16,
-        false,
-        false,
-        true,
-        privateReceiver
+        irr::video::EDT_OPENGL,                             //Driver
+        irr::core::dimension2d<unsigned int>(900,600),      //Size of window
+        16,                                                 //bits
+        false,                                              //fullscreen
+        false,                                              //stencil buffer
+        true,                                               //vsync
+        privateReceiver                                     //event receiver
     );
 
     if(!privateDevice)
         exit(1);
 
+    //caption of the window
     privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
 
+    //Initialize private pointers
     privateDriver = privateDevice->getVideoDriver();
     privateSManager = privateDevice->getSceneManager();
     privateGUIEnv = privateDevice->getGUIEnvironment();
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
+    //singleton constructor
     if(instance == 0){
         instance = new GraphicEngine();
     }
