@@ -34,6 +34,8 @@ public:
 	bool IsKeyPressed(ACTION_ENUM a);
 	bool IsKeyReleased(int n);
 	bool IsKeyReleased(ACTION_ENUM a);
+	bool IsKeyUp(int n);
+	bool IsKeyUp(ACTION_ENUM a);
 	void Update();
 	void UpdateOwnStatus();
 private:
