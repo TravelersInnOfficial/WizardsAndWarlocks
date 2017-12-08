@@ -259,3 +259,7 @@ keyStatesENUM GraphicEngine::GetMouseStatus(TKEY_CODE code){
     return privateReceiver->GetMouseStatus((int)code);
 }
 
+void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
+    privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
+}
+

@@ -225,6 +225,9 @@ public:
     //
     keyStatesENUM GetMouseStatus(TKEY_CODE code);
 
+    //
+    void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
+
     /**
      * Returns true if left button is held down
     */

@@ -37,6 +37,7 @@ public:
 	bool IsMouseDown(int n);
 	bool IsMouseDown(ACTION_ENUM a);
 	void Update();
+	void UpdateOwnStatus();
 private:
 	std::vector<Key_player*> keys;
 };

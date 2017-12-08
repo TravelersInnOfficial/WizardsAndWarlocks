@@ -54,13 +54,11 @@ Game::~Game(){
 bool Game::Input(){
 	bool end = false;
 	
-	playerOne->UpdateInput();
-	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
 	if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
-	if(g_engine->IsKeyDown(KEY_KEY_R)) playerOne->Respawn();
+	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()) footstepEvent->start();
@@ -75,7 +73,6 @@ bool Game::Input(){
 void Game::Update(){
 	UpdateDelta();
 
-	g_engine->UpdateReceiver();
 	f_engine->UpdateWorld();
 	s_engine->update();
 

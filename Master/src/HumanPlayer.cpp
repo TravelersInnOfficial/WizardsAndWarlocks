@@ -19,12 +19,15 @@ void HumanPlayer::DeclareInput(){
 	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
 	controller->AddAction(KEY_SPACE, ACTION_JUMP);
 	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	//controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
 	controller->AddAction(KEY_KEY_Q, ACTION_SHOOT);
 }
 
 void HumanPlayer::UpdateInput(){
-	controller->Update();
+	controller->UpdateOwnStatus();
+	if(isPlayerOne){
+		controller->Update();
+	}
 }
 
 void HumanPlayer::SetNetInput(){
@@ -123,6 +126,7 @@ void HumanPlayer::CheckInput(){
 }
 
 void HumanPlayer::Update(){
+	UpdateInput();
 	CheckInput();
 	Player::Update();
 }

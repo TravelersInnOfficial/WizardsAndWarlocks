@@ -197,12 +197,32 @@ void PlayerController::Update(){
 	for(int i=0; i<size; i++){
 		Key_player* k = keys[i];
 		keyStatesENUM status;
-		if(k->GetKey() < 2){
+		if(k->GetKey() < 2){		// Conseguimos el Status de la tecla
 			status = g_engine->GetMouseStatus(k->GetKey());
 		} else {
 			status = g_engine->GetKeyStatus(k->GetKey());
 		}
-		k->SetStatus(status);
+		if(status == PRESSED || status == RELEASED){
+			k->SetStatus(status);
+		}
 	}
 }
 
+/**
+ * Actualiza el status a DOWN o UP de las teclas
+ */
+void PlayerController::UpdateOwnStatus(){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(k->GetStatus() == PRESSED){
+			k->SetStatus(DOWN);
+			g_engine->SetKeyStatus(k->GetKey(), DOWN);
+		} else if(k->GetStatus() == RELEASED){
+			k->SetStatus(UP);
+			g_engine->SetKeyStatus(k->GetKey(), UP);
+		}
+	}
+}
