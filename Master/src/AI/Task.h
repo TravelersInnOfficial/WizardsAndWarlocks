@@ -9,6 +9,8 @@ class Task{
 public:
 	virtual bool run(Blackboard* bb);
 	bool terminate();
+	virtual ~Task();
+
 private:
 };
 

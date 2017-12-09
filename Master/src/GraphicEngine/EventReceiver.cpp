@@ -30,6 +30,9 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
 					break;
 				}
 			}
+			default:{
+				break;
+			}
 		}
 
 	}

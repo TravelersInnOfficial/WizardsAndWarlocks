@@ -27,6 +27,7 @@ bool Selector::run(Blackboard* bb){
 
 bool Selector::terminate(){
 	std::cout<< "Terminate de la tarea"<<std::endl;
+	return(false);
 }
 
 RandomSelector::RandomSelector(){}

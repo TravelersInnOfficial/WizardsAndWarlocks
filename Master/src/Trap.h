@@ -21,6 +21,7 @@ public:
     Trap();
     Trap(vector3df, vector3df normal, TrapEnum type);
 
+    void Update();
     void Update(float deltaTime);
 
     //ENTITY METHODS

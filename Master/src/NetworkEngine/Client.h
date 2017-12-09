@@ -54,8 +54,7 @@ private:
 	std::map<int, NetworkObject*> newNetworkObjects;		// Vector of Network Objects on the Client that haven't been retrieved
 	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of NO Objects to be erased
 
-	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Vector of Players conected to the Server
-	int player_id;										// Our PLAYER_ID
+	std::map<int, RakNet::RakNetGUID> networkPlayers;		// Vector of Players conected to the Server
 	
 	RakNet::RakPeerInterface *peer;						// Peer Interface
 	RakNet::Packet *packet;								// Packet to send and recieve
