@@ -189,8 +189,21 @@ int GraphicEngine::ReadMenu(){
     return(privateReceiver->ReadMenu());
 }
 
+std::string GraphicEngine::ReadText(int id){
+    irr::gui::IGUIElement* textElem;
+    textElem = privateGUIEnv->getRootGUIElement()->getElementFromId(id, true);
+
+    const wchar_t *text = textElem->getText();
+    std::wstring ws(text);
+    std::string text_str(ws.begin(), ws.end());
+
+    return (text_str);
+}
+
 void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
-	privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
+    irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
+    ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+    ge->setDrawBorder(false);
 }
 
 void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){	      
@@ -203,8 +216,15 @@ void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoT
 	);
 }
 
-void GraphicEngine::addEditBox(vector4di p, std::wstring text){
-	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2));
+void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id){
+	irr::gui::IGUIEditBox* ge = privateGUIEnv->addEditBox(
+                                    text.c_str(),
+                                    irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
+                                    false,
+                                    0,
+                                    (irr::s32)id
+                                );
+    ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 }
 
 irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){

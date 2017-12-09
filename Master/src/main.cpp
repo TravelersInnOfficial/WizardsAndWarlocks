@@ -29,7 +29,7 @@ NetworkEngine* CreateMenu(){
 	g_engine->addButton(rect, L"Server", L"To start a server on this computer", 3);
 
 	rect = vector4di(400,420,200,20);
-	g_engine->addEditBox(rect, L"127.0.0.1");
+	g_engine->addEditBox(rect, L"127.0.0.1", 4);
 
 	int selectedOption = -1;
 	while(g_engine->run() && selectedOption == -1){
@@ -43,7 +43,7 @@ NetworkEngine* CreateMenu(){
 	switch(selectedOption){
 		case 2:{
 			n_engine = NetworkEngine::GetInstance();
-			n_engine->SetIp("127.0.0.1");
+			n_engine->SetIp(g_engine->ReadText(4));
 			n_engine->StartClient();
 			break;
 		}

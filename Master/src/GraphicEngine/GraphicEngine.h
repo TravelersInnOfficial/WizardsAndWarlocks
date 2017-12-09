@@ -163,6 +163,11 @@ public:
     int ReadMenu();
 
     /**
+     * Reads a GUI EditBox from the reciever
+    */
+    std::string ReadText(int id);
+
+    /**
      * Adds a static text
      * text: Text to be displayed
      * position: Rectangle specifying the borders of the static text
@@ -186,7 +191,7 @@ public:
      * p: position (x, y) and size (x2,y2) of the button
      * text: text to initally display in the box
     */
-    void addEditBox(vector4di p, std::wstring text = L"");
+    void addEditBox(vector4di p, std::wstring text = L"", int id = -1);
 
     /**
      * Returns a triangle selector for applying to a node
