@@ -13,6 +13,7 @@ class Grail: public Entidad{
 public:
 	Grail();
 	~Grail();
+	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);
 private:

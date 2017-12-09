@@ -1,3 +1,7 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#pragma clang diagnostic pop
+
 #include "Fountain.h"
 
 Fountain::Fountain(){
@@ -54,6 +58,10 @@ void Fountain::Update(float deltaTime){
 	}
 	
 	inUse = false;
+}
+
+void Fountain::Update(){
+	std::cout<<"NO USAR ESTE UPDATE"<<std::endl;
 }
 
 void Fountain::SetFree(){

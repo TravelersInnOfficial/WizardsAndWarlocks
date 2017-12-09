@@ -1,3 +1,7 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#pragma clang diagnostic pop
+
 #include "Trap.h"
 #include "./Managers/TrapManager.h"
 
@@ -61,6 +65,10 @@ Trap::~Trap(){
 
 void Trap::Update(float deltaTime){
     this->deltaTime = deltaTime;
+}
+
+void Trap::Update(){
+	std::cout<<"NO USAR ESTE UPDATE"<<std::endl;
 }
 
 void Trap::InitializeTrapData(){

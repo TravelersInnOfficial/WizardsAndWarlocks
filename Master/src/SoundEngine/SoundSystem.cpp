@@ -27,12 +27,14 @@ SoundSystem* SoundSystem::getInstance() {
 }
 
 SoundSystem::SoundSystem() {
+    /*
     const char * banksPath          =               NULL;
 	FMOD::Studio::System* system    =               NULL;
 	FMOD::System* lowLevelSystem    =               NULL;
 	FMOD::Studio::Bank* masterBank  =               NULL;
 	FMOD::Studio::Bank* stringsBank =               NULL;
     FMOD::Studio::Bus* busMaster    =               NULL;
+    */
 }
 
 void SoundSystem::createSystem(string soundBanksPath){
@@ -120,7 +122,7 @@ void SoundSystem::setVolume(float vol) {
  *  Modifies the position of the listening point
  ******************************************************/
 void SoundSystem::setListenerPosition(Vector3 pos) {
-    FMOD_3D_ATTRIBUTES* listener;
+    FMOD_3D_ATTRIBUTES* listener = new FMOD_3D_ATTRIBUTES();
     FMOD_VECTOR fmodVec = {pos.x, pos.y, pos.z};
     listener->position = fmodVec;
     ERRCHECK(system->setListenerAttributes(0, listener));
@@ -167,12 +169,8 @@ void SoundEvent::stop() {
  *  Pauses the event reproduction
  ******************************************************/
 void SoundEvent::pause() {
-    bool paused = NULL;
-    //Check if is paused or not
-    if (soundInstance->getPaused(&paused))
-        ERRCHECK(soundInstance->setPaused(false));
-    else
-        ERRCHECK(soundInstance->setPaused(true));
+    bool paused = soundInstance->getPaused(&paused);
+    ERRCHECK(soundInstance->setPaused(!paused));
 }
 
 
@@ -197,7 +195,7 @@ void SoundEvent::setGain(float gain) {
  *  \param x, y, and z, new 3D position
  ******************************************************/
 void SoundEvent::setPosition(Vector3 pos) {
-    FMOD_3D_ATTRIBUTES* attributes;
+    FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
     FMOD_VECTOR fmodVec = {pos.x, pos.y, pos.z};
     attributes->position = fmodVec;
     ERRCHECK(soundInstance->set3DAttributes(attributes));
