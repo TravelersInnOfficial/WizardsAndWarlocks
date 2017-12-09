@@ -26,15 +26,15 @@ Game::Game(){
 	objectManager->AddGrail();
 
 	// Trampas
-	trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);
-	trapManager->AddTrap(vector3df(5,-0.49,0),vector3df(0,0,0),TENUM_SPIRITS);
+	//trapManager->AddTrap(vector3df(0,-0.49,5),vector3df(0,0,0),TENUM_DEATH_CLAWS);
+	//trapManager->AddTrap(vector3df(5,-0.49,0),vector3df(0,0,0),TENUM_SPIRITS);
 
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 
-	//playerManager->AddAIPlayer();
+	playerManager->AddAIPlayer();
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
 

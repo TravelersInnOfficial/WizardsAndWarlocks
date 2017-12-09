@@ -6,7 +6,7 @@
 #include "./Managers/EffectManager.h"
 
 #include "./Objects/Potion.h"
-#include "./Trap.h"
+#include "./Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -52,6 +52,8 @@ void Player::CreatePlayer(){
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3);
 	bt_body->AssignPointer(this);
+
+	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	
 	Respawn();
 
@@ -217,11 +219,9 @@ void Player::DeployTrap(){
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
-		Entidad* h = (Entidad*)Object;
-		//std::cout<<"Entidad tipo: "<<h->GetClase()<<std::endl;
+		Entidad* h = (Entidad*)Object;;
 		if(h->GetClase() == EENUM_FLOOR){
-			//std::cout<<"Entidad tipo: suelo"<<std::endl;
-			TrapManager::GetInstance()->DeployTrap(TENUM_DEATH_CLAWS);
+			TrapManager::GetInstance()->PlayerDeployTrap(this);
 		}
 	}
 }

@@ -43,9 +43,6 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
-    std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
-
     m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
     m_rigidBody->Rotate(*m_rotation);
@@ -97,6 +94,9 @@ void Trap::InitializeTrapData(){
         case TENUM_DISTURBANCE: 
             //std::cout<<"IM TENUM_DISTURBANCE"<<std::endl;
             SetTrapData(vector3df(0.5,0.5,0.5),"","Locura");
+        break;
+
+        default:
         break;
 
     }
