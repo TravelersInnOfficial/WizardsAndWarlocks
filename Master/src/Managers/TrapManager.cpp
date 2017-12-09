@@ -47,13 +47,13 @@ void TrapManager::DeployTrap(TrapEnum type){
 			point = PointData.at(1);
 		}
 	}
+	std::cout<<"Normal.X: "<<normal.X<<" Normal.Y: "<<normal.Y<<" Normal.Z: "<<normal.Z<<std::endl;
 
-	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0)
+	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
 	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
-	){
-		AddTrap(point,vector3df(-normal.X,-normal.Y,-normal.Z),type);
-	}
+	&& (normal.Y >=0 && normal.Y <=90)
+	) AddTrap(point,normal,type);
 }
 
 

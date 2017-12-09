@@ -27,10 +27,11 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
 
     m_position->Y +=0.01; 
 
-    if(m_rotation->X == -270) m_rotation->X = 0;
-    if(m_rotation->Y == -270) m_rotation->Y = 0;
-    if(m_rotation->Z == -270) m_rotation->Z = 0;
- 
+    if(m_rotation->X == 270) m_rotation->X = 0;
+    if(m_rotation->Y == 270) m_rotation->Y = 0;
+    if(m_rotation->Z == 270) m_rotation->Z = 0;
+    m_rotation->X = 360 - m_rotation->X;
+
     m_body = new BT_GhostObject();
     m_rigidBody = new BT_Body();
     
@@ -38,8 +39,8 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    //std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
-    //std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
+    std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
+    std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
 
     m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
