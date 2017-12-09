@@ -185,44 +185,26 @@ void GraphicEngine::drawAllGUI(){
 	privateGUIEnv->drawAll();
 }
 
-void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
-	privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
+int GraphicEngine::ReadMenu(){
+    return(privateReceiver->ReadMenu());
 }
 
-void GraphicEngine::initializeGUI(){
-	irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
-	/*
-	irr::gui::IGUIFont* font = privateGUIEnv->getFont("");
-	if (font){
-		skin->setFont(font);
-        std::cout<<"carga bien la fuente";
-    }
-	*/
-	skin->setFont(privateGUIEnv->getBuiltInFont(), irr::gui::EGDF_TOOLTIP);
+void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
+	privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
 }
 
 void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){	      
 	privateGUIEnv->addButton(
 		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),	//position
-		0,													//parent
-		id,													//id
-		text.c_str(),										//display text
-		infoText.c_str()									//tooltip text
+		0,													            //parent
+		id,													            //id
+		text.c_str(),										            //display text
+		infoText.c_str()									            //tooltip text
 	);
 }
 
 void GraphicEngine::addEditBox(vector4di p, std::wstring text){
 	privateGUIEnv->addEditBox(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2));
-}
-
-void GraphicEngine::setMaxSkinTransparency(){
-	irr::gui::IGUISkin* skin = privateGUIEnv->getSkin();
-	
-	for (irr::s32 i=0; i<irr::gui::EGDC_COUNT ; ++i) {
-		irr::video::SColor col = skin->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
-		col.setAlpha(255);
-		skin->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
-	}
 }
 
 irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){

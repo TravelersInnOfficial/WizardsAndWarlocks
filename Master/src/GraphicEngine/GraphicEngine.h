@@ -5,7 +5,6 @@
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
-#include "GGUIElement.h"
 #include "EventReceiver.h"
 #include <Keycodes.h>
 #include <vector3d.h>
@@ -157,11 +156,11 @@ public:
      * Draws all gui elements by traversing the GUI environment starting at the root node.
     */
     void drawAllGUI();
-    
+
     /**
-     * Initializes font and gui stuff
+     * Reads a GUI Menu from the reciever
     */
-    void initializeGUI();
+    int ReadMenu();
 
     /**
      * Adds a static text
@@ -188,11 +187,6 @@ public:
      * text: text to initally display in the box
     */
     void addEditBox(vector4di p, std::wstring text = L"");
-    
-    /**
-     * Sets Max transparency (255) to all elements in gui
-    */
-    void setMaxSkinTransparency();
 
     /**
      * Returns a triangle selector for applying to a node

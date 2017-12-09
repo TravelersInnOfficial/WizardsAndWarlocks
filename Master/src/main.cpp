@@ -17,57 +17,55 @@ NetworkEngine* CreateMenu(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	vector4di rect = vector4di(100,200,200,200);
-	g_engine->addButton(rect, L"Single Player");
+	g_engine->addButton(rect, L"Single Player", L"To play single player", 1);
 
 	rect = vector4di(575,160,100,20);
 	g_engine->addStaticText(rect, L"Multi Player", true, false);
 
 	rect = vector4di(400,200,200,200);
-	g_engine->addButton(rect, L"Client");
+	g_engine->addButton(rect, L"Client", L"To start a client (FILL IP)", 2);
 
 	rect = vector4di(650,200,200,200);
-	g_engine->addButton(rect, L"Server");
+	g_engine->addButton(rect, L"Server", L"To start a server on this computer", 3);
 
 	rect = vector4di(400,420,200,20);
-	g_engine->addEditBox(rect, L"Server IP");
+	g_engine->addEditBox(rect, L"127.0.0.1");
 
-	int draw = 120;
-	while(draw > 0){
+	int selectedOption = -1;
+	while(g_engine->run() && selectedOption == -1){
 		g_engine->beginSceneDefault();
 		g_engine->drawAllGUI();
 		g_engine->endScene();
-		draw--;
+
+		selectedOption = g_engine->ReadMenu();
 	}
 
-	return (n_engine);
-}
-
-NetworkEngine* manageArguments(int argc, char* argv[]){
-	NetworkEngine* n_engine = NULL;
-	if(argc > 1){
-		n_engine = NetworkEngine::GetInstance();
-		bool isServer = false;
-		if(strcmp(argv[1],"-s") == 0) isServer = true;
-		if (isServer) n_engine->StartServer();
-		else {
-			if(argc > 2) n_engine->SetIp(argv[2]);
+	switch(selectedOption){
+		case 2:{
+			n_engine = NetworkEngine::GetInstance();
+			n_engine->SetIp("127.0.0.1");
 			n_engine->StartClient();
+			break;
+		}
+		case 3:{
+			n_engine = NetworkEngine::GetInstance();
+			n_engine->StartServer();
+			break;
 		}
 	}
+
 	return (n_engine);
 }
 
-int main(int argc, char* argv[]) {
-
-	NetworkEngine* n_engine = manageArguments(argc, argv);
+int main() {
 
 	// Engines
 	BulletEngine* f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	// GUI
-	NetworkEngine* n_engine2 = CreateMenu();
+	// MAIN MENU
+	NetworkEngine* n_engine = CreateMenu();
 	g_engine->setCursorVisible(false);
 
 	// Level
