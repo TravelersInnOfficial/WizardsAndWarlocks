@@ -87,7 +87,7 @@ void SoundSystem::createSystem(string soundBanksPath){
  ******************************************************/
 SoundEvent* SoundSystem::getEvent(const char * eventPath) {
 
-    std::cout << eventPath << std::endl;
+    //std::cout << eventPath << std::endl;
     //Create event description
     FMOD::Studio::EventDescription * eventDesc;
     ERRCHECK(system->getEvent(eventPath, &eventDesc) );

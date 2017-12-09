@@ -38,8 +38,8 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
-    std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
+    //std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
+    //std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
 
     m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
@@ -100,7 +100,7 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
-    std::cout<<tipo<<std::endl;
+    //std::cout<<tipo<<std::endl;
 
     if(tipo == EENUM_PLAYER){
         Player* player = (Player*)(punt);
@@ -118,7 +118,7 @@ void Trap::Interact(Player* p){
 
 void Trap::Activate(Player* player ){
 
-    std::cout<<"Aplico: "<<m_effect<<std::endl;
+    //std::cout<<"Aplico: "<<m_effect<<std::endl;
 
     player->Respawn();
     TrapManager::GetInstance()->DeleteTrap(this);

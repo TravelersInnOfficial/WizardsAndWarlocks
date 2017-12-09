@@ -61,7 +61,7 @@ void Potion::Interact(Player* p){
 
 void Potion::Use(Player* p){
 	p->ChangeHP(value);
-	std::cout<<"USING"<<std::endl;
+	//std::cout<<"USING"<<std::endl;
 }
 
 void Potion::UpdatePosShape(){
