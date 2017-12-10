@@ -1,3 +1,7 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#pragma clang diagnostic pop
+
 #include "Trap.h"
 #include "./Managers/TrapManager.h"
 
@@ -27,19 +31,17 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
 
     m_position->Y +=0.01; 
 
-    if(m_rotation->X == -270) m_rotation->X = 0;
-    if(m_rotation->Y == -270) m_rotation->Y = 0;
-    if(m_rotation->Z == -270) m_rotation->Z = 0;
- 
+    if(m_rotation->X == 270) m_rotation->X = 0;
+    if(m_rotation->Y == 270) m_rotation->Y = 0;
+    if(m_rotation->Z == 270) m_rotation->Z = 0;
+    m_rotation->X = 360 - m_rotation->X;
+
     m_body = new BT_GhostObject();
     m_rigidBody = new BT_Body();
     
     m_current_time = 0;
     m_deactivation_time = 3;
     m_world_time = 0;
-
-    std::cout<<"normalX: "<<normal.X<<" normalY: "<<normal.Y<<" normalZ: "<<normal.Z<<std::endl;
-    std::cout<<"m_rotationX: "<<m_rotation->X<<" m_rotationY: "<<m_rotation->Y<<" m_rotationZ: "<<m_rotation->Z<<std::endl;
 
     m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
@@ -60,6 +62,10 @@ Trap::~Trap(){
 
 void Trap::Update(float deltaTime){
     this->deltaTime = deltaTime;
+}
+
+void Trap::Update(){
+	std::cout<<"NO USAR ESTE UPDATE"<<std::endl;
 }
 
 void Trap::InitializeTrapData(){
@@ -90,6 +96,9 @@ void Trap::InitializeTrapData(){
             SetTrapData(vector3df(0.5,0.5,0.5),"","Locura");
         break;
 
+        default:
+        break;
+
     }
 }
 
@@ -100,7 +109,7 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
-    std::cout<<tipo<<std::endl;
+    //std::cout<<tipo<<std::endl;
 
     if(tipo == EENUM_PLAYER){
         Player* player = (Player*)(punt);
@@ -118,7 +127,7 @@ void Trap::Interact(Player* p){
 
 void Trap::Activate(Player* player ){
 
-    std::cout<<"Aplico: "<<m_effect<<std::endl;
+    //std::cout<<"Aplico: "<<m_effect<<std::endl;
 
     player->Respawn();
     TrapManager::GetInstance()->DeleteTrap(this);

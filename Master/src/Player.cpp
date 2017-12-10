@@ -6,7 +6,7 @@
 #include "./Managers/EffectManager.h"
 
 #include "./Objects/Potion.h"
-#include "./Trap.h"
+#include "./Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -30,32 +30,31 @@ Player::Player(bool isPlayer1){
 
 Player::~Player(){
 	bt_body->Erase();
-    m_playerNode->Erase();	
-
+    m_playerNode->Erase();
 	delete m_playerNode;
 	delete bt_body;
 }
 
 void Player::CreatePlayer(){
-	//IRRLICHT
+
+	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	// Cargamos el Cubo
 	m_playerNode = engine->addCube2Scene(m_dimensions);
 	m_playerNode->setScale(vector3df(m_dimensions.X, m_dimensions.Y, m_dimensions.Z));
-
-	// Aplicamos Material unlit y Textura
 	if (m_playerNode) {
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
 		m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
 	}
-	
-	//BULLET
-	m_dimensions = m_dimensions * 0.5f;
-	
+	m_dimensions = m_dimensions * 0.5f;	
+
+	// Physic Player
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3);
 	bt_body->AssignPointer(this);
+
+	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
+	
 	Respawn();
 
 }
@@ -88,12 +87,10 @@ void Player::Update(){
 
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
-	vector3df newRotAux = engine->getActiveCamera()->getRotation();
 
-	// Poner posicion de camara
 	engine->getActiveCamera()->setPosition(vector3df(m_position.X /*- 0.15 * sin(rot.Y)*/, m_position.Y /*+ 0.5*/, m_position.Z /*- 0.15 * cos(rot.Y)*/));
 	engine->getActiveCamera()->updateAbsolutePosition();
-	engine->getActiveCamera()->setRotation(newRotAux);
+	engine->getActiveCamera()->setRotation(newRot);
 }
 
 void Player::checkMaxVelocity(){
@@ -147,19 +144,22 @@ void Player::ChangeHP(float HP){
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
 
-	std::cout<<m_HP<<std::endl;
+	// std::cout<<m_HP<<std::endl;
 }
 
 bool Player::ChangeMP(float MP){
-	if(m_MP - MP < 0) return false;
-	else{
+	bool toRet = false;
+	
+	if(m_MP - MP >= 0){
 		m_MP -= MP;
 		return true;
 	}
+
+	return (toRet);
 }
 
 void Player::Respawn(){
-	setPosition(0, 5, 0);
+	SetPosition(vector3df(0, 5, 0));
 	m_HP = 100;
 	m_dead = false;
 }
@@ -193,7 +193,7 @@ void Player::CatchObject(Potion* p){
 
 void Player::DropObject(){
 	if(potion!=NULL){
-		potion->CreatePotion(m_position, vector3df(0,0,0));		//rotacion de la pocion fija?
+		potion->CreatePotion(m_position, vector3df(0,0,0));
 		potion = NULL;
 	}
 }
@@ -219,22 +219,11 @@ void Player::DeployTrap(){
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
-		Entidad* h = (Entidad*)Object;
-		std::cout<<"Entidad tipo: "<<h->GetClase()<<std::endl;
+		Entidad* h = (Entidad*)Object;;
 		if(h->GetClase() == EENUM_FLOOR){
-			std::cout<<"Entidad tipo: suelo"<<std::endl;
-			TrapManager::GetInstance()->DeployTrap(TENUM_DEATH_CLAWS);
+			TrapManager::GetInstance()->PlayerDeployTrap(this);
 		}
 	}
-}
-
-void Player::setPosition(float posX, float posY, float posZ){
-	m_position.X = posX;
-	m_position.Y = posY;
-	m_position.Z = posZ;
-	m_playerNode->setPosition(m_position);
-	m_playerNode->updateAbsolutePosition();
-	bt_body->SetPosition(m_position);
 }
 
 void Player::SetPosition(vector3df pos){
@@ -246,12 +235,12 @@ void Player::SetPosition(vector3df pos){
 
 void Player::SetPosX(float posX){
 	m_position.X = posX;
-	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
+	m_playerNode->setPosition(m_position);
 }
 
 void Player::SetPosY(float posY){
 	m_position.Y = posY;
-	m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
+	m_playerNode->setPosition(m_position);
 }
 
 void Player::SetRotation(vector3df rotation){
@@ -262,19 +251,18 @@ void Player::SetRotation(vector3df rotation){
 	m_playerNode->setRotation(newRot);
 }
 
-void Player::SetHP(float HP){ m_HP = HP; }
+void Player::UpdatePosShape(){
+	m_position = bt_body->GetPosition();
+	bt_body->Update();
+	m_playerNode->setPosition(m_position);
+}
+
+void Player::SetHP(float HP){m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
-
-float Player::GetRotY(){
-	return rotation.Y;
-}
-
-vector3df Player::GetRot(){
-	return rotation;
-}
-
+float Player::GetRotY(){ return rotation.Y; }
+vector3df Player::GetRot(){ return rotation; }
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 bool Player::GetDead(){ return m_dead; }
 float Player::GetPosX(){ return m_position.X; }
@@ -288,9 +276,3 @@ float Player::GetHP(){ return m_HP; }
 float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
-
-void Player::UpdatePosShape(){
-	m_position = bt_body->GetPosition();
-	bt_body->Update();
-	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
-}

@@ -6,14 +6,7 @@
 #include "Entidad.h"
 #include "Player.h"
 #include <vector3d.h>
-
-enum TrapEnum{
-    TENUM_DEATH_CLAWS = 0x00,
-    TENUM_SPIRITS = 0x01,
-    TENUM_SILENCE = 0x02,
-    TENUM_TAXES = 0x03,
-    TENUM_DISTURBANCE = 0x04
-};
+#include "./Includes/TrapCodes.h"
 
 class Trap : public Entidad{
 public:
@@ -21,6 +14,7 @@ public:
     Trap();
     Trap(vector3df, vector3df normal, TrapEnum type);
 
+    void Update();
     void Update(float deltaTime);
 
     //ENTITY METHODS

@@ -253,6 +253,7 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
     }
     if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
         irr::core::vector3df triangleN = triangle.getNormal().getHorizontalAngle();
+        //irr::core::vector3df triangleN = triangle.getNormal();
         vector3df collisionPoint(point.X,point.Y,point.Z);
         vector3df normalVector(triangleN.X, triangleN.Y, triangleN.Z);
 

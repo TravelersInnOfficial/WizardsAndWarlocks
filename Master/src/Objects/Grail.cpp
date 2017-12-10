@@ -1,3 +1,7 @@
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#pragma clang diagnostic pop
+
 #include "Grail.h"
 
 Grail::Grail(){
@@ -17,6 +21,10 @@ void Grail::Update(float deltaTime){
 	if(casting) casting = false;
 	else timeCasting = 0.0f;
 	UpdatePosShape();
+}
+
+void Grail::Update(){
+	std::cout<<"NO USAR ESTE UPDATE"<<std::endl;
 }
 
 void Grail::Interact(Player* p){

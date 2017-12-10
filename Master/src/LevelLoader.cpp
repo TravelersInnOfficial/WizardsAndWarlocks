@@ -21,7 +21,7 @@ bool LevelLoader::readJson(std::string jsonPath){
     
     //Takes path from binary location (/bin)
     std::ifstream i(jsonPath);
-    std::cout<<"Encuentra el json"<<std::endl;
+    //std::cout<<"Encuentra el json"<<std::endl;
     nlohmann::json j;
     i >> j;
 
