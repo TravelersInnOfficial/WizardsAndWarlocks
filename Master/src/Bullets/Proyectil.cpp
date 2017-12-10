@@ -41,7 +41,7 @@ void Proyectil::CreateProyectil(vector3df pos){
 
     //BULLET    
     bt_body = new BT_Body();
-    bt_body->CreateBox(pos, vector3df(0.7*radio,0.7*radio,0.7*radio), 50, 2.3);
+    bt_body->CreateBox(pos, vector3df(0.7*radio,0.7*radio,0.7*radio), 50, 0);
     bt_body->AssignPointer(this);
     bt_body->SetGravity(vector3df(0,0,0));
     bt_body->SetCollisionFlags("no_contact");

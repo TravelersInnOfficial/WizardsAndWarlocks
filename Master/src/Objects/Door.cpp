@@ -52,7 +52,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     //BULLET
     vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, TCenter);
+	bt_body->CreateBox(TPosition, HalfExtents, 0, 0, TCenter);
     //bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
 }
