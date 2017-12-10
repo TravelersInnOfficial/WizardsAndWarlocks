@@ -26,6 +26,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     //vector3df TRotation(0,0,0);
     //vector3df TCenter(0,0,-TScale.Z)
 
+    //Dimensions of the box
     TScale.X *= 0.05;
     TScale.Y *= 1;
     TScale.Z *= 0.5;
@@ -36,7 +37,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     //IRRLICHT
     GraphicEngine* engine = GraphicEngine::getInstance();
 
-    // Cargamos el cubo
+    // Cargamos el modelo
     m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta.obj");
     m_doorNode->setPosition(TPosition);
     m_doorNode->setRotation(TRotation);
@@ -52,7 +53,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, TCenter);
-    bt_body->Rotate(TRotation);
+    //bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
 }
 

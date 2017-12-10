@@ -2,6 +2,7 @@
 #include "Objects/Block.h"
 #include "Managers/ObjectManager.h"
 #include <vector3d.h>
+#include <map>
 #include <json.hpp>
 #include <fstream>
 
@@ -16,6 +17,7 @@ bool LevelLoader::loadLobby()
 
 bool LevelLoader::readJson(std::string jsonPath){
     ObjectManager* objManager = ObjectManager::GetInstance();
+    std::map<int, Door*> doors;
     
     //Takes path from binary location (/bin)
     std::ifstream i(jsonPath);
@@ -23,23 +25,28 @@ bool LevelLoader::readJson(std::string jsonPath){
     nlohmann::json j;
     i >> j;
 
+    vector3df position;
+    vector3df rotation;
+    vector3df size;
+    std::string texture;
+    std::string model;
+    vector3df axis;
+
     //iterates objects
     for(int i = 0; !j["Objects"][i].is_null(); i++){
         //pointer to object body
         auto ptr = j["Objects"][i]["Body"];
         //unity transform
-        vector3df position = vector3df(ptr["Position"][0], ptr["Position"][1], ptr["Position"][2]);
-        vector3df rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
-        vector3df size =     vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
+         position = vector3df(ptr["Position"][0], ptr["Position"][1], ptr["Position"][2]);
+         rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
+         size     = vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
 
-        //Textures and objects
-        //std::string texture = "../";
-        std::string texture;        
+        //Textures and objects        
         texture = ptr["Texture"];
-        std::string model = ptr["3DModel"];
+        model = ptr["3DModel"];
 
         //aditional variables
-        vector3df axis = ptr["AxisCoord"].empty()? vector3df() : 
+        axis = ptr["AxisCoord"].empty()? vector3df() : 
         vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
         
         //create object
@@ -47,17 +54,16 @@ bool LevelLoader::readJson(std::string jsonPath){
             objManager->AddBlock(position, size, rotation, texture);           
         }
         else if(j["Objects"][i]["Type"] == "Door"){
-            objManager->AddDoor(position, size, rotation, axis);
+            int idDoor = j["Objects"][i]["ID"];
+            doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
         }
         else if(j["Objects"][i]["Type"] == "Switch"){
-            //objManager->AddSwitch(door, position, size, rotation);
+            //int idDoor = j["Objects"][i]["Door"];            
+            //objManager->AddSwitch(doors[idDoor], position, size, rotation, axis);
         }
-
         else if(j["Objects"][i]["Type"] == "Spawner"){
-            //objManager->AddSwitch(door, position, size, rotation);
             objManager->AddPotion(position, size, rotation);
         }
-
         else if(j["Objects"][i]["Type"] == "Grail"){
             //objManager->AddGrail(position, size, rotation);
         }
