@@ -12,7 +12,7 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::loadLobby()
 {   
-    return readJson("../assets/json/level2.json");
+    return readJson("../assets/json/map.json");
 }
 
 bool LevelLoader::readJson(std::string jsonPath){

@@ -6,7 +6,22 @@ void GEntity::setPosition(vector3df pos){
 }
 
 void GEntity::setRotation(vector3df rot){
-    privateNode->setRotation(irr::core::vector3df(rot.X, rot.Y, rot.Z));
+    irr::core::vector3df irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
+    privateNode->setRotation(irrRotation);
+}
+
+void GEntity::Rotate(vector3df rot){
+    irr::core::matrix4 m;
+    irr::core::matrix4 n;
+    irr::core::vector3df irrRotation;
+
+    irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
+    m.setRotationDegrees(privateNode->getRotation());
+    n.setRotationDegrees(irrRotation);
+    m *= n;
+    
+    privateNode->setRotation(m.getRotationDegrees());
+    privateNode->updateAbsolutePosition();
 }
 
 void GEntity::setScale(vector3df scale){
