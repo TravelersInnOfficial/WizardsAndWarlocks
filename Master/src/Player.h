@@ -41,14 +41,14 @@ class Player: public Entidad{
 		float GetPosY();
 		float GetPosZ();
 		vector3df GetPos();
+		float GetRotY();
+		vector3df GetRot();
 		float GetWidth();
 		float GetHeight();
 		float GetLength();
 		float GetHP();
 		float GetMP();
-		bool GetDead();
-		float GetRotY();
-		vector3df GetRot();
+		bool GetDead();		
 		float GetMaxVelocity();
 		NetworkObject* GetNetworkObject();
 

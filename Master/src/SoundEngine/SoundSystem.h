@@ -5,17 +5,13 @@
 #include <string>
 #include <iostream>
 #include <vector>
+#include "../Includes/vector3d.h"
+#include <math.h>
 
 using namespace std;
 
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
-
-struct Vector3 {
-	float x;
-	float y;
-	float z;
-};
 
 class SoundEvent;
 
@@ -45,16 +41,37 @@ public:
     void setVolume(float vol);
     
     /******************************************************
-     *  Modifies the position of the listening point
+     *  Modifies the position and orientation of the listener point
      ******************************************************/
-    void setListenerPosition(Vector3 pos);
+    void setListenerPosRot(vector3df pos, vector3df rot);
     
     /******************************************************
      *  Updates the audio engine
      *  \param paused tells if has to pause the engine or not
      ******************************************************/
     void update();
-    
+
+    /******************************************************
+     *  Sets the property for the listener
+     *  \param vec that has to be assigned
+     ******************************************************/
+    void setListenerPos(vector3df vec);
+    void setListenerVel(vector3df vec);
+    void setListenerForward(vector3df vec);
+    void setListenerUp(vector3df vec);    
+   
+    /******************************************************
+     *  Loads all the needed banks
+     ******************************************************/
+    void loadBanks();
+
+    /******************************************************
+     * Loads an specific bank
+     * @param string path of the bank to load
+     * @param FMOD::Studio::Bank* bank where will be loaded the bank
+     ******************************************************/
+    void loadBank(string path, FMOD::Studio::Bank* bank);
+
 private:
     const char * banksPath;
 	FMOD::Studio::System* system;
@@ -62,9 +79,10 @@ private:
 	FMOD::Studio::Bank* masterBank;
 	FMOD::Studio::Bank* stringsBank;
     FMOD::Studio::Bus* busMaster;
+    FMOD_3D_ATTRIBUTES* listener;
     map<string, FMOD::Studio::Bank*> banks;
     map<string, FMOD::Studio::EventDescription*> eventDescriptions;
-    map<string, SoundEvent*> soundEvents;  
+    map<string, SoundEvent*> soundEvents;
 };
 
 class SoundEvent {
@@ -103,7 +121,7 @@ public:
      *  Modifies the 3D position of the sound event
      *  \param x, y, and z, new 3D position
      ******************************************************/
-    void setPosition(Vector3 pos);
+    void setPosition(vector3df pos);
     
     /*******************************************************
      * Checks if the sound is playing

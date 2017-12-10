@@ -33,7 +33,7 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
-
+	
 	//playerManager->AddAIPlayer();
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
@@ -57,6 +57,8 @@ bool Game::Input(){
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()) footstepEvent->start();
+		s_engine->setListenerPosRot(playerOne->GetPos(), playerOne->GetRot());
+		
 	}
 	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
 		if(footstepEvent->isPlaying()) footstepEvent->stop();

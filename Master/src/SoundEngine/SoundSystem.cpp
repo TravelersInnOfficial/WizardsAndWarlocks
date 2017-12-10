@@ -27,22 +27,13 @@ SoundSystem* SoundSystem::getInstance() {
 }
 
 SoundSystem::SoundSystem() {
-    /*
-    const char * banksPath          =               NULL;
-	FMOD::Studio::System* system    =               NULL;
-	FMOD::System* lowLevelSystem    =               NULL;
-	FMOD::Studio::Bank* masterBank  =               NULL;
-	FMOD::Studio::Bank* stringsBank =               NULL;
-    FMOD::Studio::Bus* busMaster    =               NULL;
-    */
 }
 
 void SoundSystem::createSystem(string soundBanksPath){
    
     //Variables needed for the banks' filename
     banksPath = soundBanksPath.c_str();
-    string path;
-    const char * finalPath;
+
     //Initializing the fmod studio api
     //Create the object Studio System
     ERRCHECK(FMOD::Studio::System::create(&system));
@@ -56,30 +47,15 @@ void SoundSystem::createSystem(string soundBanksPath){
     //Initialize the system
     system->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
 
-    //Load a generated fmod bank
-    FMOD::Studio::Bank* masterBank = NULL;
-    FMOD::Studio::Bank* stringsBank = NULL;
-    FMOD::Studio::Bank* characterBank = NULL;
-
-    //The loadBankFile function needs a const char*, so we have to modify our string every time we load a new bank
-    path = banksPath + string("Master Bank.bank");     //Make a string with the filename
-    finalPath = path.c_str();                           //Convert to const char*
-    ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank));   //Load the bank
-
-    path = banksPath + string("Master Bank.strings.bank"); //Make a string with the filename
-    finalPath = path.c_str();                               //Convert to const char*
-    ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank));  //Load the bank
-    
-    path = banksPath + string("Character.bank");           //Make a string witht the filename
-    finalPath = path.c_str();                               //Convert to const char*
-    ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &characterBank));//Load the bank
-
-    //Insert the banks at the banks map
-    banks.insert(std::pair<string, FMOD::Studio::Bank*>("masterBank", masterBank));
-    banks.insert(std::pair<string, FMOD::Studio::Bank*>("stringsBank", stringsBank));
-    banks.insert(std::pair<string, FMOD::Studio::Bank*>("characterBank", characterBank));
+    //Load the needed banks
+    loadBanks();
 
     //Initialize other variables
+    listener = new FMOD_3D_ATTRIBUTES();
+    setListenerPos(vector3df(0,0,0));
+    setListenerVel(vector3df(0,0,0));
+    setListenerForward(vector3df(0,1,0));
+    setListenerUp(vector3df(0,1,0));
 }
 
 /******************************************************
@@ -103,28 +79,72 @@ SoundEvent* SoundSystem::getEvent(const char * eventPath) {
     newEvent->newSoundEvent(eventInstance);
     
     //Insert the new elements on its respecting map
-    eventDescriptions.insert(std::pair<string, FMOD::Studio::EventDescription *>(string(eventPath), eventDesc));
-    soundEvents.insert(std::pair<string, SoundEvent *>(string(eventPath), newEvent));
+    eventDescriptions[eventPath] = eventDesc;
+    soundEvents[eventPath] = newEvent;
 
     //Return the event
     return newEvent;
+}
+
+void SoundSystem::loadBank(string filePath, FMOD::Studio::Bank* bank) {
+    string path = "";
+    const char * finalPath = "";
+
+    path = banksPath + filePath;     //Make a string with the filename
+    finalPath = path.c_str();        //Convert to const char*
+    ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));   //Load the bank
+}
+
+void SoundSystem::loadBanks() {
+
+    //Initialize the banks
+    FMOD::Studio::Bank* masterBank      = NULL;
+    FMOD::Studio::Bank* stringsBank     = NULL;
+    FMOD::Studio::Bank* characterBank   = NULL;
+    FMOD::Studio::Bank* spellsBank      = NULL;
+    FMOD::Studio::Bank* ambienceBank    = NULL;
+    FMOD::Studio::Bank* HUDBank         = NULL;
+    FMOD::Studio::Bank* MusicBank       = NULL;
+    FMOD::Studio::Bank* commonSoundBank = NULL;
+
+    //Load the banks
+    loadBank("Master Bank.bank", masterBank);
+    loadBank("Master Bank.strings.bank", stringsBank);
+    loadBank("Character.bank", characterBank);
+    loadBank("Spells.bank", spellsBank);
+    loadBank("Ambience.bank", ambienceBank);
+    loadBank("HUD.bank", HUDBank);
+    loadBank("Music.bank", MusicBank);
+    loadBank("CommonSound.bank", commonSoundBank);
+    
+    //Insert the banks at the banks map
+    banks["masterBank"] = masterBank;
+    banks["stringsBank"] = stringsBank;
+    banks["characterBank"] = stringsBank;
+    banks["spellsBank"] = spellsBank;
+    banks["AmbienceBank"] = ambienceBank;
+    banks["HUDBank"] = HUDBank;
+    banks["MusicBank"] = MusicBank;
+    banks["CommonSoundBank"] = commonSoundBank;
 }
 
 /******************************************************
  *  Modifies the general volume of the engine
  ******************************************************/
 void SoundSystem::setVolume(float vol) {
-
+    
     ERRCHECK(busMaster->setVolume(vol));
 }
 
 /******************************************************
  *  Modifies the position of the listening point
  ******************************************************/
-void SoundSystem::setListenerPosition(Vector3 pos) {
-    FMOD_3D_ATTRIBUTES* listener = new FMOD_3D_ATTRIBUTES();
-    FMOD_VECTOR fmodVec = {pos.x, pos.y, pos.z};
-    listener->position = fmodVec;
+void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
+    //Sets the position and orientation of the listener
+    setListenerPos(pos);        //Position vector = player position vector
+    //setListenerForward(rot);    //Orientation vector = player rotation vector    
+    //setListenerUp(vector3df(-rot.Y, rot.X, rot.Z)); //Orientation normal vector
+    
     ERRCHECK(system->setListenerAttributes(0, listener));
 }
 
@@ -134,6 +154,33 @@ void SoundSystem::setListenerPosition(Vector3 pos) {
  ******************************************************/
 void SoundSystem::update() {
     ERRCHECK(system->update());
+}
+
+/******************************************************
+ *  Sets the property for the listener
+ *  \param vec that has to be assigned
+ ******************************************************/
+void SoundSystem::setListenerPos(vector3df vec) {   
+        listener->position.x = vec.X;
+        listener->position.y = vec.Y;
+        listener->position.z = vec.Z;
+}
+void SoundSystem::setListenerVel(vector3df vec) {
+
+        listener->velocity.x = vec.X;
+        listener->velocity.y = vec.Y;
+        listener->velocity.z = vec.Z;
+}
+void SoundSystem::setListenerForward(vector3df vec) {
+        listener->forward.x = vec.X;
+        listener->forward.y = vec.Y;
+        listener->forward.z = vec.Z;
+
+}
+void SoundSystem::setListenerUp(vector3df vec) {
+        listener->up.x = vec.X;
+        listener->up.y = vec.Y;
+        listener->up.z = vec.Z;
 }
 
 /********************************************************************************************************
@@ -194,9 +241,9 @@ void SoundEvent::setGain(float gain) {
  *  Modifies the 3D position of the sound event
  *  \param x, y, and z, new 3D position
  ******************************************************/
-void SoundEvent::setPosition(Vector3 pos) {
+void SoundEvent::setPosition(vector3df pos) {
     FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
-    FMOD_VECTOR fmodVec = {pos.x, pos.y, pos.z};
+    FMOD_VECTOR fmodVec = {pos.X, pos.Y, pos.Z};
     attributes->position = fmodVec;
     ERRCHECK(soundInstance->set3DAttributes(attributes));
 }

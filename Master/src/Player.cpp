@@ -261,14 +261,14 @@ void Player::SetHP(float HP){m_HP = HP; }
 void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
-float Player::GetRotY(){ return rotation.Y; }
-vector3df Player::GetRot(){ return rotation; }
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 bool Player::GetDead(){ return m_dead; }
 float Player::GetPosX(){ return m_position.X; }
 float Player::GetPosY(){ return m_position.Y; }
 float Player::GetPosZ(){ return m_position.Z; }
 vector3df Player::GetPos(){ return m_position; }
+float Player::GetRotY(){ return rotation.Y; }
+vector3df Player::GetRot(){ return rotation; }
 float Player::GetWidth(){ return m_dimensions.X; }
 float Player::GetHeight(){ return m_dimensions.Y; }
 float Player::GetLength(){ return m_dimensions.Z; }
