@@ -31,10 +31,10 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
 
     m_position->Y +=0.01; 
 
-    if(m_rotation->X == 270) m_rotation->X = 0;
-    if(m_rotation->Y == 270) m_rotation->Y = 0;
-    if(m_rotation->Z == 270) m_rotation->Z = 0;
-    m_rotation->X = 360 - m_rotation->X;
+    if(m_rotation->X >= 270) m_rotation->X = m_rotation->X - 270;
+    if(m_rotation->Y >= 270) m_rotation->Y = m_rotation->Y - 270;
+    if(m_rotation->Z >= 270) m_rotation->Z = m_rotation->Z - 270;
+    //m_rotation->X = 360 - m_rotation->X;
 
     m_body = new BT_GhostObject();
     m_rigidBody = new BT_Body();

@@ -36,7 +36,7 @@ private:
 	TrapManager();
 	static TrapManager* instance;
 
-	int MaxUsings = 100;
+	int MaxUsings = 4;
 };
 
 #endif

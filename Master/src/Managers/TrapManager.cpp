@@ -48,13 +48,13 @@ void TrapManager::AddTrapToPlayer(Player* player, TrapEnum trap){
 }
 
 bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End){
-	std::cout<<"Checking usings..."<<std::endl;
+	//std::cout<<"Checking usings..."<<std::endl;
 	int uses = getPlayerUsings(player);
-	std::cout<< uses << " uses"<<std::endl;
+	//std::cout<< uses << " uses"<<std::endl;
 	if(uses == 0) return false;
 	if(DeployTrap(getPlayerTrap(player),Start,End)){
 		--uses;
-		std::cout<<"You have "<<uses<<" more uses"<<std::endl;
+		//std::cout<<"You have "<<uses<<" more uses"<<std::endl;
 		setPlayerUsings(player,uses);
 		return true;
 	}
@@ -77,14 +77,14 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 			point = PointData.at(1);
 		}
 	}
-	std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
+	//std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
 	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
 	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
 	&& (normal.Y >=0 && normal.Y <=180)
 	){
 		AddTrap(point,normal,type);
-		std::cout<<"Added Trap"<<std::endl;
+		//std::cout<<"Added Trap"<<std::endl;
 		return true;
 		}
 
