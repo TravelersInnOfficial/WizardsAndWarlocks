@@ -6,7 +6,7 @@
 #include "./Managers/EffectManager.h"
 
 #include "./Objects/Potion.h"
-#include "./Trap.h"
+#include "./Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -40,11 +40,11 @@ void Player::CreatePlayer(){
 	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	m_playerNode = engine->addCube2Scene(m_dimensions);
-	m_playerNode->setScale(vector3df(m_dimensions.X, m_dimensions.Y, m_dimensions.Z));
+	m_playerNode->setScale(m_dimensions);
 	if (m_playerNode) {
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
-		m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
+		m_playerNode->setPosition(m_position);
 	}
 	m_dimensions = m_dimensions * 0.5f;	
 
@@ -52,6 +52,8 @@ void Player::CreatePlayer(){
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3);
 	bt_body->AssignPointer(this);
+
+	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	
 	Respawn();
 
@@ -157,7 +159,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	SetPosition(vector3df(0, 5, 0));
+	SetPosition(vector3df(0, 1, 0));
 	m_HP = 100;
 	m_dead = false;
 }
@@ -217,11 +219,9 @@ void Player::DeployTrap(){
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
-		Entidad* h = (Entidad*)Object;
-		//std::cout<<"Entidad tipo: "<<h->GetClase()<<std::endl;
+		Entidad* h = (Entidad*)Object;;
 		if(h->GetClase() == EENUM_FLOOR){
-			//std::cout<<"Entidad tipo: suelo"<<std::endl;
-			TrapManager::GetInstance()->DeployTrap(TENUM_DEATH_CLAWS);
+			TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 		}
 	}
 }

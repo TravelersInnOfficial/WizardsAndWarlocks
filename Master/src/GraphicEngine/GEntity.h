@@ -18,6 +18,12 @@ public:
      * rot: vector x,y,z of body rotation
     */
     void setRotation(vector3df rot);
+
+    /**
+     * Rotates body
+     * rot: vector x,y,z of body rotation
+    */
+    void Rotate(vector3df rot);
     
     /**
      * Get body scale

@@ -23,6 +23,8 @@ TrapManager::~TrapManager(){
 		delete t;
 	}
 	traps.clear();
+	playerTrap.clear();
+	playerUsings.clear();
 }
 
 Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
@@ -31,8 +33,36 @@ Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
 	return t;
 }
 
-void TrapManager::DeployTrap(TrapEnum type){
-	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast();
+void TrapManager::AddTrapToPlayer(Player* player, TrapEnum trap){
+	TrapEnum actualTrap = getPlayerTrap(player);
+	if(actualTrap != TENUM_NO_TRAP){ //si el jugador ya tiene una trampa asignada se cambia por una nueva
+		//std::cout<<"I found the player!!"<<std::endl;
+		setPlayerTrap(player,trap);
+		setPlayerUsings(player,MaxUsings);
+	}
+	else{//si no la tiene se la asignamos
+		//std::cout<<"Creating a new player..."<<std::endl;
+		playerTrap.insert(std::pair<Player*, TrapEnum>(player,trap));
+		playerUsings.insert(std::pair<Player*, int>(player,MaxUsings));
+	}
+}
+
+bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End){
+	//std::cout<<"Checking usings..."<<std::endl;
+	int uses = getPlayerUsings(player);
+	//std::cout<< uses << " uses"<<std::endl;
+	if(uses == 0) return false;
+	if(DeployTrap(getPlayerTrap(player),Start,End)){
+		--uses;
+		//std::cout<<"You have "<<uses<<" more uses"<<std::endl;
+		setPlayerUsings(player,uses);
+		return true;
+	}
+	return false;
+}
+
+bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
+	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
 	int ID = 0;
 	vector3df point(0,0,0);
 	vector3df normal(0,0,0);
@@ -47,13 +77,18 @@ void TrapManager::DeployTrap(TrapEnum type){
 			point = PointData.at(1);
 		}
 	}
-	std::cout<<"Normal.X: "<<normal.X<<" Normal.Y: "<<normal.Y<<" Normal.Z: "<<normal.Z<<std::endl;
-
+	//std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
 	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
 	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
-	&& (normal.Y >=0 && normal.Y <=90)
-	) AddTrap(point,normal,type);
+	&& (normal.Y >=0 && normal.Y <=180)
+	){
+		AddTrap(point,normal,type);
+		//std::cout<<"Added Trap"<<std::endl;
+		return true;
+		}
+
+	return false;
 }
 
 
@@ -74,4 +109,45 @@ void TrapManager::UpdateTrap(float deltaTime){
 		Trap* t = traps[i];
 		t->Update(deltaTime);
 	}
+}
+
+TrapEnum TrapManager::getPlayerTrap(Player* player){
+	std::map<Player*, TrapEnum>::iterator it = playerTrap.begin();
+	for(;it!=playerTrap.end();++it){
+		if(it->first == player){
+			return it->second;
+		}
+	}
+	return TENUM_NO_TRAP;
+}
+
+int TrapManager::getPlayerUsings(Player* player){
+	std::map<Player*, int>::iterator it = playerUsings.begin();
+	for(;it!=playerUsings.end();++it){
+		if(it->first == player){
+			return it->second;
+		}
+	}
+	return -1;
+}
+
+bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
+	std::map<Player*, TrapEnum>::iterator it = playerTrap.begin();
+	for(;it!=playerTrap.end();++it){
+		if(it->first == player){
+			it->second = trap;
+			return true;
+		}
+	}
+	return false;
+}
+bool TrapManager::setPlayerUsings(Player* player,int uses){
+	std::map<Player*, int>::iterator it = playerUsings.begin();
+	for(;it!=playerUsings.end();++it){
+		if(it->first == player){
+			it->second = uses;
+			return true;
+		}
+	}
+	return false;
 }
