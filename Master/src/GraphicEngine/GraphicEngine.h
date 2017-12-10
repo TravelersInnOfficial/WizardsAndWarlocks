@@ -204,7 +204,7 @@ public:
      *      - the node ID
      *      - vector(raycast collision point, normal vector of the triangle hitted)
      */
-    std::map<int,std::vector<vector3df>> Raycast();
+    std::map<int,std::vector<vector3df>> Raycast(vector3df, vector3df);
 
 
     /// RECEIVER FUNCTIONS

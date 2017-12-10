@@ -47,7 +47,7 @@ void TrapManager::AddTrapToPlayer(Player* player, TrapEnum trap){
 	}
 }
 
-bool TrapManager::PlayerDeployTrap(Player* player){
+bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End){
 	//std::cout<<"Checking usings..."<<std::endl;
 	int uses = getPlayerUsings(player);
 	//std::cout<< uses << " uses"<<std::endl;
@@ -56,13 +56,13 @@ bool TrapManager::PlayerDeployTrap(Player* player){
 	//std::cout<<"You have "<<uses<<" more uses"<<std::endl;
 	setPlayerUsings(player,uses);
 
-	DeployTrap(getPlayerTrap(player));
+	DeployTrap(getPlayerTrap(player),Start,End);
 	return true;
 
 }
 
-void TrapManager::DeployTrap(TrapEnum type){
-	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast();
+void TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
+	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
 	int ID = 0;
 	vector3df point(0,0,0);
 	vector3df normal(0,0,0);

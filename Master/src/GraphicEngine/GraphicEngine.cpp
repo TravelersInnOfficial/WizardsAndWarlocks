@@ -232,7 +232,7 @@ irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::IS
     return selector;
 }
 
-std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
+std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vector3df End){
     std::map<int,std::vector<vector3df>> NodePointData;
     std::vector<vector3df> PointData;
 
@@ -243,9 +243,12 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(){
     irr::scene::ITriangleSelector* selector = 0;
 
     //First we need to get the cursor position in the 2D space
-    irr::core::position2d< irr::s32 > pos = privateDevice->getCursorControl()->getPosition();
+    //irr::core::position2d<irr::s32> pos = privateDevice->getCursorControl()->getPosition();
+
     // we need to get the 3D vector from it.
-    const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+    //const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+
+    const irr::core::line3d<irr::f32> ray(Start.X,Start.Y,Start.Z,End.X,End.Y,End.Z);
 
     if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
         node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);

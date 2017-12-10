@@ -221,7 +221,7 @@ void Player::DeployTrap(){
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;;
 		if(h->GetClase() == EENUM_FLOOR){
-			TrapManager::GetInstance()->PlayerDeployTrap(this);
+			TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 		}
 	}
 }
