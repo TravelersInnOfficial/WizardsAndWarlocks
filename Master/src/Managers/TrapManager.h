@@ -19,7 +19,7 @@ public:
 	bool PlayerDeployTrap(Player*, vector3df, vector3df);
 
 	Trap* AddTrap(vector3df pos,vector3df normal, TrapEnum type);
-	void DeployTrap(TrapEnum type, vector3df, vector3df);
+	bool DeployTrap(TrapEnum type, vector3df, vector3df);
 	void UpdateTrap(float deltaTime);
 
 	int getPlayerUsings(Player*);

@@ -52,7 +52,6 @@ bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End
 	int uses = getPlayerUsings(player);
 	//std::cout<< uses << " uses"<<std::endl;
 	if(uses == 0) return false;
-
 	if(DeployTrap(getPlayerTrap(player),Start,End)){
 		--uses;
 		//std::cout<<"You have "<<uses<<" more uses"<<std::endl;
@@ -62,7 +61,7 @@ bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End
 	return false;
 }
 
-void TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
+bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
 	int ID = 0;
 	vector3df point(0,0,0);
@@ -78,14 +77,6 @@ void TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 			point = PointData.at(1);
 		}
 	}
-<<<<<<< HEAD
-
-	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
-	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
-	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
-	&& (normal.Y >=0 && normal.Y <=90)
-	) AddTrap(point,normal,type);
-=======
 	//std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
 	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
@@ -98,7 +89,6 @@ void TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 		}
 
 	return false;
->>>>>>> 52f3bde3db59eb943ebcd19c69f9151d1ef42bab
 }
 
 
