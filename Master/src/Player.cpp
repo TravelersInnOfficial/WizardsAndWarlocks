@@ -40,11 +40,11 @@ void Player::CreatePlayer(){
 	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	m_playerNode = engine->addCube2Scene(m_dimensions);
-	m_playerNode->setScale(vector3df(m_dimensions.X, m_dimensions.Y, m_dimensions.Z));
+	m_playerNode->setScale(m_dimensions);
 	if (m_playerNode) {
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
-		m_playerNode->setPosition(vector3df(m_position.X, m_position.Y, m_position.Z));
+		m_playerNode->setPosition(m_position);
 	}
 	m_dimensions = m_dimensions * 0.5f;	
 
@@ -159,7 +159,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	SetPosition(vector3df(0, 5, 0));
+	SetPosition(vector3df(0, 1, 0));
 	m_HP = 100;
 	m_dead = false;
 }

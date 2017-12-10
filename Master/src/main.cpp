@@ -80,7 +80,6 @@ int main() {
 			end = game->Input();
 			game->Update();
 			game->Draw();
-			std::this_thread::sleep_for(std::chrono::milliseconds(7));
 			g_engine->endScene();	
 		}
 		delete game;
@@ -94,7 +93,6 @@ int main() {
 			end = game->Input();
 			game->Update();
 			game->Draw();
-			std::this_thread::sleep_for(std::chrono::milliseconds(7));
 			g_engine->endScene();	
 		}
 		delete game;
