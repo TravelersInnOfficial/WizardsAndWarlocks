@@ -3,14 +3,13 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
-    Task* t = new Seek();
+    Task* t = new T_Seek();
     SetRoot(t);
 
 }
 
 BehaviourTree::~BehaviourTree(){
 	delete informacion;
-	delete root;
 }
 
 void BehaviourTree::run(){

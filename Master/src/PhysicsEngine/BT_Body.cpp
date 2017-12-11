@@ -60,6 +60,15 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
 }
 
+void BT_Body::ApplyTorque(vector3df force){
+	m_RigidBody->setAngularVelocity(btVector3(force.X, force.Y, force.Z));
+	//std::cout<<m_RigidBody->getTotalTorque().getZ()<<std::endl;
+}
+
+void BT_Body::SetAngularFactor(vector3df v){
+	m_RigidBody->setAngularFactor(btVector3(v.X, v.Y, v.Z));
+}
+
 void BT_Body::Update(){
 	m_position->X = GetBodyTrans().getOrigin().getX();
 	m_position->Y  = GetBodyTrans().getOrigin().getY();
@@ -159,11 +168,40 @@ vector3df* BT_Body::GetDimensions(){
 	return m_dimensions;
 }
 
-vector3df* BT_Body::GetLinearVelocity(){
-	vector3df* LVel = new vector3df(m_RigidBody->getLinearVelocity().getX(),
-									m_RigidBody->getLinearVelocity().getY(), 
-									m_RigidBody->getLinearVelocity().getZ());
+vector3df BT_Body::GetLinearVelocity(){
+	vector3df LVel(m_RigidBody->getLinearVelocity().getX(),
+					m_RigidBody->getLinearVelocity().getY(), 
+					m_RigidBody->getLinearVelocity().getZ());
 	return LVel;
+}
+
+vector3df BT_Body::GetAngularVelocity(){
+	btVector3 temp = m_RigidBody->getAngularVelocity();
+	vector3df Angu(temp.getX(), temp.getY(), temp.getZ());
+	return Angu;
+}
+
+vector3df BT_Body::GetRotation(){
+
+	btQuaternion rot = m_RigidBody->getOrientation();
+
+	float eulerX, eulerY, eulerZ;
+ 	
+	rot = btQuaternion(rot.y(), rot.x(), rot.z(), rot.w());
+
+
+ 	double sqw = rot.w() * rot.w();
+
+ 	double sqx = rot.x() * rot.x();
+ 	double sqy = rot.y() * rot.y();
+ 	double sqz = rot.z() * rot.z();
+
+ 	eulerY = (float)atan2l((2.0 * (rot.y()*rot.z() + rot.x()*rot.w())), (-sqx - sqy + sqz + sqw));
+ 	eulerX = (float)asinl(-2.0 * (rot.x()*rot.z() - rot.y()*rot.w() ));
+ 	eulerZ = (float)atan2l((2.0 * (rot.x()*rot.y() + rot.z()*rot.w())), (sqx - sqy - sqz + sqw));
+
+	return vector3df(eulerX, eulerY, eulerZ);
+
 }
 
 void BT_Body::AssignPointer(void* pointer){

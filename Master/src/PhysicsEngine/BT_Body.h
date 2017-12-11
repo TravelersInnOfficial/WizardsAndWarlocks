@@ -15,6 +15,7 @@ public:
 	void Update();
 
 	void ApplyCentralImpulse(vector3df);
+	void ApplyTorque(vector3df);
 	void ApplyCentralForce(vector3df);
 	void Rotate(vector3df );
 	void RotatePos(vector3df, vector3df);
@@ -24,12 +25,15 @@ public:
 	void SetDimensions(vector3df);
 	void SetLinearVelocity(vector3df);
 	void SetMass(float);
+	void SetAngularFactor(vector3df v);
 	//
 	void SetGravity(vector3df);
 
 	vector3df GetPosition();
+	vector3df GetAngularVelocity();
 	vector3df* GetDimensions();
-	vector3df* GetLinearVelocity();
+	vector3df GetRotation();
+	vector3df GetLinearVelocity();
 	float GetMass();
 
 	//

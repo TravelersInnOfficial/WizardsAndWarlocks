@@ -1,13 +1,13 @@
-#ifndef SEEK_H
-#define SEEK_H
+#ifndef T_SEEK_H
+#define T_SEEK_H
 
 #include <iostream>
 
 #include "./../Task.h"
 
-class Seek: public Task{
+class T_Seek: public Task{
 public:
-	Seek();
+	T_Seek();
 	bool run(Blackboard* bb);
 private:
 	float maxAcceleration;

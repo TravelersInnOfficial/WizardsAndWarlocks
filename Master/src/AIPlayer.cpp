@@ -19,3 +19,7 @@ void AIPlayer::Update(){
 void AIPlayer::SetForces(vector3df v){
 	bt_body->ApplyCentralImpulse(v);
 }
+
+void AIPlayer::SetAngularForce(vector3df v){
+	bt_body->ApplyTorque(v);
+}

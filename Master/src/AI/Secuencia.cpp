@@ -26,7 +26,7 @@ bool Secuencia::run(Blackboard* bb){
 
 bool Secuencia::terminate(){
 	std::cout<< "Terminate de la tarea"<<std::endl;
-	return(false);
+	return true;
 }
 
 RandomSecuencia::RandomSecuencia(){}

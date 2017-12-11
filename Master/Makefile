@@ -4,6 +4,7 @@ Target := WizardsAndWarlocks
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
 AIPath				:= ./obj/AI/Tasks
+SteeringPath		:= ./obj/AI/SteeringBehaviour
 SOURCE_DIRS			:= $(shell find ./src -maxdepth 1 -type d -not -path "./src/.vscode" -not -path "./src" -printf '$(BuildPath)/%f ')
 SourcePath			:= $(shell find src -name '*.cpp')
 
@@ -38,6 +39,7 @@ prepare:
 	@mkdir -p $(BinPath)
 	@mkdir -p $(SOURCE_DIRS)
 	@mkdir -p $(AIPath)
+	@mkdir -p $(SteeringPath)
 
 clean:
 	$(info ==============================================)

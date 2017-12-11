@@ -10,5 +10,4 @@ bool Task::terminate(){
 	return true;
 }
 
-Task::~Task(){
-}
+

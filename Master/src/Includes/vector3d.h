@@ -2,6 +2,7 @@
 #define VECTOR3D_H
 
 #include <iostream>
+#include <math.h>
 
 template<typename T>
 class vector3d{

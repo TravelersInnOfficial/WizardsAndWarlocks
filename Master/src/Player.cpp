@@ -70,17 +70,17 @@ void Player::Update(){
 	}
 
 	checkMaxVelocity();
-	vector3df* velocity = bt_body->GetLinearVelocity();
+	vector3df velocity = bt_body->GetLinearVelocity();
 
 	if(!canJump){
-		float verticalSpeed = velocity->Y;
+		float verticalSpeed = velocity.Y;
 		float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
 		if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
 		lastVerticalSpeed = verticalSpeed;
 	}
 
 	if(moving) moving = false;
-	else bt_body->SetLinearVelocity(vector3df(velocity->X/1.5, velocity->Y, velocity->Z/1.5));
+	else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 
 	if(m_dead || m_position.Y < -50) Die();
 }
@@ -94,11 +94,11 @@ void Player::positionCamera(){
 }
 
 void Player::checkMaxVelocity(){
-	vector3df* velocity = bt_body->GetLinearVelocity();
-	vector3df auxVelocity(velocity->X,0,velocity->Z);
+	vector3df velocity = bt_body->GetLinearVelocity();
+	vector3df auxVelocity(velocity.X,0,velocity.Z);
 	float speed = auxVelocity.length();
 	
-	float velY = velocity->Y;
+	float velY = velocity.Y;
     if(speed > max_velocity) {
         auxVelocity.X *= max_velocity/speed;
 		auxVelocity.Z *= max_velocity/speed;
@@ -130,8 +130,8 @@ void Player::MoveZ(int dir){
 
 void Player::Jump(){
 	if(canJump) {
-		vector3df* velocity = bt_body->GetLinearVelocity();
-		velocity->setY(0);
+		vector3df velocity = bt_body->GetLinearVelocity();
+		velocity.setY(0);
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
@@ -262,6 +262,7 @@ void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
+vector3df Player::GetAngularVelocity(){ return bt_body->GetAngularVelocity(); }
 bool Player::GetDead(){ return m_dead; }
 float Player::GetPosX(){ return m_position.X; }
 float Player::GetPosY(){ return m_position.Y; }
@@ -276,3 +277,4 @@ float Player::GetHP(){ return m_HP; }
 float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}

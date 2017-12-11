@@ -37,10 +37,12 @@ class Player: public Entidad{
 		void DeployTrap();
 
 		bool IsPlayerOne();
+		vector3df GetAngularVelocity();
 		float GetPosX();
 		float GetPosY();
 		float GetPosZ();
 		vector3df GetPos();
+
 		float GetRotY();
 		vector3df GetRot();
 		float GetWidth();
@@ -50,6 +52,7 @@ class Player: public Entidad{
 		float GetMP();
 		bool GetDead();		
 		float GetMaxVelocity();
+		vector3df GetVelocity();
 		NetworkObject* GetNetworkObject();
 
 		void SetPosition(vector3df);
