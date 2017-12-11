@@ -7,6 +7,7 @@ class CommonSoundEvent : public SoundEvent {
     public:
     CommonSoundEvent();
     ~CommonSoundEvent();
+    SoundEvent* newSoundEvent(FMOD::Studio::EventInstance*);
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
