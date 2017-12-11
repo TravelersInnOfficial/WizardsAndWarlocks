@@ -70,7 +70,7 @@ void Door::Interact(){
 
 void Door::WorkDoor(){
     rotation.Y += increment;
-    bt_body->RotatePos(rotation,vector3df(0,1,1));
+    bt_body->Rotate(rotation);
 
     if(rotation.Y<=min || rotation.Y>=max){
         working = false;

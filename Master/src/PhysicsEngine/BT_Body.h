@@ -18,7 +18,6 @@ public:
 	void ApplyTorque(vector3df);
 	void ApplyCentralForce(vector3df);
 	void Rotate(vector3df );
-	void RotatePos(vector3df, vector3df);
 
 	void SetCenter(vector3df);
 	void SetPosition(vector3df);

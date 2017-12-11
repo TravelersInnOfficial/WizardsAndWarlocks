@@ -87,21 +87,6 @@ void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
 	rotation = rotation*M_PI/180;
 
-	btVector3 TPosition(m_position->X,m_position->Y,m_position->Z);
-
-	btTransform tr;
-	tr.setIdentity();
-	btQuaternion quat;
-	quat.setEuler(rotation.Y,rotation.X,rotation.Z);
-	tr.setRotation(quat);
-	tr.setOrigin(TPosition);
-	m_RigidBody->setCenterOfMassTransform(tr);
-}
-
-void BT_Body::RotatePos(vector3df rotation, vector3df position){
-	//PASAMOS EL ANGULO A RADIANES
-	rotation = rotation*M_PI/180;
-
 	btVector3 TPosition(m_position->X - m_center->X,m_position->Y - m_center->Y,m_position->Z - m_center->Z);
 	btVector3 TCenter(m_center->X, m_center->Y, m_center->Z);
 
