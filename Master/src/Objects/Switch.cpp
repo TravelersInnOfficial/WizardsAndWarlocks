@@ -32,7 +32,7 @@ void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRota
     vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5); 
     //0.5 Puestos para que sea del mismo tamaño con TScale 1,1,1  (Quitar a placer)
     bt_body = new BT_Body();
-    bt_body->CreateBox(TPosition, HalfExtents, 0, 0, TCenter);
+    bt_body->CreateBox(TPosition, HalfExtents, 0, 0, TCenter, C_SWITCH, switchCW);
     bt_body->Rotate(TRotation);
 
     //BULLET

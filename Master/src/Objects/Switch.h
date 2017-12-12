@@ -8,6 +8,7 @@
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../Includes/ColliderMasks.h"
 
 class Switch: public Entidad{
 public:

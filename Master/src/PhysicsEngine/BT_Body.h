@@ -10,7 +10,7 @@ class BT_Body{
 public:
 
 	BT_Body();
-	void CreateBox(vector3df position, vector3df dimensions, float Tmass, float roz, vector3df center = vector3df(0.0f,0.0f,0.0f));
+	void CreateBox(vector3df position, vector3df dimensions, float Tmass, float roz, vector3df center = vector3df(0.0f,0.0f,0.0f), CollisionTypes mask = C_NOTHING, int collideWith = 0);
 
 	void Update();
 

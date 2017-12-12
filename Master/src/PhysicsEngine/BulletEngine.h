@@ -5,6 +5,7 @@
 #include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
 #include "./BulletDebug.h"
 #include "./../Entidad.h"
+#include "./../Includes/ColliderMasks.h"
 #include <vector3d.h>
 
 class BulletEngine{
@@ -16,7 +17,7 @@ public:
     void UpdateWorld();
     void EraseWorld();
 
-    void AddRigidBody(btRigidBody*);
+    void AddRigidBody(btRigidBody*, CollisionTypes mask = C_NOTHING, int collideWith = 0);
 	void AddGhostBody(btGhostObject*);
 
     void RemoveRigidBody(btRigidBody*);

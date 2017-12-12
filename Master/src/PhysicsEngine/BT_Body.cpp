@@ -17,7 +17,7 @@ BT_Body::BT_Body(){
 	m_RigidBody = NULL;
 }
 
-void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction, vector3df center){
+void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction, vector3df center, CollisionTypes mask, int collideWith){
 
 	//ASSIGN VALUES TO LOCAL VARIABLES
 	m_position->X = position.X;
@@ -57,7 +57,7 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     m_RigidBody = new btRigidBody(m_ConstructionInfo);
     m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
 	m_RigidBody->setAngularFactor(btVector3(0,0,0));
-    BulletEngine::GetInstance()->AddRigidBody(m_RigidBody);
+    BulletEngine::GetInstance()->AddRigidBody(m_RigidBody, mask, collideWith);
 }
 
 void BT_Body::ApplyTorque(vector3df force){

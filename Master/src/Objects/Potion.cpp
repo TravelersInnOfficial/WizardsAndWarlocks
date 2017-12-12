@@ -36,7 +36,7 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	//Bullet Physics
 	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 0.5f, scale.Z * 0.5f);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(TPosition, HalfExtents,1,0);
+	bt_body->CreateBox(TPosition, HalfExtents,1,0,vector3df(0,0.2,0), C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
 	//bt_body->SetCollisionFlags("no_contact");

@@ -81,8 +81,8 @@ void BulletEngine::EraseWorld(){
     delete m_physicsDebug;
 }
 
-void BulletEngine::AddRigidBody(btRigidBody* rigidBody){
-	m_dynamicsWorld->addRigidBody(rigidBody);
+void BulletEngine::AddRigidBody(btRigidBody* rigidBody, CollisionTypes mask, int collideWith){
+	m_dynamicsWorld->addRigidBody(rigidBody, mask, collideWith);
 }
 
 void BulletEngine::AddGhostBody(btGhostObject* ghostBody){
@@ -137,14 +137,14 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
 	btVector3 End(E.X, E.Y, E.Z);
 
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
-    //RayCallback.m_collisionFilterMask = FILTER_CAMERA;
 
+	RayCallback.m_collisionFilterMask = raycastCW;
+	RayCallback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
     m_dynamicsWorld->rayTest(Start, End, RayCallback);
 	
     //GraphicEngine::getInstance()->paintLineDebug(S, E, vector3df(1.0f, 0.0f, 0.0f));
 
     if(RayCallback.hasHit()) {
-
         //End = RayCallback.m_hitPointWorld;
         //Normal = RayCallback.m_hitNormalWorld;
 		if(RayCallback.m_collisionObject->getUserPointer()!=0){

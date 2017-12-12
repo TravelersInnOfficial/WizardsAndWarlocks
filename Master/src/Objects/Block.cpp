@@ -33,7 +33,7 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::st
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
 	physBody = new BT_Body();
-	physBody->CreateBox(TPosition, HalfExtents,TMass,0);
+	physBody->CreateBox(TPosition, HalfExtents,TMass,0, vector3df(0,0,0), C_WALL, wallCW);
 	physBody->Rotate(TRotation);
 	physBody->AssignPointer(this);
 }

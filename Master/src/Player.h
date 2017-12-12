@@ -10,6 +10,7 @@
 #include "GraphicEngine/GraphicEngine.h"
 #include "NetworkEngine/NetworkEngine.h"
 #include "./NetworkEngine/NetworkStructs.h"
+#include "./Includes/ColliderMasks.h"
 
 class Potion;
 

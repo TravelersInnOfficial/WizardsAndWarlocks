@@ -4,6 +4,7 @@
 #include "../Entidad.h"
 #include "../GraphicEngine/GBody.h"
 #include "../PhysicsEngine/BT_Body.h"
+#include "./../Includes/ColliderMasks.h"
 #include <vector3d.h>
 
 class Block : public Entidad{
