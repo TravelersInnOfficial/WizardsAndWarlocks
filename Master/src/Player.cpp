@@ -188,6 +188,9 @@ void Player::Die(){
 }
 
 void Player::CatchObject(Potion* p){
+	if(p!=NULL){
+		DropObject();
+	}
 	potion = p;
 }
 
@@ -254,7 +257,9 @@ void Player::SetRotation(vector3df rotation){
 void Player::UpdatePosShape(){
 	m_position = bt_body->GetPosition();
 	bt_body->Update();
-	m_playerNode->setPosition(m_position);
+	m_playerNode->setPosition( vector3df(m_position.X, m_position.Y, m_position.Z));
+
+	SetRotation(bt_body->GetRotation());
 }
 
 void Player::SetHP(float HP){m_HP = HP; }
