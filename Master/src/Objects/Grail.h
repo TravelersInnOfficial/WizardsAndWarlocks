@@ -11,7 +11,7 @@
 
 class Grail: public Entidad{
 public:
-	Grail();
+	Grail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~Grail();
 	void Update();
 	void Update(float deltaTime);
@@ -22,7 +22,7 @@ private:
 	float 	timeCasting;
 	float 	maxCasting;
 
-	void CreateGrail();
+	void CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void UpdatePosShape();
 
 	BT_Body*        bt_body;

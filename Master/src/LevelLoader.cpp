@@ -10,12 +10,7 @@ LevelLoader::LevelLoader(){
 
 }
 
-bool LevelLoader::loadLobby()
-{   
-    return readJson("../assets/json/map.json");
-}
-
-bool LevelLoader::readJson(std::string jsonPath){
+bool LevelLoader::LoadLevel(std::string jsonPath){
     ObjectManager* objManager = ObjectManager::GetInstance();
     std::map<int, Door*> doors;
     
@@ -61,14 +56,18 @@ bool LevelLoader::readJson(std::string jsonPath){
             //int idDoor = j["Objects"][i]["Door"];            
             //objManager->AddSwitch(doors[idDoor], position, size, rotation, axis);
         }
-        else if(j["Objects"][i]["Type"] == "Spawner"){
-            objManager->AddPotion(position, size, rotation);
+        else if(j["Objects"][i]["Type"] == "PotionSpawner"){
+            objManager->AddBlock(position, size, rotation, "../assets/textures/red.jpg");           
+            objManager->AddPotion(position, vector3df(0.5,0.5,0.5), rotation);
+        }
+        else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
+            objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");
         }
         else if(j["Objects"][i]["Type"] == "Grail"){
-            //objManager->AddGrail(position, size, rotation);
+            objManager->AddGrail(position, vector3df(1,1,1), rotation);
         }
         else if(j["Objects"][i]["Type"] == "Fountain"){
-            //objManager->AddFountain(position, size, rotation);
+            objManager->AddFountain(position, vector3df(1,1,1), rotation);
         }
         else if(j["Objects"][i]["Type"] == "MainCamera"){
             //std::cout<<"MainCamera, pos: "<<position<<std::endl;        

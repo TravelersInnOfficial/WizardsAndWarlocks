@@ -1,17 +1,12 @@
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Woverloaded-virtual"
-#pragma clang diagnostic pop
-
 #include "Grail.h"
 
-Grail::Grail(){
+Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	casting = false;
 
 	timeCasting = 0.0f;
 	maxCasting = 5.0f;
 
-
-	CreateGrail();
+	CreateGrail(TPosition, TScale, TRotation);
 }
 
 Grail::~Grail(){}
@@ -38,12 +33,7 @@ void Grail::Interact(Player* p){
 	casting = true;
 }
 
-void Grail::CreateGrail(){
-	vector3df TPosition(-3,0,-3);
-	vector3df TScale(1,1,1);
-	vector3df TRotation(0,0,0);
-
-
+void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	// Create an Irrlicht cube

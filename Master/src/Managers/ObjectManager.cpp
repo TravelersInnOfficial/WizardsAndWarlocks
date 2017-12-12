@@ -62,8 +62,8 @@ Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TR
 	return d;
 }
 
-Grail* ObjectManager::AddGrail(){
-	if(grail==NULL) grail = new Grail();
+Grail* ObjectManager::AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
+	if(grail==NULL) grail = new Grail(TPosition, TScale, TRotation);
 	return grail;
 }
 
@@ -86,8 +86,8 @@ Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3d
 	return p;
 }
 
-Fountain* ObjectManager::AddFountain(){
-	Fountain* f = new Fountain();
+Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
+	Fountain* f = new Fountain(TPosition, TScale, TRotation);
 	fountains.push_back(f);
 	return f;
 }

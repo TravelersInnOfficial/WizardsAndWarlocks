@@ -70,7 +70,7 @@ int main() {
 
 	// Level
 	LevelLoader loader;
-	loader.loadLobby();
+	loader.LoadLevel("../assets/json/map2.json");
 
 	// Game State
 	if (n_engine == NULL){

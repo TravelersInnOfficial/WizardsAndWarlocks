@@ -1,10 +1,6 @@
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Woverloaded-virtual"
-#pragma clang diagnostic pop
-
 #include "Fountain.h"
 
-Fountain::Fountain(){
+Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	inUse = false;
 	value = 100;
 	maxValue = 100;
@@ -16,15 +12,10 @@ Fountain::Fountain(){
 	currentTime = 0.0f;
 
 	 clase = EENUM_FOUNTAIN;   
-	CreateFountain();
+	CreateFountain(TPosition, TScale, TRotation);
 }
 
-void Fountain::CreateFountain(){
-	vector3df TPosition(-6,0,-2);
-	vector3df TScale(1,1,1);
-	vector3df TRotation(0,0,0);
-
-
+void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	float TMass = 0;
 

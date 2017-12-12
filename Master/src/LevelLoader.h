@@ -8,8 +8,7 @@ class LevelLoader{
 public:
     LevelLoader();
 
-    bool loadLobby();
-    bool readJson(std::string jsonPath);
+    bool LoadLevel(std::string jsonPath);
 };
 
 #endif
