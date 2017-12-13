@@ -34,6 +34,7 @@ private:
 
 	float timeStart;
 	float deltaTime;
+	float secondCounter = 0;
 
 	SpellManager* 		spellManager;
 	BulletManager* 		bulletManager;
@@ -48,6 +49,9 @@ private:
 	SoundEvent*			footstepEvent;
 
 	HumanPlayer*				playerOne;
+
+	void setFps();
+	
 };
 
 #endif

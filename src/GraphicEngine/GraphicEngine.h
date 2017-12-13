@@ -43,6 +43,11 @@ public:
     */
     int getTime();
 
+    /**
+     * Sets the window name
+    */
+    void ChangeWindowName(std::wstring newName);
+
     /// DRIVER FUNCTIONS
 
     /**

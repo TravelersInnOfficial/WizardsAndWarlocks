@@ -55,6 +55,10 @@ int GraphicEngine::getTime(){
 	return privateDevice->getTimer()->getTime();
 }
 
+void GraphicEngine::ChangeWindowName(std::wstring newName){
+	privateDevice->setWindowCaption(newName.c_str());
+}
+
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
 	return privateDriver->beginScene();

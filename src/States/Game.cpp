@@ -77,13 +77,25 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
+
+	setFps();
+}
+
+void Game::setFps(){
+	secondCounter += deltaTime;
+	if(secondCounter >= 0.5){
+		secondCounter = 0;
+		std::string myFps = to_string(int(1/deltaTime));
+		std::wstring wsTmp(myFps.begin(), myFps.end());
+		g_engine->ChangeWindowName(wsTmp);
+	}
 }
 
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim();
-	f_engine->DebugDrawWorld();
+	//f_engine->DebugDrawWorld();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

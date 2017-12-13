@@ -1,8 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#define _USE_MATH_DEFINES
+#include <cmath>
+
 #include <iostream>
-#include <math.h>
 #include <Actions.h>
 #include "./Entidad.h"
 
@@ -43,6 +45,7 @@ class Player: public Entidad{
 		float GetPosY();
 		float GetPosZ();
 		vector3df GetPos();
+		vector3df GetHeadPos();
 
 		float GetRotY();
 		vector3df GetRot();

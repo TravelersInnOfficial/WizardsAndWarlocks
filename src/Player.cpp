@@ -87,8 +87,11 @@ void Player::Update(){
 
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
-
-	engine->getActiveCamera()->setPosition(vector3df(m_position.X /*- 0.15 * sin(rot.Y)*/, m_position.Y /*+ 0.5*/, m_position.Z /*- 0.15 * cos(rot.Y)*/));
+	
+	//vector3df cameraPos = GetHeadPos();
+	// engine->getActiveCamera()->setPosition(vector3df(cameraPos.X /*- 0.15 * sin(rot.Y)*/, cameraPos.Y, cameraPos.Z /*- 0.15 * cos(rot.Y)*/));
+	
+	engine->getActiveCamera()->setPosition(GetHeadPos());
 	engine->getActiveCamera()->updateAbsolutePosition();
 	engine->getActiveCamera()->setRotation(newRot);
 }
@@ -168,7 +171,7 @@ void Player::Raycast(){
 	vector3df rot = GetRot();
 	rot.X = -rot.X;
 
-	vector3df Start = GetPos();
+	vector3df Start = GetHeadPos();
 	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
 	float EndY = Start.Y + sin(rot.X)*raycastDistance;
 	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
@@ -210,7 +213,7 @@ void Player::DeployTrap(){
 	vector3df rot = GetRot();
 	rot.X = -rot.X;
 
-	vector3df Start = GetPos();
+	vector3df Start = GetHeadPos();
 	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
 	float EndY = Start.Y + sin(rot.X)*raycastDistance;
 	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
@@ -247,7 +250,7 @@ void Player::SetRotation(vector3df rotation){
 	this->rotation = rotation;
 	vector3df newRot = this->rotation;
 	newRot.X = 0; newRot.Z = 0;
-	newRot = newRot * 180 / irr::core::PI;
+	newRot = newRot * 180 / M_PI;
 	m_playerNode->setRotation(newRot);
 }
 
@@ -262,6 +265,8 @@ void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
+
+
 vector3df Player::GetAngularVelocity(){ return bt_body->GetAngularVelocity(); }
 bool Player::GetDead(){ return m_dead; }
 float Player::GetPosX(){ return m_position.X; }
@@ -278,3 +283,9 @@ float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
+
+vector3df Player::GetHeadPos(){
+	vector3df headPos = m_position;
+	headPos.Y += 0.5;
+	return (headPos);
+}

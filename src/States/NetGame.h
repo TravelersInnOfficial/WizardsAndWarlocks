@@ -39,8 +39,11 @@ public:
 private:
 
 	static NetGame* instance;
+	
 	float timeStart;
 	float deltaTime;
+	float secondCounter = 0;
+
 	bool isServer;
 	SoundEvent*			footstepEvent;
 	HumanPlayer*		playerOne;
@@ -59,6 +62,8 @@ private:
 	NetworkEngine*		n_engine;
 
 	NetGame();
+
+	void setFps();
 
 };
 

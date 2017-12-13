@@ -14,7 +14,7 @@ void HechizoProyectil::Lanzar(Player* p){
 
 	rot.X = -rot.X;
 
-	vector3df pos = p->GetPos();
+	vector3df pos = p->GetHeadPos();
 	float max = 1.2;
 	pos.X = pos.X + sin(rot.Y)*cos(rot.X)*max;
 	pos.Y = pos.Y + sin(rot.X)*max;
