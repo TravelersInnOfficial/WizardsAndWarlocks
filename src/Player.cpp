@@ -285,7 +285,17 @@ NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
 
 vector3df Player::GetHeadPos(){
+	float offset = -0.1;
 	vector3df headPos = m_position;
-	headPos.Y += 0.5;
+	vector3df cameraRot = GetRot();
+
+	headPos.X += sin(cameraRot.Y) * offset;
+	headPos.Y += 0.5; // Y OFFSET
+	headPos.Z += cos(cameraRot.Y) * offset;
+
+	/*std::cout<<cameraRot.X<<std::endl;
+	headPos.X += sin(cameraRot.X) * offset*0.5;
+	headPos.Z += cos(cameraRot.X) * offset*0.5;*/
+
 	return (headPos);
 }
