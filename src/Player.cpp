@@ -46,10 +46,12 @@ void Player::CreatePlayer(){
 		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
 		m_playerNode->setPosition(m_position);
 	}
-	m_dimensions = m_dimensions * 0.5f;	
+	m_dimensions = m_dimensions * 0.5f;
 
 	// Physic Player
 	bt_body = new BT_Body();
+	//m_dimensions.Z += 0.35;
+	//m_dimensions.X += 0.35;
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 	bt_body->AssignPointer(this);
 
@@ -64,7 +66,7 @@ void Player::Update(){
 
 	if(isPlayerOne){
 		vector3df newRot = engine->getActiveCamera()->getRotation();
-		vector3df rot = newRot * irr::core::PI / 180.0;	
+		vector3df rot = newRot * M_PI / 180.0;	
 		SetRotation(rot);
 		positionCamera();
 	}
@@ -252,6 +254,7 @@ void Player::SetRotation(vector3df rotation){
 	newRot.X = 0; newRot.Z = 0;
 	newRot = newRot * 180 / M_PI;
 	m_playerNode->setRotation(newRot);
+	//bt_body->Rotate(newRot);
 }
 
 void Player::UpdatePosShape(){
@@ -292,10 +295,6 @@ vector3df Player::GetHeadPos(){
 	headPos.X += sin(cameraRot.Y) * offset;
 	headPos.Y += 0.5; // Y OFFSET
 	headPos.Z += cos(cameraRot.Y) * offset;
-
-	/*std::cout<<cameraRot.X<<std::endl;
-	headPos.X += sin(cameraRot.X) * offset*0.5;
-	headPos.Z += cos(cameraRot.X) * offset*0.5;*/
 
 	return (headPos);
 }
