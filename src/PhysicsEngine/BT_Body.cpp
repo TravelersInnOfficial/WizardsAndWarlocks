@@ -87,7 +87,7 @@ void BT_Body::Rotate(vector3df rotation){
 	//PASAMOS EL ANGULO A RADIANES
 	rotation = rotation*M_PI/180;
 
-	btVector3 TPosition(m_position->X - m_center->X,m_position->Y - m_center->Y,m_position->Z - m_center->Z);
+	btVector3 TPosition(m_position->X,m_position->Y ,m_position->Z);
 	btVector3 TCenter(m_center->X, m_center->Y, m_center->Z);
 
 	btTransform tr;
@@ -145,7 +145,7 @@ void BT_Body::SetGravity(vector3df gravity){
 }
 
 vector3df BT_Body::GetPosition(){
-	vector3df pos(m_position->X - m_center->X, m_position->Y - m_center->Y, m_position->Z - m_center->Z);
+	vector3df pos(m_position->X, m_position->Y, m_position->Z);
 	return pos;
 }
 
