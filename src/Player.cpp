@@ -228,18 +228,17 @@ void Player::DeployTrap(){
 	rot.X = -rot.X;
 
 	vector3df Start = GetHeadPos();
-	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
-	float EndY = Start.Y + sin(rot.X)*raycastDistance;
-	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
+	float trapRayDist = raycastDistance*1.5;
+	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*trapRayDist;
+	float EndY = Start.Y + sin(rot.X)*trapRayDist;
+	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*trapRayDist;
 
 	vector3df End(EndX, EndY, EndZ);
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
-		Entidad* h = (Entidad*)Object;;
-		if(h->GetClase() == EENUM_FLOOR){
-			TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
-		}
+		Entidad* h = (Entidad*)Object;
+		if(h->GetClase() == EENUM_FLOOR) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 	}
 }
 
