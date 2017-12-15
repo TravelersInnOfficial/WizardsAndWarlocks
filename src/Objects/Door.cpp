@@ -4,7 +4,7 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
 	CreateDoor(TPosition, TScale, TRotation, TCenter);
     min = TRotation.Y;
     max = TRotation.Y + 90;
-    increment = -1;
+    increment = -5;
     rotation = TRotation;
     working = false;
     clase = EENUM_DOOR;

@@ -91,8 +91,8 @@ void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim();
-	f_engine->DebugDrawWorld();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+	//f_engine->DebugDrawWorld();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
