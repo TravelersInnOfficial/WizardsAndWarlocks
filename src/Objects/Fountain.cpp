@@ -20,14 +20,14 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	float TMass = 0;
 
 	// Create an Irrlicht cube
-	m_fountainNode = engine->addObjMeshSceneNode("./../assets/modelos/fuente.obj");
+	m_fountainNode = engine->addObjMeshSceneNode("./../assets/modelos/fountain.obj");
 	m_fountainNode->setPosition(TPosition);
 	m_fountainNode->setScale(TScale);
 	m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_fountainNode) {
 		m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_fountainNode->setMaterialTexture(0, "./../assets/textures/pocion.png");
+        m_fountainNode->setMaterialTexture(0, "./../assets/textures/lifePotion.png");
     }
 
 	//Bullet Physics

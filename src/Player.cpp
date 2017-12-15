@@ -266,7 +266,7 @@ void Player::SetRotation(vector3df rotation){
 	newRot.X = 0; newRot.Z = 0;
 	newRot = newRot * 180 / M_PI;
 	m_playerNode->setRotation(newRot);
-	//bt_body->Rotate(newRot);
+	bt_body->SetRotation(newRot);
 }
 
 void Player::UpdatePosShape(){

@@ -28,14 +28,14 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
     TCenter.Z *= scale.Z;
 
 	// Create an Irrlicht cube
-	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
+	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
 	m_potionNode->setPosition(TPosition);
 	m_potionNode->setScale(scale);
 	m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_potionNode) {
 		m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_potionNode->setMaterialTexture(0, "./../assets/textures/pocion.png");
+        m_potionNode->setMaterialTexture(0, "./../assets/textures/lifePotion.png");
     }
 
 	//Bullet Physics

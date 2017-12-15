@@ -106,6 +106,12 @@ void BT_Body::Rotate(vector3df rotation){
 	m_RigidBody->setCenterOfMassTransform(tr);
 }
 
+void BT_Body::SetRotation(vector3df rotation){
+	rotation = rotation * M_PI/180;
+	btQuaternion qt(rotation.Y, rotation.X, rotation.Z);
+	m_RigidBody->getWorldTransform().setRotation(qt);
+}
+
 void BT_Body::SetCenter(vector3df center){
 	m_center->X = center.X;
 	m_center->Y = center.Y;

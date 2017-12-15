@@ -17,7 +17,8 @@ public:
 	void ApplyCentralImpulse(vector3df);
 	void ApplyTorque(vector3df);
 	void ApplyCentralForce(vector3df);
-	void Rotate(vector3df );
+	void Rotate(vector3df);
+	void SetRotation(vector3df);
 
 	void SetCenter(vector3df);
 	void SetPosition(vector3df);
@@ -25,7 +26,6 @@ public:
 	void SetLinearVelocity(vector3df);
 	void SetMass(float);
 	void SetAngularFactor(vector3df v);
-	//
 	void SetGravity(vector3df);
 
 	vector3df GetPosition();
@@ -35,7 +35,6 @@ public:
 	vector3df GetLinearVelocity();
 	float GetMass();
 
-	//
 	void AssignPointer(void*);
 	void SetCollisionFlags(std::string);
 
