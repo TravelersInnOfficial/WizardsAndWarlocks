@@ -19,6 +19,8 @@ public:
 	void Interact(Player* p);
 	void Use(Player* p);
 	void CreatePotion(vector3df TPosition, vector3df TRotation);
+	void Drop(vector3df force);
+
 private:
 	void DeletePotion();
 	void UpdatePosShape();

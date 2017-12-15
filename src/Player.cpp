@@ -193,12 +193,22 @@ void Player::Die(){
 }
 
 void Player::CatchObject(Potion* p){
+	DropObject();
 	potion = p;
 }
 
 void Player::DropObject(){
 	if(potion!=NULL){
+		/*vector3df dropForce = m_position;
+		float impulse = 20;
+		vector3df cameraRot = GetRot();
+
+		dropForce.X = sin(cameraRot.Y) * impulse;
+		dropForce.Y = impulse/2;
+		dropForce.Z = cos(cameraRot.Y) * impulse;*/
+
 		potion->CreatePotion(m_position, vector3df(0,0,0));
+		//potion->Drop(dropForce);
 		potion = NULL;
 	}
 }

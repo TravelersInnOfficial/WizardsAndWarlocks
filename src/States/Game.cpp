@@ -30,7 +30,7 @@ Game::Game(){
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 	
-	playerManager->AddAIPlayer();
+	//playerManager->AddAIPlayer();
 	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
 }
 

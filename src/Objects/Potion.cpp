@@ -22,6 +22,11 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
+	vector3df TCenter = vector3df(0,0,0);
+    TCenter.X *= scale.X;
+    TCenter.Y *= scale.Y;
+    TCenter.Z *= scale.Z;
+
 	// Create an Irrlicht cube
 	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/pocion.obj");
 	m_potionNode->setPosition(TPosition);
@@ -34,9 +39,9 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 0.5f, scale.Z * 0.5f);
+	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 1, scale.Z * 0.5f);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(TPosition, HalfExtents,1,0,vector3df(0,0.2,0), C_POTION, potionCW);
+	bt_body->CreateBox(TPosition, HalfExtents,1,1,TCenter, C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
 	//bt_body->SetCollisionFlags("no_contact");
@@ -48,9 +53,11 @@ void Potion::DeletePotion(){
 }
 
 void Potion::Update(){
-	if(!cogida){
-		UpdatePosShape();
-	}
+	if(!cogida) UpdatePosShape();
+}
+
+void Potion::Drop(vector3df force){
+	bt_body->ApplyCentralImpulse(force);
 }
 
 void Potion::Interact(Player* p){
