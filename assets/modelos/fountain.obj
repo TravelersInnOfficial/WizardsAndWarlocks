@@ -1,6 +1,6 @@
 # Blender v2.79 (sub 0) OBJ File: 'fuente.blend'
 # www.blender.org
-mtllib fuente.mtl
+mtllib fountain.mtl
 o Cylinder.001
 v 0.000000 0.000000 -1.920429
 v 0.000000 0.449564 -1.920429
