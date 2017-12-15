@@ -91,7 +91,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new Hechizo(70, 2.0f, 5.0f);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil(0, 0.0f, 1.0f);
+			h = new HechizoProyectil(1, 0.0f, 1.0f);
 			break;
 		default:
 			h = 0;

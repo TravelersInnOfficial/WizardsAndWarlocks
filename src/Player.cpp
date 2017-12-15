@@ -166,6 +166,7 @@ bool Player::ChangeMP(float MP){
 void Player::Respawn(){
 	SetPosition(vector3df(0, 1, 0));
 	m_HP = 100;
+	m_MP = 100;
 	m_dead = false;
 }
 
@@ -188,6 +189,7 @@ void Player::Raycast(){
 }
 
 void Player::Die(){
+	DropObject();
 	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
