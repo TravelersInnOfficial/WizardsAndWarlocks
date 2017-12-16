@@ -5,11 +5,21 @@
 
 class Connection{
 public:
+
     /**
      * @brief Connection constructor
      * 
      */
     Connection();
+
+    /**
+     * @brief 
+     * 
+     * @param float cost (Connection cost)
+     * @param Node FromNode (Connection start node)
+     * @param Node ToNode (Connection end node)
+     */
+    Connection(float, Node*, Node*);
 
     /**
      * @brief Connection Destructor

@@ -9,6 +9,6 @@ std::vector<Connection*> Graph::getNodeConnectionList(Node*){
     return ret;
 }
 
-std::vector<Node*> Graph::getNodeList(){
+List* Graph::getNodeList(){
     return m_nodeList;
 }

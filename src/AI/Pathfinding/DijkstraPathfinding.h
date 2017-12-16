@@ -3,14 +3,6 @@
 
 #include "Graph.h"
 
-#include <vector>
-//This structure is used to keep track of the information we need for each node
-struct NodeRecord{
-    Node* m_node;
-    Connection* m_connection;
-    float m_costSoFar;
-};
-
 class DijkstraPahtfinding{
 public:
     /**
@@ -21,19 +13,12 @@ public:
      * @param Node EndNode
      * @return std::vector<Connection*> path
      */
-    std::vector<Connection*> makeDijkstraPahtfinding(Graph*, Node*, Node*);
-    
-    /**
-     * @brief Returns the smalles element from the open list
-     * 
-     * @return Node* smallestNode
-     */
-    Node* getOpenListSmallestElement();
+    std::list<Connection*> *makeDijkstraPahtfinding(Graph*, Node*, Node*);
 
 private:
-    std::vector<Connection*> m_path;
-    std::vector<Node*> m_openList;
-    std::vector<Node*> m_closedList;
+
+    List* m_openList;
+    List* m_closedList;
     NodeRecord* m_startRecord;
 
 };

@@ -1,9 +1,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include "Node.h"
-#include "Connection.h"
 #include <vector>
+#include "List.h"
 
 class Graph{
 public:
@@ -28,14 +27,14 @@ public:
     std::vector<Connection*> getNodeConnectionList(Node*);
 
     /**
-     * @brief Returns a list with all graph nodes
+     * @brief Returns a List with all graph nodeRecords
      * 
-     * @return std::vector<Node*> allNodes
+     * @return List* (All NodeRecords)
      */
-    std::vector<Node*> getNodeList();
+    List* getNodeList();
     
 private:
-    std::vector<Node*> m_nodeList;
+    List* m_nodeList;
 
 };
 #endif
