@@ -58,10 +58,10 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
         }
         else if(j["Objects"][i]["Type"] == "PotionSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/red.jpg");           
-            objManager->AddPotion(position, vector3df(0.5,0.5,0.5), rotation);
+            objManager->AddPotion(position, vector3df(0.25,0.25,0.25), rotation);
         }
 		else if(j["Objects"][i]["Type"] == "Potion"){
-            objManager->AddPotion(position, vector3df(0.5,0.5,0.5), rotation);
+            objManager->AddPotion(position, vector3df(0.25,0.25,0.25), rotation);
         }
         else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");

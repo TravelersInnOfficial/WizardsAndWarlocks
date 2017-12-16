@@ -2,12 +2,10 @@
 
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	CreateDoor(TPosition, TScale, TRotation, TCenter);
-    min = 0;
-    max = 90;
-    increment = -1;
-    rotation.X = 0;
-    rotation.Y = 0;
-    rotation.Z = 0;
+    min = TRotation.Y;
+    max = TRotation.Y + 90;
+    increment = -5;
+    rotation = TRotation;
     working = false;
     clase = EENUM_DOOR;
 }
@@ -21,15 +19,12 @@ Door::~Door(){
 }
 
 void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
-    //vector3df TPosition(1,0,-1);
-    //vector3df TScale(0.05, 1, 0.5);
-    //vector3df TRotation(0,0,0);
-    //vector3df TCenter(0,0,-TScale.Z)
 
     //Dimensions of the box
     TScale.X *= 0.05;
     TScale.Y *= 1;
     TScale.Z *= 0.5;
+
     TCenter.X *= TScale.X;
     TCenter.Y *= TScale.Y;
     TCenter.Z *= TScale.Z;
@@ -38,7 +33,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el modelo
-    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/puerta.obj");
+    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/door.obj");
     m_doorNode->setPosition(TPosition);
     m_doorNode->setRotation(TRotation);
     m_doorNode->setScale(vector3df(1,1,1));
@@ -53,7 +48,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents, 0, 0, TCenter, C_DOOR, doorCW);
-    //bt_body->Rotate(TRotation);
+    bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
 }
 

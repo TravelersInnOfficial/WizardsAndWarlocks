@@ -80,6 +80,8 @@ public:
     */
     void drawAim();
 
+    void drawManaAndHealth(int h, int m);
+
     /// SMANAGER FUNCTIONS
 
     /**

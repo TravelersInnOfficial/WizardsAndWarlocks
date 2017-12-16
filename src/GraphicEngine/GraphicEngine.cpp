@@ -103,6 +103,40 @@ void GraphicEngine::drawAim(){
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
 }
 
+void GraphicEngine::drawManaAndHealth(int h, int m){
+	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
+	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
+
+	float size = 20;
+
+	float xInit = W/20;
+	float xEnd =  W/3;
+
+	float yInitH = H * 0.05;
+	float yInitM = H * 0.09;
+
+	// float yInitH = H - (H * 0.14);
+	// float yInitM = H - (H * 0.10);
+
+	float yEndH = yInitH + size;
+	float yEndM = yInitM + size;
+
+	float hP = h/100.0f;
+	float mP = m/100.0f;
+
+
+	// Black Bar
+	irr::video::SColor color = irr::video::SColor(255, 0, 0, 0);
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xEnd, yEndH));
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xEnd, yEndM));
+	
+	// Helath & Mana Bar
+	color = irr::video::SColor(255, 255, 0, 0);
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH));
+	color = irr::video::SColor(255, 0, 0, 255);
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM));
+}
+
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
 	privateSManager->drawAll();

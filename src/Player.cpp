@@ -166,6 +166,7 @@ bool Player::ChangeMP(float MP){
 void Player::Respawn(){
 	SetPosition(vector3df(0, 1, 0));
 	m_HP = 100;
+	m_MP = 100;
 	m_dead = false;
 }
 
@@ -188,17 +189,28 @@ void Player::Raycast(){
 }
 
 void Player::Die(){
+	DropObject();
 	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
 
 void Player::CatchObject(Potion* p){
+	DropObject();
 	potion = p;
 }
 
 void Player::DropObject(){
 	if(potion!=NULL){
+		/*vector3df dropForce = m_position;
+		float impulse = 20;
+		vector3df cameraRot = GetRot();
+
+		dropForce.X = sin(cameraRot.Y) * impulse;
+		dropForce.Y = impulse/2;
+		dropForce.Z = cos(cameraRot.Y) * impulse;*/
+
 		potion->CreatePotion(m_position, vector3df(0,0,0));
+		//potion->Drop(dropForce);
 		potion = NULL;
 	}
 }
@@ -216,18 +228,17 @@ void Player::DeployTrap(){
 	rot.X = -rot.X;
 
 	vector3df Start = GetHeadPos();
-	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
-	float EndY = Start.Y + sin(rot.X)*raycastDistance;
-	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
+	float trapRayDist = raycastDistance*1.5;
+	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*trapRayDist;
+	float EndY = Start.Y + sin(rot.X)*trapRayDist;
+	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*trapRayDist;
 
 	vector3df End(EndX, EndY, EndZ);
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
-		Entidad* h = (Entidad*)Object;;
-		if(h->GetClase() == EENUM_FLOOR){
-			TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
-		}
+		Entidad* h = (Entidad*)Object;
+		if(h->GetClase() == EENUM_FLOOR) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 	}
 }
 
@@ -254,7 +265,7 @@ void Player::SetRotation(vector3df rotation){
 	newRot.X = 0; newRot.Z = 0;
 	newRot = newRot * 180 / M_PI;
 	m_playerNode->setRotation(newRot);
-	//bt_body->Rotate(newRot);
+	bt_body->SetRotation(newRot);
 }
 
 void Player::UpdatePosShape(){
