@@ -18,7 +18,7 @@ Player::Player(bool isPlayer1){
 	max_velocity = 3.0f;
 
 	potion = NULL;
-
+	playerAlliance = NO_ALLIANCE;
 	m_HP = 100;
 	m_MP = 100;
 	m_dead = false;

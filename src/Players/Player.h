@@ -13,6 +13,7 @@
 #include "./../NetworkEngine/NetworkEngine.h"
 #include "./../NetworkEngine/NetworkStructs.h"
 #include "./../Includes/ColliderMasks.h"
+#include "./../Includes/Alliance.h"
 
 class Potion;
 
@@ -83,6 +84,7 @@ class Player: public Entidad{
 		float m_MP;
 		bool m_dead;
 		bool isPlayerOne;
+		Alliance playerAlliance;
 
 		BT_Body* bt_body;
 		GBody* m_playerNode;
