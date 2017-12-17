@@ -8,6 +8,11 @@ NetGame* NetGame::GetInstance(){
 }
 
 NetGame::NetGame(){
+
+	// Level
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/map.json");
+
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();

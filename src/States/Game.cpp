@@ -2,6 +2,10 @@
 
 Game::Game(){
 
+	// Level
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/map.json");
+
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -46,6 +50,12 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
+
+	if(g_engine->IsKeyPressed(KEY_KEY_H)){
+		LevelLoader loader;
+		ObjectManager::GetInstance()->ClearMap();
+		loader.LoadLevel("../assets/json/map.json");
+	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()) footstepEvent->start();

@@ -18,6 +18,8 @@
 #include "./../SoundEngine/SoundSystem.h"
 #include "./../NetworkEngine/NetworkEngine.h"
 
+#include "./../LevelLoader.h"
+
 #include <SpellCodes.h>
 #include <EffectCodes.h>
 

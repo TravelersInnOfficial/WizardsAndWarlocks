@@ -16,7 +16,7 @@ void ObjectManager::ClearMap(){
 		Block* b = blocks[i];
 		delete b;
 	}
-	doors.clear();
+	blocks.clear();
 	
 	size = doors.size();
 	for(int i=0; i<size; i++){
@@ -53,7 +53,7 @@ void ObjectManager::ClearMap(){
 	}
 	npcs.clear();
 
-	delete grail;
+	if(grail != NULL) delete grail;
 }
 
 ObjectManager* ObjectManager::GetInstance(){
