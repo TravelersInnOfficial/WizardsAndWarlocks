@@ -52,14 +52,3 @@ void List::add(NodeRecord* n){
 void List::remove(NodeRecord* n) { 
     m_list->remove(n);
 }
-
-std::vector<Connection*>* List::getNodeConnections(Node* n){
-    std::vector<Connection*> *list = NULL;
-
-    std::list<NodeRecord*>::iterator it = m_list->begin();
-    for(; it!=m_list->end(); ++it){
-        NodeRecord *node = *it;
-        if(node->m_node == n) list->push_back(node->m_connection);
-    }
-    return list;
-}

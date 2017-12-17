@@ -14,7 +14,7 @@ public:
      * @brief Returns the neares node
      * 
      * @param Node (Node to be checked)
-     * @return Node* (Nearest node)
+     * @return NodeRecord* (Nearest node and connection)
      */
     NodeRecord* smallestElement(Node*);
 
@@ -55,14 +55,6 @@ public:
      * @param NodeRecord (nodeRecord to be removed)
      */
     void remove(NodeRecord*);
-
-    /**
-     * @brief Returns a vector of connections from the given node
-     * 
-     * @param Node (Node to analize)
-     * @return std::list<Connection*> (Connections from the node) 
-     */
-    std::vector<Connection*> *getNodeConnections(Node*);
 
 private:
     std::list<NodeRecord*> *m_list;
