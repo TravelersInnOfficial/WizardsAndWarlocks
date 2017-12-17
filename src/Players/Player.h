@@ -68,6 +68,7 @@ class Player: public Entidad{
 		void SetDead(bool);
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
+		void SetAlliance(Alliance newAliance);
 
 		virtual ~Player();
 

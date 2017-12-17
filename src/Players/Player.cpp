@@ -300,3 +300,21 @@ vector3df Player::GetHeadPos(){
 
 	return (headPos);
 }
+
+void Player::SetAlliance(Alliance newAlliance){
+	playerAlliance = newAlliance;
+	switch(newAlliance){
+		case(ALLIANCE_WIZARD):{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			break;
+		}
+		case(ALLIANCE_WARLOCK):{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			break;
+		}
+		default:{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+			break;
+		}
+	}
+}
