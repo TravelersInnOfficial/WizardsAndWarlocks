@@ -16,7 +16,7 @@ Game::Game(){
 	// Level
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
-	objectManager->AddNpc(vector3df(1,1,1), vector3df(1,1,1), vector3df(0,0,0), NPC_SELECTOR);
+	objectManager->AddNpc(vector3df(1,-1,1), vector3df(1,1,1), vector3df(0,0,0), NPC_SELECTOR);
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
@@ -103,7 +103,7 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

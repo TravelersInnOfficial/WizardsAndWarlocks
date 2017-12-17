@@ -7,7 +7,6 @@
 class Npc: public Entidad{
 	public:
 		Npc();
-		Npc(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		virtual ~Npc();
 		
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
@@ -15,6 +14,8 @@ class Npc: public Entidad{
 		virtual void Draw();
 
 	protected:
+	    GBody*      gBody;
+    	BT_Body*    pBody;
 		bool activated;
 	
 };
