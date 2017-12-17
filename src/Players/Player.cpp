@@ -25,7 +25,7 @@ Player::Player(bool isPlayer1){
 	CreatePlayer();
 }
 
-Player::PlayerInit(){
+void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
 	m_MP = 100;

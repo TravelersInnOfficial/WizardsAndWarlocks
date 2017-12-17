@@ -22,6 +22,7 @@ class Player: public Entidad{
 
 		Player(bool isPlayer1);
 		void CreatePlayer();
+		void PlayerInit();
 		virtual void Update();
 		
 		void Move(float, float);
