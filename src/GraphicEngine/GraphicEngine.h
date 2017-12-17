@@ -48,6 +48,11 @@ public:
     */
     void ChangeWindowName(std::wstring newName);
 
+    /**
+     * Activates / Deactivates the main camera input and sets the cursor
+    */
+    void ToggleMenu(bool newState);
+
     /// DRIVER FUNCTIONS
 
     /**
@@ -80,6 +85,9 @@ public:
     */
     void drawAim();
 
+    /**
+     * Draws the MANA and the HEALTH bar
+    */
     void drawManaAndHealth(int h, int m);
 
     /// SMANAGER FUNCTIONS

@@ -5,6 +5,8 @@
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	controller = new PlayerController();
 	DeclareInput();
+	menuActivated = false;
+	//ToggleMenu(!menuActivated);
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -144,21 +146,27 @@ void HumanPlayer::GetNetInput(){
 
 }
 
-void HumanPlayer::CheckInput(){
+void HumanPlayer::ToggleMenu(bool newState){
+	menuActivated = newState;
+	GraphicEngine::getInstance()->ToggleMenu(menuActivated);
+}
 
-	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
-	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
-	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
-	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject(); }
-	if(controller->IsKeyPressed(ACTION_SHOOT)){
-		SpellManager::GetInstance()->ResetHechizo(0,this);
-		this->DropObject();
+void HumanPlayer::CheckInput(){
+	if(!menuActivated){
+		if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
+		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject(); }
+		if(controller->IsKeyPressed(ACTION_SHOOT)){
+			SpellManager::GetInstance()->ResetHechizo(0,this);
+			this->DropObject();
+		}
+		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
+		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){this->DeployTrap();}
 	}
-	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
-	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){this->DeployTrap();}
 }
 
 void HumanPlayer::Update(){

@@ -17,10 +17,13 @@ public:
 
 	void Update();
 
+	void ToggleMenu(bool newState);
+
 private:
 	void DeclareInput();
 	
 	PlayerController* controller;
+	bool menuActivated;
 
 };
 
