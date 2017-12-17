@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./../Player.h"
+#include "./../Players/Player.h"
 #include "./../Entidad.h"
 
 #include "./../PhysicsEngine/BT_Body.h"

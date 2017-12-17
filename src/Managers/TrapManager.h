@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "./../Trap.h"
-#include "./../Player.h"
+#include "./../Objects/Trap.h"
+#include "./../Players/Player.h"
 #include "./../Includes/vector3d.h"
 
 class TrapManager{

@@ -2,7 +2,7 @@
 #define HECHIZO_H
 
 #include <iostream>
-#include "./../Player.h"
+#include "./../Players/Player.h"
 
 class Hechizo{
 public:

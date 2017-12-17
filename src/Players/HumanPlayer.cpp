@@ -1,6 +1,6 @@
 #include "HumanPlayer.h"
 
-#include "./Managers/SpellManager.h"
+#include "./../Managers/SpellManager.h"
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	controller = new PlayerController();

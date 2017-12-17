@@ -6,7 +6,7 @@
 #include "./../Spells/Hechizo.h"
 #include "./../Spells/HechizoProyectil.h"
 #include <SpellCodes.h>
-#include "./../Player.h"
+#include "./../Players/Player.h"
 
 class SpellManager{
 public:

@@ -9,7 +9,7 @@
 #include "./../NetworkEngine/Server.h"
 #include "./../NetworkEngine/Client.h"
 #include "./PlayerManager.h"
-#include "./../Player.h"
+#include "./../Players/Player.h"
 
 
 class NetworkManager{

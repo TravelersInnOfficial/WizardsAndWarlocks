@@ -1,12 +1,12 @@
 #include "./Player.h"
-#include "./PhysicsEngine/BulletEngine.h"
-#include "./Managers/ObjectManager.h"
-#include "./Managers/TrapManager.h"
-#include "./Managers/SpellManager.h"
-#include "./Managers/EffectManager.h"
+#include "./../PhysicsEngine/BulletEngine.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/EffectManager.h"
 
-#include "./Objects/Potion.h"
-#include "./Includes/TrapCodes.h"
+#include "./../Objects/Potion.h"
+#include "./../Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 

@@ -1,5 +1,5 @@
 #include "AIPlayer.h"
-#include "./Managers/PlayerManager.h"
+#include "./../Managers/PlayerManager.h"
 
 AIPlayer::AIPlayer():Player(false){
 	controller = new BehaviourTree();

@@ -3,7 +3,7 @@
 #pragma clang diagnostic pop
 
 #include "Trap.h"
-#include "./Managers/TrapManager.h"
+#include "./../Managers/TrapManager.h"
 
 Trap::Trap(){
    // m_trapType = 0;

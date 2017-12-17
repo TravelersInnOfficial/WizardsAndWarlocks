@@ -2,7 +2,7 @@
 #define HECHIZOPROYECTIL_H
 
 #include "Hechizo.h"
-#include "./../Player.h"
+#include "./../Players/Player.h"
 #include <BulletCodes.h>
 
 class HechizoProyectil: public Hechizo{

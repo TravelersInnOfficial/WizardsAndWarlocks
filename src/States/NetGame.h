@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./../HumanPlayer.h"
+#include "./../Players/HumanPlayer.h"
 
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
