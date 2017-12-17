@@ -1,12 +1,12 @@
 #include "./Player.h"
-#include "./PhysicsEngine/BulletEngine.h"
-#include "./Managers/ObjectManager.h"
-#include "./Managers/TrapManager.h"
-#include "./Managers/SpellManager.h"
-#include "./Managers/EffectManager.h"
+#include "./../PhysicsEngine/BulletEngine.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/EffectManager.h"
 
-#include "./Objects/Potion.h"
-#include "./Includes/TrapCodes.h"
+#include "./../Objects/Potion.h"
+#include "./../Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -17,15 +17,19 @@ Player::Player(bool isPlayer1){
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
 
-	potion = NULL;
-
-	m_HP = 100;
-	m_MP = 100;
-	m_dead = false;
+	playerAlliance = NO_ALLIANCE;
 	isPlayerOne=isPlayer1;
 	clase = EENUM_PLAYER;
 
+	PlayerInit();
 	CreatePlayer();
+}
+
+void Player::PlayerInit(){
+	potion = NULL;
+	m_HP = 100;
+	m_MP = 100;
+	m_dead = false;
 }
 
 Player::~Player(){
@@ -50,8 +54,6 @@ void Player::CreatePlayer(){
 
 	// Physic Player
 	bt_body = new BT_Body();
-	//m_dimensions.Z += 0.35;
-	//m_dimensions.X += 0.35;
 	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 	bt_body->AssignPointer(this);
 
@@ -63,6 +65,7 @@ void Player::CreatePlayer(){
 
 void Player::Update(){
 	UpdatePosShape();
+	if(m_dead || m_position.Y < -50) Die();
 
 	if(isPlayerOne){
 		vector3df newRot = engine->getActiveCamera()->getRotation();
@@ -83,16 +86,10 @@ void Player::Update(){
 
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
-
-	if(m_dead || m_position.Y < -50) Die();
 }
 
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
-	
-	//vector3df cameraPos = GetHeadPos();
-	// engine->getActiveCamera()->setPosition(vector3df(cameraPos.X /*- 0.15 * sin(rot.Y)*/, cameraPos.Y, cameraPos.Z /*- 0.15 * cos(rot.Y)*/));
-	
 	engine->getActiveCamera()->setPosition(GetHeadPos());
 	engine->getActiveCamera()->updateAbsolutePosition();
 	engine->getActiveCamera()->setRotation(newRot);
@@ -148,8 +145,6 @@ void Player::ChangeHP(float HP){
 	if(m_HP + HP > 100) m_HP = 100;
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
 	else m_HP += HP;
-
-	// std::cout<<m_HP<<std::endl;
 }
 
 bool Player::ChangeMP(float MP){
@@ -157,7 +152,7 @@ bool Player::ChangeMP(float MP){
 	
 	if(m_MP - MP >= 0){
 		m_MP -= MP;
-		return true;
+		toRet = true;
 	}
 
 	return (toRet);
@@ -308,4 +303,22 @@ vector3df Player::GetHeadPos(){
 	headPos.Z += cos(cameraRot.Y) * offset;
 
 	return (headPos);
+}
+
+void Player::SetAlliance(Alliance newAlliance){
+	playerAlliance = newAlliance;
+	switch(newAlliance){
+		case(ALLIANCE_WIZARD):{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			break;
+		}
+		case(ALLIANCE_WARLOCK):{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			break;
+		}
+		default:{
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+			break;
+		}
+	}
 }

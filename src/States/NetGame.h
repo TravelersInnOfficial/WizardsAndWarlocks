@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./../HumanPlayer.h"
+#include "./../Players/HumanPlayer.h"
 
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
@@ -17,6 +17,8 @@
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../SoundEngine/SoundSystem.h"
 #include "./../NetworkEngine/NetworkEngine.h"
+
+#include "./../LevelLoader.h"
 
 #include <SpellCodes.h>
 #include <EffectCodes.h>

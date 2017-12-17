@@ -2,7 +2,7 @@
 #include <iostream>
 #include <bullet/btBulletDynamicsCommon.h>
 #include "BulletEngine.h"
-#include "../Trap.h"
+#include "./../Objects/Trap.h"
 
 BT_GhostObject::BT_GhostObject(){
      m_body = new btGhostObject();

@@ -1,12 +1,12 @@
 #ifndef TRAP_H
 #define TRAP_H
 
-#include "./PhysicsEngine/BT_GhostObject.h"
-#include "./GraphicEngine/GBody.h"
-#include "Entidad.h"
-#include "Player.h"
 #include <vector3d.h>
-#include "./Includes/TrapCodes.h"
+#include "./../PhysicsEngine/BT_GhostObject.h"
+#include "./../GraphicEngine/GBody.h"
+#include "./../Players/Player.h"
+#include "./../Includes/TrapCodes.h"
+#include "./../Entidad.h"
 
 class Trap : public Entidad{
 public:

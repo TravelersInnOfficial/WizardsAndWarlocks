@@ -6,7 +6,7 @@
 #include <string>
 #include <Keycodes.h>
 #include <Actions.h>
-#include "./GraphicEngine/GraphicEngine.h"
+#include "./../GraphicEngine/GraphicEngine.h"
 
 class Key_player {
 public:

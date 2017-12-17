@@ -59,6 +59,12 @@ void GraphicEngine::ChangeWindowName(std::wstring newName){
 	privateDevice->setWindowCaption(newName.c_str());
 }
 
+void GraphicEngine::ToggleMenu(bool newState){
+	irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
+	if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+    privateDevice->getCursorControl()->setVisible(newState);
+}
+
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
 	return privateDriver->beginScene();

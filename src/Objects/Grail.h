@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "./../Entidad.h"
-#include "./../Player.h"
+#include "./../Players/Player.h"
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"

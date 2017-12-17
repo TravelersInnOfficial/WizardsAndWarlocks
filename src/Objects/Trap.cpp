@@ -3,7 +3,7 @@
 #pragma clang diagnostic pop
 
 #include "Trap.h"
-#include "./Managers/TrapManager.h"
+#include "./../Managers/TrapManager.h"
 
 Trap::Trap(){
    // m_trapType = 0;
@@ -126,12 +126,8 @@ void Trap::Interact(Player* p){
 }
 
 void Trap::Activate(Player* player ){
-
-    //std::cout<<"Aplico: "<<m_effect<<std::endl;
-
-    player->Respawn();
-    TrapManager::GetInstance()->DeleteTrap(this);
-    
+    player->ChangeHP(-50);
+    TrapManager::GetInstance()->DeleteTrap(this);    
 }
 
 void Trap::Deactivate(float deltaTime){

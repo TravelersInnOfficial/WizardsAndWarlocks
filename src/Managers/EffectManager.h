@@ -7,7 +7,7 @@
 
 #include "./../Effects/Effect.h"
 #include "./../Effects/Burned.h"
-#include "./../Player.h"
+#include "./../Players/Player.h"
 #include <EffectCodes.h>
 
 class EffectManager{

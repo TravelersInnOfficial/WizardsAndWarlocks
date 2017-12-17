@@ -4,9 +4,9 @@
 #include <iostream>
 #include <vector>
 
-#include "./../Player.h"
-#include "./../HumanPlayer.h"
-#include "./../AIPlayer.h"
+#include "./../Players/Player.h"
+#include "./../Players/HumanPlayer.h"
+#include "./../Players/AIPlayer.h"
 
 class PlayerManager{
 public:

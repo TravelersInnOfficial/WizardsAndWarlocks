@@ -2,7 +2,7 @@
 #define AIPLAYER_H
 
 #include "Player.h"
-#include "./AI/BehaviourTree.h"
+#include "./../AI/BehaviourTree.h"
 
 class AIPlayer: public Player{
 public:

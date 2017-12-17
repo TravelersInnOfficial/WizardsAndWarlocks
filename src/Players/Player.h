@@ -6,13 +6,14 @@
 
 #include <iostream>
 #include <Actions.h>
-#include "./Entidad.h"
+#include "./../Entidad.h"
 
-#include "PhysicsEngine/BT_Body.h"
-#include "GraphicEngine/GraphicEngine.h"
-#include "NetworkEngine/NetworkEngine.h"
-#include "./NetworkEngine/NetworkStructs.h"
-#include "./Includes/ColliderMasks.h"
+#include "./../PhysicsEngine/BT_Body.h"
+#include "./../GraphicEngine/GraphicEngine.h"
+#include "./../NetworkEngine/NetworkEngine.h"
+#include "./../NetworkEngine/NetworkStructs.h"
+#include "./../Includes/ColliderMasks.h"
+#include "./../Includes/Alliance.h"
 
 class Potion;
 
@@ -21,6 +22,7 @@ class Player: public Entidad{
 
 		Player(bool isPlayer1);
 		void CreatePlayer();
+		void PlayerInit();
 		virtual void Update();
 		
 		void Move(float, float);
@@ -67,6 +69,7 @@ class Player: public Entidad{
 		void SetDead(bool);
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
+		void SetAlliance(Alliance newAliance);
 
 		virtual ~Player();
 
@@ -83,6 +86,7 @@ class Player: public Entidad{
 		float m_MP;
 		bool m_dead;
 		bool isPlayerOne;
+		Alliance playerAlliance;
 
 		BT_Body* bt_body;
 		GBody* m_playerNode;

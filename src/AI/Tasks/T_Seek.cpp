@@ -1,6 +1,6 @@
 #include "T_Seek.h"
-#include "./../../Player.h"
-#include "./../../AIPlayer.h"
+#include "./../../Players/Player.h"
+#include "./../../Players/AIPlayer.h"
 
 #include <vector2d.h>
 #include <kinematicTypes.h>

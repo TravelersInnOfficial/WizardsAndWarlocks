@@ -7,12 +7,16 @@ ObjectManager::ObjectManager(){
 }
 
 ObjectManager::~ObjectManager(){
+	ClearMap();
+}
+
+void ObjectManager::ClearMap(){
 	int size = blocks.size();
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
 		delete b;
 	}
-	doors.clear();
+	blocks.clear();
 	
 	size = doors.size();
 	for(int i=0; i<size; i++){
@@ -42,7 +46,14 @@ ObjectManager::~ObjectManager(){
 	}
 	fountains.clear();
 
-	delete grail;
+	size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		delete n;
+	}
+	npcs.clear();
+
+	if(grail != NULL) delete grail;
 }
 
 ObjectManager* ObjectManager::GetInstance(){
@@ -90,6 +101,24 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	Fountain* f = new Fountain(TPosition, TScale, TRotation);
 	fountains.push_back(f);
 	return f;
+}
+
+Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){
+	Npc* n = NULL;
+	switch(type){
+		case(NPC_SELLER):{
+			break;
+		}
+		case(NPC_SELECTOR):{
+			n = new NpcSelector(TPosition, TScale, TRotation);
+			break;
+		}
+		default:{
+			break;
+		}
+	}
+	npcs.push_back(n);
+	return n;
 }
 
 void ObjectManager::DeletePotion(Potion* potion){

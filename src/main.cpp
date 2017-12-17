@@ -10,7 +10,6 @@
 #include "./States/Game.h"
 #include "./States/NetGame.h"
 #include "./Managers/ObjectManager.h"
-#include "./LevelLoader.h"
 
 NetworkEngine* CreateMenu(){
 	NetworkEngine* n_engine = NULL;
@@ -67,10 +66,6 @@ int main() {
 	// MAIN MENU
 	NetworkEngine* n_engine = CreateMenu();
 	g_engine->setCursorVisible(false);
-
-	// Level
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/map.json");
 
 	// Game State
 	if (n_engine == NULL){

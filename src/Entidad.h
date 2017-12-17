@@ -14,7 +14,8 @@ enum EntityEnum{
 	EENUM_DOOR = 0x05,
 	EENUM_POTION = 0x06,
 	EENUM_FOUNTAIN = 0x07,
-	EENUM_FLOOR = 0x08
+	EENUM_FLOOR = 0x08,
+	EENUM_NPC = 0x09
 };
 
 class Player;

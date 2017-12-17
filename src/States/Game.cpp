@@ -13,6 +13,11 @@ Game::Game(){
 	g_engine 		= GraphicEngine::getInstance();
 	s_engine 		= SoundSystem::getInstance();
 
+	// Level
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	objectManager->AddNpc(vector3df(1,-1,1), vector3df(1,1,1), vector3df(0,0,0), NPC_SELECTOR);
+
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
 	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
@@ -46,6 +51,12 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
+
+	if(g_engine->IsKeyPressed(KEY_KEY_H)){
+		LevelLoader loader;
+		ObjectManager::GetInstance()->ClearMap();
+		loader.LoadLevel("../assets/json/map.json");
+	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()) footstepEvent->start();
@@ -92,7 +103,7 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
