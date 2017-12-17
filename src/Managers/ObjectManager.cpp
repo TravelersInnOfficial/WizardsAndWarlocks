@@ -103,8 +103,20 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	return f;
 }
 
-Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType tipe){
-	Npc* n = new Npc();
+Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){
+	Npc* n = NULL;
+	switch(type){
+		case(NPC_SELLER):{
+			break;
+		}
+		case(NPC_SELECTOR):{
+			n = new NpcSelector(TPosition, TScale, TRotation);
+			break;
+		}
+		default:{
+			break;
+		}
+	}
 	npcs.push_back(n);
 	return n;
 }

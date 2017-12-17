@@ -7,10 +7,12 @@
 class Npc: public Entidad{
 	public:
 		Npc();
-		void CreatePhysical();
+		Npc(vector3df TPosition, vector3df TScale, vector3df TRotation);
+		virtual ~Npc();
+		
+		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		virtual void Interact(Player* p);
 		virtual void Draw();
-		virtual ~Npc();
 
 	protected:
 		bool activated;

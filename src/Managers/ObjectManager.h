@@ -11,6 +11,7 @@
 #include "./../Objects/Fountain.h"
 #include "./../Objects/Grail.h"
 #include "./../Npcs/Npc.h"
+#include "./../Npcs/NpcSelector.h"
 #include "./../Includes/NPCTypes.h"
 
 class ObjectManager{
@@ -25,7 +26,7 @@ public:
 	Switch* AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType tipe);
+	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 
 	void ClearMap();
 	void DeletePotion(Potion* p);

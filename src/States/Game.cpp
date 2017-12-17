@@ -2,10 +2,6 @@
 
 Game::Game(){
 
-	// Level
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
-
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -16,6 +12,11 @@ Game::Game(){
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
 	s_engine 		= SoundSystem::getInstance();
+
+	// Level
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	objectManager->AddNpc(vector3df(1,1,1), vector3df(1,1,1), vector3df(0,0,0), NPC_SELECTOR);
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
