@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <list>
+#include <vector>
 #include "NodeRecord.h"
 
 class List{
@@ -10,11 +11,12 @@ public:
     ~List();
 
     /**
-     * @brief Returns the Node with smallest cost-so-far
+     * @brief Returns the neares node
      * 
-     * @return Node* (smallest Node)
+     * @param Node (Node to be checked)
+     * @return Node* (Nearest node)
      */
-    NodeRecord* smallestElement();
+    NodeRecord* smallestElement(Node*);
 
     /**
      * @brief Returns the list size
@@ -53,6 +55,14 @@ public:
      * @param NodeRecord (nodeRecord to be removed)
      */
     void remove(NodeRecord*);
+
+    /**
+     * @brief Returns a vector of connections from the given node
+     * 
+     * @param Node (Node to analize)
+     * @return std::list<Connection*> (Connections from the node) 
+     */
+    std::vector<Connection*> *getNodeConnections(Node*);
 
 private:
     std::list<NodeRecord*> *m_list;

@@ -19,22 +19,44 @@ public:
     ~Graph();
 
     /**
-     * @brief Returns an array of connections outgoing from the given node
+     * @brief Adds a connection between two nodes
      * 
-     * @param Node givenNode
-     * @return std::vector<Connection*> nodeConnections
+     * @param float (connection cost)
+     * @param Node (FromNode)
+     * @param Node (ToNode)
      */
-    std::vector<Connection*> getNodeConnectionList(Node*);
+    void addConnection(float , Node*, Node*);
 
     /**
-     * @brief Returns a List with all graph nodeRecords
+     * @brief Prints in terminal the actual graph connections
      * 
-     * @return List* (All NodeRecords)
      */
-    List* getNodeList();
+    void printActualGraphConnections();
+
+    /**
+     * @brief Prints in terminal the list of connections from the node given
+     * 
+     * @param Node (Node to check)
+     */
+    void printNodeConnections(Node*);
+
+        /**
+     * @brief Returns the shortest path from the StartNode to the EndNode using Dijkstra Algorithm
+     * 
+     * @param Graph Graph
+     * @param Node StartNode
+     * @param Node EndNode
+     * @return std::vector<Connection*> path
+     */
+    std::list<Connection*> *DijkstraPF(Node*, Node*);
     
 private:
-    List* m_nodeList;
+    std::vector<Connection*> m_connections;
+
+    //Pathfinding variables
+    List* m_openList;
+    List* m_closedList;
+    NodeRecord* m_startRecord;
 
 };
 #endif
