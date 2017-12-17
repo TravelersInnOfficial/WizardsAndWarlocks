@@ -10,13 +10,14 @@
 #include "./../Objects/Potion.h"
 #include "./../Objects/Fountain.h"
 #include "./../Objects/Grail.h"
+#include "./../Npcs/Npc.h"
+#include "./../Includes/NPCTypes.h"
 
 class ObjectManager{
 public:
 	static ObjectManager* GetInstance();
 	~ObjectManager();
 
-	// Create Block and adds to vector
 	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture=0);
 	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
@@ -24,8 +25,12 @@ public:
 	Switch* AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType tipe);
+
+	void ClearMap();
 	void DeletePotion(Potion* p);
 	void Update(float deltaTime);
+
 private:
 	void UpdateGrail(float deltaTime);
 	void UpdateDoors();
@@ -39,6 +44,7 @@ private:
 	vector<Switch*>		switchs;
 	vector<Potion*>		potions;
 	vector<Fountain*>	fountains;
+	vector<Npc*>		npcs;
 	Grail*				grail;
 
 	ObjectManager();

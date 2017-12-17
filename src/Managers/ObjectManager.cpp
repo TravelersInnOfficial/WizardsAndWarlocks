@@ -7,6 +7,10 @@ ObjectManager::ObjectManager(){
 }
 
 ObjectManager::~ObjectManager(){
+	ClearMap();
+}
+
+void ObjectManager::ClearMap(){
 	int size = blocks.size();
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
@@ -41,6 +45,13 @@ ObjectManager::~ObjectManager(){
 		delete f;
 	}
 	fountains.clear();
+
+	size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		delete n;
+	}
+	npcs.clear();
 
 	delete grail;
 }
@@ -90,6 +101,12 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	Fountain* f = new Fountain(TPosition, TScale, TRotation);
 	fountains.push_back(f);
 	return f;
+}
+
+Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType tipe){
+	Npc* n = new Npc();
+	npcs.push_back(n);
+	return n;
 }
 
 void ObjectManager::DeletePotion(Potion* potion){
