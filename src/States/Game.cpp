@@ -4,7 +4,7 @@ Game::Game(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/map.json");
+	loader.LoadLevel("../assets/json/Lobby.json");
 
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
