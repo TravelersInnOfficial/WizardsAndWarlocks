@@ -113,11 +113,9 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 			n = new NpcSelector(TPosition, TScale, TRotation);
 			break;
 		}
-		default:{
-			break;
-		}
+		default:{ break; }
 	}
-	npcs.push_back(n);
+	if(n != NULL) npcs.push_back(n);
 	return n;
 }
 

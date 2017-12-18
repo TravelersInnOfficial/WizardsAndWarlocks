@@ -249,9 +249,9 @@ MenuOption GraphicEngine::ReadButtonPressed(){
 	return(privateMenuReceiver->ReadButtonPressed());
 }
 
-std::string GraphicEngine::ReadText(int id){
+std::string GraphicEngine::ReadText(MenuOption id){
 	irr::gui::IGUIElement* textElem;
-	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId(id, true);
+	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);
 
 	const wchar_t *text = textElem->getText();
 	std::wstring ws(text);

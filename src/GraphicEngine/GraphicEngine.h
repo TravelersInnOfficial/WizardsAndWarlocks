@@ -182,7 +182,7 @@ public:
     /**
      * Reads a GUI EditBox from the reciever
     */
-    std::string ReadText(int id);
+    std::string ReadText(MenuOption id);
 
     /**
      * Returns a triangle selector for applying to a node
