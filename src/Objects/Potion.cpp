@@ -23,9 +23,6 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	vector3df TCenter = vector3df(0,0,0);
-    TCenter.X *= scale.X;
-    TCenter.Y *= scale.Y;
-    TCenter.Z *= scale.Z;
 
 	// Create an Irrlicht cube
 	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");

@@ -61,7 +61,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
             objManager->AddPotion(position, vector3df(0.25,0.25,0.25), rotation);
         }
 		else if(j["Objects"][i]["Type"] == "Potion"){
-            objManager->AddPotion(position, vector3df(0.25,0.25,0.25), rotation);
+            objManager->AddFountain(position, vector3df(1,1,1), rotation);
         }
         else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");

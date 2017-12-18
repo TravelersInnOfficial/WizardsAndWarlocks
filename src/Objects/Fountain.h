@@ -13,6 +13,8 @@
 class Fountain: public Entidad{
 public:
 	Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	~Fountain();
+	
 	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);

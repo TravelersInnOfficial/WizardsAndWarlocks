@@ -45,7 +45,8 @@ static int fountainCW		= C_WALL
 							| C_GRAIL
 							| C_FOUNTAIN
 							| C_TRAP
-							| C_PROJECTILE;
+							| C_PROJECTILE
+							| C_PLAYER;
 
 static int switchCW			= C_PROJECTILE
 							| C_PLAYER
