@@ -1,5 +1,4 @@
 #include "MenuReceiver.h"
-#include "Keycodes.h"
 
 MenuReceiver::MenuReceiver() {
 }
@@ -10,23 +9,9 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 		int id = event.GUIEvent.Caller->getID();
 
 		switch(event.GUIEvent.EventType){
-			case irr::gui::EGET_BUTTON_CLICKED:
-			switch(id) {
-				case 0:{
-					selectedOption = 0;
-					break;
-				}
-				case 2:{
-					selectedOption = 2;
-					break;
-				}
-				case 3:{
-					selectedOption = 3;
-					break;
-				}
-				default:{
-					break;
-				}
+			case irr::gui::EGET_BUTTON_CLICKED:{
+				selectedOption = (MenuOption)id;
+				break;
 			}
 			default:{
 				break;
@@ -39,11 +24,11 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 }
 
 void MenuReceiver::Update(){
-	selectedOption = -1;
+	selectedOption = NO_OPT;
 }
 
-int MenuReceiver::ReadMenu(){
-	int toRet = selectedOption;
-	selectedOption = -1;
+MenuOption MenuReceiver::ReadButtonPressed(){
+	MenuOption toRet = selectedOption;
+	selectedOption = NO_OPT;
 	return (toRet);
 }

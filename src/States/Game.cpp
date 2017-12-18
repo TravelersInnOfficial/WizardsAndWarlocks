@@ -103,8 +103,8 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	objectManager->DrawNpcMenu();
 	f_engine->DebugDrawWorld();
+	objectManager->DrawNpcMenu();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

@@ -177,38 +177,12 @@ public:
     /**
      * Reads a GUI Menu from the reciever
     */
-    int ReadMenu();
+    MenuOption ReadButtonPressed();
 
     /**
      * Reads a GUI EditBox from the reciever
     */
     std::string ReadText(int id);
-
-    /**
-     * Adds a static text
-     * text: Text to be displayed
-     * position: Rectangle specifying the borders of the static text
-     * border: Set to true if the static text should have a 3d border
-     * wordWrap: Enable if the text should wrap into multiple lines
-     * parent: Parent item of the element
-    */
-    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1);
-    
-    /**
-     * Adds a button to hud
-     * p: position (x, y) and size (x2,y2) of the button
-     * text: text to be displayed
-     * infoText: text to help the user
-     * id: id to easily access the button
-    */
-    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1);
-
-    /**
-     * Adds an editable text box to given position
-     * p: position (x, y) and size (x2,y2) of the button
-     * text: text to initally display in the box
-    */
-    void addEditBox(vector4di p, std::wstring text = L"", int id = -1);
 
     /**
      * Returns a triangle selector for applying to a node
@@ -268,6 +242,33 @@ private:
     EventReceiver* privateReceiver;
     MenuReceiver* privateMenuReceiver;
     GCamera* privateCamera;
+
+
+    /**
+     * Adds a static text
+     * text: Text to be displayed
+     * position: Rectangle specifying the borders of the static text
+     * border: Set to true if the static text should have a 3d border
+     * wordWrap: Enable if the text should wrap into multiple lines
+     * id: id to easily access the button
+    */
+    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = NULL);
+    
+    /**
+     * Adds a button to hud
+     * p: position (x, y) and size (x2,y2) of the button
+     * text: text to be displayed
+     * infoText: text to help the user
+     * id: id to easily access the button
+    */
+    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL);
+
+    /**
+     * Adds an editable text box to given position
+     * p: position (x, y) and size (x2,y2) of the button
+     * text: text to initally display in the box
+    */
+    void addEditBox(vector4di p, std::wstring text = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL);
 
 };
 

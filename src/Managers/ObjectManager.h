@@ -40,6 +40,7 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
+	void UpdateNpcs();
 
 	vector<Block*>		blocks;
 	vector<Door*>		doors;

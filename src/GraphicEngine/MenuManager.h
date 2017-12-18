@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <Menus.h>
+#include <vector2d.h>
 #include "GraphicEngine.h"
 
 class MenuManager{
@@ -19,9 +20,11 @@ private:
 	static MenuManager*	instance; 
 	std::vector<int>	loadedOptions;
 	GraphicEngine*		g_engine;
+	vector2di			screenSize;
 
 	MenuManager();
 	void CreateMain();
+	void CreateAlliance();
 
 };
 

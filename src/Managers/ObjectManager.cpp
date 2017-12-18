@@ -147,6 +147,7 @@ void ObjectManager::Update(float deltaTime){
 	UpdatePotions();
 	UpdateFountains(deltaTime);
 	UpdateBlocks();
+	UpdateNpcs();
 }
 
 void ObjectManager::UpdateGrail(float deltaTime){
@@ -190,5 +191,13 @@ void ObjectManager::UpdateBlocks(){
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
 		b->Update();
+	}
+}
+
+void ObjectManager::UpdateNpcs(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->Update();
 	}
 }

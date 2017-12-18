@@ -18,12 +18,12 @@ NetworkEngine* CreateMenu(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
 
-	int selectedOption = -1;
-	while(g_engine->run() && selectedOption == -1){
+	MenuOption selectedOption = NO_OPT;
+	while(g_engine->run() && selectedOption == NO_OPT){
 		g_engine->beginSceneDefault();
 		g_engine->drawAllGUI();
 		g_engine->endScene();
-		selectedOption = g_engine->ReadMenu();
+		selectedOption = g_engine->ReadButtonPressed();
 	}
 
 	switch(selectedOption){

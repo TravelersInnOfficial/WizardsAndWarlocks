@@ -30,13 +30,17 @@ GraphicEngine::GraphicEngine(){
 	privateDriver = privateDevice->getVideoDriver();
 	privateSManager = privateDevice->getSceneManager();
 	privateGUIEnv = privateDevice->getGUIEnvironment();
+
+	// Set GUI Alpha
+	for (int i = 0; i < irr::gui::EGDC_COUNT; ++i){
+        irr::video::SColor col = privateGUIEnv->getSkin()->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+        col.setAlpha(255);
+        privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+	}
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
-	//singleton constructor
-	if(instance == 0){
-		instance = new GraphicEngine();
-	}
+	if(instance == 0) instance = new GraphicEngine();
 	return instance;
 }
 
@@ -241,8 +245,8 @@ void GraphicEngine::drawAllGUI(){
 	privateGUIEnv->drawAll();
 }
 
-int GraphicEngine::ReadMenu(){
-	return(privateMenuReceiver->ReadMenu());
+MenuOption GraphicEngine::ReadButtonPressed(){
+	return(privateMenuReceiver->ReadButtonPressed());
 }
 
 std::string GraphicEngine::ReadText(int id){
@@ -256,28 +260,36 @@ std::string GraphicEngine::ReadText(int id){
 	return (text_str);
 }
 
-void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id){
-	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0, id);
+void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id, irr::gui::IGUIWindow* parent){
+	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(
+		text.c_str(),
+		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
+		border,
+		wordWrap,
+		parent,
+		id
+	);
+	
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	ge->setDrawBorder(false);
 }
 
-void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){
+void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id, irr::gui::IGUIWindow* parent){
 	privateGUIEnv->addButton(
 		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),	//position
-		0,													            //parent
+		parent,												            //parent
 		id,													            //id
 		text.c_str(),										            //display text
 		infoText.c_str()									            //tooltip text
 	);
 }
 
-void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id){
+void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id, irr::gui::IGUIWindow* parent){
 	irr::gui::IGUIEditBox* ge = privateGUIEnv->addEditBox(
 									text.c_str(),
 									irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
 									false,
-									0,
+									parent,
 									(irr::s32)id
 								);
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);

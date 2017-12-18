@@ -30,13 +30,28 @@ void NpcSelector::CreatePhysical(vector3df TPosition, vector3df TScale, vector3d
 
 void NpcSelector::Interact(Player* p){
 	if(p->IsPlayerOne()){
-		HumanPlayer* cp = (HumanPlayer*) p;
-		cp->ToggleMenu(true);
+		hp = (HumanPlayer*) p;
+		MenuManager::GetInstance()->CreateMenu(ALLIANCE_M);
+		hp->ToggleMenu(true);
 		active = true;
+	}
+}
 
-		// Mostrar menu
-
-		//cp->ToggleMenu(false);
+void NpcSelector::Update(){
+	MenuOption selected = NO_OPT;
+	if (active){
+		selected = GraphicEngine::getInstance()->ReadButtonPressed();
+		switch(selected){
+			case (ALLIANCE_M_CLOSE):{
+				hp->ToggleMenu(false);
+				MenuManager::GetInstance()->ClearMenu();
+				hp = NULL;
+				break;
+			}
+			default:{
+				break;
+			}
+		}
 	}
 }
 

@@ -1,16 +1,18 @@
 #include <iostream>
 #include "./irrlicht/irrlicht.h"
+#include <Menus.h>
 
 class MenuReceiver : public irr::IEventReceiver {
 
 protected:
 
-    int selectedOption = -1;
+    MenuOption selectedOption = NO_OPT;
     virtual bool OnEvent(const irr::SEvent& event);
 
 public:
 
-    int ReadMenu();
+    MenuOption ReadMenu();
+    MenuOption ReadButtonPressed();
     void Update();
     MenuReceiver();
 
