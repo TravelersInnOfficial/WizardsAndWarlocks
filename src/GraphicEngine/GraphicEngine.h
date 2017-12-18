@@ -6,6 +6,7 @@
 #include "GCamera.h"
 #include "GEntity.h"
 #include "EventReceiver.h"
+#include "MenuReceiver.h"
 #include <Keycodes.h>
 #include <vector3d.h>
 #include <vector4d.h>
@@ -264,6 +265,7 @@ private:
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
     EventReceiver* privateReceiver;
+    MenuReceiver* privateMenuReceiver;
     GCamera* privateCamera;
 
 };

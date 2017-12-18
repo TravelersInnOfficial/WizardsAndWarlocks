@@ -4,6 +4,7 @@ static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
 	privateReceiver = new EventReceiver();
+	privateMenuReceiver = new MenuReceiver();
 
 	/*irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
@@ -16,11 +17,10 @@ GraphicEngine::GraphicEngine(){
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
 		true,                                               //vsync
-		privateReceiver                                     //event receiver
+		privateMenuReceiver                                 //event receiver
 	);
 
-	if(!privateDevice)
-		exit(1);
+	if(!privateDevice) exit(1);
 
 	//caption of the window
 	privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
@@ -60,9 +60,15 @@ void GraphicEngine::ChangeWindowName(std::wstring newName){
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
-	irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
-	if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
+	else privateDevice->setEventReceiver(privateReceiver);
+
+	if (privateCamera != NULL){
+		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
+		if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+	}
     privateDevice->getCursorControl()->setVisible(newState);
+	
 }
 
 // DRIVER FUNCTIONS
@@ -235,7 +241,7 @@ void GraphicEngine::drawAllGUI(){
 }
 
 int GraphicEngine::ReadMenu(){
-	return(privateReceiver->ReadMenu());
+	return(privateMenuReceiver->ReadMenu());
 }
 
 std::string GraphicEngine::ReadText(int id){
@@ -322,6 +328,7 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vec
 // RECEIVER FUNCTIONS
 void GraphicEngine::UpdateReceiver(){
 	privateReceiver->Update();
+	privateMenuReceiver->Update();
 }
 
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){

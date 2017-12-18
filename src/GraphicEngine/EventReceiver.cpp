@@ -8,35 +8,6 @@ EventReceiver::EventReceiver() {
 
 bool EventReceiver::OnEvent(const irr::SEvent& event) {
 
-	if (event.EventType == irr::EET_GUI_EVENT){
-		int id = event.GUIEvent.Caller->getID();
-
-		switch(event.GUIEvent.EventType){
-			case irr::gui::EGET_BUTTON_CLICKED:
-			switch(id) {
-				case 1:{
-					selectedOption = 1;
-					break;
-				}
-				case 2:{
-					selectedOption = 2;
-					break;
-				}
-				case 3:{
-					selectedOption = 3;
-					break;
-				}
-				default:{
-					break;
-				}
-			}
-			default:{
-				break;
-			}
-		}
-
-	}
-
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		if (event.KeyInput.PressedDown == true) {
 			if (keyState[event.KeyInput.Key] == UP || keyState[event.KeyInput.Key] == RELEASED){
@@ -89,18 +60,10 @@ void EventReceiver::Update(){
 		if(mouseButtonState[i] == PRESSED) mouseButtonState[i] = DOWN;
 		else if(mouseButtonState[i] == RELEASED) mouseButtonState[i] = UP;
 	}
-	
-	selectedOption = -1;
 
 }
 
 void EventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
 	if(keycode > 2) keyState[keycode] = state;
 	else mouseButtonState[keycode] = state;
-}
-
-int EventReceiver::ReadMenu(){
-	int toRet = selectedOption;
-	selectedOption = -1;
-	return (toRet);
 }

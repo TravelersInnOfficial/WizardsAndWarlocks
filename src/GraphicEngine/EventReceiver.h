@@ -12,8 +12,6 @@ protected:
     static const int numMouseButtons = 2;
     keyStatesENUM mouseButtonState[numMouseButtons];
 
-    int selectedOption = -1;
-
     virtual bool OnEvent(const irr::SEvent& event);
 
 public:
@@ -25,8 +23,6 @@ public:
     
     void setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state);
     keyStatesENUM GetKeyStatus(irr::EKEY_CODE keycode);
-
-    int ReadMenu();
 
     void Update();
 

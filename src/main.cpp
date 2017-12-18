@@ -53,6 +53,7 @@ NetworkEngine* CreateMenu(){
 		}
 	}
 
+	g_engine->ToggleMenu(false);
 	return (n_engine);
 }
 
