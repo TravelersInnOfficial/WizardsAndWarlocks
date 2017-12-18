@@ -220,6 +220,11 @@ public:
     */
     void UpdateReceiver();
 
+    /*
+     Init the reciever
+    */
+    void InitReceiver();
+
     /**
      * Returns true is given code is held down
     */

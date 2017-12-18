@@ -3,6 +3,7 @@
 
 #include "./PlayerController.h"
 #include "Player.h"
+#include <KeyStates.h>
 
 class HumanPlayer: public Player{
 public:
@@ -11,6 +12,9 @@ public:
 
 	void UpdateInput();
 	void CheckInput();
+
+	void SetAllInput(keyStatesENUM state);
+	void RecoverStatus();
 
 	void GetNetInput();
 	void SetNetInput();

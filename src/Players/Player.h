@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <Actions.h>
+#include <Alliance.h>
 #include "./../Entidad.h"
 
 #include "./../PhysicsEngine/BT_Body.h"
@@ -13,7 +14,6 @@
 #include "./../NetworkEngine/NetworkEngine.h"
 #include "./../NetworkEngine/NetworkStructs.h"
 #include "./../Includes/ColliderMasks.h"
-#include "./../Includes/Alliance.h"
 
 class Potion;
 

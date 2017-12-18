@@ -30,10 +30,12 @@ void NpcSelector::CreatePhysical(vector3df TPosition, vector3df TScale, vector3d
 
 void NpcSelector::Interact(Player* p){
 	if(p->IsPlayerOne()){
-		hp = (HumanPlayer*) p;
+		GraphicEngine::getInstance()->InitReceiver();
 		MenuManager::GetInstance()->CreateMenu(ALLIANCE_M);
-		hp->ToggleMenu(true);
 		active = true;
+		hp = (HumanPlayer*) p;
+		hp->ToggleMenu(true);
+		hp->SetAllInput(UP);
 	}
 }
 
@@ -42,10 +44,14 @@ void NpcSelector::Update(){
 	if (active){
 		selected = GraphicEngine::getInstance()->ReadButtonPressed();
 		switch(selected){
-			case (ALLIANCE_M_CLOSE):{
-				hp->ToggleMenu(false);
-				MenuManager::GetInstance()->ClearMenu();
-				hp = NULL;
+			case (ALLIANCE_M_WIZARD):{
+				hp->SetAlliance(ALLIANCE_WIZARD);
+				StopInteraction();
+				break;
+			}
+			case (ALLIANCE_M_WARLOCK):{
+				hp->SetAlliance(ALLIANCE_WARLOCK);
+				StopInteraction();
 				break;
 			}
 			default:{
@@ -53,6 +59,15 @@ void NpcSelector::Update(){
 			}
 		}
 	}
+}
+
+void NpcSelector::StopInteraction(){
+	MenuManager::GetInstance()->ClearMenu();
+	//Poner el event reciever a UP
+	hp->RecoverStatus();
+	hp->ToggleMenu(false);
+	hp = NULL;
+	active = false;
 }
 
 void NpcSelector::Draw(){

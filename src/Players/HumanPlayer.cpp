@@ -1,12 +1,10 @@
 #include "HumanPlayer.h"
-
 #include "./../Managers/SpellManager.h"
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	controller = new PlayerController();
 	DeclareInput();
 	menuActivated = false;
-	//ToggleMenu(!menuActivated);
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -29,6 +27,15 @@ void HumanPlayer::DeclareInput(){
 void HumanPlayer::UpdateInput(){
 	controller->UpdateOwnStatus();
 	if(isPlayerOne) controller->Update();
+}
+
+void HumanPlayer::SetAllInput(keyStatesENUM state){
+	controller->SetAllStatus(state);
+}
+
+void HumanPlayer::RecoverStatus(){
+	//controller->RecoverStatus();
+	controller->UpdateOwnStatus();
 }
 
 void HumanPlayer::SetNetInput(){

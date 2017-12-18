@@ -338,6 +338,10 @@ void GraphicEngine::UpdateReceiver(){
 	privateMenuReceiver->Update();
 }
 
+void GraphicEngine::InitReceiver(){
+	privateReceiver->InitReceiver();
+}
+
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){
 	return privateReceiver->keyDown((irr::EKEY_CODE)code);
 }

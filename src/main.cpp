@@ -27,15 +27,18 @@ NetworkEngine* CreateMenu(){
 	}
 
 	switch(selectedOption){
-		case 2:{
+		case MAIN_M_CLIENT:{
 			n_engine = NetworkEngine::GetInstance();
 			n_engine->SetIp(g_engine->ReadText(MAIN_M_TEXT_1));
 			n_engine->StartClient();
 			break;
 		}
-		case 3:{
+		case MAIN_M_SERVER:{
 			n_engine = NetworkEngine::GetInstance();
 			n_engine->StartServer();
+			break;
+		}
+		default:{
 			break;
 		}
 	}

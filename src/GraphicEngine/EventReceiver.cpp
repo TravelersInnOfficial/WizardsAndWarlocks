@@ -2,6 +2,10 @@
 #include "Keycodes.h"
 
 EventReceiver::EventReceiver() {
+	InitReceiver();
+}
+
+void EventReceiver::InitReceiver(){
 	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++) keyState[i] = UP;
 	for (int i = 0; i < numMouseButtons; i++) mouseButtonState[i] = UP;
 }

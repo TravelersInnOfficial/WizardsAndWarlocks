@@ -83,15 +83,16 @@ void MenuManager::CreateAlliance(){
 		ALLIANCE_M_WINDOW
 	);
 	window->setDraggable(false);
+	window->getCloseButton()->setVisible(false);
 	window->getCloseButton()->setID(ALLIANCE_M_CLOSE);
 	loadedOptions.push_back(ALLIANCE_M_WINDOW);
 
 	vector4di rect = vector4di(screenSize.X/2-((screenSize.X/9.0f)/2),screenSize.Y/4,screenSize.X/9.0f,screenSize.Y/30);
-	g_engine->addStaticText(rect, L"Select your Alliance, human.", true, false, MAIN_M_TEXT_1, window);
+	g_engine->addStaticText(rect, L"Select your Alliance, human.", true, false, ALLIANCE_M_TEXT_1, window);
 	
 	rect = vector4di(screenSize.X/9.0f,screenSize.Y/3,screenSize.X/3.5f,screenSize.Y/3);
-	g_engine->addButton(rect, L"Play as a Wizard", L"Be a Wizard and get back the Grail", MAIN_M_SINGLE, window);
+	g_engine->addButton(rect, L"Play as a Wizard", L"Be a Wizard and get back the Grail", ALLIANCE_M_WIZARD, window);
 
 	rect = vector4di(screenSize.X/1.67f,screenSize.Y/3,screenSize.X/3.5f,screenSize.Y/3);
-	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", MAIN_M_CLIENT, window);
+	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", ALLIANCE_M_WARLOCK, window);
 }
