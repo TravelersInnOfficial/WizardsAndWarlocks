@@ -6,9 +6,10 @@ GraphicEngine::GraphicEngine(){
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
 
-	/*irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
-	nulldevice -> drop();*/
+	nulldevice -> drop();
+	deskres = deskres;
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
@@ -255,8 +256,8 @@ std::string GraphicEngine::ReadText(int id){
 	return (text_str);
 }
 
-void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
-	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
+void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id){
+	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0, id);
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	ge->setDrawBorder(false);
 }
@@ -296,12 +297,6 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vec
 	irr::scene::ISceneNode *node = 0;
 	irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
 	irr::scene::ITriangleSelector* selector = 0;
-
-	//First we need to get the cursor position in the 2D space
-	//irr::core::position2d<irr::s32> pos = privateDevice->getCursorControl()->getPosition();
-
-	// we need to get the 3D vector from it.
-	//const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
 
 	const irr::core::line3d<irr::f32> ray(Start.X,Start.Y,Start.Z,End.X,End.Y,End.Z);
 

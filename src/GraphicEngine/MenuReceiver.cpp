@@ -12,8 +12,8 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 		switch(event.GUIEvent.EventType){
 			case irr::gui::EGET_BUTTON_CLICKED:
 			switch(id) {
-				case 1:{
-					selectedOption = 1;
+				case 0:{
+					selectedOption = 0;
 					break;
 				}
 				case 2:{

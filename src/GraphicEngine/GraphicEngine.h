@@ -14,6 +14,7 @@
 #include <vector>
 
 class GraphicEngine{
+    friend class MenuManager;
 
 public:
     /// DEVICE FUNCTIONS
@@ -191,7 +192,7 @@ public:
      * wordWrap: Enable if the text should wrap into multiple lines
      * parent: Parent item of the element
     */
-    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true);
+    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1);
     
     /**
      * Adds a button to hud
