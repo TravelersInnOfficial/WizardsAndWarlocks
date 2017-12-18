@@ -39,7 +39,7 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 1, scale.Z * 0.5f);
+	vector3df HalfExtents(scale.X * 0.5f, scale.Y * 0.95, scale.Z * 0.5f);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,1,1,TCenter, C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
