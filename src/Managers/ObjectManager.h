@@ -31,6 +31,7 @@ public:
 	void ClearMap();
 	void DeletePotion(Potion* p);
 	void Update(float deltaTime);
+	void DrawNpcMenu();
 
 private:
 	void UpdateGrail(float deltaTime);

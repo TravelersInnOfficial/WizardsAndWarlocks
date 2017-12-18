@@ -121,6 +121,14 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 	return n;
 }
 
+void ObjectManager::DrawNpcMenu(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->Draw();
+	}
+}
+
 void ObjectManager::DeletePotion(Potion* potion){
 	int size = potions.size();
 	for(int i=0; i<size; i++){

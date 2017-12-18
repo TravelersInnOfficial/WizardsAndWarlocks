@@ -172,5 +172,5 @@ void HumanPlayer::CheckInput(){
 void HumanPlayer::Update(){
 	CheckInput();
 	Player::Update();
-	UpdateInput();
+	if(!menuActivated) UpdateInput();
 }

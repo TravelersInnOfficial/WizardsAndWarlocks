@@ -1,6 +1,6 @@
 #include "./NpcSelector.h"
 
-NpcSelector::NpcSelector(vector3df TPosition, vector3df TTScale, vector3df TRotation){
+NpcSelector::NpcSelector(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
 }
 
@@ -29,7 +29,15 @@ void NpcSelector::CreatePhysical(vector3df TPosition, vector3df TScale, vector3d
 }
 
 void NpcSelector::Interact(Player* p){
-	std::cout<<"Selecciona ya"<<std::endl;
+	if(p->IsPlayerOne()){
+		HumanPlayer* cp = (HumanPlayer*) p;
+		cp->ToggleMenu(true);
+		active = true;
+
+		// Mostrar menu
+
+		//cp->ToggleMenu(false);
+	}
 }
 
 void NpcSelector::Draw(){
