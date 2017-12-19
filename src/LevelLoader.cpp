@@ -1,10 +1,12 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
 #include "Managers/ObjectManager.h"
-#include <vector3d.h>
 #include <map>
 #include <json.hpp>
 #include <fstream>
+#include <vector3d.h>
+#include <NPCTypes.h>
+#include <PotionTypes.h>
 
 LevelLoader::LevelLoader(){
     
@@ -16,7 +18,6 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
     
     //Takes path from binary location (/bin)
     std::ifstream i(jsonPath);
-    //std::cout<<"Encuentra el json"<<std::endl;
     nlohmann::json j;
     i >> j;
 
@@ -58,28 +59,28 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
         else if(j["Objects"][i]["Type"] == "PotionSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/red.jpg");
             position.Y += 1;
-            objManager->AddPotion(position, vector3df(0.25,0.25,0.25), rotation);
+            objManager->AddPotion(position, size, rotation, POTION_LIFE);
         }
 		else if(j["Objects"][i]["Type"] == "Potion"){
-            objManager->AddFountain(position, vector3df(1,1,1), rotation);
+            objManager->AddPotion(position, size, rotation, POTION_MANA);
         }
         else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");
         }
         else if(j["Objects"][i]["Type"] == "Grail"){
-            objManager->AddGrail(position, vector3df(1,1,1), rotation);
+            objManager->AddGrail(position, size, rotation);
         }
         else if(j["Objects"][i]["Type"] == "Fountain"){
-            objManager->AddFountain(position, vector3df(1,1,1), rotation);
+            objManager->AddFountain(position, size, rotation);
         }
         else if(j["Objects"][i]["Type"] == "NPC1"){
-            //objManager->AddNPC(position, vector3df(1,1,1), rotation, 1);
+            //objManager->AddNPC(position, size, rotation, 1);
         }
         else if(j["Objects"][i]["Type"] == "NPC2"){
-            //objManager->AddNPC(position, vector3df(1,1,1), rotation, 2);
+            //objManager->AddNPC(position, size, rotation, 2);
         }
         else if(j["Objects"][i]["Type"] == "NPC3"){
-            //objManager->AddNPC(position, vector3df(1,1,1), rotation, 3);
+            //objManager->AddNPC(position, size, rotation, 3);
         }
         else{
             //std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;

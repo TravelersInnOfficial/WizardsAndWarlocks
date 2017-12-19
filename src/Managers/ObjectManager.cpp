@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include "./../Objects/Potions.h"
 
 ObjectManager* ObjectManager::instance = 0;
 
@@ -91,8 +92,34 @@ Switch* ObjectManager::AddSwitch(vector3df TPosition, vector3df TScale, vector3d
 	return s;
 }
 
-Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	Potion* p = new Potion(TPosition, TScale, TRotation);
+Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type){
+	Potion* p = NULL;
+	switch(type){
+		case POTION_LIFE:
+			p = (Potion*) new LifePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_MANA:
+			p = (Potion*) new ManaPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ICE:
+			p = (Potion*) new IcePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ELECTRIC:
+			p = (Potion*) new ElectricPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_FIRE:
+			p = (Potion*) new FirePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_POISON:
+			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ELEMENTAL:
+			p = (Potion*) new ElementalPotion(TPosition, TScale, TRotation);
+		break;
+		default:
+			std::cout<<"POCION NO CONTROLADA"<<std::endl;
+		break;
+	}
 	potions.push_back(p);
 	return p;
 }
