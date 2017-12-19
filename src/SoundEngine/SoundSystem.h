@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include "../Includes/vector3d.h"
+#include <vector3d.h>
 #include <math.h>
 
 using namespace std;

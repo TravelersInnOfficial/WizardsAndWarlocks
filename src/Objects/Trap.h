@@ -2,10 +2,10 @@
 #define TRAP_H
 
 #include <vector3d.h>
+#include <TrapCodes.h>
 #include "./../PhysicsEngine/BT_GhostObject.h"
 #include "./../GraphicEngine/GBody.h"
 #include "./../Players/Player.h"
-#include "./../Includes/TrapCodes.h"
 #include "./../Entidad.h"
 
 class Trap : public Entidad{

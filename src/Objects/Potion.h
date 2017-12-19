@@ -2,12 +2,11 @@
 #define POTION_H
 
 #include <iostream>
+#include <ColliderMasks.h>
 
 #include "./../Players/Player.h"
-
-#include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
-#include "./../Includes/ColliderMasks.h"
+#include "./../PhysicsEngine/BT_Body.h"
 
 class Player;
 
@@ -22,17 +21,16 @@ public:
 	void Drop(vector3df force);
 
 private:
+	int 		value;
+	bool 		picked;
+	vector3df 	scale;			// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
+
+	BT_Body*    bt_body;
+    GBody*      m_potionNode;
+
+private:
 	void DeletePotion();
 	void UpdatePosShape();
-	
-	int value;
-
-	bool cogida;
-
-	vector3df 		scale;			// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
-
-	BT_Body*        bt_body;
-    GBody*          m_potionNode;
 };
 
 #endif
