@@ -34,11 +34,13 @@ void HumanPlayer::SetAllInput(keyStatesENUM state){
 }
 
 void HumanPlayer::RecoverStatus(){
-	//controller->RecoverStatus();
 	controller->UpdateOwnStatus();
 }
 
 void HumanPlayer::SetNetInput(){
+
+	Player::SetNetInput();
+
 	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 3, true, false);
 
@@ -71,6 +73,9 @@ void HumanPlayer::SetNetInput(){
 }
 
 void HumanPlayer::GetNetInput(){
+
+	Player::GetNetInput();
+
 	int keystate = -1;
 	vector3df objstate = vector3df(99999,0,0);
 

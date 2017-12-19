@@ -25,6 +25,10 @@ class Player: public Entidad{
 		void PlayerInit();
 		virtual void Update();
 		
+		void GetNetInput();
+		void SetNetInput();
+		NetworkObject* GetNetworkObject();
+
 		void Move(float, float);
 		void MoveX(int);
 		void MoveZ(int);
@@ -59,7 +63,6 @@ class Player: public Entidad{
 		bool GetDead();		
 		float GetMaxVelocity();
 		vector3df GetVelocity();
-		NetworkObject* GetNetworkObject();
 
 		void SetPosition(vector3df);
 		void SetPosX(float);
