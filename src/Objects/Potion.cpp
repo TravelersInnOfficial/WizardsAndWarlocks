@@ -8,7 +8,7 @@ Potion::Potion(vector3df TPosition, vector3df TScale, vector3df TRotation){
 }
 
 Potion::~Potion(){
-	if(!cogida){
+	if(!picked){
 		bt_body->Erase();
     	m_potionNode->Erase();	
 	}
@@ -18,14 +18,11 @@ Potion::~Potion(){
 }
 
 void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
-	cogida = false;
+	picked = false;
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	vector3df TCenter = vector3df(0,0,0);
-    TCenter.X *= scale.X;
-    TCenter.Y *= scale.Y;
-    TCenter.Z *= scale.Z;
 
 	// Create an Irrlicht cube
 	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
@@ -53,7 +50,7 @@ void Potion::DeletePotion(){
 }
 
 void Potion::Update(){
-	if(!cogida) UpdatePosShape();
+	if(!picked) UpdatePosShape();
 }
 
 void Potion::Drop(vector3df force){
@@ -61,7 +58,7 @@ void Potion::Drop(vector3df force){
 }
 
 void Potion::Interact(Player* p){
-	cogida = true;
+	picked = true;
 	DeletePotion();
 	p->CatchObject(this);
 }

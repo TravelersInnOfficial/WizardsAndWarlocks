@@ -3,9 +3,9 @@
 
 #include <iostream>
 #include <vector>
+#include <vector3d.h>
 #include "./../Objects/Trap.h"
 #include "./../Players/Player.h"
-#include "./../Includes/vector3d.h"
 
 class TrapManager{
 public:

@@ -12,7 +12,7 @@
 #include "./../Objects/Grail.h"
 #include "./../Npcs/Npc.h"
 #include "./../Npcs/NpcSelector.h"
-#include "./../Includes/NPCTypes.h"
+#include <NPCTypes.h>
 
 class ObjectManager{
 public:

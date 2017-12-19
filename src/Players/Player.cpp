@@ -5,8 +5,8 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
 
+#include <TrapCodes.h>
 #include "./../Objects/Potion.h"
-#include "./../Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
