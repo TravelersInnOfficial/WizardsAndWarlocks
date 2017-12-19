@@ -245,15 +245,3 @@ void PlayerController::SetAllStatus(keyStatesENUM status){
 		k->SetStatus(status);
 	}
 }
-
-void PlayerController::RecoverStatus(){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
-
-	int size = keys.size();
-	for(int i=0; i<size; i++){
-		Key_player* k = keys[i];
-		keyStatesENUM status;
-		status = g_engine->GetKeyStatus(k->GetKey());
-		k->SetStatus(status);
-	}
-}
