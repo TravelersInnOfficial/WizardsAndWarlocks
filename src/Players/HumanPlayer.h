@@ -14,7 +14,6 @@ public:
 	void CheckInput();
 
 	void SetAllInput(keyStatesENUM state);
-	void RecoverStatus();
 
 	void GetNetInput();
 	void SetNetInput();

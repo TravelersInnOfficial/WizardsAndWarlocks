@@ -39,7 +39,6 @@ public:
 	void Update();
 	void UpdateOwnStatus();
 	void SetAllStatus(keyStatesENUM status);
-	void RecoverStatus();
 private:
 	std::vector<Key_player*> keys;
 };

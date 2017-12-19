@@ -4,8 +4,8 @@
 #include <iostream>
 #include <map>
 #include <vector3d.h>
+#include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkStructs.h"
 
 class NetworkObject{
 

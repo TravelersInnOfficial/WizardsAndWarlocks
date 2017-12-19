@@ -108,7 +108,7 @@ void NetGame::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 	objectManager->DrawNpcMenu();
 }
 

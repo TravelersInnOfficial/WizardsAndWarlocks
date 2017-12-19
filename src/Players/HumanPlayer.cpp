@@ -20,8 +20,8 @@ void HumanPlayer::DeclareInput(){
 	controller->AddAction(KEY_SPACE, ACTION_JUMP);
 	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
 	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
+	controller->AddAction(KEY_F24, ACTION_RESET_RECEIVER);
 }
 
 void HumanPlayer::UpdateInput(){
@@ -31,14 +31,15 @@ void HumanPlayer::UpdateInput(){
 
 void HumanPlayer::SetAllInput(keyStatesENUM state){
 	controller->SetAllStatus(state);
-}
-
-void HumanPlayer::RecoverStatus(){
-	//controller->RecoverStatus();
-	controller->UpdateOwnStatus();
+	if(state == UP && isPlayerOne && networkObject != NULL) {
+		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
+	}
 }
 
 void HumanPlayer::SetNetInput(){
+
+	Player::SetNetInput();
+
 	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 3, true, false);
 
@@ -68,9 +69,13 @@ void HumanPlayer::SetNetInput(){
 
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+
 }
 
 void HumanPlayer::GetNetInput(){
+
+	Player::GetNetInput();
+
 	int keystate = -1;
 	vector3df objstate = vector3df(99999,0,0);
 
@@ -136,7 +141,14 @@ void HumanPlayer::GetNetInput(){
 		keystate = -1;
 		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
 	}
-	
+
+	keystate = networkObject->GetIntVar(PLAYER_RESET_RECEIVER);
+	if(keystate != -1){
+		controller->SetStatus(ACTION_RESET_RECEIVER, (keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, keystate, false, false);
+	}
+
 	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
 	if(objstate.X != 99999){
 		SetPosition(objstate);
@@ -172,7 +184,8 @@ void HumanPlayer::CheckInput(){
 			this->DropObject();
 		}
 		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
-		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){this->DeployTrap();}
+		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
 	}
 }
 

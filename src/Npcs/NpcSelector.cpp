@@ -63,8 +63,7 @@ void NpcSelector::Update(){
 
 void NpcSelector::StopInteraction(){
 	MenuManager::GetInstance()->ClearMenu();
-	//Poner el event reciever a UP
-	hp->RecoverStatus();
+	//hp->RecoverStatus();
 	hp->ToggleMenu(false);
 	hp = NULL;
 	active = false;
