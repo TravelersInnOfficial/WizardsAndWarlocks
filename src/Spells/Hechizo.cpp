@@ -73,7 +73,7 @@ float Hechizo::GetCurrentCooldown(){
  * @param MP Mana con el que comparar
  */
 bool Hechizo::CheckMP(int MP){
-	return costePM<=MP;
+	return -costePM<=MP;
 }
 
 /**
