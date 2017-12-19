@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <map>
+#include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkStructs.h"
 #include "NetworkObject.h"
 
 class Client{

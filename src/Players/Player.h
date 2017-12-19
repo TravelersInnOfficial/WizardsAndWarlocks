@@ -7,13 +7,12 @@
 #include <iostream>
 #include <Actions.h>
 #include <Alliance.h>
+#include <ColliderMasks.h>
+#include <NetworkStructs.h>
 #include "./../Entidad.h"
-
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../NetworkEngine/NetworkEngine.h"
-#include "./../NetworkEngine/NetworkStructs.h"
-#include <ColliderMasks.h>
 
 class Potion;
 
