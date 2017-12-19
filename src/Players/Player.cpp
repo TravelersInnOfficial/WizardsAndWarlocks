@@ -18,8 +18,10 @@ Player::Player(bool isPlayer1){
 	max_velocity = 3.0f;
 
 	playerAlliance = NO_ALLIANCE;
-	isPlayerOne=isPlayer1;
+	isPlayerOne = isPlayer1;
 	clase = EENUM_PLAYER;
+
+	networkObject = NULL;
 
 	PlayerInit();
 	CreatePlayer();
@@ -64,7 +66,12 @@ void Player::CreatePlayer(){
 }
 
 void Player::GetNetInput(){
-	//networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
+	if(alliance != (int)NO_ALLIANCE){
+		SetAlliance((Alliance)alliance);
+		alliance = (int)NO_ALLIANCE;
+		networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
+	}
 }
 
 void Player::SetNetInput(){
@@ -318,17 +325,17 @@ void Player::SetAlliance(Alliance newAlliance){
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-			networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-			networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
 			break;
 		}
 		default:{
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-			networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
 			break;
 		}
 	}
