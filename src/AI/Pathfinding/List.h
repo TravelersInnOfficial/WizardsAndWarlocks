@@ -16,7 +16,7 @@ public:
      * @param Node (Node to be checked)
      * @return NodeRecord* (Nearest node and connection)
      */
-    NodeRecord* smallestElement(Node*);
+    NodeRecord* smallestElement(NodeRecord*);
 
     /**
      * @brief Returns the list size
@@ -56,8 +56,15 @@ public:
      */
     void remove(NodeRecord*);
 
+    /**
+     * @brief Prints in the terminal the actual list of nodes
+     * 
+     */
+    void printListOfNodes();
+
 private:
     std::list<NodeRecord*> *m_list;
+    
 };
 
 #endif
