@@ -19,6 +19,7 @@ void HumanPlayer::DeclareInput(){
 	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
 	controller->AddAction(KEY_SPACE, ACTION_JUMP);
 	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
 	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_F24, ACTION_RESET_RECEIVER);
@@ -60,6 +61,9 @@ void HumanPlayer::SetNetInput(){
 
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 3, true, false);
+
+	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 2, true, false);
+	else if(controller->IsKeyReleased(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 3, true, false);
 
 	if(controller->IsKeyPressed(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 3, true, false);
@@ -128,6 +132,13 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetIntVar(PLAYER_USE_OBJECT, keystate, false, false);
 	}
 
+	keystate = networkObject->GetIntVar(PLAYER_DROP_OBJECT);
+	if(keystate != -1){
+		controller->SetStatus(ACTION_DROP_OBJECT, (keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_DROP_OBJECT, keystate, false, false);
+	}
+
 	keystate = networkObject->GetIntVar(PLAYER_SHOOT);
 	if(keystate != -1){
 		controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
@@ -179,10 +190,8 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject(); }
-		if(controller->IsKeyPressed(ACTION_SHOOT)){
-			SpellManager::GetInstance()->ResetHechizo(0,this);
-			this->DropObject();
-		}
+		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(0,this); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }

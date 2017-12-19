@@ -36,7 +36,7 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 
 	if (m_fountainNode) {
 		m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_fountainNode->setMaterialTexture(0, "./../assets/textures/marble.jpeg");
+        m_fountainNode->setMaterialTexture(0, "./../assets/textures/marbre5.jpg");
     }
 
 	//Bullet Physics

@@ -165,9 +165,13 @@ void Player::ChangeHP(float HP){
 bool Player::ChangeMP(float MP){
 	bool toRet = false;
 	
-	if(m_MP - MP >= 0){
-		m_MP -= MP;
+	if(m_MP + MP >= 0){
+		m_MP += MP;
 		toRet = true;
+
+		if(m_MP>100){
+			m_MP = 100;
+		}
 	}
 
 	return (toRet);

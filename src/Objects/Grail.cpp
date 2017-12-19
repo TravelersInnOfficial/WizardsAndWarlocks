@@ -45,7 +45,7 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 	// Create an Irrlicht cube
 	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj");
 	m_grailNode->setPosition(TPosition);
-	m_grailNode->setScale(TScale/2);
+	m_grailNode->setScale(TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
@@ -54,7 +54,7 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
+	vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_GRAIL, grailCW);
 	bt_body->Rotate(TRotation);
