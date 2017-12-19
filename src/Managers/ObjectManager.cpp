@@ -53,7 +53,10 @@ void ObjectManager::ClearMap(){
 	}
 	npcs.clear();
 
-	if(grail != NULL) delete grail;
+	if(grail != NULL){
+		delete grail;
+		grail = NULL;
+	}
 }
 
 ObjectManager* ObjectManager::GetInstance(){

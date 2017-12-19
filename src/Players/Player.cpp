@@ -49,7 +49,7 @@ void Player::CreatePlayer(){
 	m_playerNode->setScale(m_dimensions);
 	if (m_playerNode) {
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-		m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+		m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 		m_playerNode->setPosition(m_position);
 	}
 

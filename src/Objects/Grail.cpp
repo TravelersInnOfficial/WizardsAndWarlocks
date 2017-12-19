@@ -9,7 +9,13 @@ Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	CreateGrail(TPosition, TScale, TRotation);
 }
 
-Grail::~Grail(){}
+Grail::~Grail(){
+	bt_body->Erase();
+    m_grailNode->Erase();
+
+    delete bt_body;
+    delete m_grailNode;
+}
 
 void Grail::Update(float deltaTime){
 	this->deltaTime = deltaTime;
