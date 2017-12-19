@@ -9,10 +9,6 @@ NetGame* NetGame::GetInstance(){
 
 NetGame::NetGame(){
 
-	// Level
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/map.json");
-
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -25,6 +21,11 @@ NetGame::NetGame(){
 	g_engine 		= GraphicEngine::getInstance();
 	s_engine 		= SoundSystem::getInstance();
 	n_engine 		= NetworkEngine::GetInstance();
+
+	// Level
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	objectManager->AddNpc(vector3df(1.5,-1.25,4.5), vector3df(2,2,2), vector3df(0,180,0), NPC_SELECTOR);
 
 	if(n_engine->IsServerInit()) isServer = true;
 	else if(n_engine->IsClientInit()) isServer = false;
@@ -107,7 +108,8 @@ void NetGame::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
+	objectManager->DrawNpcMenu();
 }
 
 float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

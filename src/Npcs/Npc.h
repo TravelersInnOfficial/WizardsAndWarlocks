@@ -11,12 +11,13 @@ class Npc: public Entidad{
 		
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		virtual void Interact(Player* p);
-		virtual void Draw();
+		virtual void Update();
+		void Draw();
 
 	protected:
 	    GBody*      gBody;
     	BT_Body*    pBody;
-		bool activated;
+		bool active;
 	
 };
 

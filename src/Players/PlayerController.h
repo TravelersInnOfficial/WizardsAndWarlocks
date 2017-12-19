@@ -38,6 +38,7 @@ public:
 	bool IsKeyUp(ACTION_ENUM a);
 	void Update();
 	void UpdateOwnStatus();
+	void SetAllStatus(keyStatesENUM status);
 private:
 	std::vector<Key_player*> keys;
 };

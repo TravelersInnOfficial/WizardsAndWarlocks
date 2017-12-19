@@ -1,0 +1,14 @@
+#ifndef POTIONTYPES_H
+#define POTIONTYPES_H
+
+enum POTIONTYPE {
+	POTION_LIFE		 = 0x00,
+	POTION_MANA  	 = 0x01,
+    POTION_ICE       = 0x02,
+    POTION_ELECTRIC  = 0x03,
+    POTION_FIRE      = 0x04,
+    POTION_POISON    = 0x05,
+    POTION_ELEMENTAL = 0x06
+};
+
+#endif

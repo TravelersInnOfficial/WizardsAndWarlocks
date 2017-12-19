@@ -50,14 +50,19 @@
         "mutex": "cpp",
         "numeric": "cpp",
         "sstream": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "*.ipp": "cpp"
     },
 
     "editor.quickSuggestions": {
         "other": true,
         "comments": true,
         "strings": false
-    }
-
-    
+    },
+    "files.exclude": {
+        "**/.git": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/libs": true
+      }    
 }

@@ -4,10 +4,12 @@ static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
 	privateReceiver = new EventReceiver();
+	privateMenuReceiver = new MenuReceiver();
 
-	/*irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
+	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
-	nulldevice -> drop();*/
+	nulldevice -> drop();
+	deskres = deskres;
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
@@ -16,11 +18,10 @@ GraphicEngine::GraphicEngine(){
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
 		true,                                               //vsync
-		privateReceiver                                     //event receiver
+		privateMenuReceiver                                 //event receiver
 	);
 
-	if(!privateDevice)
-		exit(1);
+	if(!privateDevice) exit(1);
 
 	//caption of the window
 	privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
@@ -29,13 +30,17 @@ GraphicEngine::GraphicEngine(){
 	privateDriver = privateDevice->getVideoDriver();
 	privateSManager = privateDevice->getSceneManager();
 	privateGUIEnv = privateDevice->getGUIEnvironment();
+
+	// Set GUI Alpha
+	for (int i = 0; i < irr::gui::EGDC_COUNT; ++i){
+        irr::video::SColor col = privateGUIEnv->getSkin()->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+        col.setAlpha(255);
+        privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+	}
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
-	//singleton constructor
-	if(instance == 0){
-		instance = new GraphicEngine();
-	}
+	if(instance == 0) instance = new GraphicEngine();
 	return instance;
 }
 
@@ -60,9 +65,15 @@ void GraphicEngine::ChangeWindowName(std::wstring newName){
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
-	irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
-	if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
+	else privateDevice->setEventReceiver(privateReceiver);
+
+	if (privateCamera != NULL){
+		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
+		if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+	}
     privateDevice->getCursorControl()->setVisible(newState);
+	
 }
 
 // DRIVER FUNCTIONS
@@ -234,13 +245,13 @@ void GraphicEngine::drawAllGUI(){
 	privateGUIEnv->drawAll();
 }
 
-int GraphicEngine::ReadMenu(){
-	return(privateReceiver->ReadMenu());
+MenuOption GraphicEngine::ReadButtonPressed(){
+	return(privateMenuReceiver->ReadButtonPressed());
 }
 
-std::string GraphicEngine::ReadText(int id){
+std::string GraphicEngine::ReadText(MenuOption id){
 	irr::gui::IGUIElement* textElem;
-	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId(id, true);
+	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);
 
 	const wchar_t *text = textElem->getText();
 	std::wstring ws(text);
@@ -249,28 +260,36 @@ std::string GraphicEngine::ReadText(int id){
 	return (text_str);
 }
 
-void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap){
-	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(text.c_str(), irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2), border, wordWrap, 0);
+void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id, irr::gui::IGUIWindow* parent){
+	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(
+		text.c_str(),
+		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
+		border,
+		wordWrap,
+		parent,
+		id
+	);
+	
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 	ge->setDrawBorder(false);
 }
 
-void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id){
+void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id, irr::gui::IGUIWindow* parent){
 	privateGUIEnv->addButton(
 		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),	//position
-		0,													            //parent
+		parent,												            //parent
 		id,													            //id
 		text.c_str(),										            //display text
 		infoText.c_str()									            //tooltip text
 	);
 }
 
-void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id){
+void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id, irr::gui::IGUIWindow* parent){
 	irr::gui::IGUIEditBox* ge = privateGUIEnv->addEditBox(
 									text.c_str(),
 									irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
 									false,
-									0,
+									parent,
 									(irr::s32)id
 								);
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
@@ -290,12 +309,6 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vec
 	irr::scene::ISceneNode *node = 0;
 	irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
 	irr::scene::ITriangleSelector* selector = 0;
-
-	//First we need to get the cursor position in the 2D space
-	//irr::core::position2d<irr::s32> pos = privateDevice->getCursorControl()->getPosition();
-
-	// we need to get the 3D vector from it.
-	//const irr::core::line3d<irr::f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
 
 	const irr::core::line3d<irr::f32> ray(Start.X,Start.Y,Start.Z,End.X,End.Y,End.Z);
 
@@ -322,6 +335,11 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vec
 // RECEIVER FUNCTIONS
 void GraphicEngine::UpdateReceiver(){
 	privateReceiver->Update();
+	privateMenuReceiver->Update();
+}
+
+void GraphicEngine::InitReceiver(){
+	privateReceiver->InitReceiver();
 }
 
 bool GraphicEngine::IsKeyDown(TKEY_CODE code){

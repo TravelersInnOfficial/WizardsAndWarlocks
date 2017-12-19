@@ -2,8 +2,8 @@
 #define NETWORKENGINE_H
 
 #include <iostream>
+#include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkStructs.h"
 #include "NetworkObject.h"
 #include "Server.h"
 #include "Client.h"

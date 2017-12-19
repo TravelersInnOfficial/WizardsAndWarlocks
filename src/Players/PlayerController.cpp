@@ -237,3 +237,11 @@ void PlayerController::UpdateOwnStatus(){
 		else if(k->GetStatus() == RELEASED) k->SetStatus(UP);
 	}
 }
+
+void PlayerController::SetAllStatus(keyStatesENUM status){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		k->SetStatus(status);
+	}
+}

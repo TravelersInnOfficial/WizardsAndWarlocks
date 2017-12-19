@@ -4,8 +4,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <map>
+#include <NetworkStructs.h>
 #include "./../NetworkEngine/NetworkEngine.h"
-#include "./../NetworkEngine/NetworkStructs.h"
 #include "./../NetworkEngine/Server.h"
 #include "./../NetworkEngine/Client.h"
 #include "./PlayerManager.h"

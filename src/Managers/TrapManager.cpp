@@ -1,5 +1,5 @@
 #include "TrapManager.h"
-#include "./../Includes/vector3d.h"
+#include <vector3d.h>
 
 TrapManager* TrapManager::instance = 0;
 

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <map>
+#include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkStructs.h"
 #include "NetworkObject.h"
 
 class Server{

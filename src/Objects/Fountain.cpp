@@ -11,8 +11,16 @@ Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	maxTime = 0.5f;
 	currentTime = 0.0f;
 
-	 clase = EENUM_FOUNTAIN;   
+	clase = EENUM_FOUNTAIN;   
 	CreateFountain(TPosition, TScale, TRotation);
+}
+
+Fountain::~Fountain(){
+	bt_body->Erase();
+    m_fountainNode->Erase();	
+
+    delete bt_body;
+    delete m_fountainNode;
 }
 
 void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -23,15 +31,16 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	m_fountainNode = engine->addObjMeshSceneNode("./../assets/modelos/fountain.obj");
 	m_fountainNode->setPosition(TPosition);
 	m_fountainNode->setScale(TScale);
+	m_fountainNode->setRotation(TRotation);
 	m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_fountainNode) {
 		m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_fountainNode->setMaterialTexture(0, "./../assets/textures/lifePotion.png");
+        m_fountainNode->setMaterialTexture(0, "./../assets/textures/marbre5.jpg");
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
+	vector3df HalfExtents(TScale * 0.5f * vector3df(1.36876, 2.0, 1.2));
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,TMass,0, vector3df(0,0,0), C_FOUNTAIN, fountainCW);
 	bt_body->Rotate(TRotation);

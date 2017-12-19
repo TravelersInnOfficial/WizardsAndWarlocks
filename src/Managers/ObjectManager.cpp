@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include "./../Objects/Potions.h"
 
 ObjectManager* ObjectManager::instance = 0;
 
@@ -91,8 +92,34 @@ Switch* ObjectManager::AddSwitch(vector3df TPosition, vector3df TScale, vector3d
 	return s;
 }
 
-Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	Potion* p = new Potion(TPosition, TScale, TRotation);
+Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type){
+	Potion* p = NULL;
+	switch(type){
+		case POTION_LIFE:
+			p = (Potion*) new LifePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_MANA:
+			p = (Potion*) new ManaPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ICE:
+			p = (Potion*) new IcePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ELECTRIC:
+			p = (Potion*) new ElectricPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_FIRE:
+			p = (Potion*) new FirePotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_POISON:
+			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation);
+		break;
+		case POTION_ELEMENTAL:
+			p = (Potion*) new ElementalPotion(TPosition, TScale, TRotation);
+		break;
+		default:
+			std::cout<<"POCION NO CONTROLADA"<<std::endl;
+		break;
+	}
 	potions.push_back(p);
 	return p;
 }
@@ -113,12 +140,18 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 			n = new NpcSelector(TPosition, TScale, TRotation);
 			break;
 		}
-		default:{
-			break;
-		}
+		default:{ break; }
 	}
-	npcs.push_back(n);
+	if(n != NULL) npcs.push_back(n);
 	return n;
+}
+
+void ObjectManager::DrawNpcMenu(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->Draw();
+	}
 }
 
 void ObjectManager::DeletePotion(Potion* potion){
@@ -139,6 +172,7 @@ void ObjectManager::Update(float deltaTime){
 	UpdatePotions();
 	UpdateFountains(deltaTime);
 	UpdateBlocks();
+	UpdateNpcs();
 }
 
 void ObjectManager::UpdateGrail(float deltaTime){
@@ -182,5 +216,13 @@ void ObjectManager::UpdateBlocks(){
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
 		b->Update();
+	}
+}
+
+void ObjectManager::UpdateNpcs(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->Update();
 	}
 }

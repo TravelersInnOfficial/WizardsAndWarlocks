@@ -4,8 +4,10 @@
 #include <chrono>
 #include <thread>
 #include <vector3d.h>
+#include <Menus.h>
 #include "PhysicsEngine/BT_Body.h"
 #include "GraphicEngine/GraphicEngine.h"
+#include "GraphicEngine/MenuManager.h"
 #include "NetworkEngine/NetworkEngine.h"
 #include "./States/Game.h"
 #include "./States/NetGame.h"
@@ -14,45 +16,35 @@
 NetworkEngine* CreateMenu(){
 	NetworkEngine* n_engine = NULL;
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	MenuManager::GetInstance()->CreateMenu(MAIN_M);
 
-	vector4di rect = vector4di(100,200,200,200);
-	g_engine->addButton(rect, L"Single Player", L"To play single player", 1);
-
-	rect = vector4di(575,160,100,20);
-	g_engine->addStaticText(rect, L"Multi Player", true, false);
-
-	rect = vector4di(400,200,200,200);
-	g_engine->addButton(rect, L"Client", L"To start a client (FILL IP)", 2);
-
-	rect = vector4di(650,200,200,200);
-	g_engine->addButton(rect, L"Server", L"To start a server on this computer", 3);
-
-	rect = vector4di(400,420,200,20);
-	g_engine->addEditBox(rect, L"127.0.0.1", 4);
-
-	int selectedOption = -1;
-	while(g_engine->run() && selectedOption == -1){
+	MenuOption selectedOption = NO_OPT;
+	while(g_engine->run() && selectedOption == NO_OPT){
 		g_engine->beginSceneDefault();
 		g_engine->drawAllGUI();
 		g_engine->endScene();
-
-		selectedOption = g_engine->ReadMenu();
+		selectedOption = g_engine->ReadButtonPressed();
 	}
 
 	switch(selectedOption){
-		case 2:{
+		case MAIN_M_CLIENT:{
 			n_engine = NetworkEngine::GetInstance();
-			n_engine->SetIp(g_engine->ReadText(4));
+			n_engine->SetIp(g_engine->ReadText(MAIN_M_IP));
 			n_engine->StartClient();
 			break;
 		}
-		case 3:{
+		case MAIN_M_SERVER:{
 			n_engine = NetworkEngine::GetInstance();
 			n_engine->StartServer();
 			break;
 		}
+		default:{
+			break;
+		}
 	}
 
+	MenuManager::GetInstance()->ClearMenu();
+	g_engine->ToggleMenu(false);
 	return (n_engine);
 }
 

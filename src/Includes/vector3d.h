@@ -69,10 +69,14 @@ public:
     void setZ(T newZ){ Z = newZ;}
 
     //Operators
+    vector3d<T> operator+(const T v) const { return vector3d<T>(X + v, Y + v, Z + v); }
+    vector3d<T> operator-(const T v) const { return vector3d<T>(X - v, Y - v, Z - v); }
     vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
     vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
     vector3d<T> operator-(vector3d<T> v) const { return vector3d<T>(X-v.X, Y-v.Y, Z-v.Z); }
     vector3d<T> operator+(vector3d<T> v) const { return vector3d<T>(X+v.X, Y+v.Y, Z+v.Z); }
+    vector3d<T> operator*(vector3d<T> v) const { return vector3d<T>(X*v.X, Y*v.Y, Z*v.Z); }
+    vector3d<T> operator/(vector3d<T> v) const { return vector3d<T>(X/v.X, Y/v.Y, Z/v.Z); }
 
     void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
     void operator*=(const T v) { X = X*v; Y = Y*v; Z = Z*v; }

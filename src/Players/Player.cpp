@@ -5,21 +5,23 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
 
+#include <TrapCodes.h>
 #include "./../Objects/Potion.h"
-#include "./../Includes/TrapCodes.h"
 
 GraphicEngine* engine = GraphicEngine::getInstance();
 
 Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
-	m_dimensions = vector3df(0.6,1,0.6);
+	m_dimensions = vector3df(2,2,2);
 
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
 
 	playerAlliance = NO_ALLIANCE;
-	isPlayerOne=isPlayer1;
+	isPlayerOne = isPlayer1;
 	clase = EENUM_PLAYER;
+
+	networkObject = NULL;
 
 	PlayerInit();
 	CreatePlayer();
@@ -43,23 +45,36 @@ void Player::CreatePlayer(){
 
 	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	m_playerNode = engine->addCube2Scene(m_dimensions);
+	m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 	m_playerNode->setScale(m_dimensions);
 	if (m_playerNode) {
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-		m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+		m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 		m_playerNode->setPosition(m_position);
 	}
-	m_dimensions = m_dimensions * 0.5f;
 
 	// Physic Player
+	vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.35, m_dimensions.Z * 0.15f);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(m_position, m_dimensions, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
+	bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 	bt_body->AssignPointer(this);
 
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	
 	Respawn();
+
+}
+
+void Player::GetNetInput(){
+	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
+	if(alliance != (int)NO_ALLIANCE){
+		SetAlliance((Alliance)alliance);
+		alliance = (int)NO_ALLIANCE;
+		networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
+	}
+}
+
+void Player::SetNetInput(){
 
 }
 
@@ -150,9 +165,13 @@ void Player::ChangeHP(float HP){
 bool Player::ChangeMP(float MP){
 	bool toRet = false;
 	
-	if(m_MP - MP >= 0){
-		m_MP -= MP;
+	if(m_MP + MP >= 0){
+		m_MP += MP;
 		toRet = true;
+
+		if(m_MP>100){
+			m_MP = 100;
+		}
 	}
 
 	return (toRet);
@@ -310,14 +329,17 @@ void Player::SetAlliance(Alliance newAlliance){
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
 			break;
 		}
 		default:{
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
 			break;
 		}
 	}

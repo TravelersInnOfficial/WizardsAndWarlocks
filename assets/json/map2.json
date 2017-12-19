@@ -1,0 +1,2380 @@
+{
+    "Objects": [
+        {
+            "ID": 0,
+            "Name": "Floor (8)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    2.8622612953186,
+                    17.25
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    5.30000019073486,
+                    0.0999999940395355,
+                    4.40999984741211
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 1,
+            "Name": "Wall2 (26)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    20.0399284362793,
+                    3.95113086700439,
+                    9.8799991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    2.14000010490417,
+                    10.2399997711182
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 2,
+            "Name": "Floor (7)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0.0200710296630859,
+                    4.98113059997559,
+                    24.5202140808105
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    40,
+                    0.0999999940395355,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 3,
+            "Name": "Floor (6)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2799282073975,
+                    4.98139190673828,
+                    24.5799999237061
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.55999994277954,
+                    0.0999999940395355,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 4,
+            "Name": "Floor (5)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2799282073975,
+                    4.93113088607788,
+                    12.4899997711182
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.55999994277954,
+                    0.0999999940395355,
+                    15.0899991989136
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 5,
+            "Name": "Floor (4)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    2.8622612953186,
+                    10.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    40,
+                    0.0999999940395355,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 6,
+            "Name": "Floor (3)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    2.8622612953186,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    10,
+                    0.0999999940395355,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 7,
+            "Name": "potion (2)",
+            "Type": "Potion",
+            "Body": {
+                "Position": [
+                    -17.9599990844727,
+                    0.740000009536743,
+                    10.1099996566772
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/potion.obj"
+            }
+        },
+        {
+            "ID": 8,
+            "Name": "potion (1)",
+            "Type": "Potion",
+            "Body": {
+                "Position": [
+                    -14.960000038147,
+                    1.04999995231628,
+                    24.9899997711182
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/potion.obj"
+            }
+        },
+        {
+            "ID": 9,
+            "Name": "RandomBlock2 (18)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    13.75,
+                    -0.560000002384186,
+                    9.52999973297119
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.300000011920929,
+                    3,
+                    4.73999977111816
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 10,
+            "Name": "RandomBlock2 (17)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -15.4499998092651,
+                    -0.560000002384186,
+                    9.52999973297119
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.300000011920929,
+                    3,
+                    4.73999977111816
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 11,
+            "Name": "RandomBlock2 (16)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -0.490000009536743,
+                    -1.30999994277954,
+                    8.10000038146973
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    1.51999998092651,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 12,
+            "Name": "RandomBlock2 (15)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -1.76999998092651,
+                    -1.30999994277954,
+                    9.56999969482422
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    1.51999998092651,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 13,
+            "Name": "RandomBlock2 (14)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -0.490000009536743,
+                    -1.30999994277954,
+                    10.8299999237061
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    1.51999998092651,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 14,
+            "Name": "RandomBlock2 (13)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0.839999973773956,
+                    -1.30999994277954,
+                    9.52999973297119
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    1.51999998092651,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 15,
+            "Name": "RandomBlock2 (12)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -0.5,
+                    -0.560000002384186,
+                    9.52999973297119
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    3,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 16,
+            "Name": "RandomBlock2 (11)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -0.239999994635582,
+                    1.0900000333786,
+                    24.6299991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 17,
+            "Name": "RandomBlock2 (10)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -4.60999965667725,
+                    1.0900000333786,
+                    27.8999996185303
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 18,
+            "Name": "RandomBlock2 (9)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -4.6100001335144,
+                    1.0900000333786,
+                    21.1299991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 19,
+            "Name": "RandomBlock2 (8)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    3.89000010490417,
+                    1.0900000333786,
+                    27.8999996185303
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 20,
+            "Name": "RandomBlock2 (7)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    3.89000034332275,
+                    1.0900000333786,
+                    21.1299991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 21,
+            "Name": "RandomBlock2 (6)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -10.7399997711182,
+                    1.0900000333786,
+                    27.8999996185303
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 22,
+            "Name": "RandomBlock2 (5)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -10.7399997711182,
+                    1.0900000333786,
+                    21.1299991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 23,
+            "Name": "RandomBlock2 (4)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    13.2399997711182,
+                    1.0900000333786,
+                    27.8999996185303
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 24,
+            "Name": "RandomBlock2 (3)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    13.2399997711182,
+                    1.0900000333786,
+                    21.1299991607666
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.310000002384186,
+                    2.45000004768372,
+                    3.1800000667572
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 25,
+            "Name": "Wall2 (25)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2499294281006,
+                    -0.499869346618652,
+                    19.6700000762939
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    1.25999999046326,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 26,
+            "Name": "RandomBlock2 (2)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2999992370605,
+                    -1.66299998760223,
+                    18.9340000152588
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.87000000476837,
+                    2.45000004768372,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 27,
+            "Name": "RandomBlock2 (1)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    20.7259998321533,
+                    -1.06599998474121,
+                    18.9340000152588
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    2.45000004768372,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 28,
+            "Name": "RandomBlock2",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    23.8780002593994,
+                    -1.5,
+                    18.9340000152588
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1.29999995231628,
+                    0.925589025020599,
+                    1.47252440452576
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/stones.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 29,
+            "Name": "default",
+            "Type": "Untagged",
+            "Body": {
+                "Position": [
+                    0.5,
+                    -1,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/puerta.obj"
+            }
+        },
+        {
+            "ID": 30,
+            "Name": "puerta",
+            "Type": "Door",
+            "Body": {
+                "Position": [
+                    0.5,
+                    -1,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/puerta.obj"
+            }
+        },
+        {
+            "ID": 31,
+            "Name": "default",
+            "Type": "Untagged",
+            "Body": {
+                "Position": [
+                    0.5,
+                    -1,
+                    15.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/puerta.obj"
+            }
+        },
+        {
+            "ID": 32,
+            "Name": "puerta",
+            "Type": "Door",
+            "Body": {
+                "Position": [
+                    0.5,
+                    -1,
+                    15.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    90,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/puerta.obj"
+            }
+        },
+        {
+            "ID": 33,
+            "Name": "Wall2 (8)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -9.52007102966309,
+                    0.5,
+                    7.32999992370605
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 34,
+            "Name": "Wall2 (2)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    2.75,
+                    0.5,
+                    15.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 35,
+            "Name": "Wall2 (9)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -9.52007102966309,
+                    0.5,
+                    12.7700004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 36,
+            "Name": "Wall2 (20)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    20.0399284362793,
+                    0.961130619049072,
+                    17.2770004272461
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    8,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 37,
+            "Name": "Wall2 (19)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    1.5,
+                    10.0699996948242
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    3,
+                    1.10000002384186
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 38,
+            "Name": "Wall2 (10)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0.049929141998291,
+                    3.5,
+                    19.5100002288818
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    3,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 39,
+            "Name": "Wall2 (6)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    12.5399293899536,
+                    0.5,
+                    14.9997844696045
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 40,
+            "Name": "Wall2 (8)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -2.70007038116455,
+                    2.5,
+                    19.5100002288818
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 41,
+            "Name": "Wall2",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -5,
+                    0.5,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 42,
+            "Name": "Floor (2)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2799282073975,
+                    0.119130611419678,
+                    24.5799999237061
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.55999994277954,
+                    0.0999999940395355,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 43,
+            "Name": "Wall2 (6)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    2.5,
+                    29.5197849273682
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    40,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 44,
+            "Name": "Wall2 (24)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    24.5499286651611,
+                    2.58113098144531,
+                    24.7999992370605
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    10.3999996185303
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 45,
+            "Name": "Wall2 (18)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    0.5,
+                    12.7700004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 46,
+            "Name": "Floor (1)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2799282073975,
+                    -2,
+                    12.4899997711182
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.55999994277954,
+                    0.0999999940395355,
+                    15.0900001525879
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 47,
+            "Name": "Main Camera",
+            "Type": "MainCamera",
+            "Body": {
+                "Position": [
+                    0,
+                    1,
+                    -10
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 48,
+            "Name": "Wall2 (23)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    24.5499286651611,
+                    1.64113092422485,
+                    12.2799987792969
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    7.30000019073486,
+                    14.6999998092651
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 49,
+            "Name": "Wall2 (10)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -9.52007102966309,
+                    1.5,
+                    10.0699996948242
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    3,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 50,
+            "Name": "Floor",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    -2,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    10,
+                    0.100000001490116,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 51,
+            "Name": "Wall2 (3)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    1.5,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    3,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 52,
+            "Name": "Wall2 (5)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -12.4600715637207,
+                    0.5,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 53,
+            "Name": "Wall2 (17)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    2.5,
+                    21.8299999237061
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 54,
+            "Name": "Wall2 (15)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    2.03992915153503,
+                    0.461130619049072,
+                    17.2770004272461
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 55,
+            "Name": "Wall2 (13)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    7.47992897033691,
+                    1.5,
+                    10.0699996948242
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    3,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 56,
+            "Name": "Wall2 (22)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2499294281006,
+                    2.5011305809021,
+                    29.4699993133545
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 57,
+            "Name": "Wall2 (11)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    7.47992897033691,
+                    0.5,
+                    7.32999992370605
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 58,
+            "Name": "Wall2 (17)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    0.5,
+                    7.28099822998047
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 59,
+            "Name": "Wall2 (14)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -0.190071105957031,
+                    -0.941869735717773,
+                    17.2770004272461
+                ],
+                "Rotation": [
+                    63.9000205993652,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.100000023841858
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 60,
+            "Name": "Wall2",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -20,
+                    2.5,
+                    24.5202140808105
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 61,
+            "Name": "Wall2 (4)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    12.5600004196167,
+                    2.5,
+                    19.5200004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 62,
+            "Name": "Wall2 (18)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    2.5,
+                    27.2700004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 63,
+            "Name": "Wall2 (4)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    12.5399293899536,
+                    0.5,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 64,
+            "Name": "Wall2 (5)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -12.439998626709,
+                    2.5,
+                    19.5200004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 65,
+            "Name": "Wall2 (19)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    19.9799289703369,
+                    3.5,
+                    24.5699996948242
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    3,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 66,
+            "Name": "Wall1 (1)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    0.5,
+                    -5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    10,
+                    5,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 67,
+            "Name": "Wall2 (9)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    2.79992914199829,
+                    2.5,
+                    19.5100002288818
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 68,
+            "Name": "Wall2 (16)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -2.55007076263428,
+                    0.461130619049072,
+                    17.2770004272461
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 69,
+            "Name": "Wall2 (1)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -2.74999976158142,
+                    0.5,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 70,
+            "Name": "Wall2 (3)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    1.5,
+                    15.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    3,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 71,
+            "Name": "Floor",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0.0200710296630859,
+                    0.118869304656982,
+                    24.5202140808105
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    40,
+                    0.100000001490116,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 72,
+            "Name": "Wall2 (2)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    2.75,
+                    0.5,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 73,
+            "Name": "Wall2 (12)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    7.47992897033691,
+                    0.5,
+                    12.7700004577637
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.0999999940395355,
+                    5,
+                    4.5
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 74,
+            "Name": "potion",
+            "Type": "Potion",
+            "Body": {
+                "Position": [
+                    -0.379999995231628,
+                    1.04999995231628,
+                    9.60000038146973
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    1,1,1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": "assets/models/potion.obj"
+            }
+        },
+        {
+            "ID": 75,
+            "Name": "Floor",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    0,
+                    -2,
+                    10.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    40,
+                    0.100000001490116,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/rock.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 76,
+            "Name": "Wall2 (1)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -2.75,
+                    0.5,
+                    15.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    5,
+                    0.100000001490116
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 77,
+            "Name": "Wall2 (7)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -12.4600715637207,
+                    0.5,
+                    14.9997844696045
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    15,
+                    5,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 78,
+            "Name": "Wall3",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    5,
+                    0.5,
+                    0
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 79,
+            "Name": "Wall2",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    -20.0200710296631,
+                    0.5,
+                    10.0002136230469
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    0.100000001490116,
+                    5,
+                    10
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 80,
+            "Name": "Directional Light",
+            "Type": "Untagged",
+            "Body": {
+                "Position": [
+                    0,
+                    1,
+                    0
+                ],
+                "Rotation": [
+                    50,
+                    330,
+                    0
+                ],
+                "Scale": [
+                    1,
+                    1,
+                    1
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "",
+                "3DModel": ""
+            }
+        },
+        {
+            "ID": 81,
+            "Name": "Wall2 (21)",
+            "Type": "Block",
+            "Body": {
+                "Position": [
+                    22.2499294281006,
+                    1.35113048553467,
+                    5
+                ],
+                "Rotation": [
+                    0,
+                    0,
+                    0
+                ],
+                "Scale": [
+                    4.5,
+                    7.15999984741211,
+                    0.0999999940395355
+                ],
+                "AxisCoord": [
+                    0,
+                    0,
+                    -1
+                ],
+                "Texture": "../assets/textures/2897.jpg",
+                "3DModel": ""
+            }
+        }
+    ]
+}

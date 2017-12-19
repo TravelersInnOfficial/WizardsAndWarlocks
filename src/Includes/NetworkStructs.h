@@ -1,7 +1,7 @@
 #ifndef NETWORKSTRUCTS_H
 #define NETWORKSTRUCTS_H
 
-#include "RakNetIncludes.h"
+#include "./../NetworkEngine/RakNetIncludes.h"
 
 enum GameMessages{
 	ID_PLAYER_JOIN			= ID_USER_PACKET_ENUM + 1,
@@ -41,29 +41,20 @@ enum ObjectVariable{
 	ID_NO_VAR = -1,
 
 	// ######################### PLAYER #########################
-	//BOOL
-	//INT
-	PLAYER_MOVE_UP		= 1,
-	PLAYER_MOVE_DOWN	= 2,
-	PLAYER_MOVE_LEFT	= 3,
-	PLAYER_MOVE_RIGHT	= 4,
-	PLAYER_RAYCAST		= 5,
-	PLAYER_JUMP			= 6,
-	PLAYER_USE_OBJECT	= 7,
-	PLAYER_SHOOT		= 8,
-	PLAYER_POSITION		= 9,
-	PLAYER_ROTATION		= 10,
-	PLAYER_DEPLOY_TRAP 	= 11
-	//FLOAT
-	//VI
-	//VF
-
-	// ######################### POTION #########################
-	//BOOL
-	//INT
-	//FLOAT
-	//VI
-	//VF
+	PLAYER_MOVE_UP			=	1,
+	PLAYER_MOVE_DOWN		=	2,
+	PLAYER_MOVE_LEFT		=	3,
+	PLAYER_MOVE_RIGHT		=	4,
+	PLAYER_RAYCAST			=	5,
+	PLAYER_JUMP				=	6,
+	PLAYER_USE_OBJECT		=	7,
+	PLAYER_DROP_OBJECT		=	8,
+	PLAYER_SHOOT			=	9,
+	PLAYER_POSITION			=	10,
+	PLAYER_ROTATION			=	11,
+	PLAYER_DEPLOY_TRAP 		=	12,
+	PLAYER_ALLIANCE			=	13,
+	PLAYER_RESET_RECEIVER	=	14
 	
 };
 

@@ -12,7 +12,8 @@
 #include "./../Objects/Grail.h"
 #include "./../Npcs/Npc.h"
 #include "./../Npcs/NpcSelector.h"
-#include "./../Includes/NPCTypes.h"
+#include <NPCTypes.h>
+#include <PotionTypes.h>
 
 class ObjectManager{
 public:
@@ -24,13 +25,14 @@ public:
 	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Switch* AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 
 	void ClearMap();
 	void DeletePotion(Potion* p);
 	void Update(float deltaTime);
+	void DrawNpcMenu();
 
 private:
 	void UpdateGrail(float deltaTime);
@@ -39,14 +41,15 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
+	void UpdateNpcs();
 
-	vector<Block*>		blocks;
-	vector<Door*>		doors;
-	vector<Switch*>		switchs;
-	vector<Potion*>		potions;
-	vector<Fountain*>	fountains;
-	vector<Npc*>		npcs;
-	Grail*				grail;
+	vector<Block*>				blocks;
+	vector<Door*>				doors;
+	vector<Switch*>				switchs;
+	vector<Potion*>				potions;
+	vector<Fountain*>			fountains;
+	vector<Npc*>				npcs;
+	Grail*						grail;
 
 	ObjectManager();
 	static ObjectManager* instance; 
