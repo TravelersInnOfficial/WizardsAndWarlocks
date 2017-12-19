@@ -3,11 +3,8 @@ Target := WizardsAndWarlocks
 
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
-AIPath				:= ./obj/AI/Tasks
-SteeringPath		:= ./obj/AI/SteeringBehaviour
-PathfindingPath		:= ./obj/AI/Pathfinding
 
-SOURCE_DIRS			:= $(shell find ./src -maxdepth 1 -type d -not -path "./src/.vscode" -not -path "./src" -printf '$(BuildPath)/%f ')
+SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
 SourcePath			:= $(shell find src -name '*.cpp')
 
 CXX					:= clang++
@@ -19,6 +16,8 @@ LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -l
 EXECUTABLE 			:= $(BinPath)/$(Target)
 SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)
 OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
+
+SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 
 #MAKE OPTIONS
 .PHONY: all clean
@@ -40,9 +39,6 @@ prepare:
 	$(info ==============================================)
 	@mkdir -p $(BinPath)
 	@mkdir -p $(SOURCE_DIRS)
-	@mkdir -p $(AIPath)
-	@mkdir -p $(SteeringPath)
-	@mkdir -p $(PathfindingPath)
 
 clean:
 	$(info ==============================================)
