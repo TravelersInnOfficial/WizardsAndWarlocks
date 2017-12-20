@@ -4,6 +4,7 @@
 #include "Potion.h"
 #include <PotionTypes.h>
 
+
 // LifePotion: Recovers Player 20 HP
 class LifePotion: public Potion{
 public:

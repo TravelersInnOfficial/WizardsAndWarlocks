@@ -189,7 +189,7 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
-		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject(); }
+		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(0,this); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }

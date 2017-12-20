@@ -24,9 +24,9 @@ class Player: public Entidad{
 		void CreatePlayer();
 		void PlayerInit();
 		virtual void Update();
-		SoundEvent* drinkEvent;
 		SoundEvent* dieEvent;
 		SoundEvent* damageEvent;
+		SoundEvent* drinkEvent;
 
 		void GetNetInput();
 		void SetNetInput();

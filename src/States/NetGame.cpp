@@ -32,7 +32,7 @@ NetGame::NetGame(){
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
+	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;

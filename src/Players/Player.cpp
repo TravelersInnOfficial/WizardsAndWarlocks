@@ -26,9 +26,9 @@ Player::Player(bool isPlayer1){
 	PlayerInit();
 	CreatePlayer();
 
-	drinkEvent = SoundSystem::getInstance()->getEvent("event:/Drink");
-	damageEvent = SoundSystem::getInstance()->getEvent("event:/Hit");
-	dieEvent = SoundSystem::getInstance()->getEvent("event:/Die");
+	damageEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Hit");
+	dieEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Die");
+	drinkEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Drink");
 }
 
 void Player::PlayerInit(){
@@ -161,14 +161,15 @@ void Player::Jump(){
 }
 
 void Player::ChangeHP(float HP){
+	if (HP < 0)  {damageEvent->setPosition(m_position); ;damageEvent->start();}
 	if(m_HP + HP > 100) m_HP = 100;
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
-	else {m_HP += HP; if(!damageEvent->isPlaying()) damageEvent->start();}
+	else {m_HP += HP;}
 }
 
 bool Player::ChangeMP(float MP){
 	bool toRet = false;
-	
+
 	if(m_MP + MP >= 0){
 		m_MP += MP;
 		toRet = true;
@@ -207,7 +208,7 @@ void Player::Raycast(){
 }
 
 void Player::Die(){
-	if(!dieEvent->isPlaying()) dieEvent->start();
+	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
 	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
@@ -236,7 +237,7 @@ void Player::DropObject(){
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		if(!drinkEvent->isPlaying()) drinkEvent->start();
+		if(!drinkEvent->isPlaying()) {drinkEvent->setPosition(m_position); drinkEvent->start();}
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;

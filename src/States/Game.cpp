@@ -20,8 +20,7 @@ Game::Game(){
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Footsteps");
-	std::cout << "eeee" << std::endl;
+	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
@@ -60,13 +59,16 @@ bool Game::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-		if(!footstepEvent->isPlaying()) footstepEvent->start();
+		if(!footstepEvent->isPlaying()){ footstepEvent->setPosition(playerOne->GetPos());footstepEvent->start();}
 		s_engine->setListenerPosRot(playerOne->GetPos(), playerOne->GetRot());
 		
 	}
 	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
 		if(footstepEvent->isPlaying()) footstepEvent->stop();
 	}
+
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
 
 	return end;
 }
