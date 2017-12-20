@@ -13,7 +13,6 @@ Burned::Burned(float time, int d):Effect(time){
 
 void Burned::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
-	std::cout<<"QUEMANDO ENEMIGO CON "<<-damage<<"\n";
 }
 
 //================================================================
@@ -78,6 +77,18 @@ void Paralyzed::RemoveEffect(Player* p){
 	float vel = p->GetMaxVelocity();
 	vel = vel*factor;
 	p->SetMaxVelocity(vel);
+}
+
+//================================================================
+// SILENCED
+//================================================================
+Silenced::Silenced(float time):Effect(time){
+}
+
+void Silenced::ApplyEffect(Player* p){
+}
+
+void Silenced::RemoveEffect(Player* p){
 }
 
 //================================================================

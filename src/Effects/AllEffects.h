@@ -64,21 +64,17 @@ private:
 // WEAK_SILENCED
 class Silenced: public Effect{
 public:
-	Silenced(float time, float value);
+	Silenced(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
-private:
-	float factor;
 };
 
 // WEAK_GHOSTDISTORSION
 class GhostDistorsion: public Effect{
 public:
-	GhostDistorsion(float time, float value);
+	GhostDistorsion(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
-private:
-	float factor;
 };
 
 // WEAK_MADNESS
@@ -108,5 +104,68 @@ private:
 ///	UPGRADES 	////////////////////////////
 ////////////////////////////////////////////
 
+// POWERUP_DAMAGE
+class DamageUp: public Effect{
+public:
+	DamageUp(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_DEFENSE
+class DefenseUp: public Effect{
+public:
+	DefenseUp(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_ELEMDEFENSE
+class ElementUp: public Effect{
+public:
+	ElementUp(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_SPEED
+class SpeedUp: public Effect{
+public:
+	SpeedUp(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_UNTARGET
+class Untargetable: public Effect{
+public:
+	Untargetable(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_FIRE
+class FireShots: public Effect{
+public:
+	FireShots(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_POISON
+class PoisonShots: public Effect{
+public:
+	PoisonShots(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
+
+// POWERUP_INVISIBLE
+class Invisible: public Effect{
+public:
+	Invisible(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+};
 
 #endif

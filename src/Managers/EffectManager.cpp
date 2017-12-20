@@ -97,6 +97,38 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		case WEAK_SLOWEDDOWN:
 			e = new SlowedDown(6.0f, 10.0f);
 			break;
+		case WEAK_POISONED:
+			e = new Poisoned(6.0f, 4.0f);
+			break;
+		case WEAK_SILENCED:
+			e = new Silenced(6.0f);
+			break;
+
+		case POWERUP_DAMAGE:
+			e = new DamageUp(7.0f);
+			break;
+		case POWERUP_DEFENSE:
+			e = new DefenseUp(7.0f);
+			break;
+		case POWERUP_ELEMDEFENSE:
+			e = new ElementUp(7.0f);
+			break;
+		case POWERUP_SPEED:
+			e = new SpeedUp(10.0f);
+			break;
+		case POWERUP_UNTARGET:
+			e = new Untargetable(5.0f);
+			break;
+		case POWERUP_FIRE:
+			e = new FireShots(7.0f);
+			break;
+		case POWERUP_POISON:
+			e = new PoisonShots(7.0f);
+			break;
+		case POWERUP_INVISIBLE:
+			e = new Invisible(7.0f);
+			break;
+		
 		default:
 			e = new Effect(5.0f);
 			break;
