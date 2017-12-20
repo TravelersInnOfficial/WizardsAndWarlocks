@@ -1,4 +1,5 @@
 #include "AllPotions.h"
+#include "../Managers/EffectManager.h"
 
 // LIFE POTION
 LifePotion::LifePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
@@ -26,26 +27,31 @@ void ManaPotion::Use(Player* p)
 
 // ICE POTION
 IcePotion::IcePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 60, "")
+:Potion(TScale, 60, "./../assets/textures/potions/manaPotion.png")
 {
 	CreatePotion(TPosition, TRotation);
 }
 
 void IcePotion::Use(Player* p)
 {
+	// add 60 hp and freeze player
 	p->ChangeHP(value);
+	EffectManager::GetInstance()->AddEffect(p, WEAK_FROZEN);
 }
 
 // ELECTRIC POTION
 ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 60, "")
+:Potion(TScale, 60, "./../assets/textures/potions/electricPotion.png")
 {
 	CreatePotion(TPosition, TRotation);
 }
 
 void ElectricPotion::Use(Player* p)
 {
+	// add 60 hp and paralyze player
 	p->ChangeHP(value);
+	EffectManager::GetInstance()->AddEffect(p, WEAK_PARALYZED);
+
 }
 
 // FIRE POTION

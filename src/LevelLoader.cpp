@@ -56,13 +56,14 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
             int idDoor = j["Objects"][i]["ID"];
             doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
         }
-        else if(j["Objects"][i]["Type"] == "PotionSpawner"){
-            objManager->AddBlock(position, size, rotation, "../assets/textures/red.jpg");
-            position.Y += 1;
+		else if(j["Objects"][i]["Type"] == "LifePotion"){
             objManager->AddPotion(position, size, rotation, POTION_LIFE);
         }
-		else if(j["Objects"][i]["Type"] == "Potion"){
+		else if(j["Objects"][i]["Type"] == "ManaPotion"){
             objManager->AddPotion(position, size, rotation, POTION_MANA);
+        }
+		else if(j["Objects"][i]["Type"] == "ElectricPotion"){
+            objManager->AddPotion(position, size, rotation, POTION_ELECTRIC);
         }
         else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
             objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");
