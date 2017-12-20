@@ -15,7 +15,7 @@ Game::Game(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/MapaEntrega.json");
+	loader.LoadLevel("../assets/json/Lobby.json");
 	objectManager->AddNpc(vector3df(1.5,-1.25,4.5), vector3df(2,2,2), vector3df(0,180,0), NPC_SELECTOR);
 
 	// Sound Engine
@@ -55,7 +55,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_H)){
 		LevelLoader loader;
 		ObjectManager::GetInstance()->ClearMap();
-		loader.LoadLevel("../assets/json/map.json");
+		loader.LoadLevel("../assets/json/MapaEntrega.json");
 	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
