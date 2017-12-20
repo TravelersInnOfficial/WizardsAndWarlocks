@@ -32,7 +32,7 @@ Game::Game(){
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 	
 	//playerManager->AddAIPlayer();
-	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
+	//effectManager->AddEffect(playerOne, WEAK_PARALYZED);
 }
 
 Game::~Game(){

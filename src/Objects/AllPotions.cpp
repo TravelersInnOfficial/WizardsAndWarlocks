@@ -1,4 +1,4 @@
-#include "Potions.h"
+#include "AllPotions.h"
 
 // LIFE POTION
 LifePotion::LifePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)

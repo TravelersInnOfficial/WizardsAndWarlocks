@@ -94,7 +94,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new HechizoProyectil(-5, 0.0f, 0.25f);
 			break;
 		default:
-			h = 0;
+			h = NULL;
 	}
 	return h;
 }

@@ -6,7 +6,7 @@
 #include <vector>
 
 #include "./../Effects/Effect.h"
-#include "./../Effects/Burned.h"
+#include "./../Effects/AllEffects.h"
 #include "./../Players/Player.h"
 #include <EffectCodes.h>
 

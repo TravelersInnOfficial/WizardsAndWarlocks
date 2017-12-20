@@ -1,5 +1,5 @@
 #include "ObjectManager.h"
-#include "./../Objects/Potions.h"
+#include "./../Objects/AllPotions.h"
 
 ObjectManager* ObjectManager::instance = 0;
 

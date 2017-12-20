@@ -82,17 +82,24 @@ void EffectManager::UpdateEffects(float deltaTime){
 Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
-		case EFFECT_BASIC:
+		case WEAK_BASIC:
 			e = new Effect(5.0f);
 			break;
-		case EFFECT_BURNED:
-			e = new Burned(6.0f, 10);
+		case WEAK_BURNED:
+			e = new Burned(6.0f, 5);
 			break;
-		case EFFECT_SLOWEDDOWN:
+		case WEAK_FROZEN:
+			e = new Frozen(6.0f, 10.0f);
+			break;
+		case WEAK_PARALYZED:
+			e = new Paralyzed(2.0f, 1000.0f);
+			break;
+		case WEAK_SLOWEDDOWN:
 			e = new SlowedDown(6.0f, 10.0f);
 			break;
 		default:
 			e = new Effect(5.0f);
+			break;
 	}
 	return e;
 }

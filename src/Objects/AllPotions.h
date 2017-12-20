@@ -1,5 +1,5 @@
-#ifndef POTIONS_H
-#define POTIONS_H
+#ifndef ALLPOTIONS_H
+#define ALLPOTIONS_H
 
 #include "Potion.h"
 #include <PotionTypes.h>
