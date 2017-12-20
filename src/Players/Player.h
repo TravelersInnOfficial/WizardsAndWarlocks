@@ -13,6 +13,7 @@
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../NetworkEngine/NetworkEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 
 class Potion;
 
@@ -23,7 +24,10 @@ class Player: public Entidad{
 		void CreatePlayer();
 		void PlayerInit();
 		virtual void Update();
-		
+		SoundEvent* drinkEvent;
+		SoundEvent* dieEvent;
+		SoundEvent* damageEvent;
+
 		void GetNetInput();
 		void SetNetInput();
 		NetworkObject* GetNetworkObject();

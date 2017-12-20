@@ -20,7 +20,8 @@ Game::Game(){
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
+	footstepEvent = s_engine->getEvent("event:/Footsteps");
+	std::cout << "eeee" << std::endl;
 
 	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
