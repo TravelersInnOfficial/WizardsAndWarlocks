@@ -24,7 +24,7 @@ bool HasArrived::run(Blackboard* bb){
         	vector3df dir = tKin.position - cKin.position;
         	float length = dir.length();
 
-        	std::cout<<length<<std::endl;
+        	//std::cout<<length<<std::endl;
 
         	if(length<arrivedTarget){
         		bb->CleanPuntero(AI_TARGET);

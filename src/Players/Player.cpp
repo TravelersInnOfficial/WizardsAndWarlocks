@@ -24,6 +24,9 @@ Player::Player(bool isPlayer1){
 
 	networkObject = NULL;
 
+	currentSpell = 0;
+	numberSpells = 3;   // rango de hechizos [0-numberSpells]
+
 	PlayerInit();
 	CreatePlayer();
 
@@ -106,6 +109,14 @@ void Player::Update(){
 
 	if(moving) moving = false;
 	else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+}
+
+void Player::ChangeCurrentSpell(int value){
+	int tempCurrentSpell = currentSpell + value;
+	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
+		currentSpell = tempCurrentSpell;
+	}
+	std::cout<<currentSpell<<std::endl;
 }
 
 void Player::positionCamera(){

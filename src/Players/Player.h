@@ -29,20 +29,19 @@ class Player: public Entidad{
 		SoundEvent* damageEvent;
 		SoundEvent* drinkEvent;
 
-		void GetNetInput();
-		void SetNetInput();
-		NetworkObject* GetNetworkObject();
-
+		// Actions
 		void Move(float, float);
 		void MoveX(int);
 		void MoveZ(int);
 		void Jump();
 		void ChangeHP(float);
 		bool ChangeMP(float);
+		void ChangeCurrentSpell(int);
 		void Respawn();
 		void Raycast();
 		void Die();
 
+		// Sensorial Functions
 		void SendSignal();
 
 		// Functions Object
@@ -51,6 +50,12 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 
+		// Network Functions
+		void GetNetInput();
+		void SetNetInput();
+		NetworkObject* GetNetworkObject();
+
+		//Geters
 		bool IsPlayerOne();
 		vector3df GetAngularVelocity();
 		float GetPosX();
@@ -58,7 +63,6 @@ class Player: public Entidad{
 		float GetPosZ();
 		vector3df GetPos();
 		vector3df GetHeadPos();
-
 		float GetRotY();
 		vector3df GetRot();
 		float GetWidth();
@@ -71,6 +75,7 @@ class Player: public Entidad{
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
 
+		// Seters
 		void SetPosition(vector3df);
 		void SetPosX(float);
 		void SetPosY(float);
@@ -85,32 +90,35 @@ class Player: public Entidad{
 
 	protected:
 
-		vector3df m_position;
-		vector3df m_dimensions;
-		vector3df rotation;
+		vector3df 		m_position;			// Posicion del jugador
+		vector3df 		m_dimensions;		// Dimensiones del jugador
+		vector3df 		rotation;			// Rotacion del jugador
 
-		float max_velocity;
-		float raycastDistance;
+		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
+		float 			raycastDistance;	// Distancia del rayo de RayCast
 
-		float m_HP;
-		float m_MP;
-		bool m_dead;
-		bool isPlayerOne;
-		Alliance playerAlliance;
+		int 			currentSpell;		// Hechizo Seleccionado para lanzar
+		int 			numberSpells;		// Numero de hechizos del jugador [0-numberSpells]
 
-		BT_Body* bt_body;
-		GBody* m_playerNode;
-		NetworkObject* networkObject;
+		float 			m_HP;				// Vida del jugador - 100HP
+		float			m_MP;				// Mana del jugador	- 100HP
+		bool 			m_dead;				// El jugador sigue vivo? Si/No
+		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
-		bool moving;
-		bool canJump;
-		float lastVerticalSpeed;
+		BT_Body* 		bt_body;			// Cuerpo físico del jugador
+		GBody* 			m_playerNode;		// Cuerpo visual del jugador
+		NetworkObject* 	networkObject;		// Objeto de red del jugador
 
-		Potion* potion;
+		bool 			moving;				// Se esta moviendo? Si/No
+		bool 			canJump;			// Puede saltar? Si/No
+		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
-		void checkMaxVelocity();
-		void positionCamera();
-		void UpdatePosShape();
+		Potion* potion;						// Pocion en el inventario
+
+		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
+		void positionCamera();				// Actualiza la posicion de la camera
+		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
 
 };
 

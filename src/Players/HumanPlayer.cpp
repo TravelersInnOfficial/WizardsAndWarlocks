@@ -23,6 +23,8 @@ void HumanPlayer::DeclareInput(){
 	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_F24, ACTION_RESET_RECEIVER);
+	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
+	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
 }
 
 void HumanPlayer::UpdateInput(){
@@ -191,10 +193,12 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
-		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(0,this); }
-		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(0,this); }
+		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	}
 }
 

@@ -8,7 +8,7 @@ protected:
 
     keyStatesENUM keyState[irr::KEY_KEY_CODES_COUNT];
     
-    static const int numMouseButtons = 2;
+    static const int numMouseButtons = 4;
     keyStatesENUM mouseButtonState[numMouseButtons];
     virtual bool OnEvent(const irr::SEvent& event);
 

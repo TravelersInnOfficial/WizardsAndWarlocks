@@ -60,12 +60,14 @@ void SpellManager::UpdateCooldown(float deltaTime){
 
 bool SpellManager::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
-		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
-		if(h!=NULL){							// Comprobamos si realmente existe
-			if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
-				p->ChangeMP(h->GetMP());
-				h->Lanzar(p);					// Lanzamos el hechizo
-				return true;
+		if(hechizos[num].find(p) != hechizos[num].end()){
+			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
+			if(h!=NULL){							// Comprobamos si realmente existe
+				if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
+					p->ChangeMP(h->GetMP());
+					h->Lanzar(p);					// Lanzamos el hechizo
+					return true;
+				}
 			}
 		}
 	}
@@ -74,11 +76,13 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 
 void SpellManager::ResetHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
-		Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
-		if(h!=NULL){							// Comprobamos si realmente existe
-			int mana = p->GetMP();
-			if(h->CheckMP(mana)){
-				h->EmpezarCast();				// Lanzamos el hechizo
+		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
+			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
+			if(h!=NULL){							// Comprobamos si realmente existe
+				int mana = p->GetMP();
+				if(h->CheckMP(mana)){
+					h->EmpezarCast();				// Lanzamos el hechizo
+				}
 			}
 		}
 	}
