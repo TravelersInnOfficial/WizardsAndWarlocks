@@ -12,7 +12,7 @@ public:
 	void Update();
 	void SetForces(vector3df v);
 	void SetAngularForce(vector3df v);
-
+	void Debug();
 private:
 
 	BehaviourTree* controller;

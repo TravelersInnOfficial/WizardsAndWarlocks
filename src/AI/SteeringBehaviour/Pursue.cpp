@@ -2,7 +2,7 @@
 
 float Pursue::maxPrediction = 1.0f;
 
-SteeringOutput Pursue::GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc){
+SteeringOutput Pursue::GetSteering(Kinematic cKin, Kinematic tKin){
 	vector3df direction = tKin.position - cKin.position;
 	float distance = direction.length();
 
@@ -16,5 +16,5 @@ SteeringOutput Pursue::GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc)
 
 	tKin.position = tKin.position + (tKin.velocity*prediction);
 
-	return Seek::GetSteering(cKin, tKin, maxAcc);
+	return Seek::GetSteering(cKin, tKin);
 }

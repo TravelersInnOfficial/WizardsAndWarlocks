@@ -14,7 +14,7 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
-
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 #include "./../PhysicsEngine/BulletEngine.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -24,6 +24,8 @@
 #include <SpellCodes.h>
 #include <EffectCodes.h>
 #include <NPCTypes.h>
+
+#include "./../Players/AIPlayer.h"
 
 class Game{
 public:
@@ -44,12 +46,13 @@ private:
 	float deltaTime;
 	float secondCounter = 0;
 
-	SpellManager* 		spellManager;
-	BulletManager* 		bulletManager;
-	EffectManager* 		effectManager;
-	ObjectManager*		objectManager;
-	PlayerManager*		playerManager;
-	TrapManager*		trapManager;
+	SpellManager* 			spellManager;
+	BulletManager* 			bulletManager;
+	EffectManager* 			effectManager;
+	ObjectManager*			objectManager;
+	PlayerManager*			playerManager;
+	TrapManager*			trapManager;
+	RegionalSenseManager* 	senseManager;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
@@ -57,6 +60,9 @@ private:
 	SoundEvent*			footstepEvent;
 
 	HumanPlayer*				playerOne;
+
+	// PARA EL DEBUG
+	AIPlayer* AL;
 
 	void setFps();
 	

@@ -1,7 +1,10 @@
 #include "Entidad.h"
 
-Entidad::Entidad(){
+int Entidad::ITERADORENTIDAD = 0;
 
+Entidad::Entidad(){
+	id = ITERADORENTIDAD;
+	ITERADORENTIDAD++;
 }
 
 Entidad::~Entidad(){

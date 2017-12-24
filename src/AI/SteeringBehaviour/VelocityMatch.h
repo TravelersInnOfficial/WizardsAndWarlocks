@@ -7,9 +7,10 @@
 
 class VelocityMatch{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc);
+	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
 	static float timeToTarget;
+	static float maxAcceleration;
 };
 
 

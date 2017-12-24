@@ -1,42 +1,39 @@
-#include "T_Seek.h"
-#include "./../../Players/Player.h"
+#include "T_Wander.h"
 #include "./../../Players/AIPlayer.h"
 
 #include <vector2d.h>
 #include <kinematicTypes.h>
 
-#include "./../SteeringBehaviour/Seek.h"
+#include "./../SteeringBehaviour/Wander.h"
+#include "./../SteeringBehaviour/ObstacleAvoidance.h"
 #include "./../SteeringBehaviour/LookWhereYoureGoing.h"
 
-T_Seek::T_Seek(){
+T_Wander::T_Wander(){
 	maxAcceleration = 30.0f;
 }
 
-bool T_Seek::run(Blackboard* bb){
+bool T_Wander::run(Blackboard* bb){
 	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
 	if(character!=NULL){
-		Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-		if(target!=NULL){
-
 			Kinematic cKin;
         	Kinematic tKin;
 
         	cKin = character->GetKinematic();
-        	tKin = target->kinematic;
 
-			SteeringOutput steering = Seek::GetSteering(cKin, tKin);
-
+        	SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
+        	if(steering.linear.length() == 0){
+        		steering = Wander::GetSteering(cKin);
+        	}else{
+        		SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
+        		steering.angular = steering2.angular;
+        	}
 			steering.linear.Y = 0;		// Para que no salga volando
 			character->SetForces(steering.linear);
-
-			steering = LookWhereYoureGoing::GetSteering(cKin);
-
 			vector2df linear = steering.angular;
 			//character->SetAngularForce(vector3df( (cos(cOri.Y)*linear.X) ,linear.Y, -(sin(cOri.Y)*linear.X)));
 			character->SetAngularForce(vector3df( 0 ,linear.Y, 0));
 
 			return true;
-		}
 	}
 	return false;
 }

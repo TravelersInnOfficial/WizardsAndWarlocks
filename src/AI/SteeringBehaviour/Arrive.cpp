@@ -4,10 +4,11 @@ float Arrive::slowRadius = 7.0f;
 float Arrive::targetRadius = 2.0f;
 float Arrive::maxSpeed = 6.0f;
 float Arrive::timeToTarget = 0.1f;
+float Arrive::maxAcceleration = 30.0f;
 
 // Valores a probar
 
-SteeringOutput Arrive::GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc){
+SteeringOutput Arrive::GetSteering(Kinematic cKin, Kinematic tKin){
 
 	SteeringOutput output;
 
@@ -32,9 +33,9 @@ SteeringOutput Arrive::GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc)
 	vector3df linear = targetVelocity - cKin.velocity; //targetVelocity
 	linear = linear / timeToTarget;	//timeToTarget
 
-	if(linear.length() > maxAcc){	// maxAcc
+	if(linear.length() > maxAcceleration){	// maxAcc
 		linear.normalize();
-		linear = linear * maxAcc;
+		linear = linear * maxAcceleration;
 	}
 
 	output.linear = linear;

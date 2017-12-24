@@ -27,9 +27,12 @@ public:
 	virtual void Contact(void* punt, EntityEnum tipo);
 	virtual void Interact(Player* p);
 	EntityEnum GetClase();
+	int GetId();
 	virtual ~Entidad();
 protected:
+	static int ITERADORENTIDAD;
 	EntityEnum clase;
+	int id;
 private:
 
 };

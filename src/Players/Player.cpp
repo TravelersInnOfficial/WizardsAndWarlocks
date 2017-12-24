@@ -4,6 +4,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
@@ -207,6 +208,11 @@ void Player::Raycast(){
 	}
 }
 
+void Player::SendSignal(){
+	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+	sense->AddSignal(id, AI_PLAYER, this, 5.0f, GetKinematic());
+}
+
 void Player::Die(){
 	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
@@ -294,6 +300,9 @@ void Player::UpdatePosShape(){
 	m_position = bt_body->GetPosition();
 	bt_body->Update();
 	m_playerNode->setPosition(m_position);
+
+	rotation = bt_body->GetRotation();
+	m_playerNode->setRotation(rotation * 180 / M_PI);
 }
 
 void Player::SetHP(float HP){m_HP = HP; }
@@ -319,6 +328,14 @@ float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
+Kinematic Player::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = GetPos();
+	cKin.orientation =  vector2df(GetRot());
+   	cKin.velocity = GetVelocity();
+    cKin.rotation = vector2df(GetAngularVelocity());
+    return cKin;
+}
 
 vector3df Player::GetHeadPos(){
 	float offset = -0.1;

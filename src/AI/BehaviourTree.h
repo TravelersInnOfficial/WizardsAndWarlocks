@@ -20,6 +20,7 @@ public:
     ~BehaviourTree();
     void run();
     void SetRoot(Task* t);
+    Blackboard* GetBlackboard();
     void AnyadirInformacion(AI_code name, void* value);
     void AnyadirInformacion(AI_code name, int value);
 private:

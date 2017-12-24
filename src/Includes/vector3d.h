@@ -81,6 +81,9 @@ public:
     void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
     void operator*=(const T v) { X = X*v; Y = Y*v; Z = Z*v; }
 
+    bool operator==(const vector3d<T> v) { if(v.X == X && v.Y == Y && v.Z == Z) return true; return false; }
+
+
     friend inline std::ostream& operator << (std::ostream &o,const vector3d<T> &v){
         o << "(" << v.X << ", " << v.Y << ", " << v.Z << ")";
         return o;

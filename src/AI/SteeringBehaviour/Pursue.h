@@ -9,7 +9,7 @@
 
 class Pursue: public Seek{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc);
+	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 
 private:
 	static float maxPrediction;

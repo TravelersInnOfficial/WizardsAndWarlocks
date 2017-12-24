@@ -9,6 +9,7 @@
 #include <Alliance.h>
 #include <ColliderMasks.h>
 #include <NetworkStructs.h>
+#include <kinematicTypes.h>
 #include "./../Entidad.h"
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -42,6 +43,8 @@ class Player: public Entidad{
 		void Raycast();
 		void Die();
 
+		void SendSignal();
+
 		// Functions Object
 		void CatchObject(Potion* p);
 		void DropObject();
@@ -65,6 +68,7 @@ class Player: public Entidad{
 		float GetMP();
 		bool GetDead();		
 		float GetMaxVelocity();
+		Kinematic GetKinematic();
 		vector3df GetVelocity();
 
 		void SetPosition(vector3df);

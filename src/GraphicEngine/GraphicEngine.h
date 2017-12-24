@@ -236,6 +236,8 @@ public:
     //
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
 
+    void Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal);
+
 private:
     GraphicEngine();
 

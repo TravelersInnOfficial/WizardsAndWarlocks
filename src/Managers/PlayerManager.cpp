@@ -24,8 +24,8 @@ Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 	return p;
 }
 
-Player* PlayerManager::AddAIPlayer(){
-	Player* p = new AIPlayer();
+AIPlayer* PlayerManager::AddAIPlayer(){
+	AIPlayer* p = new AIPlayer();
 	players.push_back(p);
 	return p;
 }
@@ -63,4 +63,12 @@ void PlayerManager::DeletePlayers(){
 		delete p;
 	}
 	playersToDelete.clear();
+}
+
+void PlayerManager::SendVisualSignal(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->SendSignal();
+	}
 }

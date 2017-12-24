@@ -1,6 +1,6 @@
 #include "LookWhereYoureGoing.h"
 
-SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin){
+SteeringOutput LookWhereYoureGoing::GetSteering(Kinematic cKin){
 	SteeringOutput output;
 	if(cKin.velocity.length() == 0){
 		return output;
@@ -8,6 +8,7 @@ SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin){
 
 	vector2df angleXY(cKin.velocity.X, cKin.velocity.Y);
 
+	Kinematic tKin;
 	tKin.orientation = vector2df(
 							atan2(-cKin.velocity.Y, angleXY.length()),
 							atan2(cKin.velocity.X, cKin.velocity.Z)

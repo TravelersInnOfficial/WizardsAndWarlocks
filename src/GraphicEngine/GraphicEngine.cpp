@@ -366,3 +366,23 @@ void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
 	privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
 }
 
+
+void GraphicEngine::Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal){
+	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
+
+	std::map<int,std::vector<vector3df>>::iterator it = NodePointData.begin();
+	for(; it != NodePointData.end(); ++it){
+		std::vector<vector3df> PointData = it->second;
+		std::vector<vector3df>::iterator pointIt = PointData.begin();
+		for (; pointIt != PointData.end(); ++pointIt){
+			vector3df p = PointData.at(0);
+			normal->X = p.X;
+			normal->Y = p.Y;
+			normal->Z = p.Z;
+			p = PointData.at(1);
+			point->X = p.X;
+			point->Y = p.Y;
+			point->Z = p.Z;
+		}
+	}
+}

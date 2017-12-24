@@ -80,6 +80,7 @@ static int raycastCW		= C_DOOR
 							| C_WALL
 							| C_PROJECTILE
 							| C_TRAP
-							| C_NPC;
+							| C_NPC
+							| C_PLAYER;
 
 #endif

@@ -60,9 +60,8 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     BulletEngine::GetInstance()->AddRigidBody(m_RigidBody, mask, collideWith);
 }
 
-void BT_Body::ApplyTorque(vector3df force){
+void BT_Body::SetAngularVelocity(vector3df force){
 	m_RigidBody->setAngularVelocity(btVector3(force.X, force.Y, force.Z));
-	//std::cout<<m_RigidBody->getTotalTorque().getZ()<<std::endl;
 }
 
 void BT_Body::SetAngularFactor(vector3df v){

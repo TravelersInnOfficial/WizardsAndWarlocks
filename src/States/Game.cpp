@@ -8,6 +8,7 @@ Game::Game(){
 	objectManager	= ObjectManager::GetInstance();
 	playerManager	= PlayerManager::GetInstance();
 	trapManager		= TrapManager::GetInstance();
+	senseManager	= RegionalSenseManager::GetInstance();
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
@@ -31,7 +32,7 @@ Game::Game(){
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 	
-	//playerManager->AddAIPlayer();
+	AL = playerManager->AddAIPlayer();
 	//effectManager->AddEffect(playerOne, WEAK_PARALYZED);
 }
 
@@ -41,6 +42,7 @@ Game::~Game(){
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete senseManager;
 }
 
 bool Game::Input(){
@@ -88,6 +90,8 @@ void Game::Update(){
 
 	g_engine->UpdateReceiver();
 
+	senseManager->SendSignals();
+
 	setFps();
 }
 
@@ -108,6 +112,7 @@ void Game::Draw(){
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	f_engine->DebugDrawWorld();
 	objectManager->DrawNpcMenu();
+	AL->Debug();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

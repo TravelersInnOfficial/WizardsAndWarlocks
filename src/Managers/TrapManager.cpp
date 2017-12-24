@@ -62,21 +62,11 @@ bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End
 }
 
 bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
-	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
-	int ID = 0;
 	vector3df point(0,0,0);
 	vector3df normal(0,0,0);
+	GraphicEngine::getInstance()->Raycast(Start,End, &point, &normal);
 
-	std::map<int,std::vector<vector3df>>::iterator it = NodePointData.begin();
-	for(; it != NodePointData.end(); ++it){
-		ID = it->first;
-		std::vector<vector3df> PointData = it->second;
-		std::vector<vector3df>::iterator pointIt = PointData.begin();
-		for (; pointIt != PointData.end(); ++pointIt){
-			normal = PointData.at(0);
-			point = PointData.at(1);
-		}
-	}
+
 	//std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
 	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)

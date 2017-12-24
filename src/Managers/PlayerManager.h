@@ -14,13 +14,12 @@ public:
 	~PlayerManager();
 
 	Player* AddHumanPlayer(bool isPlayer1 = true);
-	Player* AddAIPlayer();
+	AIPlayer* AddAIPlayer();
 	void UpdatePlayers(bool isNetGame = false);
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
-
-	Player* GetOne(){return players[0];}
-
+	void SendVisualSignal();
+	
 private:
 
 	vector<Player*>	players;

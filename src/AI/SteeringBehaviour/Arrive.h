@@ -7,12 +7,13 @@
 
 class Arrive{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin, float maxAcc);
+	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
 	static float slowRadius;
 	static float targetRadius;
 	static float maxSpeed;
 	static float timeToTarget;
+	static float maxAcceleration;
 };
 
 #endif
