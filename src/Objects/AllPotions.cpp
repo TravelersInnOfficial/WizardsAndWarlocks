@@ -1,117 +1,117 @@
 #include "AllPotions.h"
 #include "../Managers/EffectManager.h"
 
-// LIFE POTION
+// ===============================================================================================//
+//
+//	LIFE POTION
+//	Recovers 20 hp
+//
+// ===============================================================================================//
+
 LifePotion::LifePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "./../assets/textures/potions/lifePotion.png")
-{
+:Potion(TScale, 20, "./../assets/textures/potions/lifePotion.png"){
 	CreatePotion(TPosition, TRotation);
 }
 
-void LifePotion::Use(Player* p)
-{
+void LifePotion::Use(Player* p){
 	p->ChangeHP(value);
 }
 
-// MANA POTION
+// ===============================================================================================//
+//
+//	MANA POTION
+//	Recovers 20 MP
+//
+// ===============================================================================================//
+
 ManaPotion::ManaPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "./../assets/textures/potions/manaPotion.png")
-{
+:Potion(TScale, 20, "./../assets/textures/potions/manaPotion.png"){
 	CreatePotion(TPosition, TRotation);
 }
 
-void ManaPotion::Use(Player* p)
-{
+void ManaPotion::Use(Player* p){
 	p->ChangeMP(value);
 }
 
-// ICE POTION
+// ===============================================================================================//
+//
+//	ICE POTION
+//	Recovers 60 hp and freeze player
+//
+// ===============================================================================================//
+
 IcePotion::IcePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 60, "./../assets/textures/potions/manaPotion.png")
-{
+:Potion(TScale, 60, "./../assets/textures/potions/manaPotion.png"){
 	CreatePotion(TPosition, TRotation);
 }
 
-void IcePotion::Use(Player* p)
-{
-	// add 60 hp and freeze player
+void IcePotion::Use(Player* p){
 	p->ChangeHP(value);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_FROZEN);
 }
 
-// ELECTRIC POTION
+// ===============================================================================================//
+//
+//	ELECTRIC POTION
+//	Recovers 60 hp and paralyze player
+//
+// ===============================================================================================//
+
 ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 60, "./../assets/textures/potions/electricPotion.png")
-{
+:Potion(TScale, 60, "./../assets/textures/potions/electricPotion.png"){
 	CreatePotion(TPosition, TRotation);
 }
 
-void ElectricPotion::Use(Player* p)
-{
-	// add 60 hp and paralyze player
+void ElectricPotion::Use(Player* p){
 	p->ChangeHP(value);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_PARALYZED);
 
 }
 
-// FIRE POTION
+// ===============================================================================================//
+//
+//	FIRE POTION
+//	Recovers 20 HP and applies fire hits
+//
+// ===============================================================================================//
+
 FirePotion::FirePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "")
-{
+:Potion(TScale, 20, ""){
 	CreatePotion(TPosition, TRotation);
 }
 
-void FirePotion::Use(Player* p)
-{
+void FirePotion::Use(Player* p){
 	p->ChangeHP(value);
 }
 
-// POISON POTION
+// ===============================================================================================//
+//
+//  POISON POTION
+//	Recovers 20 HP and applies poison hits
+//
+// ===============================================================================================//
+
 PoisonPotion::PoisonPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "")
-{
+:Potion(TScale, 20, ""){
 	CreatePotion(TPosition, TRotation);
 }
 
-void PoisonPotion::Use(Player* p)
-{
+void PoisonPotion::Use(Player* p){
 	p->ChangeHP(value);
 }
 
-// ELEMENTAL POTION
+// ===============================================================================================//
+//
+//	ELEMENTAL POTION
+//	Recovers 20 HP and applies elemental resistance
+//
+// ===============================================================================================//
+
 ElementalPotion::ElementalPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "")
-{
+:Potion(TScale, 20, ""){
 	CreatePotion(TPosition, TRotation);
 }
 
-void ElementalPotion::Use(Player* p)
-{
+void ElementalPotion::Use(Player* p){
 	p->ChangeHP(value);
 }
-
-
-	/*
-			p->ChangeMP(value);
-			goto Switch_End;
-
-		break;
-		case LifePotion:
-			//does nothing special
-		break;
-		case IcePotion:
-			//freeze player
-		break;
-		case ElectricPotion:
-			//paralyze player:
-		break;
-		case FirePotion:
-			//apply fire hits
-		break;
-		case PoisonPotion:
-			//apply poison hits
-		break;
-		case ElementalPotion:
-			//apply elemental spell damage reduction
-		break;
-	}*/

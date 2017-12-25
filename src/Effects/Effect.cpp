@@ -1,5 +1,10 @@
 #include "Effect.h"
 
+/**
+ * @brief Constructor basico de hechizo
+ * 
+ * @param time - tiempo de duracion del efecto
+ */
 Effect::Effect(float time){
 	currentTime = time;
 }

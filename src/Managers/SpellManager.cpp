@@ -97,6 +97,9 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
 			h = new HechizoProyectil(-5, 0.0f, 0.25f);
 			break;
+		case SPELL_DESPERIATONMURI:		// Hechizo Invocacion Muro
+			h = new DesperiatonMuri(-5, 0.0f, 0.25f);
+			break;
 		default:
 			h = NULL;
 	}

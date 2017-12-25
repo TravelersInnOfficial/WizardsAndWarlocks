@@ -3,16 +3,16 @@
 
 enum AI_code
 {
-	AI_CHARACTER	= 0x00,	//PERSONAJE DE LA IA
-	AI_TARGET		= 0x01,	//TARGET DE LA IA
+	AI_CHARACTER	= 0x00,	// Personaje de la IA
+	AI_TARGET		= 0x01,	// Target de la IA (Kinematic Object)
 	//CODIGOS SENSE
-	AI_PLAYER		= 0x02	//CODIGO PLAYER SENSE
+	AI_PLAYER		= 0x02	// Codigo player sense
 };
 
 enum AI_modalities
 {
 	AI_SIGHT		= 0x00,	// Vision
-	AI_HEARING		= 0x01
+	AI_HEARING		= 0x01	// Oido
 };
 
 #endif

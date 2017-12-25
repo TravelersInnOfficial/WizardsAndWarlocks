@@ -22,15 +22,15 @@ private:
 	void WorkDoor();
 	void UpdatePosShape();
 
-	bool working;
-	int min;
-	int max;
-	int increment;
+	bool 		working;		// Se esta abriendo o cerrando? Si/No
+	int 		min;			// Minimo angulo a rotar
+	int 		max;			// Maximo angulo a rotar
+	int 		increment;		// Incremento a cada frame
 
-	vector3df rotation;
+	vector3df 	rotation;		// Rotacion actual de la puerta
 
-	BT_Body*        bt_body;
-    GBody*          m_doorNode;
+	BT_Body*   	bt_body;		// Cuerpo fisico de la puerta
+    GBody*    	m_doorNode;		// Cuerpo visual de la puerta
 };
 
 #endif

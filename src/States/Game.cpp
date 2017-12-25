@@ -31,6 +31,7 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
+	spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
 	
 	AL = playerManager->AddAIPlayer();
 

@@ -3,8 +3,7 @@
 
 #include <iostream>
 #include <map>
-#include "./../Spells/Hechizo.h"
-#include "./../Spells/HechizoProyectil.h"
+#include "./../Spells/AllSpells.h"
 #include <SpellCodes.h>
 #include "./../Players/Player.h"
 

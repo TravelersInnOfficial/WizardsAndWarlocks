@@ -12,7 +12,7 @@ public:
 	virtual void UpdateEffect(Player* p);
 	virtual void RemoveEffect(Player* p);
 protected:
-	float currentTime;
+	float currentTime;		// Tiempo de duracion del efecto
 };
 
 #endif

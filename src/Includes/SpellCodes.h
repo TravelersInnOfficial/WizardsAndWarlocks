@@ -4,8 +4,8 @@
 enum SPELLCODE
 {
 	SPELL_BASIC          	= 0x01,
-	SPELL_PROYECTIL			= 0x02
-
+	SPELL_PROYECTIL			= 0x02,
+	SPELL_DESPERIATONMURI	= 0x03
 };
 
 #endif
