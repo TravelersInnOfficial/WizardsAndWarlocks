@@ -74,15 +74,32 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 	return false;
 }
 
-void SpellManager::ResetHechizo(int num, Player* p){
+/**
+ * @brief Comprueba si hay suficiente mana como para lanzarlo y lo resetea en caso afirmativo
+ * 
+ * @param num Numero de hechizo
+ * @param p Player que lanza el hechizo
+ */
+void SpellManager::StartHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
 				int mana = p->GetMP();
 				if(h->CheckMP(mana)){
-					h->EmpezarCast();				// Lanzamos el hechizo
+					h->EmpezarCast();				
 				}
+			}
+		}
+	}
+}
+
+void SpellManager::ResetHechizo(int num, Player* p){
+	if(num>=0 && num<numHechizos){
+		if(hechizos[num].find(p) != hechizos[num].end()){
+			Hechizo* h = hechizos[num][p];
+			if(h!=NULL){
+				h->ResetSpell();
 			}
 		}
 	}
@@ -95,10 +112,13 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new Hechizo(-70, 2.0f, 5.0f);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil(-5, 0.0f, 0.25f);
+			h = new HechizoProyectil(-5, 0.0f, 1.0f);
 			break;
 		case SPELL_DESPERIATONMURI:		// Hechizo Invocacion Muro
 			h = new DesperiatonMuri(-5, 0.0f, 0.25f);
+			break;
+		case SPELL_GUIVERNUMVENTUS:		// Hechizo continuo hielo
+			h = new GuivernumVentus(-1, 0.0f, 0.0f);
 			break;
 		default:
 			h = NULL;

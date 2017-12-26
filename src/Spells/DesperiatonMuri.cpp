@@ -12,5 +12,10 @@ void DesperiatonMuri::Lanzar(Player* p){	// Estaria bien que se pusiera justo en
 	pos.X = pos.X + sin(rot.Y)*dist;
 	pos.Z = pos.Z + cos(rot.Y)*dist;
 
+	rot.Z = 0.0f; rot.X = 0.0f;
+	rot.Y = rot.Y * 180 / M_PI;
+
 	objectMaster->AddInvocation(pos, vector3df(1,1,1), rot);
+
+	Hechizo::Lanzar(p);
 }

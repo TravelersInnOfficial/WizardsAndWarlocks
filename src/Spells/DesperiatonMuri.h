@@ -1,9 +1,11 @@
 #ifndef DESPERIATONMURI_H
 #define DESPERIATONMURI_H
 
+#include <iostream>
+#include <math.h>
+
 #include "Hechizo.h"
 #include "./../Players/Player.h"
-#include <BulletCodes.h>
 
 class DesperiatonMuri: public Hechizo{
 public:

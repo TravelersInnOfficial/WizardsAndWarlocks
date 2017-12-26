@@ -13,6 +13,7 @@
 #include "./../Npcs/Npc.h"
 #include "./../Npcs/NpcSelector.h"
 #include "./../Objects/Invocation.h"
+#include "./../Objects/DamageArea.h"
 #include <NPCTypes.h>
 #include <PotionTypes.h>
 
@@ -31,6 +32,7 @@ public:
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
 
 	// Drawers
 	void DrawNpcMenu();
@@ -52,9 +54,11 @@ private:
 	void UpdateBlocks();
 	void UpdateNpcs();
 	void UpdateInvocations(float deltaTime);
+	void UpdateDamageAreas(float deltaTime);
 
 
 	vector<Invocation*>			invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
+	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo
 	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
 	vector<Door*>				doors;			// Vector donde se almacenan todas las puertas
 	vector<Switch*>				switchs;		// Vector donde se almacenan todos los interruptores

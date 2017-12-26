@@ -1,0 +1,1 @@
+Mirar que el player se guarda la rotacion en radianes, mientras que en las funciones de btBody hay que pasarlo en grados.

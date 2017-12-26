@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "./../Objects/DamageArea.h"
 Game::Game(){
 
 	spellManager 	= SpellManager::GetInstance();
@@ -32,10 +33,9 @@ Game::Game(){
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 	spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
+	spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
 	
 	AL = playerManager->AddAIPlayer();
-
-	//effectManager->AddEffect(playerOne, WEAK_PARALYZED);
 }
 
 Game::~Game(){

@@ -1,7 +1,7 @@
 #include "Proyectil.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Players/Player.h"
-#include "./../Invocation.h"
+#include "./../Objects/Invocation.h"
 
 Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
     direction = new vector3df(dir.X, dir.Y, dir.Z);

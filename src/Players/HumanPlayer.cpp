@@ -185,20 +185,26 @@ void HumanPlayer::ToggleMenu(bool newState){
 
 void HumanPlayer::CheckInput(){
 	if(!menuActivated){
+		// Movimiento
 		if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
 		if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
 		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
 		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
-		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+		// Acciones
+		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
-		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
-		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
-		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
-		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
+		// Hechizos
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
+		if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
+		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+		// Trampas
+		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+		// Menus
+		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
 	}
 }
 

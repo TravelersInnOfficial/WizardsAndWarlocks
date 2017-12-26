@@ -22,4 +22,6 @@ void HechizoProyectil::Lanzar(Player* p){
 
 	BulletManager* c = BulletManager::GetInstance();
 	c->AddProyectil(pos, vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X)), 0.05f, 30.0f, BULLET_BASIC);
+
+	Hechizo::Lanzar(p);
 }

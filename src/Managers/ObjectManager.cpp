@@ -112,6 +112,12 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 	return in;
 }
 
+DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation){
+	DamageArea* ar = new DamageArea(10, TPosition, TScale, TRotation);
+	damageAreas.push_back(ar);
+	return ar;
+}
+
 // ===================================================================================================== //
 //
 // DRAWERS
@@ -201,6 +207,13 @@ void ObjectManager::ClearMap(){
 	}
 	invocations.clear();
 
+	size = damageAreas.size();
+	for(int i=0; i<size; i++){
+		DamageArea* ar = damageAreas[i];
+		delete ar;
+	}
+	damageAreas.clear();
+
 	if(grail != NULL){
 		delete grail;
 		grail = NULL;
@@ -216,6 +229,7 @@ void ObjectManager::Update(float deltaTime){
 	UpdateBlocks();
 	UpdateNpcs();
 	UpdateInvocations(deltaTime);
+	UpdateDamageAreas(deltaTime);
 }
 
 // ===================================================================================================== //
@@ -283,6 +297,17 @@ void ObjectManager::UpdateInvocations(float deltaTime){
 		if(!(in->Update(deltaTime))){			// En el caso de que el update sea False es que hay que eliminarlo				
 			invocations.erase(invocations.begin() + i);
 			delete in;
+		}
+	}
+}
+
+void ObjectManager::UpdateDamageAreas(float deltaTime){
+	int size = damageAreas.size();
+	for(int i=size-1; i>=0; i--){
+		DamageArea* ar = damageAreas[i];
+		if(!(ar->Update(deltaTime))){
+			damageAreas.erase(damageAreas.begin() + i);
+			delete ar;
 		}
 	}
 }

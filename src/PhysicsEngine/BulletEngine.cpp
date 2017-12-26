@@ -162,7 +162,11 @@ void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeSt
 }
 
 void BulletEngine::motorProcessCallback(btScalar timeStep){
-	btCollisionObjectArray WorldObjects = m_dynamicsWorld->getCollisionObjectArray();
+	// El check Colision tambien detecta ghostobjects de forma por default
+	// Se duplicaban las colisiones de las areas de danyo
+	// Al comentar el codigo todo sigue funcionando correctamente
+
+	/*btCollisionObjectArray WorldObjects = m_dynamicsWorld->getCollisionObjectArray();
 	for (int i = 0; i < WorldObjects.size(); i++) {
 		btGhostObject *ghostObject = btGhostObject::upcast(WorldObjects[i]);
                if (!ghostObject) {
@@ -180,7 +184,7 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
 			ghost->Contact(pRigidBody->getUserPointer(), OvObj->GetClase());
 
 		}	
-	}
+	}*/
 }
 
 BulletEngine::~BulletEngine(){}
