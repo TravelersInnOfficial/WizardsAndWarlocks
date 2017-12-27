@@ -73,6 +73,9 @@ void HumanPlayer::SetNetInput(){
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
+
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 
@@ -162,6 +165,20 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, keystate, false, false);
 	}
 
+	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_UP);
+	if(keystate != -1){
+		controller->SetStatus(ACTION_CHANGE_SPELL_UP, (keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, keystate, false, false);
+	}
+
+	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_DOWN);
+	if(keystate != -1){
+		controller->SetStatus(ACTION_CHANGE_SPELL_DOWN, (keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, keystate, false, false);
+	}
+
 	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
 	if(objstate.X != 99999){
 		SetPosition(objstate);
@@ -191,18 +208,22 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
 		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+		
 		// Acciones
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+		
 		// Hechizos
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
 		if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+		
 		// Menus
 		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
 	}
