@@ -111,15 +111,23 @@ void AIPlayer::SetController(ACTION_ENUM action, keyStatesENUM state){
 }
 
 void AIPlayer::Steering2Controller(SteeringOutput steering){
+	// Ahora mismo por muy pequenya que sea la fuerza la IA se mueve
+	// Puede que en un futuro lo mejor sea comprobar el length del 
+	// vector fuerza, para ver si es tan pequenyo que no deberia
+	// moverse
+
+
+	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
 	vector3df linear = steering.linear;
 	float dir = atan2(linear.X, linear.Z);
+	// Luego le restamos la rotacion propia del personaje 
 	dir = rotation.Y - dir;
-	dir = dir*180.0f/M_PI;
+	dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
 
-	if(dir<-180) dir += 360;
+	if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
 	if(dir> 180) dir -=360;
 
-	float tempdir = abs(dir);
+	float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
 	if(tempdir<=60){
 		SetController(ACTION_MOVE_UP, DOWN);
 	}
@@ -127,17 +135,21 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 		SetController(ACTION_MOVE_DOWN, DOWN);
 	}
 
-	if(dir>=30 && dir<=150){
+	if(dir>=30 && dir<=150){					// En el caso de derecha, izquierda lo hacemos directamente con el valor
 		SetController(ACTION_MOVE_LEFT, DOWN);
 	}
 	else if(dir>=-120 && dir<=-30){
 		SetController(ACTION_MOVE_RIGHT, DOWN);
 	}
 
-	vector2df angular = steering.angular;
+	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
 }
 
 void AIPlayer::SetAllInput(keyStatesENUM state){
+	// Aunque ahora mismo se pongan todos, en un futuro solo deberían estar unos poco
+	// como los de movimiento
+	// En cambio con lo de hechizo como si hace falta realizar el casteo con pressed y down
+	// será el quien se encargue de pasarlo a released, o ya veremos como lo hacemos
 	controller->SetAllStatus(state);
 }

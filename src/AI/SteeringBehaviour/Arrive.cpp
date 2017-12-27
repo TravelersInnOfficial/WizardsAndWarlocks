@@ -1,7 +1,7 @@
 #include "Arrive.h"
 
-float Arrive::slowRadius = 7.0f;
-float Arrive::targetRadius = 2.0f;
+float Arrive::slowRadius = 3.0f;
+float Arrive::targetRadius = 0.5f;
 float Arrive::maxSpeed = 6.0f;
 float Arrive::timeToTarget = 0.1f;
 float Arrive::maxAcceleration = 30.0f;

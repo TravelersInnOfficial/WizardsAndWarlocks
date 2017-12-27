@@ -5,7 +5,7 @@
 #include <vector2d.h>
 #include <kinematicTypes.h>
 
-#include "./../SteeringBehaviour/Seek.h"
+#include "./../SteeringBehaviour/Arrive.h"
 #include "./../SteeringBehaviour/LookWhereYoureGoing.h"
 
 T_Seek::T_Seek(){
@@ -24,7 +24,7 @@ bool T_Seek::run(Blackboard* bb){
         	cKin = character->GetKinematic();
         	tKin = target->kinematic;
 
-			SteeringOutput steering = Seek::GetSteering(cKin, tKin);
+			SteeringOutput steering = Arrive::GetSteering(cKin, tKin);
 
 			/*
 			steering.linear.Y = 0;		// Para que no salga volando
