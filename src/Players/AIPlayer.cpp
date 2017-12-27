@@ -1,23 +1,28 @@
 #include "AIPlayer.h"
-#include "./../Managers/PlayerManager.h"
+#include "./../Managers/SpellManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
 AIPlayer::AIPlayer():Player(false){
-	controller = new BehaviourTree();
-	controller->AnyadirInformacion(AI_CHARACTER, this);
+	behaviour = new BehaviourTree();
+	behaviour->AnyadirInformacion(AI_CHARACTER, this);
+
+	controller = new PlayerController();
+	DeclareInput();
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
-	senseManager->AddSensor(&m_position, &rotation, 0.0f, controller->GetBlackboard());
+	senseManager->AddSensor(&m_position, &rotation, 0.0f, behaviour->GetBlackboard());
 }
 
 AIPlayer::~AIPlayer(){
-	delete controller;
+	delete behaviour;
 }
 
 void AIPlayer::Update(){
 	Player::Update();
-	controller->run();
+	SetAllInput(UP);
+	behaviour->run();
+	CheckInput();
 }
 
 void AIPlayer::SetForces(vector3df v){
@@ -53,5 +58,86 @@ void AIPlayer::Debug(){
 	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
 	o = vector3df(p.X+sin(l.Y - M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y - M_PI/4)*lookAHead2);
 	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+}
 
+// ========================================================================================= //
+//
+//	CONTROLLER FUNCTINS
+//
+// ========================================================================================= //
+
+void AIPlayer::DeclareInput(){
+	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
+	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
+	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
+	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
+	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
+	controller->AddAction(KEY_SPACE, ACTION_JUMP);
+	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
+	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
+	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
+	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+}
+
+void AIPlayer::UpdateInput(){
+	controller->UpdateOwnStatus();
+}
+
+void AIPlayer::CheckInput(){
+	// Movimiento
+	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
+	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+	// Acciones
+	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
+	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+	// Hechizos
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
+	if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
+	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+	// Trampas
+	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+}
+
+void AIPlayer::SetController(ACTION_ENUM action, keyStatesENUM state){
+	controller->SetStatus(action, state);
+}
+
+void AIPlayer::Steering2Controller(SteeringOutput steering){
+	vector3df linear = steering.linear;
+	float dir = atan2(linear.X, linear.Z);
+	dir = rotation.Y - dir;
+	dir = dir*180.0f/M_PI;
+
+	if(dir<-180) dir += 360;
+	if(dir> 180) dir -=360;
+
+	float tempdir = abs(dir);
+	if(tempdir<=60){
+		SetController(ACTION_MOVE_UP, DOWN);
+	}
+	else if(tempdir>=120){
+		SetController(ACTION_MOVE_DOWN, DOWN);
+	}
+
+	if(dir>=30 && dir<=150){
+		SetController(ACTION_MOVE_LEFT, DOWN);
+	}
+	else if(dir>=-120 && dir<=-30){
+		SetController(ACTION_MOVE_RIGHT, DOWN);
+	}
+
+	vector2df angular = steering.angular;
+	SetAngularForce(vector3df( 0 ,angular.Y, 0));
+}
+
+void AIPlayer::SetAllInput(keyStatesENUM state){
+	controller->SetAllStatus(state);
 }

@@ -26,14 +26,18 @@ bool T_Seek::run(Blackboard* bb){
 
 			SteeringOutput steering = Seek::GetSteering(cKin, tKin);
 
+			/*
 			steering.linear.Y = 0;		// Para que no salga volando
 			character->SetForces(steering.linear);
-
-			steering = LookWhereYoureGoing::GetSteering(cKin);
-
+			*/
+			SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
+			steering.angular = steering2.angular;
+			/*
 			vector2df linear = steering.angular;
 			//character->SetAngularForce(vector3df( (cos(cOri.Y)*linear.X) ,linear.Y, -(sin(cOri.Y)*linear.X)));
 			character->SetAngularForce(vector3df( 0 ,linear.Y, 0));
+			*/
+			character->Steering2Controller(steering);
 
 			return true;
 		}
