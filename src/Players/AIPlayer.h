@@ -2,6 +2,7 @@
 #define AIPLAYER_H
 
 #include "Player.h"
+#include "./PlayerController.h"
 #include "./../AI/BehaviourTree.h"
 
 class AIPlayer: public Player{
@@ -13,9 +14,23 @@ public:
 	void SetForces(vector3df v);
 	void SetAngularForce(vector3df v);
 	void Debug();
-private:
 
-	BehaviourTree* controller;
+	void Steering2Controller(SteeringOutput steering);
+	// Controller
+	void UpdateInput();
+	void CheckInput();
+	void SetController(ACTION_ENUM action, keyStatesENUM state);
+	void SetAllInput(keyStatesENUM state);
+
+	//void SetAllInput(keyStatesENUM state);
+	//void GetNetInput();
+	//void SetNetInput();
+
+private:
+	void DeclareInput();
+
+	PlayerController* 	controller;		// Controlador del personaje
+	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
 
 };
 
