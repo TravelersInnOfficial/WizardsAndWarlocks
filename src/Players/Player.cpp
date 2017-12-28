@@ -116,7 +116,6 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
-	std::cout<<currentSpell<<std::endl;
 }
 
 void Player::positionCamera(){
@@ -195,9 +194,10 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	SetPosition(vector3df(0, 1, 0));
+	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	m_HP = 100;
 	m_MP = 100;
+	EffectManager::GetInstance()->CleanEffects(this);
 	m_dead = false;
 }
 
@@ -228,7 +228,6 @@ void Player::SendSignal(){
 void Player::Die(){
 	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
-	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
 

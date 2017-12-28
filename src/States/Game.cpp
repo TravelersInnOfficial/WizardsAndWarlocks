@@ -59,7 +59,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_H)){
 		LevelLoader loader;
 		ObjectManager::GetInstance()->ClearMap();
-		loader.LoadLevel("../assets/json/MapaEntrega.json");
+		loader.LoadLevel("../assets/json/map.json");
 	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
@@ -73,6 +73,11 @@ bool Game::Input(){
 
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
+
+	if(g_engine->IsKeyPressed(KEY_KEY_G)){
+		vector3df pos = playerOne->GetPos();
+		std::cout<<pos.Z<<std::endl;
+	}
 
 	return end;
 }

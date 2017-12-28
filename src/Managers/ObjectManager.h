@@ -15,6 +15,7 @@
 #include "./../Objects/Invocation.h"
 #include "./../Objects/DamageArea.h"
 #include <NPCTypes.h>
+#include <Alliance.h>
 #include <PotionTypes.h>
 
 class ObjectManager{
@@ -33,6 +34,11 @@ public:
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
+	void AddReadyPoint(vector3df TPosition);
+
+	//Getters
+	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 
 	// Drawers
 	void DrawNpcMenu();
@@ -65,7 +71,10 @@ private:
 	vector<Potion*>				potions;		// Vector donde se almacenan todas las pociones
 	vector<Fountain*>			fountains;		// Vector donde se almacenan todas las fuentes
 	vector<Npc*>				npcs;			// Vector donde se almacenan todos los npcs
+	vector<vector3df>			wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
+	vector<vector3df>			warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	Grail*						grail;			// El grail de la partida, unico
+	vector4df					readyZone;		// Zona de READY
 
 	ObjectManager();
 	static ObjectManager* instance; 
