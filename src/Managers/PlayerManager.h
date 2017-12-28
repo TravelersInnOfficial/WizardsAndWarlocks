@@ -23,6 +23,8 @@ public:
 private:
 
 	vector<Player*>	players;
+	vector<Player*>	wizardPlayers;
+	vector<Player*>	warlockPlayers;
 	vector<Player*> playersToDelete;
 
 	PlayerManager();

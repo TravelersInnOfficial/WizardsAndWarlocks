@@ -116,7 +116,6 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
-	std::cout<<currentSpell<<std::endl;
 }
 
 void Player::positionCamera(){

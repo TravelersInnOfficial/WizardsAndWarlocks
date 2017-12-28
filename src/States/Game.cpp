@@ -59,7 +59,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_H)){
 		LevelLoader loader;
 		ObjectManager::GetInstance()->ClearMap();
-		loader.LoadLevel("../assets/json/MapaEntrega.json");
+		loader.LoadLevel("../assets/json/map.json");
 	}
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){

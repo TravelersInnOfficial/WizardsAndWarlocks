@@ -21,12 +21,16 @@ PlayerManager::~PlayerManager(){
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 	Player* p = new HumanPlayer(isPlayer1);
 	players.push_back(p);
+	warlockPlayers.push_back(p);
+	p->SetAlliance(ALLIANCE_WARLOCK);
 	return p;
 }
 
 AIPlayer* PlayerManager::AddAIPlayer(){
 	AIPlayer* p = new AIPlayer();
 	players.push_back(p);
+	wizardPlayers.push_back(p);
+	p->SetAlliance(ALLIANCE_WIZARD);
 	return p;
 }
 
