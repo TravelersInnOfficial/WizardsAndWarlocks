@@ -85,6 +85,9 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		else if(j["Objects"][i]["Type"] == "Fountain"){
 			objManager->AddFountain(position, size, rotation);
 		}
+		else if(j["Objects"][i]["Type"] == "ReadyPoint"){
+			objManager->AddReadyPoint(position);
+		}
 		else if(j["Objects"][i]["Type"] == "NPC1"){
 			//objManager->AddNPC(position, size, rotation, 1);
 		}

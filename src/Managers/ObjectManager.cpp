@@ -5,6 +5,7 @@ ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
 	grail = NULL;
+	readyZone = vector4df(-999,-999,-999,-999);
 }
 
 ObjectManager::~ObjectManager(){
@@ -31,6 +32,36 @@ Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
 	if(playerAlliance == ALLIANCE_WIZARD) wizardSpawn.push_back(TPosition);
 	else warlockSpawn.push_back(TPosition);
+}
+
+void ObjectManager::AddReadyPoint(vector3df TPosition){
+	
+	// Guardamos el primer punto
+	if(readyZone.X == -999){
+		readyZone.X = TPosition.X;
+		readyZone.Y = TPosition.Y;
+	}
+
+	// Guardamos el segundo punto
+	else if (readyZone.X2 == -999){
+		readyZone.X2 = TPosition.X;
+		readyZone.Y2 = TPosition.Y;
+		
+		// Si el segundo punto es mas grande que el primero
+		// Le damos la vuelta en X
+		if(readyZone.X2 > readyZone.X){
+			float aux = readyZone.X2;
+			readyZone.X2 = readyZone.X;
+			readyZone.X = aux;
+		}
+
+		// Y le damos la vuelta en Y
+		if(readyZone.Y2 > readyZone.Y){
+			float aux = readyZone.Y2;
+			readyZone.Y2 = readyZone.Y;
+			readyZone.Y = aux;
+		}
+	}
 }
 
 Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
