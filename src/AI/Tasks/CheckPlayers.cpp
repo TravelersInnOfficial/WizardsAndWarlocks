@@ -11,8 +11,10 @@ bool CheckPlayers::run(Blackboard* bb){
 		masterPlayer->SendVisualSignal();
 
 		int number = bb->GetNumberSight(AI_PLAYER);
+
 		if(number>0){
 			bb->SetTargetSight(AI_PLAYER, AI_TARGET);
+			//bb->SetTargetSound(AI_PLAYER, AI_TARGET);
 			return true;
 		}else{
 			character->SetAngularForce(vector3df(0,0,0));

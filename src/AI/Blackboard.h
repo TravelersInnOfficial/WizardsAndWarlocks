@@ -11,7 +11,6 @@
 struct Sense_struct{
     int id;
 	AI_code code;
-    void* emisor;
 	Kinematic kinematic;
     float length;
 	float duration;
@@ -35,9 +34,10 @@ public:
 
     int     GetNumberSound(AI_code name);
     int     GetNumberSight(AI_code name);
-    void    SetTargetSight(AI_code name, AI_code where); 
- 	void 	SetSound(int id, AI_code name, void* emisor, Kinematic kin, float len, float dur);
- 	void	SetSight(int id, AI_code name, void* emisor, Kinematic kin, float len, float dur);
+    void    SetTargetSight(AI_code name, AI_code where);
+    void    SetTargetSound(AI_code name, AI_code where);
+ 	void 	SetSound(int id, AI_code name, Kinematic kin, float len, float dur);
+ 	void	SetSight(int id, AI_code name, Kinematic kin, float len, float dur);
 
     void SaveParent(Blackboard* parent);
 private:

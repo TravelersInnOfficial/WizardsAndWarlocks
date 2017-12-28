@@ -4,19 +4,36 @@
 Signal::Signal(Signal* sig){
 	id = sig->GetId();
 	code = sig->GetCode();
-	emisor = sig->GetEmisor();
 	kinematic = sig->GetKinematic();
 	strength = sig->GetStrength();
-	modality = new SightModality(sig->GetModality());
+
+	AI_modalities type = sig->GetModality()->GetType();
+	switch(type){
+		case AI_SIGHT:
+			modality = new SightModality(sig->GetModality());
+			break;
+		case AI_HEARING:
+			modality = new HearingModality(sig->GetModality());
+			break;
+	}
 }
 
-Signal::Signal(int i, AI_code name, void* emi, float str, Kinematic kin){
+Signal::Signal(int i, AI_code name, float str, Kinematic kin, AI_modalities mod){
 	id = i;
 	code = name;
-	emisor = emi;
 	strength = str;
 	kinematic = kin;
-	modality = new SightModality(10.0f, 1.0f, 0.1f);
+	switch(mod){
+		case AI_SIGHT:
+			modality = new SightModality(10.0f, 1.0f, 0.1f);
+			break;
+		case AI_HEARING:
+			modality = new HearingModality(10.0f, 1.0f, 0.1f);
+			break;
+		default:
+			modality = new HearingModality(10.0f, 1.0f, 0.1f);
+			break;
+	}
 }
 
 Signal::~Signal(){
@@ -41,10 +58,6 @@ AI_code Signal::GetCode(){
 
 int Signal::GetId(){
 	return id;
-}
-
-void* Signal::GetEmisor(){
-	return emisor;
 }
 
 vector3df Signal::GetPosition(){

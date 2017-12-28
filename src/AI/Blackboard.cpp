@@ -68,11 +68,11 @@ void Blackboard::SetInt(AI_code name, int value){
     dataInt[name] = value;
 }
 
-void Blackboard::SetSound(int id, AI_code name, void* emisor, Kinematic kin, float len, float dur){
+void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float dur){
     int size = soundSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = soundSense[i];
-        if(s->id == i){
+        if(s->id == id){
             s->kinematic = kin;
             s->duration = dur;
             return;
@@ -82,7 +82,6 @@ void Blackboard::SetSound(int id, AI_code name, void* emisor, Kinematic kin, flo
     Sense_struct* s = new Sense_struct();
     s->id = id;
     s->code = name;
-    s->emisor = emisor;
     s->kinematic = kin;
     s->length = len;
     s->duration = dur;
@@ -110,7 +109,7 @@ void Blackboard::CleanSense(int id){
     }
 }
 
-void Blackboard::SetSight(int id, AI_code name, void* emisor, Kinematic kin, float len, float dur){
+void Blackboard::SetSight(int id, AI_code name, Kinematic kin, float len, float dur){
     int size = sightSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
@@ -123,7 +122,6 @@ void Blackboard::SetSight(int id, AI_code name, void* emisor, Kinematic kin, flo
     Sense_struct* s = new Sense_struct();
     s->id = id;
     s->code = name;
-    s->emisor = emisor; 
     s->kinematic = kin;
     s->length = len;
     s->duration = dur;
@@ -198,8 +196,7 @@ void Blackboard::SetTargetSight(AI_code name, AI_code where){
             if(d == -1){
                 d = s->length;
                 em = s;
-            }
-            else{
+            }else{
                 if(s->length < d){
                     d = s->length;
                     em = s;
@@ -208,6 +205,29 @@ void Blackboard::SetTargetSight(AI_code name, AI_code where){
         }
     }
     if(em != NULL){
+        SetPuntero(where, em);
+    }
+}
+
+void Blackboard::SetTargetSound(AI_code name, AI_code where){
+    void* em = NULL;
+    float d = -1;
+    int size = soundSense.size();
+    for(int i=0; i<size; i++){
+        Sense_struct* s = soundSense[i];
+        if(s->code == name){
+            if(d == -1){
+                d = s->length;
+                em = s;
+            }else{
+                if(s->length < d){
+                    d = s->length;
+                    em = s;
+                }
+            }
+        }
+    }
+     if(em != NULL){
         SetPuntero(where, em);
     }
 }

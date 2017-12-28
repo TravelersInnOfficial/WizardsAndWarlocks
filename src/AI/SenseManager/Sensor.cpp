@@ -2,7 +2,8 @@
 #include "Modality.h"
 #include "Signal.h"
 
-Sensor::Sensor(vector3df* pos, vector3df* ori, float thresh, Blackboard* inf){
+Sensor::Sensor(int _id, vector3df* pos, vector3df* ori, float thresh, Blackboard* inf){
+	id = _id;
 	position = pos;
 	orientation = ori;
 	information = inf;
@@ -14,24 +15,27 @@ Sensor::~Sensor(){
 }
 
 bool Sensor::DetectsModality(Modality* mod){
-	int type = mod->GetType();
-	if(type == 0){
+	AI_modalities type = mod->GetType();
+	if(type == AI_SIGHT){
+		return true;
+	}else if(type == AI_HEARING){
 		return true;
 	}
 	return false;
 }
 
 void Sensor::Notify(Signal* sig, float currentTime){
-	int tipo = sig->GetModality()->GetType();
+	AI_modalities type = sig->GetModality()->GetType();
 
 	vector3df dir = sig->GetPosition() - GetPosition();
 	float len = dir.length();
 
-	switch(tipo){
-		case 0:
-			information->SetSight(sig->GetId(), sig->GetCode(), sig->GetEmisor(), sig->GetKinematic(), len, currentTime + 10000); //Tiempo en milisegundos
+	switch(type){
+		case AI_SIGHT:
+			information->SetSight(sig->GetId(), sig->GetCode(), sig->GetKinematic(), len, currentTime + 10000); // Tiempo en milisegundos
 			break;
-		case 1:
+		case AI_HEARING:
+			information->SetSound(sig->GetId(), sig->GetCode(), sig->GetKinematic(), len, currentTime + 10000); // Tiempo en milisengundos
 			break;
 	}
 }
@@ -48,4 +52,8 @@ vector3df Sensor::GetOrientation(){
 
 float Sensor::GetThreshold(){
 	return threshold;
+}
+
+int Sensor::GetId(){
+	return id;
 }

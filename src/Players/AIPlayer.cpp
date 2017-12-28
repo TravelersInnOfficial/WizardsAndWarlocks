@@ -11,7 +11,7 @@ AIPlayer::AIPlayer():Player(false){
 	DeclareInput();
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
-	senseManager->AddSensor(&m_position, &rotation, 0.0f, behaviour->GetBlackboard());
+	senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
 }
 
 AIPlayer::~AIPlayer(){

@@ -10,19 +10,17 @@ class Modality;
 class Signal{
 public:
 	Signal(Signal* sig);
-	Signal(int id, AI_code name, void* emi, float str, Kinematic kin);
+	Signal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod);
 	~Signal();
 	Kinematic GetKinematic();
 	Modality* GetModality();
 	float GetStrength();
 	AI_code GetCode();
 	int	GetId();
-	void* GetEmisor();
 	vector3df GetPosition();
 private:
 	int id;
 	AI_code code;
-	void* emisor;
 	float strength;
 	Kinematic kinematic;
 	Modality* modality;

@@ -39,6 +39,13 @@ private:
 	bool checkLineOfSight(vector3df sigPos, vector3df senPos);
 };
 
-
+class HearingModality: public Modality{
+public:
+	HearingModality(Modality* mod);
+	HearingModality(float maxR, float att, float inSpeed);
+	~HearingModality();
+	bool ExtraChecks(Signal* sig, Sensor* sr);
+private:
+};
 
 #endif

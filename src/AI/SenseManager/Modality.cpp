@@ -16,7 +16,6 @@ Modality::Modality(float maxR, float att, float inSpeed){
 	maximumRange = maxR;
 	attenuation = att;
 	inverseTransmissionSpeed = inSpeed;
-	type = AI_SIGHT;
 }
 
 Modality::~Modality(){}
@@ -39,11 +38,17 @@ AI_modalities Modality::GetType(){
 	return type;
 }
 
-//-------------------------------------------------------------------------
+// ===================================================================================================== //
+//
+//	SIGHT
+//
+// ===================================================================================================== //
 
 SightModality::SightModality(Modality* mod):Modality(mod){}
 
-SightModality::SightModality(float maxR, float att, float inSpeed):Modality(maxR, att, inSpeed){}
+SightModality::SightModality(float maxR, float att, float inSpeed):Modality(maxR, att, inSpeed){
+	type = AI_SIGHT;
+}
 
 SightModality::~SightModality(){}
 
@@ -108,3 +113,20 @@ bool SightModality::checkLineOfSight(vector3df sigPos, vector3df srPos){
 	return false;
 }
 
+// ===================================================================================================== //
+//
+//	HEARING
+//
+// ===================================================================================================== //
+
+HearingModality::HearingModality(Modality* mod):Modality(mod){}
+
+HearingModality::HearingModality(float maxR, float att, float inSpeed):Modality(maxR, att, inSpeed){
+	type = AI_HEARING;
+}
+
+HearingModality::~HearingModality(){}
+
+bool HearingModality::ExtraChecks(Signal* sig, Sensor* sr){
+	return true;
+}

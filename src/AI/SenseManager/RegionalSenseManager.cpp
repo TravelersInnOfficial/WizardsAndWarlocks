@@ -30,14 +30,14 @@ RegionalSenseManager::~RegionalSenseManager(){
 	notificationQueue.clear();
 }
 
-Sensor* RegionalSenseManager::AddSensor(vector3df* cPos, vector3df* cOri, float thresh, Blackboard* inf){
-	Sensor* s = new Sensor(cPos, cOri, thresh, inf);
+Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri, float thresh, Blackboard* inf){
+	Sensor* s = new Sensor(id, cPos, cOri, thresh, inf);
 	sensors.push_back(s);
 	return s;
 }
 
-void RegionalSenseManager::AddSignal(int id, AI_code name, void* emisor, float str, Kinematic kin){
-	Signal* s = new Signal(id, name, emisor, str, kin);
+void RegionalSenseManager::AddSignal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod){
+	Signal* s = new Signal(id, name, str, kin, mod);
 	AddSignal(s);
 }
 
@@ -48,7 +48,11 @@ void RegionalSenseManager::AddSignal(Signal* sig){
 	for(int i=0; i<size; i++){
 		Sensor* sensor = sensors[i];
 		// Testing phase
-		// Chec the modality first
+		// Check if is the sensor who emmit the signal
+		if(sensor->GetId() == sig->GetId()){
+			continue;
+		}
+		// Check the modality first
 		if(!sensor->DetectsModality(sig->GetModality())){
 			continue; //Pasar al siguiente elemento
 		}

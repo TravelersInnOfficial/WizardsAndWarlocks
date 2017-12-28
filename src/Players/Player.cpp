@@ -221,7 +221,8 @@ void Player::Raycast(){
 
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
-	sense->AddSignal(id, AI_PLAYER, this, 5.0f, GetKinematic());
+	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
+	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_SIGHT);
 }
 
 void Player::Die(){
