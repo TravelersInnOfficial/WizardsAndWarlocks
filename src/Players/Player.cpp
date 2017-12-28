@@ -194,7 +194,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	SetPosition(vector3df(0, 1, 0));
+	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	m_HP = 100;
 	m_MP = 100;
 	EffectManager::GetInstance()->CleanEffects(this);

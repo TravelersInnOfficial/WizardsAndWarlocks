@@ -4,6 +4,7 @@
 #include <map>
 #include <json.hpp>
 #include <fstream>
+#include <Alliance.h>
 #include <vector3d.h>
 #include <NPCTypes.h>
 #include <PotionTypes.h>
@@ -50,12 +51,10 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddBlock(position, size, rotation, texture);           
 		}
 		else if(j["Objects"][i]["Type"] == "WizardSpawn"){
-			objManager->AddSpawner(true, position);
-			std::cout<<"WIZARDS: "<<position.X<<", "<<position.Y<<std::endl;
+			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
 		else if(j["Objects"][i]["Type"] == "WarlockSpawn"){
-			objManager->AddSpawner(false, position);
-			std::cout<<"WARLOCKS: "<<position.X<<", "<<position.Y<<std::endl;
+			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}
 		else if(j["Objects"][i]["Type"] == "Switch"){
 			// do nothing here

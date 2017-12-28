@@ -28,8 +28,8 @@ Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 	return b;
 }
 
-void ObjectManager::AddSpawner(bool isWizardSpawner, vector3df TPosition){
-	if(isWizardSpawner) wizardSpawn.push_back(TPosition);
+void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
+	if(playerAlliance == ALLIANCE_WIZARD) wizardSpawn.push_back(TPosition);
 	else warlockSpawn.push_back(TPosition);
 }
 
@@ -93,6 +93,22 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	Fountain* f = new Fountain(TPosition, TScale, TRotation);
 	fountains.push_back(f);
 	return f;
+}
+
+vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
+	vector3df toRet = vector3df(0,1,0);
+	
+	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
+		int randIndex = rand() % wizardSpawn.size();
+		toRet = wizardSpawn.at(randIndex);
+	}
+
+	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
+		int randIndex = rand() % warlockSpawn.size();
+		toRet = warlockSpawn.at(randIndex);
+	}
+
+	return(toRet);
 }
 
 Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){

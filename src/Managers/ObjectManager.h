@@ -15,6 +15,7 @@
 #include "./../Objects/Invocation.h"
 #include "./../Objects/DamageArea.h"
 #include <NPCTypes.h>
+#include <Alliance.h>
 #include <PotionTypes.h>
 
 class ObjectManager{
@@ -33,7 +34,10 @@ public:
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	void AddSpawner(bool isWizardSpawner, vector3df TPosition);
+	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
+
+	//Getters
+	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 
 	// Drawers
 	void DrawNpcMenu();
