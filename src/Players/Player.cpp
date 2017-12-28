@@ -197,6 +197,7 @@ void Player::Respawn(){
 	SetPosition(vector3df(0, 1, 0));
 	m_HP = 100;
 	m_MP = 100;
+	EffectManager::GetInstance()->CleanEffects(this);
 	m_dead = false;
 }
 
@@ -226,7 +227,6 @@ void Player::SendSignal(){
 void Player::Die(){
 	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
-	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
 

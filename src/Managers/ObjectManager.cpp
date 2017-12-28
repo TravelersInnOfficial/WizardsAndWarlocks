@@ -28,6 +28,11 @@ Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 	return b;
 }
 
+void ObjectManager::AddSpawner(bool isWizardSpawner, vector3df TPosition){
+	if(isWizardSpawner) wizardSpawn.push_back(TPosition);
+	else warlockSpawn.push_back(TPosition);
+}
+
 Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	Door* d = new Door(TPosition, TScale, TRotation, TCenter);
 	doors.push_back(d);
@@ -218,6 +223,9 @@ void ObjectManager::ClearMap(){
 		delete grail;
 		grail = NULL;
 	}
+
+	wizardSpawn.clear();
+	warlockSpawn.clear();
 }
 
 void ObjectManager::Update(float deltaTime){

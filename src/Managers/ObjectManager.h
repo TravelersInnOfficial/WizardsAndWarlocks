@@ -33,6 +33,7 @@ public:
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	void AddSpawner(bool isWizardSpawner, vector3df TPosition);
 
 	// Drawers
 	void DrawNpcMenu();
@@ -65,6 +66,8 @@ private:
 	vector<Potion*>				potions;		// Vector donde se almacenan todas las pociones
 	vector<Fountain*>			fountains;		// Vector donde se almacenan todas las fuentes
 	vector<Npc*>				npcs;			// Vector donde se almacenan todos los npcs
+	vector<vector3df>			wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
+	vector<vector3df>			warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	Grail*						grail;			// El grail de la partida, unico
 
 	ObjectManager();
