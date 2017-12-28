@@ -51,9 +51,13 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddBlock(position, size, rotation, texture);           
 		}
 		else if(j["Objects"][i]["Type"] == "WizardSpawn"){
+			objManager->AddBlock(position, size, rotation, texture); 
+			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
 		else if(j["Objects"][i]["Type"] == "WarlockSpawn"){
+			objManager->AddBlock(position, size, rotation, texture);
+			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}
 		else if(j["Objects"][i]["Type"] == "Switch"){
