@@ -74,6 +74,7 @@ class Player: public Entidad{
 		float GetMaxVelocity();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
+		Alliance GetAlliance();
 
 		// Seters
 		void SetPosition(vector3df);
