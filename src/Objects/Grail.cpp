@@ -29,14 +29,16 @@ void Grail::Update(){
 }
 
 void Grail::Interact(Player* p){
-	timeCasting += deltaTime;
+	if(p->GetAlliance() == ALLIANCE_WIZARD){
+		timeCasting += deltaTime;
 
-	if(timeCasting>=maxCasting){
-		std::cout<<"YOU WIN"<<std::endl;
-		timeCasting=0.0f;
+		if(timeCasting>=maxCasting){
+			std::cout<<"WIZARDS WIN"<<std::endl;
+			timeCasting=0.0f;
+		}
+
+		casting = true;
 	}
-
-	casting = true;
 }
 
 void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){

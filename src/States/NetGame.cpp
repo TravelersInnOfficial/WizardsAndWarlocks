@@ -25,6 +25,8 @@ NetGame::NetGame(){
 	// Level
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
+	lobbyState = true;
+	secondCounter = 0;
 	objectManager->AddNpc(vector3df(1.5,-1.25,4.5), vector3df(2,2,2), vector3df(0,180,0), NPC_SELECTOR);
 
 	if(n_engine->IsServerInit()) isServer = true;
@@ -91,6 +93,14 @@ void NetGame::Update(){
 	g_engine->UpdateReceiver();
 
 	setFps();
+
+	if(lobbyState){
+		if(playerManager->CheckIfReady()) {
+			LevelLoader loader;
+			loader.LoadLevel("../assets/json/map.json");
+			lobbyState = false;
+		}
+	}
 }
 
 void NetGame::setFps(){

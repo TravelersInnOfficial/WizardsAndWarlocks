@@ -407,6 +407,8 @@ vector3df Player::GetHeadPos(){
 	return (headPos);
 }
 
+Alliance Player::GetAlliance(){ return playerAlliance; }
+
 void Player::SetAlliance(Alliance newAlliance){
 	playerAlliance = newAlliance;
 	switch(newAlliance){

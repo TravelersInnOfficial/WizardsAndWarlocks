@@ -44,7 +44,8 @@ private:
 
 	float timeStart;
 	float deltaTime;
-	float secondCounter = 0;
+	float secondCounter;
+	bool lobbyState;
 
 	SpellManager* 			spellManager;
 	BulletManager* 			bulletManager;
