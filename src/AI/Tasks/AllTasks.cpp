@@ -1,5 +1,8 @@
 #include "AllTasks.h"
+// Engines
+#include "./../../GraphicEngine/GraphicEngine.h"
 // Managers
+#include "./../../Managers/SpellManager.h"
 #include "./../../Managers/PlayerManager.h"
 // Steerings
 #include "./../SteeringBehaviour/Face.h"
@@ -12,8 +15,46 @@
 // New information classes
 #include <vector2d.h>
 #include <kinematicTypes.h>
+// Enums
+#include <KeyStates.h>
 
 bool DEBUG = false;
+
+// ================================================================================================= //
+//
+//	SHOOT PROYECTILE BASIC
+//
+// ================================================================================================= //
+
+ShootBasic::ShootBasic(){}
+
+bool ShootBasic::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"shootBasic"<<std::endl;
+
+	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
+	if(character!=NULL){
+		SpellManager* spellMaster = SpellManager::GetInstance();
+
+		int status = bb->GetInt(AI_SPELL_STATUS);
+		if(status==-1){status = UP;}
+
+		if(status == UP){
+			if(spellMaster->StartHechizo(0, character)){
+				bb->SetInt(AI_SPELL_STATUS, PRESSED);
+				return true;
+			}
+		}else if(status == PRESSED || status == DOWN){
+			bb->SetInt(AI_SPELL_STATUS, DOWN);
+			if(spellMaster->LanzarHechizo(0, character)){
+				spellMaster->ResetHechizo(0, character);
+				bb->SetInt(AI_SPELL_STATUS, UP);
+			}
+			return true;
+		}
+
+	}
+	return false;
+}
 
 // ================================================================================================= //
 //
@@ -108,7 +149,7 @@ bool HasArrived::run(Blackboard* bb){
 
         	vector3df dir = tKin.position - cKin.position;
         	float length = dir.length();
-        	
+
         	if(length<arrivedTarget){
         		bb->CleanPuntero(AI_TARGET);
 				bb->CleanSense(target->id);

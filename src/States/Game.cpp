@@ -38,6 +38,7 @@ Game::Game(){
 	spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
 	
 	AL = playerManager->AddAIPlayer();
+	spellManager->AddHechizo(0, AL, SPELL_PROYECTIL);
 }
 
 Game::~Game(){
@@ -122,7 +123,7 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	f_engine->DebugDrawWorld();
+	//f_engine->DebugDrawWorld();
 	objectManager->DrawNpcMenu();
 	AL->Debug();
 }

@@ -15,7 +15,7 @@ public:
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
 	void UpdateCooldown(float deltaTime);
 	bool LanzarHechizo(int num, Player* p);
-	void StartHechizo(int num, Player* p);
+	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
 
 private:

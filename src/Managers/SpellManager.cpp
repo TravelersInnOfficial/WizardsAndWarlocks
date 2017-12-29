@@ -80,18 +80,20 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
  * @param num Numero de hechizo
  * @param p Player que lanza el hechizo
  */
-void SpellManager::StartHechizo(int num, Player* p){
+bool SpellManager::StartHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
 				int mana = p->GetMP();
 				if(h->CheckMP(mana)){
-					h->EmpezarCast();				
+					h->EmpezarCast();
+					return true;			
 				}
 			}
 		}
 	}
+	return false;
 }
 
 void SpellManager::ResetHechizo(int num, Player* p){
