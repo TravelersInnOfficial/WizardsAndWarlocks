@@ -126,22 +126,6 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	return f;
 }
 
-vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
-	vector3df toRet = vector3df(0,1,0);
-	
-	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
-		int randIndex = rand() % wizardSpawn.size();
-		toRet = wizardSpawn.at(randIndex);
-	}
-
-	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
-		int randIndex = rand() % warlockSpawn.size();
-		toRet = warlockSpawn.at(randIndex);
-	}
-
-	return(toRet);
-}
-
 Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){
 	Npc* n = NULL;
 	switch(type){
@@ -169,6 +153,30 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 	damageAreas.push_back(ar);
 	return ar;
 }
+
+// ===================================================================================================== //
+//
+// GETTERS
+//
+// ===================================================================================================== //
+
+vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
+	vector3df toRet = vector3df(0,1,0);
+	
+	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
+		int randIndex = rand() % wizardSpawn.size();
+		toRet = wizardSpawn.at(randIndex);
+	}
+
+	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
+		int randIndex = rand() % warlockSpawn.size();
+		toRet = warlockSpawn.at(randIndex);
+	}
+
+	return(toRet);
+}
+
+vector4df ObjectManager::GetReadyZone(){ return readyZone; }
 
 // ===================================================================================================== //
 //

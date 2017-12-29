@@ -39,6 +39,7 @@ public:
 
 	//Getters
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
+	vector4df GetReadyZone();
 
 	// Drawers
 	void DrawNpcMenu();
