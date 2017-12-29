@@ -81,15 +81,16 @@ void PlayerManager::SendVisualSignal(){
 bool PlayerManager::CheckIfReady(){
 	bool allReady = true;
 	int size = players.size();
-	vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
-
-	for(int i=0; i < size && allReady == true; i++){
-		Player* p = players[i];
-		vector3df pos = p->GetPos();
-		if(pos.X < readyZone.X || pos.X > readyZone.X2 || pos.Z < readyZone.Y || pos.Z > readyZone.Y2){
-			allReady = false;
+	if(size > 0){
+		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+		for(int i=0; i < size && allReady == true; i++){
+			Player* p = players[i];
+			vector3df pos = p->GetPos();
+			if(pos.X < readyZone.X || pos.X > readyZone.X2 || pos.Z < readyZone.Y || pos.Z > readyZone.Y2){
+				allReady = false;
+			}
 		}
-	}
+	} else allReady = false;
 
 	return allReady;
 }

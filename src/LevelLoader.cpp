@@ -14,6 +14,9 @@ LevelLoader::LevelLoader(){
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
+
+	std::cout<<"CARGANDO NIVEL"<<std::endl;
+
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
 
