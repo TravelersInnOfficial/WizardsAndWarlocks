@@ -10,6 +10,7 @@
 #include <ColliderMasks.h>
 #include <NetworkStructs.h>
 #include <kinematicTypes.h>
+#include "./PlayerController.h"
 #include "./../Entidad.h"
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -28,6 +29,12 @@ class Player: public Entidad{
 		SoundEvent* dieEvent;
 		SoundEvent* damageEvent;
 		SoundEvent* drinkEvent;
+
+		// Controller
+		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
+		void SetAllInput(keyStatesENUM state);
+		void UpdateInput();
+		virtual void CheckInput();
 
 		// Actions
 		void Move(float, float);
@@ -93,6 +100,8 @@ class Player: public Entidad{
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
 		vector3df 		rotation;			// Rotacion del jugador
+
+		PlayerController* controller;		// Objeto que controla el input del jugador
 
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
 		float 			raycastDistance;	// Distancia del rayo de RayCast

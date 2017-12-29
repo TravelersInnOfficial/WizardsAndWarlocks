@@ -2,41 +2,11 @@
 #include "./../Managers/SpellManager.h"
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
-	controller = new PlayerController();
-	DeclareInput();
 	menuActivated = false;
 }
 
 HumanPlayer::~HumanPlayer(){
 	delete controller;
-}
-
-void HumanPlayer::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
-	controller->AddAction(KEY_F24, ACTION_RESET_RECEIVER);
-	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
-	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
-}
-
-void HumanPlayer::UpdateInput(){
-	controller->UpdateOwnStatus();
-	if(isPlayerOne) controller->Update();
-}
-
-void HumanPlayer::SetAllInput(keyStatesENUM state){
-	controller->SetAllStatus(state);
-	if(state == UP && isPlayerOne && networkObject != NULL) {
-		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
-	}
 }
 
 void HumanPlayer::SetNetInput(){
@@ -230,7 +200,6 @@ void HumanPlayer::CheckInput(){
 }
 
 void HumanPlayer::Update(){
-	CheckInput();
 	Player::Update();
 	if(!menuActivated) UpdateInput();
 }

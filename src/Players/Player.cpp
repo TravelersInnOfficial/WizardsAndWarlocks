@@ -15,6 +15,9 @@ Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(2,2,2);
 
+	controller = new PlayerController();
+	DeclareInput();
+
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
 
@@ -70,8 +73,36 @@ void Player::CreatePlayer(){
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	
 	Respawn();
-
 }
+
+void Player::DeclareInput(){
+	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
+	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
+	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
+	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
+	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
+	controller->AddAction(KEY_SPACE, ACTION_JUMP);
+	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
+	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
+	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
+	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+}
+
+void Player::SetAllInput(keyStatesENUM state){
+	controller->SetAllStatus(state);
+	if(state == UP && isPlayerOne && networkObject != NULL) {
+		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
+	}
+}
+
+void Player::UpdateInput(){
+	controller->UpdateOwnStatus();
+	if(isPlayerOne) controller->Update();
+}
+
+void Player::CheckInput(){}
 
 void Player::GetNetInput(){
 	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
@@ -83,23 +114,11 @@ void Player::GetNetInput(){
 }
 
 void Player::SetNetInput(){
-
 }
 
 void Player::Update(){
-	UpdatePosShape();
-	if(m_dead || m_position.Y < -50) Die();
-
-	if(isPlayerOne){
-		vector3df newRot = engine->getActiveCamera()->getRotation();
-		vector3df rot = newRot * M_PI / 180.0;	
-		SetRotation(rot);
-		positionCamera();
-	}
-
-	checkMaxVelocity();
+	// Comprobamos la velocidad vertical del personaje?
 	vector3df velocity = bt_body->GetLinearVelocity();
-
 	if(!canJump){
 		float verticalSpeed = velocity.Y;
 		float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
@@ -107,8 +126,33 @@ void Player::Update(){
 		lastVerticalSpeed = verticalSpeed;
 	}
 
-	if(moving) moving = false;
-	else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+	// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
+	// que si no se estaba moviendo lo frenamos 
+	if(moving){ 
+		moving = false; 
+	}else{
+		bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+	}
+
+	// Comprobamos los Input del personaje
+	CheckInput();
+
+	// Actualizamos el cuerpo visual del personaje respecto al fisico
+	UpdatePosShape();
+
+	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
+	if(m_dead || m_position.Y < -50) Die();
+
+	// En el caso de que sea el jugador 1 actualizamos su camara
+	if(isPlayerOne){
+		vector3df newRot = engine->getActiveCamera()->getRotation();
+		vector3df rot = newRot * M_PI / 180.0;	
+		SetRotation(rot);
+		positionCamera();
+	}
+
+	// Comprobamos la velocidad maxima del jugador para que no se sobrepase
+	checkMaxVelocity();
 }
 
 void Player::ChangeCurrentSpell(int value){
@@ -223,7 +267,9 @@ void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
 	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_SIGHT);
-	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_HEARING);
+	if(moving){
+		sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_HEARING);
+	}
 }
 
 void Player::Die(){

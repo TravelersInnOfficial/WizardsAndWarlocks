@@ -7,9 +7,6 @@ AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
 	behaviour->AnyadirInformacion(AI_CHARACTER, this);
 
-	controller = new PlayerController();
-	DeclareInput();
-
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
 }
@@ -19,10 +16,9 @@ AIPlayer::~AIPlayer(){
 }
 
 void AIPlayer::Update(){
-	Player::Update();
 	SetAllInput(UP);
 	behaviour->run();
-	CheckInput();
+	Player::Update();
 }
 
 void AIPlayer::SetForces(vector3df v){
@@ -66,24 +62,6 @@ void AIPlayer::Debug(){
 //
 // ========================================================================================= //
 
-void AIPlayer::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
-	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
-	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
-}
-
-void AIPlayer::UpdateInput(){
-	controller->UpdateOwnStatus();
-}
 
 void AIPlayer::CheckInput(){
 	// Movimiento
@@ -144,12 +122,4 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 
 	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
-}
-
-void AIPlayer::SetAllInput(keyStatesENUM state){
-	// Aunque ahora mismo se pongan todos, en un futuro solo deberían estar unos poco
-	// como los de movimiento
-	// En cambio con lo de hechizo como si hace falta realizar el casteo con pressed y down
-	// será el quien se encargue de pasarlo a released, o ya veremos como lo hacemos
-	controller->SetAllStatus(state);
 }

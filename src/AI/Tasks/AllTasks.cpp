@@ -95,15 +95,20 @@ bool HasArrived::run(Blackboard* bb){
 		Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 		if(target!=NULL){
 
+
 			Kinematic cKin;
         	Kinematic tKin;
 
         	cKin = character->GetKinematic();
         	tKin = target->kinematic;
 
+        	// La altura a la que se encuentren los personajes para nuestro juego
+        	// en el que no podran haber dos personajes a diferentes alturas da igual
+        	tKin.position.Y = cKin.position.Y;
+
         	vector3df dir = tKin.position - cKin.position;
         	float length = dir.length();
-
+        	
         	if(length<arrivedTarget){
         		bb->CleanPuntero(AI_TARGET);
 				bb->CleanSense(target->id);
@@ -144,7 +149,7 @@ bool FaceTarget::run(Blackboard* bb){
         		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
         		steering.angular = steering2.angular;
         	}else{
-        		SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
+        		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
         		steering.angular = steering2.angular;
         	}
 
