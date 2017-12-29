@@ -3,22 +3,37 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
-    Task* t1 	= new T_Seek();
-    Task* t2 	= new CheckPlayers();
-    Task* t3    = new HasArrived();
+    Task* t_checkSight 	= new CheckPlayerSight();
+    Task* t_goToTarget  = new GoToTarget();
+    Task* t_hasArrived  = new HasArrived();
 
-    Secuencia* s1	= new Secuencia();
-    s1->addChild(t2);
-    s1->addChild(t1);
-    s1->addChild(t3);
+    Secuencia* sc_sight	= new Secuencia();
+    sc_sight->addChild(t_checkSight);
+    sc_sight->addChild(t_goToTarget);
+    sc_sight->addChild(t_hasArrived);
 
-    Task* t4        = new T_Wander();
-    Selector* s2   = new Selector();
+    Task* t_checkHearing = new CheckPlayerHearing();
+    Task* t_faceTarget = new FaceTarget();
 
-    s2->addChild(s1);
-    s2->addChild(t4);
+    Secuencia* sc_hearing = new Secuencia();
+    sc_hearing->addChild(t_checkHearing);
+    sc_hearing->addChild(t_faceTarget);
 
-    SetRoot(s2);
+    Task* t_wander = new T_Wander();
+    
+    Selector* sl_movement   = new Selector();
+    sl_movement->addChild(sc_sight);
+    sl_movement->addChild(sc_hearing);
+    sl_movement->addChild(t_wander);
+
+
+    Task* t_sendSignals = new SendPlayerSignals();
+
+    Secuencia*  sc_start = new Secuencia();
+    sc_start->addChild(t_sendSignals);
+    sc_start->addChild(sl_movement);
+
+    SetRoot(sc_start);
 
 }
 

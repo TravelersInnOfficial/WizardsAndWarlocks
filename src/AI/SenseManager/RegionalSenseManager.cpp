@@ -89,16 +89,13 @@ void RegionalSenseManager::SendSignals(){
 	//Notification Phase
 	float currentTime = g_engine->getTime() +  0;
 	int size = notificationQueue.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		Notification* n = notificationQueue[i];
 		//Check if the notification is due
 		if(n->time <= currentTime){
 			n->sensor->Notify(n->signal, currentTime);
 			notificationQueue.erase(notificationQueue.begin()+i);
 			delete n;
-		}
-		else{
-			break;
 		}
 	}
 }

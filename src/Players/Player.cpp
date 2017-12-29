@@ -223,6 +223,7 @@ void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
 	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_SIGHT);
+	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_HEARING);
 }
 
 void Player::Die(){

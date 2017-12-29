@@ -98,6 +98,7 @@ void Blackboard::CleanSense(int id){
             break;
         }
     }
+
     size = sightSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
