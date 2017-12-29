@@ -15,6 +15,8 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
 	ObjectManager* objManager = ObjectManager::GetInstance();
+	objManager->ClearMap();
+
 	std::map<int, Door*> doors;
 	
 	//Takes path from binary location (/bin)

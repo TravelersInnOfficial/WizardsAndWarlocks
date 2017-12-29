@@ -19,6 +19,7 @@ public:
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
 	void SendVisualSignal();
+	bool CheckIfReady();
 	
 private:
 

@@ -5,7 +5,7 @@ ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
 	grail = NULL;
-	readyZone = vector4df(-999,-999,-999,-999);
+	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
 ObjectManager::~ObjectManager(){
@@ -36,13 +36,13 @@ void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
 
 void ObjectManager::AddReadyPoint(vector3df TPosition){
 	// Guardamos el primer punto
-	if(readyZone.X == -999){
+	if(readyZone.X == -9999){
 		readyZone.X = TPosition.X;
 		readyZone.Y = TPosition.Z;
 	}
 
 	// Guardamos el segundo punto
-	else if (readyZone.X2 == -999){
+	else if (readyZone.X2 == -9999){
 		readyZone.X2 = TPosition.X;
 		readyZone.Y2 = TPosition.Z;
 		
@@ -281,6 +281,7 @@ void ObjectManager::ClearMap(){
 
 	wizardSpawn.clear();
 	warlockSpawn.clear();
+	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
 void ObjectManager::Update(float deltaTime){

@@ -56,11 +56,11 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 
-	if(g_engine->IsKeyPressed(KEY_KEY_H)){
+	/*if(g_engine->IsKeyPressed(KEY_KEY_H)){
 		LevelLoader loader;
 		ObjectManager::GetInstance()->ClearMap();
 		loader.LoadLevel("../assets/json/map.json");
-	}
+	}*/
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()){ footstepEvent->setPosition(playerOne->GetPos());footstepEvent->start();}
@@ -73,11 +73,6 @@ bool Game::Input(){
 
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
-
-	if(g_engine->IsKeyPressed(KEY_KEY_G)){
-		vector3df pos = playerOne->GetPos();
-		std::cout<<pos.Z<<std::endl;
-	}
 
 	return end;
 }
@@ -96,10 +91,15 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
-
 	senseManager->SendSignals();
 
 	setFps();
+
+	if(playerManager->CheckIfReady()) {
+		LevelLoader loader;
+		loader.LoadLevel("../assets/json/map.json");
+	}
+
 }
 
 void Game::setFps(){
