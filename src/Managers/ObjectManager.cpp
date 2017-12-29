@@ -35,28 +35,28 @@ void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
 }
 
 void ObjectManager::AddReadyPoint(vector3df TPosition){
-	
 	// Guardamos el primer punto
 	if(readyZone.X == -999){
 		readyZone.X = TPosition.X;
-		readyZone.Y = TPosition.Y;
+		readyZone.Y = TPosition.Z;
 	}
 
 	// Guardamos el segundo punto
 	else if (readyZone.X2 == -999){
 		readyZone.X2 = TPosition.X;
-		readyZone.Y2 = TPosition.Y;
+		readyZone.Y2 = TPosition.Z;
 		
-		// Si el segundo punto es mas grande que el primero
+		// Si el segundo punto es menor que el primero
 		// Le damos la vuelta en X
-		if(readyZone.X2 > readyZone.X){
+		if(readyZone.X2 < readyZone.X){
 			float aux = readyZone.X2;
 			readyZone.X2 = readyZone.X;
 			readyZone.X = aux;
 		}
 
+		// Si el segundo punto es menor que el primero
 		// Y le damos la vuelta en Y
-		if(readyZone.Y2 > readyZone.Y){
+		if(readyZone.Y2 < readyZone.Y){
 			float aux = readyZone.Y2;
 			readyZone.Y2 = readyZone.Y;
 			readyZone.Y = aux;
