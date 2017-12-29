@@ -3,8 +3,7 @@
 
 #include <iostream>
 #include <map>
-#include "./../Spells/Hechizo.h"
-#include "./../Spells/HechizoProyectil.h"
+#include "./../Spells/AllSpells.h"
 #include <SpellCodes.h>
 #include "./../Players/Player.h"
 
@@ -16,6 +15,7 @@ public:
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
 	void UpdateCooldown(float deltaTime);
 	bool LanzarHechizo(int num, Player* p);
+	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
 
 private:

@@ -17,11 +17,15 @@ Hechizo::~Hechizo(){
 	
 }
 
+void Hechizo::ResetSpell(){
+	timeCasting = 0.0f;
+	lanzable = false;
+}
+
 /**
  * @brief Pone las variables aptas para empezar el casteo
  */
 void Hechizo::EmpezarCast(){
-	timeCasting = 0.0f;
 	lanzable = true;
 }
  
@@ -35,7 +39,6 @@ bool Hechizo::ComprobarCast(float deltaTime){
 		if(timeCasting>=casting){					// Comprobamos si el tiempo de casteo se ha completado
 			timeCasting = 0.0f;						// Reseteamos el tiempo de casteo
 			currentCooldown = cooldown;				// Ponemos el tiempo de cooldown
-			lanzable = false;
 			return true;
 		}
 	}
@@ -48,7 +51,9 @@ bool Hechizo::ComprobarCast(float deltaTime){
  * @param p Jugador que lanza el hechizo
  */
 void Hechizo::Lanzar(Player* p){
-	//std::cout<<"Hey Lanzaste un hechizo normal"<<std::endl;
+	if(!CheckMP(p->GetMP())){
+		lanzable = false;
+	}
 }
 
 /**

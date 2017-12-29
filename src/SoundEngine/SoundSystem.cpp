@@ -65,7 +65,6 @@ void SoundSystem::createSystem(string soundBanksPath){
  ******************************************************/
 SoundEvent* SoundSystem::getEvent(const char * eventPath) {
 
-    //std::cout << eventPath << std::endl;
     //Create event description
     FMOD::Studio::EventDescription * eventDesc;
     ERRCHECK(system->getEvent(eventPath, &eventDesc) );
@@ -142,7 +141,7 @@ void SoundSystem::setVolume(float vol) {
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
     //Sets the position and orientation of the listener
     setListenerPos(pos);        //Position vector = player position vector
-    //setListenerForward(rot);    //Orientation vector = player rotation vector    
+    //wsetListenerForward(rot);    //Orientation vector = player rotation vector    
     //setListenerUp(vector3df(-rot.Y, rot.X, rot.Z)); //Orientation normal vector
     
     ERRCHECK(system->setListenerAttributes(0, listener));
@@ -183,6 +182,8 @@ void SoundSystem::setListenerUp(vector3df vec) {
         listener->up.z = vec.Z;
 }
 
+
+
 /********************************************************************************************************
  ********************************************** Sound Event *********************************************
  ********************************************************************************************************/
@@ -192,9 +193,7 @@ SoundEvent::SoundEvent() {
 }
 
 SoundEvent* SoundEvent::newSoundEvent(FMOD::Studio::EventInstance* eventInstance) {
-    soundInstance = eventInstance;
-    soundInstance->setParameterValue("Surface", 3.0f);
-    
+    soundInstance = eventInstance;    
     return this;
 }
 
@@ -245,6 +244,11 @@ void SoundEvent::setPosition(vector3df pos) {
     FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
     FMOD_VECTOR fmodVec = {pos.X, pos.Y, pos.Z};
     attributes->position = fmodVec;
+    fmodVec = {0,0,0};
+    attributes->velocity = fmodVec;
+    fmodVec = {0,1,0};
+    attributes->forward = fmodVec;
+    attributes->up = fmodVec;
     ERRCHECK(soundInstance->set3DAttributes(attributes));
 }
 
@@ -264,6 +268,10 @@ bool SoundEvent::isPlaying() {
 
     return res;
 }
+
+void SoundEvent::setParamValue(string name, float value) {
+    ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
+}   
 
 /*******************************************************
  * Releases the event and destroys it after it has stop ped

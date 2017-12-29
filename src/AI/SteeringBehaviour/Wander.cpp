@@ -1,10 +1,10 @@
 #include "Wander.h"
 
-float Wander::wanderOffset = 10.0f;
-float Wander::wanderRadius = 20.0f;
+float Wander::wanderOffset = 1.0f;
+float Wander::wanderRadius = 2.0f;
 float Wander::wanderRate = 5.0f;
 float Wander::wanderOrientation = 0.0f;
-float Wander::maxAcceleration = 90.0f;
+float Wander::maxAcceleration = 30.0f;
 
 
 SteeringOutput Wander::GetSteering(Kinematic cKin){
@@ -18,7 +18,7 @@ SteeringOutput Wander::GetSteering(Kinematic cKin){
 	vector2df targetOrientation(0, wanderOrientation);
 	//std::cout<<targetOrientation<<std::endl;
 
-	vector3df target = cKin.position + vector3df(sin(wanderOrientation), 0, cos(wanderOrientation))*wanderOffset;
+	vector3df target = cKin.position + vector3df(sin(wanderOrientation)*wanderOffset, 0, cos(wanderOrientation))*wanderOffset;
 	target = target + asVector*wanderRadius;
 	//std::cout<<target<<std::endl;
 	//std::cout<<cKin.position<<std::endl;

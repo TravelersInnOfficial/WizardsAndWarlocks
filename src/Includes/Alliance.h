@@ -2,9 +2,9 @@
 #define ALLIANCE_H
 
 enum Alliance{
-	NO_ALLIANCE				= 0x00,  
-	ALLIANCE_WARLOCK		= 0x01,
-	ALLIANCE_WIZARD			= 0x02
+	NO_ALLIANCE				= 0x00,  	// Sin Alianza (Situacion inicial)
+	ALLIANCE_WARLOCK		= 0x01,		// Brujos
+	ALLIANCE_WIZARD			= 0x02		// Magos
 };
 
 #endif

@@ -1,12 +1,14 @@
 #include "Flee.h"
 
-SteeringOutput Flee::GetSteering(Kinematic cKin, Kinematic tKin, float maxAc){
+float Flee::maxAcceleration = 30.0f;
+
+SteeringOutput Flee::GetSteering(Kinematic cKin, Kinematic tKin){
 	SteeringOutput output;
 
 	vector3df linear = cKin.position - tKin.position;
 
 	linear.normalize();
-	linear = linear * maxAc;
+	linear = linear * maxAcceleration;
 
 	output.linear = linear;
 

@@ -1,5 +1,6 @@
 #include "Game.h"
 
+#include "./../Objects/DamageArea.h"
 Game::Game(){
 
 	spellManager 	= SpellManager::GetInstance();
@@ -8,6 +9,7 @@ Game::Game(){
 	objectManager	= ObjectManager::GetInstance();
 	playerManager	= PlayerManager::GetInstance();
 	trapManager		= TrapManager::GetInstance();
+	senseManager	= RegionalSenseManager::GetInstance();
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
@@ -16,11 +18,13 @@ Game::Game(){
 	// Level
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
+	lobbyState = true;
+	secondCounter = 0;
 	objectManager->AddNpc(vector3df(1.5,-1.25,4.5), vector3df(2,2,2), vector3df(0,180,0), NPC_SELECTOR);
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
+	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
@@ -30,9 +34,11 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 	spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
+	spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
+	spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
 	
-	//playerManager->AddAIPlayer();
-	//effectManager->AddEffect(playerOne, EFFECT_BURNED);
+	AL = playerManager->AddAIPlayer();
+	spellManager->AddHechizo(0, AL, SPELL_PROYECTIL);
 }
 
 Game::~Game(){
@@ -41,6 +47,7 @@ Game::~Game(){
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete senseManager;
 }
 
 bool Game::Input(){
@@ -52,20 +59,23 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 
-	if(g_engine->IsKeyPressed(KEY_KEY_H)){
+	/*if(g_engine->IsKeyPressed(KEY_KEY_H)){
 		LevelLoader loader;
 		ObjectManager::GetInstance()->ClearMap();
 		loader.LoadLevel("../assets/json/map.json");
-	}
+	}*/
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-		if(!footstepEvent->isPlaying()) footstepEvent->start();
+		if(!footstepEvent->isPlaying()){ footstepEvent->setPosition(playerOne->GetPos());footstepEvent->start();}
 		s_engine->setListenerPosRot(playerOne->GetPos(), playerOne->GetRot());
 		
 	}
 	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
 		if(footstepEvent->isPlaying()) footstepEvent->stop();
 	}
+
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
 
 	return end;
 }
@@ -84,8 +94,18 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
+	senseManager->SendSignals();
 
 	setFps();
+
+	if(lobbyState){
+		if(playerManager->CheckIfReady()) {
+			LevelLoader loader;
+			loader.LoadLevel("../assets/json/map.json");
+			lobbyState = false;
+		}
+	}
+
 }
 
 void Game::setFps(){
@@ -103,8 +123,9 @@ void Game::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	f_engine->DebugDrawWorld();
+	//f_engine->DebugDrawWorld();
 	objectManager->DrawNpcMenu();
+	AL->Debug();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }

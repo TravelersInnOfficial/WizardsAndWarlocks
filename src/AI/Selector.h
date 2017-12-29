@@ -6,16 +6,15 @@
 #include <stdlib.h>
 #include "Task.h"
 
-using namespace std;
 class Selector : public Task{
 public:
 	Selector();
 	void addChild(Task* task);
-	void addChildren(vector<Task*> tasks);
+	void addChildren(std::vector<Task*> tasks);
 	virtual bool run(Blackboard* bb);
 	bool terminate();
 protected:
-	vector<Task*> children;
+	std::vector<Task*> children;
 };
 
 class RandomSelector: public Selector{

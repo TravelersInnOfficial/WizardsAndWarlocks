@@ -1,4 +1,5 @@
 #include "PlayerManager.h"
+#include "ObjectManager.h"
 
 PlayerManager* PlayerManager::instance = 0;
 
@@ -21,12 +22,16 @@ PlayerManager::~PlayerManager(){
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 	Player* p = new HumanPlayer(isPlayer1);
 	players.push_back(p);
+	warlockPlayers.push_back(p);
+	p->SetAlliance(ALLIANCE_WARLOCK);
 	return p;
 }
 
-Player* PlayerManager::AddAIPlayer(){
-	Player* p = new AIPlayer();
+AIPlayer* PlayerManager::AddAIPlayer(){
+	AIPlayer* p = new AIPlayer();
 	players.push_back(p);
+	wizardPlayers.push_back(p);
+	p->SetAlliance(ALLIANCE_WIZARD);
 	return p;
 }
 
@@ -63,4 +68,29 @@ void PlayerManager::DeletePlayers(){
 		delete p;
 	}
 	playersToDelete.clear();
+}
+
+void PlayerManager::SendVisualSignal(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->SendSignal();
+	}
+}
+
+bool PlayerManager::CheckIfReady(){
+	bool allReady = true;
+	int size = players.size();
+	if(size > 0){
+		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+		for(int i=0; i < size && allReady == true; i++){
+			Player* p = players[i];
+			vector3df pos = p->GetPos();
+			if(pos.X < readyZone.X || pos.X > readyZone.X2 || pos.Z < readyZone.Y || pos.Z > readyZone.Y2){
+				allReady = false;
+			}
+		}
+	} else allReady = false;
+
+	return allReady;
 }

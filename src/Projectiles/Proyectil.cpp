@@ -1,10 +1,13 @@
 #include "Proyectil.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Players/Player.h"
+#include "./../Objects/Invocation.h"
 
 Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
     direction = new vector3df(dir.X, dir.Y, dir.Z);
-    //NormalizeDir();
+   
+    damage = 25;
+
     radio = r;
     velocity = v;
 
@@ -77,7 +80,11 @@ void Proyectil::UpdatePosShape(){
 void Proyectil::Contact(void* punt, EntityEnum tipo){
     if(tipo==EENUM_PLAYER){
         Player* p = (Player*)punt;
-        p->ChangeHP(-25.0f);
+        p->ChangeHP(-damage);
+    }
+    else if(tipo == EENUM_INVOCATION){
+        Invocation* i = (Invocation*)punt;
+        i->ChangeHP(-damage);
     }
     BulletManager* c = BulletManager::GetInstance();
     c->AddToDeleteProyecil(this);

@@ -25,19 +25,19 @@ private:
 	void UpdatePosShape();
 	void CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 
-	bool 		inUse;
-	Player* 	user;
+	bool 		inUse;				// Esta en uso? Si/No
+	Player* 	user;				// Jugador que la esta utilizando
 
-	int 		maxValue;			//Valor maximo fuente
-	int 		value;				//Valor actual fuente
-	int 		incrementUse;		//Incremento Use
-	int 		incrementValue;		//Incremento Recover
+	int 		maxValue;			// Valor maximo fuente
+	int 		value;				// Valor actual fuente
+	int 		incrementUse;		// Incremento Use
+	int 		incrementValue;		// Incremento Recover
 
-	float 		currentTime;
-	float		maxTime;
+	float 		currentTime;		// Tiempo de casteo
+	float		maxTime;			// Cada cuanto se curan los jugadores
 
-	BT_Body*        bt_body;
-    GBody*          m_fountainNode;
+	BT_Body*        bt_body;		// Cuerpo fisico de la fuente
+    GBody*          m_fountainNode;	// Cuerpo visual de la fuente
 };
 
 #endif

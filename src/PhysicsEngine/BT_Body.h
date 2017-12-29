@@ -15,7 +15,7 @@ public:
 	void Update();
 
 	void ApplyCentralImpulse(vector3df);
-	void ApplyTorque(vector3df);
+	void SetAngularVelocity(vector3df);
 	void ApplyCentralForce(vector3df);
 	void Rotate(vector3df);
 	void SetRotation(vector3df);

@@ -4,6 +4,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
@@ -14,6 +15,9 @@ Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(2,2,2);
 
+	controller = new PlayerController();
+	DeclareInput();
+
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
 
@@ -23,8 +27,15 @@ Player::Player(bool isPlayer1){
 
 	networkObject = NULL;
 
+	currentSpell = 0;
+	numberSpells = 3;   // rango de hechizos [0-numberSpells]
+
 	PlayerInit();
 	CreatePlayer();
+
+	damageEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Hit");
+	dieEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Die");
+	drinkEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Drink");
 }
 
 void Player::PlayerInit(){
@@ -62,8 +73,36 @@ void Player::CreatePlayer(){
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	
 	Respawn();
-
 }
+
+void Player::DeclareInput(){
+	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
+	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
+	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
+	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
+	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
+	controller->AddAction(KEY_SPACE, ACTION_JUMP);
+	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
+	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
+	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
+	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
+	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+}
+
+void Player::SetAllInput(keyStatesENUM state){
+	controller->SetAllStatus(state);
+	if(state == UP && isPlayerOne && networkObject != NULL) {
+		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
+	}
+}
+
+void Player::UpdateInput(){
+	controller->UpdateOwnStatus();
+	if(isPlayerOne) controller->Update();
+}
+
+void Player::CheckInput(){}
 
 void Player::GetNetInput(){
 	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
@@ -75,23 +114,11 @@ void Player::GetNetInput(){
 }
 
 void Player::SetNetInput(){
-
 }
 
 void Player::Update(){
-	UpdatePosShape();
-	if(m_dead || m_position.Y < -50) Die();
-
-	if(isPlayerOne){
-		vector3df newRot = engine->getActiveCamera()->getRotation();
-		vector3df rot = newRot * M_PI / 180.0;	
-		SetRotation(rot);
-		positionCamera();
-	}
-
-	checkMaxVelocity();
+	// Comprobamos la velocidad vertical del personaje?
 	vector3df velocity = bt_body->GetLinearVelocity();
-
 	if(!canJump){
 		float verticalSpeed = velocity.Y;
 		float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
@@ -99,8 +126,40 @@ void Player::Update(){
 		lastVerticalSpeed = verticalSpeed;
 	}
 
-	if(moving) moving = false;
-	else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+	// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
+	// que si no se estaba moviendo lo frenamos 
+	if(moving){ 
+		moving = false; 
+	}else{
+		bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+	}
+
+	// Comprobamos los Input del personaje
+	CheckInput();
+
+	// Actualizamos el cuerpo visual del personaje respecto al fisico
+	UpdatePosShape();
+
+	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
+	if(m_dead || m_position.Y < -50) Die();
+
+	// En el caso de que sea el jugador 1 actualizamos su camara
+	if(isPlayerOne){
+		vector3df newRot = engine->getActiveCamera()->getRotation();
+		vector3df rot = newRot * M_PI / 180.0;	
+		SetRotation(rot);
+		positionCamera();
+	}
+
+	// Comprobamos la velocidad maxima del jugador para que no se sobrepase
+	checkMaxVelocity();
+}
+
+void Player::ChangeCurrentSpell(int value){
+	int tempCurrentSpell = currentSpell + value;
+	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
+		currentSpell = tempCurrentSpell;
+	}
 }
 
 void Player::positionCamera(){
@@ -157,14 +216,15 @@ void Player::Jump(){
 }
 
 void Player::ChangeHP(float HP){
+	if (HP < 0)  {damageEvent->setPosition(m_position); ;damageEvent->start();}
 	if(m_HP + HP > 100) m_HP = 100;
 	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
-	else m_HP += HP;
+	else {m_HP += HP;}
 }
 
 bool Player::ChangeMP(float MP){
 	bool toRet = false;
-	
+
 	if(m_MP + MP >= 0){
 		m_MP += MP;
 		toRet = true;
@@ -178,9 +238,10 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	SetPosition(vector3df(0, 1, 0));
+	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	m_HP = 100;
 	m_MP = 100;
+	EffectManager::GetInstance()->CleanEffects(this);
 	m_dead = false;
 }
 
@@ -202,9 +263,18 @@ void Player::Raycast(){
 	}
 }
 
+void Player::SendSignal(){
+	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
+	sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_SIGHT);
+	if(moving){
+		sense->AddSignal(id, AI_PLAYER, 5.0f, GetKinematic(), AI_HEARING);
+	}
+}
+
 void Player::Die(){
+	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
-	EffectManager::GetInstance()->CleanEffects(this);
 	Respawn();
 }
 
@@ -231,9 +301,11 @@ void Player::DropObject(){
 
 void Player::UseObject(){
 	if(potion!=NULL){
+		if(!drinkEvent->isPlaying()) {drinkEvent->setPosition(m_position); drinkEvent->start();}
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
+		
 	}
 }
 
@@ -286,6 +358,9 @@ void Player::UpdatePosShape(){
 	m_position = bt_body->GetPosition();
 	bt_body->Update();
 	m_playerNode->setPosition(m_position);
+
+	rotation = bt_body->GetRotation();
+	m_playerNode->setRotation(rotation * 180 / M_PI);
 }
 
 void Player::SetHP(float HP){m_HP = HP; }
@@ -311,6 +386,14 @@ float Player::GetMP(){ return m_MP; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
+Kinematic Player::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = GetPos();
+	cKin.orientation =  vector2df(GetRot());
+   	cKin.velocity = GetVelocity();
+    cKin.rotation = vector2df(GetAngularVelocity());
+    return cKin;
+}
 
 vector3df Player::GetHeadPos(){
 	float offset = -0.1;
@@ -323,6 +406,8 @@ vector3df Player::GetHeadPos(){
 
 	return (headPos);
 }
+
+Alliance Player::GetAlliance(){ return playerAlliance; }
 
 void Player::SetAlliance(Alliance newAlliance){
 	playerAlliance = newAlliance;

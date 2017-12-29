@@ -5,8 +5,6 @@
 #include "Task.h"
 #include "Blackboard.h"
 
-using namespace std;
-
 class Decorador: public Task{
 public:
     Decorador();

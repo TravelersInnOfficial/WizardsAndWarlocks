@@ -9,7 +9,7 @@ Decorador::~Decorador(){
 }
 
 bool Decorador::run(Blackboard* bb){
-    cout<<"Run del Decorador básico"<<endl;
+    std::cout<<"Run del Decorador básico"<<std::endl;
     if(child != NULL){
         return child->run(bb);
     }
@@ -17,7 +17,7 @@ bool Decorador::run(Blackboard* bb){
 }
 
 bool Decorador::terminate(){
-    cout<<"Terminate del decorador básico"<<endl;
+    std::cout<<"Terminate del decorador básico"<<std::endl;
     return true;
 }
 

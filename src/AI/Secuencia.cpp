@@ -6,7 +6,7 @@ void Secuencia::addChild(Task* task){
 	children.push_back(task);
 }
 
-void Secuencia::addChildren(vector<Task*> tasks){
+void Secuencia::addChildren(std::vector<Task*> tasks){
 	int tamanyo = tasks.size();
 	for(int i=0; i<tamanyo; i++){
 		addChild(tasks.at(i));

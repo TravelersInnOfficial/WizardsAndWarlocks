@@ -23,22 +23,42 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
 	}
 
 	if (event.EventType == irr::EET_MOUSE_INPUT_EVENT){
+		int keycode = -1;
+		int DownUp = 0;	// 0 -> Down , 1 -> Up
 		//LeftButton
 		if (event.MouseInput.Event == irr::EMIE_LMOUSE_PRESSED_DOWN){
-			if (mouseButtonState[KEY_LBUTTON] == UP || mouseButtonState[KEY_LBUTTON] == RELEASED) mouseButtonState[0] = PRESSED;
-			else mouseButtonState[KEY_LBUTTON] = DOWN;
+			keycode = KEY_LBUTTON; DownUp = 0;
 		}
-		if (event.MouseInput.Event == irr::EMIE_LMOUSE_LEFT_UP){
-			if (mouseButtonState[KEY_LBUTTON] != UP) mouseButtonState[KEY_LBUTTON] = RELEASED;
+		else if (event.MouseInput.Event == irr::EMIE_LMOUSE_LEFT_UP){
+			keycode = KEY_LBUTTON; DownUp = 1;
 		}
 		//RightButton
-		 if (event.MouseInput.Event == irr::EMIE_RMOUSE_PRESSED_DOWN){
-			if (mouseButtonState[KEY_RBUTTON] == UP || mouseButtonState[KEY_RBUTTON] == RELEASED) mouseButtonState[1] = PRESSED;
-			else mouseButtonState[KEY_RBUTTON] = DOWN;
+		if (event.MouseInput.Event == irr::EMIE_RMOUSE_PRESSED_DOWN){
+		 	keycode = KEY_RBUTTON; DownUp = 0;
 		}
-		if (event.MouseInput.Event == irr::EMIE_RMOUSE_LEFT_UP){
-			if (mouseButtonState[KEY_RBUTTON] != UP) mouseButtonState[KEY_RBUTTON] = RELEASED;
-		} 
+		else if (event.MouseInput.Event == irr::EMIE_RMOUSE_LEFT_UP){
+			keycode = KEY_RBUTTON; DownUp = 1;
+		}
+		// WheelUp
+		if (event.MouseInput.Event == irr::EMIE_MOUSE_WHEEL){
+			DownUp = 1;	// Pongo Released para que luego pase a UP al no existir un levantar rueda
+			if(event.MouseInput.Wheel > 0){
+				keycode = KEY_WHEEL_UP;
+			}
+			else{
+				keycode = KEY_WHEEL_DOWN;
+			}			 	
+		}
+		// Asignation
+		if(keycode!=-1){
+			if(DownUp == 0){
+				if (mouseButtonState[keycode] == UP || mouseButtonState[keycode] == RELEASED) mouseButtonState[keycode] = PRESSED;
+				else mouseButtonState[keycode] = DOWN;
+			}
+			else if(DownUp == 1){
+				mouseButtonState[keycode] = RELEASED;
+			}
+		}
 	}
 
 	return false;
@@ -50,7 +70,7 @@ bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycod
 bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
 keyStatesENUM EventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
-	if(keycode > 2) return keyState[keycode];
+	if(keycode > numMouseButtons) return keyState[keycode];
 	else return mouseButtonState[keycode];
 }
 
@@ -68,6 +88,6 @@ void EventReceiver::Update(){
 }
 
 void EventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
-	if(keycode > 2) keyState[keycode] = state;
+	if(keycode > numMouseButtons) keyState[keycode] = state;
 	else mouseButtonState[keycode] = state;
 }

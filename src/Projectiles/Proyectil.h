@@ -26,15 +26,17 @@ private:
 	void UpdatePosShape();
 	void NormalizeDir();
 
-    vector3df*   	direction;	// La direccion que va a tomar el proyectil
-    float			radio;		// Radio del proyectil
-    float			velocity;	// Velocidad del proyectil
+    int             damage;             // Danyo del proyectil
 
-    float           maxDistance;
-    vector3df       initPos;
+    vector3df*   	direction;	        // La direccion que va a tomar el proyectil
+    float			radio;	            // Radio del proyectil
+    float			velocity;           // Velocidad del proyectil
 
-    BT_Body*        bt_body;
-    GBody*          m_proyectilNode;
+    float           maxDistance;        // Maxima distancia que puede recorrer
+    vector3df       initPos;            // Posicion inicial del proyectil
+
+    BT_Body*        bt_body;            // Cuerpo fisico del proyectil
+    GBody*          m_proyectilNode;    // Cuerpo visual del proyectil
 };
 
 #endif

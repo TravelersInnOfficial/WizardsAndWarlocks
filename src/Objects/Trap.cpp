@@ -22,9 +22,9 @@ Trap::Trap(){
     m_world_time = 0;
 }
 
-Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
+Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
-    m_position = &position;
+    m_position = &TPosition;
     m_rotation = new vector3df(normal.X,normal.Y,normal.Z);
     m_trapType = trapType;
     InitializeTrapData();
@@ -43,17 +43,17 @@ Trap::Trap(vector3df position, vector3df normal, TrapEnum trapType){
     m_deactivation_time = 3;
     m_world_time = 0;
 
-    m_rigidBody->CreateBox(*m_position,(*m_dimensions)*0.5,0,0);
+    m_rigidBody->CreateBox(TPosition,(*m_dimensions)*0.5,0,0);
     m_rigidBody->AssignPointer(this);
     m_rigidBody->Rotate(*m_rotation);
 
-    g_body = GraphicEngine::getInstance()->addCube2Scene(*m_position, *m_rotation, vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
+    g_body = GraphicEngine::getInstance()->addCube2Scene(TPosition, *m_rotation, vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
     vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
-    m_body->CreateGhostBox(m_position,m_rotation,&aux_dimensions);
-    m_body->SetObjectPtr(this);
+    m_body->CreateGhostBox(TPosition, *m_rotation, aux_dimensions);
+    m_body->AssignPointer(this);
 }
 
 Trap::~Trap(){
@@ -167,4 +167,8 @@ void Trap::Erase(){
     m_rigidBody->Erase();
     m_body->Erase();
     g_body->Erase();
+
+    delete m_rigidBody;
+    delete m_body;
+    delete g_body;
 }

@@ -10,10 +10,7 @@ public:
 	HumanPlayer(bool isPlayer1 = true);
 	~HumanPlayer();
 
-	void UpdateInput();
 	void CheckInput();
-
-	void SetAllInput(keyStatesENUM state);
 
 	void GetNetInput();
 	void SetNetInput();
@@ -23,9 +20,6 @@ public:
 	void ToggleMenu(bool newState);
 
 private:
-	void DeclareInput();
-	
-	PlayerController* controller;
 	bool menuActivated;
 
 };

@@ -139,6 +139,8 @@ public:
      ******************************************************/
     SoundEvent* newSoundEvent(FMOD::Studio::EventInstance* eventInstance);
 
+    void setParamValue(string name, float value);
+
     
 protected:
     FMOD::Studio::EventInstance* soundInstance;

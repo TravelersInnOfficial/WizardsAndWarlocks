@@ -25,6 +25,8 @@ NetGame::NetGame(){
 	// Level
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
+	lobbyState = true;
+	secondCounter = 0;
 	objectManager->AddNpc(vector3df(1.5,-1.25,4.5), vector3df(2,2,2), vector3df(0,180,0), NPC_SELECTOR);
 
 	if(n_engine->IsServerInit()) isServer = true;
@@ -32,7 +34,7 @@ NetGame::NetGame(){
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Footsteps/Footsteps");
+	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
@@ -91,6 +93,14 @@ void NetGame::Update(){
 	g_engine->UpdateReceiver();
 
 	setFps();
+
+	if(lobbyState){
+		if(playerManager->CheckIfReady()) {
+			LevelLoader loader;
+			loader.LoadLevel("../assets/json/map.json");
+			lobbyState = false;
+		}
+	}
 }
 
 void NetGame::setFps(){
@@ -127,11 +137,17 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
+		spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
+		spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
+		spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
 		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
+		spellManager->AddHechizo(1, newPlayer, SPELL_BASIC);
+		spellManager->AddHechizo(2, newPlayer, SPELL_DESPERIATONMURI);
+		spellManager->AddHechizo(3, newPlayer, SPELL_GUIVERNUMVENTUS);
 	}
 }
