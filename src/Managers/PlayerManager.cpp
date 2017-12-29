@@ -94,3 +94,11 @@ bool PlayerManager::CheckIfReady(){
 
 	return allReady;
 }
+
+void PlayerManager::RespawnAll(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->Respawn();
+	}
+}

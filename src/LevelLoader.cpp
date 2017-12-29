@@ -1,6 +1,7 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
 #include "Managers/ObjectManager.h"
+#include "Managers/PlayerManager.h"
 #include <map>
 #include <json.hpp>
 #include <fstream>
@@ -14,9 +15,6 @@ LevelLoader::LevelLoader(){
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
-
-	std::cout<<"CARGANDO NIVEL"<<std::endl;
-
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
 
@@ -105,6 +103,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		else{
 			//std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;
 		}
+
 	}
 
 	// loop to iterate switch objects and assign it to a door
@@ -124,5 +123,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddSwitch(doors[assignedDoorID], position, vector3df(1,1,1), rotation, vector3df(0,0,0));
 		}
 	}
+
+	PlayerManager* plyManager = PlayerManager::GetInstance();
+	plyManager->RespawnAll();
 	return true;
 }

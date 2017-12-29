@@ -20,6 +20,7 @@ public:
 	void DeletePlayers();
 	void SendVisualSignal();
 	bool CheckIfReady();
+	void RespawnAll();
 	
 private:
 
