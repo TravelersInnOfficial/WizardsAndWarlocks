@@ -101,6 +101,7 @@ void NetGame::Update(){
 			playerManager->ManageMatchStatus(true);
 		}
 	}
+	else CheckIfWon();
 }
 
 void NetGame::setFps(){
@@ -149,4 +150,9 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		spellManager->AddHechizo(2, newPlayer, SPELL_DESPERIATONMURI);
 		spellManager->AddHechizo(3, newPlayer, SPELL_GUIVERNUMVENTUS);
 	}
+}
+
+void NetGame::CheckIfWon(){
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) std::cout<<"WIZARDS WIN"<<std::endl;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) std::cout<<"WARLOCKS WIN"<<std::endl;
 }

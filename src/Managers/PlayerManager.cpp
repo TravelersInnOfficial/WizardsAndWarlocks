@@ -8,7 +8,10 @@ PlayerManager* PlayerManager::GetInstance(){
 	return instance;
 }
 
-PlayerManager::PlayerManager(){}
+PlayerManager::PlayerManager(){
+	wizardsWin = false;
+	warlocksWin = false;
+}
 
 PlayerManager::~PlayerManager(){
 	int size = players.size();
@@ -120,23 +123,13 @@ void PlayerManager::AddToDead(Alliance alliance, Player* player){
 	
 	if(alliance == ALLIANCE_WIZARD){
 		deadWizards.push_back(player);
-		if(deadWizards.size() == wizardPlayers.size()) std::cout<<"WARLOCKS WIN"<<std::endl;
+		if(!wizardsWin && !warlocksWin && deadWizards.size() == wizardPlayers.size()) warlocksWin = true;
 	}
 
 	else{
 		deadWarlocks.push_back(player);
-		if(deadWarlocks.size() == warlockPlayers.size()) std::cout<<"WIZARDS WIN"<<std::endl;
+		if(!wizardsWin && !warlocksWin && deadWarlocks.size() == warlockPlayers.size()) wizardsWin = true;
 	}
-
-	/*std::cout<<"#######################################"<<std::endl;
-	std::cout<<"Players: "<<players.size()<<std::endl;
-	std::cout<<"Dead Players: "<<deadPlayers.size()<<std::endl;
-	std::cout<<"-----------------"<<std::endl;
-	std::cout<<"Wizards: "<<wizardPlayers.size()<<std::endl;
-	std::cout<<"Dead Wizards: "<<deadWizards.size()<<std::endl;
-	std::cout<<"-----------------"<<std::endl;
-	std::cout<<"Warlocks: "<<warlockPlayers.size()<<std::endl;
-	std::cout<<"Dead Warlocks: "<<deadWarlocks.size()<<std::endl;*/
 }
 
 void PlayerManager::ChangeAlliance(Alliance alliance, Player* player){
@@ -145,14 +138,17 @@ void PlayerManager::ChangeAlliance(Alliance alliance, Player* player){
 	
 	if(alliance == ALLIANCE_WIZARD) wizardPlayers.push_back(player);
 	else warlockPlayers.push_back(player);
+}
 
-	/*std::cout<<"#######################################"<<std::endl;
-	std::cout<<"Players: "<<players.size()<<std::endl;
-	std::cout<<"Dead Players: "<<deadPlayers.size()<<std::endl;
-	std::cout<<"-----------------"<<std::endl;
-	std::cout<<"Wizards: "<<wizardPlayers.size()<<std::endl;
-	std::cout<<"Dead Wizards: "<<deadWizards.size()<<std::endl;
-	std::cout<<"-----------------"<<std::endl;
-	std::cout<<"Warlocks: "<<warlockPlayers.size()<<std::endl;
-	std::cout<<"Dead Warlocks: "<<deadWarlocks.size()<<std::endl;*/
+bool PlayerManager::CheckIfWon(Alliance alliance){
+	bool toRet = false;
+	if(alliance == ALLIANCE_WIZARD) toRet = wizardsWin;
+	else toRet = warlocksWin;
+
+	if(toRet){
+		warlocksWin = false;
+		wizardsWin = false;
+	}
+
+	return toRet;
 }

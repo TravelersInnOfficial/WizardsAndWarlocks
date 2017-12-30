@@ -105,6 +105,7 @@ void Game::Update(){
 			playerManager->ManageMatchStatus(true);
 		}
 	}
+	else CheckIfWon();
 
 }
 
@@ -136,4 +137,9 @@ void Game::UpdateDelta(){
 	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
 	deltaTime = currentTime - timeStart;
 	timeStart = currentTime;
+}
+
+void Game::CheckIfWon(){
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) std::cout<<"WIZARDS WIN"<<std::endl;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) std::cout<<"WARLOCKS WIN"<<std::endl;
 }

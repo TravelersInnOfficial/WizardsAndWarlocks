@@ -289,6 +289,20 @@ void ObjectManager::ClearMap(){
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
+bool ObjectManager::CheckIfWon(){
+	bool toRet = false;
+	if(grail != NULL){
+		toRet = grail->CheckIfWon();
+	}
+	return toRet;
+}
+
+// ===================================================================================================== //
+//
+// UPDATES
+//
+// ===================================================================================================== //
+
 void ObjectManager::Update(float deltaTime){
 	UpdateGrail(deltaTime);
 	UpdateDoors();
@@ -300,12 +314,6 @@ void ObjectManager::Update(float deltaTime){
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
 }
-
-// ===================================================================================================== //
-//
-// UPDATES
-//
-// ===================================================================================================== //
 
 void ObjectManager::UpdateGrail(float deltaTime){
 	if(grail!=NULL) grail->Update(deltaTime);

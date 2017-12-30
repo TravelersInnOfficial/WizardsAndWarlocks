@@ -66,6 +66,7 @@ private:
 	AIPlayer* AL;
 
 	void setFps();
+	void CheckIfWon();
 	
 };
 

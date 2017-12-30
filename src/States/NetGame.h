@@ -67,6 +67,7 @@ private:
 	NetGame();
 
 	void setFps();
+	void CheckIfWon();
 
 };
 
