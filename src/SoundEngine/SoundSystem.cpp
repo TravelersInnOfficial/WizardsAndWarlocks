@@ -29,7 +29,7 @@ SoundSystem* SoundSystem::getInstance() {
 SoundSystem::SoundSystem() {
 }
 
-void SoundSystem::createSystem(string soundBanksPath){
+void SoundSystem::createSystem(std::string soundBanksPath){
    
     //Variables needed for the banks' filename
     banksPath = soundBanksPath.c_str();
@@ -85,8 +85,8 @@ SoundEvent* SoundSystem::getEvent(const char * eventPath) {
     return newEvent;
 }
 
-void SoundSystem::loadBank(string filePath, FMOD::Studio::Bank* bank) {
-    string path = "";
+void SoundSystem::loadBank(std::string filePath, FMOD::Studio::Bank* bank) {
+    std::string path = "";
     const char * finalPath = "";
 
     path = banksPath + filePath;     //Make a string with the filename
@@ -269,7 +269,7 @@ bool SoundEvent::isPlaying() {
     return res;
 }
 
-void SoundEvent::setParamValue(string name, float value) {
+void SoundEvent::setParamValue(std::string name, float value) {
     ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
 }   
 

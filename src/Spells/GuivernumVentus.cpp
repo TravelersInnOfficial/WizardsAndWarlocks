@@ -56,3 +56,15 @@ void GuivernumVentus::UpdateArea(Player* p){
 	area->SetPosition(pos);
 	area->SetRotation(rot);
 }
+
+float GuivernumVentus::GetUtility(Player* p){
+	float HP = p->GetHP();
+	float MP = p->GetMP();
+
+	HP = HP / 100;		// Saco los porcentajes [0, 1]
+	MP = MP / 100; 
+	// Situacion optima 50HP && 100MP
+	float utility = HP + MP;
+	utility = utility / 2;
+	return utility;
+}

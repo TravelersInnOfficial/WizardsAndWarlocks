@@ -3,6 +3,16 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
+    // ATAQUE
+    Secuencia* sc_attack = new Secuencia();
+    sc_attack->addChild(new SendPlayerSignals());       // Primero envio la senyales sonoras y visuales
+    sc_attack->addChild(new CheckPlayerSight());        // Comprobamos que vea al jugador
+    sc_attack->addChild(new ShootBasic());              // Dispara
+
+    Decorador* d_attack = new ReleaseSpell();
+    d_attack->setChild(sc_attack);
+
+    // MOVIMIENTO
     Task* t_checkSight 	= new CheckPlayerSight();
     Task* t_goToTarget  = new GoToTarget();
     Task* t_hasArrived  = new HasArrived();
@@ -26,13 +36,9 @@ BehaviourTree::BehaviourTree(){
     sl_movement->addChild(sc_hearing);
     sl_movement->addChild(t_wander);
 
-
-    Task* t_sendSignals = new SendPlayerSignals();
-
-    Secuencia*  sc_start = new Secuencia();
-    sc_start->addChild(t_sendSignals);
+    Secuencia* sc_start = new Secuencia();
+    sc_start->addChild(d_attack);
     sc_start->addChild(sl_movement);
-
     SetRoot(sc_start);
 
 }

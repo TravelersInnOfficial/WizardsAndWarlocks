@@ -88,3 +88,15 @@ int Hechizo::GetMP(){
 	return costePM;
 }
 
+float Hechizo::GetUtility(Player* p){
+	float HP = p->GetHP();
+	float MP = p->GetMP();
+
+	HP = HP / 100;		// Saco los porcentajes [0, 1]
+	MP = MP / 100; 
+	// Situacion optima 100HP && 100MP
+	float utility = HP + MP;
+	utility = utility / 2;
+	return utility;
+}
+

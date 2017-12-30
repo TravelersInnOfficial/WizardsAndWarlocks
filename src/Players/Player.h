@@ -80,6 +80,7 @@ class Player: public Entidad{
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
 		Alliance GetAlliance();
+		int GetNumberSpells();
 
 		// Seters
 		void SetPosition(vector3df);
