@@ -17,6 +17,7 @@ public:
 	void DecCooldown(float time);
 	bool CheckMP(int MP);
 	int	GetMP();
+	virtual float GetUtility(Player* p);
 protected:
 	int 	costePM;			// Coste de Mana del hechizo
 	bool	lanzable;			// Se puede lanzar el hechizo? En Cooldown? Si/No

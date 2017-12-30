@@ -6,6 +6,7 @@
 AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
 	behaviour->AnyadirInformacion(AI_CHARACTER, this);
+	behaviour->AnyadirInformacion(AI_SPELL_STATUS, UP);
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
@@ -82,11 +83,11 @@ void AIPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 	// Hechizos
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
-	if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
-	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+	//if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
+	//if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
+	//if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	// Trampas
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 }
@@ -129,4 +130,15 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 
 	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
+}
+
+
+// ========================================================================================= //
+//
+//	GETTERS
+//
+// ========================================================================================= //
+
+int AIPlayer::GetCurrentSpell(){
+	return currentSpell;
 }

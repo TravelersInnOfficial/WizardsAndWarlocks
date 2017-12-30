@@ -16,13 +16,4 @@ protected:
     Task* child;
 };
 
-class CountTime: public Decorador{
-public:
-	CountTime(int number);
-	bool run(Blackboard* bb);
-private:
-	int contador;
-	int maxContador;
-};
-
 #endif

@@ -5,7 +5,7 @@ Sense_struct::~Sense_struct(){
 }
 
 Blackboard::Blackboard(){
-
+    blackboardParent = NULL;
 }
 
 Blackboard::~Blackboard(){

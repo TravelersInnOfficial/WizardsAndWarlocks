@@ -21,6 +21,9 @@ public:
 	void SetController(ACTION_ENUM action, keyStatesENUM state);
 	void CheckInput();
 
+	// Getters
+	int GetCurrentSpell();
+
 	//void SetAllInput(keyStatesENUM state);
 	//void GetNetInput();
 	//void SetNetInput();

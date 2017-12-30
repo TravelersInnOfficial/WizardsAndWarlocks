@@ -107,6 +107,18 @@ void SpellManager::ResetHechizo(int num, Player* p){
 	}
 }
 
+float SpellManager::GetUtility(int num, Player* p){
+	if(num>=0 && num<numHechizos){
+		if(hechizos[num].find(p) != hechizos[num].end()){
+			Hechizo* h = hechizos[num][p];
+			if(h!=NULL){
+				return h->GetUtility(p);
+			}
+		}
+	}
+	return 0;
+}
+
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){

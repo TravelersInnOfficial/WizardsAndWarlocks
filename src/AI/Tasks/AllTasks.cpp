@@ -22,6 +22,77 @@ bool DEBUG = false;
 
 // ================================================================================================= //
 //
+//	ORDER SPELLS BY UTILITY
+//
+// ================================================================================================= //
+
+SpellSecuencia::SpellSecuencia(){}
+
+bool SpellSecuencia::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"SpellSecuencia"<<std::endl;
+
+	int tamanyo = children.size();
+	SortVector(bb);
+	for(int i=0; i<tamanyo; i++){
+		Task* child = children.at(i);
+		if(!child->run(bb)){
+			return false;
+		}
+	}
+	return true;
+}
+
+void SpellSecuencia::SortVector(Blackboard* bb){
+	if(DEBUG) std::cout<<"SortVector SpellSecuencia"<<std::endl;
+	// Ordenar las tareas por utilidad
+	// Se supone que cada tarea es un hechizo
+	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
+	if(character!=NULL){
+		SpellManager* spellMaster = SpellManager::GetInstance();
+
+		int size = character->GetNumberSpells();
+		std::vector<float> values;
+		std::vector<int> numbers;
+		for(int i=0; i<size; i++){
+			values.push_back(i);
+			values.push_back(spellMaster->GetUtility(i, character));
+		}
+
+		// ORDENAR AMBOS VECTORES EN FUNCION DE LA UTILIDAD
+
+	}
+}
+
+// ================================================================================================= //
+//
+//	RELEASE SPELL IF FALSE
+//
+// ================================================================================================= //
+
+ReleaseSpell::ReleaseSpell(){}
+
+bool ReleaseSpell::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"ReleaseSpell"<<std::endl;
+    
+    // Miramos si el personaje a conseguido tirar un hechizo
+    // En el caso de que no lo haya conseguido para asegurarnos
+    // reseteamos el hechizo. De esta forma si el hechizo se cancela
+    // este Decorador se encarga de resetearlo.
+    if(child != NULL){
+        if(!child->run(bb)){
+        	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
+        	if(character!=NULL){
+        		int currentSpell = character->GetCurrentSpell();
+        		SpellManager::GetInstance()->ResetHechizo(currentSpell, character);
+        		bb->SetInt(AI_SPELL_STATUS, UP);
+        	}
+        }
+    }
+    return true;
+}
+
+// ================================================================================================= //
+//
 //	SHOOT PROYECTILE BASIC
 //
 // ================================================================================================= //
@@ -35,23 +106,29 @@ bool ShootBasic::run(Blackboard* bb){
 	if(character!=NULL){
 		SpellManager* spellMaster = SpellManager::GetInstance();
 
-		int status = bb->GetInt(AI_SPELL_STATUS);
-		if(status==-1){status = UP;}
+		int currentSpell = character->GetCurrentSpell();	// El hechizo actual del personaje	
+		int status = bb->GetInt(AI_SPELL_STATUS); 			// Conseguimos el estado anterior del hechizo
 
+		// En el caso de que estuviera levantado
 		if(status == UP){
-			if(spellMaster->StartHechizo(0, character)){
-				bb->SetInt(AI_SPELL_STATUS, PRESSED);
+			// Intentamos empezar a lanzar el hechizo
+			if(spellMaster->StartHechizo(currentSpell, character)){
+				// En el caso de conseguirlo empezamos con el lanzamiento
+				spellMaster->LanzarHechizo(currentSpell, character);
+				bb->SetInt(AI_SPELL_STATUS, DOWN);
 				return true;
 			}
-		}else if(status == PRESSED || status == DOWN){
-			bb->SetInt(AI_SPELL_STATUS, DOWN);
-			if(spellMaster->LanzarHechizo(0, character)){
-				spellMaster->ResetHechizo(0, character);
+		// En el caso de que ya se estuviera lanzando
+		}else if(status == DOWN){
+			// Miramos a ver si el casteo finaliza
+			if(spellMaster->LanzarHechizo(currentSpell, character)){
+				// En el caso de que se llegue a lanzar los resetamos y volvemos
+				// a marcar como UP
+				spellMaster->ResetHechizo(currentSpell, character);
 				bb->SetInt(AI_SPELL_STATUS, UP);
 			}
 			return true;
 		}
-
 	}
 	return false;
 }

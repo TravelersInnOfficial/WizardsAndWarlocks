@@ -3,7 +3,36 @@
 
 #include <iostream>
 
+#include "./../Secuencia.h"
+#include "./../Decorador.h"
 #include "./../Task.h"
+
+// ================================================================================================= //
+//
+//	ORDER SPELLS BY UTILITY
+//
+// ================================================================================================= //
+
+class SpellSecuencia: public Secuencia{
+public:
+	SpellSecuencia();
+	bool run(Blackboard* bb);
+	void SortVector(Blackboard* bb);
+private:
+};
+
+// ================================================================================================= //
+//
+//	RELEASE SPELL IF FALSE
+//
+// ================================================================================================= //
+
+class ReleaseSpell: public Decorador{
+public:
+	ReleaseSpell();
+	bool run(Blackboard* bb);
+private:
+};
 
 // ================================================================================================= //
 //

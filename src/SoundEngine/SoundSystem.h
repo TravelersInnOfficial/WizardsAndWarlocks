@@ -27,7 +27,7 @@ public:
      *  Creates the system, loads the banks and insert them on SoundSystem maps
      *  \param soundBanksPath directory path where are located the FMOD Studio generated banks
      ******************************************************/
-    void createSystem(string soundBanksPath);
+    void createSystem(std::string soundBanksPath);
     /******************************************************
      * Factory method that constucts a SoundEvent by the name of the FMOD Studio event 
      *  f. ex. "event:/Ambience/Country"
@@ -70,7 +70,7 @@ public:
      * @param string path of the bank to load
      * @param FMOD::Studio::Bank* bank where will be loaded the bank
      ******************************************************/
-    void loadBank(string path, FMOD::Studio::Bank* bank);
+    void loadBank(std::string path, FMOD::Studio::Bank* bank);
 
 private:
     const char * banksPath;
@@ -80,9 +80,9 @@ private:
 	FMOD::Studio::Bank* stringsBank;
     FMOD::Studio::Bus* busMaster;
     FMOD_3D_ATTRIBUTES* listener;
-    map<string, FMOD::Studio::Bank*> banks;
-    map<string, FMOD::Studio::EventDescription*> eventDescriptions;
-    map<string, SoundEvent*> soundEvents;
+    std::map<std::string, FMOD::Studio::Bank*> banks;
+    std::map<std::string, FMOD::Studio::EventDescription*> eventDescriptions;
+    std::map<std::string, SoundEvent*> soundEvents;
 };
 
 class SoundEvent {
@@ -139,7 +139,7 @@ public:
      ******************************************************/
     SoundEvent* newSoundEvent(FMOD::Studio::EventInstance* eventInstance);
 
-    void setParamValue(string name, float value);
+    void setParamValue(std::string name, float value);
 
     
 protected:

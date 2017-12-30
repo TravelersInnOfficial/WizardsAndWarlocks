@@ -24,22 +24,3 @@ bool Decorador::terminate(){
 void Decorador::setChild(Task* newChild){
     child = newChild;
 }
-
-//---------------------------------------------------------------------------------------
-
-CountTime::CountTime(int n){
-	contador = n;
-	maxContador = n;
-}
-
-bool CountTime::run(Blackboard* bb){
-	contador--;
-	if(contador>=0){
-		if(child!=NULL){
-			return child->run(bb);
-		}
-		return false;
-	}
-	contador = maxContador;
-	return false;
-}
