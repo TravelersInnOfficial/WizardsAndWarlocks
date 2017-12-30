@@ -18,7 +18,7 @@ MenuManager* MenuManager::GetInstance(){
 	return instance;
 }
 
-void MenuManager::CreateMenu(MenuType type){
+void MenuManager::CreateMenu(MenuType type, int option){
 	switch(type){
 		case(MAIN_M):{
 			CreateMain();
@@ -26,6 +26,10 @@ void MenuManager::CreateMenu(MenuType type){
 		}
 		case(ALLIANCE_M):{
 			CreateAlliance();
+			break;
+		}
+		case(ENDMATCH_M):{
+			CreateMatchEnded(option);
 			break;
 		}
 		default:{
@@ -77,7 +81,6 @@ void MenuManager::CreateMain(){
 }
 
 void MenuManager::CreateAlliance(){
-
 	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
 	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
 
@@ -93,12 +96,38 @@ void MenuManager::CreateAlliance(){
 	window->getCloseButton()->setID(ALLIANCE_M_CLOSE);
 	loadedOptions.push_back(ALLIANCE_M_WINDOW);
 
-	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/9.0f)/2),menuSize.Y/4,menuSize.X/9.0f,menuSize.Y/30);
-	g_engine->addStaticText(rect, L"Select your Alliance, human.", true, false, ALLIANCE_M_TEXT_1, window);
+	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/7.0f)/2),menuSize.Y/4,menuSize.X/7.0f,menuSize.Y/30);
+	g_engine->addStaticText(rect, L"Select your Alliance, Human.", true, false, ALLIANCE_M_TEXT_1, window);
 	
 	rect = vector4di(menuSize.X/9.0f,menuSize.Y/3,menuSize.X/3.5f,menuSize.Y/3);
 	g_engine->addButton(rect, L"Play as a Wizard", L"Be a Wizard and get back the Grail", ALLIANCE_M_WIZARD, window);
 
 	rect = vector4di(menuSize.X/1.67f,menuSize.Y/3,menuSize.X/3.5f,menuSize.Y/3);
 	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", ALLIANCE_M_WARLOCK, window);
+}
+
+void MenuManager::CreateMatchEnded(int option){
+	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
+	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
+
+ 	irr::gui::IGUIWindow* window = g_engine->privateGUIEnv->addWindow(
+        menuWindow,
+        false,
+        L"Match Ended",
+		0,
+		ENDMATCH_M_WINDOW
+	);
+	window->setDraggable(false);
+	window->getCloseButton()->setVisible(false);
+	window->getCloseButton()->setID(ENDMATCH_M_WINDOW);
+	loadedOptions.push_back(ENDMATCH_M_WINDOW);
+
+	std::wstring winner = L"THE WIZARDS WON!";
+	if (option != 0) winner = L"THE WARLOCKS WON!";
+
+	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/9.0f)/2),menuSize.Y/4,menuSize.X/9.0f,menuSize.Y/30);
+	g_engine->addStaticText(rect, winner, true, false, ENDMATCH_M_TEXT_1, window);
+
+	rect = vector4di(menuSize.X/2-((menuSize.X/3.0f)/2),menuSize.Y/3,menuSize.X/3.0f,menuSize.Y/3);
+	g_engine->addButton(rect, L"Accept", L"Go Back to the Lobby", ENDMATCH_M_CONFIRM, window);
 }

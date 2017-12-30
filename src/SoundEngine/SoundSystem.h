@@ -11,6 +11,8 @@
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
 
+using namespace std;
+
 class SoundEvent;
 
 class SoundSystem {

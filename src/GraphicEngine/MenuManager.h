@@ -12,7 +12,7 @@ public:
 	static MenuManager* GetInstance();
 	~MenuManager();
 	
-	void CreateMenu(MenuType type);
+	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
 
 private:
@@ -25,6 +25,7 @@ private:
 	MenuManager();
 	void CreateMain();
 	void CreateAlliance();
+	void CreateMatchEnded(int option);
 
 };
 
