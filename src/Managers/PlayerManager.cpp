@@ -16,13 +16,18 @@ PlayerManager::~PlayerManager(){
 		Player* p = players[i];
 		delete p;
 	}
+
 	players.clear();
+	wizardPlayers.clear();
+	warlockPlayers.clear();	
+	deadPlayers.clear();
+	deadWizards.clear();
+	deadWarlocks.clear();	
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 	Player* p = new HumanPlayer(isPlayer1);
 	players.push_back(p);
-	warlockPlayers.push_back(p);
 	p->SetAlliance(ALLIANCE_WARLOCK);
 	return p;
 }
@@ -30,7 +35,6 @@ Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 AIPlayer* PlayerManager::AddAIPlayer(){
 	AIPlayer* p = new AIPlayer();
 	players.push_back(p);
-	wizardPlayers.push_back(p);
 	p->SetAlliance(ALLIANCE_WIZARD);
 	return p;
 }
@@ -109,4 +113,46 @@ void PlayerManager::ManageMatchStatus(bool started){
 		Player* p = players[i];
 		p->SetMatchStatus(started);
 	}
+}
+
+void PlayerManager::AddToDead(Alliance alliance, Player* player){
+	deadPlayers.push_back(player);
+	
+	if(alliance == ALLIANCE_WIZARD){
+		deadWizards.push_back(player);
+		if(deadWizards.size() == wizardPlayers.size()) std::cout<<"WARLOCKS WIN"<<std::endl;
+	}
+
+	else{
+		deadWarlocks.push_back(player);
+		if(deadWarlocks.size() == warlockPlayers.size()) std::cout<<"WIZARDS WIN"<<std::endl;
+	}
+
+	/*std::cout<<"#######################################"<<std::endl;
+	std::cout<<"Players: "<<players.size()<<std::endl;
+	std::cout<<"Dead Players: "<<deadPlayers.size()<<std::endl;
+	std::cout<<"-----------------"<<std::endl;
+	std::cout<<"Wizards: "<<wizardPlayers.size()<<std::endl;
+	std::cout<<"Dead Wizards: "<<deadWizards.size()<<std::endl;
+	std::cout<<"-----------------"<<std::endl;
+	std::cout<<"Warlocks: "<<warlockPlayers.size()<<std::endl;
+	std::cout<<"Dead Warlocks: "<<deadWarlocks.size()<<std::endl;*/
+}
+
+void PlayerManager::ChangeAlliance(Alliance alliance, Player* player){
+	wizardPlayers.erase(std::remove(wizardPlayers.begin(), wizardPlayers.end(), player), wizardPlayers.end());
+	warlockPlayers.erase(std::remove(warlockPlayers.begin(), warlockPlayers.end(), player), warlockPlayers.end());
+	
+	if(alliance == ALLIANCE_WIZARD) wizardPlayers.push_back(player);
+	else warlockPlayers.push_back(player);
+
+	/*std::cout<<"#######################################"<<std::endl;
+	std::cout<<"Players: "<<players.size()<<std::endl;
+	std::cout<<"Dead Players: "<<deadPlayers.size()<<std::endl;
+	std::cout<<"-----------------"<<std::endl;
+	std::cout<<"Wizards: "<<wizardPlayers.size()<<std::endl;
+	std::cout<<"Dead Wizards: "<<deadWizards.size()<<std::endl;
+	std::cout<<"-----------------"<<std::endl;
+	std::cout<<"Warlocks: "<<warlockPlayers.size()<<std::endl;
+	std::cout<<"Dead Warlocks: "<<deadWarlocks.size()<<std::endl;*/
 }

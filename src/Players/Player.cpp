@@ -4,6 +4,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
+#include "./../Managers/PlayerManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
 #include <TrapCodes.h>
@@ -302,10 +303,18 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
-	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
+	if(!dieEvent->isPlaying()) {
+		dieEvent->setPosition(m_position);
+		dieEvent->start();
+	}
+
 	DropObject();
-	
-	if(matchStarted) DestroyPlayerCharacter();
+
+	if(matchStarted){
+		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
+		DestroyPlayerCharacter();
+	}
+
 	Respawn();
 }
 
@@ -431,22 +440,26 @@ vector3df Player::GetHeadPos(){
 Alliance Player::GetAlliance(){ return playerAlliance; }
 
 void Player::SetAlliance(Alliance newAlliance){
-	playerAlliance = newAlliance;
-	switch(newAlliance){
-		case(ALLIANCE_WIZARD):{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			break;
-		}
-		case(ALLIANCE_WARLOCK):{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
-			break;
-		}
-		default:{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
-			break;
+	if(newAlliance != playerAlliance){
+		playerAlliance = newAlliance;
+		PlayerManager::GetInstance()->ChangeAlliance(newAlliance, this);
+
+		switch(newAlliance){
+			case(ALLIANCE_WIZARD):{
+				if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+				if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+				break;
+			}
+			case(ALLIANCE_WARLOCK):{
+				if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+				if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+				break;
+			}
+			default:{
+				if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+				if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
+				break;
+			}
 		}
 	}
 }
