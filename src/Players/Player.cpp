@@ -458,6 +458,9 @@ int Player::GetNumberSpells(){
 Alliance Player::GetAlliance(){ return playerAlliance; }
 
 void Player::SetAlliance(Alliance newAlliance){
+
+	if(newAlliance == ERR_ALLIANCE) return;
+
 	playerAlliance = newAlliance;
 	PlayerManager::GetInstance()->ChangeAlliance(newAlliance, this);
 
