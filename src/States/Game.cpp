@@ -1,6 +1,6 @@
 #include "Game.h"
-
 #include "./../Objects/DamageArea.h"
+
 Game::Game(){
 
 	spellManager 	= SpellManager::GetInstance();
@@ -19,6 +19,7 @@ Game::Game(){
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
 	lobbyState = true;
+	gameEnded = false;
 	secondCounter = 0;
 
 	// Sound Engine
@@ -57,12 +58,6 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 
-	/*if(g_engine->IsKeyPressed(KEY_KEY_H)){
-		LevelLoader loader;
-		ObjectManager::GetInstance()->ClearMap();
-		loader.LoadLevel("../assets/json/map.json");
-	}*/
-
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
 		if(!footstepEvent->isPlaying()){ footstepEvent->setPosition(playerOne->GetPos());footstepEvent->start();}
 		s_engine->setListenerPosRot(playerOne->GetPos(), playerOne->GetRot());
@@ -74,6 +69,11 @@ bool Game::Input(){
 
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
+
+	if(gameEnded){
+		int option = g_engine->ReadButtonPressed();
+		if(option == ENDMATCH_M_CONFIRM) RestartMatch();
+	}
 
 	return end;
 }
@@ -103,10 +103,34 @@ void Game::Update(){
 			loader.LoadLevel("../assets/json/map.json");
 			lobbyState = false;
 			playerManager->ManageMatchStatus(true);
+			g_engine->ToggleMenu(false);
+			MenuManager::GetInstance()->ClearMenu();
 		}
 	}
 	else CheckIfWon();
 
+}
+
+void Game::Draw(){
+	g_engine->beginSceneDefault();
+	g_engine->drawAll();
+	g_engine->drawAim();
+	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+	f_engine->DebugDrawWorld();
+	AL->Debug();
+	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
+}
+
+void Game::RestartMatch(){
+	gameEnded = false;
+	lobbyState = true;
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	MenuManager::GetInstance()->ClearMenu();
+	g_engine->ToggleMenu(false);
+	playerManager->ManageMatchStatus(false);
+	playerOne->CreatePlayerCharacter();
+	playerOne->Respawn();
 }
 
 void Game::setFps(){
@@ -117,16 +141,6 @@ void Game::setFps(){
 		std::wstring wsTmp(myFps.begin(), myFps.end());
 		g_engine->ChangeWindowName(wsTmp);
 	}
-}
-
-void Game::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
-	g_engine->drawAim();
-	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
-	objectManager->DrawNpcMenu();
-	AL->Debug();
 }
 
 float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
@@ -140,6 +154,14 @@ void Game::UpdateDelta(){
 }
 
 void Game::CheckIfWon(){
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) std::cout<<"WIZARDS WIN"<<std::endl;
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) std::cout<<"WARLOCKS WIN"<<std::endl;
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+		g_engine->ToggleMenu(true);
+		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 0);
+		gameEnded = true;
+	}
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)){
+		g_engine->ToggleMenu(true);
+		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 1);
+		gameEnded = true;
+	}
 }

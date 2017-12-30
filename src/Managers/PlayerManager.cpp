@@ -116,6 +116,9 @@ void PlayerManager::ManageMatchStatus(bool started){
 		Player* p = players[i];
 		p->SetMatchStatus(started);
 	}
+	deadPlayers.clear();
+	deadWizards.clear();
+	deadWarlocks.clear();
 }
 
 void PlayerManager::AddToDead(Alliance alliance, Player* player){
