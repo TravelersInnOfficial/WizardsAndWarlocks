@@ -328,32 +328,6 @@ void Player::DeployTrap(){
 	}
 }
 
-void Player::SetPosition(vector3df pos){
-	m_position = pos;
-	m_playerNode->setPosition(pos);
-	m_playerNode->updateAbsolutePosition();
-	bt_body->SetPosition(pos);
-}
-
-void Player::SetPosX(float posX){
-	m_position.X = posX;
-	m_playerNode->setPosition(m_position);
-}
-
-void Player::SetPosY(float posY){
-	m_position.Y = posY;
-	m_playerNode->setPosition(m_position);
-}
-
-void Player::SetRotation(vector3df rotation){
-	this->rotation = rotation;
-	vector3df newRot = this->rotation;
-	newRot.X = 0; newRot.Z = 0;
-	newRot = newRot * 180 / M_PI;
-	m_playerNode->setRotation(newRot);
-	bt_body->SetRotation(newRot);
-}
-
 void Player::UpdatePosShape(){
 	m_position = bt_body->GetPosition();
 	bt_body->Update();
@@ -363,29 +337,34 @@ void Player::UpdatePosShape(){
 	m_playerNode->setRotation(rotation * 180 / M_PI);
 }
 
-void Player::SetHP(float HP){m_HP = HP; }
-void Player::SetDead(bool flag){ m_dead = flag; }
-void Player::SetMaxVelocity(float max){ max_velocity = max; }
-void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
-
 vector3df Player::GetAngularVelocity(){ return bt_body->GetAngularVelocity(); }
+
 bool Player::GetDead(){ return m_dead; }
-float Player::GetPosX(){ return m_position.X; }
-float Player::GetPosY(){ return m_position.Y; }
-float Player::GetPosZ(){ return m_position.Z; }
+
 vector3df Player::GetPos(){ return m_position; }
+
 float Player::GetRotY(){ return rotation.Y; }
+
 vector3df Player::GetRot(){ return rotation; }
+
 float Player::GetWidth(){ return m_dimensions.X; }
+
 float Player::GetHeight(){ return m_dimensions.Y; }
+
 float Player::GetLength(){ return m_dimensions.Z; }
+
 float Player::GetHP(){ return m_HP; }
+
 float Player::GetMP(){ return m_MP; }
+
 float Player::GetMaxVelocity(){ return max_velocity; }
+
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+
 vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
+
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
 	cKin.position = GetPos();
@@ -429,3 +408,37 @@ void Player::SetAlliance(Alliance newAlliance){
 		}
 	}
 }
+
+void Player::SetPosition(vector3df pos){
+	m_position = pos;
+	m_playerNode->setPosition(pos);
+	m_playerNode->updateAbsolutePosition();
+	bt_body->SetPosition(pos);
+}
+
+void Player::SetPosX(float posX){
+	m_position.X = posX;
+	m_playerNode->setPosition(m_position);
+}
+
+void Player::SetPosY(float posY){
+	m_position.Y = posY;
+	m_playerNode->setPosition(m_position);
+}
+
+void Player::SetRotation(vector3df rotation){
+	this->rotation = rotation;
+	vector3df newRot = this->rotation;
+	newRot.X = 0; newRot.Z = 0;
+	newRot = newRot * 180 / M_PI;
+	m_playerNode->setRotation(newRot);
+	bt_body->SetRotation(newRot);
+}
+
+void Player::SetHP(float HP){m_HP = HP; }
+
+void Player::SetDead(bool flag){ m_dead = flag; }
+
+void Player::SetMaxVelocity(float max){ max_velocity = max; }
+
+void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }

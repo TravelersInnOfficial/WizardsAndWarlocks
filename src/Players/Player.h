@@ -65,9 +65,6 @@ class Player: public Entidad{
 		//Geters
 		bool IsPlayerOne();
 		vector3df GetAngularVelocity();
-		float GetPosX();
-		float GetPosY();
-		float GetPosZ();
 		vector3df GetPos();
 		vector3df GetHeadPos();
 		float GetRotY();
@@ -77,7 +74,7 @@ class Player: public Entidad{
 		float GetLength();
 		float GetHP();
 		float GetMP();
-		bool GetDead();		
+		bool GetDead();	
 		float GetMaxVelocity();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
