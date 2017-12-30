@@ -26,6 +26,7 @@ NetGame::NetGame(){
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
 	lobbyState = true;
+	gameEnded = false;
 	secondCounter = 0;
 
 	if(n_engine->IsServerInit()) isServer = true;
@@ -71,6 +72,10 @@ bool NetGame::Input(){
 		}
 	}
 
+	if(gameEnded){
+		if(g_engine->ReadButtonPressed() == ENDMATCH_M_CONFIRM) RestartMatch();
+	}
+
 	return end;
 }
 
@@ -101,6 +106,28 @@ void NetGame::Update(){
 			playerManager->ManageMatchStatus(true);
 		}
 	}
+	else if (!gameEnded) CheckIfWon();
+}
+
+void NetGame::Draw(){
+	g_engine->beginSceneDefault();
+	g_engine->drawAll();
+	g_engine->drawAim();
+	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+	f_engine->DebugDrawWorld();
+	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
+}
+
+void NetGame::RestartMatch(){
+	gameEnded = false;
+	lobbyState = true;
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	MenuManager::GetInstance()->ClearMenu();
+	g_engine->ToggleMenu(false);
+	playerManager->ManageMatchStatus(false);
+	playerOne->CreatePlayerCharacter();
+	playerOne->Respawn();
 }
 
 void NetGame::setFps(){
@@ -111,15 +138,6 @@ void NetGame::setFps(){
 		std::wstring wsTmp(myFps.begin(), myFps.end());
 		g_engine->ChangeWindowName(wsTmp);
 	}
-}
-
-void NetGame::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
-	g_engine->drawAim();
-	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	f_engine->DebugDrawWorld();
-	objectManager->DrawNpcMenu();
 }
 
 float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
@@ -148,5 +166,22 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		spellManager->AddHechizo(1, newPlayer, SPELL_BASIC);
 		spellManager->AddHechizo(2, newPlayer, SPELL_DESPERIATONMURI);
 		spellManager->AddHechizo(3, newPlayer, SPELL_GUIVERNUMVENTUS);
+	}
+}
+
+void NetGame::CheckIfWon(){
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+		GraphicEngine::getInstance()->InitReceiver();
+		playerOne->SetAllInput(UP);
+		g_engine->ToggleMenu(true);
+		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 0);
+		gameEnded = true;
+	}
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)){
+		GraphicEngine::getInstance()->InitReceiver();
+		playerOne->SetAllInput(UP);
+		g_engine->ToggleMenu(true);
+		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 1);
+		gameEnded = true;
 	}
 }

@@ -25,6 +25,7 @@ public:
 	void ManageMatchStatus(bool ManageMatchStatus);
 	void AddToDead(Alliance alliance, Player* player);
 	void ChangeAlliance(Alliance alliance, Player* player);
+	bool CheckIfWon(Alliance alliance);
 	
 private:
 
@@ -35,6 +36,9 @@ private:
 	vector<Player*>	deadPlayers;
 	vector<Player*>	deadWarlocks;
 	vector<Player*>	deadWizards;
+
+	bool wizardsWin;
+	bool warlocksWin;
 
 	vector<Player*> playersToDelete;
 

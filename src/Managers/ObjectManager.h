@@ -49,6 +49,7 @@ public:
 
 	// Actions
 	void ClearMap();
+	bool CheckIfWon();
 	void Update(float deltaTime);
 
 private:

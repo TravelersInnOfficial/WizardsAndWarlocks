@@ -63,7 +63,6 @@ void NpcSelector::Update(){
 
 void NpcSelector::StopInteraction(){
 	MenuManager::GetInstance()->ClearMenu();
-	//hp->RecoverStatus();
 	hp->ToggleMenu(false);
 	hp = NULL;
 	active = false;
