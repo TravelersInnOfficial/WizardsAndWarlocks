@@ -36,7 +36,7 @@ NetGame::NetGame(){
 	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
-	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
+	timeStart = g_engine->getTime() * 0.001;
 	g_engine->addCameraSceneNodeFPS(120.f, 0.005);
 
 	// Jugador
@@ -139,7 +139,6 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 		spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
 		spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
-		GraphicEngine::getInstance()->addCameraSceneNodeFPS(120.f, 0.f);
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);

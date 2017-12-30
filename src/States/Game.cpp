@@ -26,8 +26,7 @@ Game::Game(){
 	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
-	timeStart = GraphicEngine::getInstance()->getTime() * 0.001;
-	g_engine->addCameraSceneNodeFPS(120.f, 0.0f);
+	timeStart = g_engine->getTime() * 0.001;
 
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
@@ -97,11 +96,13 @@ void Game::Update(){
 
 	setFps();
 
+	// START MATCH
 	if(lobbyState){
 		if(playerManager->CheckIfReady()) {
 			LevelLoader loader;
 			loader.LoadLevel("../assets/json/map.json");
 			lobbyState = false;
+			playerManager->ManageMatchStatus(true);
 		}
 	}
 

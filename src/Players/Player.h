@@ -23,7 +23,8 @@ class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);
-		void CreatePlayer();
+		void CreatePlayerCharacter();
+		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update();
 		SoundEvent* dieEvent;
@@ -90,6 +91,7 @@ class Player: public Entidad{
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
 		void SetAlliance(Alliance newAliance);
+		void SetMatchStatus(bool started);
 
 		virtual ~Player();
 
@@ -111,14 +113,17 @@ class Player: public Entidad{
 		float			m_MP;				// Mana del jugador	- 100HP
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
 		BT_Body* 		bt_body;			// Cuerpo físico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
 
-		bool 			moving;				// Se esta moviendo? Si/No
-		bool 			canJump;			// Puede saltar? Si/No
+		bool			matchStarted;		// Ha empezado la partida?
+		bool			hasCharacter;		// Player has a physical and visual character
+		bool 			moving;				// Se esta moviendo?
+		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
 		Potion* potion;						// Pocion en el inventario

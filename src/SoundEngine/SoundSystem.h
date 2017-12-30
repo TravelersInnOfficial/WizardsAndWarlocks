@@ -8,8 +8,6 @@
 #include <vector3d.h>
 #include <math.h>
 
-using namespace std;
-
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
 

@@ -26,12 +26,15 @@ Player::Player(bool isPlayer1){
 	clase = EENUM_PLAYER;
 
 	networkObject = NULL;
+	matchStarted = false;
+	hasCharacter = false;
 
 	currentSpell = 0;
-	numberSpells = 3;   // rango de hechizos [0-numberSpells]
+	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
 	PlayerInit();
-	CreatePlayer();
+	CreatePlayerCharacter();
+	Respawn();
 
 	damageEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Hit");
 	dieEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Die");
@@ -43,6 +46,7 @@ void Player::PlayerInit(){
 	m_HP = 100;
 	m_MP = 100;
 	m_dead = false;
+	EffectManager::GetInstance()->CleanEffects(this);
 }
 
 Player::~Player(){
@@ -52,8 +56,7 @@ Player::~Player(){
 	delete bt_body;
 }
 
-void Player::CreatePlayer(){
-
+void Player::CreatePlayerCharacter(){
 	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
 	m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
@@ -71,8 +74,20 @@ void Player::CreatePlayer(){
 	bt_body->AssignPointer(this);
 
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
-	
-	Respawn();
+
+	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
+	hasCharacter = true;
+}
+
+void Player::DestroyPlayerCharacter(){
+	bt_body->Erase();
+    m_playerNode->Erase();
+	delete m_playerNode;
+	delete bt_body;
+	m_playerNode = NULL;
+	bt_body = NULL;
+	engine->addCameraSceneNodeFPS(120.f, 0.005);
+	hasCharacter = false;
 }
 
 void Player::DeclareInput(){
@@ -117,42 +132,42 @@ void Player::SetNetInput(){
 }
 
 void Player::Update(){
-	// Comprobamos la velocidad vertical del personaje?
-	vector3df velocity = bt_body->GetLinearVelocity();
-	if(!canJump){
-		float verticalSpeed = velocity.Y;
-		float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
-		if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
-		lastVerticalSpeed = verticalSpeed;
-	}
-
-	// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
-	// que si no se estaba moviendo lo frenamos 
-	if(moving){ 
-		moving = false; 
-	}else{
-		bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
-	}
-
-	// Comprobamos los Input del personaje
-	CheckInput();
-
-	// Actualizamos el cuerpo visual del personaje respecto al fisico
-	UpdatePosShape();
 
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if(m_dead || m_position.Y < -50) Die();
 
-	// En el caso de que sea el jugador 1 actualizamos su camara
-	if(isPlayerOne){
-		vector3df newRot = engine->getActiveCamera()->getRotation();
-		vector3df rot = newRot * M_PI / 180.0;	
-		SetRotation(rot);
-		positionCamera();
-	}
+	// Si tenemos cuerpo fisico
+	if(hasCharacter){
+		vector3df velocity = bt_body->GetLinearVelocity();
+		if(!canJump){
+			float verticalSpeed = velocity.Y;
+			float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
+			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
+			lastVerticalSpeed = verticalSpeed;
+		}
 
-	// Comprobamos la velocidad maxima del jugador para que no se sobrepase
-	checkMaxVelocity();
+		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
+		// que si no se estaba moviendo lo frenamos 
+		if(moving) moving = false; 
+		else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+
+		// Comprobamos los Input del personaje
+		CheckInput();
+
+		// Actualizamos el cuerpo visual del personaje respecto al fisico
+		UpdatePosShape();
+
+		// En el caso de que sea el jugador 1 actualizamos su camara
+		if(isPlayerOne){
+			vector3df newRot = engine->getActiveCamera()->getRotation();
+			vector3df rot = newRot * M_PI / 180.0;	
+			SetRotation(rot);
+			positionCamera();
+		}
+
+		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
+		checkMaxVelocity();
+	}
 }
 
 void Player::ChangeCurrentSpell(int value){
@@ -175,12 +190,12 @@ void Player::checkMaxVelocity(){
 	float speed = auxVelocity.length();
 	
 	float velY = velocity.Y;
-    if(speed > max_velocity) {
-        auxVelocity.X *= max_velocity/speed;
+	if(speed > max_velocity) {
+		auxVelocity.X *= max_velocity/speed;
 		auxVelocity.Z *= max_velocity/speed;
 		auxVelocity.setY(velY);
 		bt_body->SetLinearVelocity(auxVelocity);
-    }
+	}
 }
 
 void Player::Move(float posX, float posY){
@@ -229,9 +244,7 @@ bool Player::ChangeMP(float MP){
 		m_MP += MP;
 		toRet = true;
 
-		if(m_MP>100){
-			m_MP = 100;
-		}
+		if(m_MP>100) m_MP = 100;
 	}
 
 	return (toRet);
@@ -239,10 +252,7 @@ bool Player::ChangeMP(float MP){
 
 void Player::Respawn(){
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
-	m_HP = 100;
-	m_MP = 100;
-	EffectManager::GetInstance()->CleanEffects(this);
-	m_dead = false;
+	PlayerInit();
 }
 
 void Player::Raycast(){
@@ -275,7 +285,9 @@ void Player::SendSignal(){
 void Player::Die(){
 	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
-	Respawn();
+	
+	if(!matchStarted) Respawn();
+	//else DestroyPlayerCharacter();
 }
 
 void Player::CatchObject(Potion* p){
@@ -285,16 +297,17 @@ void Player::CatchObject(Potion* p){
 
 void Player::DropObject(){
 	if(potion!=NULL){
+		potion->CreatePotion(m_position, vector3df(0,0,0));
+
 		/*vector3df dropForce = m_position;
 		float impulse = 20;
 		vector3df cameraRot = GetRot();
 
 		dropForce.X = sin(cameraRot.Y) * impulse;
 		dropForce.Y = impulse/2;
-		dropForce.Z = cos(cameraRot.Y) * impulse;*/
+		dropForce.Z = cos(cameraRot.Y) * impulse;
+		potion->Drop(dropForce);*/
 
-		potion->CreatePotion(m_position, vector3df(0,0,0));
-		//potion->Drop(dropForce);
 		potion = NULL;
 	}
 }
@@ -442,3 +455,5 @@ void Player::SetDead(bool flag){ m_dead = flag; }
 void Player::SetMaxVelocity(float max){ max_velocity = max; }
 
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
+
+void Player::SetMatchStatus(bool started){ matchStarted = started; }

@@ -102,3 +102,11 @@ void PlayerManager::RespawnAll(){
 		p->Respawn();
 	}
 }
+
+void PlayerManager::ManageMatchStatus(bool started){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->SetMatchStatus(started);
+	}
+}

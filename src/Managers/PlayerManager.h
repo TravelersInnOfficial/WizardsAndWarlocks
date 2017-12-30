@@ -21,6 +21,7 @@ public:
 	void SendVisualSignal();
 	bool CheckIfReady();
 	void RespawnAll();
+	void ManageMatchStatus(bool ManageMatchStatus);
 	
 private:
 
