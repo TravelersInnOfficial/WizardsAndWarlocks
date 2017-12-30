@@ -91,14 +91,14 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		else if(j["Objects"][i]["Type"] == "ReadyPoint"){
 			objManager->AddReadyPoint(position);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC1"){
-			//objManager->AddNPC(position, size, rotation, 1);
+		else if(j["Objects"][i]["Type"] == "NpcSelector"){
+			objManager->AddNpc(position, size, rotation, NPC_SELECTOR);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC2"){
-			//objManager->AddNPC(position, size, rotation, 2);
+		else if(j["Objects"][i]["Type"] == "NpcSeller"){
+			objManager->AddNpc(position, size, rotation, NPC_SELLER);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC3"){
-			//objManager->AddNPC(position, size, rotation, 3);
+		else if(j["Objects"][i]["Type"] == "NpcPowerUp"){
+			objManager->AddNpc(position, size, rotation, NPC_POWERUP);
 		}
 		else{
 			//std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;

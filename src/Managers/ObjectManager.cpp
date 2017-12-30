@@ -130,10 +130,15 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 	Npc* n = NULL;
 	switch(type){
 		case(NPC_SELLER):{
+			//n = new NpcSeller(TPosition, TScale, TRotation);
 			break;
 		}
 		case(NPC_SELECTOR):{
 			n = new NpcSelector(TPosition, TScale, TRotation);
+			break;
+		}
+		case(NPC_POWERUP):{
+			//n = new NpcPowerUp(TPosition, TScale, TRotation);
 			break;
 		}
 		default:{ break; }
