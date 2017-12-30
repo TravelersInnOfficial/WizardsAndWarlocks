@@ -98,6 +98,7 @@ void NetGame::Update(){
 			LevelLoader loader;
 			loader.LoadLevel("../assets/json/map.json");
 			lobbyState = false;
+			playerManager->ManageMatchStatus(true);
 		}
 	}
 }
