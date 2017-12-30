@@ -4,7 +4,8 @@
 enum MenuType {
 	MAIN_M		= 0,
 	ALLIANCE_M	= 1,
-	STORE_M		= 2
+	STORE_M		= 2,
+	ENDMATCH_M	= 3
 };
 
 enum MenuOption {
@@ -21,7 +22,10 @@ enum MenuOption {
 	ALLIANCE_M_WARLOCK 		= 7,
 	ALLIANCE_M_WIZARD		= 8,
 	ALLIANCE_M_WINDOW		= 9,
-	ALLIANCE_M_CLOSE		= 10
+	ALLIANCE_M_CLOSE		= 10,
+
+	ENDMATCH_M_TEXT			= 11,
+	ENDMATCH_M_CONFIRM		= 12
 };
 
 #endif
