@@ -114,7 +114,7 @@ void NetGame::Draw(){
 	g_engine->drawAll();
 	g_engine->drawAim();
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	f_engine->DebugDrawWorld();
+	//f_engine->DebugDrawWorld();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 
@@ -124,10 +124,12 @@ void NetGame::RestartMatch(){
 	LevelLoader loader;
 	loader.LoadLevel("../assets/json/Lobby.json");
 	MenuManager::GetInstance()->ClearMenu();
-	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
-	playerOne->CreatePlayerCharacter();
-	playerOne->Respawn();
+	if(playerOne != NULL) {
+		g_engine->ToggleMenu(false);
+		playerOne->CreatePlayerCharacter();
+		playerOne->Respawn();
+	}
 }
 
 void NetGame::setFps(){
@@ -170,18 +172,20 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 }
 
 void NetGame::CheckIfWon(){
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+	int whosWon = -1;
+
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = 0;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = 1;
+
+	if(whosWon != -1){
 		GraphicEngine::getInstance()->InitReceiver();
-		playerOne->SetAllInput(UP);
-		g_engine->ToggleMenu(true);
-		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 0);
 		gameEnded = true;
+		if(playerOne != NULL) {
+			playerOne->SetAllInput(UP);
+			g_engine->ToggleMenu(true);
+			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
+		}
+		else RestartMatch();
 	}
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)){
-		GraphicEngine::getInstance()->InitReceiver();
-		playerOne->SetAllInput(UP);
-		g_engine->ToggleMenu(true);
-		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 1);
-		gameEnded = true;
-	}
+
 }
