@@ -99,7 +99,7 @@ void Player::DestroyPlayerCharacter(){
 		m_playerNode = NULL;
 	}
 
-	engine->addCameraSceneNodeFPS(120.f, 0.005);
+	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
 
