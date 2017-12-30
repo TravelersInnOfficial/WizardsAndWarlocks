@@ -50,10 +50,17 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
-	bt_body->Erase();
-    m_playerNode->Erase();
-	delete m_playerNode;
-	delete bt_body;
+	if(bt_body != NULL){
+		bt_body->Erase();
+		delete bt_body;
+		bt_body = NULL;
+	}
+
+    if(m_playerNode != NULL){
+		m_playerNode->Erase();
+		delete m_playerNode;
+		m_playerNode = NULL;
+	}	
 }
 
 void Player::CreatePlayerCharacter(){
@@ -80,12 +87,18 @@ void Player::CreatePlayerCharacter(){
 }
 
 void Player::DestroyPlayerCharacter(){
-	bt_body->Erase();
-    m_playerNode->Erase();
-	delete m_playerNode;
-	delete bt_body;
-	m_playerNode = NULL;
-	bt_body = NULL;
+	if(bt_body != NULL){
+		bt_body->Erase();
+		delete bt_body;
+		bt_body = NULL;
+	}
+
+    if(m_playerNode != NULL){
+		m_playerNode->Erase();
+		delete m_playerNode;
+		m_playerNode = NULL;
+	}
+
 	engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
@@ -185,16 +198,18 @@ void Player::positionCamera(){
 }
 
 void Player::checkMaxVelocity(){
-	vector3df velocity = bt_body->GetLinearVelocity();
-	vector3df auxVelocity(velocity.X,0,velocity.Z);
-	float speed = auxVelocity.length();
-	
-	float velY = velocity.Y;
-	if(speed > max_velocity) {
-		auxVelocity.X *= max_velocity/speed;
-		auxVelocity.Z *= max_velocity/speed;
-		auxVelocity.setY(velY);
-		bt_body->SetLinearVelocity(auxVelocity);
+	if(hasCharacter){
+		vector3df velocity = bt_body->GetLinearVelocity();
+		vector3df auxVelocity(velocity.X,0,velocity.Z);
+		float speed = auxVelocity.length();
+		
+		float velY = velocity.Y;
+		if(speed > max_velocity) {
+			auxVelocity.X *= max_velocity/speed;
+			auxVelocity.Z *= max_velocity/speed;
+			auxVelocity.setY(velY);
+			bt_body->SetLinearVelocity(auxVelocity);
+		}
 	}
 }
 
@@ -204,23 +219,27 @@ void Player::Move(float posX, float posY){
 }
 
 void Player::MoveX(int dir){
-	float impulse = 30;
-	impulse *= dir;
-	vector3df rot = this->rotation;
-	bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
-	moving = true;
+	if(hasCharacter){
+		float impulse = 30;
+		impulse *= dir;
+		vector3df rot = this->rotation;
+		bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
+		moving = true;
+	}
 }
 
 void Player::MoveZ(int dir){
-	float impulse = 30;
-	impulse *= dir;
-	vector3df rot = this->rotation;
-	bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
-	moving = true;
+	if(hasCharacter){
+		float impulse = 30;
+		impulse *= dir;
+		vector3df rot = this->rotation;
+		bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
+		moving = true;
+	}
 }
 
 void Player::Jump(){
-	if(canJump) {
+	if(canJump && hasCharacter) {
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
 		float impulse = 30 * 9.8;
@@ -286,8 +305,8 @@ void Player::Die(){
 	if(!dieEvent->isPlaying()) {dieEvent->setPosition(m_position); dieEvent->start();}
 	DropObject();
 	
-	if(!matchStarted) Respawn();
-	//else DestroyPlayerCharacter();
+	if(matchStarted) DestroyPlayerCharacter();
+	Respawn();
 }
 
 void Player::CatchObject(Potion* p){
@@ -342,17 +361,23 @@ void Player::DeployTrap(){
 }
 
 void Player::UpdatePosShape(){
-	m_position = bt_body->GetPosition();
-	bt_body->Update();
-	m_playerNode->setPosition(m_position);
+	if(hasCharacter){
+		m_position = bt_body->GetPosition();
+		bt_body->Update();
+		m_playerNode->setPosition(m_position);
 
-	rotation = bt_body->GetRotation();
-	m_playerNode->setRotation(rotation * 180 / M_PI);
+		rotation = bt_body->GetRotation();
+		m_playerNode->setRotation(rotation * 180 / M_PI);
+	}
 }
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
-vector3df Player::GetAngularVelocity(){ return bt_body->GetAngularVelocity(); }
+vector3df Player::GetAngularVelocity(){
+	vector3df toRet = vector3df(-999,-999,-999);
+	if(hasCharacter) toRet = bt_body->GetAngularVelocity();
+	return toRet;
+}
 
 bool Player::GetDead(){ return m_dead; }
 
@@ -376,7 +401,11 @@ float Player::GetMaxVelocity(){ return max_velocity; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 
-vector3df Player::GetVelocity(){return (bt_body->GetLinearVelocity());}
+vector3df Player::GetVelocity(){
+	vector3df toRet = vector3df(-999,-999,-999);
+	if(hasCharacter) toRet = bt_body->GetLinearVelocity();
+	return toRet;
+}
 
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
@@ -405,17 +434,17 @@ void Player::SetAlliance(Alliance newAlliance){
 	playerAlliance = newAlliance;
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
 			break;
 		}
 		default:{
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
 			break;
 		}
@@ -423,29 +452,37 @@ void Player::SetAlliance(Alliance newAlliance){
 }
 
 void Player::SetPosition(vector3df pos){
-	m_position = pos;
-	m_playerNode->setPosition(pos);
-	m_playerNode->updateAbsolutePosition();
-	bt_body->SetPosition(pos);
+	if(hasCharacter){
+		m_position = pos;
+		m_playerNode->setPosition(pos);
+		m_playerNode->updateAbsolutePosition();
+		bt_body->SetPosition(pos);
+	}
 }
 
 void Player::SetPosX(float posX){
-	m_position.X = posX;
-	m_playerNode->setPosition(m_position);
+	if(hasCharacter){
+		m_position.X = posX;
+		m_playerNode->setPosition(m_position);
+	}
 }
 
 void Player::SetPosY(float posY){
-	m_position.Y = posY;
-	m_playerNode->setPosition(m_position);
+	if(hasCharacter){
+		m_position.Y = posY;
+		m_playerNode->setPosition(m_position);
+	}
 }
 
 void Player::SetRotation(vector3df rotation){
-	this->rotation = rotation;
-	vector3df newRot = this->rotation;
-	newRot.X = 0; newRot.Z = 0;
-	newRot = newRot * 180 / M_PI;
-	m_playerNode->setRotation(newRot);
-	bt_body->SetRotation(newRot);
+	if(hasCharacter){
+		this->rotation = rotation;
+		vector3df newRot = this->rotation;
+		newRot.X = 0; newRot.Z = 0;
+		newRot = newRot * 180 / M_PI;
+		m_playerNode->setRotation(newRot);
+		bt_body->SetRotation(newRot);
+	}
 }
 
 void Player::SetHP(float HP){m_HP = HP; }
