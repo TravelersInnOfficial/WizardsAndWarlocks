@@ -14,7 +14,7 @@ GraphicEngine* engine = GraphicEngine::getInstance();
 
 Player::Player(bool isPlayer1){
 	m_position = vector3df(0,0,0);
-	m_dimensions = vector3df(2,2,2);
+	m_dimensions = vector3df(1.8,1.8,1.8);
 
 	controller = new PlayerController();
 	DeclareInput();
@@ -26,6 +26,8 @@ Player::Player(bool isPlayer1){
 	isPlayerOne = isPlayer1;
 	clase = EENUM_PLAYER;
 
+	bt_body = NULL;
+	m_playerNode = NULL;
 	networkObject = NULL;
 	matchStarted = false;
 	hasCharacter = false;
@@ -67,18 +69,28 @@ Player::~Player(){
 void Player::CreatePlayerCharacter(){
 	// Graphic Player
 	GraphicEngine* engine = GraphicEngine::getInstance();
-	m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
-	m_playerNode->setScale(m_dimensions);
-	if (m_playerNode) {
-		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-		if(playerAlliance == ALLIANCE_WIZARD) m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-		else if(playerAlliance == ALLIANCE_WARLOCK) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-		else m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-		m_playerNode->setPosition(m_position);
+	
+	if(playerAlliance == ALLIANCE_WIZARD) {
+		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+		m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 	}
+	
+	else if(playerAlliance == ALLIANCE_WARLOCK){
+		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+		m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+	}
+	
+	else{
+		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+		m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+	}
+	
+	m_playerNode->setScale(m_dimensions);
+	m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+	m_playerNode->setPosition(m_position);
 
 	// Physic Player
-	vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.35, m_dimensions.Z * 0.15f);
+	vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 	bt_body->AssignPointer(this);
@@ -451,17 +463,32 @@ void Player::SetAlliance(Alliance newAlliance){
 
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			if(hasCharacter){
+				m_playerNode->Remove();
+				m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			if(hasCharacter){
+				m_playerNode->Remove();
+				m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
 			break;
 		}
 		default:{
-			if(hasCharacter) m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+			if(hasCharacter){
+				m_playerNode->Remove();
+				m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+				m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
 			break;
 		}

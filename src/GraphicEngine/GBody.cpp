@@ -24,3 +24,7 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 void GBody::setTriangleSelector(){
     privateNode->setTriangleSelector(GraphicEngine::getInstance()->AddTriangleSelector(privateNode));
 }
+
+void GBody::Remove(){
+    privateNode->remove();
+}
