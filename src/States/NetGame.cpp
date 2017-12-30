@@ -171,11 +171,15 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 
 void NetGame::CheckIfWon(){
 	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+		GraphicEngine::getInstance()->InitReceiver();
+		playerOne->SetAllInput(UP);
 		g_engine->ToggleMenu(true);
 		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 0);
 		gameEnded = true;
 	}
 	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)){
+		GraphicEngine::getInstance()->InitReceiver();
+		playerOne->SetAllInput(UP);
 		g_engine->ToggleMenu(true);
 		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 1);
 		gameEnded = true;
