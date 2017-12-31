@@ -107,7 +107,7 @@ void Game::Update(){
 			MenuManager::GetInstance()->ClearMenu();
 		}
 	}
-	else CheckIfWon();
+	else if (!gameEnded) CheckIfWon();
 
 }
 
@@ -154,18 +154,20 @@ void Game::UpdateDelta(){
 }
 
 void Game::CheckIfWon(){
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+	int whosWon = -1;
+
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = 0;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = 1;
+
+	if(whosWon != -1){
 		GraphicEngine::getInstance()->InitReceiver();
-		playerOne->SetAllInput(UP);
-		g_engine->ToggleMenu(true);
-		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 0);
 		gameEnded = true;
+		if(playerOne != NULL) {
+			playerOne->SetAllInput(UP);
+			g_engine->ToggleMenu(true);
+			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
+		}
+		else RestartMatch();
 	}
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)){
-		GraphicEngine::getInstance()->InitReceiver();
-		playerOne->SetAllInput(UP);
-		g_engine->ToggleMenu(true);
-		MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, 1);
-		gameEnded = true;
-	}
+
 }

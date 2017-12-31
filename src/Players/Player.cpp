@@ -67,38 +67,42 @@ Player::~Player(){
 }
 
 void Player::CreatePlayerCharacter(){
-	// Graphic Player
-	GraphicEngine* engine = GraphicEngine::getInstance();
-	
-	if(playerAlliance == ALLIANCE_WIZARD) {
-		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
-		m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-	}
-	
-	else if(playerAlliance == ALLIANCE_WARLOCK){
-		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
-		m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-	}
-	
-	else{
-		m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
-		m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-	}
-	
-	m_playerNode->setScale(m_dimensions);
-	m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-	m_playerNode->setPosition(m_position);
+	if(!hasCharacter){
 
-	// Physic Player
-	vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
-	bt_body = new BT_Body();
-	bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
-	bt_body->AssignPointer(this);
+		// Graphic Player
+		GraphicEngine* engine = GraphicEngine::getInstance();
+		
+		if(playerAlliance == ALLIANCE_WIZARD) {
+			m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+		}
+		
+		else if(playerAlliance == ALLIANCE_WARLOCK){
+			m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+		}
+		
+		else{
+			m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+		}
+		
+		m_playerNode->setScale(m_dimensions);
+		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+		m_playerNode->setPosition(m_position);
 
-	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 
-	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
-	hasCharacter = true;
+		// Physic Player
+		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
+		bt_body = new BT_Body();
+		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
+		bt_body->AssignPointer(this);
+
+		TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
+
+		if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
+		hasCharacter = true;
+	}
 }
 
 void Player::DestroyPlayerCharacter(){
