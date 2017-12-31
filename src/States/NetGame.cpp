@@ -168,9 +168,9 @@ void NetGame::CheckIfWon(){
 		gameEnded = true;
 		playerManager->EraseAllCharacters();
 		if(playerOne != NULL) {
-			playerOne->SetAllInput(UP);
-			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
+			g_engine->ToggleMenu(true);
+			playerOne->SetAllInput(UP);
 		}
 		else RestartMatch();
 	}
@@ -184,6 +184,7 @@ void NetGame::RestartMatch(){
 	loader.LoadLevel("../assets/json/Lobby.json");
 	MenuManager::GetInstance()->ClearMenu();
 	playerManager->ManageMatchStatus(false);
+	
 	if(playerOne != NULL) {
 		g_engine->ToggleMenu(false);
 		playerOne->ReturnToLobby();
