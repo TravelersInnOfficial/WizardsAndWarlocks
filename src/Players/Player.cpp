@@ -79,7 +79,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		}
 		
 		else if(playerAlliance == ALLIANCE_WARLOCK){
-			if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+			if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
 			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 		}
@@ -509,7 +509,7 @@ void Player::SetAlliance(Alliance newAlliance){
 		case(ALLIANCE_WARLOCK):{
 			if(hasCharacter){
 				m_playerNode->Remove();
-				if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+				if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
 			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
