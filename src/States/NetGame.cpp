@@ -118,20 +118,6 @@ void NetGame::Draw(){
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 
-void NetGame::RestartMatch(){
-	gameEnded = false;
-	lobbyState = true;
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
-	MenuManager::GetInstance()->ClearMenu();
-	playerManager->ManageMatchStatus(false);
-	if(playerOne != NULL) {
-		g_engine->ToggleMenu(false);
-		playerOne->CreatePlayerCharacter();
-		playerOne->Respawn();
-	}
-}
-
 void NetGame::setFps(){
 	secondCounter += deltaTime;
 	if(secondCounter >= 0.5){
@@ -180,13 +166,26 @@ void NetGame::CheckIfWon(){
 	if(whosWon != -1){
 		GraphicEngine::getInstance()->InitReceiver();
 		gameEnded = true;
+		playerManager->EraseAllCharacters();
 		if(playerOne != NULL) {
 			playerOne->SetAllInput(UP);
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
-			playerManager->EraseAllCharacters();
 		}
 		else RestartMatch();
 	}
 
+}
+
+void NetGame::RestartMatch(){
+	gameEnded = false;
+	lobbyState = true;
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	MenuManager::GetInstance()->ClearMenu();
+	playerManager->ManageMatchStatus(false);
+	if(playerOne != NULL) {
+		g_engine->ToggleMenu(false);
+		playerOne->ReturnToLobby();
+	}
 }

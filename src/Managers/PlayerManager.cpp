@@ -170,6 +170,13 @@ void PlayerManager::CreateAllCharacters(){
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->CreatePlayerCharacter();
-		p->Respawn();
+	}
+}
+
+void PlayerManager::ReturnAllToLobby(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->ReturnToLobby();
 	}
 }

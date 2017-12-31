@@ -157,6 +157,21 @@ void Player::GetNetInput(){
 		alliance = (int)NO_ALLIANCE;
 		networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
 	}
+
+	bool doCreateChar = networkObject->GetBoolVar(PLAYER_CREATE_CHAR);
+	if(doCreateChar){
+		CreatePlayerCharacter();
+		doCreateChar = false;
+		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
+	}
+
+	bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
+	if(doRespawn){
+		Respawn();
+		doRespawn = false;
+		networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
+	}
+
 }
 
 void Player::SetNetInput(){
@@ -333,6 +348,15 @@ void Player::Die(){
 	}
 
 	Respawn();
+}
+
+void Player::ReturnToLobby(){
+	CreatePlayerCharacter();
+	Respawn();
+	if(networkObject != NULL){
+		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
+	}
 }
 
 void Player::CatchObject(Potion* p){

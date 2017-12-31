@@ -48,6 +48,7 @@ class Player: public Entidad{
 		void Respawn();
 		void Raycast();
 		void Die();
+		void ReturnToLobby();
 
 		// Sensorial Functions
 		void SendSignal();

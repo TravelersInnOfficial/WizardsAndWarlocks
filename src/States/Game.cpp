@@ -169,5 +169,5 @@ void Game::RestartMatch(){
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
-	playerManager->CreateAllCharacters();
+	playerManager->ReturnAllToLobby();
 }
