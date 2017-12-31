@@ -1,7 +1,7 @@
 # Blender MTL File: 'WarlockArm.blend'
 # Material Count: 1
 
-newmtl lambert2
+newmtl color.001
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
 Kd 0.640000 0.640000 0.640000
