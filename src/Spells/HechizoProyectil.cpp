@@ -1,7 +1,7 @@
 #include "HechizoProyectil.h"
 #include "./../Managers/BulletManager.h"
 
-HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown){
+HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown, SPELL_PROYECTIL){
 	//Hechizo(costPM, tCast, tCoolDown);
 }
 

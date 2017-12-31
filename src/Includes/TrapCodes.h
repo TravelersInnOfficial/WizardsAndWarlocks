@@ -1,6 +1,15 @@
 #ifndef TRAPCODES_H
 #define TRAPCODES_H
 
+/*
+Trampas
+- Garras de la Muerte
+- Ánimas del Inframundo
+- Silencio Espectral
+- Impuestos de Caronte
+- Trastorno del Ser
+*/
+
 enum TrapEnum{
     TENUM_NO_TRAP = -1,
     TENUM_DEATH_CLAWS = 0x00,

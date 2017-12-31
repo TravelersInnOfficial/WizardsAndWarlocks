@@ -144,16 +144,16 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROYECTIL);
 		spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
-		spellManager->AddHechizo(2, playerOne, SPELL_DESPERIATONMURI);
-		spellManager->AddHechizo(3, playerOne, SPELL_GUIVERNUMVENTUS);
+		spellManager->AddHechizo(2, playerOne, SPELL_WALL);
+		spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, newPlayer, SPELL_PROYECTIL);
 		spellManager->AddHechizo(1, newPlayer, SPELL_BASIC);
-		spellManager->AddHechizo(2, newPlayer, SPELL_DESPERIATONMURI);
-		spellManager->AddHechizo(3, newPlayer, SPELL_GUIVERNUMVENTUS);
+		spellManager->AddHechizo(2, newPlayer, SPELL_WALL);
+		spellManager->AddHechizo(3, newPlayer, SPELL_BLIZZARD);
 	}
 }
 

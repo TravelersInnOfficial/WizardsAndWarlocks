@@ -1,7 +1,7 @@
 #include "DesperiatonMuri.h"
 #include "./../Managers/ObjectManager.h"
 
-DesperiatonMuri::DesperiatonMuri(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown){}
+DesperiatonMuri::DesperiatonMuri(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown, SPELL_WALL){}
 	
 void DesperiatonMuri::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
 	ObjectManager* objectMaster = ObjectManager::GetInstance();
