@@ -115,7 +115,12 @@ void PlayerManager::ManageMatchStatus(bool started){
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->SetMatchStatus(started);
+		if(!started){
+			p->CreatePlayerCharacter();
+			p->Respawn();
+		}
 	}
+
 	deadPlayers.clear();
 	deadWizards.clear();
 	deadWarlocks.clear();

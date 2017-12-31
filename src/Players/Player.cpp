@@ -36,7 +36,7 @@ Player::Player(bool isPlayer1){
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
 	PlayerInit();
-	CreatePlayerCharacter();
+	CreatePlayerCharacter(true);
 	Respawn();
 
 	damageEvent = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Hit");
@@ -66,7 +66,7 @@ Player::~Player(){
 	}	
 }
 
-void Player::CreatePlayerCharacter(){
+void Player::CreatePlayerCharacter(bool firstInit){
 	if(!hasCharacter){
 
 		// Graphic Player
@@ -87,10 +87,9 @@ void Player::CreatePlayerCharacter(){
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 		}
 		
-		m_playerNode->setScale(m_dimensions);
+		if(firstInit) m_playerNode->setScale(m_dimensions);
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setPosition(m_position);
-
 
 		// Physic Player
 		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);

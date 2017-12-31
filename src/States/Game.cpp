@@ -129,8 +129,6 @@ void Game::RestartMatch(){
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
-	playerOne->CreatePlayerCharacter();
-	playerOne->Respawn();
 }
 
 void Game::setFps(){

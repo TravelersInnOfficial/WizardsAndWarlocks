@@ -23,7 +23,7 @@ class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);
-		void CreatePlayerCharacter();
+		void CreatePlayerCharacter(bool firstInit = false);
 		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update();
