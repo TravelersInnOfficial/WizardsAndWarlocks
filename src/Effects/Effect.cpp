@@ -5,8 +5,9 @@
  * 
  * @param time - tiempo de duracion del efecto
  */
-Effect::Effect(float time){
+Effect::Effect(float time, EFFECTCODE cod){
 	currentTime = time;
+	code = cod;
 }
 
 Effect::~Effect(){}
@@ -51,4 +52,13 @@ void Effect::UpdateEffect(Player* p){
  */
 void Effect::RemoveEffect(Player* p){
 
+}
+
+/**
+ * @brief Codigo que identifica al efecto
+ * 
+ * @return EFFECTCODE codigo del efecto
+ */
+EFFECTCODE Effect::getCode(){
+	return code;
 }

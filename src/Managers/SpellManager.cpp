@@ -1,5 +1,6 @@
 #include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "EffectManager.h"
 
 
 SpellManager* SpellManager::instance = 0;
@@ -85,10 +86,13 @@ bool SpellManager::StartHechizo(int num, Player* p){
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
-				int mana = p->GetMP();
-				if(h->CheckMP(mana)){
-					h->EmpezarCast();
-					return true;			
+				EffectManager* effectman = EffectManager::GetInstance();
+				if(h->GetType() == SPELL_PROYECTIL || !effectman->CheckEffect(p, WEAK_SILENCED)){		// if is basic spell or if not silenced then shoot
+					int mana = p->GetMP();
+					if(h->CheckMP(mana)){
+						h->EmpezarCast();
+						return true;			
+					}
 				}
 			}
 		}

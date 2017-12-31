@@ -79,11 +79,25 @@ void EffectManager::UpdateEffects(float deltaTime){
 	}
 }
 
+bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){	
+	if(effects.size()!=0){
+		vector<Effect*>* currentV = effects.at(p);
+		
+		int size = currentV->size();
+		for(int i=0; i<size; i++){					// Recorremos todos los efectos del jugador
+			Effect* effect = currentV->at(i);
+			if(effect->getCode() == EFFECT)			// Comprobamos que el jugador tiene el efecto adecuado
+				return true;
+		}
+	}
+	return false;
+}
+
 Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
 		case WEAK_BASIC:
-			e = new Effect(5.0f);
+			e = new Effect(5.0f, WEAK_BASIC);
 			break;
 		case WEAK_BURNED:
 			e = new Burned(6.0f, 5);
@@ -102,6 +116,12 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			break;
 		case WEAK_SILENCED:
 			e = new Silenced(6.0f);
+			break;
+		case WEAK_MADNESS:
+			e = new Madness(6.0f);
+			break;
+		case WEAK_DEATHSNARE:
+			e = new DeathSnare(3.0f, 6);
 			break;
 
 		case POWERUP_DAMAGE:
@@ -130,7 +150,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			break;
 		
 		default:
-			e = new Effect(5.0f);
+			e = new Effect(5.0f, WEAK_BASIC);
 			break;
 	}
 	return e;
