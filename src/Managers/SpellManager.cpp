@@ -1,5 +1,6 @@
 #include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "EffectManager.h"
 
 
 SpellManager* SpellManager::instance = 0;
@@ -85,10 +86,13 @@ bool SpellManager::StartHechizo(int num, Player* p){
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
-				int mana = p->GetMP();
-				if(h->CheckMP(mana)){
-					h->EmpezarCast();
-					return true;			
+				EffectManager* effectman = EffectManager::GetInstance();
+				if(h->GetType() == SPELL_PROYECTIL || !effectman->CheckEffect(p, WEAK_SILENCED)){		// if is basic spell or if not silenced then shoot
+					int mana = p->GetMP();
+					if(h->CheckMP(mana)){
+						h->EmpezarCast();
+						return true;			
+					}
 				}
 			}
 		}
@@ -123,15 +127,15 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo
-			h = new Hechizo(-70, 2.0f, 5.0f);
+			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
 			h = new HechizoProyectil(-5, 0.0f, 1.0f);
 			break;
-		case SPELL_DESPERIATONMURI:		// Hechizo Invocacion Muro
+		case SPELL_WALL:		// Hechizo Invocacion Muro
 			h = new DesperiatonMuri(-5, 0.0f, 0.25f);
 			break;
-		case SPELL_GUIVERNUMVENTUS:		// Hechizo continuo hielo
+		case SPELL_BLIZZARD:		// Hechizo continuo hielo
 			h = new GuivernumVentus(-1, 0.0f, 0.0f);
 			break;
 		default:

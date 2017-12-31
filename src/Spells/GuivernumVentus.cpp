@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 GuivernumVentus::GuivernumVentus(int costPM, float tCast, float tCoolDown)
-:Hechizo(costPM, tCast, tCoolDown){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD){
 	area = NULL;
 }
 

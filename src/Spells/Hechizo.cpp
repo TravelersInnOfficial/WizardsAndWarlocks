@@ -2,7 +2,7 @@
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
+Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code){
 	costePM = costPM;
 	lanzable = false;
 
@@ -11,6 +11,8 @@ Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
 
 	currentCooldown = 0.0f;
 	cooldown = tCoolDown;
+
+	type = code;
 }
 
 Hechizo::~Hechizo(){
@@ -100,3 +102,6 @@ float Hechizo::GetUtility(Player* p){
 	return utility;
 }
 
+SPELLCODE Hechizo::GetType(){
+	return type;
+}
