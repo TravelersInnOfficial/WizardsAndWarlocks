@@ -3,17 +3,18 @@
 static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
+
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
 
 	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
 	nulldevice -> drop();
-	deskres = deskres;
+	deskres = irr::core::dimension2d<unsigned int>(900,600);
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
-		irr::core::dimension2d<unsigned int>(900,600),      //Size of window
+		deskres,      //Size of window
 		16,                                                 //bits
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
@@ -118,6 +119,16 @@ void GraphicEngine::drawAim(){
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH + 4, cenW + 1, cenH + size)); //down
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - size, cenH - 1, cenW - 4, cenH + 1)); //left
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+}
+
+void GraphicEngine::drawOverlays(){
+	irr::video::ITexture* overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
+	const irr::core::dimension2du& size = privateDriver->getScreenSize();
+	irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+	const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
+	irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
+	
+	privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
 }
 
 void GraphicEngine::drawManaAndHealth(int h, int m){

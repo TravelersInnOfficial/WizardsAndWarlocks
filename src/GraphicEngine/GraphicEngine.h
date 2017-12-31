@@ -88,6 +88,11 @@ public:
     void drawAim();
 
     /**
+     * Draws all the efects activated
+    */
+    void drawOverlays();
+
+    /**
      * Draws the MANA and the HEALTH bar
     */
     void drawManaAndHealth(int h, int m);
@@ -249,7 +254,6 @@ private:
     EventReceiver* privateReceiver;
     MenuReceiver* privateMenuReceiver;
     GCamera* privateCamera;
-
 
     /**
      * Adds a static text
