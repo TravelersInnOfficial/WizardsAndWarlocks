@@ -121,14 +121,26 @@ void GraphicEngine::drawAim(){
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
 }
 
-void GraphicEngine::drawOverlays(){
-	irr::video::ITexture* overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
-	const irr::core::dimension2du& size = privateDriver->getScreenSize();
-	irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-	const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
-	irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
+void GraphicEngine::drawOverlays(int type){
+	irr::video::ITexture* overlay = NULL;
 	
-	privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+	switch(type){
+		case(0):{
+			overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
+			break;
+		}
+		default:{
+			break;
+		}
+	}
+
+	if(overlay != NULL){
+		const irr::core::dimension2du& size = privateDriver->getScreenSize();
+		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+		const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
+		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
+		privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+	}
 }
 
 void GraphicEngine::drawManaAndHealth(int h, int m){

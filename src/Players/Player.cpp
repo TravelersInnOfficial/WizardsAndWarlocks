@@ -286,10 +286,21 @@ void Player::Jump(){
 }
 
 void Player::ChangeHP(float HP){
-	if (HP < 0)  {damageEvent->setPosition(m_position); ;damageEvent->start();}
+	if (HP < 0)  {
+		damageEvent->setPosition(m_position);
+		damageEvent->start();
+		bloodOverlayTime = 1;
+	}
+	
 	if(m_HP + HP > 100) m_HP = 100;
-	else if(m_HP + HP <= 0){ m_HP = 0; m_dead = true;}
-	else {m_HP += HP;}
+	
+	else if(m_HP + HP <= 0){
+		m_HP = 0;
+		m_dead = true;
+		bloodOverlayTime = 0;
+	}
+
+	else m_HP += HP;
 }
 
 bool Player::ChangeMP(float MP){
@@ -360,6 +371,11 @@ void Player::ReturnToLobby(){
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 	}
+}
+
+void Player::DrawOverlays(float deltaTime){
+	bloodOverlayTime -= deltaTime;
+	if(bloodOverlayTime > 0) engine->drawOverlays(0);
 }
 
 void Player::CatchObject(Potion* p){

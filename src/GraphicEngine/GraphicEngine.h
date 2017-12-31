@@ -90,7 +90,7 @@ public:
     /**
      * Draws all the efects activated
     */
-    void drawOverlays();
+    void drawOverlays(int type = -1);
 
     /**
      * Draws the MANA and the HEALTH bar

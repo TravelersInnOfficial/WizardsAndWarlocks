@@ -113,6 +113,7 @@ void NetGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim();
+	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)

@@ -49,6 +49,7 @@ class Player: public Entidad{
 		void Raycast();
 		void Die();
 		void ReturnToLobby();
+		void DrawOverlays(float deltaTime);
 
 		// Sensorial Functions
 		void SendSignal();
@@ -115,6 +116,7 @@ class Player: public Entidad{
 		float			m_MP;				// Mana del jugador	- 100HP
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
