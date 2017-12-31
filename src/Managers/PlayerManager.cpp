@@ -115,10 +115,6 @@ void PlayerManager::ManageMatchStatus(bool started){
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->SetMatchStatus(started);
-		if(!started){
-			p->CreatePlayerCharacter();
-			p->Respawn();
-		}
 	}
 
 	deadPlayers.clear();
@@ -159,4 +155,21 @@ bool PlayerManager::CheckIfWon(Alliance alliance){
 	}
 
 	return toRet;
+}
+
+void PlayerManager::EraseAllCharacters(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->DestroyPlayerCharacter();
+	}
+}
+
+void PlayerManager::CreateAllCharacters(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->CreatePlayerCharacter();
+		p->Respawn();
+	}
 }

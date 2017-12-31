@@ -121,16 +121,6 @@ void Game::Draw(){
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 
-void Game::RestartMatch(){
-	gameEnded = false;
-	lobbyState = true;
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
-	MenuManager::GetInstance()->ClearMenu();
-	g_engine->ToggleMenu(false);
-	playerManager->ManageMatchStatus(false);
-}
-
 void Game::setFps(){
 	secondCounter += deltaTime;
 	if(secondCounter >= 0.5){
@@ -162,10 +152,22 @@ void Game::CheckIfWon(){
 		gameEnded = true;
 		if(playerOne != NULL) {
 			playerOne->SetAllInput(UP);
+			playerManager->EraseAllCharacters();
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
 		}
 		else RestartMatch();
 	}
 
+}
+
+void Game::RestartMatch(){
+	gameEnded = false;
+	lobbyState = true;
+	LevelLoader loader;
+	loader.LoadLevel("../assets/json/Lobby.json");
+	MenuManager::GetInstance()->ClearMenu();
+	g_engine->ToggleMenu(false);
+	playerManager->ManageMatchStatus(false);
+	playerManager->CreateAllCharacters();
 }

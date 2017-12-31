@@ -26,6 +26,8 @@ public:
 	void AddToDead(Alliance alliance, Player* player);
 	void ChangeAlliance(Alliance alliance, Player* player);
 	bool CheckIfWon(Alliance alliance);
+	void EraseAllCharacters();
+	void CreateAllCharacters();
 	
 private:
 

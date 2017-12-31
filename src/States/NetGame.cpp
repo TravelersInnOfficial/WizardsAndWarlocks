@@ -184,6 +184,7 @@ void NetGame::CheckIfWon(){
 			playerOne->SetAllInput(UP);
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
+			playerManager->EraseAllCharacters();
 		}
 		else RestartMatch();
 	}
