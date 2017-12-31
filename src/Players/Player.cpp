@@ -139,7 +139,7 @@ void Player::DeclareInput(){
 void Player::SetAllInput(keyStatesENUM state){
 	controller->SetAllStatus(state);
 	if(isPlayerOne && networkObject != NULL) {
-		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
+		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, (keyStatesENUM)state, true, false);
 	}
 }
 
