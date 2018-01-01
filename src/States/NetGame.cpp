@@ -171,7 +171,7 @@ void NetGame::CheckIfWon(){
 		if(playerOne != NULL) {
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
 			g_engine->ToggleMenu(true);
-			playerOne->SetAllInput(RELEASED);
+			playerOne->SetAllInput(UP);
 		}
 		else RestartMatch();
 	}

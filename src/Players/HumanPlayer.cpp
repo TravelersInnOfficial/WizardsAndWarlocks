@@ -128,13 +128,6 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
 	}
 
-	keystate = networkObject->GetIntVar(PLAYER_RESET_RECEIVER);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_RESET_RECEIVER, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, keystate, false, false);
-	}
-
 	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_UP);
 	if(keystate != -1){
 		controller->SetStatus(ACTION_CHANGE_SPELL_UP, (keyStatesENUM)keystate);
@@ -161,6 +154,13 @@ void HumanPlayer::GetNetInput(){
 		SetRotation(objstate);
 		objstate = vector3df(99999,0,0);
 		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
+	}
+
+	keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
+	if(keystate != -1){
+		SetAllInput((keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
 	}
 
 }
@@ -193,9 +193,6 @@ void HumanPlayer::CheckInput(){
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
-		
-		// Menus
-		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
 	}
 }
 

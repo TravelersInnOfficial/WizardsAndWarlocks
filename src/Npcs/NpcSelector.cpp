@@ -35,7 +35,7 @@ void NpcSelector::Interact(Player* p){
 		active = true;
 		hp = (HumanPlayer*) p;
 		hp->ToggleMenu(true);
-		hp->SetAllInput(RELEASED);
+		hp->SetAllInput(UP);
 	}
 }
 
