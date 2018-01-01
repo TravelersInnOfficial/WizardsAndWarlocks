@@ -32,6 +32,7 @@ Player::Player(bool isPlayer1){
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
+	bloodOverlayTime = 0;
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
