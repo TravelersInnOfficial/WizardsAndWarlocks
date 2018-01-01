@@ -24,7 +24,6 @@ Game::Game(){
 
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = g_engine->getTime() * 0.001;
@@ -62,16 +61,14 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 
 	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-		if(!footstepEvent->isPlaying()){ footstepEvent->setPosition(playerOne->GetPos());footstepEvent->start();}
-		s_engine->setListenerPosRot(playerOne->GetPos(), playerOne->GetRot());
-		
+		s_engine->checkAndPlayEvent("event:/Character/Hard/Footsteps", playerOne->GetPos(), playerOne->GetRot());
 	}
 	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
-		if(footstepEvent->isPlaying()) footstepEvent->stop();
+		s_engine->getEvent("event:/Character/Hard/Footsteps")->stop();
 	}
 
-	if(g_engine->IsKeyPressed(KEY_KEY_M)) footstepEvent->setParamValue("Surface", 1.0f);
-	if(g_engine->IsKeyPressed(KEY_KEY_N)) footstepEvent->setParamValue("Surface", 0.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_N)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 0.0f);
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();

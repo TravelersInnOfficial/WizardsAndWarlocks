@@ -1,16 +1,26 @@
 #ifndef CommonSoundEvent_h
 #define CommonSoundEvent_h
-
 #include "SoundSystem.h"
 
 class CommonSoundEvent : public SoundEvent {
     public:
+    /******************************************************
+     *  Default constructor 
+     ******************************************************/
     CommonSoundEvent();
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
     ~CommonSoundEvent();
-    SoundEvent* newSoundEvent(FMOD::Studio::EventInstance*);
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
+
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    CommonSoundEvent(FMOD::Studio::EventInstance* instance);
 };
 
 #endif /* CommonSoundSoundEvent_h */

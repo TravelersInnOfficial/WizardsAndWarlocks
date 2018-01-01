@@ -5,12 +5,24 @@
 
 class Music : public CommonSoundEvent {
     public:
+
+    /******************************************************
+     *  Default constructor 
+     ******************************************************/
     Music();
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
     ~Music();
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-
+    
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    Music(FMOD::Studio::EventInstance* instance);
 };
 
-#endif /* Music_h */
+#endif /* CommonSoundSoundEvent_h */
