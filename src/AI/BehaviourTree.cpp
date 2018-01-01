@@ -3,6 +3,12 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
+    CreateAttack();
+    CreateMovement();
+
+}
+
+void BehaviourTree::CreateAttack(){
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new ShootBasic();
     informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
@@ -19,12 +25,16 @@ BehaviourTree::BehaviourTree(){
     Decorador* d_attack = new ReleaseSpell();
     d_attack->setChild(sc_attack);
 
+    SetRootAttack(d_attack);
+}
+
+void BehaviourTree::CreateMovement(){
     // MOVIMIENTO
-    Task* t_checkSight 	= new CheckPlayerSight();
+    Task* t_checkSight  = new CheckPlayerSight();
     Task* t_goToTarget  = new GoToTarget();
     Task* t_hasArrived  = new HasArrived();
 
-    Secuencia* sc_sight	= new Secuencia();
+    Secuencia* sc_sight = new Secuencia();
     sc_sight->addChild(t_checkSight);
     sc_sight->addChild(t_goToTarget);
     sc_sight->addChild(t_hasArrived);
@@ -43,11 +53,7 @@ BehaviourTree::BehaviourTree(){
     sl_movement->addChild(sc_hearing);
     sl_movement->addChild(t_wander);
 
-    Secuencia* sc_start = new Secuencia();
-    sc_start->addChild(d_attack);
-    sc_start->addChild(sl_movement);
-    SetRoot(sc_start);
-
+    SetRootMove(sl_movement);
 }
 
 BehaviourTree::~BehaviourTree(){
@@ -55,11 +61,26 @@ BehaviourTree::~BehaviourTree(){
 }
 
 void BehaviourTree::run(){
-    root->run(informacion);
+    rootAttack->run(informacion);
+    rootMove->run(informacion);
 }
 
-void BehaviourTree::SetRoot(Task* t){
-    root = t;
+void BehaviourTree::SetRootAttack(Task* t){
+    rootAttack = t;
+}
+
+void BehaviourTree::SetRootMove(Task* t){
+    rootMove = t;
+}
+
+void BehaviourTree::ResetInformacion(){
+    informacion->SetInt(AI_SPELL_STATUS, UP);
+    informacion->CleanPuntero(AI_TARGET);
+    informacion->CleanSense();
+}
+
+void BehaviourTree::SetInformation(Blackboard* bb){
+    informacion->SaveParent(bb);
 }
 
 void BehaviourTree::AnyadirInformacion(AI_code name, void* value){

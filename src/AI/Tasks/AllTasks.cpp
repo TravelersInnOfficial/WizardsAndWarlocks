@@ -41,6 +41,7 @@ bool SpellSecuencia::run(Blackboard* bb){
 		Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
 		if(child!=NULL){
 			if(child->run(bb)){
+				// el spellsOrder[i] es igual al numero de hechizo que se ha conseguido lanzar
 				return true;
 			}
 		}

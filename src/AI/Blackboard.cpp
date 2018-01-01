@@ -88,6 +88,25 @@ void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float 
     soundSense.push_back(s);
 }
 
+/**
+ * @brief Vacia por completo los sentidos de la IA, resetea la informacion
+ */
+void Blackboard::CleanSense(){
+    int size = soundSense.size();
+    for(int i=0; i<size; i++){
+        Sense_struct* s = soundSense[i];
+        delete s;
+    }
+    soundSense.clear();
+
+    size = sightSense.size();
+    for(int i=0; i<size; i++){
+        Sense_struct* s = sightSense[i];
+        delete s;
+    }
+    sightSense.clear();
+}
+
 void Blackboard::CleanSense(int id){
     int size = soundSense.size();
     for(int i=0; i<size; i++){

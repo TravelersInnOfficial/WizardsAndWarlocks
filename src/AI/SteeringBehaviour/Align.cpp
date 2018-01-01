@@ -2,8 +2,8 @@
 
 	float Align::maxAngularAcceleration = 3.0f;
 	float Align::maxRotation = 10.0f;
-	float Align::targetRadius = 0.1;
-	float Align::slowRadius = 1;
+	float Align::targetRadius = 0;
+	float Align::slowRadius = 0.2f;
 	float Align::timeToTarget = 0.1f;
 
 SteeringOutput Align::GetSteering(Kinematic cKin, Kinematic tKin){

@@ -99,3 +99,14 @@ void RegionalSenseManager::SendSignals(){
 		}
 	}
 }
+
+void RegionalSenseManager::ResetSensor(Sensor* s){
+	int size = notificationQueue.size();
+	for(int i=size-1; i>=0; i--){
+		Notification* n = notificationQueue[i];
+		if(n->sensor == s){
+			notificationQueue.erase(notificationQueue.begin() + i);
+			delete n;
+		}
+	}
+}

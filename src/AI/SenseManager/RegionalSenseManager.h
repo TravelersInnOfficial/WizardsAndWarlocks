@@ -28,6 +28,7 @@ public:
 	void AddSignal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod);
 	void AddSignal(Signal* s);
 	void SendSignals();
+	void ResetSensor(Sensor* s);
 private:
 
 	std::vector<Sensor*> sensors;

@@ -31,6 +31,7 @@ public:
     void    CleanPuntero(AI_code name);
     //Senses
     void    CleanSense(int id);
+    void    CleanSense();
 
     int     GetNumberSound(AI_code name);
     int     GetNumberSight(AI_code name);

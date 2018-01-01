@@ -9,7 +9,7 @@ AIPlayer::AIPlayer():Player(false){
 	behaviour->AnyadirInformacion(AI_SPELL_STATUS, UP);
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
-	senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
+	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
 }
 
 AIPlayer::~AIPlayer(){
@@ -20,6 +20,7 @@ void AIPlayer::Update(){
 	if(hasCharacter){
 		SetAllInput(UP);
 		behaviour->run();
+		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 		Player::Update();
 	}
 }
@@ -34,6 +35,12 @@ void AIPlayer::SetAngularForce(vector3df v){
 	if(hasCharacter){
 		bt_body->SetAngularVelocity(v);
 	}
+}
+
+void AIPlayer::Die(){
+	behaviour->ResetInformacion();
+	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
+	Player::Die();
 }
 
 void AIPlayer::Debug(){

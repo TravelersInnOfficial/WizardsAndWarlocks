@@ -44,7 +44,7 @@ class Player: public Entidad{
 		void ChangeCurrentSpell(int);
 		void Respawn();
 		void Raycast();
-		void Die();
+		virtual void Die();
 		void ReturnToLobby();
 		void DrawOverlays(float deltaTime);
 		void CheckIfReady();
