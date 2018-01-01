@@ -26,20 +26,26 @@ bool DEBUG = false;
 //
 // ================================================================================================= //
 
-SpellSecuencia::SpellSecuencia(){}
+SpellSecuencia::SpellSecuencia(){
+}
 
 bool SpellSecuencia::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"SpellSecuencia"<<std::endl;
 
-	int tamanyo = children.size();
 	SortVector(bb);
+	if(DEBUG) std::cout<<"SpellSecuencia2"<<std::endl;
+	int tamanyo = spellsOrder.size();
 	for(int i=0; i<tamanyo; i++){
-		Task* child = children.at(i);
-		if(!child->run(bb)){
-			return false;
+		// Conseguimos la tarea desde el blackboard
+		// Cada vez que se cambie de hechizo tocará actualizar el puntero correspondiente
+		Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
+		if(child!=NULL){
+			if(child->run(bb)){
+				return true;
+			}
 		}
 	}
-	return true;
+	return false;
 }
 
 void SpellSecuencia::SortVector(Blackboard* bb){
@@ -50,16 +56,54 @@ void SpellSecuencia::SortVector(Blackboard* bb){
 	if(character!=NULL){
 		SpellManager* spellMaster = SpellManager::GetInstance();
 
+		// Conseguimos la utilidad de cada uno de los hechizos del personaje
+		// Cogemos el numero de hechizos que tiene el personaje
 		int size = character->GetNumberSpells();
+		size = size + 1;
+		// Insertamos en los vectores el num del hechizo y su utilidad en el mismo orden
 		std::vector<float> values;
 		std::vector<int> numbers;
 		for(int i=0; i<size; i++){
-			values.push_back(i);
+			numbers.push_back(i);
 			values.push_back(spellMaster->GetUtility(i, character));
 		}
 
 		// ORDENAR AMBOS VECTORES EN FUNCION DE LA UTILIDAD
+		// Versión un poco cutre N²
 
+		// El orden de los hechizos lo almacenamos en un vector propio de la clase
+		std::vector<float> tempValues;
+		spellsOrder.clear();
+		int tam = size;
+		float compare = -1;
+		int pos = 0;
+		for(int i=0; i<size; i++){
+			pos = 0;
+			compare = values[pos];
+
+			for(int j=0; j<tam; j++){
+				if(compare < values[j]){
+					pos = j;
+					compare = values[pos];
+				}
+			}
+
+			tempValues.push_back(compare);
+			spellsOrder.push_back(numbers[pos]);
+
+			values.erase(values.begin() + pos);
+			numbers.erase(numbers.begin() + pos);
+
+			tam--;
+		}
+
+		if(DEBUG){
+			for(int i=0; i<size; i++){
+				std::cout<<tempValues[i]<<" ";
+			}
+			std::cout<<std::endl;
+		}
+	
 	}
 }
 

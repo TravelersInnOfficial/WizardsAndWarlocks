@@ -3,11 +3,18 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
+    // DECLARANDO FUNCIONES DE ATAQUE
+    Task* t_shootBasic = new ShootBasic();
+    informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
+    informacion->SetPuntero(AI_TASK_SPELL01, t_shootBasic);
+    informacion->SetPuntero(AI_TASK_SPELL02, t_shootBasic);
+    informacion->SetPuntero(AI_TASK_SPELL03, t_shootBasic);
+
     // ATAQUE
     Secuencia* sc_attack = new Secuencia();
     sc_attack->addChild(new SendPlayerSignals());       // Primero envio la senyales sonoras y visuales
     sc_attack->addChild(new CheckPlayerSight());        // Comprobamos que vea al jugador
-    sc_attack->addChild(new ShootBasic());              // Dispara
+    sc_attack->addChild(new SpellSecuencia());          // Dispara
 
     Decorador* d_attack = new ReleaseSpell();
     d_attack->setChild(sc_attack);

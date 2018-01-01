@@ -5,6 +5,7 @@
 
 #include "./../Secuencia.h"
 #include "./../Decorador.h"
+#include "./../Selector.h"
 #include "./../Task.h"
 
 // ================================================================================================= //
@@ -13,12 +14,13 @@
 //
 // ================================================================================================= //
 
-class SpellSecuencia: public Secuencia{
+class SpellSecuencia: public Selector{
 public:
 	SpellSecuencia();
 	bool run(Blackboard* bb);
 	void SortVector(Blackboard* bb);
 private:
+	std::vector<int> spellsOrder;
 };
 
 // ================================================================================================= //
