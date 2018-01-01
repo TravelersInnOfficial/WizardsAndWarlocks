@@ -1,4 +1,4 @@
-#include "SoundSystem.h"
+#include "IncludeEventChilds.h"
 
 //Function that shows an error when something goes wrong
 void ERRCHECK_fn(FMOD_RESULT result, const char *file, int line)
@@ -17,19 +17,36 @@ static SoundSystem* instance;
 ********************************************** Sound System *********************************************
 *********************************************************************************************************/
 
-/******************************************************
- *  Constructor
- *  \param soundBanksPath directory path where are located the FMOD Studio generated banks
- ******************************************************/
 SoundSystem* SoundSystem::getInstance() {
     if (instance == NULL) instance = new SoundSystem();
     return (instance);
 }
+/******************************************************
+ *  Constructor
+ ******************************************************/
+SoundSystem::SoundSystem() {}
 
-SoundSystem::SoundSystem() {
+/******************************************************
+ *  Destructor
+ ******************************************************/
+SoundSystem::~SoundSystem() {
+    delete banksPath;
+    delete system;
+    delete lowLevelSystem;
+    delete masterBank;
+    delete stringsBank;
+    delete busMaster;
+    delete listener;
+    banks.clear();
+    eventDescriptions.clear();
+    soundEvents.clear();
 }
 
-void SoundSystem::createSystem(string soundBanksPath){
+/******************************************************
+ *  Constructor
+ *  @param soundBanksPath directory path where are located the FMOD Studio generated banks
+ ******************************************************/
+void SoundSystem::createSystem(std::string soundBanksPath){
    
     //Variables needed for the banks' filename
     banksPath = soundBanksPath.c_str();
@@ -40,60 +57,53 @@ void SoundSystem::createSystem(string soundBanksPath){
     
     //Initializing the fmod low level api
     FMOD::System* lowLevelSystem = NULL;
-    system->getLowLevelSystem(&lowLevelSystem);
+    ERRCHECK(system->getLowLevelSystem(&lowLevelSystem));
     ERRCHECK(lowLevelSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
     ERRCHECK(lowLevelSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT));
 
     //Initialize the system
-    system->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0);
+    ERRCHECK(system->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
 
     //Load the needed banks
     loadBanks();
 
     //Initialize other variables
     listener = new FMOD_3D_ATTRIBUTES();
-    setListenerPos(vector3df(0,0,0));
-    setListenerVel(vector3df(0,0,0));
-    setListenerForward(vector3df(0,1,0));
-    setListenerUp(vector3df(0,1,0));
-}
+    setPos(listener,vector3df(0.0f,0.0f,0.0f));
+    setVel(listener,vector3df(0.0f,0.0f,0.0f));
+    setForward(listener,vector3df(1.0f,0.0f,0.0f));
+    setUp(listener,vector3df(0.0f,1.0f,0.0f));
 
+    //Create event descriptions
+    createEventDescriptionsNEvents();
+}
 /******************************************************
  * Factory method that constucts a SoundEvent by the name of the FMOD Studio event 
  *  f. ex. "event:/Ambience/Country"
  *  \param eventPath name of the event according FMOD Studio nomenclature
  ******************************************************/
 SoundEvent* SoundSystem::getEvent(const char * eventPath) {
-
-    //Create event description
-    FMOD::Studio::EventDescription * eventDesc;
-    ERRCHECK(system->getEvent(eventPath, &eventDesc) );
-
-    //Create event instance
-    FMOD::Studio::EventInstance* eventInstance = NULL;
-    eventDesc->createInstance(&eventInstance);
-    
-    //Create the sound event
-    SoundEvent* newEvent = new SoundEvent();
-    newEvent->newSoundEvent(eventInstance);
-    
-    //Insert the new elements on its respecting map
-    eventDescriptions[eventPath] = eventDesc;
-    soundEvents[eventPath] = newEvent;
-
-    //Return the event
-    return newEvent;
+    return soundEvents.find(eventPath)->second;
 }
 
-void SoundSystem::loadBank(string filePath, FMOD::Studio::Bank* bank) {
-    string path = "";
+/******************************************************
+     * @brief Loads an specific bank
+     * @param string path of the bank to load
+     * @param FMOD::Studio::Bank* bank where will be loaded the 
+******************************************************/
+void SoundSystem::loadBank(std::string filePath, FMOD::Studio::Bank* bank) {
+    std::string path = "";
     const char * finalPath = "";
 
     path = banksPath + filePath;     //Make a string with the filename
     finalPath = path.c_str();        //Convert to const char*
+    
     ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));   //Load the bank
 }
 
+/******************************************************
+ *  Loads all the needed banks
+ ******************************************************/
 void SoundSystem::loadBanks() {
 
     //Initialize the banks
@@ -119,13 +129,56 @@ void SoundSystem::loadBanks() {
     //Insert the banks at the banks map
     banks["masterBank"] = masterBank;
     banks["stringsBank"] = stringsBank;
-    banks["characterBank"] = stringsBank;
+    banks["characterBank"] = characterBank;
     banks["spellsBank"] = spellsBank;
     banks["AmbienceBank"] = ambienceBank;
     banks["HUDBank"] = HUDBank;
     banks["MusicBank"] = MusicBank;
     banks["CommonSoundBank"] = commonSoundBank;
 }
+
+/******************************************************
+ *  Creates all the event descriptions and instances needed for the sound events
+ ******************************************************/
+void SoundSystem::createEventDescriptionsNEvents() {
+    
+    //Initialize the event descriptions
+     FMOD::Studio::EventDescription * footstepDesc = NULL;
+     FMOD::Studio::EventDescription * hitDesc = NULL;
+     FMOD::Studio::EventDescription * drinkDesc = NULL;
+     FMOD::Studio::EventDescription * dieDesc = NULL;
+
+    //Initialize the event instances
+     FMOD::Studio::EventInstance* footstepInst;
+     FMOD::Studio::EventInstance* hitInst;
+     FMOD::Studio::EventInstance* drinkInst;
+     FMOD::Studio::EventInstance* dieInst;
+
+    footstepDesc = createDescription("event:/Character/Hard/Footsteps", footstepDesc);  //Create and store the event in a map
+    ERRCHECK(footstepDesc->createInstance(&footstepInst));                              //Create the event instance
+    SoundEvent* footstepEvent = new CharacterSound();                                   //Initialize the event    
+    footstepEvent->setInstance(footstepInst);                                           //Set the instance to the event
+    soundEvents["event:/Character/Hard/Footsteps"] = footstepEvent;                     //Add the instance to the event instances map    
+
+    hitDesc = createDescription("event:/Character/Hard/Hit", hitDesc);    //Create and store the event in a map          
+    ERRCHECK(hitDesc->createInstance(&hitInst));                          //Create the event instance  
+    SoundEvent* hitEvent = new CharacterSound();                          //Initialize the event      
+    hitEvent->setInstance(hitInst);                                  //Set the instance to the event  
+    soundEvents["event:/Character/Hard/Hit"] = hitEvent;                  //Add the instance to the event instances map    
+    
+    drinkDesc = createDescription("event:/Character/Hard/Drink", drinkDesc); //Create and store the event in a map          
+    ERRCHECK(drinkDesc->createInstance(&drinkInst));                         //Create the event instance
+    SoundEvent* drinkEvent = new CharacterSound();                           //Initialize the event    
+    drinkEvent->setInstance(drinkInst);                                   //Set the instance to the event
+    soundEvents["event:/Character/Hard/Drink"] = drinkEvent;                 //Add the instance to the event instances map    
+
+    dieDesc = createDescription("event:/Character/Hard/Die", dieDesc); //Create and store the event in a map          
+    ERRCHECK(dieDesc->createInstance(&dieInst));                       //Create the event instance
+    SoundEvent* dieEvent = new CharacterSound();                       //Initialize the event    
+    dieEvent->setInstance(dieInst);                               //Set the instance to the event
+    soundEvents["event:/Character/Hard/Die"] = dieEvent;               //Add the instance to the event instances map    www
+}
+
 
 /******************************************************
  *  Modifies the general volume of the engine
@@ -140,8 +193,8 @@ void SoundSystem::setVolume(float vol) {
  ******************************************************/
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
     //Sets the position and orientation of the listener
-    setListenerPos(pos);        //Position vector = player position vector
-    //wsetListenerForward(rot);    //Orientation vector = player rotation vector    
+    setPos(listener, pos);        //Position vector = player position vector
+    //setListenerForward(rot);    //Orientation vector = player rotation vector    
     //setListenerUp(vector3df(-rot.Y, rot.X, rot.Z)); //Orientation normal vector
     
     ERRCHECK(system->setListenerAttributes(0, listener));
@@ -156,45 +209,84 @@ void SoundSystem::update() {
 }
 
 /******************************************************
+ *  @brief Creates the a FMOD eventDescription
+ *  @param string name path of the description
+ *  @param FMOD::Studio::EventDescription* event description pointer
+ ******************************************************/
+FMOD::Studio::EventDescription* SoundSystem::createDescription(const char* path, FMOD::Studio::EventDescription* desc){
+    ERRCHECK(system->getEvent(path, &desc)); //Create the event
+    eventDescriptions[path] = desc;         //Add the descriptions to the event descriptions map
+    return desc;
+}
+
+/******************************************************
  *  Sets the property for the listener
  *  \param vec that has to be assigned
  ******************************************************/
-void SoundSystem::setListenerPos(vector3df vec) {   
-        listener->position.x = vec.X;
-        listener->position.y = vec.Y;
-        listener->position.z = vec.Z;
+void SoundSystem::setPos(FMOD_3D_ATTRIBUTES * var,vector3df vec) {   
+        var->position.x = vec.X;
+        var->position.y = vec.Y;
+        var->position.z = vec.Z;
 }
-void SoundSystem::setListenerVel(vector3df vec) {
+void SoundSystem::setVel(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 
-        listener->velocity.x = vec.X;
-        listener->velocity.y = vec.Y;
-        listener->velocity.z = vec.Z;
+        var->velocity.x = vec.X;
+        var->velocity.y = vec.Y;
+        var->velocity.z = vec.Z;
 }
-void SoundSystem::setListenerForward(vector3df vec) {
-        listener->forward.x = vec.X;
-        listener->forward.y = vec.Y;
-        listener->forward.z = vec.Z;
+void SoundSystem::setForward(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
+        var->forward.x = vec.X;
+        var->forward.y = vec.Y;
+        var->forward.z = vec.Z;
 
 }
-void SoundSystem::setListenerUp(vector3df vec) {
-        listener->up.x = vec.X;
-        listener->up.y = vec.Y;
-        listener->up.z = vec.Z;
+void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
+        var->up.x = vec.X;
+        var->up.y = vec.Y;
+        var->up.z = vec.Z;
 }
 
+/******************************************************
+ * @brief Checks if an event is playing and plays it
+ * @param eventPath path of the event to play
+ * @param playerPos position where should play the event and/or of the listener
+ * @param playerRot rotation where should play the event and/or of the listener
+ ******************************************************/
+void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
+    //Checks if the event is being played
+    if (!getEvent(eventPath.c_str())->isPlaying()) {
+        
+        playEvent(eventPath, playerPos, playerRot); //Plays the event
+    }
+}
 
+/******************************************************
+ * @brief Plays a sound event
+ * @param eventPath path of the event to play
+ * @param playerPos position where should play the event and/or of the listener
+ * @param playerRot rotation where should play the event and/or of the listener
+ ******************************************************/
+void SoundSystem::playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
+    getEvent(eventPath.c_str())->setPosition(playerPos); //Position the event
+    setListenerPosRot(playerPos, playerRot);     //Position and rotation of the listener
+
+    getEvent(eventPath.c_str())->start(); //Plays the event
+}
 
 /********************************************************************************************************
  ********************************************** Sound Event *********************************************
  ********************************************************************************************************/
 
-SoundEvent::SoundEvent() {
-    soundInstance = NULL;
-}
+/******************************************************
+ *  Constructor
+ ******************************************************/
+SoundEvent::SoundEvent() {}
 
-SoundEvent* SoundEvent::newSoundEvent(FMOD::Studio::EventInstance* eventInstance) {
-    soundInstance = eventInstance;    
-    return this;
+/******************************************************
+ *  Destructor
+ ******************************************************/
+SoundEvent::~SoundEvent() {
+    delete soundInstance;
 }
 
 /******************************************************
@@ -238,17 +330,16 @@ void SoundEvent::setGain(float gain) {
 }
 /******************************************************
  *  Modifies the 3D position of the sound event
- *  \param x, y, and z, new 3D position
+ *  @param x, y, and z, new 3D position
  ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
     FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
-    FMOD_VECTOR fmodVec = {pos.X, pos.Y, pos.Z};
-    attributes->position = fmodVec;
-    fmodVec = {0,0,0};
-    attributes->velocity = fmodVec;
-    fmodVec = {0,1,0};
-    attributes->forward = fmodVec;
-    attributes->up = fmodVec;
+    
+    SoundSystem::getInstance()->setPos(attributes, vector3df(pos.X, pos.Y, pos.Z));
+    SoundSystem::getInstance()->setVel(attributes, vector3df(0.0f,0.0f,0.0f));
+    SoundSystem::getInstance()->setForward(attributes, vector3df(1.0f,0.0f,0.0f));
+    SoundSystem::getInstance()->setUp(attributes, vector3df(0.0f,1.0f,0.0f));
+    
     ERRCHECK(soundInstance->set3DAttributes(attributes));
 }
 
@@ -259,7 +350,6 @@ void SoundEvent::setPosition(vector3df pos) {
 bool SoundEvent::isPlaying() {
     bool res = false;
     FMOD_STUDIO_PLAYBACK_STATE state;
-
     ERRCHECK(soundInstance->getPlaybackState(&state));
 
     if (state == 0) {
@@ -269,10 +359,6 @@ bool SoundEvent::isPlaying() {
     return res;
 }
 
-void SoundEvent::setParamValue(string name, float value) {
-    ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
-}   
-
 /*******************************************************
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
@@ -280,5 +366,19 @@ void SoundEvent::release() {
     ERRCHECK(soundInstance->release());
 }
 
+/*******************************************************
+ * Sets the value of the pararmeter called as the parameter name
+ * @param string name of the parameter to modify
+ * @param float value of the parameter to modify
+ *******************************************************/
+void SoundEvent::setParamValue(std::string name, float value) {
+    ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
+}   
 
+FMOD::Studio::EventInstance* SoundEvent::getInstance() {
+    return soundInstance;
+}
 
+void SoundEvent::setInstance(FMOD::Studio::EventInstance * instance) {
+    soundInstance = instance;
+}

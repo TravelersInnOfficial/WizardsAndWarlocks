@@ -57,7 +57,6 @@ private:
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
-	SoundEvent*			footstepEvent;
 
 	HumanPlayer*				playerOne;
 

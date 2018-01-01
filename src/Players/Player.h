@@ -25,9 +25,6 @@ class Player: public Entidad{
 		void CreatePlayer();
 		void PlayerInit();
 		virtual void Update();
-		SoundEvent* dieEvent;
-		SoundEvent* damageEvent;
-		SoundEvent* drinkEvent;
 
 		// Actions
 		void Move(float, float);

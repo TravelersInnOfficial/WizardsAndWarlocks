@@ -5,11 +5,24 @@
 
 class AmbienceSound : public CommonSoundEvent {
     public:
+
+    /******************************************************
+     *  Defautl Constructor 
+     ******************************************************/
     AmbienceSound();
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
     ~AmbienceSound();
-    
+
     protected:
     FMOD::Studio::EventInstance* soundInstance;
+    
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    AmbienceSound(FMOD::Studio::EventInstance* instance);
 };
 
-#endif /* AmbienceSound_h */
+#endif /* CommonSoundSoundEvent_h */

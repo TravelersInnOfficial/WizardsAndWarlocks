@@ -5,16 +5,16 @@
 #include <string>
 #include <iostream>
 #include <vector>
-#include <vector3d.h>
+#include "../Includes/vector3d.h"
 #include <math.h>
-
-using namespace std;
 
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
 
 class SoundEvent;
-
+/********************************************************************************************************
+********************************************** Sound System *********************************************
+*********************************************************************************************************/
 class SoundSystem {
 	
 public:
@@ -27,7 +27,7 @@ public:
      *  Creates the system, loads the banks and insert them on SoundSystem maps
      *  \param soundBanksPath directory path where are located the FMOD Studio generated banks
      ******************************************************/
-    void createSystem(string soundBanksPath);
+    void createSystem(std::string soundBanksPath);
     /******************************************************
      * Factory method that constucts a SoundEvent by the name of the FMOD Studio event 
      *  f. ex. "event:/Ambience/Country"
@@ -52,25 +52,62 @@ public:
     void update();
 
     /******************************************************
-     *  Sets the property for the listener
-     *  \param vec that has to be assigned
+     *  @brief Sets the property for the var
+     *  @param FMOD_3D_ATTRIBUTES var to set the vec
+     *  @param vec that has to be assigned
      ******************************************************/
-    void setListenerPos(vector3df vec);
-    void setListenerVel(vector3df vec);
-    void setListenerForward(vector3df vec);
-    void setListenerUp(vector3df vec);    
-   
+    void setPos(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    void setVel(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    void setForward(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    void setUp(FMOD_3D_ATTRIBUTES* var,vector3df vec);    
+
     /******************************************************
      *  Loads all the needed banks
      ******************************************************/
     void loadBanks();
 
     /******************************************************
-     * Loads an specific bank
+     * @brief Loads an specific bank
      * @param string path of the bank to load
      * @param FMOD::Studio::Bank* bank where will be loaded the bank
      ******************************************************/
-    void loadBank(string path, FMOD::Studio::Bank* bank);
+    void loadBank(std::string path, FMOD::Studio::Bank* bank);
+
+    /******************************************************
+     *  Creates all the event descriptions and instances needed for the sound events
+     ******************************************************/
+    void createEventDescriptionsNEvents();
+
+
+    /******************************************************
+     *  @brief Creates the a FMOD eventDescription
+     *  @param const char* name path of the description
+     *  @param FMOD::Studio::EventDescription* event description pointer
+     ******************************************************/
+    FMOD::Studio::EventDescription* createDescription(const char* name, FMOD::Studio::EventDescription*);
+
+    /******************************************************
+     * @brief Creates a sound event
+     * @param std::string path of the event
+     * @param FMOD::Studio::EventDescription eventDesc
+     ******************************************************/
+    void createEvent(const char * path, FMOD::Studio::EventDescription * eventDesc);
+
+    /******************************************************
+     * @brief Checks if an event is playing and plays it
+     * @param string eventPath path of the event to play
+     * @param playerPos position where should play the event and/or of the listener
+     * @param playerRot rotation where should play the event and/or of the listener
+     ******************************************************/
+    void checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+
+    /******************************************************
+     * @brief Plays a sound event
+     * @param string eventPath path of the event to play
+     * @param vector3df playerPos position where should play the event and/or of the listener
+     * @param vector3df playerRot rotation where should play the event and/or of the listener
+     ******************************************************/
+    void playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
 
 private:
     const char * banksPath;
@@ -80,20 +117,35 @@ private:
 	FMOD::Studio::Bank* stringsBank;
     FMOD::Studio::Bus* busMaster;
     FMOD_3D_ATTRIBUTES* listener;
-    map<string, FMOD::Studio::Bank*> banks;
-    map<string, FMOD::Studio::EventDescription*> eventDescriptions;
-    map<string, SoundEvent*> soundEvents;
+    std::map<std::string, FMOD::Studio::Bank*> banks;
+    std::map<std::string, FMOD::Studio::EventDescription*> eventDescriptions;
+    std::map<std::string, SoundEvent*> soundEvents;
 };
 
+/********************************************************************************************************
+ ********************************************** Sound Event *********************************************
+ ********************************************************************************************************/
+
 class SoundEvent {
+    //Friend method so it can access the protected functions
+    friend void SoundSystem::createEventDescriptionsNEvents();
 public:
+    /******************************************************
+     * @brief Default constructor
+     ******************************************************/
     SoundEvent();
-     ~SoundEvent();
+
+    /******************************************************
+     *  Destructor, makes the class pure abstract (= 0)
+     * Pure abstract function
+     ******************************************************/
+     virtual ~SoundEvent() = 0;
     
     /******************************************************
      *  Starts to reproduce the event
+     * Abstract function
      ******************************************************/
-    void start();
+    virtual void start();
     
     /******************************************************
      *  Stops the event reproduction inmediately
@@ -134,17 +186,25 @@ public:
      *******************************************************/
     void release();
 
-    /******************************************************
-     * This method creates a SoundEvent corresponding to the event received by argument
-     ******************************************************/
-    SoundEvent* newSoundEvent(FMOD::Studio::EventInstance* eventInstance);
-
-    void setParamValue(string name, float value);
-
+    /*******************************************************
+     * Sets the value of the pararmeter called as the parameter name
+     * @param string name of the parameter to modify
+     * @param float value of the parameter to modify
+     *******************************************************/
+    void setParamValue(std::string name, float value);
     
+    FMOD::Studio::EventInstance* getInstance();
+
 protected:
     FMOD::Studio::EventInstance* soundInstance;
+
+    /******************************************************
+     * @brief 
+     * @param FMOD::Studio::EventInstance instance Instance
+     ******************************************************/
+    void setInstance(FMOD::Studio::EventInstance * instance);
     
 };
+
 
 #endif /* SoundSystem_h */

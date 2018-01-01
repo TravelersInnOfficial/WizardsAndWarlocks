@@ -1,12 +1,18 @@
 #include "CommonSoundEvent.h"
 
+/******************************************************
+ *  Default constructor 
+ ******************************************************/
+CommonSoundEvent::CommonSoundEvent() {}
 
-CommonSoundEvent::CommonSoundEvent() {
-    soundInstance = NULL;
-}
+/******************************************************
+ *  Destructor
+******************************************************/
+CommonSoundEvent::~CommonSoundEvent() {}
 
-SoundEvent* CommonSoundEvent::newSoundEvent(FMOD::Studio::EventInstance* eventInstance) {
-    soundInstance = eventInstance;
-
-    return this;
+/******************************************************
+ *  Constructor 
+ ******************************************************/
+CommonSoundEvent::CommonSoundEvent(FMOD::Studio::EventInstance* instance) {
+    soundInstance = instance;
 }
