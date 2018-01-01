@@ -31,6 +31,7 @@ Player::Player(bool isPlayer1){
 	networkObject = NULL;
 	matchStarted = false;
 	hasCharacter = false;
+	readyToStart = false;
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -174,6 +175,11 @@ void Player::GetNetInput(){
 		doRespawn = false;
 		networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
 	}
+
+	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
+	readyToStart = isReady;
+	isReady = false;
+	networkObject->SetBoolVar(PLAYER_READY, isReady, false, false);
 
 }
 
@@ -368,14 +374,24 @@ void Player::ReturnToLobby(){
 	CreatePlayerCharacter();
 	Respawn();
 	if(networkObject != NULL){
-		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
+		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
 	}
 }
 
 void Player::DrawOverlays(float deltaTime){
 	bloodOverlayTime -= deltaTime;
 	if(bloodOverlayTime > 0) engine->drawOverlays(0);
+}
+
+void Player::CheckIfReady(){
+	vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+	bool ready = true;
+
+	if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2) ready = false;
+	readyToStart = ready;
+
+	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, ready, true, false);
 }
 
 void Player::CatchObject(Potion* p){
@@ -406,7 +422,6 @@ void Player::UseObject(){
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
-		
 	}
 }
 
@@ -497,9 +512,9 @@ vector3df Player::GetHeadPos(){
 	return (headPos);
 }
 
-int Player::GetNumberSpells(){
-	return numberSpells;
-}
+int Player::GetNumberSpells(){ return numberSpells; }
+
+bool Player::GetReadyStatus(){ return readyToStart; }
 
 Alliance Player::GetAlliance(){ return playerAlliance; }
 

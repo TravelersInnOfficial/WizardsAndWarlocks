@@ -27,7 +27,6 @@ public:
 	void ChangeAlliance(Alliance alliance, Player* player);
 	bool CheckIfWon(Alliance alliance);
 	void EraseAllCharacters();
-	void CreateAllCharacters();
 	void ReturnAllToLobby();
 	
 private:

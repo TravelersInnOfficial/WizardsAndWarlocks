@@ -13,6 +13,7 @@ void HumanPlayer::SetNetInput(){
 
 	Player::SetNetInput();
 
+	// MOVEMENT
 	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 3, true, false);
 
@@ -25,11 +26,12 @@ void HumanPlayer::SetNetInput(){
 	if(controller->IsKeyPressed(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 3, true, false);
 
-	if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 3, true, false);
-
 	if(controller->IsKeyPressed(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 3, true, false);
+
+	// ACTIONS
+	if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 2, true, false);
+	else if(controller->IsKeyReleased(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 3, true, false);
 
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 3, true, false);
@@ -46,8 +48,11 @@ void HumanPlayer::SetNetInput(){
 	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
 	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, 3, true, false);
 
+
+	// OTHERS
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+	// VIDA Y MANA ??
 
 }
 

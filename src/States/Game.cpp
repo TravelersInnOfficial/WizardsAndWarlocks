@@ -96,19 +96,25 @@ void Game::Update(){
 
 	setFps();
 
-	// START MATCH
-	if(lobbyState){
-		if(playerManager->CheckIfReady()) {
-			LevelLoader loader;
-			loader.LoadLevel("../assets/json/map.json");
-			lobbyState = false;
-			playerManager->ManageMatchStatus(true);
-			g_engine->ToggleMenu(false);
-			MenuManager::GetInstance()->ClearMenu();
-		}
-	}
+	// START/END MATCH
+	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
 
+}
+
+void Game::CheckIfReady(){
+	// Comprobamos que el jugador uno este dentro de la zona
+	playerOne->CheckIfReady();
+
+	// Si esta dentro de la zona, cargamos el siguiente nivel
+	if(playerOne->GetReadyStatus()) {
+		LevelLoader loader;
+		loader.LoadLevel("../assets/json/map.json");
+		lobbyState = false;
+		playerManager->ManageMatchStatus(true);
+		g_engine->ToggleMenu(false);
+		MenuManager::GetInstance()->ClearMenu();
+	}
 }
 
 void Game::Draw(){

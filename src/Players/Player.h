@@ -50,6 +50,7 @@ class Player: public Entidad{
 		void Die();
 		void ReturnToLobby();
 		void DrawOverlays(float deltaTime);
+		void CheckIfReady();
 
 		// Sensorial Functions
 		void SendSignal();
@@ -83,6 +84,7 @@ class Player: public Entidad{
 		vector3df GetVelocity();
 		Alliance GetAlliance();
 		int GetNumberSpells();
+		bool GetReadyStatus();
 
 		// Seters
 		void SetPosition(vector3df);
@@ -124,8 +126,10 @@ class Player: public Entidad{
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
 
+		bool			readyToStart;		// Esta preparado para empezar la partida?
 		bool			matchStarted;		// Ha empezado la partida?
-		bool			hasCharacter;		// Player has a physical and visual character
+		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
+
 		bool 			moving;				// Se esta moviendo?
 		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior

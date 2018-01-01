@@ -85,20 +85,19 @@ void PlayerManager::SendVisualSignal(){
 	}
 }
 
+// Comprobamos TODOS las variables READY (Solo para RED)
 bool PlayerManager::CheckIfReady(){
 	bool allReady = true;
 	int size = players.size();
-	if(size > 0){
-		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
-		for(int i=0; i < size && allReady == true; i++){
-			Player* p = players[i];
-			vector3df pos = p->GetPos();
-			if(pos.X < readyZone.X || pos.X > readyZone.X2 || pos.Z < readyZone.Y || pos.Z > readyZone.Y2){
-				allReady = false;
-			}
-		}
-	} else allReady = false;
+	
+	// Si alguno de los personajes no esta READY
+	// Devolvemos una FALSE
+	for(int i=0; i < size && allReady == true; i++){
+		Player* p = players[i];
+		if(!p->GetReadyStatus()) allReady = false;
+	}
 
+	if(size == 0) allReady = false;
 	return allReady;
 }
 
@@ -162,14 +161,6 @@ void PlayerManager::EraseAllCharacters(){
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->DestroyPlayerCharacter();
-	}
-}
-
-void PlayerManager::CreateAllCharacters(){
-	int size = players.size();
-	for(int i=0; i<size; i++){
-		Player* p = players[i];
-		p->CreatePlayerCharacter();
 	}
 }
 

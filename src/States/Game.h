@@ -38,6 +38,7 @@ public:
 	void Draw();
 
 	void RestartMatch();
+	void CheckIfReady();
 
 	float GetTotalTime();
 	float GetDeltaTime();

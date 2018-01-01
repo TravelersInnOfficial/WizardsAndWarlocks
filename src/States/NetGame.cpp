@@ -73,7 +73,8 @@ bool NetGame::Input(){
 	}
 
 	if(gameEnded){
-		if(g_engine->ReadButtonPressed() == ENDMATCH_M_CONFIRM) RestartMatch();
+		int option = g_engine->ReadButtonPressed();
+		if(option == ENDMATCH_M_CONFIRM) RestartMatch();
 	}
 
 	return end;
@@ -98,15 +99,26 @@ void NetGame::Update(){
 
 	setFps();
 
-	if(lobbyState){
-		if(playerManager->CheckIfReady()) {
-			LevelLoader loader;
-			loader.LoadLevel("../assets/json/map.json");
-			lobbyState = false;
-			playerManager->ManageMatchStatus(true);
-		}
-	}
+	// START/END MATCH
+	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
+
+}
+
+void NetGame::CheckIfReady(){
+	// Comprobamos que el jugador uno este dentro de la zona
+	if(playerOne != NULL) playerOne->CheckIfReady();
+
+	// Comprobamos que todos los jugadores tengan su variable READY a true
+	// Si la tienen, cargamos el siguente nivel
+	if(playerManager->CheckIfReady()) {
+		LevelLoader loader;
+		loader.LoadLevel("../assets/json/map.json");
+		lobbyState = false;
+		playerManager->ManageMatchStatus(true);
+		g_engine->ToggleMenu(false);
+		MenuManager::GetInstance()->ClearMenu();
+	}
 }
 
 void NetGame::Draw(){
@@ -175,7 +187,6 @@ void NetGame::CheckIfWon(){
 		}
 		else RestartMatch();
 	}
-
 }
 
 void NetGame::RestartMatch(){
