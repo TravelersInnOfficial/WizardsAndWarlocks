@@ -2,7 +2,7 @@
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
+Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code){
 	costePM = costPM;
 	lanzable = false;
 
@@ -11,6 +11,8 @@ Hechizo::Hechizo(int costPM, float tCast, float tCoolDown){
 
 	currentCooldown = 0.0f;
 	cooldown = tCoolDown;
+
+	type = code;
 }
 
 Hechizo::~Hechizo(){
@@ -88,3 +90,18 @@ int Hechizo::GetMP(){
 	return costePM;
 }
 
+float Hechizo::GetUtility(Player* p){
+	float HP = p->GetHP();
+	float MP = p->GetMP();
+
+	HP = HP / 100;		// Saco los porcentajes [0, 1]
+	MP = MP / 100; 
+	// Situacion optima 100HP && 100MP
+	float utility = HP + MP;
+	utility = utility / 2;
+	return utility;
+}
+
+SPELLCODE Hechizo::GetType(){
+	return type;
+}

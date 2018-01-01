@@ -7,7 +7,6 @@ class LevelLoader{
 
 public:
     LevelLoader();
-
     bool LoadLevel(std::string jsonPath);
 };
 

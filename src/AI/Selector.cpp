@@ -7,7 +7,7 @@ void Selector::addChild(Task* task){
 	children.push_back(task);
 }
 
-void Selector::addChildren(vector<Task*> tasks){
+void Selector::addChildren(std::vector<Task*> tasks){
 	int tamanyo = tasks.size();
 	for(int i=0; i<tamanyo; i++){
 		addChild(tasks.at(i));

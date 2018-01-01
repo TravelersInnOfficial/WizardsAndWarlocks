@@ -16,20 +16,20 @@ public:
 	void Debug();
 
 	void Steering2Controller(SteeringOutput steering);
+
 	// Controller
-	void UpdateInput();
-	void CheckInput();
 	void SetController(ACTION_ENUM action, keyStatesENUM state);
-	void SetAllInput(keyStatesENUM state);
+	void CheckInput();
+
+	// Getters
+	int GetCurrentSpell();
 
 	//void SetAllInput(keyStatesENUM state);
 	//void GetNetInput();
 	//void SetNetInput();
 
 private:
-	void DeclareInput();
 
-	PlayerController* 	controller;		// Controlador del personaje
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
 
 };

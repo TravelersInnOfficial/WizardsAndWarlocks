@@ -5,7 +5,7 @@ Sense_struct::~Sense_struct(){
 }
 
 Blackboard::Blackboard(){
-
+    blackboardParent = NULL;
 }
 
 Blackboard::~Blackboard(){
@@ -52,7 +52,7 @@ int Blackboard::GetInt(AI_code name){
         return blackboardParent->GetInt(name);
     }
     else{
-        return 0; //Numero que devuelve en caso negativo
+        return -1; //Numero que devuelve en caso negativo
     }
 }
 

@@ -6,9 +6,7 @@
 AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
 	behaviour->AnyadirInformacion(AI_CHARACTER, this);
-
-	controller = new PlayerController();
-	DeclareInput();
+	behaviour->AnyadirInformacion(AI_SPELL_STATUS, UP);
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
@@ -19,45 +17,51 @@ AIPlayer::~AIPlayer(){
 }
 
 void AIPlayer::Update(){
-	Player::Update();
-	SetAllInput(UP);
-	behaviour->run();
-	CheckInput();
+	if(hasCharacter){
+		SetAllInput(UP);
+		behaviour->run();
+		Player::Update();
+	}
 }
 
 void AIPlayer::SetForces(vector3df v){
-	bt_body->ApplyCentralImpulse(v);
+	if(hasCharacter){
+		bt_body->ApplyCentralImpulse(v);
+	}
 }
 
 void AIPlayer::SetAngularForce(vector3df v){
-	bt_body->SetAngularVelocity(v);
+	if(hasCharacter){
+		bt_body->SetAngularVelocity(v);
+	}
 }
 
 void AIPlayer::Debug(){
-	
-	vector3df p = m_position;
-	vector3df l = rotation;
-	vector3df c = vector3df(1,1,1);
+	if(hasCharacter){
+		vector3df p = m_position;
+		vector3df l = rotation;
+		vector3df c = vector3df(1,1,1);
 
-	vector3df o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-	o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-	o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-	o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		vector3df o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
 
 
-	float lookAHead = 2.5f;
-	float lookAHead2 = 1.0f;
-	c = vector3df(0,1,0);
-	o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y, p.Z+cos(l.Y)*lookAHead); 
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-	o = vector3df(p.X+sin(l.Y + M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y + M_PI/4)*lookAHead2);
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-	o = vector3df(p.X+sin(l.Y - M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y - M_PI/4)*lookAHead2);
-	GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		float lookAHead = 2.5f;
+		float lookAHead2 = 1.0f;
+		c = vector3df(0,1,0);
+		o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y, p.Z+cos(l.Y)*lookAHead); 
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		o = vector3df(p.X+sin(l.Y + M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y + M_PI/4)*lookAHead2);
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		o = vector3df(p.X+sin(l.Y - M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y - M_PI/4)*lookAHead2);
+		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+	}
 }
 
 // ========================================================================================= //
@@ -66,24 +70,6 @@ void AIPlayer::Debug(){
 //
 // ========================================================================================= //
 
-void AIPlayer::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
-	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
-	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
-}
-
-void AIPlayer::UpdateInput(){
-	controller->UpdateOwnStatus();
-}
 
 void AIPlayer::CheckInput(){
 	// Movimiento
@@ -97,11 +83,11 @@ void AIPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 	// Hechizos
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
-	if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
-	if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+	//if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
+	//if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
+	//if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	// Trampas
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 }
@@ -146,10 +132,13 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
 }
 
-void AIPlayer::SetAllInput(keyStatesENUM state){
-	// Aunque ahora mismo se pongan todos, en un futuro solo deberían estar unos poco
-	// como los de movimiento
-	// En cambio con lo de hechizo como si hace falta realizar el casteo con pressed y down
-	// será el quien se encargue de pasarlo a released, o ya veremos como lo hacemos
-	controller->SetAllStatus(state);
+
+// ========================================================================================= //
+//
+//	GETTERS
+//
+// ========================================================================================= //
+
+int AIPlayer::GetCurrentSpell(){
+	return currentSpell;
 }

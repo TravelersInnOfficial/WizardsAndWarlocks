@@ -2,41 +2,11 @@
 #include "./../Managers/SpellManager.h"
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
-	controller = new PlayerController();
-	DeclareInput();
 	menuActivated = false;
 }
 
 HumanPlayer::~HumanPlayer(){
 	delete controller;
-}
-
-void HumanPlayer::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
-	controller->AddAction(KEY_F24, ACTION_RESET_RECEIVER);
-	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
-	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
-}
-
-void HumanPlayer::UpdateInput(){
-	controller->UpdateOwnStatus();
-	if(isPlayerOne) controller->Update();
-}
-
-void HumanPlayer::SetAllInput(keyStatesENUM state){
-	controller->SetAllStatus(state);
-	if(state == UP && isPlayerOne && networkObject != NULL) {
-		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, 3, true, false);
-	}
 }
 
 void HumanPlayer::SetNetInput(){
@@ -74,7 +44,7 @@ void HumanPlayer::SetNetInput(){
 	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
 	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, 3, true, false);
 
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
@@ -158,13 +128,6 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
 	}
 
-	keystate = networkObject->GetIntVar(PLAYER_RESET_RECEIVER);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_RESET_RECEIVER, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_RESET_RECEIVER, keystate, false, false);
-	}
-
 	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_UP);
 	if(keystate != -1){
 		controller->SetStatus(ACTION_CHANGE_SPELL_UP, (keyStatesENUM)keystate);
@@ -191,6 +154,13 @@ void HumanPlayer::GetNetInput(){
 		SetRotation(objstate);
 		objstate = vector3df(99999,0,0);
 		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
+	}
+
+	keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
+	if(keystate != -1){
+		SetAllInput((keyStatesENUM)keystate);
+		keystate = -1;
+		networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
 	}
 
 }
@@ -223,14 +193,10 @@ void HumanPlayer::CheckInput(){
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
-		
-		// Menus
-		if(controller->IsKeyReleased(ACTION_RESET_RECEIVER)){ SetAllInput(UP); }
 	}
 }
 
 void HumanPlayer::Update(){
-	CheckInput();
 	Player::Update();
 	if(!menuActivated) UpdateInput();
 }

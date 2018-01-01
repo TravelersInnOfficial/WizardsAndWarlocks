@@ -6,16 +6,15 @@
 #include <stdlib.h>
 #include "Task.h"
 
-using namespace std;
 class Secuencia : public Task{
 public:
 	Secuencia();
 	void addChild(Task* task);
-	void addChildren(vector<Task*> tasks);
+	void addChildren(std::vector<Task*> tasks);
 	virtual bool run(Blackboard* bb);
 	bool terminate();
 protected:
-	vector<Task*> children;
+	std::vector<Task*> children;
 private:
 	
 };

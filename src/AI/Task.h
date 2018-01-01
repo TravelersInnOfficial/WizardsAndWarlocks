@@ -4,7 +4,7 @@
 #include "Blackboard.h"
 
 #include <iostream>
-using namespace std;
+
 class Task{
 public:
 	virtual bool run(Blackboard* bb);

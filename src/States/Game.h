@@ -18,6 +18,7 @@
 
 #include "./../PhysicsEngine/BulletEngine.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../GraphicEngine/MenuManager.h"
 #include "./../SoundEngine/SoundSystem.h"
 
 //Enums
@@ -36,6 +37,8 @@ public:
 	void Update();
 	void Draw();
 
+	void RestartMatch();
+
 	float GetTotalTime();
 	float GetDeltaTime();
 	void UpdateDelta();
@@ -44,7 +47,9 @@ private:
 
 	float timeStart;
 	float deltaTime;
-	float secondCounter = 0;
+	float secondCounter;
+	bool lobbyState;
+	bool gameEnded;
 
 	SpellManager* 			spellManager;
 	BulletManager* 			bulletManager;
@@ -58,12 +63,13 @@ private:
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
 
-	HumanPlayer*				playerOne;
+	HumanPlayer*		playerOne;
 
 	// PARA EL DEBUG
 	AIPlayer* AL;
 
 	void setFps();
+	void CheckIfWon();
 	
 };
 

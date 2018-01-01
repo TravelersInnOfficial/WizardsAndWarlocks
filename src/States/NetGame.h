@@ -32,6 +32,8 @@ public:
 	void Update();
 	void Draw();
 
+	void RestartMatch();
+
 	float GetTotalTime();
 	float GetDeltaTime();
 	void UpdateDelta();
@@ -44,7 +46,9 @@ private:
 	
 	float timeStart;
 	float deltaTime;
-	float secondCounter = 0;
+	float secondCounter;
+	bool lobbyState;
+	bool gameEnded;
 
 	bool isServer;
 	SoundEvent*			footstepEvent;
@@ -66,6 +70,7 @@ private:
 	NetGame();
 
 	void setFps();
+	void CheckIfWon();
 
 };
 

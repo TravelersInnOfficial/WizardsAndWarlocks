@@ -9,7 +9,7 @@ Decorador::~Decorador(){
 }
 
 bool Decorador::run(Blackboard* bb){
-    cout<<"Run del Decorador básico"<<endl;
+    std::cout<<"Run del Decorador básico"<<std::endl;
     if(child != NULL){
         return child->run(bb);
     }
@@ -17,29 +17,10 @@ bool Decorador::run(Blackboard* bb){
 }
 
 bool Decorador::terminate(){
-    cout<<"Terminate del decorador básico"<<endl;
+    std::cout<<"Terminate del decorador básico"<<std::endl;
     return true;
 }
 
 void Decorador::setChild(Task* newChild){
     child = newChild;
-}
-
-//---------------------------------------------------------------------------------------
-
-CountTime::CountTime(int n){
-	contador = n;
-	maxContador = n;
-}
-
-bool CountTime::run(Blackboard* bb){
-	contador--;
-	if(contador>=0){
-		if(child!=NULL){
-			return child->run(bb);
-		}
-		return false;
-	}
-	contador = maxContador;
-	return false;
 }

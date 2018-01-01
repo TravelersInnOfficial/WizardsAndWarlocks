@@ -1,5 +1,7 @@
 Mirar que el player se guarda la rotacion en radianes, mientras que en las funciones de btBody hay que pasarlo en grados.
 Las colisiones se estaban haciendo dos veces para los ghostobjects. (Ahora mismo hay un metodo comentado)
 Mirar el metodo de fuerzas/controlador de la IA
-PlayerManager, sendvisualSIgnal ahora mismo envia todas las señales. Cambiar nombre o bien crear otro metodo
+PlayerManager, sendvisualSignal ahora mismo envia todas las señales. Cambiar nombre o bien crear otro metodo
 Hacer Vector de notificaciones de SenseManager este ordenado por tiempo, y asi al comprobar notifiaciones podriamos parar en cuanto se pase el tiempo
+Al conseguir la vida y mana del jugador en GetUtility de Hechizo seria mejor pasarle los porcentajes por si la vida/mana no es la misma en todos los jugadores. Además de anyadir el estres en el algoritmo.
+Hacer un buen algoritmo de GetUtility para los hechizos

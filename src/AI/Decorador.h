@@ -5,8 +5,6 @@
 #include "Task.h"
 #include "Blackboard.h"
 
-using namespace std;
-
 class Decorador: public Task{
 public:
     Decorador();
@@ -16,15 +14,6 @@ public:
     void setChild(Task* newChild);
 protected:
     Task* child;
-};
-
-class CountTime: public Decorador{
-public:
-	CountTime(int number);
-	bool run(Blackboard* bb);
-private:
-	int contador;
-	int maxContador;
 };
 
 #endif

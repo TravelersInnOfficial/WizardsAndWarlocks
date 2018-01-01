@@ -39,6 +39,7 @@ public:
 
 	//Getters
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
+	vector4df GetReadyZone();
 
 	// Drawers
 	void DrawNpcMenu();
@@ -48,6 +49,7 @@ public:
 
 	// Actions
 	void ClearMap();
+	bool CheckIfWon();
 	void Update(float deltaTime);
 
 private:

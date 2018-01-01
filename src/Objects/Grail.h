@@ -9,6 +9,7 @@
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include <ColliderMasks.h>
+#include <Alliance.h>
 
 class Grail: public Entidad{
 public:
@@ -17,11 +18,14 @@ public:
 	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);
+	bool CheckIfWon();
+	
 private:
+	bool recovered;
 	bool casting;
 	float deltaTime;
-	float 	timeCasting;
-	float 	maxCasting;
+	float timeCasting;
+	float maxCasting;
 
 	void CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void UpdatePosShape();

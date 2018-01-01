@@ -5,7 +5,7 @@ ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
 	grail = NULL;
-	readyZone = vector4df(-999,-999,-999,-999);
+	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
 ObjectManager::~ObjectManager(){
@@ -35,28 +35,28 @@ void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
 }
 
 void ObjectManager::AddReadyPoint(vector3df TPosition){
-	
 	// Guardamos el primer punto
-	if(readyZone.X == -999){
+	if(readyZone.X == -9999){
 		readyZone.X = TPosition.X;
-		readyZone.Y = TPosition.Y;
+		readyZone.Y = TPosition.Z;
 	}
 
 	// Guardamos el segundo punto
-	else if (readyZone.X2 == -999){
+	else if (readyZone.X2 == -9999){
 		readyZone.X2 = TPosition.X;
-		readyZone.Y2 = TPosition.Y;
+		readyZone.Y2 = TPosition.Z;
 		
-		// Si el segundo punto es mas grande que el primero
+		// Si el segundo punto es menor que el primero
 		// Le damos la vuelta en X
-		if(readyZone.X2 > readyZone.X){
+		if(readyZone.X2 < readyZone.X){
 			float aux = readyZone.X2;
 			readyZone.X2 = readyZone.X;
 			readyZone.X = aux;
 		}
 
+		// Si el segundo punto es menor que el primero
 		// Y le damos la vuelta en Y
-		if(readyZone.Y2 > readyZone.Y){
+		if(readyZone.Y2 < readyZone.Y){
 			float aux = readyZone.Y2;
 			readyZone.Y2 = readyZone.Y;
 			readyZone.Y = aux;
@@ -126,30 +126,19 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 	return f;
 }
 
-vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
-	vector3df toRet = vector3df(0,1,0);
-	
-	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
-		int randIndex = rand() % wizardSpawn.size();
-		toRet = wizardSpawn.at(randIndex);
-	}
-
-	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
-		int randIndex = rand() % warlockSpawn.size();
-		toRet = warlockSpawn.at(randIndex);
-	}
-
-	return(toRet);
-}
-
 Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){
 	Npc* n = NULL;
 	switch(type){
 		case(NPC_SELLER):{
+			//n = new NpcSeller(TPosition, TScale, TRotation);
 			break;
 		}
 		case(NPC_SELECTOR):{
 			n = new NpcSelector(TPosition, TScale, TRotation);
+			break;
+		}
+		case(NPC_POWERUP):{
+			//n = new NpcPowerUp(TPosition, TScale, TRotation);
 			break;
 		}
 		default:{ break; }
@@ -169,6 +158,30 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 	damageAreas.push_back(ar);
 	return ar;
 }
+
+// ===================================================================================================== //
+//
+// GETTERS
+//
+// ===================================================================================================== //
+
+vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
+	vector3df toRet = vector3df(0,1,0);
+	
+	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
+		int randIndex = rand() % wizardSpawn.size();
+		toRet = wizardSpawn.at(randIndex);
+	}
+
+	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
+		int randIndex = rand() % warlockSpawn.size();
+		toRet = warlockSpawn.at(randIndex);
+	}
+
+	return(toRet);
+}
+
+vector4df ObjectManager::GetReadyZone(){ return readyZone; }
 
 // ===================================================================================================== //
 //
@@ -273,7 +286,22 @@ void ObjectManager::ClearMap(){
 
 	wizardSpawn.clear();
 	warlockSpawn.clear();
+	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
+
+bool ObjectManager::CheckIfWon(){
+	bool toRet = false;
+	if(grail != NULL){
+		toRet = grail->CheckIfWon();
+	}
+	return toRet;
+}
+
+// ===================================================================================================== //
+//
+// UPDATES
+//
+// ===================================================================================================== //
 
 void ObjectManager::Update(float deltaTime){
 	UpdateGrail(deltaTime);
@@ -286,12 +314,6 @@ void ObjectManager::Update(float deltaTime){
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
 }
-
-// ===================================================================================================== //
-//
-// UPDATES
-//
-// ===================================================================================================== //
 
 void ObjectManager::UpdateGrail(float deltaTime){
 	if(grail!=NULL) grail->Update(deltaTime);

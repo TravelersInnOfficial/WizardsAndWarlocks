@@ -11,6 +11,8 @@
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
 
+using namespace std;
+
 class SoundEvent;
 /********************************************************************************************************
 ********************************************** Sound System *********************************************
@@ -108,6 +110,7 @@ public:
      * @param vector3df playerRot rotation where should play the event and/or of the listener
      ******************************************************/
     void playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+
 
 private:
     const char * banksPath;

@@ -65,7 +65,6 @@ ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df 
 void ElectricPotion::Use(Player* p){
 	p->ChangeHP(value);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_PARALYZED);
-
 }
 
 // ===============================================================================================//
@@ -82,6 +81,7 @@ FirePotion::FirePotion(vector3df TPosition, vector3df TScale, vector3df TRotatio
 
 void FirePotion::Use(Player* p){
 	p->ChangeHP(value);
+	EffectManager::GetInstance()->AddEffect(p, POWERUP_FIRE);
 }
 
 // ===============================================================================================//
@@ -98,6 +98,7 @@ PoisonPotion::PoisonPotion(vector3df TPosition, vector3df TScale, vector3df TRot
 
 void PoisonPotion::Use(Player* p){
 	p->ChangeHP(value);
+	EffectManager::GetInstance()->AddEffect(p, POWERUP_POISON);
 }
 
 // ===============================================================================================//
@@ -114,4 +115,5 @@ ElementalPotion::ElementalPotion(vector3df TPosition, vector3df TScale, vector3d
 
 void ElementalPotion::Use(Player* p){
 	p->ChangeHP(value);
+	EffectManager::GetInstance()->AddEffect(p, POWERUP_ELEMDEFENSE);
 }

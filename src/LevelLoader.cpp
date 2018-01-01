@@ -1,6 +1,7 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
 #include "Managers/ObjectManager.h"
+#include "Managers/PlayerManager.h"
 #include <map>
 #include <json.hpp>
 #include <fstream>
@@ -15,6 +16,8 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
 	ObjectManager* objManager = ObjectManager::GetInstance();
+	objManager->ClearMap();
+
 	std::map<int, Door*> doors;
 	
 	//Takes path from binary location (/bin)
@@ -88,18 +91,19 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		else if(j["Objects"][i]["Type"] == "ReadyPoint"){
 			objManager->AddReadyPoint(position);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC1"){
-			//objManager->AddNPC(position, size, rotation, 1);
+		else if(j["Objects"][i]["Type"] == "NpcSelector"){
+			objManager->AddNpc(position, size, rotation, NPC_SELECTOR);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC2"){
-			//objManager->AddNPC(position, size, rotation, 2);
+		else if(j["Objects"][i]["Type"] == "NpcSeller"){
+			objManager->AddNpc(position, size, rotation, NPC_SELLER);
 		}
-		else if(j["Objects"][i]["Type"] == "NPC3"){
-			//objManager->AddNPC(position, size, rotation, 3);
+		else if(j["Objects"][i]["Type"] == "NpcPowerUp"){
+			objManager->AddNpc(position, size, rotation, NPC_POWERUP);
 		}
 		else{
 			//std::cout<<"No se controla el tipo: "<<j["Objects"][i]["Type"]<<std::endl;
 		}
+
 	}
 
 	// loop to iterate switch objects and assign it to a door
@@ -119,5 +123,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddSwitch(doors[assignedDoorID], position, vector3df(1,1,1), rotation, vector3df(0,0,0));
 		}
 	}
+
+	PlayerManager* plyManager = PlayerManager::GetInstance();
+	plyManager->RespawnAll();
 	return true;
 }
