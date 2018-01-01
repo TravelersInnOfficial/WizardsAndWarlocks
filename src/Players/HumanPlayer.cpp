@@ -44,7 +44,7 @@ void HumanPlayer::SetNetInput(){
 	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
 	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
+	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, 3, true, false);
 
 	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
