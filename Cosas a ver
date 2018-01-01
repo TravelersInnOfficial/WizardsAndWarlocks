@@ -5,3 +5,5 @@ PlayerManager, sendvisualSignal ahora mismo envia todas las señales. Cambiar no
 Hacer Vector de notificaciones de SenseManager este ordenado por tiempo, y asi al comprobar notifiaciones podriamos parar en cuanto se pase el tiempo
 Al conseguir la vida y mana del jugador en GetUtility de Hechizo seria mejor pasarle los porcentajes por si la vida/mana no es la misma en todos los jugadores. Además de anyadir el estres en el algoritmo.
 Hacer un buen algoritmo de GetUtility para los hechizos
+Intentar mejorar el algoritmo de ordenacion de hechizos en funcion de la utilidad
+Cuando se vaya a lanzar un hechizo (IA), comprobar que no se este lanzando uno antes. En el caso de que se estuviera lanzado otro devolvemos un false y ya lo volveremos a intentar cuando el estado de lanzar hechizo este en UP.

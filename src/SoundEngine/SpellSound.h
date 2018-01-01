@@ -4,13 +4,25 @@
 #include "CommonSoundEvent.h"
 
 class SpellSound : public CommonSoundEvent {
-    public:
+    public:     
+
+    /******************************************************
+     *  Default constructor 
+     ******************************************************/
     SpellSound();
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
     ~SpellSound();
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-
+   
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    SpellSound(FMOD::Studio::EventInstance* instance);
 };
 
-#endif /* SpellSound_h */
+#endif /* CommonSoundSoundEvent_h */

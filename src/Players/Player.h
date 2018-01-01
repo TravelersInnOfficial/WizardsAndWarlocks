@@ -27,9 +27,6 @@ class Player: public Entidad{
 		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update();
-		SoundEvent* dieEvent;
-		SoundEvent* damageEvent;
-		SoundEvent* drinkEvent;
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
