@@ -1,12 +1,12 @@
-#include "GuivernumVentus.h"
+#include "GuivernoWind.h"
 #include "./../Managers/ObjectManager.h"
 
-GuivernumVentus::GuivernumVentus(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+GuivernoWind::GuivernoWind(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD, optHP, optMP){
 	area = NULL;
 }
 
-void GuivernumVentus::Lanzar(Player* p){
+void GuivernoWind::Lanzar(Player* p){
 	if(area==NULL){
 		CreateArea(p);
 	}
@@ -20,7 +20,7 @@ void GuivernumVentus::Lanzar(Player* p){
 	}
 }
 
-void GuivernumVentus::ResetSpell(){
+void GuivernoWind::ResetSpell(){
 	Hechizo::ResetSpell();
 	if(area!=NULL){
 		area->Deactivate();
@@ -28,7 +28,7 @@ void GuivernumVentus::ResetSpell(){
 	}
 }
 
-void GuivernumVentus::CreateArea(Player* p){
+void GuivernoWind::CreateArea(Player* p){
 	vector3df pos = p->GetPos();
 	vector3df rot = p->GetRot();
 
@@ -42,7 +42,7 @@ void GuivernumVentus::CreateArea(Player* p){
 	area = ObjectManager::GetInstance()->AddDamageArea(pos, vector3df(1,1,1), vector3df(0,0,0));
 }
 
-void GuivernumVentus::UpdateArea(Player* p){
+void GuivernoWind::UpdateArea(Player* p){
 	vector3df pos = p->GetPos();
 	vector3df rot = p->GetRot();
 

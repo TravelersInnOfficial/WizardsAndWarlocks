@@ -1,10 +1,12 @@
-#include "DesperiatonMuri.h"
+#include "DesperationWall.h"
 #include "./../Managers/ObjectManager.h"
 
-DesperiatonMuri::DesperiatonMuri(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL, optHP, optMP){}
+DesperationWall::DesperationWall(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL, optHP, optMP){
 	
-void DesperiatonMuri::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
+}
+	
+void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
 	ObjectManager* objectMaster = ObjectManager::GetInstance();
 	vector3df pos = p->GetPos();
 	vector3df rot = p->GetRot();

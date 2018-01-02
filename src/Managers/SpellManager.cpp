@@ -87,7 +87,7 @@ bool SpellManager::StartHechizo(int num, Player* p){
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
 				EffectManager* effectman = EffectManager::GetInstance();
-				if(h->GetType() == SPELL_PROYECTIL || !effectman->CheckEffect(p, WEAK_SILENCED)){		// if is basic spell or if not silenced then shoot
+				if(h->GetType() == SPELL_PROJECTILE || !effectman->CheckEffect(p, WEAK_SILENCED)){		// if is basic spell or if not silenced then shoot
 					int mana = p->GetMP();
 					if(h->CheckMP(mana)){
 						h->EmpezarCast();
@@ -129,14 +129,23 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_BASIC:		// Hechizo instantaneo
 			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, 1, 1);
 			break;
-		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil(-5, 0.0f, 1.0f, 100, 100);
+		case SPELL_PROJECTILE:	//Hechizo de ataque basico
+			h = new SpellProjectile(-5, 0.0f, 1.0f, 100, 100);
+			break;
+		case SPELL_FIRE:
+			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
+			break;
+		case SPELL_POISON:
+			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
+			break;
+		case SPELL_PARALYSIS:
+			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperiatonMuri(-5, 0.0f, 0.25f, 100, 50);
+			h = new DesperationWall(-5, 0.0f, 0.25f, 100, 50);
 			break;
 		case SPELL_BLIZZARD:		// Hechizo continuo hielo
-			h = new GuivernumVentus(-1, 0.0f, 0.0f, 100, 75);
+			h = new GuivernoWind(-1, 0.0f, 0.0f, 100, 75);
 			break;
 		default:
 			h = NULL;

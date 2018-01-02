@@ -1,0 +1,18 @@
+#ifndef DesperationWall_H
+#define DesperationWall_H
+
+#include <iostream>
+#include <math.h>
+
+#include "Hechizo.h"
+#include "./../Players/Player.h"
+
+class DesperationWall: public Hechizo{
+public:
+	DesperationWall(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	void Lanzar(Player* p);
+private:
+	
+};
+
+#endif

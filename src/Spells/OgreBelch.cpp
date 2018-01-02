@@ -1,10 +1,12 @@
-#include "HechizoProyectil.h"
+#include "OgreBelch.h"
 #include "./../Managers/BulletManager.h"
 
-HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_PROYECTIL, optHP, optMP){}
+OgreBelch::OgreBelch(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+:Hechizo(costPM, tCast, tCoolDown, SPELL_POISON, optHP, optMP){
+	
+}
 
-void HechizoProyectil::Lanzar(Player* p){
+void OgreBelch::Lanzar(Player* p){
 	vector3df rot = p->GetRot();
 
 	rot.X = -rot.X;

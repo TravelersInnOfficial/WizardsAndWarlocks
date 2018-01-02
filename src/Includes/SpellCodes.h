@@ -64,7 +64,7 @@ enum SPELLCODE
 
 	// Projectil Spells
 	SPELL_BASIC,				// default code for spell
-	SPELL_PROYECTIL,
+	SPELL_PROJECTILE,
 	SPELL_FIRE,
 	SPELL_POISON,
 	SPELL_PARALYSIS,
