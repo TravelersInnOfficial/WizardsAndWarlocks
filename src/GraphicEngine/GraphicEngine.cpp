@@ -166,15 +166,20 @@ void GraphicEngine::drawManaAndHealth(int h, int m){
 
 
 	// Black Bar
-	irr::video::SColor color = irr::video::SColor(255, 0, 0, 0);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xEnd, yEndH));
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xEnd, yEndM));
+	vector3df color(0,0,0);
+	draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
+	draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
 	
 	// Helath & Mana Bar
-	color = irr::video::SColor(255, 255, 0, 0);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH));
-	color = irr::video::SColor(255, 0, 0, 255);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM));
+	color = vector3df(255,0,0);
+	draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
+	color = vector3df(0,0,255);
+	draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+}
+
+void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
+	irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
 }
 
 // SMANAGER FUNCTIONS

@@ -25,6 +25,8 @@ public:
 
 	// Getters
 	int GetCurrentSpell();
+	bool GetShootSpell();
+	bool GetCastingSpell();
 
 	// Setters
 	void SetCurrentSpell(int num);
@@ -37,6 +39,9 @@ private:
 
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
 	Sensor*				sensor;			// Sensor de sentidos de la IA
+
+	bool				shootSpell; 	// Ha conseguido lanzar el hechizo en este frame? Si/No
+	bool 				castingSpell;	// Esta lanzando un hechizo? Si/No
 };
 
 

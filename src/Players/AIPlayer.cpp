@@ -10,6 +10,9 @@ AIPlayer::AIPlayer():Player(false){
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
+
+	shootSpell = false;
+	castingSpell = false;
 }
 
 AIPlayer::~AIPlayer(){
@@ -21,7 +24,10 @@ void AIPlayer::Update(){
 		SetAllInput(UP);
 		behaviour->run();
 		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
-		Player::Update();
+		shootSpell = false; 	// Reseteamos la variable
+		
+
+		Player::Update();		// Check Input
 	}
 }
 
@@ -45,29 +51,47 @@ void AIPlayer::Die(){
 
 void AIPlayer::Debug(){
 	if(hasCharacter){
+		GraphicEngine* g_engine = GraphicEngine::getInstance();
+
 		vector3df p = m_position;
 		vector3df l = rotation;
 		vector3df c = vector3df(1,1,1);
+		vector3df o = vector3df(0,0,0);
 
-		vector3df o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-		o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-		o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-		o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		// Cono de vision
+		if(true){
+			vector3df o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
+			g_engine->paintLineDebug(p, o, c);
+			o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
+			g_engine->paintLineDebug(p, o, c);
+			o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
+			g_engine->paintLineDebug(p, o, c);
+			o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X-0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
+			g_engine->paintLineDebug(p, o, c);
+		}
 
-
+		// Rayos verdes
 		float lookAHead = 2.5f;
 		float lookAHead2 = 1.0f;
-		c = vector3df(0,1,0);
-		o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y, p.Z+cos(l.Y)*lookAHead); 
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-		o = vector3df(p.X+sin(l.Y + M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y + M_PI/4)*lookAHead2);
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
-		o = vector3df(p.X+sin(l.Y - M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y - M_PI/4)*lookAHead2);
-		GraphicEngine::getInstance()->paintLineDebug(p, o, c);
+		if(true){
+			c = vector3df(0,1,0);
+			o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y, p.Z+cos(l.Y)*lookAHead); 
+			g_engine->paintLineDebug(p, o, c);
+			o = vector3df(p.X+sin(l.Y + M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y + M_PI/4)*lookAHead2);
+			g_engine->paintLineDebug(p, o, c);
+			o = vector3df(p.X+sin(l.Y - M_PI/4)*lookAHead2, p.Y, p.Z+cos(l.Y - M_PI/4)*lookAHead2);
+			g_engine->paintLineDebug(p, o, c);
+		}
+
+		//Varibles IA
+		if(true){
+			// Esta disparando hechizo? CastingSpell
+			c = vector3df(255*castingSpell, 0, 0);
+			g_engine->draw2DRectangle(c, 0,0,10,10);
+			// Ha conseguido lanzar el hechizo? ShootSpell
+			c = vector3df(0, 255*shootSpell, 0);
+			g_engine->draw2DRectangle(c, 10,0,20,10);
+		}
 	}
 }
 
@@ -90,9 +114,20 @@ void AIPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 	// Hechizos
-	//if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
-	//if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
-	//if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
+		if(SpellManager::GetInstance()->StartHechizo(currentSpell,this)){
+			castingSpell = true;
+		} 
+	}
+	if(controller->IsKeyReleased(ACTION_SHOOT)){ 
+		SpellManager::GetInstance()->ResetHechizo(currentSpell,this); 
+		castingSpell = false;
+	}
+	if(controller->IsKeyDown(ACTION_SHOOT)){ 
+		if(SpellManager::GetInstance()->LanzarHechizo(currentSpell,this)){
+			shootSpell = true;
+		} 
+	}
 	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	// Trampas
@@ -148,6 +183,14 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 
 int AIPlayer::GetCurrentSpell(){
 	return currentSpell;
+}
+
+bool AIPlayer::GetShootSpell(){
+	return shootSpell;
+}
+
+bool AIPlayer::GetCastingSpell(){
+	return castingSpell;
 }
 
 // ========================================================================================= //

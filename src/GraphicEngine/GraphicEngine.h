@@ -97,6 +97,11 @@ public:
     */
     void drawManaAndHealth(int h, int m);
 
+    /**
+     * Draws a rectangle
+     */
+    void draw2DRectangle(vector3df color, float xInit, float yInit, float xEnd, float yEnd);
+
     /// SMANAGER FUNCTIONS
 
     /**

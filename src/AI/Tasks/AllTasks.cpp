@@ -127,9 +127,7 @@ bool ReleaseSpell::run(Blackboard* bb){
         if(!child->run(bb)){
         	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
         	if(character!=NULL){
-        		int currentSpell = character->GetCurrentSpell();
-        		SpellManager::GetInstance()->ResetHechizo(currentSpell, character);
-        		bb->SetInt(AI_SPELL_STATUS, UP);
+        		character->SetController(ACTION_SHOOT, RELEASED);
         	}
         }
     }
@@ -149,28 +147,20 @@ bool ShootBasic::run(Blackboard* bb){
 
 	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
 	if(character!=NULL){
-		SpellManager* spellMaster = SpellManager::GetInstance();
 
-		int currentSpell = character->GetCurrentSpell();	// El hechizo actual del personaje	
-		int status = bb->GetInt(AI_SPELL_STATUS); 			// Conseguimos el estado anterior del hechizo
-
-		// En el caso de que estuviera levantado
-		if(status == UP){
-			// Intentamos empezar a lanzar el hechizo
-			if(spellMaster->StartHechizo(currentSpell, character)){
-				// En el caso de conseguirlo empezamos con el lanzamiento
-				spellMaster->LanzarHechizo(currentSpell, character);
-				bb->SetInt(AI_SPELL_STATUS, DOWN);
+		// En el caso de que no se este casteando el hechizo
+		if(!character->GetCastingSpell()){
+				// Intetamos lanzar el hechizo
+				character->SetController(ACTION_SHOOT, PRESSED);
 				return true;
-			}
 		// En el caso de que ya se estuviera lanzando
-		}else if(status == DOWN){
+		}else{
+			character->SetController(ACTION_SHOOT, DOWN);
 			// Miramos a ver si el casteo finaliza
-			if(spellMaster->LanzarHechizo(currentSpell, character)){
+			if(character->GetShootSpell()){
 				// En el caso de que se llegue a lanzar los resetamos y volvemos
 				// a marcar como UP
-				spellMaster->ResetHechizo(currentSpell, character);
-				bb->SetInt(AI_SPELL_STATUS, UP);
+				character->SetController(ACTION_SHOOT, RELEASED);
 			}
 			return true;
 		}
