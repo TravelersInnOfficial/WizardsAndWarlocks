@@ -91,6 +91,12 @@ void AIPlayer::Debug(){
 			// Ha conseguido lanzar el hechizo? ShootSpell
 			c = vector3df(0, 255*shootSpell, 0);
 			g_engine->draw2DRectangle(c, 10,0,20,10);
+			// CurrentSpell
+			if(currentSpell == 0) 		c = vector3df(255,0,0);
+			else if(currentSpell == 1)	c = vector3df(0,255,0);
+			else if(currentSpell == 2)	c = vector3df(0,0,255);
+			else if(currentSpell == 3)	c = vector3df(255,255,0);
+			g_engine->draw2DRectangle(c, 20,0,30,10);
 		}
 	}
 }

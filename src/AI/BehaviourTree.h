@@ -36,6 +36,7 @@ public:
 private:
 	void CreateAttack();
 	void CreateMovement();
+    void PrepareSubTrees();
 };
 
 #endif

@@ -25,6 +25,23 @@ private:
 
 // ================================================================================================= //
 //
+//	RUN CORRECT TASK OF MOVEMENT 
+//
+// ================================================================================================= //
+
+class RunMovementTask: public Decorador{
+public:
+	RunMovementTask();
+	bool run(Blackboard* bb);
+private:
+	void CheckChangeTask(Blackboard* bb);
+	void ChangeTask(Blackboard* bb);
+
+	int lastValue;
+};
+
+// ================================================================================================= //
+//
 //	RELEASE SPELL IF FALSE
 //
 // ================================================================================================= //
@@ -60,6 +77,21 @@ public:
 	SendPlayerSignals();
 	bool run(Blackboard* bb);
 private:
+};
+
+// ================================================================================================= //
+//
+//	CHECK DISTANCE
+//
+// ================================================================================================= //
+
+class CheckDistance: public Task{
+public:
+	CheckDistance();
+	bool run(Blackboard* bb);
+private:
+	float distance;
+	float radio;
 };
 
 // ================================================================================================= //
@@ -124,6 +156,20 @@ private:
 class GoToTarget: public Task{
 public:
 	GoToTarget();
+	bool run(Blackboard* bb);
+private:
+	float maxAcceleration;
+};
+
+// ================================================================================================= //
+//
+//	FLEE FROM TARGET
+//
+// ================================================================================================= //
+
+class FleeFromTarget: public Task{
+public:
+	FleeFromTarget();
 	bool run(Blackboard* bb);
 private:
 	float maxAcceleration;

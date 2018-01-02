@@ -3,12 +3,12 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
+    PrepareSubTrees();
     CreateAttack();
     CreateMovement();
-
 }
 
-void BehaviourTree::CreateAttack(){
+void BehaviourTree::PrepareSubTrees(){
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new ShootBasic();
     informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
@@ -16,6 +16,23 @@ void BehaviourTree::CreateAttack(){
     informacion->SetPuntero(AI_TASK_SPELL02, t_shootBasic);
     informacion->SetPuntero(AI_TASK_SPELL03, t_shootBasic);
 
+    // DECLARANDO FUNCIONES DE MOVIMIENTO DE ATAQUE
+    Secuencia* sc_moveToTarget = new Secuencia();
+    sc_moveToTarget->addChild(new CheckDistance());
+    sc_moveToTarget->addChild(new GoToTarget());
+
+    Selector* sl_moveShoot = new Selector();
+    sl_moveShoot->addChild(sc_moveToTarget);
+    sl_moveShoot->addChild(new FleeFromTarget());
+
+    informacion->SetPuntero(AI_MOVE_SPELL00, sl_moveShoot);
+    informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);
+    informacion->SetPuntero(AI_MOVE_SPELL02, sl_moveShoot);
+    informacion->SetPuntero(AI_MOVE_SPELL03, sl_moveShoot);
+}
+
+void BehaviourTree::CreateAttack(){
+   
     // ATAQUE
     Secuencia* sc_attack = new Secuencia();
     sc_attack->addChild(new SendPlayerSignals());       // Primero envio la senyales sonoras y visuales
@@ -53,7 +70,14 @@ void BehaviourTree::CreateMovement(){
     sl_movement->addChild(sc_hearing);
     sl_movement->addChild(t_wander);
 
-    SetRootMove(sl_movement);
+    informacion->SetPuntero(AI_MOVE_NOSPELL, sl_movement);
+
+
+    Decorador* d_move  = new RunMovementTask();
+    d_move->setChild(sl_movement);
+
+    SetRootMove(d_move);
+
 }
 
 BehaviourTree::~BehaviourTree(){
