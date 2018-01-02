@@ -3,9 +3,10 @@
 #include "./../Players/Player.h"
 #include "./../Objects/Invocation.h"
 
-Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v){
+Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v, int emi){
     direction = new vector3df(dir.X, dir.Y, dir.Z);
    
+    emisor = emi;
     damage = 25;
 
     radio = r;
@@ -80,6 +81,10 @@ void Proyectil::UpdatePosShape(){
 void Proyectil::Contact(void* punt, EntityEnum tipo){
     if(tipo==EENUM_PLAYER){
         Player* p = (Player*)punt;
+        int idEmisor = p->GetId();
+        if(emisor == idEmisor){
+            return;
+        }
         p->ChangeHP(-damage);
     }
     else if(tipo == EENUM_INVOCATION){

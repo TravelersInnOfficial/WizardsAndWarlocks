@@ -13,7 +13,7 @@ public:
 	static BulletManager* GetInstance();
 	~BulletManager();
 
-	void AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b);
+	void AddProyectil(vector3df pos, vector3df dir, float r, float v, int emi, BULLETCODE b);
 	void AddToDeleteProyecil(Proyectil* pro);
 	void Update();
 	void DeleteProyectiles();

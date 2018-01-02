@@ -15,10 +15,10 @@ BulletManager* BulletManager::GetInstance(){
 	return instance;
 }
 
-void BulletManager::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
+void BulletManager::AddProyectil(vector3df pos, vector3df dir, float r, float v, int emi, BULLETCODE b){
 	switch(b){
 		case BULLET_BASIC:
-			proyectiles.push_back(new Proyectil(pos, dir, r, v));
+			proyectiles.push_back(new Proyectil(pos, dir, r, v, emi));
 			break;
 	}
 }

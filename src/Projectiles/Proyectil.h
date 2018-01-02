@@ -13,7 +13,7 @@
 
 class Proyectil: public Entidad{
 public:
-    Proyectil(vector3df pos, vector3df dir, float r, float v);
+    Proyectil(vector3df pos, vector3df dir, float r, float v, int emi);
     ~Proyectil();
     void Update();
     void Contact(void* punt, EntityEnum tipo);
@@ -25,6 +25,8 @@ private:
     void CreateProyectil(vector3df pos);
 	void UpdatePosShape();
 	void NormalizeDir();
+
+    int             emisor;             // Creador del proyectil
 
     int             damage;             // Danyo del proyectil
 
