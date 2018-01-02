@@ -79,14 +79,14 @@ void EffectManager::UpdateEffects(float deltaTime){
 	}
 }
 
-bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){	
+bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){
 	if(effects.size()!=0){
 		vector<Effect*>* currentV = effects.at(p);
 		
 		int size = currentV->size();
-		for(int i=0; i<size; i++){					// Recorremos todos los efectos del jugador
+		for(int i=0; i<size; i++){							// Recorremos todos los efectos del jugador
 			Effect* effect = currentV->at(i);
-			if(effect->getCode() == EFFECT)			// Comprobamos que el jugador tiene el efecto adecuado
+			if(effect!= 0 && effect->getCode() == EFFECT)	// Comprobamos que el jugador tiene el efecto adecuado
 				return true;
 		}
 	}
@@ -109,16 +109,16 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new Paralyzed(2.0f, 1000.0f);
 			break;
 		case WEAK_SLOWEDDOWN:
-			e = new SlowedDown(6.0f, 10.0f);
+			e = new SlowedDown(4.0f, 10.0f);
 			break;
 		case WEAK_POISONED:
-			e = new Poisoned(6.0f, 4.0f);
+			e = new Poisoned(5.0f, 4.0f);
 			break;
 		case WEAK_SILENCED:
-			e = new Silenced(6.0f);
+			e = new Silenced(5.0f);
 			break;
 		case WEAK_MADNESS:
-			e = new Madness(6.0f);
+			e = new Madness(4.0f);
 			break;
 		case WEAK_DEATHSNARE:
 			e = new DeathSnare(3.0f, 6);
@@ -137,7 +137,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new SpeedUp(10.0f);
 			break;
 		case POWERUP_UNTARGET:
-			e = new Untargetable(5.0f);
+			e = new Untargetable(4.0f);
 			break;
 		case POWERUP_FIRE:
 			e = new FireShots(7.0f);
