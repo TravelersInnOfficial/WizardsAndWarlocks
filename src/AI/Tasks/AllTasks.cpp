@@ -33,18 +33,27 @@ SpellSecuencia::SpellSecuencia(){
 
 bool SpellSecuencia::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"SpellSecuencia"<<std::endl;
-
 	SortVector(bb);
 	if(DEBUG) std::cout<<"SpellSecuencia2"<<std::endl;
-	int tamanyo = spellsOrder.size();
-	for(int i=0; i<tamanyo; i++){
-		// Conseguimos la tarea desde el blackboard
-		// Cada vez que se cambie de hechizo tocará actualizar el puntero correspondiente
-		Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
-		if(child!=NULL){
-			if(child->run(bb)){
-				// el spellsOrder[i] es igual al numero de hechizo que se ha conseguido lanzar
-				return true;
+
+	AIPlayer* character = (AIPlayer*)bb->GetPuntero(AI_CHARACTER);
+	if(character!=NULL){
+		int tamanyo = spellsOrder.size();
+		for(int i=0; i<tamanyo; i++){
+			// Conseguimos la tarea desde el blackboard
+			// Cada vez que se cambie de hechizo tocará actualizar el puntero correspondiente
+			Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
+			if(child!=NULL){
+				if(child->run(bb)){
+					// En el caso de que este en medio de un caseo y quiero poner otro hechizo debera hacer release
+					if(character->GetCastingSpell() && spellsOrder[i] != character->GetCurrentSpell()){
+						return false; // El release se hace en otra tarea
+					}else{
+						character->SetCurrentSpell(spellsOrder[i]);
+					}
+					// el spellsOrder[i] es igual al numero de hechizo que se ha conseguido lanzar
+					return true;
+				}
 			}
 		}
 	}
@@ -366,7 +375,6 @@ bool HasArrived::run(Blackboard* bb){
         		bb->CleanPuntero(AI_TARGET);
 				bb->CleanSense(target->id);
         	}
-
 			return true;
 		}
 	}

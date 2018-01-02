@@ -29,6 +29,7 @@ EffectManager* EffectManager::GetInstance(){
 }
 
 void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT){
+
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it == effects.end()){
@@ -41,6 +42,7 @@ void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT){
 }
 
 void EffectManager::CleanEffects(Player* p){
+
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it != effects.end()){
@@ -56,6 +58,7 @@ void EffectManager::CleanEffects(Player* p){
 }
 
 void EffectManager::UpdateEffects(float deltaTime){
+
 	currentTime += deltaTime;
 
 	if(currentTime>=maxTime){
@@ -81,13 +84,17 @@ void EffectManager::UpdateEffects(float deltaTime){
 
 bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){
 	if(effects.size()!=0){
-		vector<Effect*>* currentV = effects.at(p);
-		
-		int size = currentV->size();
-		for(int i=0; i<size; i++){							// Recorremos todos los efectos del jugador
-			Effect* effect = currentV->at(i);
-			if(effect!= 0 && effect->getCode() == EFFECT)	// Comprobamos que el jugador tiene el efecto adecuado
-				return true;
+		std::map<Player*, vector<Effect*>* >::iterator it;
+		it = effects.find(p);
+		if(it != effects.end()){
+			vector<Effect*>* currentV = effects.at(p);
+			
+			int size = currentV->size();
+			for(int i=0; i<size; i++){							// Recorremos todos los efectos del jugador
+				Effect* effect = currentV->at(i);
+				if(effect!= 0 && effect->getCode() == EFFECT)	// Comprobamos que el jugador tiene el efecto adecuado
+					return true;
+			}
 		}
 	}
 	return false;

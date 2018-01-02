@@ -106,6 +106,9 @@ void Silenced::RemoveEffect(Player* p){
 //================================================================
 // MADNESS
 //================================================================
+Madness::~Madness(){
+}
+
 Madness::Madness(float time):Effect(time, WEAK_MADNESS){
 	actions.push_back(ACTION_MOVE_UP);
 	actions.push_back(ACTION_MOVE_DOWN);
@@ -126,6 +129,7 @@ void Madness::ApplyEffect(Player* p){
 void Madness::RemoveEffect(Player* p){
 	p->GetController()->SwapActions(actions[0], actions[1]);
 	p->GetController()->SwapActions(actions[2], actions[3]);
+	actions.clear();
 }
 
 //================================================================

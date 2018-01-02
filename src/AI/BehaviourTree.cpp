@@ -72,7 +72,6 @@ void BehaviourTree::CreateMovement(){
 
     informacion->SetPuntero(AI_MOVE_NOSPELL, sl_movement);
 
-
     Decorador* d_move  = new RunMovementTask();
     d_move->setChild(sl_movement);
 
