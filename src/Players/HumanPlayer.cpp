@@ -50,8 +50,10 @@ void HumanPlayer::SetNetInput(){
 
 
 	// OTHERS
-	networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
-	networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+	if(hasCharacter){
+		networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
+		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+	}
 	// VIDA Y MANA ??
 
 }
