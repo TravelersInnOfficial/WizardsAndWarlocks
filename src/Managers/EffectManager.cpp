@@ -65,7 +65,7 @@ void EffectManager::UpdateEffects(float deltaTime){
 			std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
 
 			int size = currentV->size();
-			for(int i=0; i<size; i++){					// Recorremos todos los efectos del jugador
+			for(int i=size-1; i>=0; i--){					// Recorremos todos los efectos del jugador
 				Effect* effect = currentV->at(i);
 				effect->UpdateEffect(p);
 				if(effect->CheckFinish(currentTime)){		// Comprobamos si ha terminado el efecto

@@ -13,6 +13,7 @@ public:
 	~Key_player();
 	Key_player(TKEY_CODE k, ACTION_ENUM a);
   	void SetStatus(keyStatesENUM);
+  	void SetAction(ACTION_ENUM action);
   	ACTION_ENUM GetAction();
   	keyStatesENUM GetStatus();
   	TKEY_CODE GetKey();
@@ -38,6 +39,7 @@ public:
 	bool IsKeyUp(ACTION_ENUM a);
 	void Update();
 	void UpdateOwnStatus();
+	void SwapActions(ACTION_ENUM a, ACTION_ENUM b);
 	void SetAllStatus(keyStatesENUM status);
 private:
 	std::vector<Key_player*> keys;

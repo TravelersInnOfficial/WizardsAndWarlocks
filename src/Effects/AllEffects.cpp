@@ -107,31 +107,25 @@ void Silenced::RemoveEffect(Player* p){
 // MADNESS
 //================================================================
 Madness::Madness(float time):Effect(time, WEAK_MADNESS){
-}
-
-void Madness::ApplyEffect(Player* p){
-	std::vector<ACTION_ENUM> actions;
 	actions.push_back(ACTION_MOVE_UP);
 	actions.push_back(ACTION_MOVE_DOWN);
 	actions.push_back(ACTION_MOVE_LEFT);
 	actions.push_back(ACTION_MOVE_RIGHT);
+}
+
+void Madness::ApplyEffect(Player* p){
 	
 	std::random_shuffle ( actions.begin(), actions.end() );
 	
 	// create random key assign
-	HumanPlayer* h = (HumanPlayer*)p;
-	h->playerActions.up_key    = actions[0];
-	h->playerActions.down_key  = actions[1];
-	h->playerActions.left_key  = actions[2];
-	h->playerActions.right_key = actions[3];
+	p->GetController()->SwapActions(actions[0], actions[1]);
+	p->GetController()->SwapActions(actions[2], actions[3]);
+
 }
 
 void Madness::RemoveEffect(Player* p){
-	HumanPlayer* h = (HumanPlayer*)p;
-	h->playerActions.up_key    = ACTION_MOVE_UP;
-	h->playerActions.down_key  = ACTION_MOVE_DOWN;
-	h->playerActions.left_key  = ACTION_MOVE_LEFT;
-	h->playerActions.right_key = ACTION_MOVE_RIGHT;
+	p->GetController()->SwapActions(actions[0], actions[1]);
+	p->GetController()->SwapActions(actions[2], actions[3]);
 }
 
 //================================================================

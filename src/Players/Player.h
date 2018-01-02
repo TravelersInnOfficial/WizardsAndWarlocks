@@ -82,6 +82,7 @@ class Player: public Entidad{
 		Alliance GetAlliance();
 		int GetNumberSpells();
 		bool GetReadyStatus();
+		PlayerController* GetController();
 
 		// Seters
 		void SetPosition(vector3df);

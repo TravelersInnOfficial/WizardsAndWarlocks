@@ -3,7 +3,6 @@
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	menuActivated = false;
-	playerActions = ActionHolder();
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -181,10 +180,10 @@ void HumanPlayer::ToggleMenu(bool newState){
 void HumanPlayer::CheckInput(){
 	if(!menuActivated){
 		// Movimiento
-		if(controller->IsKeyDown(playerActions.left_key)){ this->MoveX(-1); }
-		if(controller->IsKeyDown(playerActions.down_key)){ this->MoveZ(-1); }
-		if(controller->IsKeyDown(playerActions.right_key)){ this->MoveX(1); }
-		if(controller->IsKeyDown(playerActions.up_key)){ this->MoveZ(1); }
+		if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
 		
 		// Acciones

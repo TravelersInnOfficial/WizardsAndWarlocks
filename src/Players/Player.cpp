@@ -514,6 +514,10 @@ bool Player::GetReadyStatus(){ return readyToStart; }
 
 Alliance Player::GetAlliance(){ return playerAlliance; }
 
+PlayerController* Player::GetController(){
+	return controller;
+}
+
 void Player::SetAlliance(Alliance newAlliance){
 
 	if(newAlliance == ERR_ALLIANCE) return;

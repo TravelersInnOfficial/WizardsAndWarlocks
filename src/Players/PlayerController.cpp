@@ -10,6 +10,10 @@ void Key_player::SetStatus(keyStatesENUM k){
 	status = k;
 }
 
+void Key_player::SetAction(ACTION_ENUM act){
+	action = act;
+}
+
 TKEY_CODE Key_player::GetKey(){
 	return key;
 }
@@ -223,6 +227,18 @@ void PlayerController::Update(){
 		keyStatesENUM status;
 		status = g_engine->GetKeyStatus(k->GetKey());
 		if(status == PRESSED || status == RELEASED) k->SetStatus(status);
+	}
+}
+
+void PlayerController::SwapActions(ACTION_ENUM a, ACTION_ENUM b){
+	int size = keys.size();
+	for(int i=0; i<size; i++){
+		Key_player* k = keys[i];
+		if(a == k->GetAction()){
+			k->SetAction(b);
+		} else if( b == k->GetAction()){
+			k->SetAction(a);
+		}
 	}
 }
 
