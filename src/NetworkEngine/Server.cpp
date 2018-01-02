@@ -1,5 +1,5 @@
 #include "Server.h"
-
+#include "./../States/NetGame.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -172,6 +172,25 @@ void Server::RecievePackages(){
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				ModifyObject(&bitstream);
 
+				break;
+			}
+
+			// CUANDO SE TERMINA UNA PARTIDA
+			case ID_MATCH_ENDED: {
+
+				// Leer quien ha ganado
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				Alliance winnerAlliance;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(winnerAlliance);
+				NetGame::GetInstance()->MatchEnded(winnerAlliance);
+
+				// Propagarlo a los DEMAS clientes
+				RakNet::BitStream propagateEndMatch;
+				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
+				propagateEndMatch.Write(winnerAlliance);
+				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+				
 				break;
 			}
 		}

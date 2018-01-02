@@ -7,6 +7,8 @@
 #include <vector2d.h>
 #include "GraphicEngine.h"
 
+#include <Alliance.h>
+
 class MenuManager{
 public:
 	static MenuManager* GetInstance();

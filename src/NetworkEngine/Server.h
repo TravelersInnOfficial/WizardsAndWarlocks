@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <Alliance.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"

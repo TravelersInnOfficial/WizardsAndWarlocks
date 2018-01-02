@@ -33,9 +33,9 @@ void Grail::Interact(Player* p){
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
 		timeCasting += deltaTime;
 
-		if(timeCasting>=maxCasting){
+		if(timeCasting >= maxCasting){
 			recovered = true;
-			timeCasting=0.0f;
+			timeCasting = 0.0f;
 		}
 
 		casting = true;

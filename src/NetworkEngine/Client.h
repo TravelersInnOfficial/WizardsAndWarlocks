@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <map>
+#include <Alliance.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
@@ -47,6 +48,9 @@ public:
 	void SetObjectFloat(	int objectId, ObjectVariable k, float v);
 	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v);
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v);
+
+	// Match Status
+	void EndMatch(Alliance winnerAlliance);
 
 private:
 	

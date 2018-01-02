@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "./../States/NetGame.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -104,6 +105,17 @@ void Client::RecievePackages(){
 			case ID_OBJECT_STATUS_CHAGED: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				ModifyObject(&bitstream);
+				break;
+			}
+
+			// CUANDO SE TERMINA UNA PARTIDA
+			case ID_MATCH_ENDED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				Alliance winnerAlliance;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(winnerAlliance);
+				NetGame::GetInstance()->MatchEnded(winnerAlliance);
+
 				break;
 			}
 		}
@@ -241,4 +253,11 @@ void Client::SetObjectFloatVec(int objectId, ObjectVariable k, vector3df v){
 	stateChange.Write(k);
 	stateChange.Write(v);
 	SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED);
+}
+
+void Client::EndMatch(Alliance winnerAlliance){
+	RakNet::BitStream endMatch;
+	endMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
+	endMatch.Write(winnerAlliance);
+	SendPackage(&endMatch, HIGH_PRIORITY, RELIABLE_ORDERED);
 }

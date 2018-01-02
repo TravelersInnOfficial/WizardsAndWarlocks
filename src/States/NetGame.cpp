@@ -171,21 +171,14 @@ void NetGame::SetPlayerOne(NetworkObject* nObject){
 }
 
 void NetGame::CheckIfWon(){
-	int whosWon = -1;
+	Alliance whosWon = NO_ALLIANCE;
 
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = 0;
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = 1;
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = ALLIANCE_WIZARD;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
 
-	if(whosWon != -1){
-		GraphicEngine::getInstance()->InitReceiver();
-		gameEnded = true;
-		playerManager->EraseAllCharacters();
-		if(playerOne != NULL) {
-			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
-			g_engine->ToggleMenu(true);
-			playerOne->SetAllInput(UP);
-		}
-		else RestartMatch();
+	if(whosWon != NO_ALLIANCE){
+		MatchEnded(whosWon);
+		if(!isServer) n_engine->GetClient()->EndMatch(whosWon);
 	}
 }
 
@@ -200,5 +193,19 @@ void NetGame::RestartMatch(){
 	if(playerOne != NULL) {
 		g_engine->ToggleMenu(false);
 		playerOne->ReturnToLobby();
+	}
+}
+
+void NetGame::MatchEnded(Alliance winnerAlliance){
+	if(!gameEnded){
+		GraphicEngine::getInstance()->InitReceiver();
+		gameEnded = true;
+		playerManager->EraseAllCharacters();
+		if(playerOne != NULL) {
+			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, (int)winnerAlliance);
+			g_engine->ToggleMenu(true);
+			playerOne->SetAllInput(UP);
+		}
+		else RestartMatch();
 	}
 }

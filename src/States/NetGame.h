@@ -34,6 +34,7 @@ public:
 
 	void RestartMatch();
 	void CheckIfReady();
+	void MatchEnded(Alliance winnerAlliance);
 
 	float GetTotalTime();
 	float GetDeltaTime();

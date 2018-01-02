@@ -371,7 +371,9 @@ void ObjectManager::UpdateInvocations(float deltaTime){
 	int size = invocations.size();
 	for(int i=size-1; i>=0; i--){
 		Invocation* in = invocations[i];
-		if(!(in->Update(deltaTime))){			// En el caso de que el update sea False es que hay que eliminarlo				
+		
+		// En el caso de que el update sea False es que hay que eliminarlo
+		if(!(in->Update(deltaTime))){
 			invocations.erase(invocations.begin() + i);
 			delete in;
 		}

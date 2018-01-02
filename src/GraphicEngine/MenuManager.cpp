@@ -123,7 +123,7 @@ void MenuManager::CreateMatchEnded(int option){
 	loadedOptions.push_back(ENDMATCH_M_WINDOW);
 
 	std::wstring winner = L"THE WIZARDS WON!";
-	if (option != 0) winner = L"THE WARLOCKS WON!";
+	if (option != (int)ALLIANCE_WIZARD) winner = L"THE WARLOCKS WON!";
 
 	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/9.0f)/2),menuSize.Y/4,menuSize.X/9.0f,menuSize.Y/30);
 	g_engine->addStaticText(rect, winner, true, false, ENDMATCH_M_TEXT_1, window);
