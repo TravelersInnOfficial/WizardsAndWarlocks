@@ -592,6 +592,25 @@ void Player::SetRotation(vector3df rotation){
 	}
 }
 
+/*	This method makes the graphic body rotate on X axis if is player one
+void Player::SetRotation(vector3df rotation){
+	if(hasCharacter){
+		vector3df newRotGraphic = this->rotation;
+		vector3df newRotPhysic = this->rotation;
+		
+		newRotGraphic.Z = 0;
+		if(!isPlayerOne) newRotGraphic.X = 0;
+		newRotGraphic = newRotGraphic * 180 / M_PI;
+		m_playerNode->setRotation(newRotGraphic);
+		
+		newRotPhysic.Z = 0;
+		newRotPhysic.X = 0;
+		newRotPhysic = newRotPhysic * 180 / M_PI;
+		bt_body->SetRotation(newRotPhysic);
+	}
+}
+*/
+
 void Player::SetHP(float HP){m_HP = HP; }
 
 void Player::SetDead(bool flag){ m_dead = flag; }
