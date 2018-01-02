@@ -1,9 +1,8 @@
 #include "HechizoProyectil.h"
 #include "./../Managers/BulletManager.h"
 
-HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown):Hechizo(costPM, tCast, tCoolDown, SPELL_PROYECTIL){
-	//Hechizo(costPM, tCast, tCoolDown);
-}
+HechizoProyectil::HechizoProyectil(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+:Hechizo(costPM, tCast, tCoolDown, SPELL_PROYECTIL, optHP, optMP){}
 
 void HechizoProyectil::Lanzar(Player* p){
 	vector3df rot = p->GetRot();
@@ -20,16 +19,4 @@ void HechizoProyectil::Lanzar(Player* p){
 	c->AddProyectil(pos, vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X)), 0.05f, 30.0f, BULLET_BASIC);
 
 	Hechizo::Lanzar(p);
-}
-
-float HechizoProyectil::GetUtility(Player* p){
-	float HP = p->GetHP();
-	float MP = p->GetMP();
-
-	HP = HP / 100;		// Saco los porcentajes [0, 1]
-	MP = MP / 100; 
-	// Situacion optima 50HP && 100MP
-	float utility = HP + MP;
-	utility = utility / 2;
-	return utility;
 }

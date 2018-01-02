@@ -9,10 +9,9 @@
 
 class GuivernumVentus: public Hechizo{
 public:
-	GuivernumVentus(int costPM, float tCast, float tCoolDown);
+	GuivernumVentus(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 	void ResetSpell();
-	float GetUtility(Player* p);
 private:
 	void CreateArea(Player* p);
 	void UpdateArea(Player* p);

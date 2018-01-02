@@ -26,6 +26,9 @@ public:
 	// Getters
 	int GetCurrentSpell();
 
+	// Setters
+	void SetCurrentSpell(int num);
+
 	//void SetAllInput(keyStatesENUM state);
 	//void GetNetInput();
 	//void SetNetInput();

@@ -127,16 +127,16 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo
-			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC);
+			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, 1, 1);
 			break;
 		case SPELL_PROYECTIL:	//Hechizo de ataque basico
-			h = new HechizoProyectil(-5, 0.0f, 1.0f);
+			h = new HechizoProyectil(-5, 0.0f, 1.0f, 100, 100);
 			break;
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperiatonMuri(-5, 0.0f, 0.25f);
+			h = new DesperiatonMuri(-5, 0.0f, 0.25f, 100, 50);
 			break;
 		case SPELL_BLIZZARD:		// Hechizo continuo hielo
-			h = new GuivernumVentus(-1, 0.0f, 0.0f);
+			h = new GuivernumVentus(-1, 0.0f, 0.0f, 100, 75);
 			break;
 		default:
 			h = NULL;

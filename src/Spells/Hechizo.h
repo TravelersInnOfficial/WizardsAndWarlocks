@@ -4,10 +4,11 @@
 #include <iostream>
 #include "./../Players/Player.h"
 #include <SpellCodes.h>
+#include <math.h>
 
 class Hechizo{
 public:
-	Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code);
+	Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP);
 	virtual ~Hechizo();
 
 	void EmpezarCast();
@@ -17,8 +18,11 @@ public:
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
 	bool CheckMP(int MP);
+	// Utility
+	float GetUtility(Player* p);
+	float CalculateUtility(float value, float base);
+	// Getters
 	int	GetMP();
-	virtual float GetUtility(Player* p);
 	SPELLCODE GetType();
 
 protected:
@@ -30,6 +34,9 @@ protected:
 
 	float 	currentCooldown;	// Tiempo actual de cooldown
 	float	cooldown;			// Tiempo total de cooldown
+
+	float 	optimHP;			// Coste optimo de vida para lanzar (IA)
+	float 	optimMP;			// Coste optimo de mana para lanzar (IA)
 
 	SPELLCODE type;
 };

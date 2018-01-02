@@ -149,3 +149,13 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 int AIPlayer::GetCurrentSpell(){
 	return currentSpell;
 }
+
+// ========================================================================================= //
+//
+//	SETTERS
+//
+// ========================================================================================= //
+
+void AIPlayer::SetCurrentSpell(int num){
+	currentSpell = num;
+}

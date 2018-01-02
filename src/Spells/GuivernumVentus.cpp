@@ -1,8 +1,8 @@
 #include "GuivernumVentus.h"
 #include "./../Managers/ObjectManager.h"
 
-GuivernumVentus::GuivernumVentus(int costPM, float tCast, float tCoolDown)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD){
+GuivernumVentus::GuivernumVentus(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+:Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD, optHP, optMP){
 	area = NULL;
 }
 
@@ -55,16 +55,4 @@ void GuivernumVentus::UpdateArea(Player* p){
 
 	area->SetPosition(pos);
 	area->SetRotation(rot);
-}
-
-float GuivernumVentus::GetUtility(Player* p){
-	float HP = p->GetHP();
-	float MP = p->GetMP();
-
-	HP = HP / 100;		// Saco los porcentajes [0, 1]
-	MP = MP / 100; 
-	// Situacion optima 50HP && 100MP
-	float utility = HP + MP;
-	utility = utility / 2;
-	return utility;
 }

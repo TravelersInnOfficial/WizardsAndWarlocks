@@ -7,9 +7,8 @@
 
 class HechizoProyectil: public Hechizo{
 public:
-	HechizoProyectil(int costPM, float tCast, float tCoolDown);
+	HechizoProyectil(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
-	float GetUtility(Player* p);
 private:
 	
 };

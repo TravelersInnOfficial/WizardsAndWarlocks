@@ -34,7 +34,7 @@ Game::Game(){
 	spellManager->AddHechizo(1, playerOne, SPELL_BASIC);
 	spellManager->AddHechizo(2, playerOne, SPELL_WALL);
 	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
-	
+
 	AL = playerManager->AddAIPlayer();
 	spellManager->AddHechizo(0, AL, SPELL_PROYECTIL);
 	spellManager->AddHechizo(1, AL, SPELL_BASIC);

@@ -100,7 +100,7 @@ void SpellSecuencia::SortVector(Blackboard* bb){
 
 		if(DEBUG){
 			for(int i=0; i<size; i++){
-				std::cout<<tempValues[i]<<" ";
+				std::cout<<spellsOrder[i]<<" ";
 			}
 			std::cout<<std::endl;
 		}

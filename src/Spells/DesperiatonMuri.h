@@ -9,9 +9,8 @@
 
 class DesperiatonMuri: public Hechizo{
 public:
-	DesperiatonMuri(int costPM, float tCast, float tCoolDown);
+	DesperiatonMuri(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
-	float GetUtility(Player* p);
 private:
 	
 };

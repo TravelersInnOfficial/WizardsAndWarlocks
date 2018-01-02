@@ -2,7 +2,7 @@
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code){
+Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP){
 	costePM = costPM;
 	lanzable = false;
 
@@ -11,6 +11,9 @@ Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code){
 
 	currentCooldown = 0.0f;
 	cooldown = tCoolDown;
+
+	optimHP = optHP;
+	optimMP = optMP;
 
 	type = code;
 }
@@ -90,14 +93,32 @@ int Hechizo::GetMP(){
 	return costePM;
 }
 
-float Hechizo::GetUtility(Player* p){
-	float HP = p->GetHP();
-	float MP = p->GetMP();
+float Hechizo::CalculateUtility(float value, float optim){ 	// 100 1
 
-	HP = HP / 100;		// Saco los porcentajes [0, 1]
-	MP = MP / 100; 
+	float base = optim;
+	if(signbit(value - optim) == 0){	 // 0 = positivo / 0 != negativo
+		base = 100 - optim;
+	}
+
+	float pendiente = 0;
+	if(base!=0){
+		pendiente = 100/base;
+	} 
+	float utility = pendiente * abs(value - optim);
+	utility = 100 - utility;
+
+	return utility;
+}
+
+float Hechizo::GetUtility(Player* p){
+	float HP = p->GetHP();		// Valores entre [0, 100]
+	float MP = p->GetMP();		// Valores entre [0, 100]
+
+	float utilityHP = CalculateUtility(HP, optimHP);
+	float utilityMP = CalculateUtility(MP, optimMP);
+
 	// Situacion optima 100HP && 100MP
-	float utility = HP + MP;
+	float utility = utilityHP + utilityMP;
 	utility = utility / 2;
 	return utility;
 }
