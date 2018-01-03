@@ -167,9 +167,11 @@ DamageUp::DamageUp(float time):Effect(time, POWERUP_DAMAGE){
 }
 
 void DamageUp::ApplyEffect(Player* p){
+	p->SetDamageMult(1.6);					// set damage multiplies player damage by parameter
 }
 
 void DamageUp::RemoveEffect(Player* p){
+	p->SetDamageMult(0.625);				// 1.6 * 0.625 = 1
 }
 
 //================================================================
@@ -203,9 +205,15 @@ SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
 }
 
 void SpeedUp::ApplyEffect(Player* p){
+	float vel = p->GetMaxVelocity();
+	vel = vel*1.5f;
+	p->SetMaxVelocity(vel);
 }
 
 void SpeedUp::RemoveEffect(Player* p){
+	float vel = p->GetMaxVelocity();
+	vel = vel/1.5f;
+	p->SetMaxVelocity(vel);
 }
 
 //================================================================

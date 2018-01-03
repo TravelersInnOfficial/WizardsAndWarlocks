@@ -477,6 +477,8 @@ float Player::GetHP(){ return m_HP; }
 
 float Player::GetMP(){ return m_MP; }
 
+float Player::GetDamageM(){ return m_DamageMult; }
+
 float Player::GetMaxVelocity(){ return max_velocity; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
@@ -615,7 +617,9 @@ void Player::SetRotation(vector3df rotation){
 }
 */
 
-void Player::SetHP(float HP){m_HP = HP; }
+void Player::SetHP(float HP){ m_HP = HP; }
+
+void Player::SetDamageMult(float damageMultiplier){ m_DamageMult *= damageMultiplier; }
 
 void Player::SetDead(bool flag){ m_dead = flag; }
 
