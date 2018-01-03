@@ -38,6 +38,10 @@ GraphicEngine::GraphicEngine(){
         col.setAlpha(255);
         privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
 	}
+
+	// Sky Dome
+	privateSManager->addSkyDomeSceneNode(privateDriver->getTexture("./../assets/textures/skymap/skydome.jpg"));
+
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
