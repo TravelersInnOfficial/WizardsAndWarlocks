@@ -229,6 +229,14 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
+	// Notify
+	if(networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
+}
+
+void Player::SetSpell(int value){
+	currentSpell = value;
+	if(currentSpell < 0) currentSpell = 0;
+	else if (currentSpell > numberSpells) currentSpell = numberSpells;
 }
 
 void Player::positionCamera(){

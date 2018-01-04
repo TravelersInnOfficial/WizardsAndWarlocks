@@ -97,6 +97,7 @@ class Player: public Entidad{
 		void SetNetworkObject(NetworkObject* newNetworkObject);
 		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
+		void SetSpell(int value);
 
 		virtual ~Player();
 

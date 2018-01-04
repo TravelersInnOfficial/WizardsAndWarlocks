@@ -45,16 +45,11 @@ void HumanPlayer::SetNetInput(){
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
 	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, 3, true, false);
-	if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)) networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, 3, true, false);
-
-
 	// OTHERS
 	if(hasCharacter){
 		networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 	}
-	// VIDA Y MANA ??
 
 }
 
@@ -63,8 +58,30 @@ void HumanPlayer::GetNetInput(){
 	Player::GetNetInput();
 
 	int keystate = -1;
-	vector3df objstate = vector3df(99999,0,0);
+	int objstate_int = -99999;
+	vector3df objstate = vector3df(-99999,0,0);
 
+	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
+	if(objstate.X != -99999){
+		SetPosition(objstate);
+		objstate = vector3df(-99999,0,0);
+		networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
+	}
+
+	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
+	if(objstate.X != -99999){
+		SetRotation(objstate);
+		objstate = vector3df(-99999,0,0);
+		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
+	}
+
+	objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
+	if(objstate_int != -99999){
+		SetSpell(objstate_int);
+		objstate_int = -99999;
+		networkObject->SetIntVar(PLAYER_SPELL, objstate_int, false, false);
+	}
+	
 	keystate = networkObject->GetIntVar(PLAYER_MOVE_LEFT);
 	if(keystate != -1){
 		controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
@@ -135,34 +152,6 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
 	}
 
-	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_UP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_CHANGE_SPELL_UP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_CHANGE_SPELL_UP, keystate, false, false);
-	}
-
-	keystate = networkObject->GetIntVar(PLAYER_CHANGE_SPELL_DOWN);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_CHANGE_SPELL_DOWN, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_CHANGE_SPELL_DOWN, keystate, false, false);
-	}
-
-	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
-	if(objstate.X != 99999){
-		SetPosition(objstate);
-		objstate = vector3df(99999,0,0);
-		networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
-	}
-
-	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
-	if(objstate.X != 99999){
-		SetRotation(objstate);
-		objstate = vector3df(99999,0,0);
-		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
-	}
-
 	keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
 	if(keystate != -1){
 		SetAllInput((keyStatesENUM)keystate);
@@ -195,6 +184,7 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
 		if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 		
