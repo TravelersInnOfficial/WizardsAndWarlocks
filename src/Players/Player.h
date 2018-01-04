@@ -82,7 +82,6 @@ class Player: public Entidad{
 		float GetHP();
 		float GetMP();
 		float GetDamageM();
-		bool GetDead();	
 		float GetMaxVelocity();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();

@@ -203,7 +203,7 @@ void Player::SetNetInput(){
 void Player::Update(){
 
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
-	if(m_dead || m_position.Y < -50) Die();
+	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
@@ -318,7 +318,7 @@ void Player::ChangeHP(float HP){
 	if (HP < 0) {
 		 SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetPos(), GetRot()); //PLay the sound event
 		 bloodOverlayTime = 1;
-		 } 
+	} 
 
 	if(m_HP + HP > 100) m_HP = 100;
 	
@@ -512,8 +512,6 @@ vector3df Player::GetAngularVelocity(){
 	if(hasCharacter) toRet = bt_body->GetAngularVelocity();
 	return toRet;
 }
-
-bool Player::GetDead(){ return m_dead; }
 
 vector3df Player::GetPos(){ return m_position; }
 
