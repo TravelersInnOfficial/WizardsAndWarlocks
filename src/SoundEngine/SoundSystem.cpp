@@ -190,6 +190,9 @@ void SoundSystem::setVolume(float vol) {
 *  Modifies the position and rotation of the listening point
 ******************************************************/
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
+
+	// Transformamos la rotacion
+	rot = rot * M_PI/180;
 	setPos(listener, pos);
 
 	vector3df frwd = vector3df (sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
@@ -202,6 +205,9 @@ void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 	vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
 	setUp(listener, up);
 	// ###############################
+
+	std::cout<<"FORWARD: "<<frwd<<std::endl;
+	std::cout<<"UP: "<<up<<std::endl;
 
 	setVel(listener, vector3df(0.0f,0.0f,0.0f));
 	
