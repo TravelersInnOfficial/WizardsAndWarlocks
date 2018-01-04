@@ -28,6 +28,7 @@ public:
 	bool CheckIfWon(Alliance alliance);
 	void EraseAllCharacters();
 	void ReturnAllToLobby();
+	void RefreshServerAll();
 	
 private:
 

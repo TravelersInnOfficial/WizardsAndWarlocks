@@ -171,3 +171,11 @@ void PlayerManager::ReturnAllToLobby(){
 		p->ReturnToLobby();
 	}
 }
+
+void PlayerManager::RefreshServerAll(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->RefreshServer();
+	}
+}

@@ -71,11 +71,6 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 void Client::RecievePackages(){
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
-		
-		// std::cout<<"##############################################"<<std::endl;
-		// std::cout<<packet->data[0]<<std::endl;
-		// std::cout<<"##############################################"<<std::endl;
-
 		switch (packet->data[0]) {
 
 			// CUANDO UN JUGADOR SE CONECTA

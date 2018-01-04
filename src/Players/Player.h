@@ -67,6 +67,7 @@ class Player: public Entidad{
 		void GetNetInput();
 		void SetNetInput();
 		NetworkObject* GetNetworkObject();
+		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
 
 		//Geters
 		bool IsPlayerOne();

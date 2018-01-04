@@ -1,5 +1,6 @@
 #include "Server.h"
 #include "./../States/NetGame.h"
+#include "./../Managers/PlayerManager.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -153,6 +154,8 @@ void Server::RecievePackages(){
 					updateObjects.Write(rowObj.second->GetObjType());
 					SendPackage(&updateObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 				}
+
+				PlayerManager::GetInstance()->RefreshServerAll();
 
 				break;
 			}
