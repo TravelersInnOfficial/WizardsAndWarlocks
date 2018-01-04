@@ -1,7 +1,7 @@
 #include "SpellProjectile.h"
 #include "./../Managers/BulletManager.h"
 
-SpellProjectile::SpellProjectile(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+SpellProjectile::SpellProjectile(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(
 	costPM, 
 	tCast, 

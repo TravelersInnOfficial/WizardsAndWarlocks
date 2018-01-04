@@ -1,7 +1,7 @@
 #include "DragonBreath.h"
 #include "./../Managers/BulletManager.h"
 
-DragonBreath::DragonBreath(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+DragonBreath::DragonBreath(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(
 	costPM,
 	tCast,

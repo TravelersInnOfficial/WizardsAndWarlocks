@@ -2,7 +2,7 @@
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-Hechizo::Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP){
+Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP){
 	costePM = costPM;
 	lanzable = false;
 
@@ -82,7 +82,7 @@ float Hechizo::GetCurrentCooldown(){
  * 
  * @param MP Mana con el que comparar
  */
-bool Hechizo::CheckMP(int MP){
+bool Hechizo::CheckMP(float MP){
 	return -costePM<=MP;
 }
 

@@ -9,7 +9,7 @@
 
 class GuivernoWind: public Hechizo{
 public:
-	GuivernoWind(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 	void ResetSpell();
 private:

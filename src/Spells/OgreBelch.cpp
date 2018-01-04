@@ -1,7 +1,7 @@
 #include "OgreBelch.h"
 #include "./../Managers/BulletManager.h"
 
-OgreBelch::OgreBelch(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+OgreBelch::OgreBelch(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(
 	costPM, 
 	tCast, 

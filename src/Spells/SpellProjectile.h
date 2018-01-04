@@ -7,7 +7,7 @@
 
 class SpellProjectile: public Hechizo{
 public:
-	SpellProjectile(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	SpellProjectile(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 private:
 	

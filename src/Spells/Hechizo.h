@@ -8,7 +8,7 @@
 
 class Hechizo{
 public:
-	Hechizo(int costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP);
+	Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP);
 	virtual ~Hechizo();
 
 	void EmpezarCast();
@@ -17,7 +17,7 @@ public:
 	virtual void Lanzar(Player* p);
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
-	bool CheckMP(int MP);
+	bool CheckMP(float MP);
 	// Utility
 	float GetUtility(Player* p);
 	float CalculateUtility(float value, float base);
