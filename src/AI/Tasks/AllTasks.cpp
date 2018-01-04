@@ -203,9 +203,9 @@ bool ReleaseSpell::run(Blackboard* bb){
 //
 // ================================================================================================= //
 
-ShootBasic::ShootBasic(){}
+UseSpell::UseSpell(){}
 
-bool ShootBasic::run(Blackboard* bb){
+bool UseSpell::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"shootBasic"<<std::endl;
 
 	AIPlayer* character = bb->GetPlayer();
@@ -249,9 +249,8 @@ bool SendPlayerSignals::run(Blackboard* bb){
 //
 // ================================================================================================= //
 
-CheckDistance::CheckDistance(){
-	distance = 8.0f;	// El limite del proyectil son 10
-	radio = 0.5f;
+CheckDistance::CheckDistance(float dist){
+	distance = dist;	// El limite del proyectil son 10
 }
 
 bool CheckDistance::run(Blackboard* bb){
@@ -271,7 +270,7 @@ bool CheckDistance::run(Blackboard* bb){
         vector3df dist = tKin.position - cKin.position;
         float distLength = dist.length();
 
-        if(distLength>distance){
+        if(distLength<=distance){
         	return true;
         }
 

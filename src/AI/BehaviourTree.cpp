@@ -10,20 +10,25 @@ BehaviourTree::BehaviourTree(){
 
 void BehaviourTree::PrepareSubTrees(){
     // DECLARANDO FUNCIONES DE ATAQUE
-    Task* t_shootBasic = new ShootBasic();
+    Task* t_shootBasic = new UseSpell();
     informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
+
     informacion->SetPuntero(AI_TASK_SPELL01, t_shootBasic);
     informacion->SetPuntero(AI_TASK_SPELL02, t_shootBasic);
-    informacion->SetPuntero(AI_TASK_SPELL03, t_shootBasic);
+
+    Secuencia* sc_distance_spell = new Secuencia();
+    sc_distance_spell->addChild(t_shootBasic);
+    sc_distance_spell->addChild(new CheckDistance(1.0f));
+    informacion->SetPuntero(AI_TASK_SPELL03, sc_distance_spell);
 
     // DECLARANDO FUNCIONES DE MOVIMIENTO DE ATAQUE
     Secuencia* sc_moveToTarget = new Secuencia();
-    sc_moveToTarget->addChild(new CheckDistance());
-    sc_moveToTarget->addChild(new GoToTarget());
+    sc_moveToTarget->addChild(new CheckDistance(8.0f));
+    sc_moveToTarget->addChild(new FleeFromTarget());
 
     Selector* sl_moveShoot = new Selector();
     sl_moveShoot->addChild(sc_moveToTarget);
-    sl_moveShoot->addChild(new FleeFromTarget());
+    sl_moveShoot->addChild(new GoToTarget());
 
     informacion->SetPuntero(AI_MOVE_SPELL00, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);

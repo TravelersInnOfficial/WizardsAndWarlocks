@@ -59,9 +59,9 @@ private:
 //
 // ================================================================================================= //
  
- class ShootBasic: public Task{
+ class UseSpell: public Task{
  public:
- 	ShootBasic();
+ 	UseSpell();
  	bool run(Blackboard* bb);
  private:
  };
@@ -87,11 +87,10 @@ private:
 
 class CheckDistance: public Task{
 public:
-	CheckDistance();
+	CheckDistance(float dist);
 	bool run(Blackboard* bb);
 private:
 	float distance;
-	float radio;
 };
 
 // ================================================================================================= //

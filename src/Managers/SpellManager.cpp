@@ -128,7 +128,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, 1, 1);
 			break;
 		case SPELL_PROJECTILE:	//Hechizo de ataque basico
-			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 100);
+			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
 			break;
 		case SPELL_FIRE:
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
