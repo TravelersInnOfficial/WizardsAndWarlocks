@@ -121,13 +121,14 @@ float SpellManager::GetUtility(int num, Player* p){
 }
 
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
+	// COSTMP TIMECAST TIMECOOLDOWN OPTHP OPTMP
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo
 			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, 1, 1);
 			break;
 		case SPELL_PROJECTILE:	//Hechizo de ataque basico
-			h = new SpellProjectile(-5, 0.0f, 1.0f, 100, 100);
+			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 100);
 			break;
 		case SPELL_FIRE:
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
@@ -139,7 +140,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-5, 0.0f, 0.25f, 100, 50);
+			h = new DesperationWall(-5, 0.0f, 1.0f, 100, 50);
 			break;
 		case SPELL_BLIZZARD:		// Hechizo continuo hielo
 			h = new GuivernoWind(-1, 0.0f, 0.0f, 100, 75);

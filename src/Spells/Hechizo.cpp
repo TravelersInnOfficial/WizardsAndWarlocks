@@ -111,6 +111,8 @@ float Hechizo::CalculateUtility(float value, float optim){ 	// 100 1
 }
 
 float Hechizo::GetUtility(Player* p){
+	if(currentCooldown!=0) return 0;
+
 	float HP = p->GetHP();		// Valores entre [0, 100]
 	float MP = p->GetMP();		// Valores entre [0, 100]
 
