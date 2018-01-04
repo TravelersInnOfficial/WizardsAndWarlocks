@@ -62,8 +62,19 @@ public:
      */
     void printListOfNodes();
 
+    int getNodeRecordPosition(Node*);
+
 private:
-    std::list<NodeRecord*> *m_list;
+    std::vector<NodeRecord*> m_list;
+
+    //min heap functions
+    void insertNode(NodeRecord*);
+    NodeRecord* getMin();
+    void swapNodes(NodeRecord*, NodeRecord*);
+    int parentNodeIndex(int);
+    int leftNodeIndex(int);
+    int rightNodeIndex(int);
+    void heapify(int);
     
 };
 

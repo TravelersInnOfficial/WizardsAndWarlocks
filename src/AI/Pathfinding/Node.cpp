@@ -1,13 +1,19 @@
 #include "Node.h"
 
-Node::Node(){}
+Node::Node(){
+    m_ID = -1;
+    m_RegionName = "NONE";
+}
 
 Node::Node(int id, std::string regionName){
     m_ID = id;
     m_RegionName = regionName;
 }
 
-Node::~Node(){}
+Node::~Node(){
+    for(int i = 0; i<m_connections.size(); i++) delete m_connections[i];
+    m_connections.clear();
+}
 
 int Node::getNodeID(){
     return m_ID;

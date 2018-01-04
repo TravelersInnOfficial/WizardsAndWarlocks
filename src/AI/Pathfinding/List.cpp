@@ -1,85 +1,150 @@
 #include "List.h"
 
 List::List(){
-    m_list = new std::list<NodeRecord*>();
 }
 
-List::~List(){}
-
-NodeRecord* List::smallestElement(NodeRecord* n){
-    //if theres no connections in the list return the original node
-    NodeRecord* nextNode = NULL;
-    std::vector<Connection*> c = n->m_node->getOutgoingConnections();
-    std::cout<<c.size()<<std::endl;
-    float smallestCost = 99999;
-    for(int i = 0; i<c.size();i++){
-        if(c[i]->getCost() < smallestCost){
-            smallestCost = c[i]->getCost();
-            nextNode = find(c[i]->getToNode());
-            if(nextNode != NULL) std::cout<<"smallestElement - NextNode "<<nextNode->m_node->getRegionName()<<" with cost: "<<smallestCost<<std::endl;
-            else std::cout<<"smallestElement - NextNode is null"<<std::endl;
-        }
+List::~List(){
+    for(int i = 0; i<m_list.size();i++){
+        delete m_list[i];
     }
-    if(nextNode == NULL) return n;
-    return nextNode;
+    m_list.clear();
 }
 
-int List::size(){
-    return m_list->size();
+void List::add(NodeRecord* nr){
+    int pos = getNodeRecordPosition(nr->m_node);
+    if(pos != -1){
+        std::cout<<"The node was in the list, update"<<std::endl;
+        m_list[pos] = nr;
+    }
+    else{
+        std::cout<<"the node was not in the list"<<std::endl;
+        insertNode(nr);
+    }
+}
+
+void List::remove(NodeRecord* nr) {
 }
 
 bool List::contains(Node* n){
-    //std::cout<<"Does the list contains :: "<<n->getRegionName()<<std::endl;
-    NodeRecord* ret = new NodeRecord();
-    std::list<NodeRecord*>::iterator it = m_list->begin();
-    for(; it != m_list->end(); ++it){
-        ret = *it;
-        //std::cout<<ret->m_node->getRegionName()<<" ?= "<<n->getRegionName()<<std::endl;
-        if(ret->m_node == n){ return true;}
-    }
+    int pos = getNodeRecordPosition(n);
+    if(pos != -1) return true;
     return false;
 }
 
 NodeRecord* List::find(Node* n){
-    std::cout<<"finding node..."<<std::endl;
-    NodeRecord* ret = new NodeRecord();
-    std::list<NodeRecord*>::iterator it = m_list->begin();
-    for(; it != m_list->end(); ++it){
-        ret = *it;
-        if(ret->m_node == n){ std::cout<<"found node in list"<<std::endl;return ret;}
-    }
-    std::cout<<"NO MATCHES IN THE LIST"<<std::endl;
+    int pos = getNodeRecordPosition(n);
+    if(pos != -1 ) return m_list[pos];
     return NULL;
 }
 
-void List::add(NodeRecord* n){
-    if(contains(n->m_node)){
-        std::cout<<"node was already in the list, update"<<std::endl;
-        NodeRecord* nr = find(n->m_node);
-        nr = n;
-    }
-    else{
-        std::cout<<"the node was not in the list"<<std::endl;
-        m_list->push_back(n);
-    }
+NodeRecord* List::smallestElement(NodeRecord* n){
+    return getMin();
 }
 
-void List::remove(NodeRecord* n) { 
-    NodeRecord* nr = find(n->m_node); 
-    if(nr!=NULL) m_list->remove(nr);
+int List::size(){
+    return m_list.size();
+}
+
+int List::getNodeRecordPosition(Node* n){
+    for(int i = 0; i<m_list.size(); i++){
+        if(m_list[i]->m_node == n){
+            return i;
+        }
+    }
+    return -1;
 }
 
 void List::printListOfNodes(){
-    std::list<NodeRecord*>::iterator it = m_list->begin();
-    int i = 0;
-    for(; it != m_list->end(); ++it){
-        NodeRecord* nr = *it;
+    for(int i = 0; i < m_list.size(); i++){
+
         std::cout<<"---------- "<<i<<" ----------"<<std::endl;
-        std::cout<<" Node ID: "<<nr->m_node->getNodeID()<<std::endl;
-        std::cout<<" Node Region: "<<nr->m_node->getRegionName()<<std::endl;
-        if(nr->m_connection!=NULL) std::cout<<" Connection from < : "<<nr->m_connection->getFromNode()->getRegionName()<<" // To > "<< nr->m_connection->getToNode()->getRegionName()<<std::endl;
+        std::cout<<" Node ID: "<<m_list[i]->m_node->getNodeID()<<std::endl;
+        std::cout<<" Node Region: "<<m_list[i]->m_node->getRegionName()<<std::endl;
+        if(m_list[i]->m_connection!=NULL) std::cout<<" Connection from < : "<<m_list[i]->m_connection->getFromNode()->getRegionName()<<" // To > "<< m_list[i]->m_connection->getToNode()->getRegionName()<<std::endl;
         else std::cout<<" Connection is NULL"<<std::endl;
-        std::cout<<" NodeRecord CostSoFar: "<<nr->m_costSoFar<<"\n"<<std::endl;
-        i++;
+        std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_costSoFar<<"\n"<<std::endl;
+        std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_estimatedTotalCost<<"\n"<<std::endl;
     }
+}
+
+/**************************************************\ MIN HEAP FUNCTIONS \**************************************************/
+
+void List::insertNode(NodeRecord* nr){
+    //insert the new element at the end of the heap
+    m_list.push_back(nr);
+    //check if the heap property has been broken
+    int i = m_list.size()-1;
+    //while the parent node has bigger CostSoFar swap the nodes
+    while (i != 0 && m_list[parentNodeIndex(i)]->m_costSoFar > m_list[i]->m_costSoFar)
+    {
+       swapNodes(m_list[i], m_list[parentNodeIndex(i)]);
+       i = parentNodeIndex(i);
+    }
+}
+
+
+NodeRecord* List::getMin(){
+std::cout<<"*****************GETMIN()*****************"<<std::endl;
+    printListOfNodes();
+    //cojemos el primero del heap
+    NodeRecord* min = m_list[0];
+    std::cout<<"list size: "<<m_list.size()<<std::endl;
+    //if the list has more than one element
+    //if(m_list.size() != 1){
+        //lo sustituimos por el ultimo y lo eliminamos del final
+        std::cout<<"initial node before "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_costSoFar<<std::endl;
+        m_list[0] = m_list[m_list.size()-1];
+        std::cout<<"initial node now "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_costSoFar<<std::endl;
+        m_list.erase(m_list.end()-1);
+        std::cout<<"NEW list size: "<<m_list.size()<<std::endl;
+
+        //ordenamos el heap desde el primer elemento
+        heapify(0);
+        printListOfNodes();
+    //}
+std::cout<<"*****************GETMIN RETURNS "<< min->m_node->getRegionName() <<"*****************"<<std::endl;
+    return min;
+}
+
+void List::heapify(int root){
+    //get the left node
+    int l = leftNodeIndex(root);
+    //get the right node
+    int r = rightNodeIndex(root);
+    //asume that the root is the smallest initially
+    int min = root;
+    //if left index is minor than m_list size and the cost so far of the left is minor that the root, the new smallest is the left
+    if(l!= -1 && l<m_list.size() && m_list[min]->m_costSoFar > m_list[l]->m_costSoFar) min = l;
+    //if left index is minor than m_list size and the cost so far of the right is minor that the root, the new smallest is the right
+    if(r!=-1 && r<m_list.size() && m_list[min]->m_costSoFar > m_list[r]->m_costSoFar) min = r;
+
+    //if the smallest is different from the root, switch the actual root and smallest and proceed to the next level of the heap
+    if(min != root){
+        swapNodes(m_list[root], m_list[min]);
+        heapify(min);
+    }
+}
+
+void List::swapNodes(NodeRecord* nr1, NodeRecord* nr2){
+    NodeRecord aux = *nr1;
+    *nr1 = *nr2;
+    *nr2 = aux;
+}
+
+int List::parentNodeIndex(int index){
+    int pos = (index-1)/ 2;
+    if(pos >=0 && pos<m_list.size()) return pos;
+    return -1;
+}
+
+int List::leftNodeIndex(int index){
+    int pos = (2*index + 1);
+    if(pos >=0 && pos<m_list.size()) return pos;
+    return -1;
+}
+
+int List::rightNodeIndex(int index){
+    int pos = (2*index + 2);
+    if(pos >=0 && pos<m_list.size()) return pos;
+    return -1;
 }

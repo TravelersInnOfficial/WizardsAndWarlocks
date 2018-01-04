@@ -2,7 +2,8 @@
 #define GRAPH_H
 
 #include <vector>
-#include "List.h"
+#include "Node.h"
+#include "Connection.h"
 
 class Graph{
 public:
@@ -39,24 +40,8 @@ public:
      * @param Node (Node to check)
      */
     void printNodeConnections(Node*);
-
-        /**
-     * @brief Returns the shortest path from the StartNode to the EndNode using Dijkstra Algorithm
-     * 
-     * @param Graph Graph
-     * @param Node StartNode
-     * @param Node EndNode
-     * @return std::vector<Connection*> path
-     */
-    std::list<Connection*> *DijkstraPF(Node*, Node*);
     
 private:
     std::vector<Connection*> m_connections;
-
-    //Pathfinding variables
-    List* m_openList;
-    List* m_closedList;
-    NodeRecord* m_startRecord;
-
 };
 #endif

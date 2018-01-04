@@ -11,6 +11,7 @@ public:
     Node* m_node;
     Connection *m_connection;
     float m_costSoFar;
+    float m_estimatedTotalCost;
 
     NodeRecord* previous;
 };
