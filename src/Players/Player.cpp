@@ -177,8 +177,6 @@ void Player::GetNetInput(){
 
 	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
 	readyToStart = isReady;
-	//isReady = false;
-	//networkObject->SetBoolVar(PLAYER_READY, isReady, false, false);
 
 }
 

@@ -151,8 +151,8 @@ void NetGame::UpdateDelta(){
 	timeStart = currentTime;
 }
 
-void NetGame::SetPlayerOne(NetworkObject* nObject){
-	if(!isServer && playerOne == NULL) {
+void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
+	if(!isServer && playerOne == NULL && isPlayerOne) {
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);

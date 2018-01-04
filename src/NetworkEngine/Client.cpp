@@ -5,6 +5,7 @@ Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
 	peer->Startup(1, &descriptor, 1);
 	peer->Connect(serverIp.c_str(), serverPort, 0, 0);
+	playerOneId = -1;
 }
 
 Client::~Client(){
@@ -85,6 +86,19 @@ void Client::RecievePackages(){
 				break;
 			}
 
+			// NOS GUARDA LA ID DEL NETWORK OBJECT PLAYER ONE
+			case ID_CREATE_PLAYER_ONE:{
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				
+				// ID del NetworkObject PlayerOne, no ID del Jugador
+				int id;
+				bitstream.Read(id);
+				playerOneId = id;
+
+				break;
+			}
+
 			// CUANDO UN JUGADOR SE DESCONECTA
 			case ID_PLAYER_DISCONNECT: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
@@ -115,7 +129,6 @@ void Client::RecievePackages(){
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(winnerAlliance);
 				NetGame::GetInstance()->MatchEnded(winnerAlliance);
-
 				break;
 			}
 		}
@@ -128,15 +141,8 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 	bitstream->Read(messageSubId);
 
 	switch (messageSubId) {
+		case ID_EXISTING_OBJECT:
 		case ID_CREATE: {
-			int k = -1;
-			ObjectType o = ID_NO_OBJ;
-			bitstream->Read(k);
-			bitstream->Read(o);
-			CreateNetworkObject(k, o);
-			break;
-		}
-		case ID_EXISTING_OBJECT: {
 			int k = -1;
 			ObjectType o = ID_NO_OBJ;
 			bitstream->Read(k);
@@ -260,4 +266,13 @@ void Client::EndMatch(Alliance winnerAlliance){
 	endMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
 	endMatch.Write(winnerAlliance);
 	SendPackage(&endMatch, HIGH_PRIORITY, RELIABLE_ORDERED);
+}
+
+int Client::GetPlayerOneId(){
+	std::cout<<"##############################################"<<std::endl;
+	std::cout<<"##############################################"<<std::endl;
+	std::cout<<"playerOneId"<<std::endl;
+	std::cout<<"##############################################"<<std::endl;
+	std::cout<<"##############################################"<<std::endl;
+	return (playerOneId);
 }

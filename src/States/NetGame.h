@@ -40,7 +40,7 @@ public:
 	float GetDeltaTime();
 	void UpdateDelta();
 
-	void SetPlayerOne(NetworkObject* nObject);
+	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false);
 
 private:
 
