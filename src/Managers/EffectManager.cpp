@@ -28,7 +28,7 @@ EffectManager* EffectManager::GetInstance(){
 	return instance;
 }
 
-void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT){
+void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT_CODE){
 
 	std::map<Player*, vector<Effect*>* >::iterator it;
 	it = effects.find(p);
@@ -36,7 +36,16 @@ void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT){
 		effects[p] = new vector<Effect*>();
 	}
 	vector<Effect*>* currentV = effects.at(p);
-	Effect* effect = CreateEffect(EFFECT);
+	int size = currentV->size();
+	for(int i=0; i<size; i++){
+		Effect* ef = currentV->at(i);
+		if(ef->getCode() == EFFECT_CODE){
+			ef->ResetTime();
+			return;
+		}
+	}
+
+	Effect* effect = CreateEffect(EFFECT_CODE);
 	effect->ApplyEffect(p);
 	currentV->push_back(effect);	
 }
