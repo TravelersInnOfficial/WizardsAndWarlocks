@@ -2,6 +2,7 @@
 #include "Objects/Block.h"
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
+#include "Managers/TrapManager.h"
 #include <map>
 #include <json.hpp>
 #include <fstream>
@@ -17,6 +18,7 @@ LevelLoader::LevelLoader(){
 bool LevelLoader::LoadLevel(std::string jsonPath){
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
+	TrapManager::GetInstance()->ClearTraps();
 
 	std::map<int, Door*> doors;
 	

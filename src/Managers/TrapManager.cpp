@@ -17,14 +17,18 @@ void TrapManager::Update(float deltaTime){
 TrapManager::TrapManager(){}
 
 TrapManager::~TrapManager(){
+	ClearTraps();
+	playerTrap.clear();
+	playerUsings.clear();
+}
+
+void TrapManager::ClearTraps(){
 	int size = traps.size();
 	for(int i=0; i<size; i++){
 		Trap* t = traps[i];
 		delete t;
 	}
 	traps.clear();
-	playerTrap.clear();
-	playerUsings.clear();
 }
 
 Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
