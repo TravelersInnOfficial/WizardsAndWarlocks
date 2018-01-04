@@ -63,7 +63,6 @@ void BulletEngine::CreateWorld(){
 void BulletEngine::UpdateWorld(){
 
 	m_dynamicsWorld->stepSimulation(1 / 60.f, 7);
-	CheckColisions();
 }
 
 void BulletEngine::EraseWorld(){
@@ -98,33 +97,6 @@ void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
 void BulletEngine::RemoveGhostObject(btGhostObject* ghostBody){
 	 m_dynamicsWorld->removeCollisionObject(ghostBody);
 
-}
-
-void BulletEngine::CheckColisions(){
-	int numManifolds = m_dispatcher->getNumManifolds();
-	for(int i=0; i<numManifolds; i++){
-		btPersistentManifold* contactManifold = m_dispatcher->getManifoldByIndexInternal(i);
-		const btCollisionObject* obA = contactManifold->getBody0();
-		const btCollisionObject* obB = contactManifold->getBody1();
-		
-		void* objetoA = obA->getUserPointer();
-		void* objetoB = obB->getUserPointer();
-
-		int numContacts = contactManifold->getNumContacts();
-        for (int j = 0; j < numContacts; j++) {
-            btManifoldPoint& pt = contactManifold->getContactPoint(j);
-            if (pt.getDistance() < 0.f) {
-               	if(objetoA != 0 && objetoB != 0){
-					Entidad* a = (Entidad*)(obA->getUserPointer());
-					Entidad* b = (Entidad*)(obB->getUserPointer());
-
-					a->Contact(objetoB, b->GetClase());
-					b->Contact(objetoA, a->GetClase());
-					break;
-				}
-            }
-        }
-	}
 }
 
 void BulletEngine::DebugDrawWorld(){
@@ -163,29 +135,30 @@ void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeSt
 }
 
 void BulletEngine::motorProcessCallback(btScalar timeStep){
-	// El check Colision tambien detecta ghostobjects de forma por default
-	// Se duplicaban las colisiones de las areas de danyo
-	// Al comentar el codigo todo sigue funcionando correctamente
+	int numManifolds = m_dispatcher->getNumManifolds();
+	for(int i=0; i<numManifolds; i++){
+		btPersistentManifold* contactManifold = m_dispatcher->getManifoldByIndexInternal(i);
+		const btCollisionObject* obA = contactManifold->getBody0();
+		const btCollisionObject* obB = contactManifold->getBody1();
+		
+		void* objetoA = obA->getUserPointer();
+		void* objetoB = obB->getUserPointer();
 
-	/*btCollisionObjectArray WorldObjects = m_dynamicsWorld->getCollisionObjectArray();
-	for (int i = 0; i < WorldObjects.size(); i++) {
-		btGhostObject *ghostObject = btGhostObject::upcast(WorldObjects[i]);
-               if (!ghostObject) {
-                   continue;
-               }
-		//TYPE 2 = RIGIDBODY; TYPE 4 = GHOSTBODY
-		//std::cout<<"Object: "<< i <<", Type: "<< WorldObjects[i]->getInternalType()<< " == "<< WorldObjects[i]->CO_GHOST_OBJECT <<" (Ghost?)"<<std::endl;
+		int numContacts = contactManifold->getNumContacts();
+        for (int j = 0; j < numContacts; j++) {
+            btManifoldPoint& pt = contactManifold->getContactPoint(j);
+            if (pt.getDistance() < 0.f) {
+               	if(objetoA != 0 && objetoB != 0){
+					Entidad* a = (Entidad*)(obA->getUserPointer());
+					Entidad* b = (Entidad*)(obB->getUserPointer());
 
-		for(int i = 0; i < ghostObject->getNumOverlappingObjects(); i++){
-			btRigidBody *pRigidBody = dynamic_cast<btRigidBody *>(ghostObject->getOverlappingObject(i));
-
-			Entidad* ghost = (Entidad*)(ghostObject->getUserPointer());
-			Entidad* OvObj = (Entidad*)(pRigidBody->getUserPointer());
-
-			ghost->Contact(pRigidBody->getUserPointer(), OvObj->GetClase());
-
-		}	
-	}*/
+					a->Contact(objetoB, b->GetClase());
+					b->Contact(objetoA, a->GetClase());
+					break;
+				}
+            }
+        }
+	}
 }
 
 BulletEngine::~BulletEngine(){}
