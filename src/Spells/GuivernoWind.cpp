@@ -1,7 +1,7 @@
 #include "GuivernoWind.h"
 #include "./../Managers/ObjectManager.h"
 
-GuivernoWind::GuivernoWind(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD, optHP, optMP){
 	area = NULL;
 }

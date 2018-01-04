@@ -9,7 +9,7 @@
 
 class DesperationWall: public Hechizo{
 public:
-	DesperationWall(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	DesperationWall(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 private:
 	

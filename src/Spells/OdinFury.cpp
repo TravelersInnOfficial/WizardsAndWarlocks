@@ -1,7 +1,7 @@
 #include "OdinFury.h"
 #include "./../Managers/BulletManager.h"
 
-OdinFury::OdinFury(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+OdinFury::OdinFury(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(
 	costPM, 
 	tCast, 

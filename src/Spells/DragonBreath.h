@@ -7,7 +7,7 @@
 
 class DragonBreath: public Hechizo{
 public:
-	DragonBreath(int costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	DragonBreath(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 private:
 	

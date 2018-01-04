@@ -1,7 +1,7 @@
 #include "DesperationWall.h"
 #include "./../Managers/ObjectManager.h"
 
-DesperationWall::DesperationWall(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
+DesperationWall::DesperationWall(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_WALL, optHP, optMP){
 	
 }

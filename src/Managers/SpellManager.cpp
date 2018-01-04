@@ -143,7 +143,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new DesperationWall(-5, 0.0f, 1.0f, 100, 50);
 			break;
 		case SPELL_BLIZZARD:		// Hechizo continuo hielo
-			h = new GuivernoWind(-1, 0.0f, 0.0f, 100, 75);
+			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
 			break;
 		default:
 			h = NULL;
