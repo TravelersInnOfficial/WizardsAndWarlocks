@@ -47,6 +47,7 @@ void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
 	m_MP = 100;
+	m_DamageMult = 1;	
 	m_dead = false;
 	EffectManager::GetInstance()->CleanEffects(this);
 }

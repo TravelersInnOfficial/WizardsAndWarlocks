@@ -107,7 +107,10 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new Effect(5.0f, WEAK_BASIC);
 			break;
 		case WEAK_BURNED:
-			e = new Burned(6.0f, 5);
+			e = new Burned(6.0f, 3);
+			break;
+		case WEAK_SOFTBURNED:
+			e = new Burned(3.0f, 3);
 			break;
 		case WEAK_FROZEN:
 			e = new Frozen(6.0f, 10.0f);
@@ -119,7 +122,10 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new SlowedDown(4.0f, 10.0f);
 			break;
 		case WEAK_POISONED:
-			e = new Poisoned(5.0f, 4.0f);
+			e = new Poisoned(5.0f, 3);
+			break;
+		case WEAK_SOFTPOISONED:
+			e = new Poisoned(3.0f, 3);
 			break;
 		case WEAK_SILENCED:
 			e = new Silenced(5.0f);

@@ -6,7 +6,7 @@
 class ThunderProjectile : public Projectile{
 
 public:
-    ThunderProjectile(vector3df pos, vector3df dir, int emi, int damageMult = 1);
+    ThunderProjectile(vector3df pos, vector3df dir, int emi, float damageMult = 1);
 
 private:
     void ContactAction(Player* p);
