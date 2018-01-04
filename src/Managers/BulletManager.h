@@ -20,8 +20,8 @@ public:
 	void DeleteAllProyectiles();
 private:
 
-	vector<Projectile*> proyectiles;
-	vector<Projectile*> proyectilesToDelete;
+	std::vector<Projectile*> proyectiles;
+	std::vector<Projectile*> proyectilesToDelete;
 
 	BulletManager();
 	static BulletManager* instance;

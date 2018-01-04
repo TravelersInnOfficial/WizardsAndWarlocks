@@ -161,6 +161,24 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 
 // ===================================================================================================== //
 //
+// SENSE FUNCTIONS
+//
+// ===================================================================================================== //
+
+void ObjectManager::SendAllSignal(){
+	SendPotionSignal();
+}
+
+void ObjectManager::SendPotionSignal(){
+	int size = potions.size();
+	for(int i=0; i<size; i++){
+		Potion* po = potions[i];
+		po->SendSignal();
+	}
+}
+
+// ===================================================================================================== //
+//
 // GETTERS
 //
 // ===================================================================================================== //

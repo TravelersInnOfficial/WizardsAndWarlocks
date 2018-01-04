@@ -3,6 +3,7 @@
 #include "./../../GraphicEngine/GraphicEngine.h"
 // Managers
 #include "./../../Managers/SpellManager.h"
+#include "./../../Managers/ObjectManager.h"
 #include "./../../Managers/PlayerManager.h"
 // Steerings
 #include "./../SteeringBehaviour/Seek.h"
@@ -21,6 +22,7 @@
 #include <KeyStates.h>
 
 bool DEBUG = false;
+
 
 // ================================================================================================= //
 //
@@ -289,10 +291,12 @@ CheckPlayerHearing::CheckPlayerHearing(){}
 bool CheckPlayerHearing::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckPlayerHearing"<<std::endl;
 
-	int number = bb->GetNumberSound(AI_PLAYER);
+	AIPlayer* character = bb->GetPlayer();
+	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+	int number = bb->GetNumberSound(enemy);
 
 	if(number>0){
-		bb->SetTargetSound(AI_PLAYER, AI_TARGET);
+		bb->SetTargetSound(enemy, AI_TARGET);
 		return true;
 	}
 	return false;
@@ -309,10 +313,12 @@ CheckPlayerSight::CheckPlayerSight(){}
 bool CheckPlayerSight::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckPlayerSight"<<std::endl;
 
-	int number = bb->GetNumberSight(AI_PLAYER);
+	AIPlayer* character = bb->GetPlayer();
+	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+	int number = bb->GetNumberSight(enemy);
 	
 	if(number>0){
-		bb->SetTargetSight(AI_PLAYER, AI_TARGET);
+		bb->SetTargetSight(enemy, AI_TARGET);
 		return true;
 	}
 	return false;

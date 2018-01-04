@@ -6,7 +6,6 @@
 AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
 	behaviour->SetPlayer(this);
-	behaviour->AnyadirInformacion(AI_SPELL_STATUS, UP);
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());

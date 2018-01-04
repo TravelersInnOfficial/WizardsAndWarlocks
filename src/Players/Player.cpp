@@ -371,9 +371,9 @@ void Player::ResetSpell(){
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	sense->AddSignal(id, false, AI_PLAYER, 5.0f, GetKinematic(), AI_SIGHT);
+	sense->AddSignal(id, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
 	if(moving){
-		sense->AddSignal(id, false, AI_PLAYER, 5.0f, GetKinematic(), AI_HEARING);
+		sense->AddSignal(id, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
 	}
 }
 

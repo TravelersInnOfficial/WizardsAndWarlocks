@@ -3,9 +3,10 @@
 
 enum Alliance{
 	ERR_ALLIANCE			= -1,
-	NO_ALLIANCE				=  0,  		// Sin Alianza (Situacion inicial)
-	ALLIANCE_WARLOCK		=  1,		// Brujos
-	ALLIANCE_WIZARD			=  2		// Magos
+	// Igualacion hecha a mano para pasar de AI_code a la alianza
+	ALLIANCE_WARLOCK		=  0,		// Brujos
+	ALLIANCE_WIZARD			=  1,		// Magos
+	NO_ALLIANCE				=  2  		// Sin Alianza (Situacion inicial)
 };
 
 #endif

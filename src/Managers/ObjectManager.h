@@ -37,7 +37,11 @@ public:
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
 
-	//Getters
+	// SenseFunctions
+	void SendAllSignal();
+	void SendPotionSignal();
+
+	// Getters
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 	vector4df GetReadyZone();
 

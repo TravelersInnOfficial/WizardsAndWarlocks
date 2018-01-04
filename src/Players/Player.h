@@ -130,7 +130,7 @@ class Player: public Entidad{
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
-		BT_Body* 		bt_body;			// Cuerpo físico del jugador
+		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
 

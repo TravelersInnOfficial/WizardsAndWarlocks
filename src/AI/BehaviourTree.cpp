@@ -102,7 +102,6 @@ void BehaviourTree::SetRootMove(Task* t){
 }
 
 void BehaviourTree::ResetInformacion(){
-    informacion->SetInt(AI_SPELL_STATUS, UP);
     informacion->CleanPuntero(AI_TARGET);
     informacion->CleanSense();
 }
