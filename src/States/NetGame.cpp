@@ -145,14 +145,16 @@ float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
 
 float NetGame::GetDeltaTime(){ return deltaTime; }
 
+bool NetGame::GetLobbyState(){ return lobbyState; }
+
 void NetGame::UpdateDelta(){
 	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
 	deltaTime = currentTime - timeStart;
 	timeStart = currentTime;
 }
 
-void NetGame::SetPlayerOne(NetworkObject* nObject){
-	if(!isServer && playerOne == NULL) {
+void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
+	if(!isServer && playerOne == NULL && isPlayerOne) {
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
 		spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);

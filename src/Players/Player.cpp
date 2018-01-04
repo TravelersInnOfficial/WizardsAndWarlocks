@@ -175,10 +175,25 @@ void Player::GetNetInput(){
 		networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
 	}
 
+	float life = -9999;
+	life = networkObject->GetFloatVar(PLAYER_LIFE);
+
+	if(life != -999 && life != -1){
+		m_HP = life;
+		life = -9999;
+		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
+	}
+	
+	float mana = -9999;
+	mana = networkObject->GetFloatVar(PLAYER_MANA);
+	if(mana != -9999 && mana != -1){
+		m_MP = mana;
+		mana = -9999;
+		networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
+	}
+
 	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
 	readyToStart = isReady;
-	//isReady = false;
-	//networkObject->SetBoolVar(PLAYER_READY, isReady, false, false);
 
 }
 
@@ -386,6 +401,7 @@ void Player::Die(){
 	if(matchStarted){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
+		CheckIfReady();
 	}
 
 	Respawn();
@@ -406,15 +422,20 @@ void Player::DrawOverlays(float deltaTime){
 }
 
 void Player::CheckIfReady(){
-	vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
 	
-	bool ready = true;
-	if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
-		ready = false;
+	if(hasCharacter){
+		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+
+		bool ready = true;
+		if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
+			ready = false;
+		}
+
+		readyToStart = ready;
 	}
+	else readyToStart = false;
 	
-	readyToStart = ready;
-	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, ready, true, false);
+	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
 }
 
 void Player::CatchObject(Potion* p){
@@ -479,6 +500,12 @@ void Player::UpdatePosShape(){
 }
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
+
+void Player::RefreshServer(){
+	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
+	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_HP, true, false);
+	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_MP, true, false);
+}
 
 vector3df Player::GetAngularVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);

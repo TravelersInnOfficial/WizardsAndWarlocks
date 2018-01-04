@@ -97,7 +97,7 @@ bool PlayerManager::CheckIfReady(){
 		if(!p->GetReadyStatus()) allReady = false;
 	}
 
-	if(size == 0) allReady = false;
+	if(size < 2) allReady = false;
 	return allReady;
 }
 
@@ -169,5 +169,13 @@ void PlayerManager::ReturnAllToLobby(){
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->ReturnToLobby();
+	}
+}
+
+void PlayerManager::RefreshServerAll(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->RefreshServer();
 	}
 }

@@ -57,6 +57,7 @@ public:
 	void Update(float deltaTime);
 
 private:
+
 	// Updates
 	void UpdateGrail(float deltaTime);
 	void UpdateDoors();

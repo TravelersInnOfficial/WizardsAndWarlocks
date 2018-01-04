@@ -35,8 +35,10 @@ void NetworkManager::RetrieveObjects(){
 }
 
 void NetworkManager::SpawnNewObjects(){
-	  std::map<int, NetworkObject*>::reverse_iterator row;
-	  for (row = newNetworkObjects.rbegin(); row != newNetworkObjects.rend(); row++){
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+
+	std::map<int, NetworkObject*>::reverse_iterator row;
+	for (row = newNetworkObjects.rbegin(); row != newNetworkObjects.rend(); row++){
 		switch(row->second->GetObjType()){
 			case ID_NO_OBJ:{
 				continue;
@@ -44,7 +46,14 @@ void NetworkManager::SpawnNewObjects(){
 			}
 			case ID_PLAYER_O:{
 				NetGame* gameInstance = NetGame::GetInstance();
-				gameInstance->SetPlayerOne(row->second);
+				bool playerOne = false;
+
+				// Comprobar si es PLAYER ONE con la ID del NETWORK OBJECT y mi ID del OBJETO PLAYER ONE
+				if(n_engine->IsClientInit() && row->second->GetObjId() == n_engine->GetClient()->GetPlayerOneId()){
+					playerOne = true;
+				}
+
+				gameInstance->CreatePlayer(row->second, playerOne);
 				break;
 			}
 			case ID_POTION_O:{
