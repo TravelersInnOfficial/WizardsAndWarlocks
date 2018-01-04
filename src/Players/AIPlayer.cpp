@@ -121,16 +121,16 @@ void AIPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 	// Hechizos
 	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
-		if(SpellManager::GetInstance()->StartHechizo(currentSpell,this)){
+		if(StartSpell()){
 			castingSpell = true;
 		} 
 	}
 	if(controller->IsKeyReleased(ACTION_SHOOT)){ 
-		SpellManager::GetInstance()->ResetHechizo(currentSpell,this); 
+		ResetSpell();
 		castingSpell = false;
 	}
 	if(controller->IsKeyDown(ACTION_SHOOT)){ 
-		if(SpellManager::GetInstance()->LanzarHechizo(currentSpell,this)){
+		if(ShootSpell()){
 			shootSpell = true;
 		} 
 	}

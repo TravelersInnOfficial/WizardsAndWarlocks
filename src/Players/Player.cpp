@@ -352,6 +352,22 @@ void Player::Raycast(){
 	}
 }
 
+bool Player::StartSpell(){
+	EffectManager* effectman = EffectManager::GetInstance();
+	if(effectman->CheckEffect(this, WEAK_SILENCED) && currentSpell!=0){		// if is not a basic spell or if silenced then not shoot
+		return false;
+	}
+	return SpellManager::GetInstance()->StartHechizo(currentSpell,this);
+}
+
+bool Player::ShootSpell(){
+	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
+}
+
+void Player::ResetSpell(){
+	SpellManager::GetInstance()->ResetHechizo(currentSpell,this);
+}
+
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod

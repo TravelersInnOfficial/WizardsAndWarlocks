@@ -49,6 +49,11 @@ class Player: public Entidad{
 		void DrawOverlays(float deltaTime);
 		void CheckIfReady();
 
+		// Spells
+		bool StartSpell();
+		bool ShootSpell();
+		void ResetSpell();
+
 		// Sensorial Functions
 		void SendSignal();
 

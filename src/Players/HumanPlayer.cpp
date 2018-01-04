@@ -181,9 +181,9 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 		
 		// Hechizos
-		if(controller->IsKeyPressed(ACTION_SHOOT)){ SpellManager::GetInstance()->StartHechizo(currentSpell,this); }
-		if(controller->IsKeyReleased(ACTION_SHOOT)){ SpellManager::GetInstance()->ResetHechizo(currentSpell,this); }
-		if(controller->IsKeyDown(ACTION_SHOOT)){ SpellManager::GetInstance()->LanzarHechizo(currentSpell,this); }
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ StartSpell(); }
+		if(controller->IsKeyReleased(ACTION_SHOOT)){ ResetSpell(); }
+		if(controller->IsKeyDown(ACTION_SHOOT)){ ShootSpell(); }
 
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
