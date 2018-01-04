@@ -99,6 +99,14 @@ void Server::RecievePackages(){
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
 				
+				// Si la partida ha empezado negamos la conexion
+				if(!NetGame::GetInstance()->GetLobbyState()){
+					RakNet::BitStream bitstream;
+					bitstream.Write((RakNet::MessageID)ID_DISCONNECTION_NOTIFICATION);
+					SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					continue;
+				}
+
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
 

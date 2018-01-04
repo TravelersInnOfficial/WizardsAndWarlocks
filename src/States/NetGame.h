@@ -41,6 +41,7 @@ public:
 	void UpdateDelta();
 
 	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false);
+	bool GetLobbyState();
 
 private:
 

@@ -145,6 +145,8 @@ float NetGame::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
 
 float NetGame::GetDeltaTime(){ return deltaTime; }
 
+bool NetGame::GetLobbyState(){ return lobbyState; }
+
 void NetGame::UpdateDelta(){
 	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
 	deltaTime = currentTime - timeStart;

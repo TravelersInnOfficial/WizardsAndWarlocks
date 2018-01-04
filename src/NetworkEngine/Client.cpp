@@ -71,6 +71,11 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 void Client::RecievePackages(){
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
+		
+		// std::cout<<"##############################################"<<std::endl;
+		// std::cout<<packet->data[0]<<std::endl;
+		// std::cout<<"##############################################"<<std::endl;
+
 		switch (packet->data[0]) {
 
 			// CUANDO UN JUGADOR SE CONECTA
@@ -110,7 +115,19 @@ void Client::RecievePackages(){
 			}
 
 			// CUANDO SE PIERDE LA CONEXION CON EL SERVER
-			case ID_CONNECTION_LOST: {
+			case ID_CONNECTION_ATTEMPT_FAILED:
+			case ID_REMOTE_SYSTEM_REQUIRES_PUBLIC_KEY:
+			case ID_OUR_SYSTEM_REQUIRES_SECURITY:
+			case ID_PUBLIC_KEY_MISMATCH:
+			case ID_ALREADY_CONNECTED:
+			case ID_IP_RECENTLY_CONNECTED:
+			case ID_NO_FREE_INCOMING_CONNECTIONS:
+			case ID_CONNECTION_BANNED:
+			case ID_INVALID_PASSWORD:
+			case ID_INCOMPATIBLE_PROTOCOL_VERSION:
+			case ID_CONNECTION_LOST:
+			case ID_DISCONNECTION_NOTIFICATION: {
+				std::cout<<"Conexion Lost or Denied."<<std::endl;
 				exit(0);
 				break;
 			}
