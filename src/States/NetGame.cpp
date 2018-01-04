@@ -19,7 +19,7 @@ NetGame::NetGame(){
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
-	s_engine 		= SoundSystem::getInstance();
+	// s_engine 		= SoundSystem::getInstance();
 	n_engine 		= NetworkEngine::GetInstance();
 
 	// Level
@@ -33,8 +33,8 @@ NetGame::NetGame(){
 	else if(n_engine->IsClientInit()) isServer = false;
 
 	// Sound Engine
-	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
+	// s_engine->createSystem("./../assets/banks/");
+	// footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = g_engine->getTime() * 0.001;
@@ -85,7 +85,7 @@ void NetGame::Update(){
 
 	n_engine->Update();
 	f_engine->UpdateWorld();
-	s_engine->update();
+	// s_engine->update();
 
 	networkManager->Update();
 	bulletManager->Update();

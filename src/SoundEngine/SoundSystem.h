@@ -45,13 +45,23 @@ public:
     /******************************************************
      *  Modifies the position and orientation of the listener point
      ******************************************************/
+    void Update(vector3df headPos, vector3df headRot);
+
+    /******************************************************
+     *  Modifies the position and rotation of the listening point
+     ******************************************************/
     void setListenerPosRot(vector3df pos, vector3df rot);
+
+    /******************************************************
+     *  Return the position of the listener
+     ******************************************************/
+    vector3df getListenerPosition();
     
     /******************************************************
      *  Updates the audio engine
      *  \param paused tells if has to pause the engine or not
      ******************************************************/
-    void update();
+    void Update();
 
     /******************************************************
      *  @brief Sets the property for the var
@@ -59,8 +69,11 @@ public:
      *  @param vec that has to be assigned
      ******************************************************/
     void setPos(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    
     void setVel(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    
     void setForward(FMOD_3D_ATTRIBUTES* var,vector3df vec);
+    
     void setUp(FMOD_3D_ATTRIBUTES* var,vector3df vec);    
 
     /******************************************************
@@ -79,7 +92,6 @@ public:
      *  Creates all the event descriptions and instances needed for the sound events
      ******************************************************/
     void createEventDescriptionsNEvents();
-
 
     /******************************************************
      *  @brief Creates the a FMOD eventDescription

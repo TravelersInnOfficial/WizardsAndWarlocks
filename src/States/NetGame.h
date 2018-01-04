@@ -67,7 +67,7 @@ private:
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
-	SoundSystem*		s_engine;
+	// SoundSystem*		s_engine;
 	NetworkEngine*		n_engine;
 
 	NetGame();

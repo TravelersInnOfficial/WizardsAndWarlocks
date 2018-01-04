@@ -34,14 +34,13 @@ Game::Game(){
 	spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
 	spellManager->AddHechizo(2, playerOne, SPELL_WALL);
 	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
-
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
-	AL = playerManager->AddAIPlayer();
-	spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
-	spellManager->AddHechizo(1, AL, SPELL_FIRE);
-	spellManager->AddHechizo(2, AL, SPELL_WALL);
-	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
+	//	AL = playerManager->AddAIPlayer();
+	//	spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
+	//	spellManager->AddHechizo(1, AL, SPELL_FIRE);
+	//	spellManager->AddHechizo(2, AL, SPELL_WALL);
+	//	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
 }
 
 Game::~Game(){
@@ -61,14 +60,6 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
-
-	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-		s_engine->checkAndPlayEvent("event:/Character/Hard/Footsteps", playerOne->GetPos(), playerOne->GetRot());
-	}
-	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
-		s_engine->getEvent("event:/Character/Hard/Footsteps")->stop();
-	}
-
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 1.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 0.0f);
 
@@ -84,7 +75,10 @@ void Game::Update(){
 	UpdateDelta();
 
 	f_engine->UpdateWorld();
-	s_engine->update();
+	
+	if(g_engine->getActiveCamera() != NULL){
+		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
+	}
 
 	bulletManager->Update();
 	spellManager->UpdateCooldown(deltaTime);
@@ -126,7 +120,7 @@ void Game::Draw(){
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
-	AL->Debug();
+	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 

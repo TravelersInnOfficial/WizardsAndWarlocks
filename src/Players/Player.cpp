@@ -217,8 +217,15 @@ void Player::Update(){
 
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos 
-		if(moving) moving = false; 
-		else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+		if(moving){
+			// SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
+			moving = false; 
+		}
+		else{
+			SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
+			if(se != NULL) se->stop();
+			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+		}
 
 		// Comprobamos los Input del personaje
 		CheckInput();
@@ -316,7 +323,7 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	if (HP < 0) {
-		 SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetPos(), GetRot()); //PLay the sound event
+		 SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetHeadPos(), GetRot()); //Play the sound event
 		 bloodOverlayTime = 1;
 	} 
 
@@ -395,7 +402,7 @@ void Player::SendSignal(){
 
 void Player::Die(){
 
-	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Die", GetPos(), GetRot()); //Play the sound event
+	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Die", GetHeadPos(), GetRot()); //Play the sound event
 
 	DropObject();
 
@@ -463,7 +470,7 @@ void Player::DropObject(){
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Drink", GetPos(), GetRot());
+		SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Drink", GetHeadPos(), GetRot());
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
