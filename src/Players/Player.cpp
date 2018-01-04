@@ -177,8 +177,8 @@ void Player::GetNetInput(){
 
 	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
 	readyToStart = isReady;
-	isReady = false;
-	networkObject->SetBoolVar(PLAYER_READY, isReady, false, false);
+	//isReady = false;
+	//networkObject->SetBoolVar(PLAYER_READY, isReady, false, false);
 
 }
 
@@ -407,11 +407,13 @@ void Player::DrawOverlays(float deltaTime){
 
 void Player::CheckIfReady(){
 	vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+	
 	bool ready = true;
-
-	if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2) ready = false;
+	if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
+		ready = false;
+	}
+	
 	readyToStart = ready;
-
 	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, ready, true, false);
 }
 
