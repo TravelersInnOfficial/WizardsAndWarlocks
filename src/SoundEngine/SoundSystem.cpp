@@ -191,14 +191,15 @@ void SoundSystem::setVolume(float vol) {
 ******************************************************/
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 
-	// Transformamos la rotacion
-	rot = rot * M_PI/180;
-	setPos(listener, pos);
+	rot = rot * M_PI/180;		// Transformamos la rotacion
+	setPos(listener, pos);		// Ponemos la Posicion
 
+	// Calculamos el FORWARD
 	vector3df frwd = vector3df (sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
-	setForward(listener, frwd);
+	setForward(listener, frwd);	// Ponemos el FORWARD
 
-	// ########### CALCULATE UP VECTOR FROM FORWARD -- (FORWARD X [0,1,0]) X FORWARD -- RIGHT VECTOR X FORWARD VECTOR
+	// ########### CALCULATE UP VECTOR FROM FORWARD
+	// RIGHT VECTOR X FORWARD VECTOR --> (FORWARD X ABSOLUTE UP) X FORWARD --> (FORWARD X [0,1,0]) X FORWARD
 	vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
 	vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
 	A = aux; B = frwd;
@@ -206,11 +207,11 @@ void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 	setUp(listener, up);
 	// ###############################
 
-	std::cout<<"FORWARD: "<<frwd<<std::endl;
-	std::cout<<"UP: "<<up<<std::endl;
-
+	// Ponemos la VELOCIDAD
 	setVel(listener, vector3df(0.0f,0.0f,0.0f));
 	
+	//std::cout<<"FORWARD: "<<frwd<<std::endl;
+	//std::cout<<"UP: "<<up<<std::endl;
 	ERRCHECK(system->setListenerAttributes(0, listener));
 }
 
