@@ -15,7 +15,8 @@
 #include "Decorador.h"
 // Todas las tareas existentes
 #include "./Tasks/AllTasks.h"
-
+// Player
+class AIPlayer;
 
 class BehaviourTree{
 public:
@@ -33,6 +34,8 @@ public:
     Blackboard* GetBlackboard();
     void AnyadirInformacion(AI_code name, void* value);
     void AnyadirInformacion(AI_code name, int value);
+    void SetPlayer(AIPlayer* p);
+
 private:
 	void CreateAttack();
 	void CreateMovement();

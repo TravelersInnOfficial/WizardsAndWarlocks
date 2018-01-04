@@ -117,3 +117,7 @@ void BehaviourTree::AnyadirInformacion(AI_code name, int value){
 Blackboard* BehaviourTree::GetBlackboard(){
 	return informacion;
 }
+
+void BehaviourTree::SetPlayer(AIPlayer* p){
+    informacion->SetPlayer(p);
+}

@@ -36,8 +36,8 @@ Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri
 	return s;
 }
 
-void RegionalSenseManager::AddSignal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod){
-	Signal* s = new Signal(id, name, str, kin, mod);
+void RegionalSenseManager::AddSignal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
+	Signal* s = new Signal(id, temp, name, str, kin, mod);
 	AddSignal(s);
 }
 

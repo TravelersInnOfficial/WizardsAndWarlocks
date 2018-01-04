@@ -8,6 +8,8 @@
 #include <kinematicTypes.h>
 #include <vector>
 
+class AIPlayer;     // No se van a hacer uso de sus funcionalidad, por eso se puede anyadir de esta forma
+
 struct Sense_struct{
     int id;
 	AI_code code;
@@ -23,6 +25,9 @@ class Blackboard{
 public:
     Blackboard();
     ~Blackboard();
+
+    void SetPlayer(AIPlayer* p);
+    AIPlayer* GetPlayer();
     //Information
     void*   GetPuntero(AI_code name);
  	int 	GetInt(AI_code name); 
@@ -43,15 +48,15 @@ public:
     void SaveParent(Blackboard* parent);
 private:
 
-    Blackboard* 			blackboardParent;
-    
-    std::map< AI_code, void* > 	dataPuntero;
-    std::map< AI_code, int > 	dataInt;
+    AIPlayer*                   currentPlayer;          // Jugador al que le pertenece el blackboard
 
-    //Escucha
-    std::vector<Sense_struct*> soundSense;
-    //Vista
-    std::vector<Sense_struct*> sightSense;
+    Blackboard* 			     blackboardParent;      // El blackboard padre del que pillar la informacion que pueda faltar
+    
+    std::map< AI_code, void* > 	dataPuntero;            // Vector de punteros del blackboard
+    std::map< AI_code, int > 	dataInt;                // Vector de ints del blackboad
+
+    std::vector<Sense_struct*>  soundSense;             // Vector con todas las cosas que haya OIDO
+    std::vector<Sense_struct*>  sightSense;             // Vector con todas las cosas que haya VISTO
 
 
 };

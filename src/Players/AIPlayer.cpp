@@ -5,7 +5,7 @@
 
 AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
-	behaviour->AnyadirInformacion(AI_CHARACTER, this);
+	behaviour->SetPlayer(this);
 	behaviour->AnyadirInformacion(AI_SPELL_STATUS, UP);
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();

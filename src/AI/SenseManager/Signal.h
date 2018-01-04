@@ -10,7 +10,7 @@ class Modality;
 class Signal{
 public:
 	Signal(Signal* sig);
-	Signal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod);
+	Signal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod);
 	~Signal();
 	Kinematic GetKinematic();
 	Modality* GetModality();
@@ -18,12 +18,14 @@ public:
 	AI_code GetCode();
 	int	GetId();
 	vector3df GetPosition();
+	bool GetTemporal();
 private:
-	int id;
-	AI_code code;
-	float strength;
-	Kinematic kinematic;
-	Modality* modality;
+	int 		id;				// Id del objeto emisor de la señal
+	bool 		temporal;		// Es una señal temporal o perdurará en la memoria? Si/No
+	AI_code 	code;			// Codigo de IA que servirá para su posterior busqueda
+	float 		strength;		// Fuerza de la señal
+	Kinematic 	kinematic;		// Objeto kinematico de la señal
+	Modality* 	modality;		// Modalidad de la senyal (Visual, Sonora)
 };
 
 #endif
