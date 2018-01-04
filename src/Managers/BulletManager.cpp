@@ -1,4 +1,7 @@
 #include "BulletManager.h"
+#include "./../Projectiles/BasicProjectile.h"
+#include "./../Projectiles/FireProjectile.h"
+#include "./../Projectiles/ThunderProjectile.h"
 
 BulletManager* BulletManager::instance = 0;
 
@@ -15,10 +18,19 @@ BulletManager* BulletManager::GetInstance(){
 	return instance;
 }
 
-void BulletManager::AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b){
+void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b){
 	switch(b){
 		case BULLET_BASIC:
-			proyectiles.push_back(new Proyectil(pos, dir, r, v));
+			proyectiles.push_back(new BasicProjectile(pos, dir, emi, dmgMult));
+			break;
+		case BULLET_FIRE:
+			proyectiles.push_back(new FireProjectile(pos, dir, emi, dmgMult));
+			break;
+		case BULLET_THUNDER:
+			proyectiles.push_back(new ThunderProjectile(pos, dir, emi, dmgMult));
+			break;
+		case POISON_BOMB:
+			//proyectiles.push_back(new Projectile(pos, dir, emi, r, v));
 			break;
 	}
 }
@@ -35,14 +47,14 @@ void BulletManager::Update(){
  * @brief [Mueve los objetos proyectil del vector de Update al de delete]
  * @details [long description]
  */
-void BulletManager::AddToDeleteProyecil(Proyectil* pro){
+void BulletManager::AddToDeleteProyecil(Projectile* pro){
 	// Comprueba que el proyectil no sea NULL
 	if(pro!=NULL){
 		// Nos guardamos el tamanyo el vector
 		int size = proyectiles.size();
 		// Recorremos el vector de proyectil en update
 		for(int i=0; i<size; i++){
-			Proyectil* p = proyectiles[i];
+			Projectile* p = proyectiles[i];
 			// Comprobamos si el proyectil esta en el vector
 			if(p == pro){
 				// En el caso de que este lo borramos del primer vector y lo anyadimos en el de eliminar
@@ -65,7 +77,7 @@ void BulletManager::DeleteProyectiles(){
 	// Recorremos el vector de proyectiles por eliminar
 	for(int i=0; i<size; i++){
 		// Cargamos el proyectil a eliminar
-		Proyectil* p = proyectilesToDelete[i];
+		Projectile* p = proyectilesToDelete[i];
 		// Lo eliminamos del mundo de Irrlicht y Bullet3D
 		// Delete del proyectil
 		delete p;
@@ -80,7 +92,7 @@ void BulletManager::DeleteAllProyectiles(){
 	// =====================================
 	int size = proyectiles.size();							// Nos guardamos el tamanyo del vector
 	for(int i=0; i<size; i++){								// Recorremos el vector de proyectiles por eliminar
-		Proyectil* p = proyectiles[i];						// Cargamos el proyectil a eliminar
+		Projectile* p = proyectiles[i];						// Cargamos el proyectil a eliminar
 		delete p;											// Lo eliminamos del mundo de Irrlicht y Bullet3D
 	}
 	proyectiles.clear();									// Limpiamos el vector
@@ -89,7 +101,7 @@ void BulletManager::DeleteAllProyectiles(){
 	// =====================================
 	size = proyectilesToDelete.size();					// Nos guardamos el tamanyo del vector
 	for(int i=0; i<size; i++){								// Recorremos el vector de proyectiles por eliminar
-		Proyectil* p = proyectilesToDelete[i];				// Cargamos el proyectil a eliminar
+		Projectile* p = proyectilesToDelete[i];				// Cargamos el proyectil a eliminar
 		delete p;											// Delete del proyectil
 	}
 	proyectilesToDelete.clear();							// Limpiamos el vector

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <map>
+#include <Alliance.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
@@ -48,8 +49,15 @@ public:
 	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v);
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v);
 
+	// Match Status
+	void EndMatch(Alliance winnerAlliance);
+
+	// We get the ID of the Network Object of the Player One
+	int GetPlayerOneId();
+
 private:
 	
+	int playerOneId;
 	std::map<int, NetworkObject*> networkObjects;			// Vector of Network Objects on the Client
 	std::map<int, NetworkObject*> newNetworkObjects;		// Vector of Network Objects on the Client that haven't been retrieved
 	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of NO Objects to be erased

@@ -32,11 +32,16 @@ public:
 	void Update();
 	void Draw();
 
+	void RestartMatch();
+	void CheckIfReady();
+	void MatchEnded(Alliance winnerAlliance);
+
 	float GetTotalTime();
 	float GetDeltaTime();
 	void UpdateDelta();
 
-	void SetPlayerOne(NetworkObject* nObject);
+	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false);
+	bool GetLobbyState();
 
 private:
 
@@ -46,6 +51,7 @@ private:
 	float deltaTime;
 	float secondCounter;
 	bool lobbyState;
+	bool gameEnded;
 
 	bool isServer;
 	SoundEvent*			footstepEvent;
@@ -67,6 +73,7 @@ private:
 	NetGame();
 
 	void setFps();
+	void CheckIfWon();
 
 };
 

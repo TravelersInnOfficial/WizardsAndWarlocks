@@ -5,8 +5,10 @@
  * 
  * @param time - tiempo de duracion del efecto
  */
-Effect::Effect(float time){
+Effect::Effect(float time, EFFECTCODE cod){
+	maxTime = time;
 	currentTime = time;
+	code = cod;
 }
 
 Effect::~Effect(){}
@@ -24,6 +26,16 @@ bool Effect::CheckFinish(float deltaTime){
 		return true;
 	}
 	return false;
+}
+
+/**
+ * @brief Vuelve a poner el tiempo del hechizo, se usa para volver a aplicar tiempos
+ * @details [long description]
+ * 
+ * @param time [description]
+ */
+void Effect::ResetTime(){
+	currentTime = maxTime;
 }
 
 /**
@@ -51,4 +63,13 @@ void Effect::UpdateEffect(Player* p){
  */
 void Effect::RemoveEffect(Player* p){
 
+}
+
+/**
+ * @brief Codigo que identifica al efecto
+ * 
+ * @return EFFECTCODE codigo del efecto
+ */
+EFFECTCODE Effect::getCode(){
+	return code;
 }

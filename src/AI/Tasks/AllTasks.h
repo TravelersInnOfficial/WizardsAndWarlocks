@@ -3,7 +3,55 @@
 
 #include <iostream>
 
+#include "./../Secuencia.h"
+#include "./../Decorador.h"
+#include "./../Selector.h"
 #include "./../Task.h"
+
+// ================================================================================================= //
+//
+//	ORDER SPELLS BY UTILITY
+//
+// ================================================================================================= //
+
+class SpellSecuencia: public Selector{
+public:
+	SpellSecuencia();
+	bool run(Blackboard* bb);
+	void SortVector(Blackboard* bb);
+private:
+	std::vector<int> spellsOrder;
+};
+
+// ================================================================================================= //
+//
+//	RUN CORRECT TASK OF MOVEMENT 
+//
+// ================================================================================================= //
+
+class RunMovementTask: public Decorador{
+public:
+	RunMovementTask();
+	bool run(Blackboard* bb);
+private:
+	void CheckChangeTask(Blackboard* bb);
+	void ChangeTask(Blackboard* bb);
+
+	int lastValue;
+};
+
+// ================================================================================================= //
+//
+//	RELEASE SPELL IF FALSE
+//
+// ================================================================================================= //
+
+class ReleaseSpell: public Decorador{
+public:
+	ReleaseSpell();
+	bool run(Blackboard* bb);
+private:
+};
 
 // ================================================================================================= //
 //
@@ -11,9 +59,9 @@
 //
 // ================================================================================================= //
  
- class ShootBasic: public Task{
+ class UseSpell: public Task{
  public:
- 	ShootBasic();
+ 	UseSpell();
  	bool run(Blackboard* bb);
  private:
  };
@@ -29,6 +77,20 @@ public:
 	SendPlayerSignals();
 	bool run(Blackboard* bb);
 private:
+};
+
+// ================================================================================================= //
+//
+//	CHECK DISTANCE
+//
+// ================================================================================================= //
+
+class CheckDistance: public Task{
+public:
+	CheckDistance(float dist);
+	bool run(Blackboard* bb);
+private:
+	float distance;
 };
 
 // ================================================================================================= //
@@ -93,6 +155,20 @@ private:
 class GoToTarget: public Task{
 public:
 	GoToTarget();
+	bool run(Blackboard* bb);
+private:
+	float maxAcceleration;
+};
+
+// ================================================================================================= //
+//
+//	FLEE FROM TARGET
+//
+// ================================================================================================= //
+
+class FleeFromTarget: public Task{
+public:
+	FleeFromTarget();
 	bool run(Blackboard* bb);
 private:
 	float maxAcceleration;

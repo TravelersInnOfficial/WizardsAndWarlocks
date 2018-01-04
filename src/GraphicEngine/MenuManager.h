@@ -7,12 +7,14 @@
 #include <vector2d.h>
 #include "GraphicEngine.h"
 
+#include <Alliance.h>
+
 class MenuManager{
 public:
 	static MenuManager* GetInstance();
 	~MenuManager();
 	
-	void CreateMenu(MenuType type);
+	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
 
 private:
@@ -25,6 +27,7 @@ private:
 	MenuManager();
 	void CreateMain();
 	void CreateAlliance();
+	void CreateMatchEnded(int option);
 
 };
 

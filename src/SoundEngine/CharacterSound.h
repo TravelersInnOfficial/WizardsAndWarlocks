@@ -5,11 +5,25 @@
 
 class CharacterSound : public CommonSoundEvent {
     public:
-    CharacterSound();
-    ~CharacterSound();
 
+    /******************************************************
+     *  Default constructor
+     ******************************************************/
+    CharacterSound();    
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
+    ~CharacterSound();
+    
+    
     protected:
     FMOD::Studio::EventInstance* soundInstance;
+
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    CharacterSound(FMOD::Studio::EventInstance*);
 };
 
-#endif /* CharacterSound_h */
+#endif /* CommonSoundSoundEvent_h */

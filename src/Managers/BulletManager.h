@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <string>
-#include "./../Projectiles/Proyectil.h"
+#include "./../Projectiles/Projectile.h"
 #include <BulletCodes.h>
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -13,15 +13,15 @@ public:
 	static BulletManager* GetInstance();
 	~BulletManager();
 
-	void AddProyectil(vector3df pos, vector3df dir, float r, float v, BULLETCODE b);
-	void AddToDeleteProyecil(Proyectil* pro);
+	void AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b);
+	void AddToDeleteProyecil(Projectile* pro);
 	void Update();
 	void DeleteProyectiles();
 	void DeleteAllProyectiles();
 private:
 
-	vector<Proyectil*> proyectiles;
-	vector<Proyectil*> proyectilesToDelete;
+	std::vector<Projectile*> proyectiles;
+	std::vector<Projectile*> proyectilesToDelete;
 
 	BulletManager();
 	static BulletManager* instance;

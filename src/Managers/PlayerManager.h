@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 #include "./../Players/Player.h"
 #include "./../Players/HumanPlayer.h"
@@ -20,12 +21,28 @@ public:
 	void DeletePlayers();
 	void SendVisualSignal();
 	bool CheckIfReady();
+	void RespawnAll();
+	void ManageMatchStatus(bool ManageMatchStatus);
+	void AddToDead(Alliance alliance, Player* player);
+	void ChangeAlliance(Alliance alliance, Player* player);
+	bool CheckIfWon(Alliance alliance);
+	void EraseAllCharacters();
+	void ReturnAllToLobby();
+	void RefreshServerAll();
 	
 private:
 
 	vector<Player*>	players;
 	vector<Player*>	wizardPlayers;
 	vector<Player*>	warlockPlayers;
+
+	vector<Player*>	deadPlayers;
+	vector<Player*>	deadWarlocks;
+	vector<Player*>	deadWizards;
+
+	bool wizardsWin;
+	bool warlocksWin;
+
 	vector<Player*> playersToDelete;
 
 	PlayerManager();

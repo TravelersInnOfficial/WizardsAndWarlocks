@@ -1,5 +1,5 @@
-#ifndef GUIVERNUMVENTUS_H
-#define GUIVERNUMVENTUS_H
+#ifndef GuivernoWind_H
+#define GuivernoWind_H
 
 #include <iostream>
 #include <math.h>
@@ -7,9 +7,9 @@
 #include "Hechizo.h"
 #include "./../Objects/DamageArea.h"
 
-class GuivernumVentus: public Hechizo{
+class GuivernoWind: public Hechizo{
 public:
-	GuivernumVentus(int costPM, float tCast, float tCoolDown);
+	GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 	void ResetSpell();
 private:

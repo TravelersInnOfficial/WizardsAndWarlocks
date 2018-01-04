@@ -1,4 +1,5 @@
 #include "./Potion.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 #define MODEL_SIZE 0.136f
 
 Potion::Potion(vector3df TScale, int val, std::string tex){
@@ -68,4 +69,21 @@ void Potion::UpdatePosShape(){
 	bt_body->Update();
     vector3df pos = bt_body->GetPosition();
     m_potionNode->setPosition(pos);
+}
+
+void Potion::SendSignal(){
+	if(!picked){
+		RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+		// id, AI_code name, float str, Kinematic kin, AI_modalities mod
+		sense->AddSignal(id, true, AI_POTION, 5.0f, GetKinematic(), AI_SIGHT);
+	}
+}
+
+Kinematic Potion::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = bt_body->GetPosition();
+	cKin.orientation =  vector2df(0,0);
+   	cKin.velocity = bt_body->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }

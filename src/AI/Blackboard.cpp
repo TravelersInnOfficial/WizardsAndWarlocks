@@ -1,27 +1,31 @@
 #include "Blackboard.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../Players/AIPlayer.h"
 
 Sense_struct::~Sense_struct(){
 }
 
 Blackboard::Blackboard(){
-
+    blackboardParent = NULL;
+    currentPlayer = NULL;
 }
 
 Blackboard::~Blackboard(){
-    int size = sightSense.size();
-    for(int i=0; i<size; i++){
-        Sense_struct* s = sightSense[i];
-        delete s;
-    }
-    sightSense.clear();
+    CleanSense();
+}
 
-    size = soundSense.size();
-    for(int i=0; i<size; i++){
-        Sense_struct* s = soundSense[i];
-        delete s;
+void Blackboard::SetPlayer(AIPlayer* p){
+    currentPlayer = p;
+}
+
+AIPlayer* Blackboard::GetPlayer(){
+    if(currentPlayer!= NULL){
+        return currentPlayer;
+    }else if(blackboardParent != NULL){
+        return blackboardParent->GetPlayer();
+    }else{
+        return NULL;
     }
-    soundSense.clear();
 }
 
 void Blackboard::SaveParent(Blackboard* parent){
@@ -88,6 +92,25 @@ void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float 
     soundSense.push_back(s);
 }
 
+/**
+ * @brief Vacia por completo los sentidos de la IA, resetea la informacion
+ */
+void Blackboard::CleanSense(){
+    int size = soundSense.size();
+    for(int i=0; i<size; i++){
+        Sense_struct* s = soundSense[i];
+        delete s;
+    }
+    soundSense.clear();
+
+    size = sightSense.size();
+    for(int i=0; i<size; i++){
+        Sense_struct* s = sightSense[i];
+        delete s;
+    }
+    sightSense.clear();
+}
+
 void Blackboard::CleanSense(int id){
     int size = soundSense.size();
     for(int i=0; i<size; i++){
@@ -142,7 +165,7 @@ int Blackboard::GetNumberSound(AI_code name){
     int size = soundSense.size();           
     for(int i=size-1; i>=0; i--){           // Recorremos todos los sonidos del final al principio para poder eliminar
         Sense_struct* s = soundSense[i];
-        if(s->duration < time){             // Si la duracion del sonido ya ha pasado lo eliminamos
+        if(s->duration < time && s->duration != 0){             // Si la duracion del sonido ya ha pasado lo eliminamos
             soundSense.erase(soundSense.begin() + i);
             delete s;
         }
@@ -168,7 +191,7 @@ int Blackboard::GetNumberSight(AI_code name){
     int size = sightSense.size();           
     for(int i=size-1; i>=0; i--){           // Recorremos todos los sonidos del final al principio para poder eliminar
         Sense_struct* s = sightSense[i];
-        if(s->duration < time){             // Si la duracion de la vision ya ha pasado lo eliminamos
+        if(s->duration < time && s->duration != 0){             // Si la duracion de la vision ya ha pasado lo eliminamos
             sightSense.erase(sightSense.begin() + i);
             delete s;
         }

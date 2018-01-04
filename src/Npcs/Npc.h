@@ -15,8 +15,8 @@ class Npc: public Entidad{
 		void Draw();
 
 	protected:
+		BT_Body*	pBody;
 	    GBody*      gBody;
-    	BT_Body*    pBody;
 		bool active;
 	
 };

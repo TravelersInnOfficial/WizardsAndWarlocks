@@ -28,6 +28,8 @@ public:
 	bool setPlayerUsings(Player*, int);
 	bool setPlayerTrap(Player*, TrapEnum);
 
+	void ClearTraps();
+
 private:
 	vector<Trap*> traps;
 	std::map<Player*,TrapEnum> playerTrap;

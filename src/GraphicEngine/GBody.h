@@ -35,6 +35,8 @@ public:
 
     void setTriangleSelector();
 
+    void Remove();
+
     friend class GraphicEngine;
 
 private:

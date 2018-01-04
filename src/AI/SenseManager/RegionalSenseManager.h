@@ -25,9 +25,10 @@ public:
 
 	~RegionalSenseManager();
 	Sensor* AddSensor(int id, vector3df* cPos, vector3df* cOri, float thresh, Blackboard* inf);
-	void AddSignal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod);
+	void AddSignal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod);
 	void AddSignal(Signal* s);
 	void SendSignals();
+	void ResetSensor(Sensor* s);
 private:
 
 	std::vector<Sensor*> sensors;

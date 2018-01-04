@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <map>
+#include <Alliance.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
@@ -28,7 +29,7 @@ public:
 	void ModifyObject(RakNet::BitStream* bitstream);
 
 	// We manage a network object and notify the clients
-	int CreateNetworkObject(ObjectType type);
+	int CreateNetworkObject(ObjectType type, bool broadcast = true, RakNet::RakNetGUID guid = RakNet::UNASSIGNED_RAKNET_GUID);
 	void RemoveNetworkObject(int id, bool broadcast = true);
 
 	// We manage the players connected

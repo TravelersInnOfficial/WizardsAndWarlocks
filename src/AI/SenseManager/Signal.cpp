@@ -3,6 +3,7 @@
 
 Signal::Signal(Signal* sig){
 	id = sig->GetId();
+	temporal = sig->GetTemporal();
 	code = sig->GetCode();
 	kinematic = sig->GetKinematic();
 	strength = sig->GetStrength();
@@ -18,8 +19,9 @@ Signal::Signal(Signal* sig){
 	}
 }
 
-Signal::Signal(int i, AI_code name, float str, Kinematic kin, AI_modalities mod){
+Signal::Signal(int i, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
 	id = i;
+	temporal = temp;
 	code = name;
 	strength = str;
 	kinematic = kin;
@@ -62,4 +64,8 @@ int Signal::GetId(){
 
 vector3df Signal::GetPosition(){
 	return kinematic.position;
+}
+
+bool Signal::GetTemporal(){
+	return temporal;
 }

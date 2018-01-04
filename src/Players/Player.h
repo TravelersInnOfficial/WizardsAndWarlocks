@@ -23,12 +23,10 @@ class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1);
-		void CreatePlayer();
+		void CreatePlayerCharacter(bool firstInit = false);
+		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update();
-		SoundEvent* dieEvent;
-		SoundEvent* damageEvent;
-		SoundEvent* drinkEvent;
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
@@ -46,7 +44,15 @@ class Player: public Entidad{
 		void ChangeCurrentSpell(int);
 		void Respawn();
 		void Raycast();
-		void Die();
+		virtual void Die();
+		void ReturnToLobby();
+		void DrawOverlays(float deltaTime);
+		void CheckIfReady();
+
+		// Spells
+		bool StartSpell();
+		bool ShootSpell();
+		void ResetSpell();
 
 		// Sensorial Functions
 		void SendSignal();
@@ -61,13 +67,11 @@ class Player: public Entidad{
 		void GetNetInput();
 		void SetNetInput();
 		NetworkObject* GetNetworkObject();
+		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
 
 		//Geters
 		bool IsPlayerOne();
 		vector3df GetAngularVelocity();
-		float GetPosX();
-		float GetPosY();
-		float GetPosZ();
 		vector3df GetPos();
 		vector3df GetHeadPos();
 		float GetRotY();
@@ -77,11 +81,14 @@ class Player: public Entidad{
 		float GetLength();
 		float GetHP();
 		float GetMP();
-		bool GetDead();		
+		float GetDamageM();
 		float GetMaxVelocity();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
 		Alliance GetAlliance();
+		int GetNumberSpells();
+		bool GetReadyStatus();
+		PlayerController* GetController();
 
 		// Seters
 		void SetPosition(vector3df);
@@ -89,10 +96,13 @@ class Player: public Entidad{
 		void SetPosY(float);
 		void SetRotation(vector3df rotation);
 		void SetHP(float);
+		void SetDamageMult(float);
 		void SetDead(bool);
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
 		void SetAlliance(Alliance newAliance);
+		void SetMatchStatus(bool started);
+		void SetSpell(int value);
 
 		virtual ~Player();
 
@@ -112,16 +122,24 @@ class Player: public Entidad{
 
 		float 			m_HP;				// Vida del jugador - 100HP
 		float			m_MP;				// Mana del jugador	- 100HP
+		float 			m_DamageMult;		// Multiplicador de danyo del jugador
+
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda
+		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
-		BT_Body* 		bt_body;			// Cuerpo físico del jugador
+		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
 
-		bool 			moving;				// Se esta moviendo? Si/No
-		bool 			canJump;			// Puede saltar? Si/No
+		bool			readyToStart;		// Esta preparado para empezar la partida?
+		bool			matchStarted;		// Ha empezado la partida?
+		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
+
+		bool 			moving;				// Se esta moviendo?
+		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
 		Potion* potion;						// Pocion en el inventario

@@ -1,5 +1,6 @@
 #include "Server.h"
-
+#include "./../States/NetGame.h"
+#include "./../Managers/PlayerManager.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -26,7 +27,7 @@ void Server::SendPackage(RakNet::BitStream* bitstream, PacketPriority priority, 
 	peer->Send(bitstream, priority, reliability, 0, guid, broadcast);
 }
 
-int Server::CreateNetworkObject(ObjectType type){
+int Server::CreateNetworkObject(ObjectType type, bool broadcast, RakNet::RakNetGUID guid){
 	lastObjectId += 1;
 	networkObjects[lastObjectId] = new NetworkObject(lastObjectId, type);
 	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
@@ -37,7 +38,7 @@ int Server::CreateNetworkObject(ObjectType type){
 	bitstream.Write(ID_CREATE);
 	bitstream.Write(lastObjectId);
 	bitstream.Write(type);
-	SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+	SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, guid, broadcast);
 
 	return (lastObjectId);
 }
@@ -98,6 +99,15 @@ void Server::RecievePackages(){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
+				
+				// Si la partida ha empezado negamos la conexion
+				if(!NetGame::GetInstance()->GetLobbyState()){
+					RakNet::BitStream bitstream;
+					bitstream.Write((RakNet::MessageID)ID_DISCONNECTION_NOTIFICATION);
+					SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					continue;
+				}
+
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
 
@@ -106,36 +116,46 @@ void Server::RecievePackages(){
 				bitstream.Write((RakNet::MessageID)ID_PLAYER_JOIN);
 				bitstream.Write(id);
 				bitstream.Write(packet->guid);
-				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED,  RakNet::UNASSIGNED_RAKNET_GUID, true);
+				SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
 
 				// Creamos el nuevo jugador y lo enviamos a todos los clientes
-				int newPlayerId = CreateNetworkObject(ID_PLAYER_O);
+				// Menos al nuevo jugador, que se lo enviaremos mas tarde
+				int newPlayerId = CreateNetworkObject(ID_PLAYER_O, true, packet->guid);
 				
-				// We save the correspondency client to player
+				// Guardamos la correspondencia entre cliente y jugador (GUID -- Player ID)
 				clientToPlayer[id] = newPlayerId;
+				
+				// Le decimos al cliente nuevo cual es su PLAYER ONE
+				RakNet::BitStream bitstream2;
+				bitstream2.Write((RakNet::MessageID)ID_CREATE_PLAYER_ONE);
+				bitstream2.Write(newPlayerId);
+				SendPackage(&bitstream2, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 
-				// Notificamos al nuevo jugador de todos los jugadores existentes hasta el momento
+				// Notificamos al nuevo jugador de todos los CLIENTES existentes hasta el momento
+				// (En el cliente guardaremos su correspondencia GUID/ID DE PLAYER)
 				for (auto &rowClient : networkPlayers) {
 					if (rowClient.second != packet->guid){
-						RakNet::BitStream updateNewPlayerPlayers;
-						updateNewPlayerPlayers.Write((RakNet::MessageID)ID_EXISTING_PLAYER);
-						updateNewPlayerPlayers.Write(rowClient.first);
-						updateNewPlayerPlayers.Write(rowClient.second);
-						SendPackage(&updateNewPlayerPlayers, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+						RakNet::BitStream updateClients;
+						updateClients.Write((RakNet::MessageID)ID_EXISTING_PLAYER);
+						updateClients.Write(rowClient.first);
+						updateClients.Write(rowClient.second);
+						SendPackage(&updateClients, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					}
 				}
 
-				// Notificamos al nuevo jugador de todos los elementos existentes hasta el momento
+				// Notificamos al nuevo jugador de todos los OBJETOS DE RED existentes hasta el momento
+				// Pasandole su ID, en el cliente replicaremos el Objeto de Red
+				// Incluido su jugador, que se creara aqui pero para los demas se ha creado antes
 				for (auto &rowObj : networkObjects) {
-					if(rowObj.first != newPlayerId){
-						RakNet::BitStream updateNewPlayerObjects;
-						updateNewPlayerObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
-						updateNewPlayerObjects.Write(ID_EXISTING_OBJECT);
-						updateNewPlayerObjects.Write(rowObj.first);
-						updateNewPlayerObjects.Write(rowObj.second->GetObjType());
-						SendPackage(&updateNewPlayerObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
-					}
+					RakNet::BitStream updateObjects;
+					updateObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+					updateObjects.Write(ID_EXISTING_OBJECT);
+					updateObjects.Write(rowObj.first);
+					updateObjects.Write(rowObj.second->GetObjType());
+					SendPackage(&updateObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 				}
+
+				PlayerManager::GetInstance()->RefreshServerAll();
 
 				break;
 			}
@@ -172,6 +192,24 @@ void Server::RecievePackages(){
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				ModifyObject(&bitstream);
 
+				break;
+			}
+
+			// CUANDO SE TERMINA UNA PARTIDA
+			case ID_MATCH_ENDED: {
+				// Leer quien ha ganado
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				Alliance winnerAlliance;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(winnerAlliance);
+				NetGame::GetInstance()->MatchEnded(winnerAlliance);
+
+				// Propagarlo a los DEMAS clientes
+				RakNet::BitStream propagateEndMatch;
+				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
+				propagateEndMatch.Write(winnerAlliance);
+				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+				
 				break;
 			}
 		}

@@ -2,6 +2,7 @@
 
 Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	casting = false;
+	recovered = false;
 
 	timeCasting = 0.0f;
 	maxCasting = 5.0f;
@@ -32,9 +33,9 @@ void Grail::Interact(Player* p){
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
 		timeCasting += deltaTime;
 
-		if(timeCasting>=maxCasting){
-			std::cout<<"WIZARDS WIN"<<std::endl;
-			timeCasting=0.0f;
+		if(timeCasting >= maxCasting){
+			recovered = true;
+			timeCasting = 0.0f;
 		}
 
 		casting = true;
@@ -67,4 +68,10 @@ void Grail::UpdatePosShape(){
 	bt_body->Update();
     vector3df pos = bt_body->GetPosition();
     m_grailNode->setPosition(pos);
+}
+
+bool Grail::CheckIfWon(){
+	bool toRet = recovered;
+	if(recovered) recovered = false;
+	return toRet;
 }

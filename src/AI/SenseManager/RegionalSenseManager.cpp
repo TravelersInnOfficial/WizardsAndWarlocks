@@ -36,8 +36,8 @@ Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri
 	return s;
 }
 
-void RegionalSenseManager::AddSignal(int id, AI_code name, float str, Kinematic kin, AI_modalities mod){
-	Signal* s = new Signal(id, name, str, kin, mod);
+void RegionalSenseManager::AddSignal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
+	Signal* s = new Signal(id, temp, name, str, kin, mod);
 	AddSignal(s);
 }
 
@@ -95,6 +95,17 @@ void RegionalSenseManager::SendSignals(){
 		if(n->time <= currentTime){
 			n->sensor->Notify(n->signal, currentTime);
 			notificationQueue.erase(notificationQueue.begin()+i);
+			delete n;
+		}
+	}
+}
+
+void RegionalSenseManager::ResetSensor(Sensor* s){
+	int size = notificationQueue.size();
+	for(int i=size-1; i>=0; i--){
+		Notification* n = notificationQueue[i];
+		if(n->sensor == s){
+			notificationQueue.erase(notificationQueue.begin() + i);
 			delete n;
 		}
 	}

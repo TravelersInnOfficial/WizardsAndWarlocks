@@ -18,7 +18,10 @@ public:
 	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);
+	bool CheckIfWon();
+	
 private:
+	bool recovered;
 	bool casting;
 	float deltaTime;
 	float timeCasting;

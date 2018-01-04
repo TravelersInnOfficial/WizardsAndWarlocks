@@ -88,9 +88,19 @@ public:
     void drawAim();
 
     /**
+     * Draws all the efects activated
+    */
+    void drawOverlays(int type = -1);
+
+    /**
      * Draws the MANA and the HEALTH bar
     */
     void drawManaAndHealth(int h, int m);
+
+    /**
+     * Draws a rectangle
+     */
+    void draw2DRectangle(vector3df color, float xInit, float yInit, float xEnd, float yEnd);
 
     /// SMANAGER FUNCTIONS
 
@@ -249,7 +259,6 @@ private:
     EventReceiver* privateReceiver;
     MenuReceiver* privateMenuReceiver;
     GCamera* privateCamera;
-
 
     /**
      * Adds a static text

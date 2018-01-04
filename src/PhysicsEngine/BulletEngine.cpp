@@ -147,6 +147,7 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
     if(RayCallback.hasHit()) {
         //End = RayCallback.m_hitPointWorld;
         //Normal = RayCallback.m_hitNormalWorld;
+      
 		if(RayCallback.m_collisionObject->getUserPointer()!=0){
 			return RayCallback.m_collisionObject->getUserPointer();
    		}

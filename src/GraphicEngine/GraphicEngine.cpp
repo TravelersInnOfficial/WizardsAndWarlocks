@@ -3,17 +3,18 @@
 static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
+
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
 
 	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
 	nulldevice -> drop();
-	deskres = deskres;
+	deskres = irr::core::dimension2d<unsigned int>(900,600);
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
-		irr::core::dimension2d<unsigned int>(900,600),      //Size of window
+		deskres,      //Size of window
 		16,                                                 //bits
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
@@ -37,6 +38,10 @@ GraphicEngine::GraphicEngine(){
         col.setAlpha(255);
         privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
 	}
+
+	// Sky Dome
+	privateSManager->addSkyDomeSceneNode(privateDriver->getTexture("./../assets/textures/skymap/skydome.jpg"));
+
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
@@ -120,6 +125,28 @@ void GraphicEngine::drawAim(){
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
 }
 
+void GraphicEngine::drawOverlays(int type){
+	irr::video::ITexture* overlay = NULL;
+	
+	switch(type){
+		case(0):{
+			overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
+			break;
+		}
+		default:{
+			break;
+		}
+	}
+
+	if(overlay != NULL){
+		const irr::core::dimension2du& size = privateDriver->getScreenSize();
+		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+		const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
+		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
+		privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+	}
+}
+
 void GraphicEngine::drawManaAndHealth(int h, int m){
 	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
@@ -143,15 +170,20 @@ void GraphicEngine::drawManaAndHealth(int h, int m){
 
 
 	// Black Bar
-	irr::video::SColor color = irr::video::SColor(255, 0, 0, 0);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xEnd, yEndH));
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xEnd, yEndM));
+	vector3df color(0,0,0);
+	draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
+	draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
 	
 	// Helath & Mana Bar
-	color = irr::video::SColor(255, 255, 0, 0);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH));
-	color = irr::video::SColor(255, 0, 0, 255);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM));
+	color = vector3df(255,0,0);
+	draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
+	color = vector3df(0,0,255);
+	draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+}
+
+void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
+	irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
 }
 
 // SMANAGER FUNCTIONS

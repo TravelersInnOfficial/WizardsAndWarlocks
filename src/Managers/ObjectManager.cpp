@@ -130,10 +130,15 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 	Npc* n = NULL;
 	switch(type){
 		case(NPC_SELLER):{
+			//n = new NpcSeller(TPosition, TScale, TRotation);
 			break;
 		}
 		case(NPC_SELECTOR):{
 			n = new NpcSelector(TPosition, TScale, TRotation);
+			break;
+		}
+		case(NPC_POWERUP):{
+			//n = new NpcPowerUp(TPosition, TScale, TRotation);
 			break;
 		}
 		default:{ break; }
@@ -152,6 +157,24 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 	DamageArea* ar = new DamageArea(10, TPosition, TScale, TRotation);
 	damageAreas.push_back(ar);
 	return ar;
+}
+
+// ===================================================================================================== //
+//
+// SENSE FUNCTIONS
+//
+// ===================================================================================================== //
+
+void ObjectManager::SendAllSignal(){
+	SendPotionSignal();
+}
+
+void ObjectManager::SendPotionSignal(){
+	int size = potions.size();
+	for(int i=0; i<size; i++){
+		Potion* po = potions[i];
+		po->SendSignal();
+	}
 }
 
 // ===================================================================================================== //
@@ -284,6 +307,20 @@ void ObjectManager::ClearMap(){
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
+bool ObjectManager::CheckIfWon(){
+	bool toRet = false;
+	if(grail != NULL){
+		toRet = grail->CheckIfWon();
+	}
+	return toRet;
+}
+
+// ===================================================================================================== //
+//
+// UPDATES
+//
+// ===================================================================================================== //
+
 void ObjectManager::Update(float deltaTime){
 	UpdateGrail(deltaTime);
 	UpdateDoors();
@@ -295,12 +332,6 @@ void ObjectManager::Update(float deltaTime){
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
 }
-
-// ===================================================================================================== //
-//
-// UPDATES
-//
-// ===================================================================================================== //
 
 void ObjectManager::UpdateGrail(float deltaTime){
 	if(grail!=NULL) grail->Update(deltaTime);
@@ -358,7 +389,9 @@ void ObjectManager::UpdateInvocations(float deltaTime){
 	int size = invocations.size();
 	for(int i=size-1; i>=0; i--){
 		Invocation* in = invocations[i];
-		if(!(in->Update(deltaTime))){			// En el caso de que el update sea False es que hay que eliminarlo				
+		
+		// En el caso de que el update sea False es que hay que eliminarlo
+		if(!(in->Update(deltaTime))){
 			invocations.erase(invocations.begin() + i);
 			delete in;
 		}

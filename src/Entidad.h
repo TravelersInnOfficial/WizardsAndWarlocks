@@ -4,8 +4,6 @@
 #include <string>
 #include <iostream>
 
-using namespace std;
-
 enum EntityEnum{
 	EENUM_PLAYER 		= 0x01,
 	EENUM_PROJECTILE 	= 0x02,

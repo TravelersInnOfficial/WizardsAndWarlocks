@@ -5,12 +5,24 @@
 
 class HUDSound : public CommonSoundEvent {
     public:
+
+    /******************************************************
+     *  Default constructor 
+     ******************************************************/
     HUDSound();
+
+    /******************************************************
+     *  Destructor
+     ******************************************************/
     ~HUDSound();
-    
+
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-
+    
+    /******************************************************
+     *  Constructor 
+     ******************************************************/
+    HUDSound(FMOD::Studio::EventInstance* instance);
 };
 
-#endif /* HUDSound_h */
+#endif /* CommonSoundSoundEvent_h */
