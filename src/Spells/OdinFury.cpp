@@ -6,7 +6,7 @@ OdinFury::OdinFury(int costPM, float tCast, float tCoolDown, float optHP, float 
 	costPM, 
 	tCast, 
 	tCoolDown, 
-	SPELL_PARALYSIS, 
+	SPELL_THUNDER, 
 	optHP, 
 	optMP)
 {

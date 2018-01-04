@@ -3,11 +3,11 @@
 
 DragonBreath::DragonBreath(int costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(
-	costPM, 
-	tCast, 
-	tCoolDown, 
-	SPELL_FIRE, 
-	optHP, 
+	costPM,
+	tCast,
+	tCoolDown,
+	SPELL_FIRE,
+	optHP,
 	optMP)
 {
 	

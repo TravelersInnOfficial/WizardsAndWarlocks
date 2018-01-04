@@ -1,6 +1,7 @@
 #include "BulletManager.h"
 #include "./../Projectiles/BasicProjectile.h"
 #include "./../Projectiles/FireProjectile.h"
+#include "./../Projectiles/ThunderProjectile.h"
 
 BulletManager* BulletManager::instance = 0;
 
@@ -26,7 +27,7 @@ void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dm
 			proyectiles.push_back(new FireProjectile(pos, dir, emi, dmgMult));
 			break;
 		case BULLET_THUNDER:
-			//proyectiles.push_back(new Projectile(pos, dir, emi, r, v));
+			proyectiles.push_back(new ThunderProjectile(pos, dir, emi, dmgMult));
 			break;
 		case POISON_BOMB:
 			//proyectiles.push_back(new Projectile(pos, dir, emi, r, v));

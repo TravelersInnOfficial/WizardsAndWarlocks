@@ -138,7 +138,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_POISON:
 			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
 			break;
-		case SPELL_PARALYSIS:
+		case SPELL_THUNDER:
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_WALL:		// Hechizo Invocacion Muro
