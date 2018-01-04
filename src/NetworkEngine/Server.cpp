@@ -186,7 +186,6 @@ void Server::RecievePackages(){
 
 			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_MATCH_ENDED: {
-
 				// Leer quien ha ganado
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				Alliance winnerAlliance;

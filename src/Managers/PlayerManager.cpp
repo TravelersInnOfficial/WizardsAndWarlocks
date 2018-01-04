@@ -97,7 +97,7 @@ bool PlayerManager::CheckIfReady(){
 		if(!p->GetReadyStatus()) allReady = false;
 	}
 
-	if(size == 0) allReady = false;
+	if(size < 2) allReady = false;
 	return allReady;
 }
 

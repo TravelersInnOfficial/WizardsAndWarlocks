@@ -268,11 +268,4 @@ void Client::EndMatch(Alliance winnerAlliance){
 	SendPackage(&endMatch, HIGH_PRIORITY, RELIABLE_ORDERED);
 }
 
-int Client::GetPlayerOneId(){
-	std::cout<<"##############################################"<<std::endl;
-	std::cout<<"##############################################"<<std::endl;
-	std::cout<<"playerOneId"<<std::endl;
-	std::cout<<"##############################################"<<std::endl;
-	std::cout<<"##############################################"<<std::endl;
-	return (playerOneId);
-}
+int Client::GetPlayerOneId(){ return (playerOneId); }

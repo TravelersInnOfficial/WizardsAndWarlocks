@@ -384,6 +384,7 @@ void Player::Die(){
 	if(matchStarted){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
+		CheckIfReady();
 	}
 
 	Respawn();
@@ -404,15 +405,20 @@ void Player::DrawOverlays(float deltaTime){
 }
 
 void Player::CheckIfReady(){
-	vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
 	
-	bool ready = true;
-	if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
-		ready = false;
+	if(hasCharacter){
+		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+
+		bool ready = true;
+		if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
+			ready = false;
+		}
+
+		readyToStart = ready;
 	}
+	else readyToStart = false;
 	
-	readyToStart = ready;
-	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, ready, true, false);
+	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
 }
 
 void Player::CatchObject(Potion* p){

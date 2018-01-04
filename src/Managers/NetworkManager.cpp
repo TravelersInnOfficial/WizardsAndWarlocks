@@ -47,12 +47,6 @@ void NetworkManager::SpawnNewObjects(){
 			case ID_PLAYER_O:{
 				NetGame* gameInstance = NetGame::GetInstance();
 				bool playerOne = false;
-				
-				std::cout<<"##############################################"<<std::endl;
-				std::cout<<"##############################################"<<std::endl;
-				std::cout<<"creamos player"<<std::endl;
-				std::cout<<"##############################################"<<std::endl;
-				std::cout<<"##############################################"<<std::endl;
 
 				// Comprobar si es PLAYER ONE con la ID del NETWORK OBJECT y mi ID del OBJETO PLAYER ONE
 				if(n_engine->IsClientInit() && row->second->GetObjId() == n_engine->GetClient()->GetPlayerOneId()){
