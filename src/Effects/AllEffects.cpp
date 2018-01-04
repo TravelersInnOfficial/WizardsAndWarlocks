@@ -167,9 +167,11 @@ DamageUp::DamageUp(float time):Effect(time, POWERUP_DAMAGE){
 }
 
 void DamageUp::ApplyEffect(Player* p){
+	p->SetDamageMult(1.6);					// set damage multiplies player damage by parameter
 }
 
 void DamageUp::RemoveEffect(Player* p){
+	p->SetDamageMult(0.625);				// 1.6 * 0.625 = 1
 }
 
 //================================================================
@@ -179,6 +181,7 @@ DefenseUp::DefenseUp(float time):Effect(time, POWERUP_DEFENSE){
 }
 
 void DefenseUp::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void DefenseUp::RemoveEffect(Player* p){
@@ -191,6 +194,7 @@ ElementUp::ElementUp(float time):Effect(time, POWERUP_ELEMDEFENSE){
 }
 
 void ElementUp::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void ElementUp::RemoveEffect(Player* p){
@@ -203,9 +207,17 @@ SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
 }
 
 void SpeedUp::ApplyEffect(Player* p){
+	float vel = p->GetMaxVelocity();
+	vel = vel*1.5f;
+	p->SetMaxVelocity(vel);
+
+	// TODO: APPLY COOLDOWN REDUCTION
 }
 
 void SpeedUp::RemoveEffect(Player* p){
+	float vel = p->GetMaxVelocity();
+	vel = vel/1.5f;
+	p->SetMaxVelocity(vel);
 }
 
 //================================================================
@@ -215,6 +227,7 @@ Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
 }
 
 void Untargetable::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void Untargetable::RemoveEffect(Player* p){
@@ -227,6 +240,7 @@ FireShots::FireShots(float time):Effect(time, POWERUP_FIRE){
 }
 
 void FireShots::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void FireShots::RemoveEffect(Player* p){
@@ -239,6 +253,7 @@ PoisonShots::PoisonShots(float time):Effect(time, POWERUP_POISON){
 }
 
 void PoisonShots::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void PoisonShots::RemoveEffect(Player* p){
@@ -251,6 +266,7 @@ Invisible::Invisible(float time):Effect(time, POWERUP_INVISIBLE){
 }
 
 void Invisible::ApplyEffect(Player* p){
+	// TODO: FINISH EFFECT
 }
 
 void Invisible::RemoveEffect(Player* p){

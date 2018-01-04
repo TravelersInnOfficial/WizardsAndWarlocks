@@ -75,6 +75,7 @@ class Player: public Entidad{
 		float GetLength();
 		float GetHP();
 		float GetMP();
+		float GetDamageM();
 		bool GetDead();	
 		float GetMaxVelocity();
 		Kinematic GetKinematic();
@@ -90,6 +91,7 @@ class Player: public Entidad{
 		void SetPosY(float);
 		void SetRotation(vector3df rotation);
 		void SetHP(float);
+		void SetDamageMult(float);
 		void SetDead(bool);
 		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
@@ -114,6 +116,8 @@ class Player: public Entidad{
 
 		float 			m_HP;				// Vida del jugador - 100HP
 		float			m_MP;				// Mana del jugador	- 100HP
+		float 			m_DamageMult;		// Multiplicador de danyo del jugador
+
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
 		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda

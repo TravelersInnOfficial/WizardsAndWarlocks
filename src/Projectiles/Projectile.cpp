@@ -1,58 +1,59 @@
-#include "Proyectil.h"
+#include "Projectile.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Players/Player.h"
 #include "./../Objects/Invocation.h"
 
-Proyectil::Proyectil(vector3df pos,vector3df dir, float r, float v, int emi){
+Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture){
+    initPos = pos;
     direction = new vector3df(dir.X, dir.Y, dir.Z);
    
     emisor = emi;
-    damage = 25;
 
-    radio = r;
-    velocity = v;
+    radius = rat;
+    velocity = vel;
 
-    maxDistance = 10.0f;
-    initPos = pos;
+    damage = dmg;
+    maxDistance = maxDist;
 
-    CreateProyectil(pos);
+    m_Texture = texture;
     clase = EENUM_PROJECTILE;
+    CreateProjectile();
 }
 
-Proyectil::~Proyectil(){
+Projectile::~Projectile(){
     delete direction;
 
     bt_body->Erase();
-    m_proyectilNode->Erase();
+    m_ProjectileNode->Erase();
 
     delete bt_body;
-    delete m_proyectilNode;
+    delete m_ProjectileNode;
 }
 
-void Proyectil::CreateProyectil(vector3df pos){
-    //IRRLICHT
+void Projectile::CreateProjectile(){
+    // GRAPHIC ENGINE
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_proyectilNode = engine->addSphere2Scene(pos,vector3df(0,0,0),vector3df(1,1,1),radio, -1);
-    m_proyectilNode->setScale(vector3df(1,1,1));
+    m_ProjectileNode = engine->addSphere2Scene(initPos,vector3df(0,0,0),vector3df(1,1,1), radius, -1);
+    m_ProjectileNode->setScale(vector3df(1,1,1));
 
     // Aplicamos Material unlit y Textura
-    if (m_proyectilNode) {
-        m_proyectilNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-        m_proyectilNode->setMaterialTexture(0, "./../assets/textures/wall.bmp");
+    if (m_ProjectileNode) {
+        m_ProjectileNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+        m_ProjectileNode->setMaterialTexture(0, m_Texture);
     }
 
-    //BULLET    
+    // BULLET    
     bt_body = new BT_Body();
-    bt_body->CreateBox(pos, vector3df(0.7*radio,0.7*radio,0.7*radio), 50, 0,vector3df(0,0,0), C_PROJECTILE, projectileCW);
+    bt_body->CreateBox(initPos, vector3df(0.7*radius,0.7*radius,0.7*radius), 50, 0,vector3df(0,0,0), C_PROJECTILE, projectileCW);
     bt_body->AssignPointer(this);
     bt_body->SetGravity(vector3df(0,0,0));
     bt_body->SetCollisionFlags("no_contact");
     //bt_body->SetMass(0);    
 }
 
-void Proyectil::Update(){
+void Projectile::Update(){
     vector3df vel(velocity*direction->X, velocity*direction->Y, velocity*direction->Z);
     bt_body->SetLinearVelocity(vel);
     UpdatePosShape();
@@ -72,20 +73,28 @@ void Proyectil::Update(){
     }
 }
 
-void Proyectil::UpdatePosShape(){
+void Projectile::UpdatePosShape(){
     bt_body->Update();
     vector3df pos = bt_body->GetPosition();
-    m_proyectilNode->setPosition(pos);
+    m_ProjectileNode->setPosition(pos);
 }
 
-void Proyectil::Contact(void* punt, EntityEnum tipo){
+/**
+ * @brief Enters here the moment collides with something
+ * 
+ * @param punt: pointer to whatever projectile contacts 
+ * @param tipo: type of entity collided
+ */
+void Projectile::Contact(void* punt, EntityEnum tipo){
     if(tipo==EENUM_PLAYER){
         Player* p = (Player*)punt;
         int idEmisor = p->GetId();
         if(emisor == idEmisor){
             return;
         }
-        p->ChangeHP(-damage);
+
+        // Projectile hits player
+        ContactAction(p);
     }
     else if(tipo == EENUM_INVOCATION){
         Invocation* i = (Invocation*)punt;
@@ -95,17 +104,21 @@ void Proyectil::Contact(void* punt, EntityEnum tipo){
     c->AddToDeleteProyecil(this);
 }
 
-BT_Body* Proyectil::GetBody(){
+BT_Body* Projectile::GetBody(){
     return bt_body;
  }
 
-GBody* Proyectil::GetShape(){
-    return m_proyectilNode;
+GBody* Projectile::GetShape(){
+    return m_ProjectileNode;
 }
 
-void Proyectil::NormalizeDir(){
+void Projectile::NormalizeDir(){
     float length = sqrt(pow(direction->X, 2) + pow(direction->Y, 2) + pow(direction->Z,2));
     direction->X = direction->X/length;
     direction->Y = direction->Y/length;
     direction->Z = direction->Z/length;
+}
+
+void Projectile::ContactAction(Player* p){
+    p->ChangeHP(-damage);
 }

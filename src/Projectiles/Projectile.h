@@ -1,5 +1,5 @@
-#ifndef PROYECTIL_H
-#define PROYECTIL_H
+#ifndef PROJECTILE_H
+#define PROJECTILE_H
 
 #include <vector>
 #include <string>
@@ -10,35 +10,35 @@
 #include "./../GraphicEngine/GraphicEngine.h"
 #include <ColliderMasks.h>
 
-
-class Proyectil: public Entidad{
+class Projectile: public Entidad{
 public:
-    Proyectil(vector3df pos, vector3df dir, float r, float v, int emi);
-    ~Proyectil();
+    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, int damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp");
+    ~Projectile();
     void Update();
     void Contact(void* punt, EntityEnum tipo);
 
     BT_Body* GetBody();
     GBody* GetShape();
 
-private:
-    void CreateProyectil(vector3df pos);
+protected:
+    void CreateProjectile();
 	void UpdatePosShape();
 	void NormalizeDir();
+    virtual void ContactAction(Player* p) = 0;
 
     int             emisor;             // Creador del proyectil
 
-    int             damage;             // Danyo del proyectil
-
+    vector3df       initPos;            // Posicion inicial del proyectil
     vector3df*   	direction;	        // La direccion que va a tomar el proyectil
-    float			radio;	            // Radio del proyectil
+    float			radius;	            // Radio del proyectil
     float			velocity;           // Velocidad del proyectil
 
+    int             damage;             // Danyo del proyectil
     float           maxDistance;        // Maxima distancia que puede recorrer
-    vector3df       initPos;            // Posicion inicial del proyectil
 
     BT_Body*        bt_body;            // Cuerpo fisico del proyectil
-    GBody*          m_proyectilNode;    // Cuerpo visual del proyectil
+    GBody*          m_ProjectileNode;    // Cuerpo visual del proyectil
+    std::string     m_Texture;
 };
 
 #endif

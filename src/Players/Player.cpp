@@ -47,6 +47,7 @@ void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
 	m_MP = 100;
+	m_DamageMult = 1;	
 	m_dead = false;
 	EffectManager::GetInstance()->CleanEffects(this);
 }
@@ -477,6 +478,8 @@ float Player::GetHP(){ return m_HP; }
 
 float Player::GetMP(){ return m_MP; }
 
+float Player::GetDamageM(){ return m_DamageMult; }
+
 float Player::GetMaxVelocity(){ return max_velocity; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
@@ -615,7 +618,9 @@ void Player::SetRotation(vector3df rotation){
 }
 */
 
-void Player::SetHP(float HP){m_HP = HP; }
+void Player::SetHP(float HP){ m_HP = HP; }
+
+void Player::SetDamageMult(float damageMultiplier){ m_DamageMult *= damageMultiplier; }
 
 void Player::SetDead(bool flag){ m_dead = flag; }
 
