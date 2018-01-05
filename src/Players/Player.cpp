@@ -218,7 +218,7 @@ void Player::Update(){
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos 
 		if(moving){
-			// SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
+			SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
 			moving = false; 
 		}
 		else{

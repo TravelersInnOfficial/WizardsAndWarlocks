@@ -280,6 +280,8 @@ void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
 void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
+	if(getEvent(eventPath.c_str()) != NULL) getEvent(eventPath.c_str())->setPosition(playerPos);	//Position the event
+
 	//Checks if the event is being played
 	if (!getEvent(eventPath.c_str())->isPlaying()) {
 		playEvent(eventPath, playerPos, playerRot); //Plays the event
@@ -360,48 +362,32 @@ void SoundEvent::setGain(float gain) {
 void SoundEvent::setPosition(vector3df pos) {
 	FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 
-
-	// ########### CALCULATE POSITION
-		// Recibimos la posicion REAL DEL LISTENER
-		vector3df listenerPos = SoundSystem::getInstance()->getListenerPosition();
-
-		// Para el AUDIO SOURCE [0,0,0] es la posicion del listener porque es RELATIVO
-		// De este modo el OFFSET REAL de las posiciones sera el OFFSET de [0,0,0] al AUDIO SOURCE
-		vector3df offset = pos - listenerPos;
-		SoundSystem::getInstance()->setPos(attributes, offset);
-	// ###############################
+	SoundSystem::getInstance()->setPos(attributes, pos);					// Ponemos la Posicion
+	SoundSystem::getInstance()->setVel(attributes, vector3df(0, 0, 0));		// Ponemos la Velocidad
 
 
-	// ########### CALCULATE FORWARD VECTOR (RELATIVE LISTENER TO SOUND POSITION)
-		vector3df frwd = pos;
+	// ########### CALCULATE FORWARD VECTOR (LISTENER TO SOUND POSITION NORMALIZED)
+		// Recibimos la posicion del listener
+		//vector3df listenerPos = SoundSystem::getInstance()->getListenerPosition();
+		vector3df frwd = vector3df(0,0,1);
 		frwd.normalize();
 		SoundSystem::getInstance()->setForward(attributes, frwd);
 	// ###############################
 
-
-	// ########### CALCULATE UP VECTOR FROM FORWARD -- (FORWARD X [0,1,0]) X FORWARD -- RIGHT VECTOR X FORWARD VECTOR
-		vector3df A = frwd;
-		vector3df B = vector3df(0, 1, 0);
+	// ########### CALCULATE UP VECTOR FROM FORWARD
+	// RIGHT VECTOR X FORWARD VECTOR --> (FORWARD X ABSOLUTE UP) X FORWARD --> (FORWARD X [0,1,0]) X FORWARD
+		vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
 		vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-
-		A = aux;
-		B = frwd;
+		A = aux; B = frwd;
 		vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-
 		SoundSystem::getInstance()->setUp(attributes, up);
 	// ###############################
-
 	
-	// ########### CALCULATE VEL
-	SoundSystem::getInstance()->setVel(attributes, vector3df(0, 0, 0));
-	// ###############################
+	// std::cout<<"##################################"<<std::endl;
+	// std::cout<<"SOUND POS: "<<pos<<std::endl;
+	// std::cout<<"FORWARD VECTOR: "<<frwd<<std::endl;
+	// std::cout<<"UP VECTOR: "<<up<<std::endl;
 	
-	std::cout<<"##################################"<<std::endl;
-	std::cout<<"SOUND POS: "<<pos<<std::endl;
-	std::cout<<"LISTENER POS: "<<listenerPos<<std::endl;
-	std::cout<<"OFFSET: "<<offset<<std::endl;
-	std::cout<<"FORWARD VECTOR: "<<frwd<<std::endl;
-	std::cout<<"UP VECTOR: "<<up<<std::endl;
 	ERRCHECK(soundInstance->set3DAttributes(attributes));
 }
 
