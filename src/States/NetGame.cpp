@@ -19,8 +19,8 @@ NetGame::NetGame(){
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
-	// s_engine 		= SoundSystem::getInstance();
 	n_engine 		= NetworkEngine::GetInstance();
+	s_engine 		= SoundSystem::getInstance();
 
 	// Level
 	LevelLoader loader;
@@ -29,12 +29,11 @@ NetGame::NetGame(){
 	gameEnded = false;
 	secondCounter = 0;
 
+	// Sound Engine
+	s_engine->createSystem("./../assets/banks/");
+
 	if(n_engine->IsServerInit()) isServer = true;
 	else if(n_engine->IsClientInit()) isServer = false;
-
-	// Sound Engine
-	// s_engine->createSystem("./../assets/banks/");
-	// footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
 
 	// Graphic Engine
 	timeStart = g_engine->getTime() * 0.001;
@@ -57,20 +56,6 @@ bool NetGame::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
-	
-	if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
-		if(footstepEvent->isPlaying()) footstepEvent->stop();
-	}
-
-	if(playerOne != NULL){
-		/*if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
-		if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
-		if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
-		if(g_engine->IsKeyDown(KEY_KEY_R)) playerOne->Respawn();*/
-		if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-			if(!footstepEvent->isPlaying()) footstepEvent->start();
-		}
-	}
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -81,11 +66,15 @@ bool NetGame::Input(){
 }
 
 void NetGame::Update(){
+
 	UpdateDelta();
 
 	n_engine->Update();
 	f_engine->UpdateWorld();
-	// s_engine->update();
+	
+	if(g_engine->getActiveCamera() != NULL){
+		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
+	}
 
 	networkManager->Update();
 	bulletManager->Update();

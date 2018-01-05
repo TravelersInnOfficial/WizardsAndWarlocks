@@ -54,7 +54,6 @@ private:
 	bool gameEnded;
 
 	bool isServer;
-	SoundEvent*			footstepEvent;
 	HumanPlayer*		playerOne;
 
 	SpellManager* 		spellManager;
@@ -67,7 +66,7 @@ private:
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
-	// SoundSystem*		s_engine;
+	SoundSystem*		s_engine;
 	NetworkEngine*		n_engine;
 
 	NetGame();
