@@ -74,6 +74,7 @@ bool Fountain::Use(){
 		if(incrementUse<=value){		
 			value -= incrementUse;
 			user->ChangeHP(incrementUse);
+			user->ChangeMP(incrementUse);
 			return true;
 		}
 	}
