@@ -192,6 +192,7 @@ void SoundSystem::setVolume(float vol) {
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 
 	rot = rot * M_PI/180;		// Transformamos la rotacion
+	rot.X = 0; rot.Z = 0;
 	setPos(listener, pos);		// Ponemos la Posicion
 
 	// Calculamos el FORWARD
