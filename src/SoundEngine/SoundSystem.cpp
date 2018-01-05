@@ -280,11 +280,13 @@ void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
 void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
-	if(getEvent(eventPath.c_str()) != NULL) getEvent(eventPath.c_str())->setPosition(playerPos);	//Position the event
+	if(getEvent(eventPath.c_str()) != NULL){
+		getEvent(eventPath.c_str())->setPosition(playerPos);	//Position the event
 
-	//Checks if the event is being played
-	if (!getEvent(eventPath.c_str())->isPlaying()) {
-		playEvent(eventPath, playerPos, playerRot); //Plays the event
+		//Checks if the event is being played
+		if (!getEvent(eventPath.c_str())->isPlaying()) {
+			playEvent(eventPath, playerPos, playerRot); //Plays the event
+		}
 	}
 }
 
