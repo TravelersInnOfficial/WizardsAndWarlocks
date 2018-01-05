@@ -87,7 +87,7 @@ bool GraphicEngine::beginScene(){
 }
 
 bool GraphicEngine::beginSceneDefault(){
-	return privateDriver->beginScene(true, true, irr::video::SColor(255,113,113,255));
+	return privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 }
 
 bool GraphicEngine::endScene(){

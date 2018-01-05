@@ -56,9 +56,13 @@ bool Game::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
-	if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
-	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
-	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
+
+	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
+	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+30);
+	
+	if(g_engine->IsKeyPressed(KEY_KEY_K)) playerOne->ChangeMP(-5);
+	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
+	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 1.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 0.0f);
