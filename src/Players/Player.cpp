@@ -206,8 +206,6 @@ void Player::SetNetInput(){
 
 void Player::Update(){
 
-	SetNetInput();
-
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
