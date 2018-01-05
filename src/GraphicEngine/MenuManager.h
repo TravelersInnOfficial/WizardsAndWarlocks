@@ -9,6 +9,8 @@
 
 #include <Alliance.h>
 
+class Player;
+
 class MenuManager{
 public:
 	static MenuManager* GetInstance();
@@ -16,6 +18,8 @@ public:
 	
 	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
+	void ClearElement(MenuOption elementID);
+	void UpdateNetDebug(std::vector<Player*> players);
 
 private:
 
@@ -23,11 +27,13 @@ private:
 	std::vector<int>	loadedOptions;
 	GraphicEngine*		g_engine;
 	vector2di			screenSize;
+	irr::gui::IGUIWindow* netDebugWindow;
 
 	MenuManager();
 	void CreateMain();
 	void CreateAlliance();
 	void CreateMatchEnded(int option);
+	void CreateNetDebug();
 
 };
 

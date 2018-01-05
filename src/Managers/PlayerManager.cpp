@@ -179,3 +179,7 @@ void PlayerManager::RefreshServerAll(){
 		p->RefreshServer();
 	}
 }
+
+void PlayerManager::UpdateNetDebug(){
+	MenuManager::GetInstance()->UpdateNetDebug(players);
+}

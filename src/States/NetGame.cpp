@@ -56,6 +56,8 @@ bool NetGame::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
+	if(g_engine->IsKeyPressed(KEY_F1)) MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
+
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -84,6 +86,7 @@ void NetGame::Update(){
 	trapManager->Update(deltaTime);
 
 	playerManager->UpdatePlayers(true);
+	playerManager->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
 	setFps();

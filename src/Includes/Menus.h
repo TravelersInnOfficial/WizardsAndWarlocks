@@ -5,7 +5,8 @@ enum MenuType {
 	MAIN_M		= 0,
 	ALLIANCE_M	= 1,
 	STORE_M		= 2,
-	ENDMATCH_M	= 3
+	ENDMATCH_M	= 3,
+	NETDEBUG_M	= 4
 };
 
 enum MenuOption {
@@ -26,7 +27,17 @@ enum MenuOption {
 
 	ENDMATCH_M_TEXT_1		= 11,
 	ENDMATCH_M_CONFIRM		= 12,
-	ENDMATCH_M_WINDOW		= 13
+	ENDMATCH_M_WINDOW		= 13,
+
+	NETDEBUG_M_P1			= 14,
+	NETDEBUG_M_P2			= 15,
+	NETDEBUG_M_P3			= 16,
+	NETDEBUG_M_P4			= 17,
+	NETDEBUG_M_P5			= 18,
+	NETDEBUG_M_P6			= 19,
+	NETDEBUG_M_P7			= 20,
+	NETDEBUG_M_P8			= 21,
+	NETDEBUG_M_WINDOW		= 22
 };
 
 #endif
