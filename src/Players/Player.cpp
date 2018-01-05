@@ -178,7 +178,7 @@ void Player::GetNetInput(){
 	float life = -9999;
 	life = networkObject->GetFloatVar(PLAYER_LIFE);
 
-	if(life != -999 && life != -1){
+	if(life != -9999 && life != -1){
 		m_HP = life;
 		life = -9999;
 		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
@@ -511,8 +511,8 @@ bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::RefreshServer(){
 	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
-	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_HP, true, false);
-	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_MP, true, false);
+	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 }
 
 vector3df Player::GetAngularVelocity(){
