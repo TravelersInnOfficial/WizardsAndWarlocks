@@ -69,11 +69,8 @@ public:
      *  @param vec that has to be assigned
      ******************************************************/
     void setPos(FMOD_3D_ATTRIBUTES* var,vector3df vec);
-    
     void setVel(FMOD_3D_ATTRIBUTES* var,vector3df vec);
-    
     void setForward(FMOD_3D_ATTRIBUTES* var,vector3df vec);
-    
     void setUp(FMOD_3D_ATTRIBUTES* var,vector3df vec);    
 
     /******************************************************
@@ -113,7 +110,7 @@ public:
      * @param playerPos position where should play the event and/or of the listener
      * @param playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+    void checkAndPlayEvent(std::string eventPath, vector3df playerPos);
 
     /******************************************************
      * @brief Plays a sound event
@@ -121,8 +118,19 @@ public:
      * @param vector3df playerPos position where should play the event and/or of the listener
      * @param vector3df playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+    void playEvent(std::string eventPath, vector3df playerPos);
 
+    /******************************************************
+     * @brief Stops an event
+     * @param eventPath path of the event to stop
+     ******************************************************/
+    void stopEvent(std::string eventPath);
+
+    /******************************************************
+     * @brief Stops an event if it's being played
+     * @param eventPath path of the event to stop
+     ******************************************************/
+    void checkAndStopEvent(std::string eventPath);
 
 private:
     const char * banksPath;
@@ -151,13 +159,13 @@ public:
     SoundEvent();
 
     /******************************************************
-     *  Destructor, makes the class pure abstract (= 0)
+     * Destructor, makes the class pure abstract (= 0)
      * Pure abstract function
      ******************************************************/
      virtual ~SoundEvent() = 0;
     
     /******************************************************
-     *  Starts to reproduce the event
+     * Starts to reproduce the event
      * Abstract function
      ******************************************************/
     virtual void start();
@@ -174,25 +182,25 @@ public:
     
     /******************************************************
      *  Modifies the sound event volume
-     *  \param vol event volume, 0 = silence, 1 = maximun volume
+     *  @param vol event volume, 0 = silence, 1 = maximun volume
      ******************************************************/
     void setVolume(float vol);
     
     /******************************************************
      *  Modifies the event volume multiplying it with a gain factor
-     *  \param gain factor, 0 = silence, 1 = keep volume
+     *  @param gain factor, 0 = silence, 1 = keep volume
      ******************************************************/
     void setGain(float  gain);
     
     /******************************************************
      *  Modifies the 3D position of the sound event
-     *  \param x, y, and z, new 3D position
+     *  @param x, y, and z, new 3D position
      ******************************************************/
     void setPosition(vector3df pos);
     
     /*******************************************************
      * Checks if the sound is playing
-     *  \return returns true if the sound is playing
+     *  @return returns true if the sound is playing
      *******************************************************/
     bool isPlaying();
 
@@ -208,18 +216,21 @@ public:
      *******************************************************/
     void setParamValue(std::string name, float value);
     
+    /*******************************************************
+     * @brief Returns the event instance
+     * @return FMOD::Studio::EventInstance* 
+     *******************************************************/
     FMOD::Studio::EventInstance* getInstance();
 
 protected:
     FMOD::Studio::EventInstance* soundInstance;
 
-    /******************************************************
-     * @brief 
-     * @param FMOD::Studio::EventInstance instance Instance
-     ******************************************************/
+    /*******************************************************
+     * @brief Sets the event instance
+     * @return FMOD::Studio::EventInstance* 
+     *******************************************************/
     void setInstance(FMOD::Studio::EventInstance * instance);
     
 };
-
 
 #endif /* SoundSystem_h */

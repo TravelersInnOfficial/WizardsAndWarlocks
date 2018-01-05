@@ -191,28 +191,23 @@ void SoundSystem::setVolume(float vol) {
 ******************************************************/
 void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 
-	rot = rot * M_PI/180;		// Transformamos la rotacion
+	rot = rot * M_PI/180;		//Transform to degrees
 	rot.X = 0; rot.Z = 0;
-	setPos(listener, pos);		// Ponemos la Posicion
+	setPos(listener, pos);		//Set the listener position
 
-	// Calculamos el FORWARD
+	//Calculate the forward vector
 	vector3df frwd = vector3df (sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 	setForward(listener, frwd);	// Ponemos el FORWARD
 
-	// ########### CALCULATE UP VECTOR FROM FORWARD
-	// RIGHT VECTOR X FORWARD VECTOR --> (FORWARD X ABSOLUTE UP) X FORWARD --> (FORWARD X [0,1,0]) X FORWARD
+	//Calculate the up vector from the forward vector
+	//Right vector x forward vector --> (forward x absolute up) x forward --> (forward x [0,1,0]) x forward
 	vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
 	vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
 	A = aux; B = frwd;
 	vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
 	setUp(listener, up);
-	// ###############################
-
-	// Ponemos la VELOCIDAD
-	setVel(listener, vector3df(0.0f,0.0f,0.0f));
 	
-	//std::cout<<"FORWARD: "<<frwd<<std::endl;
-	//std::cout<<"UP: "<<up<<std::endl;
+	//Finally, set the attributes
 	ERRCHECK(system->setListenerAttributes(0, listener));
 }
 
@@ -280,12 +275,11 @@ void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 * @param playerPos position where should play the event and/or of the listener
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
-void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
+void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos) {
+	
 	//Checks if the event exists and is being played
-	if(getEvent(eventPath.c_str()) != NULL){
-		if (!getEvent(eventPath.c_str())->isPlaying()) {
-			playEvent(eventPath, playerPos, playerRot); //Plays the event
-		}
+	if (!getEvent(eventPath.c_str())->isPlaying()) {
+		playEvent(eventPath, playerPos); //Plays the event
 	}
 }
 
@@ -295,10 +289,28 @@ void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos, 
 * @param playerPos position where should play the event and/or of the listener
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
-void SoundSystem::playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot) {
+void SoundSystem::playEvent(std::string eventPath, vector3df playerPos) {
 	getEvent(eventPath.c_str())->setPosition(playerPos);	//Position the event
 	getEvent(eventPath.c_str())->start();        			//Plays the event
 }
+
+/******************************************************
+ * @brief Stops an event that is being played
+ * @param eventPath path of the event to stop
+ ******************************************************/
+void SoundSystem::stopEvent(std::string eventPath) {
+    
+    getEvent(eventPath.c_str())->stop();
+}
+
+/******************************************************
+ * @brief Stops an event if it's being played
+ * @param eventPath path of the event to stop
+ ******************************************************/
+void SoundSystem::checkAndStopEvent(std::string eventPath) {
+    if (getEvent(eventPath.c_str())->isPlaying()) stopEvent(eventPath);
+}
+
 
 /********************************************************************************************************
 ********************************************** Sound Event *********************************************
@@ -363,43 +375,32 @@ void SoundEvent::setGain(float gain) {
 void SoundEvent::setPosition(vector3df pos) {
 	FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 
-	SoundSystem::getInstance()->setPos(attributes, pos);					// Ponemos la Posicion
-	SoundSystem::getInstance()->setVel(attributes, vector3df(0, 0, 0));		// Ponemos la Velocidad
+	SoundSystem::getInstance()->setPos(attributes, pos);	//Set the position
 
-
-	// ########### CALCULATE FORWARD VECTOR (LISTENER TO SOUND POSITION NORMALIZED)
-		// Recibimos la posicion del listener
-		//vector3df listenerPos = SoundSystem::getInstance()->getListenerPosition();
-		vector3df frwd = vector3df(0,0,1);
-		frwd.normalize();
-		SoundSystem::getInstance()->setForward(attributes, frwd);
-	// ###############################
-
-	// ########### CALCULATE UP VECTOR FROM FORWARD
-	// RIGHT VECTOR X FORWARD VECTOR --> (FORWARD X ABSOLUTE UP) X FORWARD --> (FORWARD X [0,1,0]) X FORWARD
-		vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
-		vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-		A = aux; B = frwd;
-		vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-		SoundSystem::getInstance()->setUp(attributes, up);
-	// ###############################
+	//Set the forward vector
+	vector3df frwd = vector3df(0,0,1);
+	SoundSystem::getInstance()->setForward(attributes, frwd);
 	
-	// std::cout<<"##################################"<<std::endl;
-	// std::cout<<"SOUND POS: "<<pos<<std::endl;
-	// std::cout<<"FORWARD VECTOR: "<<frwd<<std::endl;
-	// std::cout<<"UP VECTOR: "<<up<<std::endl;
-	
+	//Calculate the up vector from the forward vector
+	//Right vector x forward vector --> (forward x absolute up) x forward --> (forward x [0,1,0]) x forward
+	vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
+	vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
+	A = aux; B = frwd;
+	vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
+	SoundSystem::getInstance()->setUp(attributes, up);
+
+	//Finally, set the attributes
 	ERRCHECK(soundInstance->set3DAttributes(attributes));
 }
 
 /*******************************************************
 * Checks if the sound is playing
-*  \return returns true if the sound is playing
+*  @return returns true if the sound is playing
 *******************************************************/
 bool SoundEvent::isPlaying() {
 	bool res = false;
 	FMOD_STUDIO_PLAYBACK_STATE state;
-	ERRCHECK(soundInstance->getPlaybackState(&state));
+	ERRCHECK(soundInstance->getPlaybackState(&state)); //Checks the state (0 = true, 3 = false)
 	if (state == 0) res = true;
 	return res;
 }
@@ -420,10 +421,18 @@ void SoundEvent::setParamValue(std::string name, float value) {
 	ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
 }   
 
+/*******************************************************
+ * @brief Returns the event instance
+ * @return FMOD::Studio::EventInstance* 
+ *******************************************************/
 FMOD::Studio::EventInstance* SoundEvent::getInstance() {
 	return soundInstance;
 }
 
+/*******************************************************
+ * @brief Sets the event instance
+ * @return FMOD::Studio::EventInstance* 
+ *******************************************************/
 void SoundEvent::setInstance(FMOD::Studio::EventInstance * instance) {
 	soundInstance = instance;
 }

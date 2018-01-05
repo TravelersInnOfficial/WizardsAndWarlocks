@@ -225,15 +225,14 @@ void Player::Update(){
 		if(moving){
 			if(!stepsStarted){
 				stepsStarted = true;
-				SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
+				playFootsteps();
 			}
 			moving = false;
 		}
 		else{
 			if(stepsStarted){
 				stepsStarted = false;
-				SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
-				if(se != NULL) se->stop();
+				stopFootsteps();
 			}
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
@@ -323,6 +322,7 @@ void Player::MoveZ(int dir){
 
 void Player::Jump(){
 	if(canJump && hasCharacter) {
+		stopFootsteps();
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
 		float impulse = 30 * 9.8;
@@ -335,7 +335,7 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	if (HP < 0) {
-		 SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetHeadPos(), GetRot()); //Play the sound event
+		 playHit(); //Play the sound event
 		 bloodOverlayTime = 1;
 	} 
 
@@ -414,7 +414,7 @@ void Player::SendSignal(){
 
 void Player::Die(){
 
-	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Die", GetHeadPos(), GetRot()); //Play the sound event
+	playDie(); //Play the sound event
 
 	DropObject();
 
@@ -482,7 +482,7 @@ void Player::DropObject(){
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Drink", GetHeadPos(), GetRot());
+		playDrink();
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
@@ -519,13 +519,6 @@ void Player::UpdatePosShape(){
 	}
 }
 
-void Player::UpdateSoundsPosition(){
-	if(stepsStarted){
-		SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
-		if(se != NULL) se->setPosition(GetHeadPos());
-	}
-}
-
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::RefreshServer(){
@@ -533,6 +526,39 @@ void Player::RefreshServer(){
 	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 }
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCITONS *********************************************
+ ********************************************************************************************************/
+void Player::playFootsteps() {
+	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetPos());
+}
+
+void Player::playDrink() {
+	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Drink", GetPos());
+}
+
+void Player::playDie() {
+	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Die", GetPos());
+}
+
+void Player::playHit() {
+	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetPos());
+}
+
+void Player::stopFootsteps() {
+	SoundSystem::getInstance()->stopEvent("event:/Character/Hard/Footsteps");
+}
+
+void Player::UpdateSoundsPosition(){
+	if(stepsStarted){
+		SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps")->setPosition(GetHeadPos());
+	}
+}
+/********************************************************************************************************
+ ********************************************** GETERS **************************************************
+ ********************************************************************************************************/
+
 
 vector3df Player::GetAngularVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);

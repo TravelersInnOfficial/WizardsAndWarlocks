@@ -36,11 +36,11 @@ Game::Game(){
 	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
-	AL = playerManager->AddAIPlayer();
-	spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
-	spellManager->AddHechizo(1, AL, SPELL_FIRE);
-	spellManager->AddHechizo(2, AL, SPELL_WALL);
-	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
+	//AL = playerManager->AddAIPlayer();
+	//spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
+	//spellManager->AddHechizo(1, AL, SPELL_FIRE);
+	//spellManager->AddHechizo(2, AL, SPELL_WALL);
+	//spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
 }
 
 Game::~Game(){
@@ -125,7 +125,7 @@ void Game::Draw(){
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
-	if(AL != NULL) AL->Debug();
+	//if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 

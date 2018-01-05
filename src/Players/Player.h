@@ -69,6 +69,14 @@ class Player: public Entidad{
 		NetworkObject* GetNetworkObject();
 		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
 
+		//Sound Function
+		void playFootsteps();				//Plays the footsteps sound
+		void playDrink();					//PLays the drink potion sound
+		void playDie();						//Plays the die sound
+		void playHit();						//Plays the damage hit sound
+		void stopFootsteps();				//Stops the footsteps sound
+		void UpdateSoundsPosition();		//Updates the continuous sounds
+
 		//Geters
 		bool IsPlayerOne();
 		vector3df GetAngularVelocity();
@@ -149,7 +157,7 @@ class Player: public Entidad{
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
-		void UpdateSoundsPosition();		// Actualiza los sonidos continuos
+		
 
 };
 
