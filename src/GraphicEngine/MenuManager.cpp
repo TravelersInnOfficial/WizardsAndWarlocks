@@ -164,14 +164,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 
 	if(netDebugWindow != NULL){
 
-		std::wstring player1;
-		std::wstring player2;
-		std::wstring player3;
-		std::wstring player4;
-		std::wstring player5;
-		std::wstring player6;
-		std::wstring player7;
-		std::wstring player8;
+		ClearElement(NETDEBUG_M_P1); ClearElement(NETDEBUG_M_P2); ClearElement(NETDEBUG_M_P3); ClearElement(NETDEBUG_M_P4); ClearElement(NETDEBUG_M_P5); ClearElement(NETDEBUG_M_P6); ClearElement(NETDEBUG_M_P7); ClearElement(NETDEBUG_M_P8);	
+		std::wstring player1; std::wstring player2; std::wstring player3; std::wstring player4; std::wstring player5; std::wstring player6; std::wstring player7; std::wstring player8;
+		vector2di menuSize = vector2di(netDebugWindow->getClientRect().getWidth(), netDebugWindow->getClientRect().getHeight());
+
+		// ##################################################
 
 		if(players.size() > 0 && players.at(0) != NULL){
 			std::string player1_s = "Player 1: "+ std::to_string((int)players.at(0)->GetHP()) +" HP / "+ std::to_string((int)players.at(0)->GetMP()) +" MP";
@@ -180,13 +177,23 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player1 = L"PLAYER 1 NOT CONNECTED";
 
+		vector4di rect = vector4di(0, menuSize.Y/8, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player1, true, false, NETDEBUG_M_P1, netDebugWindow);
+		
+		// ##################################################
+
 		if(players.size() > 1 && players.at(1) != NULL){
 			std::string player2_s = "Player 2: "+ std::to_string((int)players.at(1)->GetHP()) +" HP / "+ std::to_string((int)players.at(1)->GetMP()) +" MP";
 			player2 = std::wstring(player2_s.length(), L' ');
 			std::copy(player2_s.begin(), player2_s.end(), player2.begin());
 		}
 		else player2 = L"PLAYER 2 NOT CONNECTED";
-
+		
+		rect = vector4di(0, menuSize.Y/8*2, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player2, true, false, NETDEBUG_M_P2, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 2 && players.at(2) != NULL){
 			std::string player3_s = "Player 3: "+ std::to_string((int)players.at(2)->GetHP()) +" HP / "+ std::to_string((int)players.at(2)->GetMP()) +" MP";
 			player3 = std::wstring(player3_s.length(), L' ');
@@ -194,6 +201,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player3 = L"PLAYER 3 NOT CONNECTED";
 
+		rect = vector4di(0, menuSize.Y/8*3, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player3, true, false, NETDEBUG_M_P3, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 3 && players.at(3) != NULL){
 			std::string player4_s = "Player 4: "+ std::to_string((int)players.at(3)->GetHP()) +" HP / "+ std::to_string((int)players.at(3)->GetMP()) +" MP";
 			player4 = std::wstring(player4_s.length(), L' ');
@@ -201,6 +213,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player4 = L"PLAYER 4 NOT CONNECTED";
 
+		rect = vector4di(0, menuSize.Y/8*4, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player4, true, false, NETDEBUG_M_P4, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 4 && players.at(4) != NULL){
 			std::string player5_s = "Player 5: "+ std::to_string((int)players.at(4)->GetHP()) +" HP / "+ std::to_string((int)players.at(4)->GetMP()) +" MP";
 			player5 = std::wstring(player5_s.length(), L' ');
@@ -208,6 +225,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player5 = L"PLAYER 5 NOT CONNECTED";
 
+		rect = vector4di(0, menuSize.Y/8*5, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player5, true, false, NETDEBUG_M_P5, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 5 && players.at(5) != NULL){
 			std::string player6_s = "Player 6: "+ std::to_string((int)players.at(5)->GetHP()) +" HP / "+ std::to_string((int)players.at(5)->GetMP()) +" MP";
 			player6 = std::wstring(player6_s.length(), L' ');
@@ -215,6 +237,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player6 = L"PLAYER 6 NOT CONNECTED";
 
+		rect = vector4di(0, menuSize.Y/8*6, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player6, true, false, NETDEBUG_M_P6, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 6 && players.at(6) != NULL){
 			std::string player7_s = "Player 7: "+ std::to_string((int)players.at(6)->GetHP()) +" HP / "+ std::to_string((int)players.at(6)->GetMP()) +" MP";
 			player7 = std::wstring(player7_s.length(), L' ');
@@ -222,6 +249,11 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player7 = L"PLAYER 7 NOT CONNECTED";
 
+		rect = vector4di(0, menuSize.Y/8*7, menuSize.X, menuSize.Y/8);
+		g_engine->addStaticText(rect, player7, true, false, NETDEBUG_M_P7, netDebugWindow);
+		
+		// ##################################################
+		
 		if(players.size() > 7 && players.at(7) != NULL){
 			std::string player8_s = "Player 8: "+ std::to_string((int)players.at(7)->GetHP()) +" HP / "+ std::to_string((int)players.at(7)->GetMP()) +" MP";
 			player8 = std::wstring(player8_s.length(), L' ');
@@ -229,40 +261,10 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		}
 		else player8 = L"PLAYER 8 NOT CONNECTED";
 
-		ClearElement(NETDEBUG_M_P1);
-		ClearElement(NETDEBUG_M_P2);
-		ClearElement(NETDEBUG_M_P3);
-		ClearElement(NETDEBUG_M_P4);
-		ClearElement(NETDEBUG_M_P5);
-		ClearElement(NETDEBUG_M_P6);
-		ClearElement(NETDEBUG_M_P7);
-		ClearElement(NETDEBUG_M_P8);	
-
-		vector2di menuSize = vector2di(netDebugWindow->getClientRect().getWidth(), netDebugWindow->getClientRect().getHeight());
-
-		vector4di rect = vector4di(0, menuSize.Y/8, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player1, true, false, NETDEBUG_M_P1, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*2, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player2, true, false, NETDEBUG_M_P2, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*3, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player3, true, false, NETDEBUG_M_P3, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*4, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player4, true, false, NETDEBUG_M_P4, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*5, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player5, true, false, NETDEBUG_M_P5, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*6, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player6, true, false, NETDEBUG_M_P6, netDebugWindow);
-		
-		rect = vector4di(0, menuSize.Y/8*7, menuSize.X, menuSize.Y/8);
-		g_engine->addStaticText(rect, player7, true, false, NETDEBUG_M_P7, netDebugWindow);
-		
 		rect = vector4di(0, menuSize.Y/8*8, menuSize.X, menuSize.Y/8);
 		g_engine->addStaticText(rect, player8, true, false, NETDEBUG_M_P8, netDebugWindow);
+		
+		// ##################################################
 
 	}
 }
