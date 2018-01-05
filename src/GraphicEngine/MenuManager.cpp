@@ -107,7 +107,6 @@ void MenuManager::CreateAlliance(){
 	);
 	window->setDraggable(false);
 	window->getCloseButton()->setVisible(false);
-	window->getCloseButton()->setID(ALLIANCE_M_CLOSE);
 	loadedOptions.push_back(ALLIANCE_M_WINDOW);
 
 	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/7.0f)/2),menuSize.Y/4,menuSize.X/7.0f,menuSize.Y/30);
@@ -133,7 +132,6 @@ void MenuManager::CreateMatchEnded(int option){
 	);
 	window->setDraggable(false);
 	window->getCloseButton()->setVisible(false);
-	window->getCloseButton()->setID(ENDMATCH_M_WINDOW);
 	loadedOptions.push_back(ENDMATCH_M_WINDOW);
 
 	std::wstring winner = L"THE WIZARDS WON!";
@@ -156,8 +154,10 @@ void MenuManager::CreateNetDebug(){
 		0,
 		NETDEBUG_M_WINDOW
 	);
-
+	netDebugWindow->setDraggable(false);
+	netDebugWindow->getCloseButton()->setVisible(false);
 	loadedOptions.push_back(NETDEBUG_M_WINDOW);
+
 	UpdateNetDebug(std::vector<Player*>());
 }
 

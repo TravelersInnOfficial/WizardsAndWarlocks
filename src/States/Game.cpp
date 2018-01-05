@@ -36,11 +36,11 @@ Game::Game(){
 	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
-	// AL = playerManager->AddAIPlayer();
-	// spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
-	// spellManager->AddHechizo(1, AL, SPELL_FIRE);
-	// spellManager->AddHechizo(2, AL, SPELL_WALL);
-	// spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
+	AL = playerManager->AddAIPlayer();
+	spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
+	spellManager->AddHechizo(1, AL, SPELL_FIRE);
+	spellManager->AddHechizo(2, AL, SPELL_WALL);
+	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
 }
 
 Game::~Game(){
