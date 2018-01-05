@@ -149,6 +149,7 @@ class Player: public Entidad{
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
+		void UpdateSoundsPosition();		// Actualiza los sonidos continuos
 
 };
 

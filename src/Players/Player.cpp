@@ -243,6 +243,7 @@ void Player::Update(){
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
+		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne){
@@ -515,6 +516,13 @@ void Player::UpdatePosShape(){
 
 		rotation = bt_body->GetRotation();
 		m_playerNode->setRotation(rotation * 180 / M_PI);
+	}
+}
+
+void Player::UpdateSoundsPosition(){
+	if(stepsStarted){
+		SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
+		if(se != NULL) se->setPosition(GetHeadPos());
 	}
 }
 
