@@ -138,6 +138,8 @@ class Player: public Entidad{
 		bool			matchStarted;		// Ha empezado la partida?
 		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
 
+		bool			stepsStarted;		// Han empezado a sonar los steps?
+
 		bool 			moving;				// Se esta moviendo?
 		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior

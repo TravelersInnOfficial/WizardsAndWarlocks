@@ -33,6 +33,7 @@ Player::Player(bool isPlayer1){
 	hasCharacter = false;
 	readyToStart = false;
 	moving = false;
+	stepsStarted = false;
 	bloodOverlayTime = 0;
 
 	currentSpell = 0;
@@ -222,12 +223,18 @@ void Player::Update(){
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos 
 		if(moving){
-			SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
-			moving = false; 
+			if(!stepsStarted){
+				stepsStarted = true;
+				SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
+			}
+			moving = false;
 		}
 		else{
-			SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
-			if(se != NULL) se->stop();
+			if(stepsStarted){
+				stepsStarted = false;
+				SoundEvent* se = SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps");
+				if(se != NULL) se->stop();
+			}
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
@@ -314,7 +321,7 @@ void Player::MoveZ(int dir){
 }
 
 void Player::Jump(){
-	// SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
+	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
 	if(canJump && hasCharacter) {
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
