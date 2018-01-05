@@ -321,7 +321,6 @@ void Player::MoveZ(int dir){
 }
 
 void Player::Jump(){
-	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetHeadPos(), GetRot());
 	if(canJump && hasCharacter) {
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
