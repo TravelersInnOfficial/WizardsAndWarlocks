@@ -50,6 +50,7 @@ void Player::PlayerInit(){
 	m_DamageMult = 1;	
 	m_dead = false;
 	EffectManager::GetInstance()->CleanEffects(this);
+	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 }
 
 Player::~Player(){
@@ -99,8 +100,6 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body = new BT_Body();
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
-
-		TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 
 		if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
 		hasCharacter = true;
@@ -415,7 +414,7 @@ void Player::Die(){
 		DestroyPlayerCharacter();
 		CheckIfReady();
 	}
-
+	
 	Respawn();
 }
 
