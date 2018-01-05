@@ -223,17 +223,11 @@ void Player::Update(){
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos 
 		if(moving){
-			if(!stepsStarted){
-				stepsStarted = true;
-				playFootsteps();
-			}
+			if(!stepsStarted && canJump) playFootsteps();
 			moving = false;
 		}
 		else{
-			if(stepsStarted){
-				stepsStarted = false;
-				stopFootsteps();
-			}
+			if(stepsStarted) stopFootsteps();
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
@@ -531,6 +525,7 @@ void Player::RefreshServer(){
  ****************************************** SOUND FUNCITONS *********************************************
  ********************************************************************************************************/
 void Player::playFootsteps() {
+	stepsStarted = true;
 	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetPos());
 }
 
@@ -547,6 +542,7 @@ void Player::playHit() {
 }
 
 void Player::stopFootsteps() {
+	stepsStarted = false;
 	SoundSystem::getInstance()->stopEvent("event:/Character/Hard/Footsteps");
 }
 
