@@ -198,9 +198,15 @@ void Player::GetNetInput(){
 }
 
 void Player::SetNetInput(){
+	if(isPlayerOne){
+		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+	}
 }
 
 void Player::Update(){
+
+	SetNetInput();
 
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();

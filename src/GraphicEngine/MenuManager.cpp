@@ -35,7 +35,8 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(NETDEBUG_M):{
-			CreateNetDebug();
+			if(netDebugWindow == NULL) CreateNetDebug();
+			else ClearMenu();
 			break;
 		}
 		default:{
