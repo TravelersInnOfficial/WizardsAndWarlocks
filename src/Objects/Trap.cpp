@@ -51,7 +51,7 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
-    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
+    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.5,m_dimensions->Z*0.5);
     m_body->CreateGhostBox(TPosition, *m_rotation, aux_dimensions);
     m_body->AssignPointer(this);
 }
