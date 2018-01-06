@@ -204,7 +204,6 @@ void Player::GetNetInput(){
 	string auxName = networkObject->GetStringVar(PLAYER_NAME);
 	if(auxName.length() > 0){
 		SetName(auxName);
-		// std::cout<<"RECIBIMOS NOMBRE: "<<auxName<<std::endl;
 		auxName = "";
 		networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
 	}
@@ -213,7 +212,7 @@ void Player::GetNetInput(){
 
 void Player::SetNetInput(){
 	if(isPlayerOne){
-		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+		// networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 	}
 }
@@ -485,16 +484,6 @@ void Player::CatchObject(Potion* p){
 void Player::DropObject(){
 	if(potion!=NULL){
 		potion->CreatePotion(m_position, vector3df(0,0,0));
-
-		/*vector3df dropForce = m_position;
-		float impulse = 20;
-		vector3df cameraRot = GetRot();
-
-		dropForce.X = sin(cameraRot.Y) * impulse;
-		dropForce.Y = impulse/2;
-		dropForce.Z = cos(cameraRot.Y) * impulse;
-		potion->Drop(dropForce);*/
-
 		potion = NULL;
 	}
 }
@@ -547,6 +536,7 @@ void Player::HitMade(Player* player){
 /********************************************************************************************************
  ****************************************** SOUND FUNCITONS *********************************************
  ********************************************************************************************************/
+ 
 void Player::createSoundEvents() {
 	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
 	SoundEvent * drink = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
@@ -665,6 +655,8 @@ PlayerController* Player::GetController(){
 	return controller;
 }
 
+std::string Player::GetName(){ return name; }
+
 void Player::SetAlliance(Alliance newAlliance){
 
 	if(newAlliance == ERR_ALLIANCE) return;
@@ -744,25 +736,6 @@ void Player::SetRotation(vector3df rotation){
 		bt_body->SetRotation(newRot);
 	}
 }
-
-/*	This method makes the graphic body rotate on X axis if is player one
-void Player::SetRotation(vector3df rotation){
-	if(hasCharacter){
-		vector3df newRotGraphic = this->rotation;
-		vector3df newRotPhysic = this->rotation;
-		
-		newRotGraphic.Z = 0;
-		if(!isPlayerOne) newRotGraphic.X = 0;
-		newRotGraphic = newRotGraphic * 180 / M_PI;
-		m_playerNode->setRotation(newRotGraphic);
-		
-		newRotPhysic.Z = 0;
-		newRotPhysic.X = 0;
-		newRotPhysic = newRotPhysic * 180 / M_PI;
-		bt_body->SetRotation(newRotPhysic);
-	}
-}
-*/
 
 void Player::SetHP(float HP){ m_HP = HP; }
 

@@ -77,7 +77,7 @@ class Player: public Entidad{
 		void playHit();						//Plays the damage hit sound
 		void stopFootsteps();				//Stops the footsteps sound
 		void UpdateSoundsPosition();		//Updates the continuous sounds
-		void changeSurface(float n);			//Changes the surface parameter of the event
+		void changeSurface(float n);		//Changes the surface parameter of the event
 
 		//Geters
 		bool IsPlayerOne();
@@ -99,6 +99,7 @@ class Player: public Entidad{
 		int GetNumberSpells();
 		bool GetReadyStatus();
 		PlayerController* GetController();
+		std::string GetName();
 
 		// Seters
 		void SetPosition(vector3df);

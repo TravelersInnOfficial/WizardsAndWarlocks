@@ -175,7 +175,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 
 		if(players.size() > 0 && players.at(0) != NULL){
-			std::string player1_s = "Player 1: "+ std::to_string((int)players.at(0)->GetHP()) +" HP / "+ std::to_string((int)players.at(0)->GetMP()) +" MP";
+			std::string player1_s = players.at(0)->GetName() + ": " + std::to_string((int)players.at(0)->GetHP()) +" HP / "+ std::to_string((int)players.at(0)->GetMP()) +" MP";
 			player1 = std::wstring(player1_s.length(), L' ');
 			std::copy(player1_s.begin(), player1_s.end(), player1.begin());
 		}
@@ -187,7 +187,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 
 		if(players.size() > 1 && players.at(1) != NULL){
-			std::string player2_s = "Player 2: "+ std::to_string((int)players.at(1)->GetHP()) +" HP / "+ std::to_string((int)players.at(1)->GetMP()) +" MP";
+			std::string player2_s = players.at(1)->GetName() + ": " + std::to_string((int)players.at(1)->GetHP()) +" HP / "+ std::to_string((int)players.at(1)->GetMP()) +" MP";
 			player2 = std::wstring(player2_s.length(), L' ');
 			std::copy(player2_s.begin(), player2_s.end(), player2.begin());
 		}
@@ -199,7 +199,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 2 && players.at(2) != NULL){
-			std::string player3_s = "Player 3: "+ std::to_string((int)players.at(2)->GetHP()) +" HP / "+ std::to_string((int)players.at(2)->GetMP()) +" MP";
+			std::string player3_s = players.at(2)->GetName() + ": " + std::to_string((int)players.at(2)->GetHP()) +" HP / "+ std::to_string((int)players.at(2)->GetMP()) +" MP";
 			player3 = std::wstring(player3_s.length(), L' ');
 			std::copy(player3_s.begin(), player3_s.end(), player3.begin());
 		}
@@ -211,7 +211,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 3 && players.at(3) != NULL){
-			std::string player4_s = "Player 4: "+ std::to_string((int)players.at(3)->GetHP()) +" HP / "+ std::to_string((int)players.at(3)->GetMP()) +" MP";
+			std::string player4_s = players.at(3)->GetName() + ": " + std::to_string((int)players.at(3)->GetHP()) +" HP / "+ std::to_string((int)players.at(3)->GetMP()) +" MP";
 			player4 = std::wstring(player4_s.length(), L' ');
 			std::copy(player4_s.begin(), player4_s.end(), player4.begin());
 		}
@@ -223,7 +223,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 4 && players.at(4) != NULL){
-			std::string player5_s = "Player 5: "+ std::to_string((int)players.at(4)->GetHP()) +" HP / "+ std::to_string((int)players.at(4)->GetMP()) +" MP";
+			std::string player5_s = players.at(4)->GetName() + ": " + std::to_string((int)players.at(4)->GetHP()) +" HP / "+ std::to_string((int)players.at(4)->GetMP()) +" MP";
 			player5 = std::wstring(player5_s.length(), L' ');
 			std::copy(player5_s.begin(), player5_s.end(), player5.begin());
 		}
@@ -235,7 +235,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 5 && players.at(5) != NULL){
-			std::string player6_s = "Player 6: "+ std::to_string((int)players.at(5)->GetHP()) +" HP / "+ std::to_string((int)players.at(5)->GetMP()) +" MP";
+			std::string player6_s = players.at(5)->GetName() + ": " + std::to_string((int)players.at(5)->GetHP()) +" HP / "+ std::to_string((int)players.at(5)->GetMP()) +" MP";
 			player6 = std::wstring(player6_s.length(), L' ');
 			std::copy(player6_s.begin(), player6_s.end(), player6.begin());
 		}
@@ -247,7 +247,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 6 && players.at(6) != NULL){
-			std::string player7_s = "Player 7: "+ std::to_string((int)players.at(6)->GetHP()) +" HP / "+ std::to_string((int)players.at(6)->GetMP()) +" MP";
+			std::string player7_s = players.at(6)->GetName() + ": " + std::to_string((int)players.at(6)->GetHP()) +" HP / "+ std::to_string((int)players.at(6)->GetMP()) +" MP";
 			player7 = std::wstring(player7_s.length(), L' ');
 			std::copy(player7_s.begin(), player7_s.end(), player7.begin());
 		}
@@ -259,7 +259,7 @@ void MenuManager::UpdateNetDebug(std::vector<Player*> players){
 		// ##################################################
 		
 		if(players.size() > 7 && players.at(7) != NULL){
-			std::string player8_s = "Player 8: "+ std::to_string((int)players.at(7)->GetHP()) +" HP / "+ std::to_string((int)players.at(7)->GetMP()) +" MP";
+			std::string player8_s = players.at(7)->GetName() + ": " + std::to_string((int)players.at(7)->GetHP()) +" HP / "+ std::to_string((int)players.at(7)->GetMP()) +" MP";
 			player8 = std::wstring(player8_s.length(), L' ');
 			std::copy(player8_s.begin(), player8_s.end(), player8.begin());
 		}
