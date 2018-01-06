@@ -86,11 +86,6 @@ public:
     void loadBank(std::string path, FMOD::Studio::Bank* bank);
 
     /******************************************************
-     *  Creates all the event descriptions and instances needed for the sound events
-     ******************************************************/
-    void createEventDescriptionsNEvents();
-
-    /******************************************************
      *  @brief Creates the a FMOD eventDescription
      *  @param const char* name path of the description
      *  @param FMOD::Studio::EventDescription* event description pointer
@@ -150,7 +145,6 @@ private:
 
 class SoundEvent {
     //Friend method so it can access the protected functions
-    friend void SoundSystem::createEventDescriptionsNEvents();
     friend SoundEvent* SoundSystem::createEvent(std::string);
 public:
     /******************************************************

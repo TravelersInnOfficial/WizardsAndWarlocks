@@ -71,9 +71,6 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setVel(listener,vector3df(0.0f,0.0f,0.0f));
 	setForward(listener,vector3df(1.0f,0.0f,0.0f));
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
-
-	//Create event descriptions
-	//createEventDescriptionsNEvents();
 }
 
 /******************************************************
@@ -135,50 +132,6 @@ void SoundSystem::loadBanks() {
 	banks["MusicBank"] = MusicBank;
 	banks["CommonSoundBank"] = commonSoundBank;
 }
-
-/******************************************************
-*  Creates all the event descriptions and instances needed for the sound events
-******************************************************/
-void SoundSystem::createEventDescriptionsNEvents() {
-/*
-	//Initialize the event descriptions
-	FMOD::Studio::EventDescription * footstepDesc = NULL;
-	FMOD::Studio::EventDescription * hitDesc 	  = NULL;
-	FMOD::Studio::EventDescription * drinkDesc 	  = NULL;
-	FMOD::Studio::EventDescription * dieDesc 	  = NULL;
-
-	//Initialize the event instances
-	FMOD::Studio::EventInstance* footstepInst;
-	FMOD::Studio::EventInstance* hitInst;
-	FMOD::Studio::EventInstance* drinkInst;
-	FMOD::Studio::EventInstance* dieInst;
-
-	footstepDesc = createDescription("event:/Character/Hard/Footsteps", footstepDesc);  // Create and store the event in a map
-	ERRCHECK(footstepDesc->createInstance(&footstepInst));                              // Create the event instance
-	SoundEvent* footstepEvent = new CharacterSound();                                   // Initialize the event    
-	footstepEvent->setInstance(footstepInst);                                           // Set the instance to the event
-	soundEvents["event:/Character/Hard/Footsteps"] = footstepEvent;                     // Add the instance to the event instances map    
-
-	hitDesc = createDescription("event:/Character/Hard/Hit", hitDesc);	// Create and store the event in a map          
-	ERRCHECK(hitDesc->createInstance(&hitInst));						// Create the event instance  
-	SoundEvent* hitEvent = new CharacterSound();						// Initialize the event      
-	hitEvent->setInstance(hitInst);										// Set the instance to the event  
-	soundEvents["event:/Character/Hard/Hit"] = hitEvent;				// Add the instance to the event instances map    
-	
-	drinkDesc = createDescription("event:/Character/Hard/Drink", drinkDesc);	// Create and store the event in a map          
-	ERRCHECK(drinkDesc->createInstance(&drinkInst));							// Create the event instance
-	SoundEvent* drinkEvent = new CharacterSound();								// Initialize the event    
-	drinkEvent->setInstance(drinkInst);											// Set the instance to the event
-	soundEvents["event:/Character/Hard/Drink"] = drinkEvent;					// Add the instance to the event instances map    
-
-	dieDesc = createDescription("event:/Character/Hard/Die", dieDesc);	// Create and store the event in a map          
-	ERRCHECK(dieDesc->createInstance(&dieInst));						// Create the event instance
-	SoundEvent* dieEvent = new CharacterSound();						// Initialize the event    
-	dieEvent->setInstance(dieInst);										// Set the instance to the event
-	soundEvents["event:/Character/Hard/Die"] = dieEvent;				// Add the instance to the event instances map
-*/
-}
-
 
 /******************************************************
 *  Modifies the general volume of the engine
