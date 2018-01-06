@@ -4,9 +4,6 @@
 GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
     board = NULL;
-
-    // std::wstring playerName = L"Jugador";
-    // AddText(playerName, vector3df(0,1.25f,0), -1);
 }
 
 GBody::~GBody(){

@@ -749,5 +749,5 @@ void Player::SetName(std::wstring newName){
 }
 
 void Player::SetBillboard(){
-	if(!name.empty()){ m_playerNode->AddText(name, vector3df(0,1.25f,0), -1); }
+	if(!name.empty() && !isPlayerOne){ m_playerNode->AddText(name, vector3df(0,1.25f,0), -1); }
 }
