@@ -36,6 +36,7 @@ Player::Player(bool isPlayer1){
 	stepsStarted = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
+	name = "";
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -98,6 +99,8 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		if(firstInit) m_playerNode->setScale(m_dimensions);
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setPosition(m_position);
+
+		SetBillboard();
 
 		// Physic Player
 		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
@@ -198,6 +201,14 @@ void Player::GetNetInput(){
 	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
 	readyToStart = isReady;
 
+	string auxName = networkObject->GetStringVar(PLAYER_NAME);
+	if(auxName.length() > 0){
+		SetName(auxName);
+		// std::cout<<"RECIBIMOS NOMBRE: "<<auxName<<std::endl;
+		auxName = "";
+		networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
+	}
+
 }
 
 void Player::SetNetInput(){
@@ -205,6 +216,13 @@ void Player::SetNetInput(){
 		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 	}
+}
+
+void Player::RefreshServer(){
+	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
+	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+	networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 }
 
 void Player::Update(){
@@ -522,12 +540,6 @@ void Player::UpdatePosShape(){
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
-void Player::RefreshServer(){
-	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
-	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
-	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
-}
-
 void Player::HitMade(Player* player){
 	hitOverlayTime = 0.25f;
 }
@@ -695,6 +707,8 @@ void Player::SetAlliance(Alliance newAlliance){
 			break;
 		}
 	}
+
+	SetBillboard();
 }
 
 void Player::SetPosition(vector3df pos){
@@ -761,3 +775,15 @@ void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
 void Player::SetMatchStatus(bool started){ matchStarted = started; }
+
+void Player::SetName(std::string newName){
+	name = newName;
+	if(!name.empty()){
+		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+		else SetBillboard();
+	}
+}
+
+void Player::SetBillboard(){
+	if(!isPlayerOne) m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
+}

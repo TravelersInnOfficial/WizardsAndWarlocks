@@ -48,16 +48,23 @@ public:
 	void SetObjectFloat(	int objectId, ObjectVariable k, float v);
 	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v);
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v);
+	void SetObjectString(	int objectId, ObjectVariable k, std::string v);
 
 	// Match Status
 	void EndMatch(Alliance winnerAlliance);
 
 	// We get the ID of the Network Object of the Player One
 	int GetPlayerOneId();
+	
+	// Name of the Client/Player
+	void SetClientName(std::string name);
+	std::string GetClientName();
 
 private:
 	
 	int playerOneId;
+	std::string name;
+
 	std::map<int, NetworkObject*> networkObjects;			// Vector of Network Objects on the Client
 	std::map<int, NetworkObject*> newNetworkObjects;		// Vector of Network Objects on the Client that haven't been retrieved
 	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of NO Objects to be erased

@@ -21,7 +21,8 @@ enum VariableMapID{
 	ID_CHANGE_INT		= 5,
 	ID_CHANGE_FLOAT		= 6,
 	ID_CHANGE_VECINT	= 7,
-	ID_CHANGE_VECFLOAT	= 8
+	ID_CHANGE_VECFLOAT	= 8,
+	ID_CHANGE_STRING	= 9
 };
 
 // ####################### GAME SPECIFIC MESSAGES #######################
@@ -62,7 +63,8 @@ enum ObjectVariable{
 	PLAYER_RESPAWN				=	17,
 	PLAYER_CREATE_CHAR			=	18,
 	PLAYER_READY				=	19,
-	PLAYER_SPELL				=	20
+	PLAYER_SPELL				=	20,
+	PLAYER_NAME					=	21
 	
 };
 

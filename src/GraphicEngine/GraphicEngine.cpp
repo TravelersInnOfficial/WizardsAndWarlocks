@@ -14,7 +14,7 @@ GraphicEngine::GraphicEngine(){
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
-		deskres,      //Size of window
+		deskres,      										//Size of window
 		16,                                                 //bits
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
@@ -421,4 +421,18 @@ void GraphicEngine::Raycast(vector3df Start, vector3df End, vector3df* point, ve
 			point->Z = p.Z;
 		}
 	}
+}
+
+irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){
+	irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
+	auxPos.X = position.X; auxPos.Y = position.Y; auxPos.Z = position.Z;
+
+	float dimX = text.length() * 0.1;
+	float dimY = 0.25f;
+	irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
+	
+	std::wstring wText = std::wstring(text.begin(), text.end());
+
+	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, wText.c_str(), parent, dim, auxPos, id);
+	return board;
 }

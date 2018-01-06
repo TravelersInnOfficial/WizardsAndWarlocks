@@ -92,6 +92,9 @@ void MenuManager::CreateMain(){
 
 	rect = vector4di(menuSize.X/2.3f,menuSize.Y/1.4f,menuSize.X/4.5f,menuSize.Y/30);
 	g_engine->addEditBox(rect, L"127.0.0.1", MAIN_M_IP, window);
+
+	rect = vector4di(menuSize.X/2.3f,menuSize.Y/1.3f,menuSize.X/4.5f,menuSize.Y/30);
+	g_engine->addEditBox(rect, L"Player Name", MAIN_M_NAME, window);
 }
 
 void MenuManager::CreateAlliance(){

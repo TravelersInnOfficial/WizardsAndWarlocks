@@ -26,6 +26,7 @@ public:
 	void SetFloatVar(	ObjectVariable k, float v,		bool notify, bool expandClientChanges);
 	void SetVecIVar(	ObjectVariable k, vector3di v, 	bool notify, bool expandClientChanges);
 	void SetVecFVar(	ObjectVariable k, vector3df v, 	bool notify, bool expandClientChanges);
+	void SetStringVar(	ObjectVariable k, std::string v, 	bool notify, bool expandClientChanges);
 
 	// Getters will retrieve info from the network object (Server must update it)
 	bool GetBoolVar(ObjectVariable k);
@@ -33,6 +34,7 @@ public:
 	float GetFloatVar(ObjectVariable k);
 	vector3di GetVecIVar(ObjectVariable k);
 	vector3df GetVecFVar(ObjectVariable k);
+	std::string GetStringVar(ObjectVariable k);
 
 private:
 
@@ -48,6 +50,7 @@ private:
 	std::map<int, float>		floatVariables;
 	std::map<int, vector3di>	v3iVariables;
 	std::map<int, vector3df>	v3fVariables;
+	std::map<int, std::string>	stringVariables;
 
 };
 
