@@ -375,15 +375,18 @@ void SoundEvent::setGain(float gain) {
 void SoundEvent::setPosition(vector3df pos) {
 	FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 
-	SoundSystem::getInstance()->setPos(attributes, pos);	//Set the position
+	vector3df newPos(pos.X, pos.Y+0.5, pos.Z);
+
+	SoundSystem::getInstance()->setPos(attributes, newPos);	//Set the position
 
 	//Set the forward vector
-	vector3df frwd = vector3df(0,0,1);
+	vector3df frwd = newPos - pos;
+	frwd.normalize();
 	SoundSystem::getInstance()->setForward(attributes, frwd);
 	
 	//Calculate the up vector from the forward vector
 	//Right vector x forward vector --> (forward x absolute up) x forward --> (forward x [0,1,0]) x forward
-	vector3df A = frwd; vector3df B = vector3df(0, 1, 0);
+	vector3df A = frwd; vector3df B = vector3df(0, 0, 1);
 	vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
 	A = aux; B = frwd;
 	vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
