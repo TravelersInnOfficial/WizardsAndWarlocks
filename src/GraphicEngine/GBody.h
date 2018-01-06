@@ -37,7 +37,7 @@ public:
 
 	void Remove();
 
-	void AddText(std::wstring text, vector3df position, int id = 0);
+	void AddText(std::string text, vector3df position, int id = 0);
 
 	friend class GraphicEngine;
 

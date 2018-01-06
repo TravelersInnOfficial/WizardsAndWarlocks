@@ -86,6 +86,20 @@ void NetworkObject::SetVecFVar(ObjectVariable k, vector3df v, bool notify, bool 
 	}
 }
 
+void NetworkObject::SetStringVar(ObjectVariable k, std::string v, bool notify, bool expandClientChange){
+	stringVariables[k] = v;
+	if(notify){
+		Server* server = NetworkEngine::GetInstance()->GetServer();
+		if(server != NULL){
+			server->SetObjectString(objectId, k, v, expandClientChange);
+		}
+		else{
+			Client* client = NetworkEngine::GetInstance()->GetClient();
+			if(client != NULL) client->SetObjectString(objectId, k, v);
+		}
+	}
+}
+
 bool NetworkObject::GetBoolVar(ObjectVariable k){
 	bool toRet = false;
 	std::map<int, bool>::iterator i = boolVariables.find(k);
@@ -118,5 +132,12 @@ vector3df NetworkObject::GetVecFVar(ObjectVariable k){
 	vector3df toRet = vector3df(-1, -1,-1);
 	std::map<int, vector3df>::iterator i = v3fVariables.find(k);
 	if (i != v3fVariables.end()) toRet = i->second;	
+	return(toRet);
+}
+
+std::string NetworkObject::GetStringVar(ObjectVariable k){
+	std::string toRet = "";
+	std::map<int, std::string>::iterator i = stringVariables.find(k);
+	if (i != stringVariables.end()) toRet = i->second;	
 	return(toRet);
 }

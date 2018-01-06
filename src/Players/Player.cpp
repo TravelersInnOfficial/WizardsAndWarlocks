@@ -36,7 +36,7 @@ Player::Player(bool isPlayer1){
 	stepsStarted = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
-	name = L"";
+	name = "";
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -200,6 +200,14 @@ void Player::GetNetInput(){
 	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
 	readyToStart = isReady;
 
+	string auxName = networkObject->GetStringVar(PLAYER_NAME);
+	if(auxName.length() > 0){
+		SetName(auxName);
+		// std::cout<<"RECIBIMOS NOMBRE: "<<auxName<<std::endl;
+		auxName = "";
+		networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
+	}
+
 }
 
 void Player::SetNetInput(){
@@ -207,6 +215,13 @@ void Player::SetNetInput(){
 		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 	}
+}
+
+void Player::RefreshServer(){
+	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
+	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+	networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 }
 
 void Player::Update(){
@@ -522,12 +537,6 @@ void Player::UpdatePosShape(){
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
-void Player::RefreshServer(){
-	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
-	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
-	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
-}
-
 void Player::HitMade(Player* player){
 	hitOverlayTime = 0.25f;
 }
@@ -743,11 +752,14 @@ void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = 
 
 void Player::SetMatchStatus(bool started){ matchStarted = started; }
 
-void Player::SetName(std::wstring newName){
+void Player::SetName(std::string newName){
 	name = newName;
-	SetBillboard();
+	if(!name.empty()){
+		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+		else SetBillboard();
+	}
 }
 
 void Player::SetBillboard(){
-	if(!name.empty() && !isPlayerOne){ m_playerNode->AddText(name, vector3df(0,1.25f,0), -1); }
+	m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
 }

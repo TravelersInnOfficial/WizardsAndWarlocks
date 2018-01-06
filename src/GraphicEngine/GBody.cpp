@@ -30,6 +30,6 @@ void GBody::Remove(){
     privateNode->remove();
 }
 
-void GBody::AddText(std::wstring text, vector3df position, int id){
+void GBody::AddText(std::string text, vector3df position, int id){
     board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 }

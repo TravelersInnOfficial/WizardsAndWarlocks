@@ -145,7 +145,9 @@ void NetGame::UpdateDelta(){
 	timeStart = currentTime;
 }
 
-void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
+void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne, std::string name){
+	Player* p;
+	
 	if(!isServer && playerOne == NULL && isPlayerOne) {
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
@@ -153,6 +155,7 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
 		spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
 		spellManager->AddHechizo(2, playerOne, SPELL_WALL);
 		spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
+		p = (Player*) playerOne;
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
@@ -161,7 +164,10 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
 		spellManager->AddHechizo(1, newPlayer, SPELL_FIRE);
 		spellManager->AddHechizo(2, newPlayer, SPELL_WALL);
 		spellManager->AddHechizo(3, newPlayer, SPELL_BLIZZARD);
+		p = (Player*) newPlayer;
 	}
+
+	if(name.length() > 0) p->SetName(name);
 }
 
 void NetGame::CheckIfWon(){

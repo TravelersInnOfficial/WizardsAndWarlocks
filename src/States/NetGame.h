@@ -40,7 +40,7 @@ public:
 	float GetDeltaTime();
 	void UpdateDelta();
 
-	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false);
+	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false, std::string name = "");
 	bool GetLobbyState();
 
 private:

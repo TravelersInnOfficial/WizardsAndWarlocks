@@ -46,6 +46,7 @@ public:
 	void SetObjectFloat(	int objectId, ObjectVariable k, float v,		bool expandClientChange);
 	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v,	bool expandClientChange);
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v,	bool expandClientChange);
+	void SetObjectString(	int objectId, ObjectVariable k, std::string v,	bool expandClientChange);
 
 private:
 	

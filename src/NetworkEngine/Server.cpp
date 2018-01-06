@@ -281,6 +281,18 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			networkObjects[k]->SetVecFVar(k_var, v, true, true);
 			break;
 		}
+		case ID_CHANGE_STRING: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			RakNet::RakString vAux = "";
+			std::string v = "";
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(vAux);
+			v = vAux;
+			networkObjects[k]->SetStringVar(k_var, v, true, true);
+			break;
+		}
 	}
 
 }
@@ -337,6 +349,20 @@ void Server::SetObjectFloatVec(int objectId, ObjectVariable k, vector3df v, bool
 	stateChange.Write(objectId);
 	stateChange.Write(k);
 	stateChange.Write(v);
+	if(!expandClientChange) SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+	else SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+}
+
+void Server::SetObjectString(int objectId, ObjectVariable k, std::string v, bool expandClientChange){
+	RakNet::BitStream stateChange;
+	stateChange.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+	stateChange.Write(ID_CHANGE_STRING);
+	stateChange.Write(objectId);
+	stateChange.Write(k);
+	
+	RakNet::RakString vAux = RakNet::RakString(v.c_str());
+	stateChange.Write(vAux);
+
 	if(!expandClientChange) SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 	else SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
 }

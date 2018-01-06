@@ -22,7 +22,7 @@ class Potion;
 class Player: public Entidad{
 	public:
 
-		Player(bool isPlayer1);
+		Player(bool isPlayer1 = false);
 		void CreatePlayerCharacter(bool firstInit = false);
 		void DestroyPlayerCharacter();
 		void PlayerInit();
@@ -112,7 +112,7 @@ class Player: public Entidad{
 		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
 		void SetSpell(int value);
-		void SetName(std::wstring newName);
+		void SetName(std::string newName);
 
 		virtual ~Player();
 
@@ -145,7 +145,7 @@ class Player: public Entidad{
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
-		std::wstring	name;				// Nombre del jugador en RED
+		std::string		name;				// Nombre del jugador en RED
 
 		bool			readyToStart;		// Esta preparado para empezar la partida?
 		bool			matchStarted;		// Ha empezado la partida?

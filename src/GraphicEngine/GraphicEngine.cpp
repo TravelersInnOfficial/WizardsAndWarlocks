@@ -423,7 +423,7 @@ void GraphicEngine::Raycast(vector3df Start, vector3df End, vector3df* point, ve
 	}
 }
 
-irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::wstring text, irr::scene::ISceneNode* parent, vector3df position, int id){
+irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){
 	irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
 	auxPos.X = position.X; auxPos.Y = position.Y; auxPos.Z = position.Z;
 
@@ -431,6 +431,8 @@ irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::wstrin
 	float dimY = 0.25f;
 	irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
 	
-	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, text.c_str(), parent, dim, auxPos, id);
+	std::wstring wText = std::wstring(text.begin(), text.end());
+
+	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, wText.c_str(), parent, dim, auxPos, id);
 	return board;
 }
