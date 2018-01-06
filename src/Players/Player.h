@@ -77,6 +77,7 @@ class Player: public Entidad{
 		void playHit();						//Plays the damage hit sound
 		void stopFootsteps();				//Stops the footsteps sound
 		void UpdateSoundsPosition();		//Updates the continuous sounds
+		void changeSurface(float n);			//Changes the surface parameter of the event
 
 		//Geters
 		bool IsPlayerOne();
@@ -157,9 +158,12 @@ class Player: public Entidad{
 
 		Potion* potion;						// Pocion en el inventario
 
+		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
+		void createSoundEvents();			//Create the sound events needed for the player
 		
 
 };

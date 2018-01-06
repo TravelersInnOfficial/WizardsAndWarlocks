@@ -60,7 +60,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	ERRCHECK(lowLevelSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(system->initialize(512, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
@@ -73,7 +73,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
 
 	//Create event descriptions
-	createEventDescriptionsNEvents();
+	//createEventDescriptionsNEvents();
 }
 
 /******************************************************
@@ -140,12 +140,12 @@ void SoundSystem::loadBanks() {
 *  Creates all the event descriptions and instances needed for the sound events
 ******************************************************/
 void SoundSystem::createEventDescriptionsNEvents() {
-	
+/*
 	//Initialize the event descriptions
 	FMOD::Studio::EventDescription * footstepDesc = NULL;
-	FMOD::Studio::EventDescription * hitDesc = NULL;
-	FMOD::Studio::EventDescription * drinkDesc = NULL;
-	FMOD::Studio::EventDescription * dieDesc = NULL;
+	FMOD::Studio::EventDescription * hitDesc 	  = NULL;
+	FMOD::Studio::EventDescription * drinkDesc 	  = NULL;
+	FMOD::Studio::EventDescription * dieDesc 	  = NULL;
 
 	//Initialize the event instances
 	FMOD::Studio::EventInstance* footstepInst;
@@ -176,6 +176,7 @@ void SoundSystem::createEventDescriptionsNEvents() {
 	SoundEvent* dieEvent = new CharacterSound();						// Initialize the event    
 	dieEvent->setInstance(dieInst);										// Set the instance to the event
 	soundEvents["event:/Character/Hard/Die"] = dieEvent;				// Add the instance to the event instances map
+*/
 }
 
 
@@ -241,6 +242,38 @@ FMOD::Studio::EventDescription* SoundSystem::createDescription(const char* path,
 }
 
 /******************************************************
+ * @brief Creates a sound event
+ * @param std::string path of the event
+ ******************************************************/
+SoundEvent* SoundSystem::createEvent(std::string eventPath) {
+	FMOD::Studio::EventDescription * eventDesc = NULL;					//Initialize the event description
+	FMOD::Studio::EventInstance * eventInst    = NULL;					//Initialize the event instance
+	SoundEvent * newEvent					   = NULL; 					//Initialize the event
+
+	//Search the description to know if it's already created
+	if (eventDescriptions[eventPath] != NULL) 
+		eventDesc = eventDescriptions[eventPath];					 //Set it to the eventDesc var
+	else {
+		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
+		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
+	}
+		
+	ERRCHECK(eventDesc->createInstance(&eventInst));				//Set the event instance
+
+	//Dertermine wich type of sound event will create
+	if (eventPath.find("Character") != -1)  	newEvent = new CharacterSound();//Set the event
+	else if (eventPath.find("Spells") != -1)   	newEvent = new SpellSound();	//Set the event		
+	else if (eventPath.find("Ambience") != -1) 	newEvent = new AmbienceSound();	//Set the event
+	else if (eventPath.find("HUD") != -1) 	  	newEvent = new HUDSound();		//Set the event
+	else if (eventPath.find("Music") != -1)   	newEvent = new Music();			//Set the event
+
+	newEvent->setInstance(eventInst);	//Set the event instance
+	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
+
+	return newEvent;
+}
+
+/******************************************************
 *  Sets the property for the listener
 *  \param vec that has to be assigned
 ******************************************************/
@@ -275,11 +308,11 @@ void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 * @param playerPos position where should play the event and/or of the listener
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
-void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos) {
+void SoundSystem::checkAndPlayEvent(SoundEvent* event, vector3df playerPos) {
 	
 	//Checks if the event exists and is being played
-	if (!getEvent(eventPath.c_str())->isPlaying()) {
-		playEvent(eventPath, playerPos); //Plays the event
+	if (!event->isPlaying()) {
+		playEvent(event, playerPos); //Plays the event
 	}
 }
 
@@ -289,26 +322,26 @@ void SoundSystem::checkAndPlayEvent(std::string eventPath, vector3df playerPos) 
 * @param playerPos position where should play the event and/or of the listener
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
-void SoundSystem::playEvent(std::string eventPath, vector3df playerPos) {
-	getEvent(eventPath.c_str())->setPosition(playerPos);	//Position the event
-	getEvent(eventPath.c_str())->start();        			//Plays the event
+void SoundSystem::playEvent(SoundEvent* event, vector3df playerPos) {
+	event->setPosition(playerPos);	//Position the event
+	event->start();					//Start the event
 }
 
 /******************************************************
  * @brief Stops an event that is being played
  * @param eventPath path of the event to stop
  ******************************************************/
-void SoundSystem::stopEvent(std::string eventPath) {
+void SoundSystem::stopEvent(SoundEvent* event) {
     
-    getEvent(eventPath.c_str())->stop();
+    event->stop();
 }
 
 /******************************************************
  * @brief Stops an event if it's being played
  * @param eventPath path of the event to stop
  ******************************************************/
-void SoundSystem::checkAndStopEvent(std::string eventPath) {
-    if (getEvent(eventPath.c_str())->isPlaying()) stopEvent(eventPath);
+void SoundSystem::checkAndStopEvent(SoundEvent* event) {
+    if (event->isPlaying()) event->stop();
 }
 
 
@@ -339,7 +372,7 @@ void SoundEvent::start() {
 *  Stops the event reproduction inmediately
 ******************************************************/
 void SoundEvent::stop() {
-	ERRCHECK(soundInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+		ERRCHECK(soundInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
 }
 
 /******************************************************
@@ -393,7 +426,7 @@ void SoundEvent::setPosition(vector3df pos) {
 	SoundSystem::getInstance()->setUp(attributes, up);
 
 	//Finally, set the attributes
-	ERRCHECK(soundInstance->set3DAttributes(attributes));
+	if (soundInstance != NULL) ERRCHECK(soundInstance->set3DAttributes(attributes));
 }
 
 /*******************************************************
@@ -437,5 +470,9 @@ FMOD::Studio::EventInstance* SoundEvent::getInstance() {
  * @return FMOD::Studio::EventInstance* 
  *******************************************************/
 void SoundEvent::setInstance(FMOD::Studio::EventInstance * instance) {
+	
+
 	soundInstance = instance;
+
+	
 }

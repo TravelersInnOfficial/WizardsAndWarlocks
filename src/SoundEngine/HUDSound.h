@@ -18,11 +18,6 @@ class HUDSound : public CommonSoundEvent {
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-    
-    /******************************************************
-     *  Constructor 
-     ******************************************************/
-    HUDSound(FMOD::Studio::EventInstance* instance);
 };
 
 #endif /* CommonSoundSoundEvent_h */

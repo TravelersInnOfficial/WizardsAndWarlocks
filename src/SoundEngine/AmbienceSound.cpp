@@ -1,13 +1,11 @@
 #include "AmbienceSound.h"
 
 /******************************************************
+ *  Default constructor
+ ******************************************************/
+AmbienceSound::AmbienceSound() {}
+
+/******************************************************
  *  Destructor
  ******************************************************/
 AmbienceSound::~AmbienceSound() {}
-
-/******************************************************
- *  Constructor 
- ******************************************************/
-AmbienceSound::AmbienceSound(FMOD::Studio::EventInstance* instance) {
-    soundInstance = instance;
-}

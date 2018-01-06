@@ -18,11 +18,6 @@ class SpellSound : public CommonSoundEvent {
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-   
-    /******************************************************
-     *  Constructor 
-     ******************************************************/
-    SpellSound(FMOD::Studio::EventInstance* instance);
 };
 
 #endif /* CommonSoundSoundEvent_h */

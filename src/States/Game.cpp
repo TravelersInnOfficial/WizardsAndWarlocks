@@ -64,8 +64,8 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
 	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
-	if(g_engine->IsKeyPressed(KEY_KEY_M)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 1.0f);
-	if(g_engine->IsKeyPressed(KEY_KEY_N)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 0.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -125,7 +125,7 @@ void Game::Draw(){
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
-	//if(AL != NULL) AL->Debug();
+	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 

@@ -100,9 +100,8 @@ public:
     /******************************************************
      * @brief Creates a sound event
      * @param std::string path of the event
-     * @param FMOD::Studio::EventDescription eventDesc
      ******************************************************/
-    void createEvent(const char * path, FMOD::Studio::EventDescription * eventDesc);
+    SoundEvent* createEvent(std::string);
 
     /******************************************************
      * @brief Checks if an event is playing and plays it
@@ -110,7 +109,7 @@ public:
      * @param playerPos position where should play the event and/or of the listener
      * @param playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void checkAndPlayEvent(std::string eventPath, vector3df playerPos);
+    void checkAndPlayEvent(SoundEvent* event, vector3df playerPos);
 
     /******************************************************
      * @brief Plays a sound event
@@ -118,19 +117,19 @@ public:
      * @param vector3df playerPos position where should play the event and/or of the listener
      * @param vector3df playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void playEvent(std::string eventPath, vector3df playerPos);
+    void playEvent(SoundEvent* event, vector3df playerPos);
 
     /******************************************************
      * @brief Stops an event
      * @param eventPath path of the event to stop
      ******************************************************/
-    void stopEvent(std::string eventPath);
+    void stopEvent(SoundEvent* event);
 
     /******************************************************
      * @brief Stops an event if it's being played
      * @param eventPath path of the event to stop
      ******************************************************/
-    void checkAndStopEvent(std::string eventPath);
+    void checkAndStopEvent(SoundEvent* event);
 
 private:
     const char * banksPath;
@@ -152,6 +151,7 @@ private:
 class SoundEvent {
     //Friend method so it can access the protected functions
     friend void SoundSystem::createEventDescriptionsNEvents();
+    friend SoundEvent* SoundSystem::createEvent(std::string);
 public:
     /******************************************************
      * @brief Default constructor

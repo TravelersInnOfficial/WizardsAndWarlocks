@@ -54,6 +54,7 @@ void Player::PlayerInit(){
 	m_dead = false;
 	EffectManager::GetInstance()->CleanEffects(this);
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
+	createSoundEvents();
 }
 
 Player::~Player(){
@@ -418,6 +419,8 @@ void Player::Die(){
 		DestroyPlayerCharacter();
 		CheckIfReady();
 	}
+
+	soundEvents.clear();
 	
 	Respawn();
 }
@@ -532,31 +535,52 @@ void Player::HitMade(Player* player){
 /********************************************************************************************************
  ****************************************** SOUND FUNCITONS *********************************************
  ********************************************************************************************************/
+void Player::createSoundEvents() {
+	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
+	SoundEvent * drink = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
+	SoundEvent * die = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
+	SoundEvent * hit = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	
+	soundEvents["footsteps"] = footsteps;
+	soundEvents["drink"] 	 = drink;
+	soundEvents["die"] 		 = die;
+	soundEvents["hit"] 		 = hit;
+
+}
+
 void Player::playFootsteps() {
 	stepsStarted = true;
-	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Footsteps", GetPos());
+	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["footsteps"], GetPos());
 }
 
 void Player::playDrink() {
-	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Drink", GetPos());
+	SoundSystem::getInstance()->playEvent(soundEvents["drink"], GetPos());
 }
 
 void Player::playDie() {
-	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Die", GetPos());
+	SoundSystem::getInstance()->playEvent(soundEvents["die"], GetPos());
 }
 
 void Player::playHit() {
-	SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetPos());
+	SoundSystem::getInstance()->playEvent(soundEvents["hit"], GetPos());
 }
 
 void Player::stopFootsteps() {
 	stepsStarted = false;
-	SoundSystem::getInstance()->stopEvent("event:/Character/Hard/Footsteps");
+	SoundSystem::getInstance()->stopEvent(soundEvents["footsteps"]);
 }
 
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
-		SoundSystem::getInstance()->getEvent("event:/Character/Hard/Footsteps")->setPosition(GetHeadPos());
+		if (soundEvents["footsteps"] != NULL) {
+			soundEvents["footsteps"]->setPosition(GetHeadPos());
+		}
+	}
+}
+
+void Player::changeSurface(float n) {
+	if (soundEvents["footsteps"] != NULL) {
+		soundEvents["footsteps"]->setParamValue("Surface", n);
 	}
 }
 /********************************************************************************************************
