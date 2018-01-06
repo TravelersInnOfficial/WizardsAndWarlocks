@@ -36,6 +36,7 @@ Player::Player(bool isPlayer1){
 	stepsStarted = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
+	name = L"";
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -97,6 +98,8 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		if(firstInit) m_playerNode->setScale(m_dimensions);
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setPosition(m_position);
+
+		SetBillboard();
 
 		// Physic Player
 		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
@@ -671,6 +674,8 @@ void Player::SetAlliance(Alliance newAlliance){
 			break;
 		}
 	}
+
+	SetBillboard();
 }
 
 void Player::SetPosition(vector3df pos){
@@ -737,3 +742,12 @@ void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
 void Player::SetMatchStatus(bool started){ matchStarted = started; }
+
+void Player::SetName(std::wstring newName){
+	name = newName;
+	SetBillboard();
+}
+
+void Player::SetBillboard(){
+	if(!name.empty()){ m_playerNode->AddText(name, vector3df(0,1.25f,0), -1); }
+}

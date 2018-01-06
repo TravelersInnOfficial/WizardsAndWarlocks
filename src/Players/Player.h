@@ -112,6 +112,7 @@ class Player: public Entidad{
 		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
 		void SetSpell(int value);
+		void SetName(std::wstring newName);
 
 		virtual ~Player();
 
@@ -144,6 +145,7 @@ class Player: public Entidad{
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
+		std::wstring	name;				// Nombre del jugador en RED
 
 		bool			readyToStart;		// Esta preparado para empezar la partida?
 		bool			matchStarted;		// Ha empezado la partida?
@@ -160,7 +162,7 @@ class Player: public Entidad{
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
-		
+		void SetBillboard();				// Ponemos el billboard en el player
 
 };
 

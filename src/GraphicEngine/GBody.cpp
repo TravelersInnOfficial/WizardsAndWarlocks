@@ -3,6 +3,10 @@
 
 GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
+    board = NULL;
+
+    // std::wstring playerName = L"Jugador";
+    // AddText(playerName, vector3df(0,1.25f,0), -1);
 }
 
 GBody::~GBody(){
@@ -27,4 +31,8 @@ void GBody::setTriangleSelector(){
 
 void GBody::Remove(){
     privateNode->remove();
+}
+
+void GBody::AddText(std::wstring text, vector3df position, int id){
+    board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 }
