@@ -761,5 +761,5 @@ void Player::SetName(std::string newName){
 }
 
 void Player::SetBillboard(){
-	m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
+	if(!isPlayerOne) m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
 }
