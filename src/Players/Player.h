@@ -68,6 +68,7 @@ class Player: public Entidad{
 		void SetNetInput();
 		NetworkObject* GetNetworkObject();
 		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
+		void HitMade(Player* player);
 
 		//Sound Function
 		void playFootsteps();				//Plays the footsteps sound
@@ -134,7 +135,9 @@ class Player: public Entidad{
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		
 		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda
+		float			hitOverlayTime;
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 

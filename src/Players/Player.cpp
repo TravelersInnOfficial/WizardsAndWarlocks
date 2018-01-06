@@ -35,6 +35,7 @@ Player::Player(bool isPlayer1){
 	moving = false;
 	stepsStarted = false;
 	bloodOverlayTime = 0;
+	hitOverlayTime = 0;
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -432,6 +433,9 @@ void Player::ReturnToLobby(){
 
 void Player::DrawOverlays(float deltaTime){
 	bloodOverlayTime -= deltaTime;
+	hitOverlayTime -= deltaTime;
+	
+	if(hitOverlayTime > 0) engine->drawOverlays(1);
 	if(bloodOverlayTime > 0) engine->drawOverlays(0);
 }
 
@@ -519,6 +523,10 @@ void Player::RefreshServer(){
 	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
 	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+}
+
+void Player::HitMade(Player* player){
+	hitOverlayTime = 0.25f;
 }
 
 /********************************************************************************************************

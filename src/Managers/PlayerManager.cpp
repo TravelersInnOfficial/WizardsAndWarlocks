@@ -183,3 +183,15 @@ void PlayerManager::RefreshServerAll(){
 void PlayerManager::UpdateNetDebug(){
 	MenuManager::GetInstance()->UpdateNetDebug(players);
 }
+
+Player* PlayerManager::GetPlayerFromID(int id){
+	Player* toRet = NULL;
+	
+	int size = players.size();
+	for(int i=0; i<size && toRet == NULL; i++){
+		Player* p = players[i];
+		if(p->GetId() == id) toRet = p;
+	}
+
+	return toRet;
+}

@@ -31,6 +31,7 @@ public:
 	void ReturnAllToLobby();
 	void RefreshServerAll();
 	void UpdateNetDebug();
+	Player* GetPlayerFromID(int id);
 	
 private:
 

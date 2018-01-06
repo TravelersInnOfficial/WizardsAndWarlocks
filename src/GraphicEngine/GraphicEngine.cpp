@@ -130,7 +130,11 @@ void GraphicEngine::drawOverlays(int type){
 	
 	switch(type){
 		case(0):{
-			overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
+			overlay = privateDriver->getTexture("./../assets/textures/overlays/BloodSplatter.png");
+			break;
+		}
+		case(1):{
+			overlay = privateDriver->getTexture("./../assets/textures/overlays/HitMade.png");
 			break;
 		}
 		default:{
