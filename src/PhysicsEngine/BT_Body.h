@@ -29,11 +29,12 @@ public:
 	void SetGravity(vector3df);
 
 	vector3df GetPosition();
-	vector3df GetAngularVelocity();
-	vector3df* GetDimensions();
 	vector3df GetRotation();
+	vector3df* GetDimensions();
 	vector3df GetLinearVelocity();
+	vector3df GetAngularVelocity();
 	float GetMass();
+	vector3df GetGravity();
 
 	void AssignPointer(void*);
 	void SetCollisionFlags(std::string);

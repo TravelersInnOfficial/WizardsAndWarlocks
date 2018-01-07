@@ -154,23 +154,6 @@ vector3df BT_Body::GetPosition(){
 	return pos;
 }
 
-vector3df* BT_Body::GetDimensions(){
-	return m_dimensions;
-}
-
-vector3df BT_Body::GetLinearVelocity(){
-	vector3df LVel(m_RigidBody->getLinearVelocity().getX(),
-					m_RigidBody->getLinearVelocity().getY(), 
-					m_RigidBody->getLinearVelocity().getZ());
-	return LVel;
-}
-
-vector3df BT_Body::GetAngularVelocity(){
-	btVector3 temp = m_RigidBody->getAngularVelocity();
-	vector3df Angu(temp.getX(), temp.getY(), temp.getZ());
-	return Angu;
-}
-
 vector3df BT_Body::GetRotation(){
 
 	btQuaternion rot = m_RigidBody->getOrientation();
@@ -194,6 +177,32 @@ vector3df BT_Body::GetRotation(){
 
 }
 
+vector3df* BT_Body::GetDimensions(){
+	return m_dimensions;
+}
+
+vector3df BT_Body::GetLinearVelocity(){
+	vector3df LVel(m_RigidBody->getLinearVelocity().getX(),
+					m_RigidBody->getLinearVelocity().getY(), 
+					m_RigidBody->getLinearVelocity().getZ());
+	return LVel;
+}
+
+vector3df BT_Body::GetAngularVelocity(){
+	btVector3 temp = m_RigidBody->getAngularVelocity();
+	vector3df Angu(temp.getX(), temp.getY(), temp.getZ());
+	return Angu;
+}
+
+float BT_Body::GetMass(){
+	return m_RigidBody->getInvMass();
+}
+
+vector3df BT_Body::GetGravity(){
+	btVector3 grav = m_RigidBody->getGravity();
+	return vector3df(grav.getX(), grav.getY(), grav.getZ());
+}
+
 void BT_Body::AssignPointer(void* pointer){
 	m_RigidBody->setUserPointer(pointer);
 }
@@ -201,6 +210,9 @@ void BT_Body::AssignPointer(void* pointer){
 void BT_Body::SetCollisionFlags(std::string s){
 	if(s.compare("no_contact")==0){
 		m_RigidBody->setCollisionFlags(btCollisionObject::CF_NO_CONTACT_RESPONSE);
+	}
+	else if(s.compare("contact")==0){
+		m_RigidBody->setCollisionFlags(0);
 	}
 }
 

@@ -49,14 +49,12 @@ void Projectile::CreateProjectile(){
 	bt_body = new BT_Body();
 	bt_body->CreateBox(initPos, vector3df(0.7*radius,0.7*radius,0.7*radius), 50, 0,vector3df(0,0,0), C_PROJECTILE, projectileCW);
 	bt_body->AssignPointer(this);
-	bt_body->SetGravity(vector3df(0,0,0));
-	bt_body->SetCollisionFlags("no_contact");
-	//bt_body->SetMass(0);    
+
+    vector3df vel(velocity * direction->X, velocity * direction->Y, velocity * direction->Z);
+    bt_body->SetLinearVelocity(vel);
 }
 
 void Projectile::Update(){
-	vector3df vel(velocity*direction->X, velocity*direction->Y, velocity*direction->Z);
-	bt_body->SetLinearVelocity(vel);
 	UpdatePosShape();
 
 	//Comprobamos si ha llegado a la distancia maxima
@@ -69,9 +67,8 @@ void Projectile::Update(){
 	float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
 
 	if(currentDistance >= maxDistance){
-		BulletManager* c = BulletManager::GetInstance();
-		c->AddToDeleteProyecil(this);
-	}
+        BulletManager::GetInstance()->AddToDeleteProyecil(this);
+	}   
 }
 
 void Projectile::UpdatePosShape(){
@@ -87,7 +84,6 @@ void Projectile::UpdatePosShape(){
  * @param tipo: type of entity collided
  */
 void Projectile::Contact(void* punt, EntityEnum tipo){
-
 	if(tipo==EENUM_PLAYER){
 		Player* p = (Player*)punt;
 		int idEmisor = p->GetId();
@@ -101,8 +97,8 @@ void Projectile::Contact(void* punt, EntityEnum tipo){
 		Invocation* i = (Invocation*)punt;
 		i->ChangeHP(-damage);
 	}
-	BulletManager* c = BulletManager::GetInstance();
-	c->AddToDeleteProyecil(this);
+
+    ContactBehavior();
 }
 
 BT_Body* Projectile::GetBody(){
@@ -120,6 +116,19 @@ void Projectile::NormalizeDir(){
 	direction->Z = direction->Z/length;
 }
 
+/**
+ * @brief This function is called when bullet contacts anything (normally will be deleted)
+ * 
+ */
+void Projectile::ContactBehavior(){
+    BulletManager::GetInstance()->AddToDeleteProyecil(this);
+}
+
+/**
+ * @brief this function will be overriden by derived class
+ * 
+ * @param p: player collided
+ */
 void Projectile::ContactAction(Player* p){
 	p->ChangeHP(-damage);
 }
