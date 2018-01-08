@@ -134,7 +134,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_POISON:
-			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
+			h = new OgreBelch(-5, 1.0f, 1.0f, 100, 100);
 			break;
 		case SPELL_THUNDER:
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
