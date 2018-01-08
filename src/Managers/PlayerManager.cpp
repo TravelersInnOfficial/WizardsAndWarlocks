@@ -50,13 +50,18 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
+
 		if(isNetGame) {
 			HumanPlayer* hp = (HumanPlayer*) players[i];
-			if(p->IsPlayerOne()) hp->SetNetInput();
+			NetworkEngine* n_engine = NetworkEngine::GetInstance();
+			bool isServer = n_engine->IsServerInit();
+			if(p->IsPlayerOne() || isServer) hp->SetNetInput();
 			hp->GetNetInput();
 		}
+
 		p->Update();
 	}
+	
 	// Actualizamos los personajes muertos (camara libre)
 	size = deadPlayers.size();
 	for(int i=0; i<size; i++){
@@ -125,12 +130,15 @@ void PlayerManager::RespawnDeadPlayers(){
 	}
 }
 
-void PlayerManager::RespawnAll(){
+void PlayerManager::RestartMatchStatus(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		p->Respawn();
 	}
+	RespawnDeadPlayers();
+	warlocksWin = false;
+	wizardsWin = false;
 }
 
 void PlayerManager::ManageMatchStatus(bool started){
@@ -160,22 +168,16 @@ void PlayerManager::CheckWon(){
 
 	// Comprobamos cuantos jugadores de cada faccion quedan vivos
 	int size = players.size();
-	for(int i=0; i<size; i++){
+	for(int i=0; i < size; i++){
 		Player* p = players[i];
 		Alliance alli = p->GetAlliance();
-		if(alli == ALLIANCE_WIZARD){
-			contWiz++;
-		}else if(alli == ALLIANCE_WARLOCK){
-			contWar++;
-		}
+		if(alli == ALLIANCE_WIZARD) contWiz++;
+		else if(alli == ALLIANCE_WARLOCK) contWar++;
 	}
 
 	// En el caso de que alguno quede a 0 significara la victoria del equipo contrario
-	if(contWiz == 0){
-		warlocksWin = true;
-	}else if(contWar == 0){
-		wizardsWin = true;
-	}
+	if(contWiz == 0) warlocksWin = true;
+	else if(contWar == 0) wizardsWin = true;
 
 }
 

@@ -160,61 +160,43 @@ void Player::UpdateInput(){
 void Player::CheckInput(){}
 
 void Player::GetNetInput(){
-	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
-	if(alliance != (int)NO_ALLIANCE){
-		SetAlliance((Alliance)alliance);
-		alliance = (int)NO_ALLIANCE;
-		networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
-	}
 
-	bool doCreateChar = networkObject->GetBoolVar(PLAYER_CREATE_CHAR);
-	if(doCreateChar){
-		CreatePlayerCharacter();
-		doCreateChar = false;
-		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
-	}
+	if(!isPlayerOne){
+		int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
+		if(alliance != (int)NO_ALLIANCE){
+			SetAlliance((Alliance)alliance);
+			alliance = (int)NO_ALLIANCE;
+			networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
+		}
 
-	bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
-	if(doRespawn){
-		Respawn();
-		doRespawn = false;
-		networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
-	}
+		bool doCreateChar = networkObject->GetBoolVar(PLAYER_CREATE_CHAR);
+		if(doCreateChar){
+			CreatePlayerCharacter();
+			doCreateChar = false;
+			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
+		}
 
-	float life = -9999;
-	life = networkObject->GetFloatVar(PLAYER_LIFE);
+		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
+		if(doRespawn){
+			Respawn();
+			doRespawn = false;
+			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
+		}
 
-	if(life != -9999 && life != -1){
-		m_HP = life;
-		life = -9999;
-		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
-	}
-	
-	float mana = -9999;
-	mana = networkObject->GetFloatVar(PLAYER_MANA);
-	if(mana != -9999 && mana != -1){
-		m_MP = mana;
-		mana = -9999;
-		networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
-	}
+		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
+		readyToStart = isReady;
 
-	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
-	readyToStart = isReady;
-
-	string auxName = networkObject->GetStringVar(PLAYER_NAME);
-	if(auxName.length() > 0){
-		SetName(auxName);
-		auxName = "";
-		networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
+		string auxName = networkObject->GetStringVar(PLAYER_NAME);
+		if(auxName.length() > 0){
+			SetName(auxName);
+			auxName = "";
+			networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
+		}
 	}
 
 }
 
 void Player::SetNetInput(){
-	if(isPlayerOne){
-		// networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
-		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
-	}
 }
 
 void Player::RefreshServer(){
@@ -256,6 +238,9 @@ void Player::Update(){
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
 		UpdateSoundsPosition();
+
+		// Actualizamos el HP con 0 para comprobar la muerte
+		ChangeHP(0);
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne){
@@ -348,19 +333,20 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	if (HP < 0) {
-		 playHit(); //Play the sound event
-		 bloodOverlayTime = 1;
-	} 
+		playHit();
+		bloodOverlayTime = 1;
+	}
 
-	if(m_HP + HP > 100) m_HP = 100;
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+	if(isServer) m_HP += HP;
 	
-	else if(m_HP + HP <= 0){
+	if(m_HP >= 100) m_HP = 100;
+	else if(m_HP <= 0){
 		m_HP = 0;
 		m_dead = true;
 		bloodOverlayTime = 0;
 	}
-
-	else m_HP += HP;
 }
 
 bool Player::ChangeMP(float MP){

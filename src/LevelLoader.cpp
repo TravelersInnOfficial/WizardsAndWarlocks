@@ -127,6 +127,6 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 	}
 
 	PlayerManager* plyManager = PlayerManager::GetInstance();
-	plyManager->RespawnAll();
+	plyManager->RestartMatchStatus();
 	return true;
 }
