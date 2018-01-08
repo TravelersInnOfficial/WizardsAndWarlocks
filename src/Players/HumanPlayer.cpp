@@ -47,7 +47,8 @@ void HumanPlayer::SetNetInput(){
 
 	// OTHERS
 	if(hasCharacter){
-		// networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(n_engine->IsServerInit()) networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 	}
 
