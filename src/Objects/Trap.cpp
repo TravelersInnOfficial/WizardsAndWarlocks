@@ -1,5 +1,6 @@
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Trap::Trap(){
    // m_trapType = 0;
@@ -167,4 +168,19 @@ void Trap::Erase(){
     delete m_rigidBody;
     delete m_body;
     delete g_body;
+}
+
+void Trap::SendSignal(){
+    RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+    // id, AI_code name, float str, Kinematic kin, AI_modalities mod
+    sense->AddSignal(id, true, AI_TRAP, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Trap::GetKinematic(){
+    Kinematic cKin;
+    cKin.position = m_rigidBody->GetPosition();
+    cKin.orientation =  vector2df(0,0);
+    cKin.velocity = m_rigidBody->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }
