@@ -47,7 +47,7 @@ void HumanPlayer::SetNetInput(){
 
 	// OTHERS
 	if(hasCharacter){
-		if(!isPlayerOne) networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
+		// networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 	}
 
@@ -68,14 +68,14 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
 	}
 
-	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
-	if(objstate.X != -99999){
-		SetRotation(objstate);
-		objstate = vector3df(-99999,0,0);
-		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
-	}
-
 	if(!isPlayerOne){
+		objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
+		if(objstate.X != -99999){
+			SetRotation(objstate);
+			objstate = vector3df(-99999,0,0);
+			networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
+		}
+
 		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
 		if(objstate_int != -99999){
 			SetSpell(objstate_int);
