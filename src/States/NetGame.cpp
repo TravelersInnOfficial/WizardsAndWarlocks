@@ -78,6 +78,8 @@ void NetGame::Update(){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
+	playerManager->UpdatePlayers(true);
+
 	networkManager->Update();
 	bulletManager->Update();
 	spellManager->UpdateCooldown(deltaTime);
@@ -85,7 +87,6 @@ void NetGame::Update(){
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
 
-	playerManager->UpdatePlayers(true);
 	//if(lobbyState) playerManager->RespawnDeadPlayers();
 	playerManager->UpdateNetDebug();
 	g_engine->UpdateReceiver();
@@ -177,12 +178,13 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne, std::string
 void NetGame::CheckIfWon(){
 	Alliance whosWon = NO_ALLIANCE;
 
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = ALLIANCE_WIZARD;
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
-
-	if(whosWon != NO_ALLIANCE){
-		MatchEnded(whosWon);
-		if(!isServer) n_engine->GetClient()->EndMatch(whosWon);
+	if(isServer){
+		if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)){
+			whosWon = ALLIANCE_WIZARD;
+		}
+		else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
+		
+		if(whosWon != NO_ALLIANCE) MatchEnded(whosWon);
 	}
 }
 
@@ -201,6 +203,9 @@ void NetGame::RestartMatch(){
 }
 
 void NetGame::MatchEnded(Alliance winnerAlliance){
+	
+	if(isServer) n_engine->GetServer()->EndMatch(winnerAlliance);
+
 	if(!gameEnded){
 		GraphicEngine::getInstance()->InitReceiver();
 		gameEnded = true;

@@ -343,9 +343,7 @@ void ObjectManager::ClearMap(){
 
 bool ObjectManager::CheckIfWon(){
 	bool toRet = false;
-	if(grail != NULL){
-		toRet = grail->CheckIfWon();
-	}
+	if(grail != NULL) toRet = grail->CheckIfWon();
 	return toRet;
 }
 

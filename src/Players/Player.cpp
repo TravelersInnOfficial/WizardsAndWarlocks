@@ -126,6 +126,7 @@ void Player::DestroyPlayerCharacter(){
 		m_playerNode = NULL;
 	}
 
+	CheckIfReady();
 	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
@@ -382,7 +383,7 @@ void Player::Raycast(){
 	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
 
 	vector3df End(EndX, EndY, EndZ);
-
+	
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
@@ -423,7 +424,6 @@ void Player::Die(){
 	if(matchStarted){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
-		CheckIfReady();
 	}
 
 	soundEvents.clear();
