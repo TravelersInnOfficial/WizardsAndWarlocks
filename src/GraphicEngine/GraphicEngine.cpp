@@ -111,18 +111,28 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 	privateDriver->draw3DLine(from, to, fromC.toSColor());
 }
 
-void GraphicEngine::drawAim(){
-	irr::video::SColor color = irr::video::SColor(255, 255, 0, 0);
+void GraphicEngine::drawAim(bool moving){
+	irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
 	irr::u32 size = 15;
 	irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
 	irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
 
+	irr::u32 rDist = 0;
+	irr::u32 yoff = 0;
+	if(moving){
+		rDist = 30;
+	}
+	else{// Not moving
+		rDist = 4;
+		// Draws center point
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+	}
+
 	//Draw crosshair
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - size, cenW + 1, cenH - 4)); //above
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + 4, cenH - 1, cenW + size, cenH + 1)); //right
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH + 4, cenW + 1, cenH + size)); //down
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - size, cenH - 1, cenW - 4, cenH + 1)); //left
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH - rDist - size	, cenW + 1				, cenH - rDist			)); //above
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + rDist		, cenH - 1	 			, cenW + rDist + size	, cenH + 1				)); //right
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH + rDist			, cenW + 1				, cenH + rDist + size	)); //down
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
 }
 
 void GraphicEngine::drawOverlays(int type){

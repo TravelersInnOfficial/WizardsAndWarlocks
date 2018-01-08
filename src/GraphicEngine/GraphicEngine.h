@@ -85,7 +85,7 @@ public:
     /**
      * Draws hud aiming square
     */
-    void drawAim();
+    void drawAim(bool playerMoving);
 
     /**
      * Draws all the efects activated

@@ -100,6 +100,7 @@ class Player: public Entidad{
 		bool GetReadyStatus();
 		PlayerController* GetController();
 		std::string GetName();
+		bool GetMoving();
 
 		// Seters
 		void SetPosition(vector3df);

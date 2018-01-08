@@ -122,7 +122,7 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-	g_engine->drawAim();
+	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();

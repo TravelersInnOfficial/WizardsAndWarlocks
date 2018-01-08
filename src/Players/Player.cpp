@@ -657,6 +657,10 @@ PlayerController* Player::GetController(){
 
 std::string Player::GetName(){ return name; }
 
+bool Player::GetMoving(){
+	return moving;
+}
+
 void Player::SetAlliance(Alliance newAlliance){
 
 	if(newAlliance == ERR_ALLIANCE) return;
