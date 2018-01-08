@@ -4,8 +4,55 @@ BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
     PrepareSubTrees();
-    CreateAttack();
+    CreateReceive();
+    CreateAction();
     CreateMovement();
+}
+
+BehaviourTree::~BehaviourTree(){
+	delete informacion;
+}
+
+void BehaviourTree::run(){
+    rootAction->run(informacion);
+    rootMove->run(informacion);
+}
+
+void BehaviourTree::SetRootReceive(Task* t){
+    rootRecive = t;
+}
+
+void BehaviourTree::SetRootAction(Task* t){
+    rootAction = t;
+}
+
+void BehaviourTree::SetRootMove(Task* t){
+    rootMove = t;
+}
+
+void BehaviourTree::ResetInformacion(){
+    informacion->CleanPuntero(AI_TARGET);
+    informacion->CleanSense();
+}
+
+void BehaviourTree::SetInformation(Blackboard* bb){
+    informacion->SaveParent(bb);
+}
+
+void BehaviourTree::AnyadirInformacion(AI_code name, void* value){
+    informacion->SetPuntero(name, value);
+}
+
+void BehaviourTree::AnyadirInformacion(AI_code name, int value){
+    informacion->SetInt(name, value);
+}
+
+Blackboard* BehaviourTree::GetBlackboard(){
+	return informacion;
+}
+
+void BehaviourTree::SetPlayer(AIPlayer* p){
+    informacion->SetPlayer(p);
 }
 
 void BehaviourTree::PrepareSubTrees(){
@@ -36,7 +83,19 @@ void BehaviourTree::PrepareSubTrees(){
     informacion->SetPuntero(AI_MOVE_SPELL03, sl_moveShoot);
 }
 
-void BehaviourTree::CreateAttack(){
+void BehaviourTree::CreateReceive(){
+
+
+    Selector* sc_checkActions = new Selector();
+
+    Secuencia* sc_receive = new Secuencia();
+
+    SetRootReceive(sc_receive);
+    sc_receive->addChild(new SendAllSignals());
+    sc_receive->addChild(sc_checkActions);
+}
+
+void BehaviourTree::CreateAction(){
    
     // ATAQUE
     Secuencia* sc_attack = new Secuencia();
@@ -47,7 +106,7 @@ void BehaviourTree::CreateAttack(){
     Decorador* d_attack = new ReleaseSpell();
     d_attack->setChild(sc_attack);
 
-    SetRootAttack(d_attack);
+    SetRootAction(d_attack);
 }
 
 void BehaviourTree::CreateMovement(){
@@ -81,47 +140,4 @@ void BehaviourTree::CreateMovement(){
     d_move->setChild(sl_movement);
 
     SetRootMove(d_move);
-
-}
-
-BehaviourTree::~BehaviourTree(){
-	delete informacion;
-}
-
-void BehaviourTree::run(){
-    rootAttack->run(informacion);
-    rootMove->run(informacion);
-}
-
-void BehaviourTree::SetRootAttack(Task* t){
-    rootAttack = t;
-}
-
-void BehaviourTree::SetRootMove(Task* t){
-    rootMove = t;
-}
-
-void BehaviourTree::ResetInformacion(){
-    informacion->CleanPuntero(AI_TARGET);
-    informacion->CleanSense();
-}
-
-void BehaviourTree::SetInformation(Blackboard* bb){
-    informacion->SaveParent(bb);
-}
-
-void BehaviourTree::AnyadirInformacion(AI_code name, void* value){
-    informacion->SetPuntero(name, value);
-}
-
-void BehaviourTree::AnyadirInformacion(AI_code name, int value){
-    informacion->SetInt(name, value);
-}
-
-Blackboard* BehaviourTree::GetBlackboard(){
-	return informacion;
-}
-
-void BehaviourTree::SetPlayer(AIPlayer* p){
-    informacion->SetPlayer(p);
 }

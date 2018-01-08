@@ -131,6 +131,8 @@ void PlayerManager::RespawnAll(){
 		Player* p = players[i];
 		p->Respawn();
 	}
+
+	RespawnDeadPlayers();
 }
 
 void PlayerManager::ManageMatchStatus(bool started){

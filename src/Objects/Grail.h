@@ -19,6 +19,9 @@ public:
 	void Update(float deltaTime);
 	void Interact(Player* p);
 	bool CheckIfWon();
+
+	void SendSignal();
+	Kinematic GetKinematic();
 	
 private:
 	bool recovered;

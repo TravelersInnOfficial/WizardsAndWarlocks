@@ -19,6 +19,10 @@ public:
 	void Update(float deltaTime);
 	void Interact(Player* p);
 	void SetFree();
+
+	// Sensorial Functions
+	void SendSignal();
+	Kinematic GetKinematic();
 private:
 	void Recover();
 	bool Use();
