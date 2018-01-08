@@ -8,6 +8,7 @@
 #include <Actions.h>
 #include <Alliance.h>
 #include <ColliderMasks.h>
+#include <EffectCodes.h>
 #include <NetworkStructs.h>
 #include <kinematicTypes.h>
 #include "./PlayerController.h"
@@ -122,6 +123,7 @@ class Player: public Entidad{
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
 		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 		float 			m_Defense;			// Divisor del danyo recibido
+		EFFECTCODE 		m_shotEffect;
 
 	protected:
 

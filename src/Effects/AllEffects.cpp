@@ -227,10 +227,11 @@ FireShots::FireShots(float time):Effect(time, POWERUP_FIRE){
 }
 
 void FireShots::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
 void FireShots::RemoveEffect(Player* p){
+	p->m_shotEffect = WEAK_BASIC;
 }
 
 //================================================================
@@ -240,10 +241,11 @@ PoisonShots::PoisonShots(float time):Effect(time, POWERUP_POISON){
 }
 
 void PoisonShots::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
 void PoisonShots::RemoveEffect(Player* p){
+	p->m_shotEffect = WEAK_BASIC;
 }
 
 //================================================================

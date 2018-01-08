@@ -19,10 +19,10 @@ BulletManager* BulletManager::GetInstance(){
 	return instance;
 }
 
-void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b){
+void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect){
 	switch(b){
 		case BULLET_BASIC:
-			proyectiles.push_back(new BasicProjectile(pos, dir, emi, dmgMult));
+			proyectiles.push_back(new BasicProjectile(pos, dir, emi, bulletEffect, dmgMult));
 			break;
 		case BULLET_FIRE:
 			proyectiles.push_back(new FireProjectile(pos, dir, emi, dmgMult));

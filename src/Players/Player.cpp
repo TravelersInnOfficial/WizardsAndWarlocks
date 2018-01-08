@@ -51,6 +51,7 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_DamageMult = 1;
 	m_Defense = 1;
+	m_shotEffect = WEAK_BASIC;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -341,9 +342,11 @@ void Player::ChangeHP(float HP){
 	if(networkObject != NULL){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
-		if(isServer) m_HP += HP;
+		if(isServer) m_HP += HP / m_Defense;
 	}
-	else m_HP += HP;
+	else{
+		m_HP += HP / m_Defense;
+	} 
 	
 	if(m_HP >= 100) m_HP = 100;
 	else if(m_HP <= 0){
