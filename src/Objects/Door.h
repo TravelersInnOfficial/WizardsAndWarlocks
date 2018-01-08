@@ -17,6 +17,10 @@ public:
 	void Interact(Player* p);
 	void Interact();
 	void Update();
+
+	// Sense Functions
+	void SendSignal();
+	Kinematic GetKinematic();
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void WorkDoor();

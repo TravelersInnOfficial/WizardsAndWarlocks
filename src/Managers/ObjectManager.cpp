@@ -167,6 +167,32 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 
 void ObjectManager::SendAllSignal(){
 	SendPotionSignal();
+	SendFountainSignal();
+	SendGrailSignal();
+	SendInvocationSignal();
+	SendSwitchSignal();
+}
+
+void ObjectManager::SendSwitchSignal(){
+	int size = switchs.size();
+	for(int i=0; i<size; i++){
+		Switch* sw = switchs[i];
+		sw->SendSignal();
+	}
+}
+
+void ObjectManager::SendInvocationSignal(){
+	int size = invocations.size();
+	for(int i=0; i<size; i++){
+		Invocation* in = invocations[i];
+		in->SendSignal();
+	}
+}
+
+void ObjectManager::SendGrailSignal(){
+	if(grail!=NULL){
+		grail->SendSignal();
+	}
 }
 
 void ObjectManager::SendPotionSignal(){
@@ -174,6 +200,14 @@ void ObjectManager::SendPotionSignal(){
 	for(int i=0; i<size; i++){
 		Potion* po = potions[i];
 		po->SendSignal();
+	}
+}
+
+void ObjectManager::SendFountainSignal(){
+	int size = fountains.size();
+	for(int i=0; i<size; i++){
+		Fountain* fo = fountains[i];
+		fo->SendSignal();
 	}
 }
 

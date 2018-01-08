@@ -21,23 +21,35 @@ class AIPlayer;
 class BehaviourTree{
 public:
     Blackboard* informacion;
-    Task* rootAttack;
+    Task* rootRecive;
+    Task* rootAction;
     Task* rootMove;
 
     BehaviourTree();
     ~BehaviourTree();
     void run();
-    void SetRootAttack(Task* t);
+
+    // Setters
+    void SetRootReceive(Task* t);
+    void SetRootAction(Task* t);
     void SetRootMove(Task* t);
     void SetInformation(Blackboard* bb);
-    void ResetInformacion();
-    Blackboard* GetBlackboard();
-    void AnyadirInformacion(AI_code name, void* value);
-    void AnyadirInformacion(AI_code name, int value);
     void SetPlayer(AIPlayer* p);
 
+    // Functions
+    void ResetInformacion();
+
+    // Getters
+    Blackboard* GetBlackboard();
+
+    // Adders
+    void AnyadirInformacion(AI_code name, void* value);
+    void AnyadirInformacion(AI_code name, int value);
+   
+
 private:
-	void CreateAttack();
+    void CreateReceive();
+	void CreateAction();
 	void CreateMovement();
     void PrepareSubTrees();
 };

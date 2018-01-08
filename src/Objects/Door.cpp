@@ -1,4 +1,5 @@
 #include "Door.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	CreateDoor(TPosition, TScale, TRotation, TCenter);
@@ -84,4 +85,19 @@ void Door::Update(){
        WorkDoor();
     }
 	UpdatePosShape();
+}
+
+void Door::SendSignal(){
+    RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+    // id, AI_code name, float str, Kinematic kin, AI_modalities mod
+    sense->AddSignal(id, true, AI_DOOR, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Door::GetKinematic(){
+    Kinematic cKin;
+    cKin.position = bt_body->GetPosition();
+    cKin.orientation =  vector2df(0,0);
+    cKin.velocity = bt_body->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }

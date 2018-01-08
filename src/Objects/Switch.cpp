@@ -1,4 +1,5 @@
 #include "Switch.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Switch::Switch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
     open = false;
@@ -60,4 +61,21 @@ void Switch::Contact(void* punt, EntityEnum tipo){
         open = true;
         actualDoor->Interact();
     }
+}
+
+void Switch::SendSignal(){
+    //RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+    // id, AI_code name, float str, Kinematic kin, AI_modalities mod
+    
+    // Hacer que no siempre se envie el sensor
+    //sense->AddSignal(id, true, AI_SWITCH, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Switch::GetKinematic(){
+    Kinematic cKin;
+    cKin.position = bt_body->GetPosition();
+    cKin.orientation =  vector2df(0,0);
+    cKin.velocity = bt_body->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }
