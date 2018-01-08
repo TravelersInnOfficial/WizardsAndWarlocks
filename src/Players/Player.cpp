@@ -378,6 +378,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
+	CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -431,15 +432,14 @@ void Player::Die(){
 
 	DropObject();
 
+	PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
+	DestroyPlayerCharacter();
+
 	if(matchStarted){
-		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
-		DestroyPlayerCharacter();
 		CheckIfReady();
 	}
 
 	soundEvents.clear();
-	
-	Respawn();
 }
 
 void Player::ReturnToLobby(){
@@ -662,7 +662,6 @@ void Player::SetAlliance(Alliance newAlliance){
 	if(newAlliance == ERR_ALLIANCE) return;
 
 	playerAlliance = newAlliance;
-	PlayerManager::GetInstance()->ChangeAlliance(newAlliance, this);
 
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{

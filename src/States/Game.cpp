@@ -90,6 +90,7 @@ void Game::Update(){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
+	playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();

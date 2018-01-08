@@ -19,13 +19,15 @@ PlayerManager::~PlayerManager(){
 		Player* p = players[i];
 		delete p;
 	}
-
 	players.clear();
-	wizardPlayers.clear();
-	warlockPlayers.clear();	
+
+	size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* p = deadPlayers[i];
+		delete p;
+	}
 	deadPlayers.clear();
-	deadWizards.clear();
-	deadWarlocks.clear();	
+	
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
@@ -44,11 +46,23 @@ AIPlayer* PlayerManager::AddAIPlayer(){
 
 void PlayerManager::UpdatePlayers(bool isNetGame){
 	DeletePlayers();
+	// Actualizamos los personajes vivos
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		if(isNetGame) {
 			HumanPlayer* hp = (HumanPlayer*) players[i];
+			if(p->IsPlayerOne()) hp->SetNetInput();
+			else hp->GetNetInput();
+		}
+		p->Update();
+	}
+	// Actualizamos los personajes muertos (camara libre)
+	size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* p = deadPlayers[i];
+		if(isNetGame) {
+			HumanPlayer* hp = (HumanPlayer*) deadPlayers[i];
 			if(p->IsPlayerOne()) hp->SetNetInput();
 			else hp->GetNetInput();
 		}
@@ -101,6 +115,16 @@ bool PlayerManager::CheckIfReady(){
 	return allReady;
 }
 
+void PlayerManager::RespawnDeadPlayers(){
+	int size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* p = deadPlayers[i];
+		deadPlayers.erase(deadPlayers.begin() + i);
+		players.push_back(p);
+		p->Respawn();
+	}
+}
+
 void PlayerManager::RespawnAll(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
@@ -115,32 +139,44 @@ void PlayerManager::ManageMatchStatus(bool started){
 		Player* p = players[i];
 		p->SetMatchStatus(started);
 	}
-
-	deadPlayers.clear();
-	deadWizards.clear();
-	deadWarlocks.clear();
+	size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* p = deadPlayers[i];
+		p->SetMatchStatus(started);
+	}
 }
 
 void PlayerManager::AddToDead(Alliance alliance, Player* player){
+	players.erase(std::remove(players.begin(), players.end(), player), players.end());
 	deadPlayers.push_back(player);
 	
-	if(alliance == ALLIANCE_WIZARD){
-		deadWizards.push_back(player);
-		if(!wizardsWin && !warlocksWin && deadWizards.size() == wizardPlayers.size()) warlocksWin = true;
-	}
-
-	else{
-		deadWarlocks.push_back(player);
-		if(!wizardsWin && !warlocksWin && deadWarlocks.size() == warlockPlayers.size()) wizardsWin = true;
-	}
+	CheckWon();
 }
 
-void PlayerManager::ChangeAlliance(Alliance alliance, Player* player){
-	wizardPlayers.erase(std::remove(wizardPlayers.begin(), wizardPlayers.end(), player), wizardPlayers.end());
-	warlockPlayers.erase(std::remove(warlockPlayers.begin(), warlockPlayers.end(), player), warlockPlayers.end());
-	
-	if(alliance == ALLIANCE_WIZARD) wizardPlayers.push_back(player);
-	else warlockPlayers.push_back(player);
+void PlayerManager::CheckWon(){
+	// Ponemos un contador para cada faccion
+	int contWiz = 0;
+	int contWar = 0;
+
+	// Comprobamos cuantos jugadores de cada faccion quedan vivos
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		Alliance alli = p->GetAlliance();
+		if(alli == ALLIANCE_WIZARD){
+			contWiz++;
+		}else if(alli == ALLIANCE_WARLOCK){
+			contWar++;
+		}
+	}
+
+	// En el caso de que alguno quede a 0 significara la victoria del equipo contrario
+	if(contWiz == 0){
+		warlocksWin = true;
+	}else if(contWar == 0){
+		wizardsWin = true;
+	}
+
 }
 
 bool PlayerManager::CheckIfWon(Alliance alliance){
