@@ -93,7 +93,6 @@ class Player: public Entidad{
 		float GetHP();
 		float GetMP();
 		float GetDamageM();
-		float GetMaxVelocity();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
 		Alliance GetAlliance();
@@ -111,7 +110,6 @@ class Player: public Entidad{
 		void SetHP(float);
 		void SetDamageMult(float);
 		void SetDead(bool);
-		void SetMaxVelocity(float);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
 		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
@@ -119,6 +117,11 @@ class Player: public Entidad{
 		void SetName(std::string newName);
 
 		virtual ~Player();
+
+		// public variables
+		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
+		float 			m_DamageMult;		// Multiplicador de danyo del jugador
+		float 			m_Defense;			// Divisor del danyo recibido
 
 	protected:
 
@@ -128,7 +131,6 @@ class Player: public Entidad{
 
 		PlayerController* controller;		// Objeto que controla el input del jugador
 
-		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
 		float 			raycastDistance;	// Distancia del rayo de RayCast
 
 		int 			currentSpell;		// Hechizo Seleccionado para lanzar
@@ -136,7 +138,6 @@ class Player: public Entidad{
 
 		float 			m_HP;				// Vida del jugador - 100HP
 		float			m_MP;				// Mana del jugador	- 100HP
-		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No

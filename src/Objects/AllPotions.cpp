@@ -103,17 +103,17 @@ void PoisonPotion::Use(Player* p){
 
 // ===============================================================================================//
 //
-//	ELEMENTAL POTION
-//	Recovers 20 HP and applies elemental resistance
+//	DEFENSE POTION
+//	Recovers 20 HP and applies defense resistance
 //
 // ===============================================================================================//
 
-ElementalPotion::ElementalPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
+DefensePotion::DefensePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Potion(TScale, 20, ""){
 	CreatePotion(TPosition, TRotation);
 }
 
-void ElementalPotion::Use(Player* p){
+void DefensePotion::Use(Player* p){
 	p->ChangeHP(value);
-	EffectManager::GetInstance()->AddEffect(p, POWERUP_ELEMDEFENSE);
+	EffectManager::GetInstance()->AddEffect(p, POWERUP_DEFENSE);
 }

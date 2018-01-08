@@ -36,7 +36,8 @@ PoisonBomb::~PoisonBomb(){
  */
 void PoisonBomb::ContactAction(Player* p){
     if(!ready2Burst){
-        p->ChangeHP(-damage);
+        if(!bursted)
+            p->ChangeHP(-damage);
         EffectManager::GetInstance()->AddEffect(p, WEAK_POISONED);
     }
 }
