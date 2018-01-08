@@ -118,7 +118,7 @@ void NetGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 
-	if(playerOne != NULL) 
+	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->DrawOverlays(deltaTime);
 		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
