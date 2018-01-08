@@ -1,6 +1,6 @@
 #include "BT_GhostObject.h"
 #include <iostream>
-#include <bullet/btBulletDynamicsCommon.h>
+#include <btBulletDynamicsCommon.h>
 #include "BulletEngine.h"
 #include "./../Objects/Trap.h"
 
@@ -11,6 +11,8 @@ BT_GhostObject::BT_GhostObject(){
      m_center = new vector3df(0,0,0);
 }
 
+BT_GhostObject::~BT_GhostObject(){}
+
 void BT_GhostObject::CreateGhostBox(vector3df position,vector3df rotation, vector3df dimensions){
     m_body = new btGhostObject();
     m_position = new vector3df(position.X, position.Y, position.Z);
@@ -18,7 +20,7 @@ void BT_GhostObject::CreateGhostBox(vector3df position,vector3df rotation, vecto
     m_rotation = new vector3df(rotation.X,rotation.Y,rotation.Z);
 
     const btVector3 m_ShapeInfo(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
-    m_body->setCollisionShape(new btBoxShape(btVector3(m_ShapeInfo)));
+    m_body->setCollisionShape(new btBoxShape(m_ShapeInfo));
     //m_body->setCollisionShape(new btSphereShape(0.5));
     Rotate(rotation);
     
@@ -67,13 +69,14 @@ void BT_GhostObject::AssignPointer(void* pointer){
     m_body->setUserPointer(pointer);
 }
 
-void BT_GhostObject::Erase(){
+void BT_GhostObject::SetScale(float ammount){
+    m_body->getCollisionShape()->setLocalScaling(btVector3(ammount, ammount, ammount));
+}
 
+void BT_GhostObject::Erase(){
     BulletEngine::GetInstance()->RemoveGhostObject(m_body);
     //delete m_body->getMotionState();
     delete m_body->getCollisionShape();
 
     delete m_body;
 }
-
-BT_GhostObject::~BT_GhostObject(){}

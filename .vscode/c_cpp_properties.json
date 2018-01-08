@@ -34,6 +34,7 @@
                 "/usr/local/include/",
                 "/usr/include",
                 "${workspaceRoot}",
+                "/usr/include/bullet",
                 "${workspaceRoot}/src/Includes"
             ],
             "defines": [],

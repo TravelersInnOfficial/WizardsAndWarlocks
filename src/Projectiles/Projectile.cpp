@@ -35,7 +35,7 @@ void Projectile::CreateProjectile(){
 	// GRAPHIC ENGINE
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
-	// Cargamos el cubo
+	// Cargamos la esfera
 	m_ProjectileNode = engine->addSphere2Scene(initPos,vector3df(0,0,0),vector3df(1,1,1), radius, -1);
 	m_ProjectileNode->setScale(vector3df(1,1,1));
 
@@ -59,10 +59,7 @@ void Projectile::Update(){
 
 	//Comprobamos si ha llegado a la distancia maxima
 	vector3df pos = bt_body->GetPosition();
-	vector3df vectorDistance;
-	vectorDistance.X = pos.X - initPos.X;
-	vectorDistance.Y = pos.Y - initPos.Y;
-	vectorDistance.Z = pos.Z - initPos.Z;
+	vector3df vectorDistance = pos - initPos;
 
 	float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
 

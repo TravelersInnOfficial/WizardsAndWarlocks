@@ -14,6 +14,7 @@ public:
     void AssignPointer(void*);
 
     void SetPosition(vector3df pos);
+    void SetScale(float ammount);
 
     void Erase();
     ~BT_GhostObject();

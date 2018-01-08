@@ -1,7 +1,3 @@
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Woverloaded-virtual"
-#pragma clang diagnostic pop
-
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
 
