@@ -50,9 +50,6 @@ public:
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v);
 	void SetObjectString(	int objectId, ObjectVariable k, std::string v);
 
-	// Match Status
-	void EndMatch(Alliance winnerAlliance);
-
 	// We get the ID of the Network Object of the Player One
 	int GetPlayerOneId();
 	
