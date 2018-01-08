@@ -81,7 +81,7 @@ int main() {
 			end = game->Input();
 			game->Update();
 			game->Draw();
-			g_engine->endScene();	
+			g_engine->endScene();			
 		}
 		delete game;
 	}

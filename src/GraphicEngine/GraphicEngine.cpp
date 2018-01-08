@@ -118,10 +118,7 @@ void GraphicEngine::drawAim(bool moving){
 	irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
 
 	irr::u32 rDist = 0;
-	irr::u32 yoff = 0;
-	if(moving){
-		rDist = 30;
-	}
+	if(moving) rDist = 30;
 	else{// Not moving
 		rDist = 4;
 		// Draws center point
