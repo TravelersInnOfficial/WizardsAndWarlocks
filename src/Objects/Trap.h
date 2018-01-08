@@ -32,6 +32,10 @@ public:
     vector3df* GetDimensions();
     TrapEnum GetTrapType();
 
+    // Sense Functions
+    void SendSignal();
+    Kinematic GetKinematic();
+
     void Erase();
     ~Trap();
     
