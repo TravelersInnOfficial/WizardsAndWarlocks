@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-
+#include "../../Includes/vector3d.h"
 class Connection;
 
 class Node{
@@ -20,7 +20,7 @@ public:
      * 
      * @param id (Node ID)
      */
-    Node(int, std::string);
+    Node(int, std::string, vector3df);
 
     /**
      * @brief Node destructor
@@ -56,10 +56,18 @@ public:
      */
     std::vector<Connection*> getOutgoingConnections();
 
+    /**
+     * @brief Returns the node position
+     * 
+     * @return vector3df (position)
+     */
+    vector3df getPosition();
+
 private: 
     int m_ID;
     std::string m_RegionName;
     std::vector<Connection*> m_connections;
+    vector3df m_position;
 };
 
 #endif

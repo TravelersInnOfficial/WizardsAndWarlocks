@@ -15,13 +15,17 @@ Pathfinding::~Pathfinding(){
 
 std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* EndNode){
     Heuristic* heur = new Heuristic(EndNode);
+    float endNodeHeuristic = 0;
 
     //Initialize the record for the start node
     m_startRecord->m_node = StartNode;
     m_startRecord->m_connection = NULL;
     m_startRecord->m_costSoFar = 0;
-    m_startRecord->previous = 0;
-    m_startRecord->m_estimatedTotalCost = heur->estimate(StartNode);
+    //m_startRecord->previous = 0;
+    m_startRecord->m_heuristic = heur->estimate(StartNode);
+    m_startRecord->m_estimatedTotalCost = m_startRecord->m_costSoFar + m_startRecord->m_heuristic;
+    //the estimated total cost is the sum of the cost-so-fat plus the heuristic function 
+    //(how far is the node from the goal node)
 
     //Initialize the open and closed lists
     m_openList->add(m_startRecord);
@@ -45,11 +49,12 @@ std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* End
 
         std::cout<<"OPEN LIST SIZE::: "<<m_openList->size()<<std::endl;
 
-        //Find the smallest element in the open list (TODO:: USING THE m_estimatedTotalCost)
+        //Find the smallest element in the open list (USING THE m_estimatedTotalCost)
         std::cout<<"Finding the smallest element in the open list... "<<std::endl;
-        current = m_openList->smallestElement(current);
+        current = m_openList->smallestElement();
 
-        if(current->previous!=0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
+        //if(current->previous!=0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
+        //else std::cout<<"THERE'S NO PREVIOUS NODE ASSIGNED"<<std::endl;
         std::cout<<"--------------------------- CURRENT NODE "<<current->m_node->getRegionName()<<" ---------------------------"<<std::endl;
         
          //If it is the goal node, then terminate
@@ -73,34 +78,69 @@ std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* End
             std::cout<<"This connection leads to: "<<endNode->getRegionName()<<std::endl;
             endNodeCost =  current->m_costSoFar + nodeConnections.at(i)->getCost();
 
-            //Skip if the node is closed
+            //If the node is closed we may have to skip, or remove it from the closed list
             if(m_closedList->contains(endNode)){ 
-                std::cout<<"!! The node with the region: "<< endNode->getRegionName()<<" was already in the CLOSED list\n"<<std::endl;
-                continue;
+                //Here we find the record in the closed list corresponding to the endNode.
+                endNodeRecord = m_closedList->find(endNode);
+
+                //If we didn't find a shorter route, skip
+                if(endNodeRecord->m_costSoFar <= endNodeCost) continue;
+
+                //Otherwhise remove it from the closed list
+                std::cout<<"$$$$removing "<<endNodeRecord->m_node->getRegionName()<<" from closed list$$$$"<<std::endl;
+                m_closedList->remove(endNodeRecord);
+                m_closedList->printListOfNodes();
+                std::cout<<"$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"<<std::endl;
+
+                //We can use the node's old cost values to calculate its heuristic without calling the
+                //possibly expensive heuristic function
+                //TODO:: endNodeHeuristic = endNodeRecord.cost - endNodeRecord.costSoFar
+                //endNodeHeuristic = endNodeCost - endNodeRecord->m_costSoFar;
+                endNodeHeuristic = heur->estimate(endNodeRecord->m_node);
             }
-             //.. or if it is open and we’ve found a worse route
+            //Skip if the node is open and we've not found a better route
             else if(m_openList->contains(endNode)){
                 std::cout<<"!! The node with the region: "<< endNode->getRegionName()<<" was already in the OPEN list\n"<<std::endl;
                 //Here we find the record in the open list corresponding to the endNode.
                 endNodeRecord = m_openList->find(endNode);
+
+                //If our route is no better, then skip
                 if(endNodeRecord!=NULL && endNodeRecord->m_costSoFar <= endNodeCost){ 
                     std::cout<<"Checking the current costSoFar with the new founded..."<<std::endl;
                     std::cout<<" CURRENT COSTSOFAR "<< endNodeCost<< " // COSTSOFAR FOUND "<< endNodeRecord->m_costSoFar<<std::endl;
                     continue;
                 }
+
+                //We can use the node's old cost values to calculate its heuristic without calling the
+                //possibly expensive heuristic function
+                endNodeHeuristic = heur->estimate(endNodeRecord->m_node);
             } 
             else{
                 std::cout<<"We have an unvisited node called: "<<endNode->getRegionName()<<std::endl;
                 //Otherwise we know we’ve got an unvisited node, so make a record for it
                 endNodeRecord = new NodeRecord();
                 endNodeRecord->m_node = endNode;
+
+                //We'll need to calculate the heuristic value using the function, since we dont have an
+                //existing record to use
+                endNodeHeuristic = heur->estimate(endNode);
             }
 
             //We’re here if we need to update the node. Update the cost and connection
-            std::cout<<"----EndNodecost: "<<endNodeCost<<"----"<<std::endl;
+            std::cout<<"********************UPDATING THE NODE*****************"<<std::endl;
             endNodeRecord->m_costSoFar = endNodeCost;
             endNodeRecord->m_connection = nodeConnections.at(i);
-            endNodeRecord->previous = current;
+            //endNodeRecord->previous = current;
+            endNodeRecord->m_heuristic = endNodeHeuristic;
+            endNodeRecord->m_estimatedTotalCost = endNodeCost + endNodeHeuristic;
+
+            std::cout<<"----Node: "<<endNodeRecord->m_node->getRegionName()<<"----"<<std::endl;
+            std::cout<<"----CostSoFar: "<<endNodeRecord->m_costSoFar<<"----"<<std::endl;
+            std::cout<<"----Connection: "<<endNodeRecord->m_connection->getFromNode()->getRegionName()<<" >> "<<endNodeRecord->m_connection->getToNode()->getRegionName()<<std::endl;
+            //std::cout<<"----Previous: "<<endNodeRecord->previous->m_node->getRegionName()<<std::endl;
+            std::cout<<"----Heuristic: "<<endNodeRecord->m_heuristic<<"----"<<std::endl;
+            std::cout<<"----Estimated Total Cost: "<<endNodeRecord->m_estimatedTotalCost<<"----"<<std::endl;
+            std::cout<<"************************************************************"<<std::endl;
 
             //And add it to the open list
             if(!m_openList->contains(endNode)){
@@ -116,6 +156,7 @@ std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* End
 
         std::cout<<"----add in closed list----"<<std::endl;
         m_closedList->add(current);
+ 
     }
     //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
     if(current->m_node != EndNode){
@@ -126,10 +167,15 @@ std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* End
     else{
         std::cout<<"!! FOUND THE PATH TO THE END NODE with cost "<< current->m_costSoFar<<std::endl;
         path = new std::list<Connection*>();
-
-        while(current->previous !=0 && current->m_node!= StartNode){
+        std::cout<<"Compiling path..."<<std::endl;
+        while(/*current->previous !=0 && */current->m_node!= StartNode){
+            std::cout<<"Node: "<<current->m_node->getRegionName()<<std::endl;
+            //if(current->previous != 0)std::cout<<"Previous: "<<current->previous->m_node->getRegionName()<<std::endl;
+            //else std::cout<<"THERE'S NO PREVIOUS NODE"<<std::endl;
             path->push_back(current->m_connection);
-            current = current->previous;
+            //current = current->previous;
+            current = m_closedList->find(current->m_connection->getFromNode());
+
         }
         path->reverse();
         std::cout<<"FINAL OPEN LIST\n"<<std::endl;
@@ -146,7 +192,7 @@ std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node*
     m_startRecord->m_node = StartNode;
     m_startRecord->m_connection = NULL;
     m_startRecord->m_costSoFar = 0;
-    m_startRecord->previous = 0;
+    //m_startRecord->previous = 0;
 
     //Initialize the open and closed lists
     m_openList->add(m_startRecord);
@@ -172,9 +218,9 @@ std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node*
 
         //Find the smallest element in the open list
         std::cout<<"Finding the smallest element in the open list... "<<std::endl;
-        current = m_openList->smallestElement(current);
+        current = m_openList->smallestElement();
 
-        if(current->previous!=0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
+        //if(current->previous!=0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
         std::cout<<"--------------------------- CURRENT NODE "<<current->m_node->getRegionName()<<" ---------------------------"<<std::endl;
         
          //If it is the goal node, then terminate
@@ -225,7 +271,7 @@ std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node*
             std::cout<<"----EndNodecost: "<<endNodeCost<<"----"<<std::endl;
             endNodeRecord->m_costSoFar = endNodeCost;
             endNodeRecord->m_connection = nodeConnections.at(i);
-            endNodeRecord->previous = current;
+            //endNodeRecord->previous = current;
 
             //And add it to the open list
             if(!m_openList->contains(endNode)){
@@ -251,11 +297,12 @@ std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node*
     else{
         std::cout<<"!! FOUND THE PATH TO THE END NODE with cost "<< current->m_costSoFar<<std::endl;
         path = new std::list<Connection*>();
-
+/*
         while(current->previous !=0 && current->m_node!= StartNode){
             path->push_back(current->m_connection);
             current = current->previous;
         }
+    */
         path->reverse();
         std::cout<<"FINAL OPEN LIST\n"<<std::endl;
         m_openList->printListOfNodes();

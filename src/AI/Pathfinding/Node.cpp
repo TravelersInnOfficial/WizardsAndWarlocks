@@ -3,11 +3,13 @@
 Node::Node(){
     m_ID = -1;
     m_RegionName = "NONE";
+    m_position = vector3df(0,0,0);
 }
 
-Node::Node(int id, std::string regionName){
+Node::Node(int id, std::string regionName, vector3df position){
     m_ID = id;
     m_RegionName = regionName;
+    m_position = position;
 }
 
 Node::~Node(){
@@ -29,4 +31,8 @@ void Node::addConnection(Connection* c){
 
 std::vector<Connection*> Node::getOutgoingConnections(){
     return m_connections;
+}
+
+vector3df Node::getPosition(){
+    return m_position;
 }

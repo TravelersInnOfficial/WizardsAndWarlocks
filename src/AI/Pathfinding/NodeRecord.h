@@ -12,8 +12,7 @@ public:
     Connection *m_connection;
     float m_costSoFar;
     float m_estimatedTotalCost;
-
-    NodeRecord* previous;
+    float m_heuristic;
 };
 
 #endif

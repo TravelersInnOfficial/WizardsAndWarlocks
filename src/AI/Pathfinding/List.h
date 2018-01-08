@@ -16,7 +16,7 @@ public:
      * @param Node (Node to be checked)
      * @return NodeRecord* (Nearest node and connection)
      */
-    NodeRecord* smallestElement(NodeRecord*);
+    NodeRecord* smallestElement();
 
     /**
      * @brief Returns the list size

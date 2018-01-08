@@ -23,6 +23,13 @@ void List::add(NodeRecord* nr){
 }
 
 void List::remove(NodeRecord* nr) {
+    float cost = nr->m_estimatedTotalCost;
+    for(int i = 0; i<m_list.size(); i++){
+        if(nr!= m_list[i]) m_list.erase(m_list.begin() + i);
+        else if(cost<=m_list[i]->m_estimatedTotalCost){
+            break;
+        }
+    }
 }
 
 bool List::contains(Node* n){
@@ -37,7 +44,7 @@ NodeRecord* List::find(Node* n){
     return NULL;
 }
 
-NodeRecord* List::smallestElement(NodeRecord* n){
+NodeRecord* List::smallestElement(){
     return getMin();
 }
 
@@ -62,8 +69,9 @@ void List::printListOfNodes(){
         std::cout<<" Node Region: "<<m_list[i]->m_node->getRegionName()<<std::endl;
         if(m_list[i]->m_connection!=NULL) std::cout<<" Connection from < : "<<m_list[i]->m_connection->getFromNode()->getRegionName()<<" // To > "<< m_list[i]->m_connection->getToNode()->getRegionName()<<std::endl;
         else std::cout<<" Connection is NULL"<<std::endl;
-        std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_costSoFar<<"\n"<<std::endl;
-        std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_estimatedTotalCost<<"\n"<<std::endl;
+        std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_costSoFar<<std::endl;
+        std::cout<<" NodeRecord heuristic value: "<<m_list[i]->m_heuristic<<std::endl;
+        std::cout<<" NodeRecord estimatedTotalCost: "<<m_list[i]->m_estimatedTotalCost<<"\n"<<std::endl;
     }
 }
 
@@ -72,10 +80,11 @@ void List::printListOfNodes(){
 void List::insertNode(NodeRecord* nr){
     //insert the new element at the end of the heap
     m_list.push_back(nr);
+    
     //check if the heap property has been broken
     int i = m_list.size()-1;
     //while the parent node has bigger CostSoFar swap the nodes
-    while (i != 0 && m_list[parentNodeIndex(i)]->m_costSoFar > m_list[i]->m_costSoFar)
+    while (i != 0 && m_list[parentNodeIndex(i)]->m_estimatedTotalCost > m_list[i]->m_estimatedTotalCost)
     {
        swapNodes(m_list[i], m_list[parentNodeIndex(i)]);
        i = parentNodeIndex(i);
@@ -92,9 +101,9 @@ std::cout<<"*****************GETMIN()*****************"<<std::endl;
     //if the list has more than one element
     //if(m_list.size() != 1){
         //lo sustituimos por el ultimo y lo eliminamos del final
-        std::cout<<"initial node before "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_costSoFar<<std::endl;
+        std::cout<<"initial node before "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_estimatedTotalCost<<std::endl;
         m_list[0] = m_list[m_list.size()-1];
-        std::cout<<"initial node now "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_costSoFar<<std::endl;
+        std::cout<<"initial node now "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_estimatedTotalCost<<std::endl;
         m_list.erase(m_list.end()-1);
         std::cout<<"NEW list size: "<<m_list.size()<<std::endl;
 
@@ -114,9 +123,9 @@ void List::heapify(int root){
     //asume that the root is the smallest initially
     int min = root;
     //if left index is minor than m_list size and the cost so far of the left is minor that the root, the new smallest is the left
-    if(l!= -1 && l<m_list.size() && m_list[min]->m_costSoFar > m_list[l]->m_costSoFar) min = l;
+    if(l!= -1 && l<m_list.size() && m_list[min]->m_estimatedTotalCost > m_list[l]->m_estimatedTotalCost) min = l;
     //if left index is minor than m_list size and the cost so far of the right is minor that the root, the new smallest is the right
-    if(r!=-1 && r<m_list.size() && m_list[min]->m_costSoFar > m_list[r]->m_costSoFar) min = r;
+    if(r!=-1 && r<m_list.size() && m_list[min]->m_estimatedTotalCost > m_list[r]->m_estimatedTotalCost) min = r;
 
     //if the smallest is different from the root, switch the actual root and smallest and proceed to the next level of the heap
     if(min != root){
@@ -126,7 +135,9 @@ void List::heapify(int root){
 }
 
 void List::swapNodes(NodeRecord* nr1, NodeRecord* nr2){
+
     NodeRecord aux = *nr1;
+
     *nr1 = *nr2;
     *nr2 = aux;
 }
