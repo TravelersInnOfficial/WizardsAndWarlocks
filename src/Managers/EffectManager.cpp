@@ -152,9 +152,11 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		case POWERUP_DEFENSE:
 			e = new DefenseUp(7.0f);
 			break;
+		/*
 		case POWERUP_ELEMDEFENSE:
 			e = new ElementUp(7.0f);
 			break;
+		*/
 		case POWERUP_SPEED:
 			e = new SpeedUp(10.0f);
 			break;

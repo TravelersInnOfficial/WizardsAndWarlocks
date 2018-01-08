@@ -130,6 +130,7 @@ public:
 	void RemoveEffect(Player* p);
 };
 
+/*
 // POWERUP_ELEMDEFENSE
 class ElementUp: public Effect{
 public:
@@ -137,6 +138,7 @@ public:
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 };
+*/
 
 // POWERUP_SPEED
 class SpeedUp: public Effect{
