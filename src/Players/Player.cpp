@@ -53,8 +53,8 @@ void Player::PlayerInit(){
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
+	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	EffectManager::GetInstance()->CleanEffects(this);
-	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	createSoundEvents();
 }
 
@@ -673,6 +673,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+			TrapManager::GetInstance()->setPlayerUsings(this,0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -684,6 +685,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+			TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 			break;
 		}
 		default:{
