@@ -34,8 +34,6 @@ Player::Player(bool isPlayer1){
 	readyToStart = false;
 	moving = false;
 	stepsStarted = false;
-	bloodOverlayTime = 0;
-	hitOverlayTime = 0;
 	name = "";
 
 	currentSpell = 0;
@@ -53,6 +51,8 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_DamageMult = 1;	
 	m_dead = false;
+	bloodOverlayTime = 0;
+	hitOverlayTime = 0;
 	EffectManager::GetInstance()->CleanEffects(this);
 	TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	createSoundEvents();
@@ -337,9 +337,12 @@ void Player::ChangeHP(float HP){
 		bloodOverlayTime = 1;
 	}
 
-	NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	bool isServer = n_engine->IsServerInit();
-	if(isServer) m_HP += HP;
+	if(networkObject != NULL){
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		bool isServer = n_engine->IsServerInit();
+		if(isServer) m_HP += HP;
+	}
+	else m_HP += HP;
 	
 	if(m_HP >= 100) m_HP = 100;
 	else if(m_HP <= 0){
@@ -364,7 +367,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
-	CreatePlayerCharacter();
+	// CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -415,17 +418,16 @@ void Player::SendSignal(){
 void Player::Die(){
 
 	playDie(); //Play the sound event
-
 	DropObject();
 
-	PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
-	DestroyPlayerCharacter();
-
 	if(matchStarted){
+		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
+		DestroyPlayerCharacter();
 		CheckIfReady();
 	}
 
 	soundEvents.clear();
+	Respawn();
 }
 
 void Player::ReturnToLobby(){
@@ -434,6 +436,7 @@ void Player::ReturnToLobby(){
 	if(networkObject != NULL){
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+		if(isPlayerOne) CheckIfReady();
 	}
 }
 

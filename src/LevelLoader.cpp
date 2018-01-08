@@ -3,6 +3,7 @@
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
 #include "Managers/TrapManager.h"
+#include "NetworkEngine/NetworkEngine.h"
 #include <map>
 #include <json.hpp>
 #include <fstream>
@@ -128,5 +129,6 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	PlayerManager* plyManager = PlayerManager::GetInstance();
 	plyManager->RestartMatchStatus();
+
 	return true;
 }
