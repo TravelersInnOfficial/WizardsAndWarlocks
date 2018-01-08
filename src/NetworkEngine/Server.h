@@ -32,6 +32,9 @@ public:
 	int CreateNetworkObject(ObjectType type, bool broadcast = true, RakNet::RakNetGUID guid = RakNet::UNASSIGNED_RAKNET_GUID);
 	void RemoveNetworkObject(int id, bool broadcast = true);
 
+	// Match Status
+	void EndMatch(Alliance winnerAlliance);
+
 	// We manage the players connected
 	int AddPlayer(RakNet::RakNetGUID guid);
 	int RemovePlayer(RakNet::RakNetGUID guid);

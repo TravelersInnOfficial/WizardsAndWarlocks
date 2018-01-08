@@ -59,7 +59,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 			hp->GetNetInput();
 		}
 
-		p->Update();
+		p->Update();		
 	}
 	
 	// Actualizamos los personajes muertos (camara libre)

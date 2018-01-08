@@ -306,11 +306,4 @@ void Client::SetObjectString(int objectId, ObjectVariable k, std::string v){
 	SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED);
 }
 
-void Client::EndMatch(Alliance winnerAlliance){
-	RakNet::BitStream endMatch;
-	endMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
-	endMatch.Write(winnerAlliance);
-	SendPackage(&endMatch, HIGH_PRIORITY, RELIABLE_ORDERED);
-}
-
 int Client::GetPlayerOneId(){ return (playerOneId); }
