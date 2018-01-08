@@ -47,7 +47,7 @@ void HumanPlayer::SetNetInput(){
 
 	// OTHERS
 	if(hasCharacter){
-		networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
+		// networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 	}
 
@@ -75,88 +75,90 @@ void HumanPlayer::GetNetInput(){
 		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
 	}
 
-	objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
-	if(objstate_int != -99999){
-		SetSpell(objstate_int);
-		objstate_int = -99999;
-		networkObject->SetIntVar(PLAYER_SPELL, objstate_int, false, false);
-	}
-	
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_LEFT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_LEFT, keystate, false, false);
-	}
-	
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_RIGHT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_RIGHT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_RIGHT, keystate, false, false);
-	}
+	if(!isPlayerOne){
+		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
+		if(objstate_int != -99999){
+			SetSpell(objstate_int);
+			objstate_int = -99999;
+			networkObject->SetIntVar(PLAYER_SPELL, objstate_int, false, false);
+		}
+		
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_LEFT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_LEFT, keystate, false, false);
+		}
+		
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_RIGHT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_RIGHT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_RIGHT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_UP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_UP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_UP, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_UP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_UP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_UP, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_DOWN);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_DOWN, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_DOWN, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_DOWN);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_DOWN, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_DOWN, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_RAYCAST);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_RAYCAST, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_RAYCAST, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_RAYCAST);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_RAYCAST, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_RAYCAST, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_JUMP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_JUMP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_JUMP, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_JUMP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_JUMP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_JUMP, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_USE_OBJECT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_USE_OBJECT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_USE_OBJECT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_USE_OBJECT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_USE_OBJECT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_USE_OBJECT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_DROP_OBJECT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_DROP_OBJECT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_DROP_OBJECT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_DROP_OBJECT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_DROP_OBJECT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_DROP_OBJECT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_SHOOT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_SHOOT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_SHOOT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_SHOOT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_DEPLOY_TRAP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_DEPLOY_TRAP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
-	if(keystate != -1){
-		SetAllInput((keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
+		keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
+		if(keystate != -1){
+			SetAllInput((keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
+		}
 	}
 
 }

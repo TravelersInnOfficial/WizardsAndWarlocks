@@ -50,7 +50,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 		if(isNetGame) {
 			HumanPlayer* hp = (HumanPlayer*) players[i];
 			if(p->IsPlayerOne()) hp->SetNetInput();
-			else hp->GetNetInput();
+			hp->GetNetInput();
 		}
 		p->Update();
 	}
