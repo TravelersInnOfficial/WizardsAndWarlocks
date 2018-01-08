@@ -19,8 +19,8 @@ NetGame::NetGame(){
 
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
-	s_engine 		= SoundSystem::getInstance();
 	n_engine 		= NetworkEngine::GetInstance();
+	s_engine 		= SoundSystem::getInstance();
 
 	// Level
 	LevelLoader loader;
@@ -29,12 +29,11 @@ NetGame::NetGame(){
 	gameEnded = false;
 	secondCounter = 0;
 
-	if(n_engine->IsServerInit()) isServer = true;
-	else if(n_engine->IsClientInit()) isServer = false;
-
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
-	footstepEvent = s_engine->getEvent("event:/Character/Hard/Footsteps");
+
+	if(n_engine->IsServerInit()) isServer = true;
+	else if(n_engine->IsClientInit()) isServer = false;
 
 	// Graphic Engine
 	timeStart = g_engine->getTime() * 0.001;
@@ -57,20 +56,8 @@ bool NetGame::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
-	
-	if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
-		if(footstepEvent->isPlaying()) footstepEvent->stop();
-	}
+	if(g_engine->IsKeyPressed(KEY_F1)) MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
 
-	if(playerOne != NULL){
-		/*if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
-		if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
-		if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
-		if(g_engine->IsKeyDown(KEY_KEY_R)) playerOne->Respawn();*/
-		if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-			if(!footstepEvent->isPlaying()) footstepEvent->start();
-		}
-	}
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -81,11 +68,15 @@ bool NetGame::Input(){
 }
 
 void NetGame::Update(){
+
 	UpdateDelta();
 
 	n_engine->Update();
 	f_engine->UpdateWorld();
-	s_engine->update();
+	
+	if(g_engine->getActiveCamera() != NULL){
+		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
+	}
 
 	networkManager->Update();
 	bulletManager->Update();
@@ -95,6 +86,8 @@ void NetGame::Update(){
 	trapManager->Update(deltaTime);
 
 	playerManager->UpdatePlayers(true);
+	//if(lobbyState) playerManager->RespawnDeadPlayers();
+	playerManager->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
 	setFps();
@@ -124,9 +117,12 @@ void NetGame::CheckIfReady(){
 void NetGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-	g_engine->drawAim();
-	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
-	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+
+	if(playerOne != NULL){
+		g_engine->drawAim(playerOne->GetMoving());
+		playerOne->DrawOverlays(deltaTime);
+		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+	}
 	//f_engine->DebugDrawWorld();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
@@ -153,7 +149,9 @@ void NetGame::UpdateDelta(){
 	timeStart = currentTime;
 }
 
-void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
+void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne, std::string name){
+	Player* p;
+	
 	if(!isServer && playerOne == NULL && isPlayerOne) {
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
@@ -161,6 +159,7 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
 		spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
 		spellManager->AddHechizo(2, playerOne, SPELL_WALL);
 		spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
+		p = (Player*) playerOne;
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
@@ -169,7 +168,10 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne){
 		spellManager->AddHechizo(1, newPlayer, SPELL_FIRE);
 		spellManager->AddHechizo(2, newPlayer, SPELL_WALL);
 		spellManager->AddHechizo(3, newPlayer, SPELL_BLIZZARD);
+		p = (Player*) newPlayer;
 	}
+
+	if(name.length() > 0) p->SetName(name);
 }
 
 void NetGame::CheckIfWon(){

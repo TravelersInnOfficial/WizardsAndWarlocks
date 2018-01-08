@@ -9,10 +9,3 @@ HUDSound::HUDSound() {}
  *  Destructor
  ******************************************************/
 HUDSound::~HUDSound() {}
-
-/******************************************************
- *  Constructor 
- ******************************************************/
-HUDSound::HUDSound(FMOD::Studio::EventInstance* instance) {
-    soundInstance = instance;
-}

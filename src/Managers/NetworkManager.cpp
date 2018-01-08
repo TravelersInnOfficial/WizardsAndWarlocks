@@ -47,13 +47,15 @@ void NetworkManager::SpawnNewObjects(){
 			case ID_PLAYER_O:{
 				NetGame* gameInstance = NetGame::GetInstance();
 				bool playerOne = false;
+				std::string name = "";
 
 				// Comprobar si es PLAYER ONE con la ID del NETWORK OBJECT y mi ID del OBJETO PLAYER ONE
 				if(n_engine->IsClientInit() && row->second->GetObjId() == n_engine->GetClient()->GetPlayerOneId()){
 					playerOne = true;
+					name = n_engine->GetClient()->GetClientName();
 				}
 
-				gameInstance->CreatePlayer(row->second, playerOne);
+				gameInstance->CreatePlayer(row->second, playerOne, name);
 				break;
 			}
 			case ID_POTION_O:{

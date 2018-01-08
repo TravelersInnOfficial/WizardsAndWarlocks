@@ -1,4 +1,5 @@
 #include "Invocation.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Invocation::Invocation(int HP, float time, vector3df pos, vector3df scale, vector3df rot){
 	m_HP = HP;
@@ -59,4 +60,19 @@ void Invocation::ChangeHP(int value){
 	if(m_HP<=0){
 		m_HP = 0;
 	}
+}
+
+void Invocation::SendSignal(){
+	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
+	sense->AddSignal(id, true, AI_INVOCATION, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Invocation::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = bt_body->GetPosition();
+	cKin.orientation =  vector2df(0,0);
+   	cKin.velocity = bt_body->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }

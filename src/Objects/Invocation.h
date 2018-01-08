@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector3d.h>
+#include <kinematicTypes.h>
 #include <ColliderMasks.h>
 
 #include "./../PhysicsEngine/BT_Body.h"
@@ -18,6 +19,11 @@ public:
 	void Update();
 	void ChangeHP(int value);
 	void Contact(void* punt, EntityEnum tipo);
+
+	// Sense Functios
+	void SendSignal();
+	Kinematic GetKinematic();
+
 private:
 	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
 

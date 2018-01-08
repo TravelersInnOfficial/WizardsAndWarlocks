@@ -19,7 +19,13 @@ enum AI_code
 	//CODIGOS SENSE
 	AI_PLAYER_WARL	= 0x0C,	// Codigo player sense
 	AI_PLAYER_WIZA	= 0x0D,	// Codigo player sense
-	AI_POTION		= 0x0E	// Codigo pocion sense
+	AI_POTION		= 0x0E,	// Codigo pocion sense
+	AI_FOUNTAIN		= 0x0F,	// Codigo fuente sense
+	AI_GRAIL		= 0x10, // Codigo grial sense
+	AI_INVOCATION	= 0x11,	// Codigo invocacion sense
+	AI_SWITCH		= 0x12,	// Codigo switch sense
+	AI_DOOR			= 0x13,	// Codigo door sense
+	AI_TRAP			= 0x14	// Codigo trap sense
 };
 
 enum AI_modalities

@@ -86,7 +86,7 @@ bool SpellManager::StartHechizo(int num, Player* p){
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
-				int mana = p->GetMP();
+				float mana = p->GetMP();
 				if(h->CheckMP(mana)){
 					h->EmpezarCast();
 					return true;			
@@ -134,7 +134,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_POISON:
-			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
+			h = new OgreBelch(-5, 1.0f, 1.0f, 100, 100);
 			break;
 		case SPELL_THUNDER:
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);

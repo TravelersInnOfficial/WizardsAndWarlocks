@@ -89,7 +89,7 @@ bool Hechizo::CheckMP(float MP){
 /**
  * @brief Devuelve el coste del hechizo
  */
-int Hechizo::GetMP(){
+float Hechizo::GetMP(){
 	return costePM;
 }
 

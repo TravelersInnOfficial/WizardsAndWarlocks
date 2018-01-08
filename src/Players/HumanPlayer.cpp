@@ -13,42 +13,54 @@ void HumanPlayer::SetNetInput(){
 
 	Player::SetNetInput();
 
-	// MOVEMENT
-	if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 3, true, false);
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
 
-	if(controller->IsKeyPressed(ACTION_MOVE_DOWN)) networkObject->SetIntVar(PLAYER_MOVE_DOWN, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_MOVE_DOWN)) networkObject->SetIntVar(PLAYER_MOVE_DOWN, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(PLAYER_MOVE_RIGHT, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(PLAYER_MOVE_RIGHT, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 3, true, false);
-
-	// ACTIONS
-	if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 3, true, false);
-
-	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
-	else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
-
-	// OTHERS
-	if(hasCharacter){
+	// LO QUE SINCRONIZA EL SERVIDOR
+	if(isServer){
 		networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
-		networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+	}
+
+	// LO QUE SINCRONIZA EL CLIENTE (PLAYER ONE)
+	else if (isPlayerOne){
+
+		// MOVEMENT
+		if(controller->IsKeyPressed(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_MOVE_LEFT)) networkObject->SetIntVar(PLAYER_MOVE_LEFT, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_MOVE_DOWN)) networkObject->SetIntVar(PLAYER_MOVE_DOWN, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_MOVE_DOWN)) networkObject->SetIntVar(PLAYER_MOVE_DOWN, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(PLAYER_MOVE_RIGHT, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_MOVE_RIGHT)) networkObject->SetIntVar(PLAYER_MOVE_RIGHT, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_MOVE_UP)) networkObject->SetIntVar(PLAYER_MOVE_UP, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 3, true, false);
+
+		// ACTIONS
+		if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_USE_OBJECT)) networkObject->SetIntVar(PLAYER_USE_OBJECT, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_DROP_OBJECT)) networkObject->SetIntVar(PLAYER_DROP_OBJECT, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_SHOOT)) networkObject->SetIntVar(PLAYER_SHOOT, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
+
+		// OTHERS
+		if(hasCharacter) networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
+
 	}
 
 }
@@ -61,102 +73,124 @@ void HumanPlayer::GetNetInput(){
 	int objstate_int = -99999;
 	vector3df objstate = vector3df(-99999,0,0);
 
-	objstate = networkObject->GetVecFVar(PLAYER_POSITION);
-	if(objstate.X != -99999){
-		SetPosition(objstate);
-		objstate = vector3df(-99999,0,0);
-		networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+	if(!isServer){
+		objstate = networkObject->GetVecFVar(PLAYER_POSITION);
+		if(objstate.X != -99999){
+			SetPosition(objstate);
+			objstate = vector3df(-99999,0,0);
+			networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
+		}
 	}
 
-	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
-	if(objstate.X != -99999){
-		SetRotation(objstate);
-		objstate = vector3df(-99999,0,0);
-		networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
-	}
-
-	objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
-	if(objstate_int != -99999){
-		SetSpell(objstate_int);
-		objstate_int = -99999;
-		networkObject->SetIntVar(PLAYER_SPELL, objstate_int, false, false);
+	float life = -9999;
+	life = networkObject->GetFloatVar(PLAYER_LIFE);
+	if(life != -9999 && life != -1){
+		m_HP = life;
+		life = -9999;
+		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
 	}
 	
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_LEFT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_LEFT, keystate, false, false);
-	}
-	
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_RIGHT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_RIGHT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_RIGHT, keystate, false, false);
+	float mana = -9999;
+	mana = networkObject->GetFloatVar(PLAYER_MANA);
+	if(mana != -9999 && mana != -1){
+		m_MP = mana;
+		mana = -9999;
+		networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
 	}
 
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_UP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_UP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_UP, keystate, false, false);
-	}
+	if(!isPlayerOne){
+		objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
+		if(objstate.X != -99999){
+			SetRotation(objstate);
+			objstate = vector3df(-99999,0,0);
+			networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_MOVE_DOWN);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_MOVE_DOWN, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_MOVE_DOWN, keystate, false, false);
-	}
+		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
+		if(objstate_int != -99999){
+			SetSpell(objstate_int);
+			objstate_int = -99999;
+			networkObject->SetIntVar(PLAYER_SPELL, objstate_int, false, false);
+		}
+		
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_LEFT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_LEFT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_LEFT, keystate, false, false);
+		}
+		
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_RIGHT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_RIGHT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_RIGHT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_RAYCAST);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_RAYCAST, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_RAYCAST, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_UP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_UP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_UP, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_JUMP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_JUMP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_JUMP, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_MOVE_DOWN);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_MOVE_DOWN, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_MOVE_DOWN, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_USE_OBJECT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_USE_OBJECT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_USE_OBJECT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_RAYCAST);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_RAYCAST, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_RAYCAST, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_DROP_OBJECT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_DROP_OBJECT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_DROP_OBJECT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_JUMP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_JUMP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_JUMP, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_SHOOT);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_SHOOT, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_USE_OBJECT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_USE_OBJECT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_USE_OBJECT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_DEPLOY_TRAP);
-	if(keystate != -1){
-		controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
-	}
+		keystate = networkObject->GetIntVar(PLAYER_DROP_OBJECT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_DROP_OBJECT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_DROP_OBJECT, keystate, false, false);
+		}
 
-	keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
-	if(keystate != -1){
-		SetAllInput((keyStatesENUM)keystate);
-		keystate = -1;
-		networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
+		keystate = networkObject->GetIntVar(PLAYER_SHOOT);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_SHOOT, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_SHOOT, keystate, false, false);
+		}
+
+		keystate = networkObject->GetIntVar(PLAYER_DEPLOY_TRAP);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
+		}
+
+		keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
+		if(keystate != -1){
+			SetAllInput((keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, keystate, false, false);
+		}
 	}
 
 }

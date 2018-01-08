@@ -1,4 +1,5 @@
 #include "Fountain.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	inUse = false;
@@ -74,6 +75,7 @@ bool Fountain::Use(){
 		if(incrementUse<=value){		
 			value -= incrementUse;
 			user->ChangeHP(incrementUse);
+			user->ChangeMP(incrementUse);
 			return true;
 		}
 	}
@@ -96,4 +98,20 @@ void Fountain::UpdatePosShape(){
 	bt_body->Update();
     vector3df pos = bt_body->GetPosition();
     m_fountainNode->setPosition(pos);
+}
+
+
+void Fountain::SendSignal(){
+	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
+	sense->AddSignal(id, true, AI_FOUNTAIN, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Fountain::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = bt_body->GetPosition();
+	cKin.orientation =  vector2df(0,0);
+   	cKin.velocity = bt_body->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }

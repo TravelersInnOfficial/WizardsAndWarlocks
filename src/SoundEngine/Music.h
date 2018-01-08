@@ -18,11 +18,6 @@ class Music : public CommonSoundEvent {
 
     protected:
     FMOD::Studio::EventInstance* soundInstance;
-    
-    /******************************************************
-     *  Constructor 
-     ******************************************************/
-    Music(FMOD::Studio::EventInstance* instance);
 };
 
 #endif /* CommonSoundSoundEvent_h */

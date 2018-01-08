@@ -14,7 +14,7 @@ GraphicEngine::GraphicEngine(){
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver
-		deskres,      //Size of window
+		deskres,      										//Size of window
 		16,                                                 //bits
 		false,                                              //fullscreen
 		false,                                              //stencil buffer
@@ -87,7 +87,7 @@ bool GraphicEngine::beginScene(){
 }
 
 bool GraphicEngine::beginSceneDefault(){
-	return privateDriver->beginScene(true, true, irr::video::SColor(255,113,113,255));
+	return privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 }
 
 bool GraphicEngine::endScene(){
@@ -111,18 +111,25 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 	privateDriver->draw3DLine(from, to, fromC.toSColor());
 }
 
-void GraphicEngine::drawAim(){
-	irr::video::SColor color = irr::video::SColor(255, 255, 0, 0);
+void GraphicEngine::drawAim(bool moving){
+	irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
 	irr::u32 size = 15;
 	irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
 	irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
 
+	irr::u32 rDist = 0;
+	if(moving) rDist = 30;
+	else{// Not moving
+		rDist = 4;
+		// Draws center point
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+	}
+
 	//Draw crosshair
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - size, cenW + 1, cenH - 4)); //above
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + 4, cenH - 1, cenW + size, cenH + 1)); //right
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH + 4, cenW + 1, cenH + size)); //down
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - size, cenH - 1, cenW - 4, cenH + 1)); //left
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH - rDist - size	, cenW + 1				, cenH - rDist			)); //above
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + rDist		, cenH - 1	 			, cenW + rDist + size	, cenH + 1				)); //right
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH + rDist			, cenW + 1				, cenH + rDist + size	)); //down
+	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
 }
 
 void GraphicEngine::drawOverlays(int type){
@@ -130,7 +137,11 @@ void GraphicEngine::drawOverlays(int type){
 	
 	switch(type){
 		case(0):{
-			overlay = privateDriver->getTexture("./../assets/textures/BloodSplatter.png");
+			overlay = privateDriver->getTexture("./../assets/textures/overlays/BloodSplatter.png");
+			break;
+		}
+		case(1):{
+			overlay = privateDriver->getTexture("./../assets/textures/overlays/HitMade.png");
 			break;
 		}
 		default:{
@@ -417,4 +428,18 @@ void GraphicEngine::Raycast(vector3df Start, vector3df End, vector3df* point, ve
 			point->Z = p.Z;
 		}
 	}
+}
+
+irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){
+	irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
+	auxPos.X = position.X; auxPos.Y = position.Y; auxPos.Z = position.Z;
+
+	float dimX = text.length() * 0.1;
+	float dimY = 0.25f;
+	irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
+	
+	std::wstring wText = std::wstring(text.begin(), text.end());
+
+	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, wText.c_str(), parent, dim, auxPos, id);
+	return board;
 }

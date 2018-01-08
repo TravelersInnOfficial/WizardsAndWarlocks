@@ -1,9 +1,6 @@
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Woverloaded-virtual"
-#pragma clang diagnostic pop
-
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Trap::Trap(){
    // m_trapType = 0;
@@ -51,7 +48,7 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
-    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5,m_dimensions->Z*0.5);
+    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.5,m_dimensions->Z*0.5);
     m_body->CreateGhostBox(TPosition, *m_rotation, aux_dimensions);
     m_body->AssignPointer(this);
 }
@@ -171,4 +168,19 @@ void Trap::Erase(){
     delete m_rigidBody;
     delete m_body;
     delete g_body;
+}
+
+void Trap::SendSignal(){
+    RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+    // id, AI_code name, float str, Kinematic kin, AI_modalities mod
+    sense->AddSignal(id, true, AI_TRAP, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+Kinematic Trap::GetKinematic(){
+    Kinematic cKin;
+    cKin.position = m_rigidBody->GetPosition();
+    cKin.orientation =  vector2df(0,0);
+    cKin.velocity = m_rigidBody->GetLinearVelocity();
+    cKin.rotation = vector2df(0,0);
+    return cKin;
 }

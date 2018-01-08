@@ -85,7 +85,7 @@ public:
     /**
      * Draws hud aiming square
     */
-    void drawAim();
+    void drawAim(bool playerMoving);
 
     /**
      * Draws all the efects activated
@@ -247,6 +247,8 @@ public:
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
 
     void Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal);
+
+    irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 
 private:
     GraphicEngine();

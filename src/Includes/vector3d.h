@@ -18,6 +18,11 @@ public:
     vector3d() : X(0), Y(0), Z(0) {}
     
     /**
+     * Creates and initializes 3d vector of same number
+    */
+    vector3d(T n) : X(n), Y(n), Z(n) {}
+
+    /**
      * Creates and initializes 3d vector
     */
     vector3d(T nx, T ny, T nz) : X(nx), Y(ny), Z(nz) {}

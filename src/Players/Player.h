@@ -22,7 +22,7 @@ class Potion;
 class Player: public Entidad{
 	public:
 
-		Player(bool isPlayer1);
+		Player(bool isPlayer1 = false);
 		void CreatePlayerCharacter(bool firstInit = false);
 		void DestroyPlayerCharacter();
 		void PlayerInit();
@@ -62,12 +62,23 @@ class Player: public Entidad{
 		void DropObject();
 		void UseObject();
 		void DeployTrap();
+		bool HasObject();
 
 		// Network Functions
 		void GetNetInput();
 		void SetNetInput();
 		NetworkObject* GetNetworkObject();
 		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
+		void HitMade(Player* player);
+
+		//Sound Function
+		void playFootsteps();				//Plays the footsteps sound
+		void playDrink();					//PLays the drink potion sound
+		void playDie();						//Plays the die sound
+		void playHit();						//Plays the damage hit sound
+		void stopFootsteps();				//Stops the footsteps sound
+		void UpdateSoundsPosition();		//Updates the continuous sounds
+		void changeSurface(float n);		//Changes the surface parameter of the event
 
 		//Geters
 		bool IsPlayerOne();
@@ -89,6 +100,8 @@ class Player: public Entidad{
 		int GetNumberSpells();
 		bool GetReadyStatus();
 		PlayerController* GetController();
+		std::string GetName();
+		bool GetMoving();
 
 		// Seters
 		void SetPosition(vector3df);
@@ -103,6 +116,7 @@ class Player: public Entidad{
 		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
 		void SetSpell(int value);
+		void SetName(std::string newName);
 
 		virtual ~Player();
 
@@ -126,17 +140,22 @@ class Player: public Entidad{
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		
 		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda
+		float			hitOverlayTime;
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
+		std::string		name;				// Nombre del jugador en RED
 
 		bool			readyToStart;		// Esta preparado para empezar la partida?
 		bool			matchStarted;		// Ha empezado la partida?
 		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
+
+		bool			stepsStarted;		// Han empezado a sonar los steps?
 
 		bool 			moving;				// Se esta moviendo?
 		bool 			canJump;			// Puede saltar?
@@ -144,9 +163,13 @@ class Player: public Entidad{
 
 		Potion* potion;						// Pocion en el inventario
 
+		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
+		void createSoundEvents();			//Create the sound events needed for the player
+		void SetBillboard();				// Ponemos el billboard en el player
 
 };
 

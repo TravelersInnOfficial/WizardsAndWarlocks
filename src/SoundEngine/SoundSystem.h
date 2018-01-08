@@ -45,13 +45,23 @@ public:
     /******************************************************
      *  Modifies the position and orientation of the listener point
      ******************************************************/
+    void Update(vector3df headPos, vector3df headRot);
+
+    /******************************************************
+     *  Modifies the position and rotation of the listening point
+     ******************************************************/
     void setListenerPosRot(vector3df pos, vector3df rot);
+
+    /******************************************************
+     *  Return the position of the listener
+     ******************************************************/
+    vector3df getListenerPosition();
     
     /******************************************************
      *  Updates the audio engine
      *  \param paused tells if has to pause the engine or not
      ******************************************************/
-    void update();
+    void Update();
 
     /******************************************************
      *  @brief Sets the property for the var
@@ -76,12 +86,6 @@ public:
     void loadBank(std::string path, FMOD::Studio::Bank* bank);
 
     /******************************************************
-     *  Creates all the event descriptions and instances needed for the sound events
-     ******************************************************/
-    void createEventDescriptionsNEvents();
-
-
-    /******************************************************
      *  @brief Creates the a FMOD eventDescription
      *  @param const char* name path of the description
      *  @param FMOD::Studio::EventDescription* event description pointer
@@ -91,9 +95,8 @@ public:
     /******************************************************
      * @brief Creates a sound event
      * @param std::string path of the event
-     * @param FMOD::Studio::EventDescription eventDesc
      ******************************************************/
-    void createEvent(const char * path, FMOD::Studio::EventDescription * eventDesc);
+    SoundEvent* createEvent(std::string);
 
     /******************************************************
      * @brief Checks if an event is playing and plays it
@@ -101,7 +104,7 @@ public:
      * @param playerPos position where should play the event and/or of the listener
      * @param playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void checkAndPlayEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+    void checkAndPlayEvent(SoundEvent* event, vector3df playerPos);
 
     /******************************************************
      * @brief Plays a sound event
@@ -109,8 +112,19 @@ public:
      * @param vector3df playerPos position where should play the event and/or of the listener
      * @param vector3df playerRot rotation where should play the event and/or of the listener
      ******************************************************/
-    void playEvent(std::string eventPath, vector3df playerPos, vector3df playerRot);
+    void playEvent(SoundEvent* event, vector3df playerPos);
 
+    /******************************************************
+     * @brief Stops an event
+     * @param eventPath path of the event to stop
+     ******************************************************/
+    void stopEvent(SoundEvent* event);
+
+    /******************************************************
+     * @brief Stops an event if it's being played
+     * @param eventPath path of the event to stop
+     ******************************************************/
+    void checkAndStopEvent(SoundEvent* event);
 
 private:
     const char * banksPath;
@@ -131,7 +145,7 @@ private:
 
 class SoundEvent {
     //Friend method so it can access the protected functions
-    friend void SoundSystem::createEventDescriptionsNEvents();
+    friend SoundEvent* SoundSystem::createEvent(std::string);
 public:
     /******************************************************
      * @brief Default constructor
@@ -139,13 +153,13 @@ public:
     SoundEvent();
 
     /******************************************************
-     *  Destructor, makes the class pure abstract (= 0)
+     * Destructor, makes the class pure abstract (= 0)
      * Pure abstract function
      ******************************************************/
      virtual ~SoundEvent() = 0;
     
     /******************************************************
-     *  Starts to reproduce the event
+     * Starts to reproduce the event
      * Abstract function
      ******************************************************/
     virtual void start();
@@ -162,25 +176,25 @@ public:
     
     /******************************************************
      *  Modifies the sound event volume
-     *  \param vol event volume, 0 = silence, 1 = maximun volume
+     *  @param vol event volume, 0 = silence, 1 = maximun volume
      ******************************************************/
     void setVolume(float vol);
     
     /******************************************************
      *  Modifies the event volume multiplying it with a gain factor
-     *  \param gain factor, 0 = silence, 1 = keep volume
+     *  @param gain factor, 0 = silence, 1 = keep volume
      ******************************************************/
     void setGain(float  gain);
     
     /******************************************************
      *  Modifies the 3D position of the sound event
-     *  \param x, y, and z, new 3D position
+     *  @param x, y, and z, new 3D position
      ******************************************************/
     void setPosition(vector3df pos);
     
     /*******************************************************
      * Checks if the sound is playing
-     *  \return returns true if the sound is playing
+     *  @return returns true if the sound is playing
      *******************************************************/
     bool isPlaying();
 
@@ -196,18 +210,21 @@ public:
      *******************************************************/
     void setParamValue(std::string name, float value);
     
+    /*******************************************************
+     * @brief Returns the event instance
+     * @return FMOD::Studio::EventInstance* 
+     *******************************************************/
     FMOD::Studio::EventInstance* getInstance();
 
 protected:
     FMOD::Studio::EventInstance* soundInstance;
 
-    /******************************************************
-     * @brief 
-     * @param FMOD::Studio::EventInstance instance Instance
-     ******************************************************/
+    /*******************************************************
+     * @brief Sets the event instance
+     * @return FMOD::Studio::EventInstance* 
+     *******************************************************/
     void setInstance(FMOD::Studio::EventInstance * instance);
     
 };
-
 
 #endif /* SoundSystem_h */

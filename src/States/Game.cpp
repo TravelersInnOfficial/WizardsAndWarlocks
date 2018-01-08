@@ -34,7 +34,6 @@ Game::Game(){
 	spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
 	spellManager->AddHechizo(2, playerOne, SPELL_WALL);
 	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
-
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
 	AL = playerManager->AddAIPlayer();
@@ -57,20 +56,16 @@ bool Game::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
-	if(g_engine->IsKeyPressed(KEY_KEY_F)) playerOne->DeployTrap();
-	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->ChangeHP(-5);
-	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+3);
+
+	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
+	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+30);
+	
+	if(g_engine->IsKeyPressed(KEY_KEY_K)) playerOne->ChangeMP(-5);
+	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
+	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
-
-	if(g_engine->IsKeyPressed(KEY_KEY_A) || g_engine->IsKeyPressed(KEY_KEY_W) || g_engine->IsKeyPressed(KEY_KEY_S) || g_engine->IsKeyPressed(KEY_KEY_D)){
-		s_engine->checkAndPlayEvent("event:/Character/Hard/Footsteps", playerOne->GetPos(), playerOne->GetRot());
-	}
-	else if (g_engine->IsKeyUp(KEY_KEY_A) && g_engine->IsKeyUp(KEY_KEY_W) && g_engine->IsKeyUp(KEY_KEY_S) && g_engine->IsKeyUp(KEY_KEY_D)){
-		s_engine->getEvent("event:/Character/Hard/Footsteps")->stop();
-	}
-
-	if(g_engine->IsKeyPressed(KEY_KEY_M)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 1.0f);
-	if(g_engine->IsKeyPressed(KEY_KEY_N)) s_engine->getEvent("event:/Character/Hard/Footsteps")->setParamValue("Surface", 0.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -81,16 +76,21 @@ bool Game::Input(){
 }
 
 void Game::Update(){
+	
 	UpdateDelta();
 
 	f_engine->UpdateWorld();
-	s_engine->update();
+	
+	if(g_engine->getActiveCamera() != NULL){
+		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
+	}
 
 	bulletManager->Update();
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
+	playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
@@ -122,11 +122,11 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-	g_engine->drawAim();
+	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
-	AL->Debug();
+	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 
@@ -151,12 +151,12 @@ void Game::UpdateDelta(){
 }
 
 void Game::CheckIfWon(){
-	int whosWon = -1;
+	Alliance whosWon = NO_ALLIANCE;
 
-	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = 0;
-	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = 1;
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = ALLIANCE_WIZARD;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
 
-	if(whosWon != -1){
+	if(whosWon != NO_ALLIANCE){
 		GraphicEngine::getInstance()->InitReceiver();
 		gameEnded = true;
 		if(playerOne != NULL) {

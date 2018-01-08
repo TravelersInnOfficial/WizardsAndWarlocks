@@ -22,8 +22,9 @@ public:
 
 protected:
     void CreateProjectile();
-	void UpdatePosShape();
 	void NormalizeDir();
+	virtual void UpdatePosShape();
+    virtual void ContactBehavior();
     virtual void ContactAction(Player* p) = 0;
 
     int             emisor;             // Creador del proyectil

@@ -32,7 +32,9 @@ Player::Player(bool isPlayer1){
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
-	bloodOverlayTime = 0;
+	moving = false;
+	stepsStarted = false;
+	name = "";
 
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
@@ -49,7 +51,11 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_DamageMult = 1;	
 	m_dead = false;
+	bloodOverlayTime = 0;
+	hitOverlayTime = 0;
+	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	EffectManager::GetInstance()->CleanEffects(this);
+	createSoundEvents();
 }
 
 Player::~Player(){
@@ -94,13 +100,13 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_playerNode->setPosition(m_position);
 
+		SetBillboard();
+
 		// Physic Player
 		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
 		bt_body = new BT_Body();
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
-
-		TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 
 		if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
 		hasCharacter = true;
@@ -154,50 +160,50 @@ void Player::UpdateInput(){
 void Player::CheckInput(){}
 
 void Player::GetNetInput(){
-	int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
-	if(alliance != (int)NO_ALLIANCE){
-		SetAlliance((Alliance)alliance);
-		alliance = (int)NO_ALLIANCE;
-		networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
-	}
 
-	bool doCreateChar = networkObject->GetBoolVar(PLAYER_CREATE_CHAR);
-	if(doCreateChar){
-		CreatePlayerCharacter();
-		doCreateChar = false;
-		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
-	}
+	if(!isPlayerOne){
+		int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
+		if(alliance != (int)NO_ALLIANCE){
+			SetAlliance((Alliance)alliance);
+			alliance = (int)NO_ALLIANCE;
+			networkObject->SetIntVar(PLAYER_ALLIANCE, alliance, false, false);
+		}
 
-	bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
-	if(doRespawn){
-		Respawn();
-		doRespawn = false;
-		networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
-	}
+		bool doCreateChar = networkObject->GetBoolVar(PLAYER_CREATE_CHAR);
+		if(doCreateChar){
+			CreatePlayerCharacter();
+			doCreateChar = false;
+			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
+		}
 
-	float life = -9999;
-	life = networkObject->GetFloatVar(PLAYER_LIFE);
+		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
+		if(doRespawn){
+			Respawn();
+			doRespawn = false;
+			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
+		}
 
-	if(life != -999 && life != -1){
-		m_HP = life;
-		life = -9999;
-		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
-	}
-	
-	float mana = -9999;
-	mana = networkObject->GetFloatVar(PLAYER_MANA);
-	if(mana != -9999 && mana != -1){
-		m_MP = mana;
-		mana = -9999;
-		networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
-	}
+		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
+		readyToStart = isReady;
 
-	bool isReady = networkObject->GetBoolVar(PLAYER_READY);
-	readyToStart = isReady;
+		string auxName = networkObject->GetStringVar(PLAYER_NAME);
+		if(auxName.length() > 0){
+			SetName(auxName);
+			auxName = "";
+			networkObject->SetStringVar(PLAYER_NAME, auxName, false, false);
+		}
+	}
 
 }
 
 void Player::SetNetInput(){
+}
+
+void Player::RefreshServer(){
+	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
+	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
+	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+	networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 }
 
 void Player::Update(){
@@ -217,14 +223,24 @@ void Player::Update(){
 
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos 
-		if(moving) moving = false; 
-		else bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+		if(moving){
+			if(!stepsStarted && canJump) playFootsteps();
+			moving = false;
+		}
+		else{
+			if(stepsStarted) stopFootsteps();
+			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
+		}
 
 		// Comprobamos los Input del personaje
 		CheckInput();
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
+		UpdateSoundsPosition();
+
+		// Actualizamos el HP con 0 para comprobar la muerte
+		ChangeHP(0);
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne){
@@ -304,6 +320,7 @@ void Player::MoveZ(int dir){
 
 void Player::Jump(){
 	if(canJump && hasCharacter) {
+		stopFootsteps();
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
 		float impulse = 30 * 9.8;
@@ -316,22 +333,27 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	if (HP < 0) {
-		 SoundSystem::getInstance()->playEvent("event:/Character/Hard/Hit", GetPos(), GetRot()); //PLay the sound event
-		 bloodOverlayTime = 1;
-	} 
+		playHit();
+		bloodOverlayTime = 1;
+	}
 
-	if(m_HP + HP > 100) m_HP = 100;
+	if(networkObject != NULL){
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		bool isServer = n_engine->IsServerInit();
+		if(isServer) m_HP += HP;
+	}
+	else m_HP += HP;
 	
-	else if(m_HP + HP <= 0){
+	if(m_HP >= 100) m_HP = 100;
+	else if(m_HP <= 0){
 		m_HP = 0;
 		m_dead = true;
 		bloodOverlayTime = 0;
 	}
-
-	else m_HP += HP;
 }
 
 bool Player::ChangeMP(float MP){
+
 	bool toRet = false;
 
 	if(m_MP + MP >= 0){
@@ -345,6 +367,7 @@ bool Player::ChangeMP(float MP){
 }
 
 void Player::Respawn(){
+	// CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -394,8 +417,7 @@ void Player::SendSignal(){
 
 void Player::Die(){
 
-	SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Die", GetPos(), GetRot()); //Play the sound event
-
+	playDie(); //Play the sound event
 	DropObject();
 
 	if(matchStarted){
@@ -404,6 +426,7 @@ void Player::Die(){
 		CheckIfReady();
 	}
 
+	soundEvents.clear();
 	Respawn();
 }
 
@@ -413,11 +436,15 @@ void Player::ReturnToLobby(){
 	if(networkObject != NULL){
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+		if(isPlayerOne) CheckIfReady();
 	}
 }
 
 void Player::DrawOverlays(float deltaTime){
 	bloodOverlayTime -= deltaTime;
+	hitOverlayTime -= deltaTime;
+	
+	if(hitOverlayTime > 0) engine->drawOverlays(1);
 	if(bloodOverlayTime > 0) engine->drawOverlays(0);
 }
 
@@ -446,27 +473,24 @@ void Player::CatchObject(Potion* p){
 void Player::DropObject(){
 	if(potion!=NULL){
 		potion->CreatePotion(m_position, vector3df(0,0,0));
-
-		/*vector3df dropForce = m_position;
-		float impulse = 20;
-		vector3df cameraRot = GetRot();
-
-		dropForce.X = sin(cameraRot.Y) * impulse;
-		dropForce.Y = impulse/2;
-		dropForce.Z = cos(cameraRot.Y) * impulse;
-		potion->Drop(dropForce);*/
-
 		potion = NULL;
 	}
 }
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		SoundSystem::getInstance()->checkAndPlayEvent("event:/Character/Hard/Drink", GetPos(), GetRot());
+		playDrink();
 		potion->Use(this);
 		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
+}
+
+bool Player::HasObject(){
+	if(potion!=NULL){
+		return true;
+	}
+	return false;
 }
 
 void Player::DeployTrap(){
@@ -501,11 +525,66 @@ void Player::UpdatePosShape(){
 
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
-void Player::RefreshServer(){
-	networkObject->SetIntVar(PLAYER_ALLIANCE, playerAlliance, true, false);
-	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_HP, true, false);
-	networkObject->SetFloatVar(PLAYER_ALLIANCE, m_MP, true, false);
+void Player::HitMade(Player* player){
+	hitOverlayTime = 0.25f;
 }
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCITONS *********************************************
+ ********************************************************************************************************/
+ 
+void Player::createSoundEvents() {
+	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
+	SoundEvent * drink = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
+	SoundEvent * die = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
+	SoundEvent * hit = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	
+	soundEvents["footsteps"] = footsteps;
+	soundEvents["drink"] 	 = drink;
+	soundEvents["die"] 		 = die;
+	soundEvents["hit"] 		 = hit;
+
+}
+
+void Player::playFootsteps() {
+	stepsStarted = true;
+	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["footsteps"], GetPos());
+}
+
+void Player::playDrink() {
+	SoundSystem::getInstance()->playEvent(soundEvents["drink"], GetPos());
+}
+
+void Player::playDie() {
+	SoundSystem::getInstance()->playEvent(soundEvents["die"], GetPos());
+}
+
+void Player::playHit() {
+	SoundSystem::getInstance()->playEvent(soundEvents["hit"], GetPos());
+}
+
+void Player::stopFootsteps() {
+	stepsStarted = false;
+	SoundSystem::getInstance()->stopEvent(soundEvents["footsteps"]);
+}
+
+void Player::UpdateSoundsPosition(){
+	if(stepsStarted){
+		if (soundEvents["footsteps"] != NULL) {
+			soundEvents["footsteps"]->setPosition(GetHeadPos());
+		}
+	}
+}
+
+void Player::changeSurface(float n) {
+	if (soundEvents["footsteps"] != NULL) {
+		soundEvents["footsteps"]->setParamValue("Surface", n);
+	}
+}
+/********************************************************************************************************
+ ********************************************** GETERS **************************************************
+ ********************************************************************************************************/
+
 
 vector3df Player::GetAngularVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);
@@ -572,12 +651,17 @@ PlayerController* Player::GetController(){
 	return controller;
 }
 
+std::string Player::GetName(){ return name; }
+
+bool Player::GetMoving(){
+	return moving;
+}
+
 void Player::SetAlliance(Alliance newAlliance){
 
 	if(newAlliance == ERR_ALLIANCE) return;
 
 	playerAlliance = newAlliance;
-	PlayerManager::GetInstance()->ChangeAlliance(newAlliance, this);
 
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
@@ -589,6 +673,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+			TrapManager::GetInstance()->setPlayerUsings(this,0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -600,6 +685,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+			TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 			break;
 		}
 		default:{
@@ -614,6 +700,8 @@ void Player::SetAlliance(Alliance newAlliance){
 			break;
 		}
 	}
+
+	SetBillboard();
 }
 
 void Player::SetPosition(vector3df pos){
@@ -650,25 +738,6 @@ void Player::SetRotation(vector3df rotation){
 	}
 }
 
-/*	This method makes the graphic body rotate on X axis if is player one
-void Player::SetRotation(vector3df rotation){
-	if(hasCharacter){
-		vector3df newRotGraphic = this->rotation;
-		vector3df newRotPhysic = this->rotation;
-		
-		newRotGraphic.Z = 0;
-		if(!isPlayerOne) newRotGraphic.X = 0;
-		newRotGraphic = newRotGraphic * 180 / M_PI;
-		m_playerNode->setRotation(newRotGraphic);
-		
-		newRotPhysic.Z = 0;
-		newRotPhysic.X = 0;
-		newRotPhysic = newRotPhysic * 180 / M_PI;
-		bt_body->SetRotation(newRotPhysic);
-	}
-}
-*/
-
 void Player::SetHP(float HP){ m_HP = HP; }
 
 void Player::SetDamageMult(float damageMultiplier){ m_DamageMult *= damageMultiplier; }
@@ -680,3 +749,15 @@ void Player::SetMaxVelocity(float max){ max_velocity = max; }
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 
 void Player::SetMatchStatus(bool started){ matchStarted = started; }
+
+void Player::SetName(std::string newName){
+	name = newName;
+	if(!name.empty()){
+		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+		else SetBillboard();
+	}
+}
+
+void Player::SetBillboard(){
+	if(!isPlayerOne) m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
+}

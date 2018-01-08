@@ -17,6 +17,10 @@ public:
 	void SetDoor(Door* d);
 	void Update();
 	void Contact(void* punt, EntityEnum tipo);
+
+	// Sense Functions
+	void SendSignal();
+	Kinematic GetKinematic();
 private:
 	void CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void UpdatePosShape();

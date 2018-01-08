@@ -9,10 +9,3 @@ Music::Music() {}
  *  Destructor
  ******************************************************/
 Music::~Music() {}
-
-/******************************************************
- *  Constructor 
- ******************************************************/
-Music::Music(FMOD::Studio::EventInstance* instance) {
-    soundInstance = instance;
-}

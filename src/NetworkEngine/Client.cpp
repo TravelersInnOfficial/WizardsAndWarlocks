@@ -68,6 +68,14 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 	return(toRet);
 }
 
+void Client::SetClientName(std::string name){
+	if(name.length() <= 0) name = "Player Name";
+	if(name.length() > 10) name = name.substr(0,10);
+	this->name = name;
+}
+
+std::string Client::GetClientName(){ return (name); }
+
 void Client::RecievePackages(){
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
@@ -218,6 +226,18 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			if(networkObjects[k] != NULL) networkObjects[k]->SetVecFVar(k_var, v, false, false);
 			break;
 		}
+		case ID_CHANGE_STRING: {
+			int k = -1;
+			ObjectVariable k_var = ID_NO_VAR;
+			RakNet::RakString vAux = "";
+			std::string v = "";
+			bitstream->Read(k);
+			bitstream->Read(k_var);
+			bitstream->Read(vAux);
+			v = vAux;
+			if(networkObjects[k] != NULL) networkObjects[k]->SetStringVar(k_var, v, false, false);
+			break;
+		}
 	}
 
 }
@@ -270,6 +290,19 @@ void Client::SetObjectFloatVec(int objectId, ObjectVariable k, vector3df v){
 	stateChange.Write(objectId);
 	stateChange.Write(k);
 	stateChange.Write(v);
+	SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED);
+}
+
+void Client::SetObjectString(int objectId, ObjectVariable k, std::string v){
+	RakNet::BitStream stateChange;
+	stateChange.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+	stateChange.Write(ID_CHANGE_STRING);
+	stateChange.Write(objectId);
+	stateChange.Write(k);
+
+	RakNet::RakString vAux = RakNet::RakString(v.c_str());
+	stateChange.Write(vAux);
+
 	SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED);
 }
 

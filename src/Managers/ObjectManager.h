@@ -39,7 +39,11 @@ public:
 
 	// SenseFunctions
 	void SendAllSignal();
+	void SendGrailSignal();
+	void SendSwitchSignal();
 	void SendPotionSignal();
+	void SendFountainSignal();
+	void SendInvocationSignal();
 
 	// Getters
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);

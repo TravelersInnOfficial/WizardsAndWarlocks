@@ -232,6 +232,31 @@ bool UseSpell::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	SEND ALL SIGNALS
+//
+// ================================================================================================= //
+
+SendAllSignals::SendAllSignals(){}
+
+bool SendAllSignals::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"SendAllSignals"<<std::endl;
+
+	// Enviamos a los jugadores
+	PlayerManager* masterPlayer = PlayerManager::GetInstance();
+	masterPlayer->SendVisualSignal();
+
+	// Enviamos a los objetos
+	ObjectManager* masterObject = ObjectManager::GetInstance();
+	masterObject->SendAllSignal();
+
+	return true;
+}
+
+
+
+
+// ================================================================================================= //
+//
 //	SEND PLAYER SIGNALS
 //
 // ================================================================================================= //
@@ -239,7 +264,7 @@ bool UseSpell::run(Blackboard* bb){
 SendPlayerSignals::SendPlayerSignals(){}
 
 bool SendPlayerSignals::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"sendPlayers"<<std::endl;
+	if(DEBUG) std::cout<<"SendPlayerSignals"<<std::endl;
 
 	PlayerManager* masterPlayer = PlayerManager::GetInstance(); 
 	masterPlayer->SendVisualSignal();	// Cambiar nombre del metodo o modo de uso

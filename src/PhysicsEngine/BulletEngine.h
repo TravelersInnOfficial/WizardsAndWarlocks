@@ -23,7 +23,6 @@ public:
     void RemoveRigidBody(btRigidBody*);
     void RemoveGhostObject(btGhostObject*);
 
-    void CheckColisions();
     void DebugDrawWorld();
 
     void* Raycast(vector3df Start, vector3df End);

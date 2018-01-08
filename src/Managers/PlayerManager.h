@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 
+#include "./../GraphicEngine/MenuManager.h"
 #include "./../Players/Player.h"
 #include "./../Players/HumanPlayer.h"
 #include "./../Players/AIPlayer.h"
@@ -21,14 +22,17 @@ public:
 	void DeletePlayers();
 	void SendVisualSignal();
 	bool CheckIfReady();
-	void RespawnAll();
+	void RespawnDeadPlayers();
+	void RestartMatchStatus();
 	void ManageMatchStatus(bool ManageMatchStatus);
 	void AddToDead(Alliance alliance, Player* player);
-	void ChangeAlliance(Alliance alliance, Player* player);
 	bool CheckIfWon(Alliance alliance);
+	void CheckWon();
 	void EraseAllCharacters();
 	void ReturnAllToLobby();
 	void RefreshServerAll();
+	void UpdateNetDebug();
+	Player* GetPlayerFromID(int id);
 	
 private:
 

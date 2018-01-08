@@ -3,6 +3,7 @@
 
 GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
+    board = NULL;
 }
 
 GBody::~GBody(){
@@ -27,4 +28,8 @@ void GBody::setTriangleSelector(){
 
 void GBody::Remove(){
     privateNode->remove();
+}
+
+void GBody::AddText(std::string text, vector3df position, int id){
+    board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 }

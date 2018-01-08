@@ -22,11 +22,11 @@ public:
 	float GetUtility(Player* p);
 	float CalculateUtility(float value, float base);
 	// Getters
-	int	GetMP();
+	float	GetMP();
 	SPELLCODE GetType();
 
 protected:
-	int 	costePM;			// Coste de Mana del hechizo
+	float 	costePM;			// Coste de Mana del hechizo
 	bool	lanzable;			// Se puede lanzar el hechizo? En Cooldown? Si/No
 
 	float 	timeCasting;		// Tiempo que lleva casteando
