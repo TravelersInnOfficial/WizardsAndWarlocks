@@ -14,6 +14,7 @@ BehaviourTree::~BehaviourTree(){
 }
 
 void BehaviourTree::run(){
+    rootRecive->run(informacion);
     rootAction->run(informacion);
     rootMove->run(informacion);
 }

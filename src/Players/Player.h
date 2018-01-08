@@ -62,6 +62,7 @@ class Player: public Entidad{
 		void DropObject();
 		void UseObject();
 		void DeployTrap();
+		bool HasObject();
 
 		// Network Functions
 		void GetNetInput();

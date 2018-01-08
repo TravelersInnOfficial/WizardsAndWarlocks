@@ -486,6 +486,13 @@ void Player::UseObject(){
 	}
 }
 
+bool Player::HasObject(){
+	if(potion!=NULL){
+		return true;
+	}
+	return false;
+}
+
 void Player::DeployTrap(){
 	vector3df rot = GetRot();
 	rot.X = -rot.X;
