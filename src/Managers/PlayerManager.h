@@ -23,7 +23,7 @@ public:
 	void SendVisualSignal();
 	bool CheckIfReady();
 	void RespawnDeadPlayers();
-	void RespawnAll();
+	void RestartMatchStatus();
 	void ManageMatchStatus(bool ManageMatchStatus);
 	void AddToDead(Alliance alliance, Player* player);
 	bool CheckIfWon(Alliance alliance);
