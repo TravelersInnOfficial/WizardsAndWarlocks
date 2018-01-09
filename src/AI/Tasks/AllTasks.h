@@ -10,34 +10,62 @@
 
 // ================================================================================================= //
 //
-//	ORDER SPELLS BY UTILITY
+//	MASTER MOVEMENT
 //
 // ================================================================================================= //
 
-class SpellSecuencia: public Selector{
+class MasterAction: public Task{
 public:
-	SpellSecuencia();
+	MasterAction();
 	bool run(Blackboard* bb);
-	void SortVector(Blackboard* bb);
-private:
-	std::vector<int> spellsOrder;
 };
 
 // ================================================================================================= //
 //
-//	RUN CORRECT TASK OF MOVEMENT 
+//	MASTER MOVEMENT
 //
 // ================================================================================================= //
 
-class RunMovementTask: public Decorador{
+class MasterMovement: public Task{
 public:
-	RunMovementTask();
+	MasterMovement();
 	bool run(Blackboard* bb);
-private:
-	void CheckChangeTask(Blackboard* bb);
-	void ChangeTask(Blackboard* bb);
+};
 
-	int lastValue;
+// ================================================================================================= //
+//
+//	PUT DEFAULT ACTION
+//
+// ================================================================================================= //
+
+class PutDefaultAction: public Task{
+public:
+	PutDefaultAction();
+	bool run(Blackboard* bb);
+};
+
+// ================================================================================================= //
+//
+//	USE POTION
+//
+// ================================================================================================= //
+
+class UsePotion: public Task{
+public:
+	UsePotion();
+	bool run(Blackboard* bb);
+};
+
+// ================================================================================================= //
+//
+//	CHECK USE POTION
+//
+// ================================================================================================= //
+
+class CheckUsePotion: public Task{
+public:
+	CheckUsePotion();
+	bool run(Blackboard* bb);
 };
 
 // ================================================================================================= //
@@ -50,7 +78,6 @@ class ReleaseSpell: public Decorador{
 public:
 	ReleaseSpell();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -63,7 +90,6 @@ private:
  public:
  	UseSpell();
  	bool run(Blackboard* bb);
- private:
  };
 
 // ================================================================================================= //
@@ -76,7 +102,6 @@ class SendAllSignals: public Task{
 public:
 	SendAllSignals();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -89,7 +114,6 @@ class SendPlayerSignals: public Task{
 public:
 	SendPlayerSignals();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -116,7 +140,6 @@ class CheckPlayerSight: public Task{
 public:
 	CheckPlayerSight();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -129,7 +152,6 @@ class CheckPlayerHearing: public Task{
 public:
 	CheckPlayerHearing();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -156,7 +178,6 @@ class FaceTarget: public Task{
 public:
 	FaceTarget();
 	bool run(Blackboard* bb);
-private:
 };
 
 // ================================================================================================= //
@@ -199,6 +220,22 @@ public:
 	bool run(Blackboard* bb);
 private:
 	float maxAcceleration;
+};
+
+
+// ================================================================================================= //
+//
+//	ORDER SPELLS BY UTILITY
+//
+// ================================================================================================= //
+
+class SpellSecuencia: public Selector{
+public:
+	SpellSecuencia();
+	bool run(Blackboard* bb);
+	void SortVector(Blackboard* bb);
+private:
+	std::vector<int> spellsOrder;
 };
 
 #endif

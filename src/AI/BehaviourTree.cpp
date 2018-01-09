@@ -56,7 +56,44 @@ void BehaviourTree::SetPlayer(AIPlayer* p){
     informacion->SetPlayer(p);
 }
 
+// ====================================================================================== //
+//
+//  SUBARBOLES
+//
+// ====================================================================================== //
+
+void BehaviourTree::CreateReceive(){
+
+    Selector* sc_checkActions = new Selector();
+    sc_checkActions->addChild(new CheckUsePotion());
+    sc_checkActions->addChild(new CheckPlayerSight());
+    sc_checkActions->addChild(new PutDefaultAction());
+
+    Secuencia* sc_receive = new Secuencia();
+
+    SetRootReceive(sc_receive);
+    sc_receive->addChild(new SendAllSignals());
+    sc_receive->addChild(sc_checkActions);
+}
+
+void BehaviourTree::CreateAction(){
+    Task* t_masterAction = new MasterAction();
+    SetRootAction(t_masterAction);
+}
+
+void BehaviourTree::CreateMovement(){
+    Task* t_masterMovement = new MasterMovement();
+    SetRootMove(t_masterMovement);
+}
+
 void BehaviourTree::PrepareSubTrees(){
+    // Movimiento Default
+    CreateMoveDefault();
+    // Movimiento de los Hechizos
+    CreateMoveSpell();
+    // Lanzamiento de los hechizos
+    CreateShootSpell();
+
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
     informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
@@ -69,7 +106,40 @@ void BehaviourTree::PrepareSubTrees(){
     sc_distance_spell->addChild(new CheckDistance(1.0f));
     informacion->SetPuntero(AI_TASK_SPELL03, sc_distance_spell);
 
-    // DECLARANDO FUNCIONES DE MOVIMIENTO DE ATAQUE
+
+}
+
+void BehaviourTree::CreateShootSpell(){
+    Secuencia* sc_attack = new Secuencia();
+    sc_attack->addChild(new SendPlayerSignals());
+    sc_attack->addChild(new CheckPlayerSight());   
+    sc_attack->addChild(new SpellSecuencia());  
+
+    Decorador* d_attack = new ReleaseSpell();
+    d_attack->setChild(sc_attack);
+
+    informacion->SetPuntero(AI_TASK_SHOOT_SPELL, sc_attack);
+}
+
+void BehaviourTree::CreateMoveDefault(){
+    Secuencia* sc_sight = new Secuencia();
+    sc_sight->addChild(new CheckPlayerSight());
+    sc_sight->addChild(new GoToTarget());
+    sc_sight->addChild(new HasArrived());
+
+    Secuencia* sc_hearing = new Secuencia();
+    sc_hearing->addChild(new CheckPlayerHearing());
+    sc_hearing->addChild(new FaceTarget());
+    
+    Selector* sl_movement = new Selector();
+    sl_movement->addChild(sc_sight);
+    sl_movement->addChild(sc_hearing);
+    sl_movement->addChild(new T_Wander());
+
+    informacion->SetPuntero(AI_MOVE_DEFAULT, sl_movement);
+}
+
+void BehaviourTree::CreateMoveSpell(){
     Secuencia* sc_moveToTarget = new Secuencia();
     sc_moveToTarget->addChild(new CheckDistance(8.0f));
     sc_moveToTarget->addChild(new FleeFromTarget());
@@ -82,63 +152,4 @@ void BehaviourTree::PrepareSubTrees(){
     informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL02, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL03, sl_moveShoot);
-}
-
-void BehaviourTree::CreateReceive(){
-
-
-    Selector* sc_checkActions = new Selector();
-
-    Secuencia* sc_receive = new Secuencia();
-
-    SetRootReceive(sc_receive);
-    sc_receive->addChild(new SendAllSignals());
-    sc_receive->addChild(sc_checkActions);
-}
-
-void BehaviourTree::CreateAction(){
-   
-    // ATAQUE
-    Secuencia* sc_attack = new Secuencia();
-    sc_attack->addChild(new SendPlayerSignals());       // Primero envio la senyales sonoras y visuales
-    sc_attack->addChild(new CheckPlayerSight());        // Comprobamos que vea al jugador
-    sc_attack->addChild(new SpellSecuencia());          // Dispara
-
-    Decorador* d_attack = new ReleaseSpell();
-    d_attack->setChild(sc_attack);
-
-    SetRootAction(d_attack);
-}
-
-void BehaviourTree::CreateMovement(){
-    // MOVIMIENTO
-    Task* t_checkSight  = new CheckPlayerSight();
-    Task* t_goToTarget  = new GoToTarget();
-    Task* t_hasArrived  = new HasArrived();
-
-    Secuencia* sc_sight = new Secuencia();
-    sc_sight->addChild(t_checkSight);
-    sc_sight->addChild(t_goToTarget);
-    sc_sight->addChild(t_hasArrived);
-
-    Task* t_checkHearing = new CheckPlayerHearing();
-    Task* t_faceTarget = new FaceTarget();
-
-    Secuencia* sc_hearing = new Secuencia();
-    sc_hearing->addChild(t_checkHearing);
-    sc_hearing->addChild(t_faceTarget);
-
-    Task* t_wander = new T_Wander();
-    
-    Selector* sl_movement   = new Selector();
-    sl_movement->addChild(sc_sight);
-    sl_movement->addChild(sc_hearing);
-    sl_movement->addChild(t_wander);
-
-    informacion->SetPuntero(AI_MOVE_NOSPELL, sl_movement);
-
-    Decorador* d_move  = new RunMovementTask();
-    d_move->setChild(sl_movement);
-
-    SetRootMove(d_move);
 }

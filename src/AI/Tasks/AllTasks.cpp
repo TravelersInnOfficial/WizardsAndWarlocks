@@ -23,6 +23,455 @@
 
 bool DEBUG = false;
 
+// ================================================================================================= //
+//
+//	MASTER MOVEMENT
+//
+// ================================================================================================= //
+
+MasterAction::MasterAction(){}
+
+bool MasterAction::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"MasterAction\n";
+
+	Task* t = (Task*)bb->GetPuntero((AI_code)(bb->masterAction + AI_TASK_DEFAULT));
+	if(t!=NULL){
+		t->run(bb);
+	}
+	return true;
+}
+
+// ================================================================================================= //
+//
+//	MASTER MOVEMENT
+//
+// ================================================================================================= //
+
+MasterMovement::MasterMovement(){}
+
+bool MasterMovement::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"MasterMovement\n";
+
+	Task* t = (Task*)bb->GetPuntero((AI_code)(bb->masterMovement + AI_MOVE_DEFAULT));
+	if(t!=NULL){
+		t->run(bb);	
+	}
+	return true;
+}
+
+// ================================================================================================= //
+//
+//	PUT DEFAULT ACTION
+//
+// ================================================================================================= //
+
+PutDefaultAction::PutDefaultAction(){}
+
+bool PutDefaultAction::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"PutDefaultAction\n";
+
+	bb->SetMasterAction(AI_TASK_DEFAULT);
+
+	return true;
+}
+
+
+// ================================================================================================= //
+//
+//	CHECK USE POTION
+//
+// ================================================================================================= //
+
+UsePotion::UsePotion(){}
+
+bool UsePotion::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"UsePotion\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character->HasObject()){
+		character->UseObject();
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK USE POTION
+//
+// ================================================================================================= //
+
+CheckUsePotion::CheckUsePotion(){}
+
+bool CheckUsePotion::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckUsePotion\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character->HasObject()){
+		Potion* playerPotion = character->GetPotion();	
+		int value = playerPotion->GetValue();	// Cogemos el valor de sanacion de la pocion en propiedad
+		float playerHP = character->GetHP(); 	// Cogemos el valor de la vida actual de la IA
+		if(playerHP + value <=100){				// La querremos usar en el caso de que no se malgaste al usarla
+			return true;
+		}
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	RELEASE SPELL IF FALSE
+//
+// ================================================================================================= //
+
+ReleaseSpell::ReleaseSpell(){}
+
+bool ReleaseSpell::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"ReleaseSpell\n";
+    
+    // Miramos si el personaje a conseguido tirar un hechizo
+    // En el caso de que no lo haya conseguido para asegurarnos
+    // reseteamos el hechizo. De esta forma si el hechizo se cancela
+    // este Decorador se encarga de resetearlo.
+    if(child != NULL){
+        if(!child->run(bb)){
+        	AIPlayer* character = bb->GetPlayer();
+        	character->SetController(ACTION_SHOOT, RELEASED);
+        }
+    }
+    return true;
+}
+
+// ================================================================================================= //
+//
+//	SHOOT PROYECTILE BASIC
+//
+// ================================================================================================= //
+
+UseSpell::UseSpell(){}
+
+bool UseSpell::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"shootBasic\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	// En el caso de que no se este casteando el hechizo
+	if(!character->GetCastingSpell()){
+			// Intetamos lanzar el hechizo
+			character->SetController(ACTION_SHOOT, PRESSED);
+			return true;
+	// En el caso de que ya se estuviera lanzando
+	}else{
+		character->SetController(ACTION_SHOOT, DOWN);
+		// Miramos a ver si el casteo finaliza
+		if(character->GetShootSpell()){
+			// En el caso de que se llegue a lanzar los resetamos y volvemos
+			// a marcar como UP
+			character->SetController(ACTION_SHOOT, RELEASED);
+		}
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	SEND ALL SIGNALS
+//
+// ================================================================================================= //
+
+SendAllSignals::SendAllSignals(){}
+
+bool SendAllSignals::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"SendAllSignals\n";
+
+	// Enviamos a los jugadores
+	PlayerManager* masterPlayer = PlayerManager::GetInstance();
+	masterPlayer->SendVisualSignal();
+
+	// Enviamos a los objetos
+	ObjectManager* masterObject = ObjectManager::GetInstance();
+	masterObject->SendAllSignal();
+
+	return true;
+}
+
+
+
+
+// ================================================================================================= //
+//
+//	SEND PLAYER SIGNALS
+//
+// ================================================================================================= //
+
+SendPlayerSignals::SendPlayerSignals(){}
+
+bool SendPlayerSignals::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"SendPlayerSignals\n";
+
+	PlayerManager* masterPlayer = PlayerManager::GetInstance(); 
+	masterPlayer->SendVisualSignal();	// Cambiar nombre del metodo o modo de uso
+	return true;
+}
+// ================================================================================================= //
+//
+//	CHECK DISTANCE
+//
+// ================================================================================================= //
+
+CheckDistance::CheckDistance(float dist){
+	distance = dist;	// El limite del proyectil son 10
+}
+
+bool CheckDistance::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckDistance\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target!=NULL){
+		Kinematic cKin;
+        Kinematic tKin;
+
+        cKin = character->GetKinematic();
+        tKin = target->kinematic;
+
+        tKin.position.Y = cKin.position.Y;
+
+        vector3df dist = tKin.position - cKin.position;
+        float distLength = dist.length();
+
+        if(distLength<=distance){
+        	return true;
+        }
+
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK PLAYER HEARING
+//
+// ================================================================================================= //
+
+CheckPlayerHearing::CheckPlayerHearing(){}
+
+bool CheckPlayerHearing::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckPlayerHearing\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+	int number = bb->GetNumberSound(enemy);
+
+	if(number>0){
+		bb->SetTargetSound(enemy, AI_TARGET);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK PLAYER SIGHT
+//
+// ================================================================================================= //
+
+CheckPlayerSight::CheckPlayerSight(){}
+
+bool CheckPlayerSight::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckPlayerSight\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+	int number = bb->GetNumberSight(enemy);
+	if(number>0){
+		bb->SetTargetSight(enemy, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	HAS ARRIVED?
+//
+// ================================================================================================= //
+
+HasArrived::HasArrived(){
+	arrivedTarget = 1.0f;
+}
+
+bool HasArrived::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"HasArrived\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target!=NULL){
+
+
+		Kinematic cKin;
+    	Kinematic tKin;
+
+    	cKin = character->GetKinematic();
+    	tKin = target->kinematic;
+
+    	// La altura a la que se encuentren los personajes para nuestro juego
+    	// en el que no podran haber dos personajes a diferentes alturas da igual
+    	tKin.position.Y = cKin.position.Y;
+
+    	vector3df dir = tKin.position - cKin.position;
+    	float length = dir.length();
+
+    	if(length<arrivedTarget){
+    		bb->CleanPuntero(AI_TARGET);
+			bb->CleanSense(target->id);
+    	}
+		return true;
+	}
+	return true;
+}
+
+// ================================================================================================= //
+//
+//	FACE THE TARGET
+//
+// ================================================================================================= //
+
+FaceTarget::FaceTarget(){}
+
+bool FaceTarget::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"FaceTarget\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target!=NULL){
+
+		Kinematic cKin;
+    	Kinematic tKin;
+
+    	cKin = character->GetKinematic();
+    	tKin = target->kinematic;
+
+		SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
+    	if(steering.linear.length() == 0){
+    		steering = Wander::GetSteering(cKin);
+
+    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+    		steering.angular = steering2.angular;
+    	}else{
+    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+    		steering.angular = steering2.angular;
+    	}
+
+		character->Steering2Controller(steering);
+
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	GO TO TARGET
+//
+// ================================================================================================= //
+
+GoToTarget::GoToTarget(){
+	maxAcceleration = 30.0f;
+}
+
+bool GoToTarget::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"GoToTarget\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target!=NULL){
+
+		Kinematic cKin;
+    	Kinematic tKin;
+
+    	cKin = character->GetKinematic();
+    	tKin = target->kinematic;
+
+		SteeringOutput steering = Seek::GetSteering(cKin, tKin);
+
+		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+		steering.angular = steering2.angular;
+
+		character->Steering2Controller(steering);
+
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	FLEE FROM TARGET
+//
+// ================================================================================================= //
+
+FleeFromTarget::FleeFromTarget(){
+	maxAcceleration = 30.0f;
+}
+
+bool FleeFromTarget::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"FleeFromTarget\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target!=NULL){
+
+		Kinematic cKin;
+    	Kinematic tKin;
+
+    	cKin = character->GetKinematic();
+    	tKin = target->kinematic;
+
+		SteeringOutput steering = Flee::GetSteering(cKin, tKin);
+
+		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+		steering.angular = steering2.angular;
+
+		character->Steering2Controller(steering);
+
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	DEAMBULAR
+//
+// ================================================================================================= //
+
+T_Wander::T_Wander(){
+	maxAcceleration = 30.0f;
+}
+
+bool T_Wander::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"T_Wander\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Kinematic cKin;
+	Kinematic tKin;
+
+	cKin = character->GetKinematic();
+
+	SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
+	if(steering.linear.length() == 0){
+		steering = Wander::GetSteering(cKin);
+	}else{
+		SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
+		steering.angular = steering2.angular;
+	}
+	
+	character->Steering2Controller(steering);
+	return true;
+}
+
 
 // ================================================================================================= //
 //
@@ -34,9 +483,9 @@ SpellSecuencia::SpellSecuencia(){
 }
 
 bool SpellSecuencia::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"SpellSecuencia"<<std::endl;
+	if(DEBUG) std::cout<<"SpellSecuencia\n";
 	SortVector(bb);
-	if(DEBUG) std::cout<<"SpellSecuencia2"<<std::endl;
+	if(DEBUG) std::cout<<"SpellSecuencia2\n";
 
 	AIPlayer* character = bb->GetPlayer();
 	int tamanyo = spellsOrder.size();
@@ -61,7 +510,7 @@ bool SpellSecuencia::run(Blackboard* bb){
 }
 
 void SpellSecuencia::SortVector(Blackboard* bb){
-	if(DEBUG) std::cout<<"SortVector SpellSecuencia"<<std::endl;
+	if(DEBUG) std::cout<<"SortVector SpellSecuencia\n";
 	// Ordenar las tareas por utilidad
 	// Se supone que cada tarea es un hechizo
 	AIPlayer* character =bb->GetPlayer();
@@ -114,417 +563,4 @@ void SpellSecuencia::SortVector(Blackboard* bb){
 		}
 		std::cout<<std::endl;
 	}
-}
-
-// ================================================================================================= //
-//
-//	RUN CORRECT TASK OF MOVEMENT 
-//
-// ================================================================================================= //
-
-RunMovementTask::RunMovementTask(){
-	lastValue = -1;
-}
-	
-bool RunMovementTask::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"RunMovementTask"<<std::endl;
-
-	// Miramos si la tarea a ejecutar a cambiado, en el caso de que se haya alterado
-	// Cambiamos la tarea a ejecutar y vamos con la tarea.
-	if(child != NULL){
-		CheckChangeTask(bb);
-
-		if(child->run(bb)){
-			return true;
-		}
-	}
-	return false;
-}
-
-void RunMovementTask::ChangeTask(Blackboard* bb){
-	Task* t = (Task*)bb->GetPuntero((AI_code)(AI_MOVE_SPELL00 + lastValue));
-	if(t!=NULL){
-		setChild(t);
-	}
-}
-
-void RunMovementTask::CheckChangeTask(Blackboard* bb){
-	AIPlayer* character =bb->GetPlayer();
-	bool casting = character->GetCastingSpell();
-	// Esta lanzando un hechizo
-	if(casting){
-		int spell = character->GetCurrentSpell();
-		// Comprobamos si el hechizo a cambiado
-		if(spell != lastValue){
-			lastValue = spell;
-			// Cambiamos la tarea a ejecutar
-			ChangeTask(bb);
-		}
-	}
-	// No esta lazando un hechizo
-	else{
-		// Comprobamos si algo a cambiado
-		if(lastValue != -1 ){
-			lastValue = -1;
-			// Cambiamos la tarea a ejecutar
-			ChangeTask(bb);
-		}
-	}
-}
-
-
-
-
-// ================================================================================================= //
-//
-//	RELEASE SPELL IF FALSE
-//
-// ================================================================================================= //
-
-ReleaseSpell::ReleaseSpell(){}
-
-bool ReleaseSpell::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"ReleaseSpell"<<std::endl;
-    
-    // Miramos si el personaje a conseguido tirar un hechizo
-    // En el caso de que no lo haya conseguido para asegurarnos
-    // reseteamos el hechizo. De esta forma si el hechizo se cancela
-    // este Decorador se encarga de resetearlo.
-    if(child != NULL){
-        if(!child->run(bb)){
-        	AIPlayer* character = bb->GetPlayer();
-        	character->SetController(ACTION_SHOOT, RELEASED);
-        }
-    }
-    return true;
-}
-
-// ================================================================================================= //
-//
-//	SHOOT PROYECTILE BASIC
-//
-// ================================================================================================= //
-
-UseSpell::UseSpell(){}
-
-bool UseSpell::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"shootBasic"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	// En el caso de que no se este casteando el hechizo
-	if(!character->GetCastingSpell()){
-			// Intetamos lanzar el hechizo
-			character->SetController(ACTION_SHOOT, PRESSED);
-			return true;
-	// En el caso de que ya se estuviera lanzando
-	}else{
-		character->SetController(ACTION_SHOOT, DOWN);
-		// Miramos a ver si el casteo finaliza
-		if(character->GetShootSpell()){
-			// En el caso de que se llegue a lanzar los resetamos y volvemos
-			// a marcar como UP
-			character->SetController(ACTION_SHOOT, RELEASED);
-		}
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	SEND ALL SIGNALS
-//
-// ================================================================================================= //
-
-SendAllSignals::SendAllSignals(){}
-
-bool SendAllSignals::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"SendAllSignals"<<std::endl;
-
-	// Enviamos a los jugadores
-	PlayerManager* masterPlayer = PlayerManager::GetInstance();
-	masterPlayer->SendVisualSignal();
-
-	// Enviamos a los objetos
-	ObjectManager* masterObject = ObjectManager::GetInstance();
-	masterObject->SendAllSignal();
-
-	return true;
-}
-
-
-
-
-// ================================================================================================= //
-//
-//	SEND PLAYER SIGNALS
-//
-// ================================================================================================= //
-
-SendPlayerSignals::SendPlayerSignals(){}
-
-bool SendPlayerSignals::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"SendPlayerSignals"<<std::endl;
-
-	PlayerManager* masterPlayer = PlayerManager::GetInstance(); 
-	masterPlayer->SendVisualSignal();	// Cambiar nombre del metodo o modo de uso
-	return true;
-}
-// ================================================================================================= //
-//
-//	CHECK DISTANCE
-//
-// ================================================================================================= //
-
-CheckDistance::CheckDistance(float dist){
-	distance = dist;	// El limite del proyectil son 10
-}
-
-bool CheckDistance::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"CheckDistance"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
-		Kinematic cKin;
-        Kinematic tKin;
-
-        cKin = character->GetKinematic();
-        tKin = target->kinematic;
-
-        tKin.position.Y = cKin.position.Y;
-
-        vector3df dist = tKin.position - cKin.position;
-        float distLength = dist.length();
-
-        if(distLength<=distance){
-        	return true;
-        }
-
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	CHECK PLAYER HEARING
-//
-// ================================================================================================= //
-
-CheckPlayerHearing::CheckPlayerHearing(){}
-
-bool CheckPlayerHearing::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"CheckPlayerHearing"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
-	int number = bb->GetNumberSound(enemy);
-
-	if(number>0){
-		bb->SetTargetSound(enemy, AI_TARGET);
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	CHECK PLAYER SIGHT
-//
-// ================================================================================================= //
-
-CheckPlayerSight::CheckPlayerSight(){}
-
-bool CheckPlayerSight::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"CheckPlayerSight"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
-	int number = bb->GetNumberSight(enemy);
-	
-	if(number>0){
-		bb->SetTargetSight(enemy, AI_TARGET);
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	HAS ARRIVED?
-//
-// ================================================================================================= //
-
-HasArrived::HasArrived(){
-	arrivedTarget = 1.0f;
-}
-
-bool HasArrived::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"HasArrived"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
-
-
-		Kinematic cKin;
-    	Kinematic tKin;
-
-    	cKin = character->GetKinematic();
-    	tKin = target->kinematic;
-
-    	// La altura a la que se encuentren los personajes para nuestro juego
-    	// en el que no podran haber dos personajes a diferentes alturas da igual
-    	tKin.position.Y = cKin.position.Y;
-
-    	vector3df dir = tKin.position - cKin.position;
-    	float length = dir.length();
-
-    	if(length<arrivedTarget){
-    		bb->CleanPuntero(AI_TARGET);
-			bb->CleanSense(target->id);
-    	}
-		return true;
-	}
-	return true;
-}
-
-// ================================================================================================= //
-//
-//	FACE THE TARGET
-//
-// ================================================================================================= //
-
-FaceTarget::FaceTarget(){}
-
-bool FaceTarget::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"FaceTarget"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
-
-		Kinematic cKin;
-    	Kinematic tKin;
-
-    	cKin = character->GetKinematic();
-    	tKin = target->kinematic;
-
-		SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
-    	if(steering.linear.length() == 0){
-    		steering = Wander::GetSteering(cKin);
-
-    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
-    		steering.angular = steering2.angular;
-    	}else{
-    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
-    		steering.angular = steering2.angular;
-    	}
-
-		character->Steering2Controller(steering);
-
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	GO TO TARGET
-//
-// ================================================================================================= //
-
-GoToTarget::GoToTarget(){
-	maxAcceleration = 30.0f;
-}
-
-bool GoToTarget::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"GoToTarget"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
-
-		Kinematic cKin;
-    	Kinematic tKin;
-
-    	cKin = character->GetKinematic();
-    	tKin = target->kinematic;
-
-		SteeringOutput steering = Seek::GetSteering(cKin, tKin);
-
-		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
-		steering.angular = steering2.angular;
-
-		character->Steering2Controller(steering);
-
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	FLEE FROM TARGET
-//
-// ================================================================================================= //
-
-FleeFromTarget::FleeFromTarget(){
-	maxAcceleration = 30.0f;
-}
-
-bool FleeFromTarget::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"FleeFromTarget"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
-
-		Kinematic cKin;
-    	Kinematic tKin;
-
-    	cKin = character->GetKinematic();
-    	tKin = target->kinematic;
-
-		SteeringOutput steering = Flee::GetSteering(cKin, tKin);
-
-		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
-		steering.angular = steering2.angular;
-
-		character->Steering2Controller(steering);
-
-		return true;
-	}
-	return false;
-}
-
-// ================================================================================================= //
-//
-//	DEAMBULAR
-//
-// ================================================================================================= //
-
-T_Wander::T_Wander(){
-	maxAcceleration = 30.0f;
-}
-
-bool T_Wander::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"T_Wander"<<std::endl;
-
-	AIPlayer* character = bb->GetPlayer();
-	Kinematic cKin;
-	Kinematic tKin;
-
-	cKin = character->GetKinematic();
-
-	SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
-	if(steering.linear.length() == 0){
-		steering = Wander::GetSteering(cKin);
-	}else{
-		SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
-		steering.angular = steering2.angular;
-	}
-	
-	character->Steering2Controller(steering);
-	return true;
 }

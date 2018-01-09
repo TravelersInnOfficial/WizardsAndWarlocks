@@ -143,6 +143,10 @@ void Player::DeclareInput(){
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
 	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+	controller->AddAction(KEY_KEY_1, ACTION_SELECT_SPELL_00);
+	controller->AddAction(KEY_KEY_2, ACTION_SELECT_SPELL_01);
+	controller->AddAction(KEY_KEY_3, ACTION_SELECT_SPELL_02);
+	controller->AddAction(KEY_KEY_4, ACTION_SELECT_SPELL_03);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -613,6 +617,8 @@ float Player::GetDamageM(){ return m_DamageMult; }
 float Player::GetMaxVelocity(){ return max_velocity; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+
+Potion* Player::GetPotion(){ return potion; }
 
 vector3df Player::GetVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);

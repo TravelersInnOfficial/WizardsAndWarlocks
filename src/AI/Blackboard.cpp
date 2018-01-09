@@ -8,6 +8,9 @@ Sense_struct::~Sense_struct(){
 Blackboard::Blackboard(){
     blackboardParent = NULL;
     currentPlayer = NULL;
+    
+    masterMovement = 0;
+    masterAction = 0;
 }
 
 Blackboard::~Blackboard(){
@@ -254,4 +257,12 @@ void Blackboard::SetTargetSound(AI_code name, AI_code where){
      if(em != NULL){
         SetPuntero(where, em);
     }
+}
+
+void Blackboard::SetMasterMovement(AI_code name){
+    masterMovement = name - AI_MOVE_DEFAULT;
+}
+
+void Blackboard::SetMasterAction(AI_code name){
+    masterAction = name - AI_TASK_DEFAULT;
 }

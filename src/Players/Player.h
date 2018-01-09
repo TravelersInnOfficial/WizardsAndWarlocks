@@ -102,6 +102,7 @@ class Player: public Entidad{
 		PlayerController* GetController();
 		std::string GetName();
 		bool GetMoving();
+		Potion* GetPotion();
 
 		// Seters
 		void SetPosition(vector3df);

@@ -46,13 +46,20 @@ public:
  	void 	SetSound(int id, AI_code name, Kinematic kin, float len, float dur);
  	void	SetSight(int id, AI_code name, Kinematic kin, float len, float dur);
 
-    void SaveParent(Blackboard* parent);
+    void    SaveParent(Blackboard* parent);
+
+    void    SetMasterAction(AI_code name);
+    void    SetMasterMovement(AI_code name);
+
+    int                         masterAction;           // Int que marca que subarbol de accion ha de utilizar
+    int                         masterMovement;         // Int que marca que subarbol de movimiento ha de utilizar
+
 private:
 
     AIPlayer*                   currentPlayer;          // Jugador al que le pertenece el blackboard
 
-    Blackboard* 			    blackboardParent;      // El blackboard padre del que pillar la informacion que pueda faltar
-    
+    Blackboard* 			    blackboardParent;       // El blackboard padre del que pillar la informacion que pueda faltar
+
     std::map< AI_code, void* > 	dataPuntero;            // Vector de punteros del blackboard
     std::map< AI_code, int > 	dataInt;                // Vector de ints del blackboad
 

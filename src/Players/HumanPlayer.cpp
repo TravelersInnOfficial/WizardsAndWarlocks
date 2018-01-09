@@ -219,8 +219,13 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyReleased(ACTION_SHOOT)){ ResetSpell(); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ ShootSpell(); }
 
+		// Cambiar hechizos
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
 		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_00)){ currentSpell = 0; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ currentSpell = 1; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ currentSpell = 2; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ currentSpell = 3; }
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
