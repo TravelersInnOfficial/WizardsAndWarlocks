@@ -67,6 +67,7 @@ void BehaviourTree::CreateReceive(){
     Selector* sc_checkActions = new Selector();
     sc_checkActions->addChild(new CheckUsePotion());
     sc_checkActions->addChild(new CheckPlayerSight());
+    sc_checkActions->addChild(new CheckSawPotion());
     sc_checkActions->addChild(new PutDefaultAction());
 
     Secuencia* sc_receive = new Secuencia();
@@ -93,6 +94,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateMoveSpell();
     // Lanzamiento de los hechizos
     CreateShootSpell();
+    // Coger Pocion
+    CreateCathPotion();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -152,4 +155,14 @@ void BehaviourTree::CreateMoveSpell(){
     informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL02, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL03, sl_moveShoot);
+}
+
+void BehaviourTree::CreateCathPotion(){
+    Secuencia* sc_catchPotion = new Secuencia();
+    sc_catchPotion->addChild(new GoToTarget());
+    sc_catchPotion->addChild(new CheckDistance(2.0f));  // Distancia del raycast
+    sc_catchPotion->addChild(new Debug());
+
+    informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
+
 }
