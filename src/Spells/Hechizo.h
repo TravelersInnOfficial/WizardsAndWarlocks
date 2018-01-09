@@ -13,6 +13,7 @@ public:
 	virtual ~Hechizo();
 
 	void EmpezarCast();
+	void ResetCooldown();
 	virtual void ResetSpell();
 	bool ComprobarCast(float deltaTime);
 	virtual void Lanzar(Player* p);

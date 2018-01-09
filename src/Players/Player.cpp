@@ -146,6 +146,10 @@ void Player::DeclareInput(){
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
 	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+	controller->AddAction(KEY_KEY_1, ACTION_SELECT_SPELL_00);
+	controller->AddAction(KEY_KEY_2, ACTION_SELECT_SPELL_01);
+	controller->AddAction(KEY_KEY_3, ACTION_SELECT_SPELL_02);
+	controller->AddAction(KEY_KEY_4, ACTION_SELECT_SPELL_03);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -211,6 +215,9 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
+	// Actualizamos el HP con 0 para comprobar la muerte
+	ChangeHP(0);
+
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
@@ -242,9 +249,6 @@ void Player::Update(){
 		UpdatePosShape();
 		UpdateSoundsPosition();
 
-		// Actualizamos el HP con 0 para comprobar la muerte
-		ChangeHP(0);
-
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne){
 			vector3df newRot = engine->getActiveCamera()->getRotation();
@@ -263,8 +267,6 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
-	// Notify
-	if(networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 }
 
 void Player::SetSpell(int value){
@@ -441,12 +443,13 @@ void Player::Die(){
 }
 
 void Player::ReturnToLobby(){
+	if(isPlayerOne && networkObject != NULL) CheckIfReady();
+
 	CreatePlayerCharacter();
 	Respawn();
 	if(networkObject != NULL){
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
-		if(isPlayerOne) CheckIfReady();
 	}
 }
 
@@ -633,6 +636,10 @@ float Player::GetMP(){ return m_MP; }
 float Player::GetDamageM(){ return m_DamageMult; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+
+Potion* Player::GetPotion(){ return potion; }
+
+bool Player::GetHasCharacter(){ return hasCharacter; }
 
 vector3df Player::GetVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);

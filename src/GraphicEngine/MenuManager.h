@@ -19,7 +19,7 @@ public:
 	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
 	void ClearElement(MenuOption elementID);
-	void UpdateNetDebug(std::vector<Player*> players);
+	void UpdateNetDebug();
 
 private:
 

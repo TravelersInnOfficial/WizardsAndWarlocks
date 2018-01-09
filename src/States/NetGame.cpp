@@ -88,7 +88,7 @@ void NetGame::Update(){
 	trapManager->Update(deltaTime);
 
 	//if(lobbyState) playerManager->RespawnDeadPlayers();
-	playerManager->UpdateNetDebug();
+	MenuManager::GetInstance()->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
 	setFps();

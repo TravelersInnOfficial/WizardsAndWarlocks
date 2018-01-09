@@ -31,10 +31,6 @@ public:
 	// Setters
 	void SetCurrentSpell(int num);
 
-	//void SetAllInput(keyStatesENUM state);
-	//void GetNetInput();
-	//void SetNetInput();
-
 private:
 
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA

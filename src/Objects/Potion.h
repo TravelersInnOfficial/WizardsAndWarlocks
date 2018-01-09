@@ -25,6 +25,9 @@ public:
 	// child functions
 	virtual void Use(Player* p)=0;
 
+	//Getters
+	int GetValue();
+
 	// Sensorial Functions
 	void SendSignal();
 	Kinematic GetKinematic();
