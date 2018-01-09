@@ -59,6 +59,15 @@ void SpellManager::UpdateCooldown(float deltaTime){
 	}	
 }
 
+void SpellManager::ResetCooldown(Player* p){
+	for(int i=0; i<numHechizos; i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			h->ResetCooldown();
+		}
+	}
+}
+
 bool SpellManager::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(hechizos[num].find(p) != hechizos[num].end()){
