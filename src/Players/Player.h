@@ -103,6 +103,7 @@ class Player: public Entidad{
 		std::string GetName();
 		bool GetMoving();
 		Potion* GetPotion();
+		bool GetHasCharacter();
 
 		// Seters
 		void SetPosition(vector3df);

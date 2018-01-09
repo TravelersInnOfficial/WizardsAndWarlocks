@@ -267,8 +267,6 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
-	// Notify
-	if(networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 }
 
 void Player::SetSpell(int value){
@@ -439,12 +437,13 @@ void Player::Die(){
 }
 
 void Player::ReturnToLobby(){
+	if(isPlayerOne && networkObject != NULL) CheckIfReady();
+
 	CreatePlayerCharacter();
 	Respawn();
 	if(networkObject != NULL){
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
-		if(isPlayerOne) CheckIfReady();
 	}
 }
 
@@ -621,6 +620,8 @@ float Player::GetDamageM(){ return m_DamageMult; }
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
 
 Potion* Player::GetPotion(){ return potion; }
+
+bool Player::GetHasCharacter(){ return hasCharacter; }
 
 vector3df Player::GetVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);
