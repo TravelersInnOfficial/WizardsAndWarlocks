@@ -202,7 +202,7 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	FMOD::Studio::EventDescription * eventDesc = NULL;					//Initialize the event description
 	FMOD::Studio::EventInstance * eventInst    = NULL;					//Initialize the event instance
 	SoundEvent * newEvent					   = NULL; 					//Initialize the event
-
+	
 	//Search the description to know if it's already created
 	if (eventDescriptions[eventPath] != NULL) 
 		eventDesc = eventDescriptions[eventPath];					 //Set it to the eventDesc var
@@ -210,7 +210,7 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
 		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
-		
+
 	ERRCHECK(eventDesc->createInstance(&eventInst));				//Set the event instance
 
 	//Dertermine wich type of sound event will create
@@ -222,7 +222,7 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 
 	newEvent->setInstance(eventInst);	//Set the event instance
 	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
-
+	
 	return newEvent;
 }
 
@@ -277,6 +277,11 @@ void SoundSystem::checkAndPlayEvent(SoundEvent* event, vector3df playerPos) {
 ******************************************************/
 void SoundSystem::playEvent(SoundEvent* event, vector3df playerPos) {
 	event->setPosition(playerPos);	//Position the event
+	event->start();					//Start the event
+}
+
+//Used for events without position as the events from the menu
+void SoundSystem::playEvent(SoundEvent* event) {
 	event->start();					//Start the event
 }
 

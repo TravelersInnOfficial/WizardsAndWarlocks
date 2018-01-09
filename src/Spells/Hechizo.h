@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "./../Players/Player.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include <SpellCodes.h>
 #include <math.h>
 

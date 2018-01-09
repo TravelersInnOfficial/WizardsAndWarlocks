@@ -28,7 +28,7 @@ Game::Game(){
     navmesh.printActualGraphConnections();
 
 	// Sound Engine
-	s_engine->createSystem("./../assets/banks/");
+	createSoundEvents();
 
 	// Graphic Engine
 	timeStart = g_engine->getTime() * 0.001;
@@ -69,7 +69,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
 	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
-	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(1.0f);
+	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 
 	if(gameEnded){
@@ -182,6 +182,8 @@ void Game::CheckIfWon(){
 		gameEnded = true;
 		if(playerOne != NULL) {
 			playerOne->SetAllInput(UP);
+			if (playerOne->GetAlliance() != whosWon) playDefeat(); else playVictory();
+
 			playerManager->EraseAllCharacters();
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
@@ -200,4 +202,23 @@ void Game::RestartMatch(){
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
 	playerManager->ReturnAllToLobby();
+}
+/********************************************************************************************************
+ ****************************************** SOUND FUNCITONS *********************************************
+ ********************************************************************************************************/
+
+void Game::createSoundEvents() {
+	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
+	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
+
+	soundEvents["defeat"]  = defeat;
+	soundEvents["victory"] = victory;
+}
+
+void Game::playDefeat() {
+	SoundSystem::getInstance()->playEvent(soundEvents["defeat"]);
+}
+
+void Game::playVictory() {
+	SoundSystem::getInstance()->playEvent(soundEvents["victory"]);
 }

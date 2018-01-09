@@ -46,6 +46,10 @@ public:
 	float GetDeltaTime();
 	void UpdateDelta();
 
+	//Sound Functions
+	void playDefeat();
+	void playVictory();
+
 private:
 
 	float timeStart;
@@ -67,6 +71,9 @@ private:
 	SoundSystem*		s_engine;
 
 	HumanPlayer*		playerOne;
+
+	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+	void createSoundEvents();			//Create the sound events
 
 	// PARA EL DEBUG
 	AIPlayer* AL;

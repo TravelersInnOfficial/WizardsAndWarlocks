@@ -7,13 +7,17 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 
 	if (event.EventType == irr::EET_GUI_EVENT){
 		int id = event.GUIEvent.Caller->getID();
-
+		
 		switch(event.GUIEvent.EventType){
+			
 			case irr::gui::EGET_BUTTON_CLICKED:{
+				SoundEvent* click = SoundSystem::getInstance()->createEvent("event:/HUD/Click");
+				SoundSystem::getInstance()->playEvent(click);
 				selectedOption = (MenuOption)id;
 				break;
 			}
 			default:{
+				
 				break;
 			}
 		}

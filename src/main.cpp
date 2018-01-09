@@ -9,6 +9,7 @@
 #include "GraphicEngine/GraphicEngine.h"
 #include "GraphicEngine/MenuManager.h"
 #include "NetworkEngine/NetworkEngine.h"
+#include "SoundEngine/SoundSystem.h"
 #include "./States/Game.h"
 #include "./States/NetGame.h"
 #include "./Managers/ObjectManager.h"
@@ -16,6 +17,8 @@
 NetworkEngine* CreateMenu(){
 	NetworkEngine* n_engine = NULL;
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	
+
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
 
 	MenuOption selectedOption = NO_OPT;
@@ -25,7 +28,7 @@ NetworkEngine* CreateMenu(){
 		g_engine->endScene();
 		selectedOption = g_engine->ReadButtonPressed();
 	}
-
+	
 	switch(selectedOption){
 		case MAIN_M_CLIENT:{
 			n_engine = NetworkEngine::GetInstance();
@@ -55,6 +58,8 @@ int main() {
 	BulletEngine* f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	SoundSystem* s_engine = SoundSystem::getInstance();
+	s_engine->createSystem("./../assets/banks/");
 
 	// MAIN MENU
 	NetworkEngine* n_engine = CreateMenu();
@@ -90,6 +95,6 @@ int main() {
 	if(n_engine != NULL) n_engine->EndService();
 	f_engine->EraseWorld();
 	g_engine->drop();
-
+	
 	return 0;
 }

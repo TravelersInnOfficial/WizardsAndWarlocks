@@ -113,7 +113,7 @@ public:
      * @param vector3df playerRot rotation where should play the event and/or of the listener
      ******************************************************/
     void playEvent(SoundEvent* event, vector3df playerPos);
-
+    void playEvent(SoundEvent* event); //Used for events without position as the events from the menu
     /******************************************************
      * @brief Stops an event
      * @param eventPath path of the event to stop
