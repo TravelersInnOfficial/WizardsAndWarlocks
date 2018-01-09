@@ -350,11 +350,17 @@ void Player::ChangeHP(float HP){
 	} 
 	
 	if(m_HP >= 100) m_HP = 100;
+	else if (m_HP <=  20 && m_HP > 0) {
+		soundEvents["pulse"]->setParamValue("Life", 20-m_HP);
+		playPulse();
+	}
 	else if(m_HP <= 0){
+		stopPulse();
 		m_HP = 0;
 		m_dead = true;
 		bloodOverlayTime = 0;
 	}
+
 }
 
 bool Player::ChangeMP(float MP){
@@ -538,16 +544,19 @@ void Player::HitMade(Player* player){
  ********************************************************************************************************/
  
 void Player::createSoundEvents() {
+	//Create the events
 	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
-	SoundEvent * drink = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
-	SoundEvent * die = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
-	SoundEvent * hit = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	SoundEvent * drink 	   = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
+	SoundEvent * die       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
+	SoundEvent * hit       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	SoundEvent * pulse     = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
 	
+	//Store them at the player's sounds map
 	soundEvents["footsteps"] = footsteps;
 	soundEvents["drink"] 	 = drink;
 	soundEvents["die"] 		 = die;
 	soundEvents["hit"] 		 = hit;
-
+	soundEvents["pulse"]     = pulse;
 }
 
 void Player::playFootsteps() {
@@ -567,10 +576,19 @@ void Player::playHit() {
 	SoundSystem::getInstance()->playEvent(soundEvents["hit"], GetPos());
 }
 
+void Player::playPulse() {
+	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
+}
+
 void Player::stopFootsteps() {
 	stepsStarted = false;
 	SoundSystem::getInstance()->stopEvent(soundEvents["footsteps"]);
 }
+
+void Player::stopPulse() {
+	SoundSystem::getInstance()->checkAndStopEvent(soundEvents["pulse"]);
+}
+
 
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){

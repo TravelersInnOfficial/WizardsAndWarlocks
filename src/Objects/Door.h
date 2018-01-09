@@ -8,6 +8,7 @@
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include <ColliderMasks.h>
 
 class Door: public Entidad{
@@ -21,12 +22,19 @@ public:
 	// Sense Functions
 	void SendSignal();
 	Kinematic GetKinematic();
+
+	//Sound Functions
+	void playOpen();
+	void playClose();
+
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void WorkDoor();
 	void UpdatePosShape();
+	void createSoundEvents();	//Create the sound events needed for the player
 
 	bool 		working;		// Se esta abriendo o cerrando? Si/No
+	bool		isOpen;			// Estado de la puerta, abierta o cerrada? true/false
 	int 		min;			// Minimo angulo a rotar
 	int 		max;			// Maximo angulo a rotar
 	int 		increment;		// Incremento a cada frame
@@ -35,6 +43,8 @@ private:
 
 	BT_Body*   	bt_body;		// Cuerpo fisico de la puerta
     GBody*    	m_doorNode;		// Cuerpo visual de la puerta
+
+	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 };
 
 #endif

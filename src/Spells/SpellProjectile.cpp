@@ -10,7 +10,7 @@ SpellProjectile::SpellProjectile(float costPM, float tCast, float tCoolDown, flo
 	optHP, 
 	optMP)
 {
-	
+	createSoundEvents();	
 }
 
 void SpellProjectile::Lanzar(Player* p){
@@ -27,6 +27,18 @@ void SpellProjectile::Lanzar(Player* p){
 	BulletManager* bullman = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_BASIC, p->m_shotEffect);
-
+	playRegularShot(pos); //Play sound event
 	Hechizo::Lanzar(p);
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCITONS *********************************************
+ ********************************************************************************************************/
+void SpellProjectile::createSoundEvents() {
+	SoundEvent * regularShot = SoundSystem::getInstance()->createEvent("event:/Spells/RegularShot");
+	soundEvents["regularshot"] = regularShot;
+}
+
+void SpellProjectile::playRegularShot(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(soundEvents["regularshot"], pos);
 }

@@ -8,6 +8,7 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
     increment = -5;
     rotation = TRotation;
     working = false;
+    isOpen  = false; //Closed by default
     clase = EENUM_DOOR;
 }
 
@@ -51,6 +52,9 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
 	bt_body->CreateBox(TPosition, HalfExtents, 0, 0, TCenter, C_DOOR, doorCW);
     bt_body->Rotate(TRotation);
     bt_body->AssignPointer(this);
+
+    //Sound
+    createSoundEvents();
 }
 
 void Door::Interact(Player* p){
@@ -58,9 +62,19 @@ void Door::Interact(Player* p){
 }
 
 void Door::Interact(){
+ 
     if(!working){
         working = true;
         increment = -increment;
+
+        //Play the sound event
+        if (isOpen) {
+            playClose();
+            isOpen = false;
+        } else {
+            playOpen();
+            isOpen = true;
+        }
     }
 }
 
@@ -100,4 +114,26 @@ Kinematic Door::GetKinematic(){
     cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCITONS *********************************************
+ ********************************************************************************************************/
+
+void Door::createSoundEvents() {
+    //Create the events
+    SoundEvent * close = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Close");
+    SoundEvent * open  = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Open");
+    
+    //Store them at the player's sounds map
+    soundEvents["close"] = close;
+    soundEvents["open"]  = open;
+}
+
+void Door::playClose() {
+    SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["close"], bt_body->GetPosition());
+}
+
+void Door::playOpen() {
+    SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["open"], bt_body->GetPosition());
 }

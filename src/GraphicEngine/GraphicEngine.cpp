@@ -289,6 +289,7 @@ void GraphicEngine::drawAllGUI(){
 }
 
 MenuOption GraphicEngine::ReadButtonPressed(){
+	
 	return(privateMenuReceiver->ReadButtonPressed());
 }
 
