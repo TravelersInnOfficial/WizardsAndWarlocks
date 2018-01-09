@@ -61,15 +61,11 @@ SlowedDown::SlowedDown(float time, float value):Effect(time, WEAK_SLOWEDDOWN){
 }
 
 void SlowedDown::ApplyEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel/factor;
-	p->SetMaxVelocity(vel);
+	p->max_velocity /= factor;
 }
 
 void SlowedDown::RemoveEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel*factor;
-	p->SetMaxVelocity(vel);
+	p->max_velocity *= factor;
 }
 
 //================================================================
@@ -80,15 +76,11 @@ Paralyzed::Paralyzed(float time, float value):Effect(time, WEAK_PARALYZED){
 }
 
 void Paralyzed::ApplyEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel/factor;
-	p->SetMaxVelocity(vel);
+	p->max_velocity /= factor;
 }
 
 void Paralyzed::RemoveEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel*factor;
-	p->SetMaxVelocity(vel);
+	p->max_velocity *= factor;
 }
 
 //================================================================
@@ -144,15 +136,11 @@ void DeathSnare::UpdateEffect(Player* p){
 }
 
 void DeathSnare::ApplyEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel/1000.0f;
-	p->SetMaxVelocity(vel);
+	p->max_velocity /= 1000.0f;
 }
 
 void DeathSnare::RemoveEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel*1000.0f;
-	p->SetMaxVelocity(vel);
+	p->max_velocity *= 1000.0f;
 }
 
 
@@ -167,11 +155,11 @@ DamageUp::DamageUp(float time):Effect(time, POWERUP_DAMAGE){
 }
 
 void DamageUp::ApplyEffect(Player* p){
-	p->SetDamageMult(1.6);					// set damage multiplies player damage by parameter
+	p->m_DamageMult *= 1.6;
 }
 
 void DamageUp::RemoveEffect(Player* p){
-	p->SetDamageMult(0.625);				// 1.6 * 0.625 = 1
+	p->m_DamageMult /= 1.6;				// 1.6 * 0.625 = 1
 }
 
 //================================================================
@@ -181,12 +169,14 @@ DefenseUp::DefenseUp(float time):Effect(time, POWERUP_DEFENSE){
 }
 
 void DefenseUp::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_Defense *= 1.6;
 }
 
 void DefenseUp::RemoveEffect(Player* p){
+	p->m_Defense /= 1.6;
 }
 
+/*
 //================================================================
 // ELEMENT UP
 //================================================================
@@ -194,11 +184,13 @@ ElementUp::ElementUp(float time):Effect(time, POWERUP_ELEMDEFENSE){
 }
 
 void ElementUp::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_ElementDefense *= 1.6;
 }
 
 void ElementUp::RemoveEffect(Player* p){
+	p->m_ElementDefense /= 1.6;
 }
+*/
 
 //================================================================
 // SPEED UP
@@ -207,17 +199,12 @@ SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
 }
 
 void SpeedUp::ApplyEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel*1.5f;
-	p->SetMaxVelocity(vel);
-
+	p->max_velocity *= 1.5f;
 	// TODO: APPLY COOLDOWN REDUCTION
 }
 
 void SpeedUp::RemoveEffect(Player* p){
-	float vel = p->GetMaxVelocity();
-	vel = vel/1.5f;
-	p->SetMaxVelocity(vel);
+	p->max_velocity /= 1.5f;
 }
 
 //================================================================
@@ -240,10 +227,11 @@ FireShots::FireShots(float time):Effect(time, POWERUP_FIRE){
 }
 
 void FireShots::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
 void FireShots::RemoveEffect(Player* p){
+	p->m_shotEffect = WEAK_BASIC;
 }
 
 //================================================================
@@ -253,10 +241,11 @@ PoisonShots::PoisonShots(float time):Effect(time, POWERUP_POISON){
 }
 
 void PoisonShots::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
 void PoisonShots::RemoveEffect(Player* p){
+	p->m_shotEffect = WEAK_BASIC;
 }
 
 //================================================================

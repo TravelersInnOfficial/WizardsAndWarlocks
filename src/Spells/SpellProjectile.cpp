@@ -26,7 +26,7 @@ void SpellProjectile::Lanzar(Player* p){
 
 	BulletManager* bullman = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
-	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_BASIC);
+	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_BASIC, p->m_shotEffect);
 
 	Hechizo::Lanzar(p);
 }

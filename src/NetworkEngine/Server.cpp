@@ -197,6 +197,7 @@ void Server::RecievePackages(){
 
 			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_MATCH_ENDED: {
+
 				// Leer quien ha ganado
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				Alliance winnerAlliance;
@@ -204,11 +205,11 @@ void Server::RecievePackages(){
 				bitstream.Read(winnerAlliance);
 				NetGame::GetInstance()->MatchEnded(winnerAlliance);
 
-				// Propagarlo a los DEMAS clientes
+				// Propagarlo a todos los clientes
 				RakNet::BitStream propagateEndMatch;
 				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
 				propagateEndMatch.Write(winnerAlliance);
-				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 				
 				break;
 			}
@@ -365,4 +366,11 @@ void Server::SetObjectString(int objectId, ObjectVariable k, std::string v, bool
 
 	if(!expandClientChange) SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 	else SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+}
+
+void Server::EndMatch(Alliance winnerAlliance){
+	RakNet::BitStream propagateEndMatch;
+	propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
+	propagateEndMatch.Write(winnerAlliance);
+	SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 }

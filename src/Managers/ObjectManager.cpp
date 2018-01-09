@@ -109,8 +109,8 @@ Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3d
 		case POTION_POISON:
 			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation);
 			break;
-		case POTION_ELEMENTAL:
-			p = (Potion*) new ElementalPotion(TPosition, TScale, TRotation);
+		case POTION_DEFENSE:
+			p = (Potion*) new DefensePotion(TPosition, TScale, TRotation);
 			break;
 		default:
 			std::cout<<"POCION NO CONTROLADA"<<std::endl;
@@ -343,9 +343,7 @@ void ObjectManager::ClearMap(){
 
 bool ObjectManager::CheckIfWon(){
 	bool toRet = false;
-	if(grail != NULL){
-		toRet = grail->CheckIfWon();
-	}
+	if(grail != NULL) toRet = grail->CheckIfWon();
 	return toRet;
 }
 

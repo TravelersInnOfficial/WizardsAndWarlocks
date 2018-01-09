@@ -84,6 +84,12 @@ void HumanPlayer::GetNetInput(){
 		}
 	}
 
+	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
+	if(objstate.X != -99999){
+		SetRotation(objstate);
+		objstate = vector3df(-99999,0,0);
+	}
+
 	float life = -9999;
 	life = networkObject->GetFloatVar(PLAYER_LIFE);
 	if(life != -9999 && life != -1){
@@ -101,13 +107,6 @@ void HumanPlayer::GetNetInput(){
 	}
 
 	if(!isPlayerOne){
-		objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
-		if(objstate.X != -99999){
-			SetRotation(objstate);
-			objstate = vector3df(-99999,0,0);
-			networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
-		}
-
 		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
 		if(objstate_int != -99999){
 			SetSpell(objstate_int);
@@ -211,6 +210,7 @@ void HumanPlayer::CheckInput(){
 		
 		// Acciones
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 		

@@ -1,7 +1,8 @@
 #include "BasicProjectile.h"
 #include "../Players/Player.h"
+#include "../Managers/EffectManager.h"
 
-BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, float damageMult)
+BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCODE effect, float damageMult)
 : Projectile(
     pos,                        // initial position of the projectile
     dir,                        // direction of the projectile
@@ -15,8 +16,12 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, float da
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,0,0));
+    contactEffect = effect;
 }
 
 void BasicProjectile::ContactAction(Player* p){
     p->ChangeHP(-damage);
+
+    if(contactEffect != WEAK_BASIC)
+        EffectManager::GetInstance()->AddEffect(p, contactEffect);
 }
