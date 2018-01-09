@@ -49,7 +49,9 @@ void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
 	m_MP = 100;
-	m_DamageMult = 1;	
+	m_DamageMult = 1;
+	m_Defense = 1;
+	m_shotEffect = WEAK_BASIC;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -126,6 +128,7 @@ void Player::DestroyPlayerCharacter(){
 		m_playerNode = NULL;
 	}
 
+	CheckIfReady();
 	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
@@ -143,6 +146,10 @@ void Player::DeclareInput(){
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
 	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
+	controller->AddAction(KEY_KEY_1, ACTION_SELECT_SPELL_00);
+	controller->AddAction(KEY_KEY_2, ACTION_SELECT_SPELL_01);
+	controller->AddAction(KEY_KEY_3, ACTION_SELECT_SPELL_02);
+	controller->AddAction(KEY_KEY_4, ACTION_SELECT_SPELL_03);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -260,8 +267,6 @@ void Player::ChangeCurrentSpell(int value){
 	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
 		currentSpell = tempCurrentSpell;
 	}
-	// Notify
-	if(networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 }
 
 void Player::SetSpell(int value){
@@ -340,9 +345,11 @@ void Player::ChangeHP(float HP){
 	if(networkObject != NULL){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
-		if(isServer) m_HP += HP;
+		if(isServer) m_HP += HP / m_Defense;
 	}
-	else m_HP += HP;
+	else{
+		m_HP += HP / m_Defense;
+	} 
 	
 	if(m_HP >= 100) m_HP = 100;
 	else if(m_HP <= 0){
@@ -382,7 +389,7 @@ void Player::Raycast(){
 	float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
 
 	vector3df End(EndX, EndY, EndZ);
-
+	
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
@@ -423,7 +430,6 @@ void Player::Die(){
 	if(matchStarted){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
-		CheckIfReady();
 	}
 
 	soundEvents.clear();
@@ -431,12 +437,13 @@ void Player::Die(){
 }
 
 void Player::ReturnToLobby(){
+	if(isPlayerOne && networkObject != NULL) CheckIfReady();
+
 	CreatePlayerCharacter();
 	Respawn();
 	if(networkObject != NULL){
 		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
-		if(isPlayerOne) CheckIfReady();
 	}
 }
 
@@ -610,9 +617,11 @@ float Player::GetMP(){ return m_MP; }
 
 float Player::GetDamageM(){ return m_DamageMult; }
 
-float Player::GetMaxVelocity(){ return max_velocity; }
-
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
+
+Potion* Player::GetPotion(){ return potion; }
+
+bool Player::GetHasCharacter(){ return hasCharacter; }
 
 vector3df Player::GetVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);
@@ -740,11 +749,7 @@ void Player::SetRotation(vector3df rotation){
 
 void Player::SetHP(float HP){ m_HP = HP; }
 
-void Player::SetDamageMult(float damageMultiplier){ m_DamageMult *= damageMultiplier; }
-
 void Player::SetDead(bool flag){ m_dead = flag; }
-
-void Player::SetMaxVelocity(float max){ max_velocity = max; }
 
 void Player::SetNetworkObject(NetworkObject* newNetworkObject){ networkObject = newNetworkObject; }
 

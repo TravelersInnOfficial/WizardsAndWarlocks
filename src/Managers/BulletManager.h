@@ -5,6 +5,7 @@
 #include <string>
 #include "./../Projectiles/Projectile.h"
 #include <BulletCodes.h>
+#include <EffectCodes.h>
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
@@ -13,7 +14,7 @@ public:
 	static BulletManager* GetInstance();
 	~BulletManager();
 
-	void AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b);
+	void AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect = WEAK_BASIC);
 	void AddToDeleteProyecil(Projectile* pro);
 	void Update();
 	void DeleteProyectiles();

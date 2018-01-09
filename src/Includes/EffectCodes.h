@@ -28,8 +28,6 @@
 
 	Área de Tarion
 	Aumenta el daño durante 7 segundos.
-	Gorro del Heraldo
-	Reduce el daño producido por los proyectiles Elementales.
 	Sombrero de protección Óhmica
 	Reduce todo el daño recibido en un 50%.
 	Las Chanclas de Hermes
@@ -42,7 +40,7 @@
 	Tus ataques básicos aplican Veneno
 	Invisibilidad
 	Te hace invisible para los demás jugadores
-
+	
 */
 
 enum EFFECTCODE
@@ -62,7 +60,7 @@ enum EFFECTCODE
 
 	POWERUP_DAMAGE,
 	POWERUP_DEFENSE,
-	POWERUP_ELEMDEFENSE,
+	//POWERUP_ELEMDEFENSE,
 	POWERUP_SPEED,
 	POWERUP_UNTARGET,
 	POWERUP_FIRE,

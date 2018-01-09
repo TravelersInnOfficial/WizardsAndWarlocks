@@ -27,6 +27,11 @@ void Hechizo::ResetSpell(){
 	lanzable = false;
 }
 
+void Hechizo::ResetCooldown(){
+	currentCooldown = 0.0f;
+	ResetSpell();
+}
+
 /**
  * @brief Pone las variables aptas para empezar el casteo
  */

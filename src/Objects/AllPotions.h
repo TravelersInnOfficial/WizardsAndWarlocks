@@ -84,14 +84,14 @@ public:
 
 // ===============================================================================================//
 //
-//  ELEMENTAL POTION
-//  Recovers 20 HP and applies elemental resistance
+//  DEFENSE POTION
+//  Recovers 20 HP and applies defense resistance
 //
 // ===============================================================================================//
 
-class ElementalPotion: public Potion{
+class DefensePotion: public Potion{
 public:
-    ElementalPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    DefensePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
 };
 

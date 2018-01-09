@@ -84,6 +84,12 @@ void HumanPlayer::GetNetInput(){
 		}
 	}
 
+	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
+	if(objstate.X != -99999){
+		SetRotation(objstate);
+		objstate = vector3df(-99999,0,0);
+	}
+
 	float life = -9999;
 	life = networkObject->GetFloatVar(PLAYER_LIFE);
 	if(life != -9999 && life != -1){
@@ -101,13 +107,6 @@ void HumanPlayer::GetNetInput(){
 	}
 
 	if(!isPlayerOne){
-		objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
-		if(objstate.X != -99999){
-			SetRotation(objstate);
-			objstate = vector3df(-99999,0,0);
-			networkObject->SetVecFVar(PLAYER_ROTATION, objstate, false, false);
-		}
-
 		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
 		if(objstate_int != -99999){
 			SetSpell(objstate_int);
@@ -211,6 +210,7 @@ void HumanPlayer::CheckInput(){
 		
 		// Acciones
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+
 		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
 		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 		
@@ -219,8 +219,15 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyReleased(ACTION_SHOOT)){ ResetSpell(); }
 		if(controller->IsKeyDown(ACTION_SHOOT)){ ShootSpell(); }
 
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+		// Cambiar hechizos
+		bool spellChanged = false;
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); spellChanged = true;}
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); spellChanged = true; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_00)){ currentSpell = 0; spellChanged = true; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ currentSpell = 1; spellChanged = true; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ currentSpell = 2; spellChanged = true; }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ currentSpell = 3; spellChanged = true; }
+		if(spellChanged && networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }

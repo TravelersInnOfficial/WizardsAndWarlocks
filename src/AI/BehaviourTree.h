@@ -52,6 +52,10 @@ private:
 	void CreateAction();
 	void CreateMovement();
     void PrepareSubTrees();
+
+    void CreateMoveSpell();     // SubArboles de movimiento con hechizos
+    void CreateMoveDefault();   // SubArbol de movimiento por defecto
+    void CreateShootSpell();    // SubArbol de lanzar hechizo
 };
 
 #endif
