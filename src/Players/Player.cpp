@@ -215,6 +215,9 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
+	// Actualizamos el HP con 0 para comprobar la muerte
+	ChangeHP(0);
+
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
@@ -245,9 +248,6 @@ void Player::Update(){
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
 		UpdateSoundsPosition();
-
-		// Actualizamos el HP con 0 para comprobar la muerte
-		ChangeHP(0);
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne){
