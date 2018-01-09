@@ -22,6 +22,10 @@ Game::Game(){
 	gameEnded = false;
 	secondCounter = 0;
 
+	//NavMesh
+	NavMeshLoader navmesh;
+	std::cout<<"Loading navmesh.."<<navmesh.LoadNavMesh("../assets/json/NavMesh.json")<<std::endl;
+	
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
 
@@ -117,17 +121,33 @@ void Game::CheckIfReady(){
 		g_engine->ToggleMenu(false);
 		MenuManager::GetInstance()->ClearMenu();
 	}
+
 }
 
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim(playerOne->GetMoving());
+
+	//TESTING NAVMESH
+	/*
+	std::vector<Connection*> nmc = navmesh.getNavMeshConnections();
+	for(int i =0; i<nmc.size();i++){
+		std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
+		vector3df pointA = nmc[i]->getFromNode()->getPosition();
+		pointA.Y = pointA.Y -10;
+		vector3df pointB = nmc[i]->getToNode()->getPosition();
+		pointB.Y = pointB.Y -10;
+		vector3df color = vector3df(255,255,255);
+		g_engine->paintLineDebug(pointA, pointB,color);
+	}*/
+	
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();
 	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
+	
 }
 
 void Game::setFps(){

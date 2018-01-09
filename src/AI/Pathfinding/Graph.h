@@ -40,6 +40,14 @@ public:
      * @param Node (Node to check)
      */
     void printNodeConnections(Node*);
+
+    /**
+     * @brief Returns all the connections of the graphs
+     * 
+     * @return std::vector<Connection*> (AllConnections)
+     */
+    std::vector<Connection*> getConnections();
+
     
 private:
     std::vector<Connection*> m_connections;
