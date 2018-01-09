@@ -35,6 +35,9 @@ void Graph::printNodeConnections(Node* n){
 }
 
 std::vector<Connection*> Graph::getConnections(){
-    std::cout<<"m_connections size: "<<m_connections.size()<<std::endl;
     return m_connections;
+}
+
+std::vector<Node*> Graph::getNodes(){
+    return m_nodes;
 }
