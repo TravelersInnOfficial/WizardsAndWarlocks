@@ -357,7 +357,6 @@ void Player::ChangeHP(float HP){
 		playPulse();
 	}
 	else if(m_HP <= 0){
-		stopPulse();
 		m_HP = 0;
 		m_dead = true;
 		bloodOverlayTime = 0;
@@ -430,7 +429,8 @@ void Player::SendSignal(){
 
 void Player::Die(){
 
-	playDie(); //Play the sound event
+	stopPulse();	//Stop the pulse event
+	playDie(); 		//Play the sound event
 	DropObject();
 
 	if(matchStarted){
