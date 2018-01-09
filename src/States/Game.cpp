@@ -23,9 +23,10 @@ Game::Game(){
 	secondCounter = 0;
 
 	//NavMesh
-	NavMeshLoader navmesh;
-	std::cout<<"Loading navmesh.."<<navmesh.LoadNavMesh("../assets/json/NavMesh.json")<<std::endl;
-	
+	NavMeshLoader nm_loader;
+	navmesh = nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
+    navmesh.printActualGraphConnections();
+
 	// Sound Engine
 	s_engine->createSystem("./../assets/banks/");
 
@@ -130,18 +131,18 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 
 	//TESTING NAVMESH
-	/*
-	std::vector<Connection*> nmc = navmesh.getNavMeshConnections();
-	for(int i =0; i<nmc.size();i++){
-		std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
-		vector3df pointA = nmc[i]->getFromNode()->getPosition();
-		pointA.Y = pointA.Y -10;
-		vector3df pointB = nmc[i]->getToNode()->getPosition();
-		pointB.Y = pointB.Y -10;
-		vector3df color = vector3df(255,255,255);
-		g_engine->paintLineDebug(pointA, pointB,color);
-	}*/
 	
+	std::vector<Connection*> nmc = navmesh.getConnections();
+	for(int i =0; i<nmc.size();i++){
+		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
+		vector3df pointA = nmc[i]->getFromNode()->getPosition();
+		pointA.Y = pointA.Y;
+		vector3df pointB = nmc[i]->getToNode()->getPosition();
+		pointB.Y = pointB.Y;
+		vector3df color = vector3df(255,0,0);
+		g_engine->paintLineDebug(pointA, pointB, color);
+	}
+
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	//f_engine->DebugDrawWorld();

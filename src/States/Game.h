@@ -66,12 +66,11 @@ private:
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
 
-	NavMeshLoader navmesh;
-
 	HumanPlayer*		playerOne;
 
 	// PARA EL DEBUG
 	AIPlayer* AL;
+	Graph navmesh;
 
 	void setFps();
 	void CheckIfWon();

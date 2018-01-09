@@ -1,13 +1,17 @@
 #include "Graph.h"
 
 Graph::Graph(){
-    
+
 }
 Graph::~Graph(){}
 
-void Graph::addConnection(float cost, Node* FromNode, Node* ToNode){
-    Connection* c = new Connection(cost, FromNode, ToNode);
+void Graph::addConnection(float cost, int FromNode,int ToNode){
+    Connection* c = new Connection(cost, m_nodes[FromNode], m_nodes[ToNode]);
     m_connections.push_back(c);
+}
+void Graph::addNode(int id, vector3df position){
+    Node* n = new Node(id, position);
+    m_nodes.push_back(n);
 }
 
 void Graph::printActualGraphConnections(){

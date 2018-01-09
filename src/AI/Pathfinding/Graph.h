@@ -20,13 +20,21 @@ public:
     ~Graph();
 
     /**
-     * @brief Adds a connection between two nodes
+     * @brief Adds a new connection between two nodes inside the graph
      * 
-     * @param float (connection cost)
-     * @param Node (FromNode)
-     * @param Node (ToNode)
+     * @param float (cost)
+     * @param int (from node index)
+     * @param int (to node index)
      */
-    void addConnection(float , Node*, Node*);
+    void addConnection(float ,int, int);
+
+    /**
+     * @brief Adds a new node to the graph
+     * 
+     * @param int (ID)
+     * @param vector3df (Position)
+     */
+    void addNode(int, vector3df);
 
     /**
      * @brief Prints in terminal the actual graph connections
@@ -48,8 +56,16 @@ public:
      */
     std::vector<Connection*> getConnections();
 
+    /**
+     * @brief Returns all the nodes of the graph
+     * 
+     * @return std::vector<Node*> (AllNodes)
+     */
+    std::vector<Node*> getNodes();
+
     
 private:
     std::vector<Connection*> m_connections;
+    std::vector<Node*> m_nodes;
 };
 #endif

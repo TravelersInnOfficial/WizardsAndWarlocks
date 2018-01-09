@@ -16,11 +16,12 @@ public:
     Node();
 
     /**
-     * @brief Creates a new Node
+     * @brief Creates a new node
      * 
-     * @param id (Node ID)
+     * @param int (ID)
+     * @param vector3df (Position)
      */
-    Node(int, std::string, vector3df);
+    Node(int, vector3df);
 
     /**
      * @brief Node destructor

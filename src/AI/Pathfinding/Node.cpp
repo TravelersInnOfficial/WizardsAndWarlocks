@@ -6,9 +6,8 @@ Node::Node(){
     m_position = vector3df(0,0,0);
 }
 
-Node::Node(int id, std::string regionName, vector3df position){
+Node::Node(int id, vector3df position){
     m_ID = id;
-    m_RegionName = regionName;
     m_position = position;
 }
 
