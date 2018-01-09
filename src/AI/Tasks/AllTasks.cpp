@@ -25,6 +25,19 @@ bool DEBUG = false;
 
 // ================================================================================================= //
 //
+//	DEBUG
+//
+// ================================================================================================= //
+
+Debug::Debug(){}
+
+bool Debug::run(Blackboard* bb){
+	std::cout<<"HA LLEGADO HASTA AQUI\n";
+	return true;
+}
+
+// ================================================================================================= //
+//
 //	MASTER MOVEMENT
 //
 // ================================================================================================= //
@@ -213,6 +226,28 @@ bool SendPlayerSignals::run(Blackboard* bb){
 	masterPlayer->SendVisualSignal();	// Cambiar nombre del metodo o modo de uso
 	return true;
 }
+
+// ================================================================================================= //
+//
+//	CHECK SEE POTION TO CATCH
+//
+// ================================================================================================= //
+
+
+CheckSawPotion::CheckSawPotion(){}
+
+bool CheckSawPotion::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckSawPotion\n";
+
+	int number = bb->GetNumberSight(AI_POTION);
+	if(number>0){
+		bb->SetTargetSound(AI_POTION, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_CATCH_POT);
+		return true;
+	}
+	return false;
+}
+
 // ================================================================================================= //
 //
 //	CHECK DISTANCE

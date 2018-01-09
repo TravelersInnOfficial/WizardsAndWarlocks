@@ -8,6 +8,8 @@
 #include "./../Selector.h"
 #include "./../Task.h"
 
+
+
 // ================================================================================================= //
 //
 //	MASTER MOVEMENT
@@ -29,6 +31,18 @@ public:
 class MasterMovement: public Task{
 public:
 	MasterMovement();
+	bool run(Blackboard* bb);
+};
+
+// ================================================================================================= //
+//
+//	DEBUG
+//
+// ================================================================================================= //
+
+class Debug: public Task{
+public:
+	Debug();
 	bool run(Blackboard* bb);
 };
 
@@ -65,6 +79,18 @@ public:
 class CheckUsePotion: public Task{
 public:
 	CheckUsePotion();
+	bool run(Blackboard* bb);
+};
+
+// ================================================================================================= //
+//
+//	CHECK SEE POTION TO CATCH
+//
+// ================================================================================================= //
+
+class CheckSawPotion: public Task{
+public:
+	CheckSawPotion();
 	bool run(Blackboard* bb);
 };
 

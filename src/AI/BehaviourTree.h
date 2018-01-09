@@ -56,6 +56,7 @@ private:
     void CreateMoveSpell();     // SubArboles de movimiento con hechizos
     void CreateMoveDefault();   // SubArbol de movimiento por defecto
     void CreateShootSpell();    // SubArbol de lanzar hechizo
+    void CreateCathPotion();    // SubArbol de coger una pocion
 };
 
 #endif
