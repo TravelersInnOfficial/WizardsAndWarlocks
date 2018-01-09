@@ -124,17 +124,19 @@ void PlayerManager::RespawnDeadPlayers(){
 	int size = deadPlayers.size();
 	for(int i=0; i<size; i++){
 		Player* p = deadPlayers[i];
-		deadPlayers.erase(deadPlayers.begin() + i);
-		players.push_back(p);
-		p->Respawn();
+		if(p != NULL){
+			players.push_back(p);
+			p->Respawn();
+		}
 	}
+	deadPlayers.clear();
 }
 
 void PlayerManager::RestartMatchStatus(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
-		p->Respawn();
+		if(p != NULL) p->Respawn();
 	}
 	RespawnDeadPlayers();
 	warlocksWin = false;
@@ -218,9 +220,12 @@ void PlayerManager::RefreshServerAll(){
 	}
 }
 
-void PlayerManager::UpdateNetDebug(){
-	MenuManager::GetInstance()->UpdateNetDebug(players);
-}
+ vector<Player*> PlayerManager::GetAllPlayers(){
+	vector<Player*> toRet;
+	toRet.insert(toRet.end(), players.begin(), players.end() );
+	toRet.insert(toRet.end(), deadPlayers.begin(), deadPlayers.end() );
+	return(toRet);
+ }
 
 Player* PlayerManager::GetPlayerFromID(int id){
 	Player* toRet = NULL;

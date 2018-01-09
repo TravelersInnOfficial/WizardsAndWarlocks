@@ -18,10 +18,6 @@ LevelLoader::LevelLoader(){
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
 
-	std::cout<<"##################################"<<std::endl;
-	std::cout<<"CARGAMOS EL NIVEL "<<jsonPath<<std::endl;
-	std::cout<<"##################################"<<std::endl;
-
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
 	TrapManager::GetInstance()->ClearTraps();

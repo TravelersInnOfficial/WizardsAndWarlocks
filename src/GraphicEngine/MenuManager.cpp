@@ -1,5 +1,6 @@
 #include "MenuManager.h"
 #include "./../Players/Player.h"
+#include "./../Managers/PlayerManager.h"
 
 MenuManager* MenuManager::instance = 0;
 
@@ -161,10 +162,12 @@ void MenuManager::CreateNetDebug(){
 	netDebugWindow->getCloseButton()->setVisible(false);
 	loadedOptions.push_back(NETDEBUG_M_WINDOW);
 
-	UpdateNetDebug(std::vector<Player*>());
+	UpdateNetDebug();
 }
 
-void MenuManager::UpdateNetDebug(std::vector<Player*> players){
+void MenuManager::UpdateNetDebug(){
+
+	std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
 
 	if(netDebugWindow != NULL){
 

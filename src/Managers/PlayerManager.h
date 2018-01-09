@@ -31,18 +31,13 @@ public:
 	void EraseAllCharacters();
 	void ReturnAllToLobby();
 	void RefreshServerAll();
-	void UpdateNetDebug();
 	Player* GetPlayerFromID(int id);
+	vector<Player*> GetAllPlayers();
 	
 private:
 
 	vector<Player*>	players;
-	vector<Player*>	wizardPlayers;
-	vector<Player*>	warlockPlayers;
-
 	vector<Player*>	deadPlayers;
-	vector<Player*>	deadWarlocks;
-	vector<Player*>	deadWizards;
 
 	bool wizardsWin;
 	bool warlocksWin;
