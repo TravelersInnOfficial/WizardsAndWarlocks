@@ -4,6 +4,7 @@
 GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD, optHP, optMP){
 	area = NULL;
+	dist = 1.0f;
 }
 
 void GuivernoWind::Lanzar(Player* p){
@@ -35,7 +36,6 @@ void GuivernoWind::CreateArea(Player* p){
 	rot.Z = 0.0f; rot.X = 0.0f;
 	rot.Y = rot.Y * 180 / M_PI;
 
-	float dist = 1.5f;
 	pos.X = pos.X + sin(rot.Y)*dist;
 	pos.Z = pos.Z + cos(rot.Y)*dist;
 
@@ -46,7 +46,6 @@ void GuivernoWind::UpdateArea(Player* p){
 	vector3df pos = p->GetPos();
 	vector3df rot = p->GetRot();
 
-	float dist = 1.5f;
 	pos.X = pos.X + sin(rot.Y)*dist;
 	pos.Z = pos.Z + cos(rot.Y)*dist;
 

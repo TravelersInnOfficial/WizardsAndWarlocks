@@ -128,7 +128,7 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }

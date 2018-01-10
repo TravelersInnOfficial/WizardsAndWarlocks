@@ -17,6 +17,7 @@ private:
 	void UpdateArea(Player* p);
 	
 	DamageArea* area;
+	float  		dist; 		// distancia a la que aparecera el area
 };
 
 
