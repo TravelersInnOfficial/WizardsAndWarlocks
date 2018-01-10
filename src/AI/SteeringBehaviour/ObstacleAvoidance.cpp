@@ -1,5 +1,5 @@
 #include "ObstacleAvoidance.h"
-#include "./../../GraphicEngine/GraphicEngine.h"
+#include "./../../PhysicsEngine/BulletEngine.h"
 
 float ObstacleAvoidance::avoidDistance = 2.0f;
 float ObstacleAvoidance::lookAHead = 2.5f;
@@ -19,7 +19,7 @@ SteeringOutput ObstacleAvoidance::GetSteering(Kinematic cKin){
 
 	vector3df point_1(std::numeric_limits<float>::max(),0,0);
 	vector3df normal_1(0,0,0);
-	GraphicEngine::getInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_1, &normal_1);
+	BulletEngine::GetInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_1, &normal_1);
 	//Caso de que se haya alterado al valor, es decir se ha encontrado un punto
 
 
@@ -30,7 +30,7 @@ SteeringOutput ObstacleAvoidance::GetSteering(Kinematic cKin){
 	vector3df point_2(std::numeric_limits<float>::max(), 0, 0);
 	vector3df normal_2(0,0,0);
 
-	GraphicEngine::getInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_2, &normal_2);
+	BulletEngine::GetInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_2, &normal_2);
 	//Caso de que se haya alterado al valor, es decir se ha encontrado un punto
 	
 	// -------------------------------------------------------------------Tercer Raycast <- 
@@ -40,7 +40,7 @@ SteeringOutput ObstacleAvoidance::GetSteering(Kinematic cKin){
 	vector3df point_3(std::numeric_limits<float>::max(), 0, 0);
 	vector3df normal_3(0,0,0);
 
-	GraphicEngine::getInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_3, &normal_3);
+	BulletEngine::GetInstance()->Raycast(cKin.position, cKin.position+rayVector, &point_3, &normal_3);
 	//Caso de que se haya alterado al valor, es decir se ha encontrado un punto
 
 	// -------------------------------------------------------------------Resolucion

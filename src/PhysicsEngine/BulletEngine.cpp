@@ -113,18 +113,39 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
 	RayCallback.m_collisionFilterMask = raycastCW;
 	RayCallback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
     m_dynamicsWorld->rayTest(Start, End, RayCallback);
-	
-    //GraphicEngine::getInstance()->paintLineDebug(S, E, vector3df(1.0f, 0.0f, 0.0f));
 
     if(RayCallback.hasHit()) {
-        //End = RayCallback.m_hitPointWorld;
-        //Normal = RayCallback.m_hitNormalWorld;
-      
 		if(RayCallback.m_collisionObject->getUserPointer()!=0){
 			return RayCallback.m_collisionObject->getUserPointer();
    		}
     }
+
     return NULL;
+}
+
+void BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal){
+	btVector3 Start(S.X, S.Y, S.Z);
+	btVector3 End(E.X, E.Y, E.Z);
+
+	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
+
+	RayCallback.m_collisionFilterMask = raycastCW;
+	RayCallback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
+	m_dynamicsWorld->rayTest(Start, End, RayCallback);
+
+	if(RayCallback.hasHit()){
+		if(RayCallback.m_collisionObject->getUserPointer()!=0){
+			btVector3 N = RayCallback.m_hitNormalWorld;
+
+			normal->X = acos(N.getY())*180/M_PI;
+			normal->Y = atan2(N.getX(), N.getZ())*180/M_PI;
+
+			btVector3 P = RayCallback.m_hitPointWorld;
+			point->X = P.getX();
+			point->Y = P.getY();
+			point->Z = P.getZ();
+		}
+	}
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){

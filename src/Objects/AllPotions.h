@@ -15,6 +15,7 @@ class LifePotion: public Potion{
 public:
     LifePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -28,6 +29,7 @@ class ManaPotion: public Potion{
 public:
     ManaPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -41,6 +43,7 @@ class IcePotion: public Potion{
 public:
     IcePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -54,6 +57,7 @@ class ElectricPotion: public Potion{
 public:
     ElectricPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -67,6 +71,7 @@ class FirePotion: public Potion{
 public:
     FirePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -80,6 +85,7 @@ class PoisonPotion: public Potion{
 public:
     PoisonPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 // ===============================================================================================//
@@ -93,6 +99,7 @@ class DefensePotion: public Potion{
 public:
     DefensePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
     void Use(Player* p);
+    bool CheckUse(Player* p);
 };
 
 #endif

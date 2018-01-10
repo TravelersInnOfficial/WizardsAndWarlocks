@@ -88,6 +88,9 @@ void Game::Update(){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
+	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
+	senseManager->SendSignals();				// Update de las notificaciones sensoriales
+
 	bulletManager->Update();
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
@@ -97,7 +100,7 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
-	senseManager->SendSignals();
+	
 
 	setFps();
 
@@ -128,7 +131,7 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }

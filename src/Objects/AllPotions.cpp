@@ -17,6 +17,10 @@ void LifePotion::Use(Player* p){
 	p->ChangeHP(value);
 }
 
+bool LifePotion::CheckUse(Player* p){
+	return CheckUseHP(p);
+}
+
 // ===============================================================================================//
 //
 //	MANA POTION
@@ -31,6 +35,10 @@ ManaPotion::ManaPotion(vector3df TPosition, vector3df TScale, vector3df TRotatio
 
 void ManaPotion::Use(Player* p){
 	p->ChangeMP(value);
+}
+
+bool ManaPotion::CheckUse(Player* p){
+	return CheckUseMP(p);
 }
 
 // ===============================================================================================//
@@ -50,6 +58,10 @@ void IcePotion::Use(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, WEAK_FROZEN);
 }
 
+bool IcePotion::CheckUse(Player* p){
+	return CheckUseHP(p);
+}
+
 // ===============================================================================================//
 //
 //	ELECTRIC POTION
@@ -65,6 +77,10 @@ ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df 
 void ElectricPotion::Use(Player* p){
 	p->ChangeHP(value);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_PARALYZED);
+}
+
+bool ElectricPotion::CheckUse(Player* p){
+	return CheckUseHP(p);
 }
 
 // ===============================================================================================//
@@ -84,6 +100,10 @@ void FirePotion::Use(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_FIRE);
 }
 
+bool FirePotion::CheckUse(Player* p){
+	return CheckUseHP(p);
+}
+
 // ===============================================================================================//
 //
 //  POISON POTION
@@ -101,6 +121,10 @@ void PoisonPotion::Use(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_POISON);
 }
 
+bool PoisonPotion::CheckUse(Player* p){
+	return CheckUseHP(p);
+}
+
 // ===============================================================================================//
 //
 //	DEFENSE POTION
@@ -116,4 +140,8 @@ DefensePotion::DefensePotion(vector3df TPosition, vector3df TScale, vector3df TR
 void DefensePotion::Use(Player* p){
 	p->ChangeHP(value);
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_DEFENSE);
+}
+
+bool DefensePotion::CheckUse(Player* p){
+	return CheckUseHP(p);
 }

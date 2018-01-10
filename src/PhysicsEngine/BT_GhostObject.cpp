@@ -13,11 +13,12 @@ BT_GhostObject::BT_GhostObject(){
 
 BT_GhostObject::~BT_GhostObject(){}
 
-void BT_GhostObject::CreateGhostBox(vector3df position,vector3df rotation, vector3df dimensions){
+void BT_GhostObject::CreateGhostBox(vector3df position,vector3df rotation, vector3df dimensions, vector3df center){
     m_body = new btGhostObject();
     m_position = new vector3df(position.X, position.Y, position.Z);
     m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
-    m_rotation = new vector3df(rotation.X,rotation.Y,rotation.Z);
+    m_rotation = new vector3df(rotation.X,rotation.Y, rotation.Z);
+    m_center = new vector3df(center.X, center.Y, center.Z);
 
     const btVector3 m_ShapeInfo(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
     m_body->setCollisionShape(new btBoxShape(m_ShapeInfo));
@@ -77,6 +78,10 @@ void BT_GhostObject::Erase(){
     BulletEngine::GetInstance()->RemoveGhostObject(m_body);
     //delete m_body->getMotionState();
     delete m_body->getCollisionShape();
-
     delete m_body;
+
+    delete m_position;
+    delete m_rotation;
+    delete m_dimensions;
+    delete m_center;
 }

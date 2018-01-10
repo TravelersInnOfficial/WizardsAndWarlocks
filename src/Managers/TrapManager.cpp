@@ -70,17 +70,14 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 	vector3df normal(0,0,0);
 	GraphicEngine::getInstance()->Raycast(Start,End, &point, &normal);
 
-
-	//std::cout<<"NormalX: "<<normal.X<<" NormalY: "<<normal.Y<<" NormalZ: "<<normal.Z<<std::endl;
 	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
 	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
 	&& (normal.Y >=0 && normal.Y <=180)
 	){
 		AddTrap(point,normal,type);
-		//std::cout<<"Added Trap"<<std::endl;
 		return true;
-		}
+	}
 
 	return false;
 }

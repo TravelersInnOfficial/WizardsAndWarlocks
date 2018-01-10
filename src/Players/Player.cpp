@@ -215,6 +215,7 @@ void Player::RefreshServer(){
 }
 
 void Player::Update(){
+
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -529,7 +530,8 @@ void Player::DeployTrap(){
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
-		if(h->GetClase() == EENUM_FLOOR) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
+		if(h->GetClase() == EENUM_FLOOR) 
+		TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 	}
 }
 

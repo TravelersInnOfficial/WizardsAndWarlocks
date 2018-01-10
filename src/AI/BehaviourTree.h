@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 // Enums
 #include <AICodes.h>
 #include <KeyStates.h>
@@ -48,6 +49,8 @@ public:
    
 
 private:
+    std::vector<Task*> tasks;        // Vector con todas las tareas del behaviour
+
     void CreateReceive();
 	void CreateAction();
 	void CreateMovement();
@@ -55,8 +58,10 @@ private:
 
     void CreateMoveSpell();     // SubArboles de movimiento con hechizos
     void CreateMoveDefault();   // SubArbol de movimiento por defecto
+    void CreateMoveToTarget();  // SubArbol de movimiento hacia el target
     void CreateShootSpell();    // SubArbol de lanzar hechizo
     void CreateCathPotion();    // SubArbol de coger una pocion
+    void CreateDrinkPotion();   // SubArbol de beber una pocion
 };
 
 #endif
