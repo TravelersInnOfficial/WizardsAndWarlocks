@@ -43,7 +43,7 @@ Game::Game(){
 	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
-	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.14, 17.25));
+	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 }
 
 Game::~Game(){
@@ -199,7 +199,7 @@ void Game::createSoundEvents() {
 	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
 	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
 	SoundEvent * ghosts  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
-	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
+	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/WaterDrops");
 
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;
