@@ -8,7 +8,7 @@ class BT_GhostObject{
 public:
     BT_GhostObject();
 
-    void CreateGhostBox(vector3df, vector3df, vector3df);
+    void CreateGhostBox(vector3df pos, vector3df rot, vector3df dim, vector3df cen = vector3df(0,0,0));
     void Rotate(vector3df rot);
 
     void AssignPointer(void*);

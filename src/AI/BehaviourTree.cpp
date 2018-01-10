@@ -70,11 +70,7 @@ void BehaviourTree::CreateReceive(){
     sc_checkActions->addChild(new CheckSawPotion());
     sc_checkActions->addChild(new PutDefaultAction());
 
-    Secuencia* sc_receive = new Secuencia();
-
-    SetRootReceive(sc_receive);
-    sc_receive->addChild(new SendAllSignals());
-    sc_receive->addChild(sc_checkActions);
+    SetRootReceive(sc_checkActions);
 }
 
 void BehaviourTree::CreateAction(){
@@ -114,7 +110,6 @@ void BehaviourTree::PrepareSubTrees(){
 
 void BehaviourTree::CreateShootSpell(){
     Secuencia* sc_attack = new Secuencia();
-    sc_attack->addChild(new SendPlayerSignals());
     sc_attack->addChild(new CheckPlayerSight());   
     sc_attack->addChild(new SpellSecuencia());  
 
@@ -161,8 +156,12 @@ void BehaviourTree::CreateCathPotion(){
     Secuencia* sc_catchPotion = new Secuencia();
     sc_catchPotion->addChild(new GoToTarget());
     sc_catchPotion->addChild(new CheckDistance(2.0f));  // Distancia del raycast
-    sc_catchPotion->addChild(new Debug());
+    sc_catchPotion->addChild(new CatchPotion());
 
     informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
+}
 
+void BehaviourTree::CreateMoveToTarget(){
+    Task* t = new GoToTarget();
+    informacion->SetPuntero(AI_MOVE_GOTARGET, t);
 }

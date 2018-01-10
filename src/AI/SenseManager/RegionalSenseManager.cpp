@@ -1,5 +1,9 @@
 #include "RegionalSenseManager.h"
+// Engines
 #include "./../../GraphicEngine/GraphicEngine.h"
+// Managers
+#include "./../../Managers/PlayerManager.h"
+#include "./../../Managers/ObjectManager.h"
 
 GraphicEngine* g_engine = GraphicEngine::getInstance(); 
 
@@ -39,6 +43,11 @@ Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri
 void RegionalSenseManager::AddSignal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
 	Signal* s = new Signal(id, temp, name, str, kin, mod);
 	AddSignal(s);
+}
+
+void RegionalSenseManager::CreateAllSignals(){
+	PlayerManager::GetInstance()->SendVisualSignal();
+	ObjectManager::GetInstance()->SendAllSignal();
 }
 
 void RegionalSenseManager::AddSignal(Signal* sig){

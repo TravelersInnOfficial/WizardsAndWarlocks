@@ -21,7 +21,7 @@ Trap::Trap(){
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
-    m_position = &TPosition;
+    m_position = new vector3df(TPosition.X, TPosition.Y, TPosition.Z);
     m_rotation = new vector3df(normal.X,normal.Y,normal.Z);
     m_trapType = trapType;
     InitializeTrapData();
@@ -48,8 +48,8 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     g_body->setMaterialTexture(0,m_texturePath);
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
-    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.5,m_dimensions->Z*0.5);
-    m_body->CreateGhostBox(TPosition, *m_rotation, aux_dimensions);
+    vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
+    m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0));
     m_body->AssignPointer(this);
 }
 
@@ -70,27 +70,27 @@ void Trap::InitializeTrapData(){
         switch(m_trapType){
         case TENUM_DEATH_CLAWS:
             //std::cout<<"IM TENUM_DEATH_CLAWS"<<std::endl;
-            SetTrapData(vector3df(0.5,0.5,0.5),"","Inmovilizacion mortal");
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Inmovilizacion mortal");
         break;
 
         case TENUM_SPIRITS:
             //std::cout<<"IM TENUM_SPIRITS"<<std::endl;
-            SetTrapData(vector3df(0.5,0.5,0.5),"","Distorsion fantasmal");
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Distorsion fantasmal");
         break;
 
         case TENUM_SILENCE: 
             //std::cout<<"IM TENUM_SILENCE"<<std::endl;
-            SetTrapData(vector3df(0.5,0.5,0.5),"","Silenciar");
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Silenciar");
         break;
 
         case TENUM_TAXES:
             //std::cout<<"IM TENUM_TAXES"<<std::endl;
-            SetTrapData(vector3df(0.5,0.5,0.5),"","Te quita la poción que lleves encima");
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Te quita la poción que lleves encima");
         break;
         
         case TENUM_DISTURBANCE: 
             //std::cout<<"IM TENUM_DISTURBANCE"<<std::endl;
-            SetTrapData(vector3df(0.5,0.5,0.5),"","Locura");
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Locura");
         break;
 
         default:
@@ -100,7 +100,7 @@ void Trap::InitializeTrapData(){
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
-        m_dimensions = new vector3df(0.5,0,0.5);
+        m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
         m_texturePath = "../assets/textures/decal.png";
         m_effect = effect;
 }
@@ -137,11 +137,15 @@ void Trap::Deactivate(float deltaTime){
 }
 
 void Trap::SetPosition(vector3df position){
-    m_position = &position;
+    m_position->X = position.X;
+    m_position->Y = position.Y;
+    m_position->Z = position.Z;
 }
 
 void Trap::SetDimensions(vector3df dimensions){
-    m_dimensions = &dimensions;
+    m_dimensions->X = dimensions.X;
+    m_dimensions->Y = dimensions.Y;
+    m_dimensions->Z = dimensions.Z;
 }
 
 void Trap::SetType(TrapEnum trapType){
@@ -168,6 +172,10 @@ void Trap::Erase(){
     delete m_rigidBody;
     delete m_body;
     delete g_body;
+
+    delete m_position;
+    delete m_rotation;
+    delete m_dimensions;
 }
 
 void Trap::SendSignal(){

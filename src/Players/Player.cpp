@@ -224,7 +224,7 @@ void Player::Update(){
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
 	if (m_HP <= 20) {
-		std::cout << 20-m_HP << std::endl;
+		//std::cout << 20-m_HP << std::endl;
 		soundEvents["pulse"]->setParamValue("Life", 20-m_HP);
 		playPulse();
 	}
@@ -525,7 +525,8 @@ void Player::DeployTrap(){
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
-		if(h->GetClase() == EENUM_FLOOR) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
+		if(h->GetClase() == EENUM_FLOOR) 
+		TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 	}
 }
 
@@ -584,7 +585,7 @@ void Player::playHit() {
 }
 
 void Player::playPulse() {
-	std::cout << "pulse" << std::endl;
+	//std::cout << "pulse" << std::endl;
 	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
 }
 
@@ -594,7 +595,7 @@ void Player::stopFootsteps() {
 }
 
 void Player::stopPulse() {
-	std::cout << "stop" << std::endl;
+	//std::cout << "stop" << std::endl;
 	SoundSystem::getInstance()->stopEvent(soundEvents["pulse"]);
 }
 
