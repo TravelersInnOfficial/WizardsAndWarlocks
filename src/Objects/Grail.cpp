@@ -7,7 +7,7 @@ Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 
 	timeCasting = 0.0f;
 	maxCasting = 5.0f;
-
+	createSoundEvent();
 	CreateGrail(TPosition, TScale, TRotation);
 }
 
@@ -31,6 +31,8 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 	bt_body->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_GRAIL, grailCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
+	
+	playEvent(TPosition);
 }
 
 Grail::~Grail(){
@@ -90,4 +92,15 @@ Kinematic Grail::GetKinematic(){
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+void Grail::createSoundEvent() {
+	soundEvent = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Grail/Levitation");
+}
+
+void Grail::playEvent(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(soundEvent, pos);
 }

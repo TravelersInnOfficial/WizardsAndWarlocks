@@ -54,6 +54,8 @@ class Player: public Entidad{
 		bool StartSpell();
 		bool ShootSpell();
 		void ResetSpell();
+		
+
 
 		// Sensorial Functions
 		void SendSignal();
@@ -163,10 +165,11 @@ class Player: public Entidad{
 		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
 
 		bool			stepsStarted;		// Han empezado a sonar los steps?
-
+		bool 			pulseStarted;		// Pulse sound event started?
 		bool 			moving;				// Se esta moviendo?
 		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
+
 
 		Potion* potion;						// Pocion en el inventario
 

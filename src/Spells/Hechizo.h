@@ -26,6 +26,7 @@ public:
 	// Getters
 	float	GetMP();
 	SPELLCODE GetType();
+	SoundEvent* getShotEvent();
 
 protected:
 	float 	costePM;			// Coste de Mana del hechizo
@@ -40,7 +41,13 @@ protected:
 	float 	optimHP;			// Coste optimo de vida para lanzar (IA)
 	float 	optimMP;			// Coste optimo de mana para lanzar (IA)
 
+	SoundEvent* shotEvent;		//Shot sound event
+
 	SPELLCODE type;
+
+	//Sound Functions
+	virtual void createSoundEvent();
+	void playShotEvent(vector3df pos);
 };
 
 #endif

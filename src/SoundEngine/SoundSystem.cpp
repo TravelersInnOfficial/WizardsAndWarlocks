@@ -60,7 +60,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	ERRCHECK(lowLevelSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(system->initialize(1024, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
@@ -310,7 +310,9 @@ void SoundSystem::checkAndStopEvent(SoundEvent* event) {
 /******************************************************
 *  Constructor
 ******************************************************/
-SoundEvent::SoundEvent() {}
+SoundEvent::SoundEvent() {
+	soundInstance = NULL;
+}
 
 /******************************************************
 *  Destructor
@@ -428,9 +430,5 @@ FMOD::Studio::EventInstance* SoundEvent::getInstance() {
  * @return FMOD::Studio::EventInstance* 
  *******************************************************/
 void SoundEvent::setInstance(FMOD::Studio::EventInstance * instance) {
-	
-
 	soundInstance = instance;
-
-	
 }

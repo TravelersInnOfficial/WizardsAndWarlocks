@@ -8,6 +8,7 @@
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include "./../Entidad.h"
 
 
@@ -24,14 +25,20 @@ public:
 	void SendSignal();
 	Kinematic GetKinematic();
 
+	//Sound Functions
+	void playSpawnEvent(vector3df pos);
+
 private:
 	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	void createSoundEvent();
 
 	int 		m_HP;						// Vida de la invocacion
 	float 		currentTime;				// Tiempo 
 
 	BT_Body* 	bt_body;					// Cuerpo fisico de la invocacion
     GBody*    	m_invocationNode;			// Cuerpo visual de la invocacion
+	SoundEvent* spawnEvent;					//Invocation sound event
+	
 };
 
 

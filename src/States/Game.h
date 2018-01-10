@@ -45,8 +45,8 @@ public:
 	void UpdateDelta();
 
 	//Sound Functions
-	void playDefeat();
-	void playVictory();
+	void playEvent(SoundEvent* event, vector3df pos);
+	void playEvent(SoundEvent* event);
 
 private:
 

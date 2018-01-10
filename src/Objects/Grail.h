@@ -8,6 +8,7 @@
 
 #include "./../PhysicsEngine/BT_Body.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include <ColliderMasks.h>
 #include <Alliance.h>
 
@@ -22,6 +23,9 @@ public:
 
 	void SendSignal();
 	Kinematic GetKinematic();
+
+	//Sound Functions
+	void playEvent(vector3df pos);
 	
 private:
 	bool recovered;
@@ -32,9 +36,11 @@ private:
 
 	void CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void UpdatePosShape();
+	void createSoundEvent();
 
 	BT_Body*        bt_body;
     GBody*          m_grailNode;
+	SoundEvent* 	soundEvent;
 };
 
 #endif

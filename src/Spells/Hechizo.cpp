@@ -16,6 +16,7 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, flo
 	optimMP = optMP;
 
 	type = code;
+	shotEvent = NULL;
 }
 
 Hechizo::~Hechizo(){
@@ -133,3 +134,14 @@ float Hechizo::GetUtility(Player* p){
 SPELLCODE Hechizo::GetType(){
 	return type;
 }
+
+void Hechizo::createSoundEvent() {}
+
+void Hechizo::playShotEvent(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(shotEvent, pos);
+}
+
+SoundEvent* Hechizo::getShotEvent() {
+	return shotEvent;
+}
+
