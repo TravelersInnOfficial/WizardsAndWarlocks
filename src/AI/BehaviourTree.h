@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 // Enums
 #include <AICodes.h>
 #include <KeyStates.h>
@@ -48,6 +49,8 @@ public:
    
 
 private:
+    std::vector<Task*> tasks;        // Vector con todas las tareas del behaviour
+
     void CreateReceive();
 	void CreateAction();
 	void CreateMovement();

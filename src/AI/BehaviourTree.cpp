@@ -11,6 +11,12 @@ BehaviourTree::BehaviourTree(){
 
 BehaviourTree::~BehaviourTree(){
 	delete informacion;
+    int size = tasks.size();
+    for(int i=0; i<size; i++){
+        Task* t = tasks[i];
+        delete t;
+    }
+    tasks.clear();
 }
 
 void BehaviourTree::run(){
@@ -98,16 +104,16 @@ void BehaviourTree::PrepareSubTrees(){
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
     informacion->SetPuntero(AI_TASK_SPELL00, t_shootBasic);
-
     informacion->SetPuntero(AI_TASK_SPELL01, t_shootBasic);
     informacion->SetPuntero(AI_TASK_SPELL02, t_shootBasic);
 
     Secuencia* sc_distance_spell = new Secuencia();
-    sc_distance_spell->addChild(t_shootBasic);
+    sc_distance_spell->addChild(new UseSpell());
     sc_distance_spell->addChild(new CheckDistance(1.0f));
     informacion->SetPuntero(AI_TASK_SPELL03, sc_distance_spell);
 
-
+    tasks.push_back(t_shootBasic);
+    tasks.push_back(sc_distance_spell);
 }
 
 void BehaviourTree::CreateShootSpell(){
@@ -118,7 +124,9 @@ void BehaviourTree::CreateShootSpell(){
     Decorador* d_attack = new ReleaseSpell();
     d_attack->setChild(sc_attack);
 
-    informacion->SetPuntero(AI_TASK_SHOOT_SPELL, sc_attack);
+    informacion->SetPuntero(AI_TASK_SHOOT_SPELL, d_attack);
+
+    tasks.push_back(d_attack);
 }
 
 void BehaviourTree::CreateMoveDefault(){
@@ -137,6 +145,8 @@ void BehaviourTree::CreateMoveDefault(){
     sl_movement->addChild(new T_Wander());
 
     informacion->SetPuntero(AI_MOVE_DEFAULT, sl_movement);
+
+    tasks.push_back(sl_movement);
 }
 
 void BehaviourTree::CreateMoveSpell(){
@@ -152,6 +162,8 @@ void BehaviourTree::CreateMoveSpell(){
     informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL02, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL03, sl_moveShoot);
+
+    tasks.push_back(sl_moveShoot);
 }
 
 void BehaviourTree::CreateCathPotion(){
@@ -161,14 +173,20 @@ void BehaviourTree::CreateCathPotion(){
     sc_catchPotion->addChild(new CatchPotion());
 
     informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
+
+    tasks.push_back(sc_catchPotion);
 }
 
 void BehaviourTree::CreateMoveToTarget(){
     Task* t = new GoToTarget();
     informacion->SetPuntero(AI_MOVE_GOTARGET, t);
+
+    tasks.push_back(t);
 }
 
 void BehaviourTree::CreateDrinkPotion(){
     Task* t = new UsePotion();
     informacion->SetPuntero(AI_TASK_DRINK_POT, t);
+
+    tasks.push_back(t);
 }

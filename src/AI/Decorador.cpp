@@ -5,7 +5,7 @@ Decorador::Decorador(){
 }
 
 Decorador::~Decorador(){
-
+	delete child;
 }
 
 bool Decorador::run(Blackboard* bb){

@@ -2,6 +2,15 @@
 
 Secuencia::Secuencia(){}
 
+Secuencia::~Secuencia(){
+	int size = children.size();
+	for(int i=0; i<size; i++){
+		Task* t = children[i];
+		delete t;
+	}
+	children.size();
+}
+
 void Secuencia::addChild(Task* task){
 	children.push_back(task);
 }

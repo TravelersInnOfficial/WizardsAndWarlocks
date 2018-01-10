@@ -9,6 +9,7 @@
 class Secuencia : public Task{
 public:
 	Secuencia();
+	virtual ~Secuencia();
 	void addChild(Task* task);
 	void addChildren(std::vector<Task*> tasks);
 	virtual bool run(Blackboard* bb);

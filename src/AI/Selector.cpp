@@ -3,6 +3,15 @@
 Selector::Selector(){
 }
 
+Selector::~Selector(){
+	int size = children.size();
+	for(int i=0; i<size; i++){
+		Task* t = children[i];
+		delete t;
+	}
+	children.size();
+}
+
 void Selector::addChild(Task* task){
 	children.push_back(task);
 }
@@ -29,6 +38,8 @@ bool Selector::terminate(){
 	std::cout<< "Terminate de la tarea"<<std::endl;
 	return true;
 }
+
+RandomSelector::~RandomSelector(){}
 
 RandomSelector::RandomSelector(){}
 
