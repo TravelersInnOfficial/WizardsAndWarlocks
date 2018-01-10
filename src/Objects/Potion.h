@@ -24,6 +24,10 @@ public:
 
 	// child functions
 	virtual void Use(Player* p)=0;
+	virtual bool CheckUse(Player* p);		// Metodo para la IA que le indica si es "optimo" utilizarla, no se malgasta
+
+	bool CheckUseHP(Player* p);
+	bool CheckUseMP(Player* p);
 
 	//Getters
 	int GetValue();
