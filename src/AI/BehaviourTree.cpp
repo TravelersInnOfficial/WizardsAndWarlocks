@@ -92,6 +92,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateShootSpell();
     // Coger Pocion
     CreateCathPotion();
+    // Beber Pocion
+    CreateDrinkPotion();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -164,4 +166,9 @@ void BehaviourTree::CreateCathPotion(){
 void BehaviourTree::CreateMoveToTarget(){
     Task* t = new GoToTarget();
     informacion->SetPuntero(AI_MOVE_GOTARGET, t);
+}
+
+void BehaviourTree::CreateDrinkPotion(){
+    Task* t = new UsePotion();
+    informacion->SetPuntero(AI_TASK_DRINK_POT, t);
 }

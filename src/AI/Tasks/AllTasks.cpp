@@ -152,10 +152,9 @@ bool CheckUsePotion::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	if(character->HasObject()){
 		Potion* playerPotion = character->GetPotion();	
-		int value = playerPotion->GetValue();	// Cogemos el valor de sanacion de la pocion en propiedad
-		float playerHP = character->GetHP(); 	// Cogemos el valor de la vida actual de la IA
-		if(playerHP + value <=100){				// La querremos usar en el caso de que no se malgaste al usarla
-			return true;
+		if(playerPotion->CheckUse(character)){
+			bb->SetMasterAction(AI_TASK_DRINK_POT);
+			return true;				// La querremos usar en el caso de que no se malgaste la pocion
 		}
 	}
 	return false;
