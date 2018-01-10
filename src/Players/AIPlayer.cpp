@@ -97,6 +97,12 @@ void AIPlayer::Debug(){
 			else if(currentSpell == 3)	c = vector3df(255,255,0);
 			g_engine->draw2DRectangle(c, 20,0,30,10);
 		}
+		//Comportamientos IA
+		if(true){
+			vector2di values = GetActionMoveIA();
+			std::string text = AICode_str[values.X] + " / " + AICode_str[values.Y];
+			m_playerNode->AddText(text, vector3df(0,1.5,0));
+		}
 	}
 }
 
@@ -185,6 +191,13 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 //	GETTERS
 //
 // ========================================================================================= //
+
+vector2di AIPlayer::GetActionMoveIA(){
+	vector2di output(0,0);
+	output.X = behaviour->GetBlackboard()->masterAction + AI_TASK_DEFAULT;
+	output.Y = behaviour->GetBlackboard()->masterMovement + AI_MOVE_DEFAULT;
+	return output;
+}
 
 int AIPlayer::GetCurrentSpell(){
 	return currentSpell;

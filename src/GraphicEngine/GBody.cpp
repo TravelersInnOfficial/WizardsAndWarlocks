@@ -31,5 +31,16 @@ void GBody::Remove(){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-    board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
+	if(board!=NULL){  
+		std::wstring textTmp(text.begin(), text.end());
+		board->setText(textTmp.c_str());
+
+		float dimX = text.length() * 0.1;
+		float dimY = 0.25f;
+		irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
+		board->setSize(dim);
+
+	}else{
+ 	   board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);	
+	}
 }

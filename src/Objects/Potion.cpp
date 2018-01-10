@@ -19,6 +19,26 @@ Potion::~Potion(){
     delete m_potionNode;
 }
 
+bool Potion::CheckUse(Player* p){
+	return true;
+}
+
+bool Potion::CheckUseHP(Player* p){
+	float playerLife = p->GetHP();
+	if(playerLife + value <= 100){
+		return true;
+	}
+	return false;
+}
+
+bool Potion::CheckUseMP(Player* p){
+	float playerMana = p->GetMP();
+	if(playerMana + value <= 100){
+		return true;
+	}
+	return false;
+}
+
 void Potion::Update(){
 	if(!picked) UpdatePosShape();
 }

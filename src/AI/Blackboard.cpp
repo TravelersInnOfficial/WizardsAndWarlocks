@@ -80,6 +80,7 @@ void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float 
     for(int i=0; i<size; i++){
         Sense_struct* s = soundSense[i];
         if(s->id == id){
+            s->code = name;
             s->kinematic = kin;
             s->duration = dur;
             return;
@@ -141,6 +142,7 @@ void Blackboard::SetSight(int id, AI_code name, Kinematic kin, float len, float 
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
         if(s->id == id){
+            s->code = name;
             s->kinematic = kin;
             s->duration = dur;
             return;

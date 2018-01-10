@@ -1,5 +1,7 @@
 #include "Task.h"
 
+Task::~Task(){}
+
 bool Task::run(Blackboard* bb){
 	std::cout<< "Run de la tarea"<<std::endl;
 	return true;

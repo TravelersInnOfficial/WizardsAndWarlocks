@@ -8,7 +8,7 @@
 class Decorador: public Task{
 public:
     Decorador();
-    ~Decorador();
+    virtual ~Decorador();
     virtual bool run(Blackboard* bb);
     bool terminate();
     void setChild(Task* newChild);

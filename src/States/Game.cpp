@@ -90,6 +90,9 @@ void Game::Update(){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
+	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
+	senseManager->SendSignals();				// Update de las notificaciones sensoriales
+
 	bulletManager->Update();
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
@@ -99,7 +102,7 @@ void Game::Update(){
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
-	senseManager->SendSignals();
+	
 
 	setFps();
 
@@ -213,7 +216,7 @@ void Game::RestartMatch(){
 	playerManager->ReturnAllToLobby();
 }
 /********************************************************************************************************
- ****************************************** SOUND FUNCITONS *********************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 
 void Game::createSoundEvents() {

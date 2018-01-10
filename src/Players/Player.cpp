@@ -215,11 +215,19 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
+	
+
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
+
+	if (m_HP <= 20) {
+		//std::cout << 20-m_HP << std::endl;
+		soundEvents["pulse"]->setParamValue("Life", 20-m_HP);
+		playPulse();
+	}
 
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
@@ -352,12 +360,7 @@ void Player::ChangeHP(float HP){
 	} 
 	
 	if(m_HP >= 100) m_HP = 100;
-	else if (m_HP <=  20 && m_HP > 0) {
-		soundEvents["pulse"]->setParamValue("Life", 20-m_HP);
-		playPulse();
-	}
 	else if(m_HP <= 0){
-		stopPulse();
 		m_HP = 0;
 		m_dead = true;
 		bloodOverlayTime = 0;
@@ -430,7 +433,8 @@ void Player::SendSignal(){
 
 void Player::Die(){
 
-	playDie(); //Play the sound event
+	stopPulse();	//Stop the pulse event
+	playDie(); 		//Play the sound event
 	DropObject();
 
 	if(matchStarted){
@@ -521,7 +525,8 @@ void Player::DeployTrap(){
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
-		if(h->GetClase() == EENUM_FLOOR) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
+		if(h->GetClase() == EENUM_FLOOR) 
+		TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 	}
 }
 
@@ -543,7 +548,7 @@ void Player::HitMade(Player* player){
 }
 
 /********************************************************************************************************
- ****************************************** SOUND FUNCITONS *********************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
  
 void Player::createSoundEvents() {
@@ -580,6 +585,7 @@ void Player::playHit() {
 }
 
 void Player::playPulse() {
+	//std::cout << "pulse" << std::endl;
 	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
 }
 
@@ -589,7 +595,8 @@ void Player::stopFootsteps() {
 }
 
 void Player::stopPulse() {
-	SoundSystem::getInstance()->checkAndStopEvent(soundEvents["pulse"]);
+	//std::cout << "stop" << std::endl;
+	SoundSystem::getInstance()->stopEvent(soundEvents["pulse"]);
 }
 
 

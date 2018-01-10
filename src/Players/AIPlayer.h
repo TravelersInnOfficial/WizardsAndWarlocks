@@ -1,6 +1,8 @@
 #ifndef AIPLAYER_H
 #define AIPLAYER_H
 
+#include <vector2d.h>
+
 #include "Player.h"
 #include "./PlayerController.h"
 #include "./../AI/BehaviourTree.h"
@@ -24,6 +26,7 @@ public:
 	void CheckInput();
 
 	// Getters
+	vector2di GetActionMoveIA();
 	int GetCurrentSpell();
 	bool GetShootSpell();
 	bool GetCastingSpell();

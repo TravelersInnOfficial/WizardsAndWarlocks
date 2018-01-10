@@ -1,6 +1,7 @@
 #include "AllTasks.h"
 // Engines
 #include "./../../GraphicEngine/GraphicEngine.h"
+#include "./../../PhysicsEngine/BulletEngine.h"
 // Managers
 #include "./../../Managers/SpellManager.h"
 #include "./../../Managers/ObjectManager.h"
@@ -22,6 +23,19 @@
 #include <KeyStates.h>
 
 bool DEBUG = false;
+
+// ================================================================================================= //
+//
+//	DEBUG
+//
+// ================================================================================================= //
+
+Debug::Debug(){}
+
+bool Debug::run(Blackboard* bb){
+	std::cout<<"TAREA DEBUG: HA LLEGADO HASTA AQUI\n";
+	return true;
+}
 
 // ================================================================================================= //
 //
@@ -71,10 +85,39 @@ bool PutDefaultAction::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"PutDefaultAction\n";
 
 	bb->SetMasterAction(AI_TASK_DEFAULT);
+	bb->SetMasterMovement(AI_MOVE_DEFAULT);
 
 	return true;
 }
 
+// ================================================================================================= //
+//
+//	CATCH POTION
+//
+// ================================================================================================= //
+
+CatchPotion::CatchPotion(){}
+
+bool CatchPotion::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CatchPotion\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target != NULL){
+		void* Object = BulletEngine::GetInstance()->Raycast(
+		character->GetPos(), 
+		target->kinematic.position);
+
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_POTION){
+				h->Interact(character);
+			}
+		}
+		bb->CleanSense(target->id);
+	}
+	return false;
+}
 
 // ================================================================================================= //
 //
@@ -109,10 +152,9 @@ bool CheckUsePotion::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	if(character->HasObject()){
 		Potion* playerPotion = character->GetPotion();	
-		int value = playerPotion->GetValue();	// Cogemos el valor de sanacion de la pocion en propiedad
-		float playerHP = character->GetHP(); 	// Cogemos el valor de la vida actual de la IA
-		if(playerHP + value <=100){				// La querremos usar en el caso de que no se malgaste al usarla
-			return true;
+		if(playerPotion->CheckUse(character)){
+			bb->SetMasterAction(AI_TASK_DRINK_POT);
+			return true;				// La querremos usar en el caso de que no se malgaste la pocion
 		}
 	}
 	return false;
@@ -175,44 +217,30 @@ bool UseSpell::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
-//	SEND ALL SIGNALS
+//	CHECK SEE POTION TO CATCH
 //
 // ================================================================================================= //
 
-SendAllSignals::SendAllSignals(){}
 
-bool SendAllSignals::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"SendAllSignals\n";
+CheckSawPotion::CheckSawPotion(){}
 
-	// Enviamos a los jugadores
-	PlayerManager* masterPlayer = PlayerManager::GetInstance();
-	masterPlayer->SendVisualSignal();
+bool CheckSawPotion::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckSawPotion\n";
 
-	// Enviamos a los objetos
-	ObjectManager* masterObject = ObjectManager::GetInstance();
-	masterObject->SendAllSignal();
-
-	return true;
+	AIPlayer* character = bb->GetPlayer();
+	if(!character->HasObject()){	// Comprobamos si el jugador no tiene pocion y le hace falta	
+									// ir a por una
+		int number = bb->GetNumberSight(AI_POTION);
+		if(number>0){				// Miramos si la IA tiene alguna pocion en memoria para ir a por ella
+			bb->SetTargetSight(AI_POTION, AI_TARGET);	// Ponemos el target
+			bb->SetMasterAction(AI_TASK_CATCH_POT);		// Cambiamos la tarea
+			bb->SetMasterMovement(AI_MOVE_GOTARGET);	// Cambiamos el movimiento
+			return true;
+		}
+	}
+	return false;
 }
 
-
-
-
-// ================================================================================================= //
-//
-//	SEND PLAYER SIGNALS
-//
-// ================================================================================================= //
-
-SendPlayerSignals::SendPlayerSignals(){}
-
-bool SendPlayerSignals::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"SendPlayerSignals\n";
-
-	PlayerManager* masterPlayer = PlayerManager::GetInstance(); 
-	masterPlayer->SendVisualSignal();	// Cambiar nombre del metodo o modo de uso
-	return true;
-}
 // ================================================================================================= //
 //
 //	CHECK DISTANCE

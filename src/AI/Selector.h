@@ -8,6 +8,7 @@
 
 class Selector : public Task{
 public:
+	virtual ~Selector();
 	Selector();
 	void addChild(Task* task);
 	void addChildren(std::vector<Task*> tasks);
@@ -19,6 +20,7 @@ protected:
 
 class RandomSelector: public Selector{
 public:
+	~RandomSelector();
 	RandomSelector();
 	bool run(Blackboard* bb);
 	void shuffleVector();
