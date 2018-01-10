@@ -215,8 +215,6 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
-	
-
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 

@@ -122,11 +122,11 @@ void BT_Body::SetPosition(vector3df position){
 	m_position->Y = position.Y;
 	m_position->Z = position.Z;
 
-	btTransform transform;
-    m_RigidBody->getMotionState()->getWorldTransform(transform);
-    transform.setOrigin(btVector3(m_position->X, m_position->Y, m_position->Z));
-    m_RigidBody->getMotionState()->setWorldTransform(transform);
-    m_RigidBody->setCenterOfMassTransform(transform);
+	 btVector3 TPosition(m_position->X,m_position->Y ,m_position->Z);
+
+    btTransform transform;
+    transform.setOrigin(TPosition);
+    m_RigidBody->setWorldTransform(transform);
 	m_RigidBody->setLinearVelocity(btVector3(0,0,0));
 }
 
