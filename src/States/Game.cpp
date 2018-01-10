@@ -132,15 +132,15 @@ void Game::Draw(){
 
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();
-	std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
+	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
 	for(int i = 0; i<nmn.size(); i++){
 		vector3df position = nmn[i]->getPosition();
-		std::cout<<"node "<<i<<" :("<<position.X<<","<<position.Y<<","<<position.Z<<")"<<std::endl;
+		//std::cout<<"node "<<i<<" :("<<position.X<<","<<position.Y<<","<<position.Z<<")"<<std::endl;
 		//vector3df p, vector3df r, vector3df s, float radius, int id
 		g_engine->addSphere2Scene(position,vector3df(0,0,0), vector3df(1,1,1),0.2,i);
 	}
 	std::vector<Connection*> nmc = navmesh.getConnections();
-	std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
+	//std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
 	for(int i =0; i<nmc.size();i++){
 		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
 		vector3df pointA = nmc[i]->getFromNode()->getPosition();
