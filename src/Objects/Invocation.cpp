@@ -11,6 +11,7 @@ Invocation::Invocation(int HP, float time, vector3df pos, vector3df scale, vecto
 }
 
 Invocation::~Invocation(){
+	spawnEvent->release();
 	bt_body->Erase();
     m_invocationNode->Erase();	
 
