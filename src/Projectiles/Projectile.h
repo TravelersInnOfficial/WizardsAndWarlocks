@@ -3,7 +3,6 @@
 
 #include <vector>
 #include <string>
-#include <math.h>
 #include "./../Entidad.h"
 
 #include "./../PhysicsEngine/BT_Body.h"

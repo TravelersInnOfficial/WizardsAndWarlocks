@@ -14,7 +14,7 @@
 #include "./States/NetGame.h"
 #include "./Managers/ObjectManager.h"
 
-NetworkEngine* CreateMenu(){
+NetworkEngine* SpawnMenu(){
 	NetworkEngine* n_engine = NULL;
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
@@ -62,7 +62,7 @@ int main() {
 	s_engine->createSystem("./../assets/banks/");
 
 	// MAIN MENU
-	NetworkEngine* n_engine = CreateMenu();
+	NetworkEngine* n_engine = SpawnMenu();
 	g_engine->setCursorVisible(false);
 
 	// Game State

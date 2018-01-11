@@ -11,6 +11,7 @@ Invocation::Invocation(int HP, float time, vector3df pos, vector3df scale, vecto
 }
 
 Invocation::~Invocation(){
+	spawnEvent->release();
 	bt_body->Erase();
     m_invocationNode->Erase();	
 
@@ -30,7 +31,7 @@ void Invocation::CreateInvocation(vector3df TPosition, vector3df TScale, vector3
 
 	if (m_invocationNode) {
 		m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_invocationNode->setMaterialTexture(0, "./../assets/textures/gold.jpg");
+        m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/clouds.jpeg");
     }
 
 	//Bullet Physics

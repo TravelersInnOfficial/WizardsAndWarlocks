@@ -2,7 +2,7 @@
 obj/*
 
 # Binary of the game
-bin/*
+WizardsAndWarlocks*
 
 # Compiled Dynamic libraries
 #*.so

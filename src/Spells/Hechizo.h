@@ -5,7 +5,6 @@
 #include "./../Players/Player.h"
 #include "./../SoundEngine/SoundSystem.h"
 #include <SpellCodes.h>
-#include <math.h>
 
 class Hechizo{
 public:
@@ -33,7 +32,7 @@ public:
 	float GetTotalCooldown();
 	float GetTotalCasting();
 
-protected:
+protected:	
 	float 	costePM;			// Coste de Mana del hechizo
 	bool	lanzable;			// Se puede lanzar el hechizo? En Cooldown? Si/No
 

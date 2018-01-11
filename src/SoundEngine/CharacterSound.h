@@ -18,7 +18,7 @@ class CharacterSound : public CommonSoundEvent {
     
     
     protected:
-    FMOD::Studio::EventInstance* soundInstance;
+    FMOD_STUDIO_EVENTINSTANCE* soundInstance;
 };
 
 #endif /* CommonSoundSoundEvent_h */

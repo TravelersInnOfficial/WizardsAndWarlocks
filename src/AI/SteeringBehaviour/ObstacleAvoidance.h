@@ -5,7 +5,6 @@
 #include <vector3d.h>
 #include <kinematicTypes.h>
 #include <limits>
-#include <math.h>
 
 #include "Seek.h"
 

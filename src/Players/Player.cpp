@@ -13,6 +13,8 @@
 GraphicEngine* engine = GraphicEngine::getInstance();
 
 Player::Player(bool isPlayer1){
+
+	createSoundEvents();
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(1.8,1.8,1.8);
 
@@ -58,7 +60,7 @@ void Player::PlayerInit(){
 	hitOverlayTime = 0;
 	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
 	EffectManager::GetInstance()->CleanEffects(this);
-	createSoundEvents();
+	stopPulse();
 }
 
 Player::~Player(){
@@ -222,18 +224,12 @@ void Player::Update(){
 	// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
-	if (m_HP <= 20) {
+	// Controlamos el pulse
+	if (m_HP <= 20 && m_HP > 0) {
 		soundEvents["pulse"]->setParamValue("Life", m_HP);
-		if (!pulseStarted) {
-			pulseStarted = true;
-			playPulse();
-		}
-	} else {
-		if (pulseStarted) {
-			pulseStarted = false;
-			stopPulse();
-		}
+		if (!pulseStarted) playPulse();
 	}
+	else if (pulseStarted) stopPulse();
 
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
@@ -454,8 +450,7 @@ void Player::Die(){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
 	}
-	pulseStarted = false;
-	soundEvents.clear();
+	
 	Respawn();
 }
 
@@ -598,7 +593,10 @@ void Player::playHit() {
 }
 
 void Player::playPulse() {
-	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
+	if(isPlayerOne){
+		pulseStarted = true;
+		SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
+	}
 }
 
 void Player::stopFootsteps() {
@@ -607,7 +605,10 @@ void Player::stopFootsteps() {
 }
 
 void Player::stopPulse() {
-	SoundSystem::getInstance()->checkAndStopEvent(soundEvents["pulse"]);
+	if(isPlayerOne) {
+		pulseStarted = false;
+		SoundSystem::getInstance()->stopEvent(soundEvents["pulse"]);
+	}
 }
 
 //Update the event positions for continuous events or usable while moving events (like spells)

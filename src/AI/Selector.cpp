@@ -35,7 +35,7 @@ bool Selector::run(Blackboard* bb){
 }
 
 bool Selector::terminate(){
-	std::cout<< "Terminate de la tarea"<<std::endl;
+	//std::cout<< "Terminate de la tarea"<<std::endl;
 	return true;
 }
 

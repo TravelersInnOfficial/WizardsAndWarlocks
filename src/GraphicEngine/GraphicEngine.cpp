@@ -4,6 +4,7 @@ static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
 
+	privateCamera = NULL;
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
 
@@ -41,6 +42,7 @@ GraphicEngine::GraphicEngine(){
 
 	// Sky Dome
 	privateSManager->addSkyDomeSceneNode(privateDriver->getTexture("./../assets/textures/skymap/skydome.jpg"));
+	privateSManager->setAmbientLight(irr::video::SColor(255, 200, 200, 200));
 
 }
 

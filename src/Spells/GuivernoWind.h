@@ -2,7 +2,6 @@
 #define GuivernoWind_H
 
 #include <iostream>
-#include <math.h>
 
 #include "Hechizo.h"
 #include "./../Objects/DamageArea.h"

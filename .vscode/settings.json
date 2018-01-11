@@ -51,7 +51,8 @@
         "numeric": "cpp",
         "sstream": "cpp",
         "valarray": "cpp",
-        "*.ipp": "cpp"
+        "*.ipp": "cpp",
+        "ios": "cpp"
     },
 
     "editor.quickSuggestions": {

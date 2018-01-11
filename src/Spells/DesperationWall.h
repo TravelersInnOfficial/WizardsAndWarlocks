@@ -2,7 +2,6 @@
 #define DesperationWall_H
 
 #include <iostream>
-#include <math.h>
 
 #include "Hechizo.h"
 #include "./../Players/Player.h"
@@ -13,8 +12,6 @@ public:
 	void Lanzar(Player* p);
 
 protected:	
-	//Sound Functions
-	void createSoundEvent();
 
 private:
 	
