@@ -2,7 +2,6 @@
 #define KINEMATICTYPES_H
 
 #include <iostream>
-#include <math.h>
 #include <vector3d.h>
 #include <vector2d.h>
 

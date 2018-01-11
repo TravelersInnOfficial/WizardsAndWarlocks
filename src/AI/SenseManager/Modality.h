@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector3d.h>
-#include <math.h>
+#include <Constants.h>
 #include <AICodes.h>
 
 class Signal;

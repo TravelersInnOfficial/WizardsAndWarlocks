@@ -2,7 +2,8 @@
 #define VECTOR2D_H
 
 #include <iostream>
-#include <math.h>
+#include <cmath>
+#include <Constants.h>
 #include <vector3d.h>
 
 template<typename T>

@@ -5,7 +5,6 @@
 #include <vector3d.h>
 #include <vector2d.h>
 #include <kinematicTypes.h>
-#include <math.h>
 
 class Align{
 public:

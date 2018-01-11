@@ -1,5 +1,5 @@
 #include "Heuristic.h"
-#include <math.h>
+
 Heuristic::Heuristic(){}
 Heuristic::Heuristic(Node* goalNode){
     m_goalNode = goalNode;
