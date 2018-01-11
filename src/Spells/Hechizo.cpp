@@ -21,7 +21,7 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 }
 
 Hechizo::~Hechizo(){
-	
+	if(shotEvent!=NULL)shotEvent->release();
 }
 
 void Hechizo::ResetSpell(){
@@ -136,7 +136,7 @@ SPELLCODE Hechizo::GetType(){
 	return type;
 }
 
-void Hechizo::createSoundEvent() {}
+void Hechizo::createSoundEvent(){}
 
 void Hechizo::playShotEvent(vector3df pos) {
 	SoundSystem::getInstance()->playEvent(shotEvent, pos);
@@ -149,4 +149,3 @@ SoundEvent* Hechizo::getShotEvent() {
 std::string Hechizo::GetHUDTexturePath(){
 	return HUDTexturePath;
 }
-

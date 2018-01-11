@@ -30,7 +30,7 @@ public:
 
 	std::string GetHUDTexturePath();
 
-protected:
+protected:	
 	float 	costePM;			// Coste de Mana del hechizo
 	bool	lanzable;			// Se puede lanzar el hechizo? En Cooldown? Si/No
 
