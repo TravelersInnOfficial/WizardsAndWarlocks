@@ -423,6 +423,10 @@ bool Player::ShootSpell(){
 	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
 }
 
+void Player::ResetAllSpells(){
+	SpellManager::GetInstance()->ResetHechizo(this);
+}
+
 void Player::ResetSpell(){
 	SpellManager::GetInstance()->ResetHechizo(currentSpell,this);
 }

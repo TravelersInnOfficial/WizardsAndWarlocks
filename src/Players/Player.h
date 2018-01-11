@@ -54,7 +54,7 @@ class Player: public Entidad{
 		bool StartSpell();
 		bool ShootSpell();
 		void ResetSpell();
-		
+		void ResetAllSpells();
 
 
 		// Sensorial Functions

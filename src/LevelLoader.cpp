@@ -20,6 +20,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
+	PlayerManager::GetInstance()->ResetAllSpells();
 	TrapManager::GetInstance()->ClearTraps();
 
 	std::map<int, Door*> doors;
