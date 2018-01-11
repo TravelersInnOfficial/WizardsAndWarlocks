@@ -98,6 +98,11 @@ public:
     void drawManaAndHealth(int h, int m);
 
     /**
+     * Draws the spell selector bar
+    */
+    void drawSpellSelector(std::vector<std::string> ,int);
+
+    /**
      * Draws a rectangle
      */
     void draw2DRectangle(vector3df color, float xInit, float yInit, float xEnd, float yEnd);

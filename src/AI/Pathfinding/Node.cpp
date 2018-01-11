@@ -1,4 +1,5 @@
 #include "Node.h"
+#include "Connection.h"
 
 Node::Node(){
     m_ID = -1;

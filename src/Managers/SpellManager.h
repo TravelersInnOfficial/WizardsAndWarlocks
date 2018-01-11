@@ -19,6 +19,7 @@ public:
 	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
 	float GetUtility(int num, Player* p);
+	void DrawHUDSpells(Player* p);
 
 private:
 	Hechizo* CrearHechizo(SPELLCODE type);

@@ -138,7 +138,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
 	switch(type){
 		case SPELL_BASIC:		// Hechizo instantaneo
-			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, 1, 1);
+			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, "", 1, 1);
 			break;
 		case SPELL_PROJECTILE:	//Hechizo de ataque basico
 			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
@@ -173,4 +173,16 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 			}
 		}
 	}
+}
+
+void SpellManager::DrawHUDSpells(Player* p){
+	std::vector<std::string> spellHUDtextures;
+	for(int i = 0; i<numHechizos;i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			//get all spells texture
+			spellHUDtextures.push_back(h->GetHUDTexturePath());
+		}
+	}
+	GraphicEngine::getInstance()->drawSpellSelector(spellHUDtextures,p->GetCurrentSpell());
 }

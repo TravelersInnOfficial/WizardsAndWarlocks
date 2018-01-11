@@ -2,7 +2,7 @@
 #include "./../Managers/BulletManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 
-Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP){
+Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP){
 	costePM = costPM;
 	lanzable = false;
 
@@ -16,6 +16,7 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, flo
 	optimMP = optMP;
 
 	type = code;
+	HUDTexturePath = HUDMiniature;
 	shotEvent = NULL;
 }
 
@@ -143,5 +144,9 @@ void Hechizo::playShotEvent(vector3df pos) {
 
 SoundEvent* Hechizo::getShotEvent() {
 	return shotEvent;
+}
+
+std::string Hechizo::GetHUDTexturePath(){
+	return HUDTexturePath;
 }
 

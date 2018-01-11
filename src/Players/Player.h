@@ -54,6 +54,7 @@ class Player: public Entidad{
 		bool StartSpell();
 		bool ShootSpell();
 		void ResetSpell();
+		int GetCurrentSpell();
 		
 
 

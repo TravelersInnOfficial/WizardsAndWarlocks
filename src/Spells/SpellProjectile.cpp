@@ -6,7 +6,8 @@ SpellProjectile::SpellProjectile(float costPM, float tCast, float tCoolDown, flo
 	costPM, 
 	tCast, 
 	tCoolDown, 
-	SPELL_PROJECTILE, 
+	SPELL_PROJECTILE,
+	"./../assets/textures/HUD/Spells/basic.png", 
 	optHP, 
 	optMP)
 {

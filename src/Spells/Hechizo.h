@@ -9,7 +9,7 @@
 
 class Hechizo{
 public:
-	Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, float optHP, float optMP);
+	Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP);
 	virtual ~Hechizo();
 
 	void EmpezarCast();
@@ -28,6 +28,8 @@ public:
 	SPELLCODE GetType();
 	SoundEvent* getShotEvent();
 
+	std::string GetHUDTexturePath();
+
 protected:
 	float 	costePM;			// Coste de Mana del hechizo
 	bool	lanzable;			// Se puede lanzar el hechizo? En Cooldown? Si/No
@@ -40,6 +42,7 @@ protected:
 
 	float 	optimHP;			// Coste optimo de vida para lanzar (IA)
 	float 	optimMP;			// Coste optimo de mana para lanzar (IA)
+	std::string HUDTexturePath; // Textura de la miniatura en el hud 
 
 	SoundEvent* shotEvent;		//Shot sound event
 

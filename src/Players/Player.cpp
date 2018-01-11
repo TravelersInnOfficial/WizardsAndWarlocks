@@ -289,6 +289,10 @@ void Player::SetSpell(int value){
 	else if (currentSpell > numberSpells) currentSpell = numberSpells;
 }
 
+int Player::GetCurrentSpell(){
+	return currentSpell;
+}
+
 void Player::positionCamera(){
 	vector3df newRot = engine->getActiveCamera()->getRotation();
 	engine->getActiveCamera()->setPosition(GetHeadPos());

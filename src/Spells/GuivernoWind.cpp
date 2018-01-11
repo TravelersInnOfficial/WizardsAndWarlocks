@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD, optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD,"./../assets/textures/HUD/Spells/blizzard.png", optHP, optMP){
 	area = NULL;
 	dist = 1.0f;
 }

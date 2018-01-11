@@ -137,8 +137,11 @@ void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	g_engine->drawAim(playerOne->GetMoving());
-	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
-	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+	if(playerOne != NULL){
+		playerOne->DrawOverlays(deltaTime);
+		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+		spellManager->DrawHUDSpells(playerOne);
+	}
 	
 	if(debug){
 		f_engine->DebugDrawWorld();
@@ -147,10 +150,10 @@ void Game::Draw(){
 	
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 
-
+/*
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();
-	std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
+	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
 	for(int i = 0; i<nmn.size(); i++){
 		vector3df position = nmn[i]->getPosition();
 		//std::cout<<"node "<<i<<" :("<<position.X<<","<<position.Y<<","<<position.Z<<")"<<std::endl;
@@ -158,7 +161,7 @@ void Game::Draw(){
 		g_engine->addCube2Scene(position,vector3df(0,0,0), vector3df(1,1,1),0.2,i);
 	}
 	std::vector<Connection*> nmc = navmesh.getConnections();
-	std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
+	//std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
 	for(int i =0; i<nmc.size();i++){
 		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
 		vector3df pointA = nmc[i]->getFromNode()->getPosition();
@@ -167,7 +170,8 @@ void Game::Draw(){
 		g_engine->paintLineDebug(pointA, pointB, color);
 
 	}
-	
+*/
+
 }
 
 void Game::setFps(){
