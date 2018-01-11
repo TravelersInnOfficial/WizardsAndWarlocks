@@ -12,8 +12,6 @@ public:
 	void Lanzar(Player* p);
 
 protected:	
-	//Sound Functions
-	void createSoundEvent();
 
 private:
 	
