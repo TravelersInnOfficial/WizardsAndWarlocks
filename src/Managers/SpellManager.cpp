@@ -188,12 +188,20 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 
 void SpellManager::DrawHUDSpells(Player* p){
 	std::vector<std::string> spellHUDtextures;
+	std::vector<float> spellCooldowns;
+	std::vector<float> spellCastings;
+	std::vector<float> totalCooldowns;
+	std::vector<float> totalCastings;
 	for(int i = 0; i<numHechizos;i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
 			//get all spells texture
 			spellHUDtextures.push_back(h->GetHUDTexturePath());
+			spellCooldowns.push_back(h->GetCurrentCooldown());
+			spellCastings.push_back(h->GetTimeCasting());
+			totalCooldowns.push_back(h->GetTotalCooldown());
+			totalCastings.push_back(h->GetTotalCasting());
 		}
 	}
-	GraphicEngine::getInstance()->drawSpellSelector(spellHUDtextures,p->GetCurrentSpell());
+	GraphicEngine::getInstance()->drawSpellSelector(spellHUDtextures, spellCooldowns,totalCooldowns, spellCastings, totalCastings,p->GetCurrentSpell());
 }

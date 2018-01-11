@@ -84,6 +84,10 @@ float Hechizo::GetCurrentCooldown(){
 	return currentCooldown;
 }
 
+float Hechizo::GetTotalCooldown(){
+	return cooldown;
+}
+
 /**
  * @brief Comprueba si hay suficiente mana para lanzarlo
  * 
@@ -150,3 +154,10 @@ std::string Hechizo::GetHUDTexturePath(){
 	return HUDTexturePath;
 }
 
+float Hechizo::GetTimeCasting(){
+	return timeCasting;
+}
+
+float Hechizo::GetTotalCasting(){
+	return casting;
+}

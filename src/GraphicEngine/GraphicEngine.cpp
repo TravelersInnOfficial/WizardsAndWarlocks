@@ -192,18 +192,18 @@ void GraphicEngine::drawManaAndHealth(int h, int m){
 	draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
 }
 
-void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths, int selectedSpell){
+void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths,std::vector<float> cooldowns,std::vector<float> totalcooldowns, std::vector<float> castings, std::vector<float> totalcastings, int selectedSpell){
 	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
 
-	float size = 40;
+	float sizeBox = W/20;
 
 	float xInit = W/20;
-	float xEnd =  W/10.5;
+	float xEnd =  W/10;
 
 	float yInitH = H * 0.9;
 
-	float yEndH = yInitH + size;
+	float yEndH = yInitH + sizeBox;
 
 	float space = 0;
 	float outline = 5;
@@ -212,16 +212,25 @@ void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths, int
 	vector3df color(0,0,0);
 	color = vector3df(0,255,0);
 	irr::video::ITexture* spellTexture;
+
 	for(int i = 0;i<texturePaths.size();i++){
+		draw2DRectangle(vector3df(0,0,0), xInit + space - outline, yInitH - outline, xInit + (xEnd - xInit) + space + outline, yEndH + outline);
 		if(i == selectedSpell){
 			draw2DRectangle(vector3df(255,255,0), xInit + space - outline, yInitH - outline, xInit + (xEnd - xInit) + space + outline, yEndH + outline) ;
+		}
+		if(castings[i]>0){
+			draw2DRectangle(vector3df(0,0,255), xInit + space - outline, (yEndH + outline) - (yEndH - yInitH + outline*2) * (castings[i]/totalcastings[i]), xInit + (xEnd - xInit) + space + outline, yEndH + outline);
+		}
+		if(cooldowns[i]>0){
+			
+			draw2DRectangle(vector3df(255,0,0), xInit + space - outline, (yInitH - outline) + (yEndH - yInitH + outline*2) * (1-(cooldowns[i]/totalcooldowns[i])) , xInit + (xEnd - xInit) + space + outline, (yEndH + outline));
 		}
 		spellTexture = privateDriver->getTexture(texturePaths[i].c_str());
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
 		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
 		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
 		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
-		space += 50;
+		space += W/15;
 	}
 }
 

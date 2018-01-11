@@ -100,7 +100,7 @@ public:
     /**
      * Draws the spell selector bar
     */
-    void drawSpellSelector(std::vector<std::string> ,int);
+    void drawSpellSelector(std::vector<std::string>, std::vector<float>, std::vector<float>, std::vector<float>,std::vector<float>, int);
 
     /**
      * Draws a rectangle

@@ -29,6 +29,9 @@ public:
 	SoundEvent* getShotEvent();
 
 	std::string GetHUDTexturePath();
+	float GetTimeCasting();
+	float GetTotalCooldown();
+	float GetTotalCasting();
 
 protected:
 	float 	costePM;			// Coste de Mana del hechizo
