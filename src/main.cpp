@@ -95,6 +95,9 @@ int main() {
 	if(n_engine != NULL) n_engine->EndService();
 	f_engine->EraseWorld();
 	g_engine->drop();
+	delete f_engine;
+	delete g_engine;
+	delete s_engine;
 	
 	return 0;
 }

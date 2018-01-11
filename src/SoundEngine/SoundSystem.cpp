@@ -28,16 +28,34 @@ SoundSystem::SoundSystem() {}
 *  Destructor
 ******************************************************/
 SoundSystem::~SoundSystem() {
-	delete banksPath;
-	delete system;
-	delete lowLevelSystem;
-	delete masterBank;
-	delete stringsBank;
-	delete busMaster;
-	delete listener;
-	banks.clear();
-	eventDescriptions.clear();
-	soundEvents.clear();
+
+	//Delete the sound event instances
+	std::map<std::string, SoundEvent*>::iterator itSe = soundEvents.begin();
+	for(; itSe!=soundEvents.end(); itSe++){
+		SoundEvent* even = itSe->second;
+		delete even;		//Delete the events
+	}
+	soundEvents.clear();	//Clear the sound events map
+
+	//Deete the event descriptions
+	std::map<std::string, FMOD::Studio::EventDescription*>::iterator iteven = eventDescriptions.begin();
+	for(; iteven!=eventDescriptions.end(); iteven++){
+		FMOD::Studio::EventDescription* even = iteven->second;
+		ERRCHECK(even->releaseAllInstances());		//Delette all the  event instances of the event description
+	}
+	eventDescriptions.clear();		//Clear the event descriptions map
+
+	//Delete the banks
+	std::map<std::string, FMOD::Studio::Bank*>::iterator itBanks = banks.begin();
+	for(; itBanks!=banks.end(); itBanks++){
+		FMOD::Studio::Bank* ba = itBanks->second;
+		if(ba!=NULL) ERRCHECK(ba->unload());  //Delete every map
+	}
+	banks.clear();		//Clear the banks map
+	
+	delete listener;	//Delete the sound listener
+
+	ERRCHECK(system->release());	//Delete the sound system
 }
 
 /******************************************************
@@ -183,6 +201,10 @@ void SoundSystem::Update(vector3df headPos, vector3df headRot) {
 	ERRCHECK(system->update());
 }
 
+void SoundSystem::Update(){
+	ERRCHECK(system->update());
+}
+
 /******************************************************
 *  @brief Creates the a FMOD eventDescription
 *  @param string name path of the description
@@ -199,9 +221,9 @@ FMOD::Studio::EventDescription* SoundSystem::createDescription(const char* path,
  * @param std::string path of the event
  ******************************************************/
 SoundEvent* SoundSystem::createEvent(std::string eventPath) {
-	FMOD::Studio::EventDescription * eventDesc = NULL;					//Initialize the event description
-	FMOD::Studio::EventInstance * eventInst    = NULL;					//Initialize the event instance
-	SoundEvent * newEvent					   = NULL; 					//Initialize the event
+	FMOD::Studio::EventDescription* eventDesc  = NULL;					//Initialize the event description
+	FMOD::Studio::EventInstance* eventInst     = NULL;					//Initialize the event instance
+	SoundEvent* newEvent					   = NULL; 					//Initialize the event
 	
 	//Search the description to know if it's already created
 	if (eventDescriptions[eventPath] != NULL) 
@@ -214,12 +236,13 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	ERRCHECK(eventDesc->createInstance(&eventInst));				//Set the event instance
 
 	//Dertermine wich type of sound event will create
-	if (eventPath.find("Character") != -1)  	newEvent = new CharacterSound();//Set the event
-	else if (eventPath.find("Spells") != -1)   	newEvent = new SpellSound();	//Set the event		
-	else if (eventPath.find("Ambience") != -1) 	newEvent = new AmbienceSound();	//Set the event
-	else if (eventPath.find("HUD") != -1) 	  	newEvent = new HUDSound();		//Set the event
-	else if (eventPath.find("Music") != -1)   	newEvent = new Music();			//Set the event
-
+	if (eventPath.find("Character") != -1)  		newEvent = new CharacterSound();	//Set the event
+	else if (eventPath.find("Spells") != -1)   		newEvent = new SpellSound();		//Set the event		
+	else if (eventPath.find("Ambience") != -1) 		newEvent = new AmbienceSound();		//Set the event
+	else if (eventPath.find("HUD") != -1) 	  		newEvent = new HUDSound();			//Set the event
+	else if (eventPath.find("Music") != -1)   		newEvent = new Music();				//Set the event
+	else if (eventPath.find("CommonSound") != -1)	newEvent = new CommonSoundEvent();	//Set the event
+	
 	newEvent->setInstance(eventInst);	//Set the event instance
 	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
 	
@@ -318,7 +341,7 @@ SoundEvent::SoundEvent() {
 *  Destructor
 ******************************************************/
 SoundEvent::~SoundEvent() {
-	delete soundInstance;
+	//ERRCHECK(soundInstance->release());
 }
 
 /******************************************************
