@@ -54,7 +54,7 @@ void BulletManager::AddToDeleteProyecil(Projectile* pro){
 		// Nos guardamos el tamanyo el vector
 		int size = proyectiles.size();
 		// Recorremos el vector de proyectil en update
-		for(int i=0; i<size; i++){
+		for(int i=size-1; i>=0; i--){
 			Projectile* p = proyectiles[i];
 			// Comprobamos si el proyectil esta en el vector
 			if(p == pro){

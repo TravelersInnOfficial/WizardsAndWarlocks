@@ -77,7 +77,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 
 void PlayerManager::AddToDeletePlayer(int networkId){
 	int size = players.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		Player* p = players[i];
 		if(p->GetNetworkObject()->GetObjId() == networkId){
 			players.erase(players.begin()+i);

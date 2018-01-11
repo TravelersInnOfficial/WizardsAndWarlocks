@@ -259,7 +259,7 @@ void ObjectManager::DrawNpcMenu(){
 
 void ObjectManager::DeletePotion(Potion* potion){
 	int size = potions.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		Potion* p = potions[i];
 		if(p == potion){
 			potions.erase(potions.begin() + i);
