@@ -17,7 +17,7 @@ class SpellSound : public CommonSoundEvent {
     ~SpellSound();
 
     protected:
-    FMOD::Studio::EventInstance* soundInstance;
+    FMOD_STUDIO_EVENTINSTANCE* soundInstance;
 };
 
 #endif /* CommonSoundSoundEvent_h */

@@ -38,24 +38,24 @@ SoundSystem::~SoundSystem() {
 	soundEvents.clear();	//Clear the sound events map
 
 	//Deete the event descriptions
-	std::map<std::string, FMOD::Studio::EventDescription*>::iterator iteven = eventDescriptions.begin();
+	std::map<std::string, FMOD_STUDIO_EVENTDESCRIPTION*>::iterator iteven = eventDescriptions.begin();
 	for(; iteven!=eventDescriptions.end(); iteven++){
-		FMOD::Studio::EventDescription* even = iteven->second;
-		ERRCHECK(even->releaseAllInstances());		//Delette all the  event instances of the event description
+		FMOD_STUDIO_EVENTDESCRIPTION* even = iteven->second;
+		ERRCHECK(FMOD_Studio_EventDescription_ReleaseAllInstances(even));		//Delette all the  event instances of the event description
 	}
 	eventDescriptions.clear();		//Clear the event descriptions map
 
 	//Delete the banks
-	std::map<std::string, FMOD::Studio::Bank*>::iterator itBanks = banks.begin();
+	std::map<std::string, FMOD_STUDIO_BANK*>::iterator itBanks = banks.begin();
 	for(; itBanks!=banks.end(); itBanks++){
-		FMOD::Studio::Bank* ba = itBanks->second;
-		if(ba!=NULL) ERRCHECK(ba->unload());  //Delete every map
+		FMOD_STUDIO_BANK* ba = itBanks->second;
+		if(ba!=NULL) ERRCHECK(FMOD_Studio_Bank_Unload(ba));  //Delete every map
 	}
 	banks.clear();		//Clear the banks map
 	
 	delete listener;	//Delete the sound listener
 
-	ERRCHECK(system->release());	//Delete the sound system
+	ERRCHECK(FMOD_Studio_System_Release(system));	//Delete the sound system
 }
 
 /******************************************************
@@ -76,16 +76,16 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 
 	//Initializing the fmod studio api
 	//Create the object Studio System
-	ERRCHECK(FMOD::Studio::System::create(&system));
+	ERRCHECK(FMOD_Studio_System_Create(&system, FMOD_VERSION));
 	
 	//Initializing the fmod low level api
-	FMOD::System* lowLevelSystem = NULL;
-	ERRCHECK(system->getLowLevelSystem(&lowLevelSystem));
-	ERRCHECK(lowLevelSystem->setSoftwareFormat(0, FMOD_SPEAKERMODE_5POINT1, 0));
-	ERRCHECK(lowLevelSystem->setOutput(FMOD_OUTPUTTYPE_AUTODETECT));
+	FMOD_SYSTEM * lowLevelSystem = NULL;
+	ERRCHECK(FMOD_Studio_System_GetLowLevelSystem(system, &lowLevelSystem));
+	ERRCHECK(FMOD_System_SetSoftwareFormat(lowLevelSystem, 0, FMOD_SPEAKERMODE_5POINT1, 0));
+	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(system->initialize(1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
@@ -110,16 +110,16 @@ SoundEvent* SoundSystem::getEvent(const char * eventPath) {
 /******************************************************
 * @brief Loads an specific bank
 * @param string path of the bank to load
-* @param FMOD::Studio::Bank* bank where will be loaded the 
+* @param FMOD_STUDIO_BANK* bank where will be loaded the 
 ******************************************************/
-void SoundSystem::loadBank(std::string filePath, FMOD::Studio::Bank* bank) {
+void SoundSystem::loadBank(std::string filePath, FMOD_STUDIO_BANK* bank) {
 	std::string path = "";
 	const char * finalPath = "";
 
 	path = banksPath + filePath;     //Make a string with the filename
 	finalPath = path.c_str();        //Convert to const char*
 	
-	ERRCHECK(system->loadBankFile(finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));   //Load the bank
+	ERRCHECK(FMOD_Studio_System_LoadBankFile(system, finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));   //Load the bank
 }
 
 /******************************************************
@@ -128,14 +128,14 @@ void SoundSystem::loadBank(std::string filePath, FMOD::Studio::Bank* bank) {
 void SoundSystem::loadBanks() {
 
 	//Initialize the banks
-	FMOD::Studio::Bank* masterBank      = NULL;
-	FMOD::Studio::Bank* stringsBank     = NULL;
-	FMOD::Studio::Bank* characterBank   = NULL;
-	FMOD::Studio::Bank* spellsBank      = NULL;
-	FMOD::Studio::Bank* ambienceBank    = NULL;
-	FMOD::Studio::Bank* HUDBank         = NULL;
-	FMOD::Studio::Bank* MusicBank       = NULL;
-	FMOD::Studio::Bank* commonSoundBank = NULL;
+	FMOD_STUDIO_BANK* masterBank      = NULL;
+	FMOD_STUDIO_BANK* stringsBank     = NULL;
+	FMOD_STUDIO_BANK* characterBank   = NULL;
+	FMOD_STUDIO_BANK* spellsBank      = NULL;
+	FMOD_STUDIO_BANK* ambienceBank    = NULL;
+	FMOD_STUDIO_BANK* HUDBank         = NULL;
+	FMOD_STUDIO_BANK* MusicBank       = NULL;
+	FMOD_STUDIO_BANK* commonSoundBank = NULL;
 
 	//Load the banks
 	loadBank("Master Bank.bank", masterBank);
@@ -162,7 +162,7 @@ void SoundSystem::loadBanks() {
 *  Modifies the general volume of the engine
 ******************************************************/
 void SoundSystem::setVolume(float vol) {
-	ERRCHECK(busMaster->setVolume(vol));
+	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, vol));
 }
 
 /******************************************************
@@ -187,7 +187,7 @@ void SoundSystem::setListenerPosRot(vector3df pos, vector3df rot) {
 	setUp(listener, up);
 	
 	//Finally, set the attributes
-	ERRCHECK(system->setListenerAttributes(0, listener));
+	ERRCHECK(FMOD_Studio_System_SetListenerAttributes(system, 0, listener));
 }
 
 /******************************************************
@@ -205,21 +205,21 @@ vector3df SoundSystem::getListenerPosition() {
 ******************************************************/
 void SoundSystem::Update(vector3df headPos, vector3df headRot) {
 	setListenerPosRot(headPos, headRot);	//Position and rotation of the listener
-	ERRCHECK(system->update());
+	ERRCHECK(FMOD_Studio_System_Update(system));
 }
 
 void SoundSystem::Update(){
-	ERRCHECK(system->update());
+	ERRCHECK(FMOD_Studio_System_Update(system));
 }
 
 /******************************************************
 *  @brief Creates the a FMOD eventDescription
 *  @param string name path of the description
-*  @param FMOD::Studio::EventDescription* event description pointer
+*  @param FMOD_STUDIO_EVENTDESCRIPTION* event description pointer
 ******************************************************/
-FMOD::Studio::EventDescription* SoundSystem::createDescription(const char* path, FMOD::Studio::EventDescription* desc){
-	ERRCHECK(system->getEvent(path, &desc));	//Create the event
-	eventDescriptions[path] = desc;				//Add the descriptions to the event descriptions map
+FMOD_STUDIO_EVENTDESCRIPTION* SoundSystem::createDescription(const char* path, FMOD_STUDIO_EVENTDESCRIPTION* desc){
+	ERRCHECK(FMOD_Studio_System_GetEvent(system, path, &desc));		//Create the event
+	eventDescriptions[path] = desc;									//Add the descriptions to the event descriptions map
 	return desc;
 }
 
@@ -228,8 +228,8 @@ FMOD::Studio::EventDescription* SoundSystem::createDescription(const char* path,
  * @param std::string path of the event
  ******************************************************/
 SoundEvent* SoundSystem::createEvent(std::string eventPath) {
-	FMOD::Studio::EventDescription* eventDesc  = NULL;					//Initialize the event description
-	FMOD::Studio::EventInstance* eventInst     = NULL;					//Initialize the event instance
+	FMOD_STUDIO_EVENTDESCRIPTION* eventDesc  = NULL;					//Initialize the event description
+	FMOD_STUDIO_EVENTINSTANCE* eventInst     = NULL;					//Initialize the event instance
 	SoundEvent* newEvent					   = NULL; 					//Initialize the event
 	
 	//Search the description to know if it's already created
@@ -240,7 +240,7 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
 
-	ERRCHECK(eventDesc->createInstance(&eventInst));				//Set the event instance
+	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));		//Set the event instance
 
 	//Dertermine wich type of sound event will create
 	if (eventPath.find("Character") != -1)  		newEvent = new CharacterSound();	//Set the event
@@ -355,22 +355,23 @@ SoundEvent::~SoundEvent() {
 *  Starts to reproduce the event
 ******************************************************/
 void SoundEvent::start() {
-	ERRCHECK(soundInstance->start());   
+	ERRCHECK(FMOD_Studio_EventInstance_Start(soundInstance));   
 }
 
 /******************************************************
 *  Stops the event reproduction inmediately
 ******************************************************/
 void SoundEvent::stop() {
-		ERRCHECK(soundInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE));
+		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 }
 
 /******************************************************
 *  Pauses the event reproduction
 ******************************************************/
 void SoundEvent::pause() {
-	bool paused = soundInstance->getPaused(&paused);
-	ERRCHECK(soundInstance->setPaused(!paused));
+	FMOD_BOOL paused = false;
+	FMOD_Studio_EventInstance_GetPaused(soundInstance, &paused);
+	ERRCHECK(FMOD_Studio_EventInstance_SetPaused(soundInstance, !paused));
 }
 
 
@@ -379,7 +380,7 @@ void SoundEvent::pause() {
 *  \param vol event volume, 0 = silence, 1 = maximun volume
 ******************************************************/
 void SoundEvent::setVolume(float vol) {
-	ERRCHECK(soundInstance->setVolume(vol));
+	ERRCHECK(FMOD_Studio_EventInstance_SetVolume(soundInstance, vol));
 }
 
 /******************************************************
@@ -387,7 +388,7 @@ void SoundEvent::setVolume(float vol) {
 *  \param gain factor, 0 = silence, 1 = keep volume
 ******************************************************/
 void SoundEvent::setGain(float gain) {
-	ERRCHECK(soundInstance->setPitch(gain));
+	ERRCHECK(FMOD_Studio_EventInstance_SetPitch(soundInstance, gain));
 
 }
 
@@ -417,7 +418,7 @@ void SoundEvent::setPosition(vector3df pos) {
 		SoundSystem::getInstance()->setUp(attributes, up);
 
 		//Finally, set the attributes
-		if (soundInstance != NULL) ERRCHECK(soundInstance->set3DAttributes(attributes));
+	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
 	}
 	else{
 		std::cout<<"ERROR: NaN Value, SoundSystem::setPosition"<<std::endl;
@@ -431,7 +432,7 @@ void SoundEvent::setPosition(vector3df pos) {
 bool SoundEvent::isPlaying() {
 	bool res = false;
 	FMOD_STUDIO_PLAYBACK_STATE state;
-	ERRCHECK(soundInstance->getPlaybackState(&state)); //Checks the state (0 = true, 3 = false)
+	ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(soundInstance, &state)); //Checks the state (0 = true, 3 = false)
 	if (state == 0) res = true;
 	return res;
 }
@@ -440,7 +441,7 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
-	ERRCHECK(soundInstance->release());
+	ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
 }
 
 /*******************************************************
@@ -449,21 +450,21 @@ void SoundEvent::release() {
 * @param float value of the parameter to modify
 *******************************************************/
 void SoundEvent::setParamValue(std::string name, float value) {
-	ERRCHECK(soundInstance->setParameterValue(name.c_str(), value));
+	ERRCHECK(FMOD_Studio_EventInstance_SetParameterValue(soundInstance, name.c_str(), value));
 }   
 
 /*******************************************************
  * @brief Returns the event instance
- * @return FMOD::Studio::EventInstance* 
+ * @return FMOD_STUDIO_EVENTINSTANCE* 
  *******************************************************/
-FMOD::Studio::EventInstance* SoundEvent::getInstance() {
+FMOD_STUDIO_EVENTINSTANCE* SoundEvent::getInstance() {
 	return soundInstance;
 }
 
 /*******************************************************
  * @brief Sets the event instance
- * @return FMOD::Studio::EventInstance* 
+ * @return FMOD_STUDIO_EVENTINSTANCE* 
  *******************************************************/
-void SoundEvent::setInstance(FMOD::Studio::EventInstance * instance) {
+void SoundEvent::setInstance(FMOD_STUDIO_EVENTINSTANCE * instance) {
 	soundInstance = instance;
 }

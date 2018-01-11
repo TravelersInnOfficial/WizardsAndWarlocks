@@ -6,7 +6,7 @@
 #include <iostream>
 #include <vector>
 #include "../Includes/vector3d.h"
-#include <math.h>
+#include <Constants.h>
 
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
@@ -81,16 +81,16 @@ public:
     /******************************************************
      * @brief Loads an specific bank
      * @param string path of the bank to load
-     * @param FMOD::Studio::Bank* bank where will be loaded the bank
+     * @param FMOD_STUDIO_BANK* bank where will be loaded the bank
      ******************************************************/
-    void loadBank(std::string path, FMOD::Studio::Bank* bank);
+    void loadBank(std::string path, FMOD_STUDIO_BANK* bank);
 
     /******************************************************
      *  @brief Creates the a FMOD eventDescription
      *  @param const char* name path of the description
-     *  @param FMOD::Studio::EventDescription* event description pointer
+     *  @param FMOD_STUDIO_EVENTDESCRIPTION* event description pointer
      ******************************************************/
-    FMOD::Studio::EventDescription* createDescription(const char* name, FMOD::Studio::EventDescription*);
+    FMOD_STUDIO_EVENTDESCRIPTION* createDescription(const char* name, FMOD_STUDIO_EVENTDESCRIPTION*);
 
     /******************************************************
      * @brief Creates a sound event
@@ -128,14 +128,14 @@ public:
 
 private:
     const char * banksPath;
-	FMOD::Studio::System* system;
-	FMOD::System* lowLevelSystem;
-	FMOD::Studio::Bank* masterBank;
-	FMOD::Studio::Bank* stringsBank;
-    FMOD::Studio::Bus* busMaster;
+	FMOD_STUDIO_SYSTEM* system;
+	FMOD_SYSTEM* lowLevelSystem;
+	FMOD_STUDIO_BANK* masterBank;
+	FMOD_STUDIO_BANK* stringsBank;
+    FMOD_STUDIO_BUS* busMaster;
     FMOD_3D_ATTRIBUTES* listener;
-    std::map<std::string, FMOD::Studio::Bank*> banks;
-    std::map<std::string, FMOD::Studio::EventDescription*> eventDescriptions;
+    std::map<std::string, FMOD_STUDIO_BANK*> banks;
+    std::map<std::string, FMOD_STUDIO_EVENTDESCRIPTION*> eventDescriptions;
     std::map<std::string, SoundEvent*> soundEvents;
 };
 
@@ -212,18 +212,18 @@ public:
     
     /*******************************************************
      * @brief Returns the event instance
-     * @return FMOD::Studio::EventInstance* 
+     * @return FMOD_STUDIO_EVENTINSTANCE* 
      *******************************************************/
-    FMOD::Studio::EventInstance* getInstance();
+    FMOD_STUDIO_EVENTINSTANCE* getInstance();
 
 protected:
-    FMOD::Studio::EventInstance* soundInstance;
+    FMOD_STUDIO_EVENTINSTANCE* soundInstance;
 
     /*******************************************************
      * @brief Sets the event instance
-     * @return FMOD::Studio::EventInstance* 
+     * @return FMOD_STUDIO_EVENTINSTANCE* 
      *******************************************************/
-    void setInstance(FMOD::Studio::EventInstance * instance);
+    void setInstance(FMOD_STUDIO_EVENTINSTANCE * instance);
     
 };
 
