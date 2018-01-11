@@ -7,7 +7,7 @@ OdinFury::OdinFury(float costPM, float tCast, float tCoolDown, float optHP, floa
 	tCast, 
 	tCoolDown, 
 	SPELL_THUNDER, 
-	"",
+	"./../assets/textures/HUD/Spells/thunderball.png",
 	optHP, 
 	optMP)
 {
