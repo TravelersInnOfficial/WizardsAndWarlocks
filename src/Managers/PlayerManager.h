@@ -24,6 +24,7 @@ public:
 	bool CheckIfReady();
 	void RespawnDeadPlayers();
 	void RestartMatchStatus();
+	void ResetAllSpells();
 	void ManageMatchStatus(bool ManageMatchStatus);
 	void AddToDead(Alliance alliance, Player* player);
 	bool CheckIfWon(Alliance alliance);

@@ -104,6 +104,14 @@ void PlayerManager::SendVisualSignal(){
 	}
 }
 
+void PlayerManager::ResetAllSpells(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->ResetAllSpells();
+	}
+}
+
 // Comprobamos TODOS las variables READY (Solo para RED)
 bool PlayerManager::CheckIfReady(){
 	bool allReady = true;
