@@ -187,6 +187,43 @@ std::list<Connection*> *Pathfinding::AStar(Graph* g, Node* StartNode , Node* End
 
 }
 
+bool Pathfinding::pointInTriangle(vector3df point, std::vector<vector3df> triangle){
+    /*
+    A = triangle[0]
+    B = triangle[1]
+    C = triangle[2]
+    p = point
+    Any point p where [B-A] cross [p-A] does not point in the same direction
+    as [B-A] cross [C-A] isn't inside the triangle. 
+    If the cross products do point in the same direction, then we need to test p with the other lines
+    as well. If the point was on the same side of AB as C and is also on the same side
+    of BC as A and on the same side of CA as B, then it is in the triangle.
+    */
+    if(sameSide(point, triangle[0], triangle[1], triangle[2]) 
+    && sameSide(point, triangle[1], triangle[0], triangle[2])
+    && sameSide(point, triangle[2], triangle[0], triangle[1])) return true;
+    return false;
+}
+
+float Pathfinding::dotProduct(vector3df A, vector3df B){
+    //A*B = A.X*B.X + A.Y*B.Y + A.Z*B.Z
+    return (A.X*B.X + A.Y*B.Y + A.Z*B.Z);   
+}
+
+vector3df Pathfinding::crossProduct(vector3df A, vector3df B){
+    //A = [A.X A.Y A.Z]
+    //B = [B.X B.Y B.Z]
+    //AxB = [A.X*B.Y - A.Y*B.X, A.Y*B.Z - A.Z*B.Y, A.Z*B.X - A.X*B.Z]
+    return vector3df(A.X*B.Y - A.Y*B.X, A.Y*B.Z - A.Z*B.Y, A.Z*B.X - A.X*B.Z);
+}
+
+bool Pathfinding::sameSide(vector3df p1, vector3df p2, vector3df A, vector3df B){
+    vector3df cp1 = crossProduct(vector3df(B.X-A.X,B.Y-A.Y,B.Z-A.Z),vector3df(p1.X-A.X,p1.Y-A.Y,p1.Z-A.Z));
+    vector3df cp2 = crossProduct(vector3df(B.X-A.X,B.Y-A.Y,B.Z-A.Z),vector3df(p2.X-A.X,p2.Y-A.Y,p2.Z-A.Z));
+    if(dotProduct(cp1,cp2) >= 0) return true;
+    else return false;
+}
+
 std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node* EndNode){
     //Initialize the record for the start node
     m_startRecord->m_node = StartNode;
