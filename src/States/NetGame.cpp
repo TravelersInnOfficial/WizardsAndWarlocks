@@ -27,10 +27,8 @@ NetGame::NetGame(){
 	loader.LoadLevel("../assets/json/Lobby.json");
 	lobbyState = true;
 	gameEnded = false;
+	debug = false;
 	secondCounter = 0;
-
-	// Sound Engine
-	s_engine->createSystem("./../assets/banks/");
 
 	if(n_engine->IsServerInit()) isServer = true;
 	else if(n_engine->IsClientInit()) isServer = false;
@@ -56,8 +54,10 @@ bool NetGame::Input(){
 	bool end = false;
 	
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
-	if(g_engine->IsKeyPressed(KEY_F1)) MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
-
+	if(g_engine->IsKeyPressed(KEY_F1)){
+		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
+		debug = !debug;
+	}
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();
@@ -124,7 +124,9 @@ void NetGame::Draw(){
 		playerOne->DrawOverlays(deltaTime);
 		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 	}
-	//f_engine->DebugDrawWorld();
+	
+	if(debug) f_engine->DebugDrawWorld();
+	
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 

@@ -20,6 +20,7 @@ Game::Game(){
 	loader.LoadLevel("../assets/json/Lobby.json");
 	lobbyState = true;
 	gameEnded = false;
+	debug = false;
 	secondCounter = 0;
 
 	//NavMesh
@@ -72,6 +73,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
 	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
+	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
 	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
 	if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 
@@ -137,8 +139,12 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	f_engine->DebugDrawWorld();
-	if(AL != NULL) AL->Debug();
+	
+	if(debug){
+		f_engine->DebugDrawWorld();
+		if(AL != NULL) AL->Debug();
+	}
+	
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 
 
