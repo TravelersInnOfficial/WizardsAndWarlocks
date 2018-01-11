@@ -153,7 +153,6 @@ SoundEvent* Hechizo::getShotEvent() {
 std::string Hechizo::GetHUDTexturePath(){
 	return HUDTexturePath;
 }
-<<<<<<< HEAD
 
 float Hechizo::GetTimeCasting(){
 	return timeCasting;
@@ -162,5 +161,3 @@ float Hechizo::GetTimeCasting(){
 float Hechizo::GetTotalCasting(){
 	return casting;
 }
-=======
->>>>>>> 278b5158d6c5451919948f04044096d3e9d5b275
