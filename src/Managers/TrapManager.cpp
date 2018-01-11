@@ -85,7 +85,7 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
 
 void TrapManager::DeleteTrap(Trap* trap){
 	int size = traps.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		Trap* t = traps[i];
 		if(t == trap){
 			traps.erase(traps.begin() + i);
