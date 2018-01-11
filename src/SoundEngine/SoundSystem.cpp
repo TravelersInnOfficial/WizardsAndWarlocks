@@ -64,6 +64,13 @@ SoundSystem::~SoundSystem() {
 ******************************************************/
 void SoundSystem::createSystem(std::string soundBanksPath){
    
+	// Init Variables
+	system = NULL;
+	lowLevelSystem = NULL;
+	masterBank = NULL;
+	stringsBank = NULL;
+    busMaster = NULL;
+
 	//Variables needed for the banks' filename
 	banksPath = soundBanksPath.c_str();
 
