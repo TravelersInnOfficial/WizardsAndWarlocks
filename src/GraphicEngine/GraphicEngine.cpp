@@ -203,9 +203,6 @@ void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths, int
 
 	float yInitH = H * 0.9;
 
-	// float yInitH = H - (H * 0.14);
-	// float yInitM = H - (H * 0.10);
-
 	float yEndH = yInitH + size;
 
 	float space = 0;
@@ -219,7 +216,6 @@ void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths, int
 		if(i == selectedSpell){
 			draw2DRectangle(vector3df(255,255,0), xInit + space - outline, yInitH - outline, xInit + (xEnd - xInit) + space + outline, yEndH + outline) ;
 		}
-		//draw2DRectangle(color, xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
 		spellTexture = privateDriver->getTexture(texturePaths[i].c_str());
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
 		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
