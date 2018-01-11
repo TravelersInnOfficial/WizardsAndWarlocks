@@ -96,6 +96,7 @@ void TrapManager::DeleteTrap(Trap* trap){
 
 void TrapManager::UpdateTrap(float deltaTime){
 	int size = traps.size();
+	std::cout<<size<<std::endl;
 	for(int i=0; i<size; i++){
 		Trap* t = traps[i];
 		t->Update(deltaTime);

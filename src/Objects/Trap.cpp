@@ -2,23 +2,6 @@
 #include "./../Managers/TrapManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
-Trap::Trap(){
-   // m_trapType = 0;
-
-    m_position = new vector3df(0,0,0);
-    m_dimensions = new vector3df(0,0,0);
-
-    m_body = new BT_GhostObject();
-    m_rigidBody = new BT_Body();
-
-    m_texturePath = "";
-    m_effect = "";
-
-    m_current_time = 0;
-    m_deactivation_time = 5;
-    m_world_time = 0;
-}
-
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
     m_position = new vector3df(TPosition.X, TPosition.Y, TPosition.Z);
@@ -51,6 +34,12 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
     m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0));
     m_body->AssignPointer(this);
+}
+
+void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
+        m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
+        m_texturePath = "../assets/textures/decal.png";
+        m_effect = effect;
 }
 
 Trap::~Trap(){
@@ -97,12 +86,6 @@ void Trap::InitializeTrapData(){
         break;
 
     }
-}
-
-void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
-        m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
-        m_texturePath = "../assets/textures/decal.png";
-        m_effect = effect;
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
@@ -152,12 +135,14 @@ void Trap::SetType(TrapEnum trapType){
     m_trapType = trapType;
 }
 
-vector3df* Trap::GetPosition(){
-    return m_position;
+vector3df Trap::GetPosition(){
+    vector3df pos(m_position->X, m_position->Y, m_position->Z);
+    return pos;
 }
 
-vector3df* Trap::GetDimensions(){
-    return m_dimensions;
+vector3df Trap::GetDimensions(){
+    vector3df dim(m_dimensions->X, m_dimensions->Y, m_dimensions->Z);
+    return dim;
 }
 
 TrapEnum Trap::GetTrapType(){

@@ -11,7 +11,6 @@
 class Trap : public Entidad{
 public:
 
-    Trap();
     Trap(vector3df, vector3df normal, TrapEnum type);
 
     void Update();
@@ -28,8 +27,8 @@ public:
     void SetDimensions(vector3df);
     void SetType(TrapEnum);
 
-    vector3df* GetPosition();
-    vector3df* GetDimensions();
+    vector3df GetPosition();
+    vector3df GetDimensions();
     TrapEnum GetTrapType();
 
     // Sense Functions
