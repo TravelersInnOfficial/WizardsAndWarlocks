@@ -253,17 +253,9 @@ void NetGame::createSoundEvents() {
 	soundEvents["waterdrops"]  = waterDrops;
 }
 void NetGame::playEvent(SoundEvent* event, vector3df pos) {
-	if (event != NULL)
-		std::cout << "NO ES NULL" <<std::endl;
-	else
-		std::cout << "ES NULL" <<std::endl;
 	SoundSystem::getInstance()->playEvent(event, pos);
 }
 
 void NetGame::playEvent(SoundEvent* event) {
-	if (event != NULL)
-		std::cout << "NO ES NULL" <<std::endl;
-	else
-		std::cout << "ES NULL" <<std::endl;
 	SoundSystem::getInstance()->playEvent(event);
 }
