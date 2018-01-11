@@ -66,7 +66,7 @@ int main() {
 	g_engine->setCursorVisible(false);
 
 	// Game State
-	if (n_engine == NULL){
+	if (n_engine == NULL && g_engine->run()){
 		Game* game = new Game();
 		bool end = false;
 		while(g_engine->run() && !end){
@@ -79,7 +79,7 @@ int main() {
 	}
 
 	// Network Game State
-	else{
+	else if(g_engine->run()){
 		NetGame* game = NetGame::GetInstance();
 		bool end = false;
 		while(g_engine->run() && !end){
