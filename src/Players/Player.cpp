@@ -34,6 +34,7 @@ Player::Player(bool isPlayer1){
 	readyToStart = false;
 	moving = false;
 	stepsStarted = false;
+	pulseStarted = false;
 	name = "";
 
 	currentSpell = 0;
@@ -215,8 +216,6 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
-	
-
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -224,9 +223,16 @@ void Player::Update(){
 	if((m_dead || m_position.Y < -50) && hasCharacter) Die();
 
 	if (m_HP <= 20) {
-		//std::cout << 20-m_HP << std::endl;
-		soundEvents["pulse"]->setParamValue("Life", 20-m_HP);
-		playPulse();
+		soundEvents["pulse"]->setParamValue("Life", m_HP);
+		if (!pulseStarted) {
+			pulseStarted = true;
+			playPulse();
+		}
+	} else {
+		if (pulseStarted) {
+			pulseStarted = false;
+			stopPulse();
+		}
 	}
 
 	// Si tenemos cuerpo fisico
@@ -346,7 +352,7 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	if (HP < 0) {
-		playHit();
+		if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
 		bloodOverlayTime = 1;
 	}
 
@@ -365,7 +371,6 @@ void Player::ChangeHP(float HP){
 		m_dead = true;
 		bloodOverlayTime = 0;
 	}
-
 }
 
 bool Player::ChangeMP(float MP){
@@ -441,7 +446,7 @@ void Player::Die(){
 		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
 		DestroyPlayerCharacter();
 	}
-
+	pulseStarted = false;
 	soundEvents.clear();
 	Respawn();
 }
@@ -585,7 +590,6 @@ void Player::playHit() {
 }
 
 void Player::playPulse() {
-	//std::cout << "pulse" << std::endl;
 	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
 }
 
@@ -595,15 +599,18 @@ void Player::stopFootsteps() {
 }
 
 void Player::stopPulse() {
-	//std::cout << "stop" << std::endl;
-	SoundSystem::getInstance()->stopEvent(soundEvents["pulse"]);
+	SoundSystem::getInstance()->checkAndStopEvent(soundEvents["pulse"]);
 }
 
-
+//Update the event positions for continuous events or usable while moving events (like spells)
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
 		if (soundEvents["footsteps"] != NULL) {
+			//Update footsteps
 			soundEvents["footsteps"]->setPosition(GetHeadPos());
+			
+			//Also the spells
+			
 		}
 	}
 }

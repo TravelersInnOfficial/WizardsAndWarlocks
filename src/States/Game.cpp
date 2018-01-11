@@ -46,6 +46,9 @@ Game::Game(){
 	spellManager->AddHechizo(1, AL, SPELL_FIRE);
 	spellManager->AddHechizo(2, AL, SPELL_WALL);
 	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
+
+	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
+	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 }
 
 Game::~Game(){
@@ -134,7 +137,7 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL) playerOne->DrawOverlays(deltaTime);
 	if(playerOne != NULL) g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-	//f_engine->DebugDrawWorld();
+	f_engine->DebugDrawWorld();
 	if(AL != NULL) AL->Debug();
 	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
 
@@ -192,7 +195,9 @@ void Game::CheckIfWon(){
 		gameEnded = true;
 		if(playerOne != NULL) {
 			playerOne->SetAllInput(UP);
-			if (playerOne->GetAlliance() != whosWon) playDefeat(); else playVictory();
+
+			//Play sound event when you lose or win
+			if (playerOne->GetAlliance() != whosWon) playEvent(soundEvents["defeat"]); else playEvent(soundEvents["victory"]);
 
 			playerManager->EraseAllCharacters();
 			g_engine->ToggleMenu(true);
@@ -218,17 +223,22 @@ void Game::RestartMatch(){
  ********************************************************************************************************/
 
 void Game::createSoundEvents() {
+	//Create the sound events
 	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
 	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
+	SoundEvent * ghosts  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
+	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/WaterDrops");
 
+	//Store them at the map
 	soundEvents["defeat"]  = defeat;
 	soundEvents["victory"] = victory;
+	soundEvents["ghosts"]  = ghosts;
+	soundEvents["waterdrops"]  = waterDrops;
+}
+void Game::playEvent(SoundEvent* event, vector3df pos) {
+	SoundSystem::getInstance()->playEvent(event, pos);
 }
 
-void Game::playDefeat() {
-	SoundSystem::getInstance()->playEvent(soundEvents["defeat"]);
-}
-
-void Game::playVictory() {
-	SoundSystem::getInstance()->playEvent(soundEvents["victory"]);
+void Game::playEvent(SoundEvent* event) {
+	SoundSystem::getInstance()->playEvent(event);
 }

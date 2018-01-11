@@ -47,16 +47,20 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
  * @details [long description]
  */
 void SpellManager::UpdateCooldown(float deltaTime){
-	this->deltaTime = deltaTime;					// Hacemos update de nuestro deltaTime
+	this->deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
 		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
 			Hechizo* h = it->second;			// Cargamos el hechizo
+			Player*  p = it->first;				//Load the player
+			updateSoundEvents(h, p);			//Update the sound events
 			if(h->GetCurrentCooldown()>0){	 	// Comprobamos si esta en cooldown
 				h->DecCooldown(this->deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
 			}
+			
+
 		}
-	}	
+	}
 }
 
 void SpellManager::ResetCooldown(Player* p){
@@ -158,4 +162,15 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 			h = NULL;
 	}
 	return h;
+}
+
+//Update sound event spell position, otherwise will sound far as we move
+void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
+	if (h != NULL){
+		if (p != NULL) {		
+			if (h->getShotEvent() != NULL) {
+				h->getShotEvent()->setPosition(p->GetHeadPos()); //Update the event position
+			}
+		}
+	}
 }

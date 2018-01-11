@@ -28,6 +28,7 @@ private:
 	float deltaTime;
 
 	SpellManager();
+	void updateSoundEvents(Hechizo* h, Player* p); 	//Update sound event spell position, otherwise will sound far as we move
 	static SpellManager* instance;
 };
 
