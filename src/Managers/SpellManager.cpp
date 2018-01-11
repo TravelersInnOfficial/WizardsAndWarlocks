@@ -157,11 +157,11 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_FIRE:
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
 			break;
-		case SPELL_POISON:
-			h = new OgreBelch(-5, 1.0f, 1.0f, 100, 100);
-			break;
 		case SPELL_THUNDER:
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
+			break;
+		case SPELL_POISON:
+			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
 			break;
 		case SPELL_WALL:		// Hechizo Invocacion Muro
 			h = new DesperationWall(-5, 0.0f, 1.0f, 100, 50);
