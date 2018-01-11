@@ -55,6 +55,7 @@ private:
 	float secondCounter;
 	bool lobbyState;
 	bool gameEnded;
+	bool debug;
 
 	SpellManager* 			spellManager;
 	BulletManager* 			bulletManager;

@@ -52,6 +52,7 @@ private:
 	float secondCounter;
 	bool lobbyState;
 	bool gameEnded;
+	bool debug;
 
 	bool isServer;
 	HumanPlayer*		playerOne;
