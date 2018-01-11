@@ -43,6 +43,10 @@ public:
 	void CreatePlayer(NetworkObject* nObject, bool isPlayerOne = false, std::string name = "");
 	bool GetLobbyState();
 
+	//Sound Functions
+	void playEvent(SoundEvent* event, vector3df pos);
+	void playEvent(SoundEvent* event);
+
 private:
 
 	static NetGame* instance;
@@ -74,6 +78,9 @@ private:
 
 	void setFps();
 	void CheckIfWon();
+
+	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+	void createSoundEvents();			//Create the sound events
 
 };
 

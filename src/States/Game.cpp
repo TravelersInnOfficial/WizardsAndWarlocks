@@ -74,8 +74,8 @@ bool Game::Input(){
 	
 	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
 	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
-	if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
-	if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
+	//if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
+	//if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 
 	if(gameEnded){
 		int option = g_engine->ReadButtonPressed();

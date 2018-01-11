@@ -39,6 +39,12 @@ NetGame::NetGame(){
 
 	// Jugador
 	playerOne = NULL;
+
+	// Sound Engine
+	createSoundEvents();
+
+	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
+	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 }
 
 NetGame::~NetGame(){
@@ -187,7 +193,9 @@ void NetGame::CheckIfWon(){
 		}
 		else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
 		
-		if(whosWon != NO_ALLIANCE) MatchEnded(whosWon);
+		if(whosWon != NO_ALLIANCE) {
+			MatchEnded(whosWon);
+		} 
 	}
 }
 
@@ -210,6 +218,11 @@ void NetGame::MatchEnded(Alliance winnerAlliance){
 	if(isServer) n_engine->GetServer()->EndMatch(winnerAlliance);
 
 	if(!gameEnded){
+		//Play sound event when you lose or win
+		if (playerOne != NULL) {
+			if (playerOne->GetAlliance() != winnerAlliance)  playEvent(soundEvents["defeat"]);
+			else playEvent(soundEvents["victory"]);
+		}
 		GraphicEngine::getInstance()->InitReceiver();
 		gameEnded = true;
 		playerManager->EraseAllCharacters();
@@ -220,4 +233,37 @@ void NetGame::MatchEnded(Alliance winnerAlliance){
 		}
 		else RestartMatch();
 	}
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+
+void NetGame::createSoundEvents() {
+	//Create the sound events
+	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
+	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
+	SoundEvent * ghosts  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
+	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/WaterDrops");
+
+	//Store them at the map
+	soundEvents["defeat"]  = defeat;
+	soundEvents["victory"] = victory;
+	soundEvents["ghosts"]  = ghosts;
+	soundEvents["waterdrops"]  = waterDrops;
+}
+void NetGame::playEvent(SoundEvent* event, vector3df pos) {
+	if (event != NULL)
+		std::cout << "NO ES NULL" <<std::endl;
+	else
+		std::cout << "ES NULL" <<std::endl;
+	SoundSystem::getInstance()->playEvent(event, pos);
+}
+
+void NetGame::playEvent(SoundEvent* event) {
+	if (event != NULL)
+		std::cout << "NO ES NULL" <<std::endl;
+	else
+		std::cout << "ES NULL" <<std::endl;
+	SoundSystem::getInstance()->playEvent(event);
 }

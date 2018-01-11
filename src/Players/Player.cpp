@@ -15,6 +15,7 @@ GraphicEngine* engine = GraphicEngine::getInstance();
 Player::Player(bool isPlayer1){
 
 	createSoundEvents();
+	changeSurface(2);
 	m_position = vector3df(0,0,0);
 	m_dimensions = vector3df(1.8,1.8,1.8);
 
