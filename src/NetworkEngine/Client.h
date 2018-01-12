@@ -38,6 +38,9 @@ public:
 	void AddPlayer(int id, RakNet::RakNetGUID guid);
 	void RemovePlayer(int id);
 
+	// Manage traps
+	void EraseTrap(int idTrap);
+
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
 	std::map<int, NetworkObject*> GetToEraseNetworkObjects();
@@ -71,6 +74,8 @@ private:
 	RakNet::RakPeerInterface *peer;						// Peer Interface
 	RakNet::Packet *packet;								// Packet to send and recieve
 	RakNet::SocketDescriptor descriptor;				// Socket Descriptor
+
+	void SetTrap(int trapId, RakNet::BitStream* bitstream);
 
 };
 

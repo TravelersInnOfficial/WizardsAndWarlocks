@@ -1,12 +1,12 @@
 #include "TrapManager.h"
+#include "PlayerManager.h"
 #include <vector3d.h>
+#include "./../NetworkEngine/NetworkEngine.h"
 
 TrapManager* TrapManager::instance = 0;
 
 TrapManager* TrapManager::GetInstance(){
-	if(instance==0){
-		instance = new TrapManager();
-	}
+	if(instance == 0) instance = new TrapManager();
 	return instance;
 }
 
@@ -14,7 +14,9 @@ void TrapManager::Update(float deltaTime){
 	UpdateTrap(deltaTime);
 }
 
-TrapManager::TrapManager(){}
+TrapManager::TrapManager(){
+	lastTrapId = 0;
+}
 
 TrapManager::~TrapManager(){
 	ClearTraps();
@@ -39,47 +41,60 @@ Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
 
 void TrapManager::AddTrapToPlayer(Player* player, TrapEnum trap){
 	TrapEnum actualTrap = getPlayerTrap(player);
-	if(actualTrap != TENUM_NO_TRAP){ //si el jugador ya tiene una trampa asignada se cambia por una nueva
-		//std::cout<<"I found the player!!"<<std::endl;
+
+	// Si el jugador ya tiene una trampa asignada se cambia por una nueva
+	if(actualTrap != TENUM_NO_TRAP){
 		setPlayerTrap(player,trap);
 		setPlayerUsings(player,MaxUsings);
 	}
-	else{//si no la tiene se la asignamos
-		//std::cout<<"Creating a new player..."<<std::endl;
+
+	// Si no la tiene se la asignamos
+	else{
 		playerTrap.insert(std::pair<Player*, TrapEnum>(player,trap));
 		playerUsings.insert(std::pair<Player*, int>(player,MaxUsings));
 	}
 }
 
 bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End){
-	//std::cout<<"Checking usings..."<<std::endl;
+	bool toRet = false;
+	
 	int uses = getPlayerUsings(player);
-	//std::cout<< uses << " uses"<<std::endl;
 	if(uses == 0) return false;
-	if(DeployTrap(getPlayerTrap(player),Start,End)){
-		--uses;
-		//std::cout<<"You have "<<uses<<" more uses"<<std::endl;
+	if(DeployTrap(getPlayerTrap(player),Start,End, player->GetId())){
+		uses--;
 		setPlayerUsings(player,uses);
-		return true;
+		toRet = true;
 	}
-	return false;
+
+	return toRet;
 }
 
-bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End){
+bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End, int playerId){
+	bool toRet = false;
 	vector3df point(0,0,0);
 	vector3df normal(0,0,0);
 	GraphicEngine::getInstance()->Raycast(Start,End, &point, &normal);
 
-	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0) //paredes
+	// Paredes
+	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0)
 	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
 	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
 	&& (normal.Y >=0 && normal.Y <=180)
 	){
-		AddTrap(point,normal,type);
-		return true;
+		Trap* myTrap = AddTrap(point,normal,type);
+		toRet = true;
+		
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(n_engine->IsServerInit()){
+			Server* server = n_engine->GetServer();
+			if(server != NULL){
+				myTrap->SetTrapId(lastTrapId);
+				server->SetTrap(point, normal, playerId, lastTrapId++);
+			}
+		}
 	}
 
-	return false;
+	return toRet;
 }
 
 
@@ -96,7 +111,6 @@ void TrapManager::DeleteTrap(Trap* trap){
 
 void TrapManager::UpdateTrap(float deltaTime){
 	int size = traps.size();
-	std::cout<<size<<std::endl;
 	for(int i=0; i<size; i++){
 		Trap* t = traps[i];
 		t->Update(deltaTime);
@@ -105,41 +119,77 @@ void TrapManager::UpdateTrap(float deltaTime){
 
 TrapEnum TrapManager::getPlayerTrap(Player* player){
 	std::map<Player*, TrapEnum>::iterator it = playerTrap.begin();
-	for(;it!=playerTrap.end();++it){
-		if(it->first == player){
-			return it->second;
-		}
+	
+	for(; it != playerTrap.end(); ++it){
+		if(it->first == player) return it->second;
 	}
+
 	return TENUM_NO_TRAP;
 }
 
 int TrapManager::getPlayerUsings(Player* player){
 	std::map<Player*, int>::iterator it = playerUsings.begin();
-	for(;it!=playerUsings.end();++it){
-		if(it->first == player){
-			return it->second;
-		}
+	
+	for(; it != playerUsings.end(); ++it){
+		if(it->first == player) return it->second;
 	}
+
 	return -1;
 }
 
 bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
+	bool toRet = false;
 	std::map<Player*, TrapEnum>::iterator it = playerTrap.begin();
-	for(;it!=playerTrap.end();++it){
+	
+	for(; it != playerTrap.end(); ++it){
 		if(it->first == player){
 			it->second = trap;
-			return true;
+			toRet = true;
 		}
 	}
-	return false;
+
+	return toRet;
 }
-bool TrapManager::setPlayerUsings(Player* player,int uses){
+bool TrapManager::setPlayerUsings(Player* player, int uses){
+	bool toRet = false;
 	std::map<Player*, int>::iterator it = playerUsings.begin();
-	for(;it!=playerUsings.end();++it){
+	
+	for(; it != playerUsings.end(); ++it){
 		if(it->first == player){
 			it->second = uses;
-			return true;
+			toRet = true;
 		}
 	}
-	return false;
+
+	return toRet;
+}
+
+void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df normal, int id){
+	Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
+	
+	if(player != NULL){
+		int uses = getPlayerUsings(player);
+		setPlayerUsings(player, uses--);
+	}
+
+	TrapEnum type = getPlayerTrap(player);
+	Trap* myTrap = AddTrap(position, normal, type);
+	if(myTrap != NULL) myTrap->SetTrapId(id);
+}
+
+void TrapManager::IdErase(int id){
+	Trap* trapToErase = GetTrapWithId(id);
+	if(trapToErase != NULL) DeleteTrap(trapToErase);
+}
+
+Trap* TrapManager::GetTrapWithId(int id){
+	Trap* toRet = NULL;
+
+	int size = traps.size();
+	for(int i = size-1; i >= 0; i--){
+		Trap* t = traps[i];
+		if(t != NULL && t->GetTrapId() == id) toRet = t;
+	}
+
+	return toRet;
 }

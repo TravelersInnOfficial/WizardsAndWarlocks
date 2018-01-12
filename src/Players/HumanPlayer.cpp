@@ -93,7 +93,13 @@ void HumanPlayer::GetNetInput(){
 	float life = -9999;
 	life = networkObject->GetFloatVar(PLAYER_LIFE);
 	if(life != -9999 && life != -1){
-		m_HP = life;
+		if(m_HP != life){
+			if(life < m_HP){
+				playHit();
+				bloodOverlayTime = 1;
+			}
+			m_HP = life;
+		}
 		life = -9999;
 		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
 	}

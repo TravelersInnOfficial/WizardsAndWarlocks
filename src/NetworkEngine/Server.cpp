@@ -76,6 +76,29 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 	return(id);
 }
 
+void Server::SetTrap(vector3df point,vector3df normal, int playerId, int trapId){
+	RakNet::BitStream setTrapMessage;
+	
+	setTrapMessage.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);	// Message ID
+	setTrapMessage.Write(ID_CREATE);	// Message Sub ID
+	
+	setTrapMessage.Write(trapId);		// K
+	setTrapMessage.Write(ID_TRAP_O);	// O
+
+	setTrapMessage.Write(point);		//|
+	setTrapMessage.Write(normal);		//| 
+	setTrapMessage.Write(playerId);		//| ETC 
+	
+	SendPackage(&setTrapMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::EraseTrap(int trapId){
+	RakNet::BitStream eraseTrapMessage;
+	eraseTrapMessage.Write((RakNet::MessageID)ID_ERASE_TRAP);
+	eraseTrapMessage.Write(trapId);
+	SendPackage(&eraseTrapMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
 std::map<int, NetworkObject*> Server::GetNetworkObjects(){
 	return(networkObjects);
 }

@@ -1,6 +1,7 @@
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../NetworkEngine/NetworkEngine.h"
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
@@ -37,9 +38,10 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
-        m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
-        m_texturePath = "../assets/textures/decal.png";
-        m_effect = effect;
+    m_dimensions = new vector3df(dimensions.X, dimensions.Y, dimensions.Z);
+    m_texturePath = "../assets/textures/decal.png";
+    m_effect = effect;
+    trapId = -1;
 }
 
 Trap::~Trap(){
@@ -89,20 +91,39 @@ void Trap::InitializeTrapData(){
 }
 
 void Trap::Contact(void* punt, EntityEnum tipo){
-    //std::cout<<tipo<<std::endl;
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(!n_engine->IsClientInit()){
 
-    if(tipo == EENUM_PLAYER){
-        Player* player = (Player*)(punt);
-        Activate(player);
-    }
-    if(tipo == EENUM_PROJECTILE){
-        TrapManager::GetInstance()->DeleteTrap(this);
-    }
+        bool contacted = false;
+
+        if(tipo == EENUM_PLAYER){
+            Player* player = (Player*)(punt);
+            Activate(player);
+            contacted = true;
+        }
+        else if(tipo == EENUM_PROJECTILE){
+            TrapManager::GetInstance()->DeleteTrap(this);
+            contacted = true;
+        }
+
+        if(contacted && n_engine->IsServerInit()){
+            Server* myServer = n_engine->GetServer();
+            if(myServer != NULL) myServer->EraseTrap(trapId);
+        }
+
+    }    
 }
 
 void Trap::Interact(Player* p){
-    if(m_world_time - deltaTime*0.001 < -0.1) m_current_time = 0;
-    Deactivate(deltaTime);
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(!n_engine->IsClientInit()){
+        if(m_world_time - deltaTime*0.001 < -0.1) m_current_time = 0;
+        Deactivate(deltaTime);
+        if(n_engine->IsServerInit()){
+            Server* myServer = n_engine->GetServer();
+            if(myServer != NULL) myServer->EraseTrap(trapId);
+        }
+    }
 }
 
 void Trap::Activate(Player* player ){
@@ -176,4 +197,12 @@ Kinematic Trap::GetKinematic(){
     cKin.velocity = m_rigidBody->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
+}
+
+void Trap::SetTrapId(int id){
+    this->trapId = id;
+}
+
+int Trap::GetTrapId(){
+    return(trapId);
 }
