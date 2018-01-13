@@ -21,6 +21,8 @@ public:
 	void Interact(Player* p);
 	bool CheckIfWon();
 
+	void drawGUI();
+
 	void SendSignal();
 	Kinematic GetKinematic();
 
@@ -33,6 +35,7 @@ private:
 	float deltaTime;
 	float timeCasting;
 	float maxCasting;
+	float playerOneInteraction;
 
 	void CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void UpdatePosShape();

@@ -130,6 +130,7 @@ void NetGame::Draw(){
 		playerOne->DrawOverlays(deltaTime);
 		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 		spellManager->DrawHUDSpells(playerOne);
+		objectManager->DrawGrailGUI();
 	}
 	
 	if(debug) f_engine->DebugDrawWorld();

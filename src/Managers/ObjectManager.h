@@ -51,6 +51,7 @@ public:
 
 	// Drawers
 	void DrawNpcMenu();
+	void DrawGrailGUI();
 
 	// Deleters
 	void DeletePotion(Potion* p);

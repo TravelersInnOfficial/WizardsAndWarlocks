@@ -46,8 +46,13 @@ Grail::~Grail(){
 
 void Grail::Update(float deltaTime){
 	this->deltaTime = deltaTime;
+	
 	if(casting) casting = false;
-	else timeCasting = 0.0f;
+	else{
+		playerOneInteraction = false;
+		timeCasting = 0.0f;
+	}
+	
 	UpdatePosShape();
 }
 
@@ -65,6 +70,7 @@ void Grail::Interact(Player* p){
 		}
 
 		casting = true;
+		if(p->IsPlayerOne()) playerOneInteraction = true;
 	}
 }
 
@@ -93,6 +99,13 @@ Kinematic Grail::GetKinematic(){
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
+}
+
+void Grail::drawGUI(){
+	if(playerOneInteraction){
+		GraphicEngine* engine = GraphicEngine::getInstance();
+		if(engine != NULL) engine->drawGrailGUI(timeCasting, maxCasting);
+	}
 }
 
 /********************************************************************************************************

@@ -134,6 +134,28 @@ void GraphicEngine::drawAim(bool moving){
 	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
 }
 
+void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
+	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
+	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
+
+	float size = 20;
+	float xInit = W/2 - 200;
+	
+	float xEnd =  W/2 + 200;
+	float yInit = H/2 + H/4;
+
+	float yEnd = yInit + size;
+	float hP = currentValue/maxValue;
+
+	// Black Bar
+	vector3df color(0,0,0);
+	draw2DRectangle(color, xInit, yInit, xEnd, yEnd);
+	
+	// Helath & Mana Bar
+	color = vector3df(51, 171, 249);
+	draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
+}
+
 void GraphicEngine::drawOverlays(int type){
 	irr::video::ITexture* overlay = NULL;
 	

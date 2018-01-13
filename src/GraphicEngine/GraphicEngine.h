@@ -88,6 +88,11 @@ public:
     void drawAim(bool playerMoving);
 
     /**
+     * Draws GUI for the grail
+    */
+    void drawGrailGUI(float currentValue, float maxValue);
+
+    /**
      * Draws all the efects activated
     */
     void drawOverlays(int type = -1);

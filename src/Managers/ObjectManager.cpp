@@ -250,6 +250,10 @@ void ObjectManager::DrawNpcMenu(){
 	}
 }
 
+void ObjectManager::DrawGrailGUI(){
+	if(grail != NULL) grail->drawGUI();
+}
+
 // ===================================================================================================== //
 //
 // DELETERS

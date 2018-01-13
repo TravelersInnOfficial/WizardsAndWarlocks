@@ -145,6 +145,7 @@ void Game::Draw(){
 		playerOne->DrawOverlays(deltaTime);
 		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
 		spellManager->DrawHUDSpells(playerOne);
+		objectManager->DrawGrailGUI();
 	}
 	
 	if(debug){
