@@ -165,16 +165,18 @@ bool TrapManager::setPlayerUsings(Player* player, int uses){
 }
 
 void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df normal, int id){
-	Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
-	
-	if(player != NULL){
-		int uses = getPlayerUsings(player);
-		setPlayerUsings(player, uses--);
-	}
+    Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
+    TrapEnum type = TENUM_NO_TRAP;
+    Trap* myTrap = NULL;
+    
+    if(player != NULL){
+        int uses = getPlayerUsings(player);
+        setPlayerUsings(player, uses--);
+        type = getPlayerTrap(player);
+    }
 
-	TrapEnum type = getPlayerTrap(player);
-	Trap* myTrap = AddTrap(position, normal, type);
-	if(myTrap != NULL) myTrap->SetTrapId(id);
+    if(type != TENUM_NO_TRAP) myTrap = AddTrap(position, normal, type);
+    if(myTrap != NULL) myTrap->SetTrapId(id);
 }
 
 void TrapManager::IdErase(int id){

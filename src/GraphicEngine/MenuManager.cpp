@@ -149,7 +149,7 @@ void MenuManager::CreateMatchEnded(int option){
 }
 
 void MenuManager::CreateNetDebug(){
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X - 200, 0, screenSize.X, 200);
+	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X - 300, 0, screenSize.X, 200);
 
  	netDebugWindow = g_engine->privateGUIEnv->addWindow(
         menuWindow,
@@ -174,16 +174,17 @@ void MenuManager::UpdateNetDebug(){
 		ClearElement(NETDEBUG_M_P1); ClearElement(NETDEBUG_M_P2); ClearElement(NETDEBUG_M_P3); ClearElement(NETDEBUG_M_P4); ClearElement(NETDEBUG_M_P5); ClearElement(NETDEBUG_M_P6); ClearElement(NETDEBUG_M_P7); ClearElement(NETDEBUG_M_P8);	
 		std::wstring player1; std::wstring player2; std::wstring player3; std::wstring player4; std::wstring player5; std::wstring player6; std::wstring player7; std::wstring player8;
 		vector2di menuSize = vector2di(netDebugWindow->getClientRect().getWidth(), netDebugWindow->getClientRect().getHeight());
+		Player* player = NULL;
 
 		// ##################################################
 
-		if(players.size() > 0 && players.at(0) != NULL){
-			std::string player1_s = players.at(0)->GetName() + ": "
-									+ std::to_string((int)players.at(0)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(0)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(0)->GetHasCharacter());
-			player1 = std::wstring(player1_s.length(), L' ');
-			std::copy(player1_s.begin(), player1_s.end(), player1.begin());
+		if(players.size() > 0){
+			player = players.at(0);
+			if(player != NULL){
+				std::string player1_s = GetStringFromPlayer(player);
+				player1 = std::wstring(player1_s.length(), L' ');
+				std::copy(player1_s.begin(), player1_s.end(), player1.begin());
+			}
 		}
 		else player1 = L"PLAYER 1 NOT CONNECTED";
 
@@ -192,13 +193,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 
-		if(players.size() > 1 && players.at(1) != NULL){
-			std::string player2_s = players.at(1)->GetName() + ": "
-									+ std::to_string((int)players.at(1)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(1)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(1)->GetHasCharacter());
-			player2 = std::wstring(player2_s.length(), L' ');
-			std::copy(player2_s.begin(), player2_s.end(), player2.begin());
+		if(players.size() > 1){
+			player = players.at(1);
+			if(player != NULL){
+				std::string player2_s = GetStringFromPlayer(player);
+				player2 = std::wstring(player2_s.length(), L' ');
+				std::copy(player2_s.begin(), player2_s.end(), player2.begin());
+			}
 		}
 		else player2 = L"PLAYER 2 NOT CONNECTED";
 		
@@ -207,13 +208,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 2 && players.at(2) != NULL){
-			std::string player3_s = players.at(2)->GetName() + ": "
-									+ std::to_string((int)players.at(2)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(2)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(2)->GetHasCharacter());
-			player3 = std::wstring(player3_s.length(), L' ');
-			std::copy(player3_s.begin(), player3_s.end(), player3.begin());
+		if(players.size() > 2){
+			player = players.at(2);
+			if(player != NULL){
+				std::string player3_s = GetStringFromPlayer(player);
+				player3 = std::wstring(player3_s.length(), L' ');
+				std::copy(player3_s.begin(), player3_s.end(), player3.begin());
+			}
 		}
 		else player3 = L"PLAYER 3 NOT CONNECTED";
 
@@ -222,13 +223,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 3 && players.at(3) != NULL){
-			std::string player4_s = players.at(3)->GetName() + ": "
-									+ std::to_string((int)players.at(3)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(3)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(3)->GetHasCharacter());
-			player4 = std::wstring(player4_s.length(), L' ');
-			std::copy(player4_s.begin(), player4_s.end(), player4.begin());
+		if(players.size() > 3){
+			player = players.at(3);
+			if(player != NULL){
+				std::string player4_s = GetStringFromPlayer(player);
+				player4 = std::wstring(player4_s.length(), L' ');
+				std::copy(player4_s.begin(), player4_s.end(), player4.begin());
+			}
 		}
 		else player4 = L"PLAYER 4 NOT CONNECTED";
 
@@ -237,13 +238,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 4 && players.at(4) != NULL){
-			std::string player5_s = players.at(4)->GetName() + ": "
-									+ std::to_string((int)players.at(4)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(4)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(4)->GetHasCharacter());
-			player5 = std::wstring(player5_s.length(), L' ');
-			std::copy(player5_s.begin(), player5_s.end(), player5.begin());
+		if(players.size() > 4){
+			player = players.at(4);
+			if(player != NULL){
+				std::string player5_s = GetStringFromPlayer(player);
+				player5 = std::wstring(player5_s.length(), L' ');
+				std::copy(player5_s.begin(), player5_s.end(), player5.begin());
+			}
 		}
 		else player5 = L"PLAYER 5 NOT CONNECTED";
 
@@ -252,13 +253,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 5 && players.at(5) != NULL){
-			std::string player6_s = players.at(5)->GetName() + ": "
-									+ std::to_string((int)players.at(5)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(5)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(5)->GetHasCharacter());
-			player6 = std::wstring(player6_s.length(), L' ');
-			std::copy(player6_s.begin(), player6_s.end(), player6.begin());
+		if(players.size() > 5){
+			player = players.at(5);
+			if(player != NULL){
+				std::string player6_s = GetStringFromPlayer(player);
+				player6 = std::wstring(player6_s.length(), L' ');
+				std::copy(player6_s.begin(), player6_s.end(), player6.begin());
+			}
 		}
 		else player6 = L"PLAYER 6 NOT CONNECTED";
 
@@ -267,13 +268,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 6 && players.at(6) != NULL){
-			std::string player7_s = players.at(6)->GetName() + ": "
-									+ std::to_string((int)players.at(6)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(6)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(6)->GetHasCharacter());
-			player7 = std::wstring(player7_s.length(), L' ');
-			std::copy(player7_s.begin(), player7_s.end(), player7.begin());
+		if(players.size() > 6){
+			player = players.at(6);
+			if(player != NULL){
+				std::string player7_s = GetStringFromPlayer(player);
+				player7 = std::wstring(player7_s.length(), L' ');
+				std::copy(player7_s.begin(), player7_s.end(), player7.begin());
+			}
 		}
 		else player7 = L"PLAYER 7 NOT CONNECTED";
 
@@ -282,13 +283,13 @@ void MenuManager::UpdateNetDebug(){
 		
 		// ##################################################
 		
-		if(players.size() > 7 && players.at(7) != NULL){
-			std::string player8_s = players.at(7)->GetName() + ": "
-									+ std::to_string((int)players.at(7)->GetHP()) +" HP / "
-									+ std::to_string((int)players.at(7)->GetMP()) +" MP. Has Character?: "
-									+ std::to_string(players.at(7)->GetHasCharacter());
-			player8 = std::wstring(player8_s.length(), L' ');
-			std::copy(player8_s.begin(), player8_s.end(), player8.begin());
+		if(players.size() > 7){
+			player = players.at(7);
+			if(player != NULL){
+				std::string player8_s = GetStringFromPlayer(player);
+				player8 = std::wstring(player8_s.length(), L' ');
+				std::copy(player8_s.begin(), player8_s.end(), player8.begin());
+			}
 		}
 		else player8 = L"PLAYER 8 NOT CONNECTED";
 
@@ -298,4 +299,14 @@ void MenuManager::UpdateNetDebug(){
 		// ##################################################
 
 	}
+}
+
+std::string MenuManager::GetStringFromPlayer(Player* player){
+	std::string toRet = player->GetName() + ": "
+						+ std::to_string((int)player->GetHP()) +" HP / "
+						+ std::to_string((int)player->GetMP()) +" MP."
+						+ " Has Character?: " + std::to_string(player->GetHasCharacter())
+						+ " LOCAL ID: " + std::to_string(player->GetId())
+						+ " NETWORK ID: " + std::to_string(player->GetNetworkObject()->GetObjId());
+	return(toRet);
 }
