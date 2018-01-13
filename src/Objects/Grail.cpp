@@ -102,9 +102,12 @@ Kinematic Grail::GetKinematic(){
 }
 
 void Grail::drawGUI(){
-	if(playerOneInteraction){
-		GraphicEngine* engine = GraphicEngine::getInstance();
-		if(engine != NULL) engine->drawGrailGUI(timeCasting, maxCasting);
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(timeCasting > 0){
+		if(playerOneInteraction || n_engine->IsServerInit()){
+			GraphicEngine* engine = GraphicEngine::getInstance();
+			if(engine != NULL) engine->drawGrailGUI(timeCasting, maxCasting);
+		}
 	}
 }
 
