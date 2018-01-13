@@ -4,8 +4,6 @@ ifeq ($(OS),Windows_NT)
     CPPFLAGS        	:= -I./src/Includes -I/mingw64/include -I/mingw64/include/bullet
     LDFLAGS				:= -L/mingw64/lib
     LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64
-    ICO 				:= assets/game-icon-res.rc
-    ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
     CXXFLAGS			:= -O3 -ffast-math -g -Wall -std=c++11
@@ -19,6 +17,9 @@ BuildPath 			:= ./obj
 
 SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
 SourcePath			:= $(shell find src -name '*.cpp')
+
+ICO 				:= assets/game-icon-res.rc
+ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 
 CXX					:= clang++
 
@@ -34,11 +35,11 @@ SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 #MAKE OPTIONS
 .PHONY: all clean cleanall ico
 
-all: prepare $(OBJ)
-	$(info ----------------------------------------------)
+all: prepare ico $(OBJ)
+	$(info ==============================================)
 	$(info Linking executable $(Target)...)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS) $(ICOOBJ)
-	$(info ----------------------------------------------)	
+	$(info ==============================================)	
 	$(info Compile OK)
 
 obj/%.o: src/%.cpp
@@ -53,15 +54,17 @@ prepare:
 	@mkdir -p $(SOURCE_DIRS)
 
 ico:
-	$(info ----------------------------------------------)
-	$(info Creating ico .o file)
-	$(info Compiling-> $(ICOOBJ))
-	$(info ----------------------------------------------)
-	$(shell windres $(ICO) -o $(ICOOBJ))
+    ifeq ($(OS),Windows_NT)
+		$(info ==============================================)
+		$(info Creating ico .o file)
+		$(info Compiling-> $(ICOOBJ))
+		$(info ==============================================)
+		$(shell windres $(ICO) -o $(ICOOBJ))
+    endif
 
 clean:
 	$(info ==============================================)
-	$(info Cleaning Objects (Not Engine ones) and Binaries... )
+	$(info Cleaning Objects (Not Engine ones), Binaries or ICO File... )
 	$(info ==============================================)
 	@$(RM) $(SOFTCLEAN)
 	@$(RM) $(EXECUTABLE)
@@ -71,4 +74,5 @@ cleanall:
 	$(info Cleaning every Objects and Binaries... )
 	$(info ==============================================)
 	@$(RM) $(OBJ)
+	@$(RM) $(ICOOBJ)
 	@$(RM) $(EXECUTABLE)
