@@ -9,7 +9,7 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     dir,                    // direction of the projectile
     emi,                    // player id 
     0.2f,                   // radius of the projectile
-    15.0f,                  // speed of the projectile
+    10.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
     20.0f,                  // max distance the projectile can travel
     "./../assets/textures/projectils/poisonbomb.png")        // texture of the projectile

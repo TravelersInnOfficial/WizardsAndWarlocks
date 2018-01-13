@@ -4,6 +4,8 @@ ifeq ($(OS),Windows_NT)
     CPPFLAGS        	:= -I./src/Includes -I/mingw64/include -I/mingw64/include/bullet
     LDFLAGS				:= -L/mingw64/lib
     LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64
+    ICO 				:= assets/game-icon-res.rc
+    ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
     CXXFLAGS			:= -O3 -ffast-math -g -Wall -std=c++11
@@ -21,7 +23,6 @@ SourcePath			:= $(shell find src -name '*.cpp')
 CXX					:= clang++
 
 EXECUTABLE 			:= $(BinPath)/$(Target)
-EXECUTABLE_W 		:= $(BinPath)/$(Target_W)
 SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)
 OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
 
@@ -31,12 +32,12 @@ SOFTCLEAN			 = $(patsubst src/%.cpp,obj/%.o,$(GAMEOBJ))
 SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 
 #MAKE OPTIONS
-.PHONY: all clean cleanall
+.PHONY: all clean cleanall ico
 
 all: prepare $(OBJ)
 	$(info ----------------------------------------------)
 	$(info Linking executable $(Target)...)
-	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS) $(ICOOBJ)
 	$(info ----------------------------------------------)	
 	$(info Compile OK)
 
@@ -50,6 +51,13 @@ prepare:
 	$(info ==============================================)
 	@mkdir -p $(BinPath)
 	@mkdir -p $(SOURCE_DIRS)
+
+ico:
+	$(info ----------------------------------------------)
+	$(info Creating ico .o file)
+	$(info Compiling-> $(ICOOBJ))
+	$(info ----------------------------------------------)
+	$(shell windres $(ICO) -o $(ICOOBJ))
 
 clean:
 	$(info ==============================================)

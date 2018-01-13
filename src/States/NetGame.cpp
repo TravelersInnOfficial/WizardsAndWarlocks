@@ -143,7 +143,7 @@ void NetGame::setFps(){
 		secondCounter = 0;
 		std::string myFps = to_string(int(1/deltaTime));
 		std::wstring wsTmp(myFps.begin(), myFps.end());
-		g_engine->ChangeWindowName(wsTmp);
+		g_engine->ChangeWindowName(L"Wizards And Warlocks Master v1.0 FPS:" + wsTmp);
 	}
 }
 

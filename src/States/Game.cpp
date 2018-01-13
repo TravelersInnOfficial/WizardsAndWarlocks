@@ -38,8 +38,8 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 	spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);
 	spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
-	spellManager->AddHechizo(2, playerOne, SPELL_WALL);
-	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
+	spellManager->AddHechizo(2, playerOne, SPELL_THUNDER);
+	spellManager->AddHechizo(3, playerOne, SPELL_POISON);
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
 	AL = playerManager->AddAIPlayer();
@@ -180,7 +180,7 @@ void Game::setFps(){
 		secondCounter = 0;
 		std::string myFps = to_string(int(1/deltaTime));
 		std::wstring wsTmp(myFps.begin(), myFps.end());
-		g_engine->ChangeWindowName(wsTmp);
+		g_engine->ChangeWindowName(L"Wizards And Warlocks Master v1.0 FPS: " + wsTmp);
 	}
 }
 
