@@ -64,16 +64,20 @@ Game::~Game(){
 bool Game::Input(){
 	bool end = false;
 	
+	// SALIR
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
 
+	// TEMPORALES
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+30);
-	
 	if(g_engine->IsKeyPressed(KEY_KEY_K)) playerOne->ChangeMP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
-	
-	if(g_engine->IsKeyPressed(KEY_KEY_R)) playerOne->Respawn();
+	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->Respawn();
+
+	// DEBUG
 	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
+
+	// SONIDO
 	//if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
 	//if(g_engine->IsKeyPressed(KEY_KEY_N)) playerOne->changeSurface(0.0f);
 

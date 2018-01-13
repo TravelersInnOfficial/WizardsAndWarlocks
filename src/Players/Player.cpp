@@ -144,8 +144,8 @@ void Player::DeclareInput(){
 	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
 	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
 	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_Z, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_X, ACTION_DROP_OBJECT);
+	controller->AddAction(KEY_KEY_R, ACTION_USE_OBJECT);
+	controller->AddAction(KEY_KEY_T, ACTION_DROP_OBJECT);
 	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
 	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
 	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
