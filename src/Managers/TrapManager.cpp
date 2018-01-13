@@ -89,7 +89,9 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End, int p
 			Server* server = n_engine->GetServer();
 			if(server != NULL){
 				myTrap->SetTrapId(lastTrapId);
-				server->SetTrap(point, normal, playerId, lastTrapId++);
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
+				int netPlayerId = player->GetNetworkObject()->GetObjId();
+				server->SetTrap(point, normal, netPlayerId, lastTrapId++);
 			}
 		}
 	}
@@ -164,8 +166,9 @@ bool TrapManager::setPlayerUsings(Player* player, int uses){
 	return toRet;
 }
 
+// Only for NETWORK
 void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df normal, int id){
-    Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
+	Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
     TrapEnum type = TENUM_NO_TRAP;
     Trap* myTrap = NULL;
     

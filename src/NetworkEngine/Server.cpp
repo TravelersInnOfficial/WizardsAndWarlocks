@@ -76,6 +76,7 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 	return(id);
 }
 
+// REMEMBER: IS THE NETWORK ID, NOT THE ENTITY ID
 void Server::SetTrap(vector3df point,vector3df normal, int playerId, int trapId){
 	RakNet::BitStream setTrapMessage;
 	
