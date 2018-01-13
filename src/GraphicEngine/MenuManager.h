@@ -35,6 +35,8 @@ private:
 	void CreateMatchEnded(int option);
 	void CreateNetDebug();
 
+	std::string GetStringFromPlayer(Player* player);
+
 };
 
 #endif

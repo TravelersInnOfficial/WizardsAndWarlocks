@@ -246,3 +246,18 @@ Player* PlayerManager::GetPlayerFromID(int id){
 
 	return toRet;
 }
+
+Player* PlayerManager::GetPlayerFromNetID(int id){
+	Player* toRet = NULL;
+	
+	int size = players.size();
+	for(int i=0; i<size && toRet == NULL; i++){
+		Player* p = players[i];
+		NetworkObject* nObj = NULL;
+
+		if(p != NULL) nObj = p->GetNetworkObject();
+		if(nObj != NULL && nObj->GetObjId() == id) toRet = p;
+	}
+
+	return toRet;
+}

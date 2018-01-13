@@ -1,5 +1,6 @@
 #include "Client.h"
 #include "./../States/NetGame.h"
+#include ".//../Managers/TrapManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -39,6 +40,10 @@ void Client::AddPlayer(int id, RakNet::RakNetGUID guid){
 
 void Client::RemovePlayer(int id){
 	networkPlayers.erase(id);
+}
+
+void Client::EraseTrap(int trapId){
+	TrapManager::GetInstance()->IdErase(trapId);
 }
 
 void Client::CreateNetworkObject(int id, ObjectType type){
@@ -151,6 +156,16 @@ void Client::RecievePackages(){
 				NetGame::GetInstance()->MatchEnded(winnerAlliance);
 				break;
 			}
+
+			// CUANDO SE ELIMINA UNA TRAMPA
+			case ID_ERASE_TRAP: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int trapId = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(trapId);
+				EraseTrap(trapId);
+				break;
+			}
 		}
 	}
 }
@@ -167,7 +182,8 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			ObjectType o = ID_NO_OBJ;
 			bitstream->Read(k);
 			bitstream->Read(o);
-			CreateNetworkObject(k, o);
+			if(o == ID_TRAP_O) SetTrap(k, bitstream);
+			else CreateNetworkObject(k, o);
 			break;
 		}
 		case ID_REMOVE: {
@@ -240,6 +256,18 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 		}
 	}
 
+}
+
+void Client::SetTrap(int trapId, RakNet::BitStream* bitstream){
+	vector3df position = vector3df(0, 0, 0);
+	vector3df normal = vector3df(0, 0, 0);
+	int playerId = -1;
+
+	bitstream->Read(position);
+	bitstream->Read(normal);
+	bitstream->Read(playerId);
+
+	TrapManager::GetInstance()->DirectDeploy(playerId, position, normal, trapId);
 }
 
 // Object variable messages

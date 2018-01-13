@@ -26,10 +26,12 @@ public:
     void SetPosition(vector3df);
     void SetDimensions(vector3df);
     void SetType(TrapEnum);
+    void SetTrapId(int id);
 
     vector3df GetPosition();
     vector3df GetDimensions();
     TrapEnum GetTrapType();
+    int GetTrapId();
 
     // Sense Functions
     void SendSignal();
@@ -58,6 +60,8 @@ private:
     float m_current_time;
     float m_deactivation_time;
     float m_world_time;
+
+    int trapId;
 
     void InitializeTrapData();
     void SetTrapData(vector3df, std::string, std::string);

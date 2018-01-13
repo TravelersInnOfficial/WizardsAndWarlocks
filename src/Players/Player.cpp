@@ -352,20 +352,23 @@ void Player::Jump(){
 
 void Player::ChangeHP(float HP){
 
-	if (HP < 0) {
-		if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
-		bloodOverlayTime = 1;
-	}
-
+	// MULTIJUGADOR
 	if(networkObject != NULL){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
 		if(isServer) m_HP += HP / m_Defense;
 	}
+
+	// UN JUGADOR
 	else{
+		if (HP < 0) {
+			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
+			bloodOverlayTime = 1;
+		}
 		m_HP += HP / m_Defense;
-	} 
+	}
 	
+	// AMBOS
 	if(m_HP >= 100) m_HP = 100;
 	else if(m_HP <= 0){
 		m_HP = 0;
@@ -534,8 +537,18 @@ void Player::DeployTrap(){
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 	if(Object!=NULL){
 		Entidad* h = (Entidad*)Object;
-		if(h->GetClase() == EENUM_FLOOR) 
-		TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
+		if(h->GetClase() == EENUM_FLOOR){
+			bool putTrap = false;
+			
+			if(networkObject == NULL) putTrap = true;
+			else{
+				NetworkEngine* n_engine = NetworkEngine::GetInstance();
+				bool isServer = n_engine->IsServerInit();
+				if(isServer) putTrap = true;
+			}
+
+			if(putTrap) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
+		}
 	}
 }
 

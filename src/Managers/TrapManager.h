@@ -19,7 +19,7 @@ public:
 	bool PlayerDeployTrap(Player*, vector3df, vector3df);
 
 	Trap* AddTrap(vector3df pos,vector3df normal, TrapEnum type);
-	bool DeployTrap(TrapEnum type, vector3df, vector3df);
+	bool DeployTrap(TrapEnum type,vector3df Start, vector3df End, int playerId);
 	void UpdateTrap(float deltaTime);
 
 	int getPlayerUsings(Player*);
@@ -30,10 +30,15 @@ public:
 
 	void ClearTraps();
 
+	void DirectDeploy(int playerId, vector3df position, vector3df normal, int id);
+	void IdErase(int id);
+	Trap* GetTrapWithId(int id);
+
 private:
 	vector<Trap*> traps;
 	std::map<Player*,TrapEnum> playerTrap;
 	std::map<Player*, int> playerUsings;
+	int lastTrapId;
 
 	TrapManager();
 	static TrapManager* instance;
