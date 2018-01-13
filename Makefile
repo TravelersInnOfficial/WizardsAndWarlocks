@@ -4,6 +4,8 @@ ifeq ($(OS),Windows_NT)
     CPPFLAGS        	:= -I./src/Includes -I/mingw64/include -I/mingw64/include/bullet
     LDFLAGS				:= -L/mingw64/lib
     LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64
+	ICO 				:= assets/game-icon-res.rc
+	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
     CXXFLAGS			:= -O3 -ffast-math -g -Wall -std=c++11
@@ -17,9 +19,6 @@ BuildPath 			:= ./obj
 
 SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
 SourcePath			:= $(shell find src -name '*.cpp')
-
-ICO 				:= assets/game-icon-res.rc
-ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 
 CXX					:= clang++
 
