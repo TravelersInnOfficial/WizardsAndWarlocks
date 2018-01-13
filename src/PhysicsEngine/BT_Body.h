@@ -38,6 +38,7 @@ public:
 
 	void AssignPointer(void*);
 	void SetCollisionFlags(std::string);
+	void SetCCD(float treshold, float size);
 
 	void Erase();
 	~BT_Body();
