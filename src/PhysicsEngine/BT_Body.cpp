@@ -57,7 +57,8 @@ void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, fl
     m_RigidBody = new btRigidBody(m_ConstructionInfo);
     m_RigidBody->setActivationState(DISABLE_DEACTIVATION); //IMPORTANT: FOR BULLET DO NOT DEACTIVATE MOVEMENT IF STAND STILL
 	m_RigidBody->setAngularFactor(btVector3(0,0,0));
-    BulletEngine::GetInstance()->AddRigidBody(m_RigidBody, mask, collideWith);
+
+	BulletEngine::GetInstance()->AddRigidBody(m_RigidBody, mask, collideWith);
 }
 
 void BT_Body::SetAngularVelocity(vector3df force){
@@ -214,6 +215,11 @@ void BT_Body::SetCollisionFlags(std::string s){
 	else if(s.compare("contact")==0){
 		m_RigidBody->setCollisionFlags(0);
 	}
+}
+
+void BT_Body::SetCCD(float treshold, float size){
+	m_RigidBody->setCcdMotionThreshold(treshold);	// If the obj moves more than 1 meter
+	m_RigidBody->setCcdSweptSphereRadius(size);		// Radius that fits inside object
 }
 
 void BT_Body::Erase(){

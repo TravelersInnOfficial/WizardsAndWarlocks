@@ -16,12 +16,11 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCO
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,0,0));
+    bt_body->SetCCD(0.04, 0.01);
     contactEffect = effect;
 }
 
 void BasicProjectile::ContactAction(Player* p){
     p->ChangeHP(-damage);
-
-    if(contactEffect != WEAK_BASIC)
-        EffectManager::GetInstance()->AddEffect(p, contactEffect);
+    if(contactEffect != WEAK_BASIC) EffectManager::GetInstance()->AddEffect(p, contactEffect);
 }
