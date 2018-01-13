@@ -52,7 +52,10 @@
         "sstream": "cpp",
         "valarray": "cpp",
         "*.ipp": "cpp",
-        "ios": "cpp"
+        "ios": "cpp",
+        "cinttypes": "cpp",
+        "__config": "cpp",
+        "__nullptr": "cpp"
     },
 
     "editor.quickSuggestions": {
