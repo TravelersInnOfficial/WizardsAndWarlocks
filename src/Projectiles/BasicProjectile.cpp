@@ -16,7 +16,7 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCO
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,0,0));
-    bt_body->SetCCD(0.04, 0.01);
+    //bt_body->SetCCD(0.000004, 0.01);
     contactEffect = effect;
 }
 
