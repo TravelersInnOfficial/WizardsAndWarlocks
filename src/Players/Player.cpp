@@ -400,7 +400,7 @@ void Player::UpdateSP(){
 	float useCost = 0.5;
 
 	if(isRunning) m_SP -= useCost;
-	else m_SP += useCost;
+	else m_SP += (useCost/2);
 	
 	if(m_SP <= 0){
 		m_SP = 0;
