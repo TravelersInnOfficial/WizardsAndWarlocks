@@ -47,6 +47,7 @@ class Player: public Entidad{
 		void Jump();
 		void ChangeHP(float);
 		bool ChangeMP(float);
+		void UpdateSP();
 		void ChangeCurrentSpell(int);
 		void Respawn();
 		void Raycast();
@@ -54,6 +55,7 @@ class Player: public Entidad{
 		void ReturnToLobby();
 		void DrawOverlays(float deltaTime);
 		void CheckIfReady();
+		void Run(bool runningStatus);
 
 		// Spells
 		bool StartSpell();
@@ -61,7 +63,6 @@ class Player: public Entidad{
 		void ResetSpell();
 		int GetCurrentSpell();
 		void ResetAllSpells();
-
 
 		// Sensorial Functions
 		void SendSignal();
@@ -103,6 +104,7 @@ class Player: public Entidad{
 		float GetLength();
 		float GetHP();
 		float GetMP();
+		float GetSP();
 		float GetDamageM();
 		Kinematic GetKinematic();
 		vector3df GetVelocity();
@@ -121,6 +123,7 @@ class Player: public Entidad{
 		void SetPosY(float);
 		void SetRotation(vector3df rotation);
 		void SetHP(float);
+		void SetSP(float);
 		void SetDamageMult(float);
 		void SetDead(bool);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
@@ -132,9 +135,9 @@ class Player: public Entidad{
 		virtual ~Player();
 
 		// public variables
-		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar
-		float 			m_DamageMult;		// Multiplicador de danyo del jugador
-		float 			m_Defense;			// Divisor del danyo recibido
+		float 			max_velocity;				// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
+		float 			m_DamageMult;				// Multiplicador de danyo del jugador
+		float 			m_Defense;					// Divisor del danyo recibido
 		EFFECTCODE 		m_shotEffect;
 
 	protected:
@@ -150,14 +153,16 @@ class Player: public Entidad{
 		int 			currentSpell;		// Hechizo Seleccionado para lanzar
 		int 			numberSpells;		// Numero de hechizos del jugador [0-numberSpells]
 
-		float 			m_HP;				// Vida del jugador - 100HP
-		float			m_MP;				// Mana del jugador	- 100HP
+		float 			m_HP;				// Vida del jugador		- 100HP
+		float			m_MP;				// Mana del jugador		- 100HP
+		float			m_SP;				// Stamina del jugador	- 100HP
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
-		
-		float			bloodOverlayTime;	// Tiempo de Blood Overlay que queda
-		float			hitOverlayTime;
+		bool			isRunning;			// The player is running? Yes/No
+
+		float			bloodOverlayTime;	//|
+		float			hitOverlayTime;		//| Tiempo de Blood Overlay que queda
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
