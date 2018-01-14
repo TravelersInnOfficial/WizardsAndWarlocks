@@ -302,11 +302,16 @@ void MenuManager::UpdateNetDebug(){
 }
 
 std::string MenuManager::GetStringFromPlayer(Player* player){
-	std::string toRet = player->GetName() + ": "
-						+ std::to_string((int)player->GetHP()) +" HP / "
-						+ std::to_string((int)player->GetMP()) +" MP."
-						+ " Has Character?: " + std::to_string(player->GetHasCharacter())
-						+ " LOCAL ID: " + std::to_string(player->GetId())
-						+ " NETWORK ID: " + std::to_string(player->GetNetworkObject()->GetObjId());
+	std::string toRet = player->GetName()
+						+ "     |     "
+						+ std::to_string((int)player->GetHP())
+						+" HP / "
+						+ std::to_string((int)player->GetMP())
+						+" MP /"
+						+ std::to_string((int)player->GetSP())
+						+" SP.     |     Char: "
+						+ std::to_string(player->GetHasCharacter())
+						+ "     |     N_ID: "
+						+ std::to_string(player->GetNetworkObject()->GetObjId());
 	return(toRet);
 }
