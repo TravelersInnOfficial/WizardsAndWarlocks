@@ -161,3 +161,36 @@ float Hechizo::GetTimeCasting(){
 float Hechizo::GetTotalCasting(){
 	return casting;
 }
+
+void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	g_engine->draw2DRectangle(vector3df(0,0,0), 
+								initX, 
+								initY, 
+								initX + size, 
+								initY + size);
+	if(current){
+	g_engine->draw2DRectangle(vector3df(255,255,0), 
+								initX, 
+								initY, 
+								initX + size, 
+								initY + size);
+	}	
+	if(timeCasting>0){
+		g_engine->draw2DRectangle(vector3df(0,0,255), 
+									initX, 
+									(initY + size) - size * (timeCasting/casting), 
+									initX + size, 
+									initY + size);
+	}
+	else if(currentCooldown>0){
+		g_engine->draw2DRectangle(vector3df(255,0,0), 
+									initX, 
+									(initY) + size * (1-(currentCooldown/cooldown)) , 
+									initX + size, 
+									initY + size);
+	}
+	vector4df sizeImage(initX+outline, initY+outline, initX+size-outline, initY+size-outline);
+	g_engine->draw2DImage(HUDTexturePath, sizeImage);
+}

@@ -98,15 +98,17 @@ public:
     void drawOverlays(int type = -1);
 
     /**
-     * Draws the MANA and the HEALTH bar
+     * Returns the height of the screen
     */
-    void drawManaAndHealth(int h, int m);
+    int GetScreenHeight();
 
     /**
-     * Draws the spell selector bar
+     * Returns the width of the screen
     */
-    void drawSpellSelector(std::vector<std::string>, std::vector<float>, std::vector<float>, std::vector<float>,std::vector<float>, int);
+    int GetScreenWidth();
 
+
+    void draw2DImage(std::string texturePath, vector4df rect);
     /**
      * Draws a rectangle
      */

@@ -182,80 +182,27 @@ void GraphicEngine::drawOverlays(int type){
 	}
 }
 
-void GraphicEngine::drawManaAndHealth(int h, int m){
-	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
-	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
-
-	float size = 20;
-
-	float xInit = W/20;
-	float xEnd =  W/3;
-
-	float yInitH = H * 0.05;
-	float yInitM = H * 0.09;
-
-	// float yInitH = H - (H * 0.14);
-	// float yInitM = H - (H * 0.10);
-
-	float yEndH = yInitH + size;
-	float yEndM = yInitM + size;
-
-	float hP = h/100.0f;
-	float mP = m/100.0f;
-
-
-	// Black Bar
-	vector3df color(0,0,0);
-	draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
-	draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
-	
-	// Helath & Mana Bar
-	color = vector3df(255,0,0);
-	draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
-	color = vector3df(0,0,255);
-	draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+int GraphicEngine::GetScreenHeight(){
+	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Height;
+	return (int)W;
 }
 
-void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths,std::vector<float> cooldowns,std::vector<float> totalcooldowns, std::vector<float> castings, std::vector<float> totalcastings, int selectedSpell){
-	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
-	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
+int GraphicEngine::GetScreenWidth(){
+	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Width;
+	return (int)H;
+}
 
-	float sizeBox = W/20;
+void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 
-	float xInit = W/20;
-	float xEnd =  W/10;
+	irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
 
-	float yInitH = H * 0.9;
+	irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
 
-	float yEndH = yInitH + sizeBox;
-
-	float space = 0;
-	float outline = 5;
-
-	//draw the spells
-	vector3df color(0,0,0);
-	color = vector3df(0,255,0);
-	irr::video::ITexture* spellTexture;
-
-	for(int i = 0;i<texturePaths.size();i++){
-		draw2DRectangle(vector3df(0,0,0), xInit + space - outline, yInitH - outline, xInit + (xEnd - xInit) + space + outline, yEndH + outline);
-		if(i == selectedSpell){
-			draw2DRectangle(vector3df(255,255,0), xInit + space - outline, yInitH - outline, xInit + (xEnd - xInit) + space + outline, yEndH + outline) ;
-		}
-		if(castings[i]>0){
-			draw2DRectangle(vector3df(0,0,255), xInit + space - outline, (yEndH + outline) - (yEndH - yInitH + outline*2) * (castings[i]/totalcastings[i]), xInit + (xEnd - xInit) + space + outline, yEndH + outline);
-		}
-		if(cooldowns[i]>0){
-			
-			draw2DRectangle(vector3df(255,0,0), xInit + space - outline, (yInitH - outline) + (yEndH - yInitH + outline*2) * (1-(cooldowns[i]/totalcooldowns[i])) , xInit + (xEnd - xInit) + space + outline, (yEndH + outline));
-		}
-		spellTexture = privateDriver->getTexture(texturePaths[i].c_str());
-		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
-		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
-		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
-		space += W/15;
-	}
+	const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
+	
+	irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+		
+	privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){

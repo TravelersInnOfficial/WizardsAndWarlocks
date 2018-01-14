@@ -29,6 +29,11 @@ class Player: public Entidad{
 		void PlayerInit();
 		virtual void Update();
 
+		// Draw
+		void Draw();
+		void DrawManaAndHealth();
+		void DrawSpellSelector();
+
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
 		void SetAllInput(keyStatesENUM state);

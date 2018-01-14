@@ -19,13 +19,18 @@ public:
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
 	bool CheckMP(float MP);
+
 	// Utility
 	float GetUtility(Player* p);
 	float CalculateUtility(float value, float base);
+
 	// Getters
 	float	GetMP();
 	SPELLCODE GetType();
 	SoundEvent* getShotEvent();
+
+	// Draw
+	void DrawHUD(float initX, float initY, float size, float outline, bool current);
 
 	std::string GetHUDTexturePath();
 	float GetTimeCasting();

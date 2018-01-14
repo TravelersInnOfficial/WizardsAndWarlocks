@@ -821,3 +821,83 @@ void Player::SetName(std::string newName){
 void Player::SetBillboard(){
 	if(!isPlayerOne) m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
 }
+
+void Player::Draw(){
+	DrawManaAndHealth();
+	DrawSpellSelector();
+}
+
+void Player::DrawManaAndHealth(){
+
+	int W = engine->GetScreenWidth();		
+	int H = engine->GetScreenHeight();
+
+	float size = 20.0f;			// Height of the bar
+
+	float xInit = W/20.0f;		// Calculate the Init and End of the bar on X axis
+	float xEnd =  W/3.0f;		
+
+	float yInitH = H * 0.05;	// Calculate the Init of the bar on Y axis
+	float yInitM = H * 0.09;
+
+	// float yInitH = H - (H * 0.14);
+	// float yInitM = H - (H * 0.10);
+
+	float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
+	float yEndM = yInitM + size;
+
+	float hP = m_HP/100.0f;		// % of the life
+	float mP = m_MP/100.0f;		// % of the mana
+
+
+	// Black Bar
+	vector3df color(0,0,0);
+	engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
+	engine->draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
+	
+	// Helath & Mana Bar
+	color = vector3df(255,0,0);
+	engine->draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
+	color = vector3df(0,0,255);
+	engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+}
+
+void Player::DrawSpellSelector(){
+	SpellManager::GetInstance()->DrawHUDSpells(this, currentSpell);
+
+
+
+
+/*
+	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
+	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
+
+	float sizeBox = W/20;
+
+	float xInit = W/20;
+	float xEnd =  W/10;
+
+	float yInit = H * 0.9;
+
+	float yEndH = yInitH + sizeBox;
+
+	float space = 0;
+	float outline = 5;
+
+	//draw the spells
+	vector3df color(0,0,0);
+	color = vector3df(0,255,0);
+	irr::video::ITexture* spellTexture;
+
+	for(int i = 0;i<texturePaths.size();i++){
+
+		spellTexture = privateDriver->getTexture(texturePaths[i].c_str());
+		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
+		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
+		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+		
+		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
+
+	}
+	*/
+}

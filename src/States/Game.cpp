@@ -143,8 +143,7 @@ void Game::Draw(){
 	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL){
 		playerOne->DrawOverlays(deltaTime);
-		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
-		spellManager->DrawHUDSpells(playerOne);
+		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
 	

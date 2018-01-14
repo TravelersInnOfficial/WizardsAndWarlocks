@@ -186,22 +186,29 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 	}
 }
 
-void SpellManager::DrawHUDSpells(Player* p){
-	std::vector<std::string> spellHUDtextures;
-	std::vector<float> spellCooldowns;
-	std::vector<float> spellCastings;
-	std::vector<float> totalCooldowns;
-	std::vector<float> totalCastings;
+void SpellManager::DrawHUDSpells(Player* p, int current){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	int W = g_engine->GetScreenWidth();
+	int H = g_engine->GetScreenHeight();
+
+	float sizeBox = W * 0.075;	// Tamanyo de los cuadrados del hechizo
+
+	float xInit = W/20;			// X inicial del primer hechizo
+	float yInit = H*0.85;		// Y inicial
+
+	float space = W * 0.03;		// Espacio entre hechizos
+	float outline = 5;			// Borde de los hechizo
+
+
+	float xInitSpell = 0.0f;
 	for(int i = 0; i<numHechizos;i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
-			//get all spells texture
-			spellHUDtextures.push_back(h->GetHUDTexturePath());
-			spellCooldowns.push_back(h->GetCurrentCooldown());
-			spellCastings.push_back(h->GetTimeCasting());
-			totalCooldowns.push_back(h->GetTotalCooldown());
-			totalCastings.push_back(h->GetTotalCasting());
+			if(h!=NULL){
+				xInitSpell = xInit + (sizeBox + space)*i;	// Calcula la X inicial de cada hechizo
+				h->DrawHUD(xInitSpell, yInit, sizeBox, outline, i==current);
+			}
 		}
 	}
-	GraphicEngine::getInstance()->drawSpellSelector(spellHUDtextures, spellCooldowns,totalCooldowns, spellCastings, totalCastings,p->GetCurrentSpell());
 }
