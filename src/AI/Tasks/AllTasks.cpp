@@ -140,6 +140,34 @@ bool UsePotion::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	USE FOUNTAIN
+//
+// ================================================================================================= //
+
+UseFountain::UseFountain(){}
+bool UseFountain::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"UseFountain\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target != NULL){
+		void* Object = BulletEngine::GetInstance()->Raycast(
+		character->GetPos(), 
+		target->kinematic.position);
+
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_FOUNTAIN){
+				h->Interact(character);
+			}
+		}
+	}
+	return false;
+}
+
+
+// ================================================================================================= //
+//
 //	CHECK USE POTION
 //
 // ================================================================================================= //
@@ -217,6 +245,28 @@ bool UseSpell::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	CHECK SEE FOUNTAIN TO RECOVER
+//
+// ================================================================================================= //
+
+CheckSawFountain::CheckSawFountain(){}
+
+bool CheckSawFountain::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckSawFountain\n";
+
+	int number = bb->GetNumberSight(AI_FOUNTAIN);
+	if(number>0){
+		bb->SetTargetSight(AI_FOUNTAIN, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_USE_FOUNT);
+		bb->SetMasterMovement(AI_MOVE_GOTARGET);
+		return true;
+	}
+	return false;
+}
+
+
+// ================================================================================================= //
+//
 //	CHECK SEE POTION TO CATCH
 //
 // ================================================================================================= //
@@ -271,7 +321,6 @@ bool CheckDistance::run(Blackboard* bb){
         if(distLength<=distance){
         	return true;
         }
-
 	}
 	return false;
 }

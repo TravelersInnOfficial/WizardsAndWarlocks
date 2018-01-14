@@ -5,6 +5,7 @@
 #include "./../Managers/PlayerManager.h"
 
 Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture){
+	impact = false;
 	initPos = pos;
 	direction = new vector3df(dir.X, dir.Y, dir.Z);
    
@@ -81,21 +82,26 @@ void Projectile::UpdatePosShape(){
  * @param tipo: type of entity collided
  */
 void Projectile::Contact(void* punt, EntityEnum tipo){
-	if(tipo==EENUM_PLAYER){
-		Player* p = (Player*)punt;
-		int idEmisor = p->GetId();
-		if(emisor == idEmisor) return;
+	if(!impact){		// En el caso de que no haya impactado ya
+		if(tipo==EENUM_PLAYER){
+			Player* p = (Player*)punt; 		//Cargamos el personaje
+			int idEmisor = p->GetId();	
+			if(emisor == idEmisor) return;	// En el caso de que sea quien ha lanzado el proyectil no hacemos hit
 
-		Player* emisor_p = PlayerManager::GetInstance()->GetPlayerFromID(emisor);
-		if(emisor_p != NULL) emisor_p->HitMade(p);
-		ContactAction(p);	// Projectile hits player
-	}
-	else if(tipo == EENUM_INVOCATION){
-		Invocation* i = (Invocation*)punt;
-		i->ChangeHP(-damage);
-	}
+			// Cargamos el emisor del disparo y activamos su overflow de hit
+			Player* emisor_p = PlayerManager::GetInstance()->GetPlayerFromID(emisor);
+			if(emisor_p != NULL){emisor_p->HitMade(p);}
 
-    ContactBehavior();
+			ContactAction(p);	// Projectile hits player
+			impact = true;
+		}
+		else if(tipo == EENUM_INVOCATION){
+			Invocation* i = (Invocation*)punt;
+			i->ChangeHP(-damage);
+			impact = true;
+		}
+	    ContactBehavior();
+	}
 }
 
 BT_Body* Projectile::GetBody(){

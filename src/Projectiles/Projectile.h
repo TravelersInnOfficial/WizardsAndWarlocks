@@ -27,6 +27,7 @@ protected:
     virtual void ContactAction(Player* p) = 0;
 
     int             emisor;             // Creador del proyectil
+    bool            impact;             // Ha llegado a hacer hit? Si/No
 
     vector3df       initPos;            // Posicion inicial del proyectil
     vector3df*   	direction;	        // La direccion que va a tomar el proyectil

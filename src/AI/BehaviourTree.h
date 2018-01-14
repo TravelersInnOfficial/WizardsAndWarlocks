@@ -62,6 +62,7 @@ private:
     void CreateShootSpell();    // SubArbol de lanzar hechizo
     void CreateCathPotion();    // SubArbol de coger una pocion
     void CreateDrinkPotion();   // SubArbol de beber una pocion
+    void CreateUseFountain();   // SubArbol de usar una fuente
 };
 
 #endif

@@ -1,8 +1,9 @@
 #include "DamageArea.h"
 #include "./../Players/Player.h"
 
-DamageArea::DamageArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation){
+DamageArea::DamageArea(int dam, int emi, vector3df TPosition, vector3df TScale, vector3df TRotation){
 	damage = dam;
+	emisor = emi;
 	casting = 0.2f;
 	currentCast = 0.0f;
 	activated = true;
@@ -43,6 +44,7 @@ void DamageArea::Contact(void* punt, EntityEnum tipo){
 	if(currentCast<=0){
 		if(tipo==EENUM_PLAYER){
 	        Player* p = (Player*)punt;
+	        if(p->GetId() == emisor) return;
 	        p->ChangeHP(-damage);
 	    }
 	}

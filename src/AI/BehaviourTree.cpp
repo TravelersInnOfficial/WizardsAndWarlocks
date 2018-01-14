@@ -73,6 +73,7 @@ void BehaviourTree::CreateReceive(){
     Selector* sc_checkActions = new Selector();
     sc_checkActions->addChild(new CheckUsePotion());
     sc_checkActions->addChild(new CheckPlayerSight());
+    sc_checkActions->addChild(new CheckSawFountain());
     sc_checkActions->addChild(new CheckSawPotion());
     sc_checkActions->addChild(new PutDefaultAction());
 
@@ -92,6 +93,8 @@ void BehaviourTree::CreateMovement(){
 void BehaviourTree::PrepareSubTrees(){
     // Movimiento Default
     CreateMoveDefault();
+    // Movimiento a un target
+    CreateMoveToTarget();
     // Movimiento de los Hechizos
     CreateMoveSpell();
     // Lanzamiento de los hechizos
@@ -100,6 +103,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateCathPotion();
     // Beber Pocion
     CreateDrinkPotion();
+    // Usar fuente
+    CreateUseFountain();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -168,7 +173,6 @@ void BehaviourTree::CreateMoveSpell(){
 
 void BehaviourTree::CreateCathPotion(){
     Secuencia* sc_catchPotion = new Secuencia();
-    sc_catchPotion->addChild(new GoToTarget());
     sc_catchPotion->addChild(new CheckDistance(2.0f));  // Distancia del raycast
     sc_catchPotion->addChild(new CatchPotion());
 
@@ -189,4 +193,14 @@ void BehaviourTree::CreateDrinkPotion(){
     informacion->SetPuntero(AI_TASK_DRINK_POT, t);
 
     tasks.push_back(t);
+}
+
+void BehaviourTree::CreateUseFountain(){
+    Secuencia* sc_useFountain = new Secuencia();
+    sc_useFountain->addChild(new CheckDistance(2.0f));  // Distancia del raycast
+    sc_useFountain->addChild(new UseFountain());
+
+    informacion->SetPuntero(AI_TASK_USE_FOUNT, sc_useFountain);
+
+    tasks.push_back(sc_useFountain);
 }

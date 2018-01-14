@@ -9,28 +9,29 @@ enum AI_code
 	AI_TASK_DEFAULT 	= 0x02,	// (Puntero) SubArbol de decisiones de tareas basico
 	AI_TASK_DRINK_POT	= 0x03, // (Puntero) SubArbol de decisiones de tarea beber pocion
 	AI_TASK_CATCH_POT	= 0x04, // (Puntero) SubArbol de decisiones de tarea coger pocion
-	AI_TASK_SHOOT_SPELL	= 0x05,	// (Puntero) SubArbol de decisiones de tarea disparar habilidad
-	AI_TASK_SPELL00		= 0x06,	// (Puntero) SubArbol de decisiones del hechizo 00
-	AI_TASK_SPELL01 	= 0x07,	// (Puntero) SubArbol de decisiones del hechizo 01
-	AI_TASK_SPELL02 	= 0x08,	// (Puntero) SubArbol de decisiones del hechizo 02
-	AI_TASK_SPELL03 	= 0x09,	// (Puntero) SubArbol de decisiones del hechizo 03
+	AI_TASK_USE_FOUNT	= 0x05,	// (Puntero) SubArbol de decisiones de tarea usar fuente
+	AI_TASK_SHOOT_SPELL	= 0x06,	// (Puntero) SubArbol de decisiones de tarea disparar habilidad
+	AI_TASK_SPELL00		= 0x07,	// (Puntero) SubArbol de decisiones del hechizo 00
+	AI_TASK_SPELL01 	= 0x08,	// (Puntero) SubArbol de decisiones del hechizo 01
+	AI_TASK_SPELL02 	= 0x09,	// (Puntero) SubArbol de decisiones del hechizo 02
+	AI_TASK_SPELL03 	= 0x0A,	// (Puntero) SubArbol de decisiones del hechizo 03
 	// SUB ARBOLES DE MOVIMIENTO
-	AI_MOVE_DEFAULT		= 0x0A,	// (Puntero) SubArbol de decisiones de movimiento basico
-	AI_MOVE_GOTARGET	= 0x0B, // (Puntero) SubArbol de decisiones de movimiento hacia el target
-	AI_MOVE_SPELL00 	= 0x0C,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
-	AI_MOVE_SPELL01 	= 0x0D,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
-	AI_MOVE_SPELL02 	= 0x0E, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
-	AI_MOVE_SPELL03 	= 0x0F, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
+	AI_MOVE_DEFAULT		= 0x0B,	// (Puntero) SubArbol de decisiones de movimiento basico
+	AI_MOVE_GOTARGET	= 0x0C, // (Puntero) SubArbol de decisiones de movimiento hacia el target
+	AI_MOVE_SPELL00 	= 0x0D,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
+	AI_MOVE_SPELL01 	= 0x0E,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
+	AI_MOVE_SPELL02 	= 0x0F, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
+	AI_MOVE_SPELL03 	= 0x10, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
 	//CODIGOS SENSE
-	AI_PLAYER_WARL		= 0x10,	// Codigo player sense
-	AI_PLAYER_WIZA		= 0x11,	// Codigo player sense
-	AI_POTION			= 0x12,	// Codigo pocion sense
-	AI_FOUNTAIN			= 0x13,	// Codigo fuente sense
-	AI_GRAIL			= 0x14, // Codigo grial sense
-	AI_INVOCATION		= 0x15,	// Codigo invocacion sense
-	AI_SWITCH			= 0x16,	// Codigo switch sense
-	AI_DOOR				= 0x17,	// Codigo door sense
-	AI_TRAP				= 0x18	// Codigo trap sense
+	AI_PLAYER_WARL		= 0x11,	// Codigo player sense
+	AI_PLAYER_WIZA		= 0x12,	// Codigo player sense
+	AI_POTION			= 0x13,	// Codigo pocion sense
+	AI_FOUNTAIN			= 0x14,	// Codigo fuente sense
+	AI_GRAIL			= 0x15, // Codigo grial sense
+	AI_INVOCATION		= 0x16,	// Codigo invocacion sense
+	AI_SWITCH			= 0x17,	// Codigo switch sense
+	AI_DOOR				= 0x18,	// Codigo door sense
+	AI_TRAP				= 0x19	// Codigo trap sense
 };
 
 enum AI_modalities
@@ -44,7 +45,8 @@ static std::string AICode_str[] = {
 	"TARGET",
 	"TASK_DEFAULT", 
 	"TASK_DRINK_POT", 
-	"TASK_CATCH_POT", 
+	"TASK_CATCH_POT",
+	"AI_TASK_USE_FOUNT",
 	"TASK_SHOOT_SPELL",
 	"TASK_SPELL00", 
 	"TASK_SPELL01", 

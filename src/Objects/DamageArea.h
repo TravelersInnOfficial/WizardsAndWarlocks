@@ -11,7 +11,7 @@
 
 class DamageArea: public Entidad{
 public:
-	DamageArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea(int dam, int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~DamageArea();
 	bool Update(float deltaTime);
 	void Update();
@@ -24,6 +24,7 @@ public:
 private:
 	void CreateDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
 
+	int 		emisor;				// Emisor del area de danyo
 	bool 		activated;			// Esta activa? Deberia seguir existiendo? Si/No
 
 	int 		damage; 			// Danyo que hacer la area

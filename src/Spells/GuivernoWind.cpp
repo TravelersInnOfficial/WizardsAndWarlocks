@@ -39,7 +39,7 @@ void GuivernoWind::CreateArea(Player* p){
 	pos.X = pos.X + sin(rot.Y)*dist;
 	pos.Z = pos.Z + cos(rot.Y)*dist;
 
-	area = ObjectManager::GetInstance()->AddDamageArea(pos, vector3df(1,1,1), vector3df(0,0,0));
+	area = ObjectManager::GetInstance()->AddDamageArea(p->GetId(), pos, vector3df(1,1,1), vector3df(0,0,0));
 }
 
 void GuivernoWind::UpdateArea(Player* p){

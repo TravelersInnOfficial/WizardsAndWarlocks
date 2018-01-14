@@ -33,7 +33,7 @@ public:
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea* AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
 
