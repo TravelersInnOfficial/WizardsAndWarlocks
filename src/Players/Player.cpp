@@ -32,12 +32,15 @@ Player::Player(bool isPlayer1){
 	bt_body = NULL;
 	m_playerNode = NULL;
 	networkObject = NULL;
+
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
 	moving = false;
 	stepsStarted = false;
 	pulseStarted = false;
+	isRunning = false;
+
 	name = "";
 
 	currentSpell = 0;
@@ -53,6 +56,7 @@ void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
 	m_MP = 100;
+	m_SP = 100;
 	m_DamageMult = 1;
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
@@ -154,6 +158,7 @@ void Player::DeclareInput(){
 	controller->AddAction(KEY_KEY_2, ACTION_SELECT_SPELL_01);
 	controller->AddAction(KEY_KEY_3, ACTION_SELECT_SPELL_02);
 	controller->AddAction(KEY_KEY_4, ACTION_SELECT_SPELL_03);
+	controller->AddAction(KEY_LSHIFT, ACTION_RUN);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -246,6 +251,7 @@ void Player::Update(){
 		// que si no se estaba moviendo lo frenamos 
 		if(moving){
 			if(!stepsStarted && canJump) playFootsteps();
+			UpdateSP();	// Updateamos SP (sumamos o restamos segun isRunning)
 			moving = false;
 		}
 		else{
@@ -378,7 +384,6 @@ void Player::ChangeHP(float HP){
 }
 
 bool Player::ChangeMP(float MP){
-
 	bool toRet = false;
 
 	if(m_MP + MP >= 0){
@@ -389,6 +394,19 @@ bool Player::ChangeMP(float MP){
 	}
 
 	return (toRet);
+}
+
+void Player::UpdateSP(){
+	float useCost = 0.5;
+
+	if(isRunning) m_SP -= useCost;
+	else m_SP += useCost;
+	
+	if(m_SP <= 0){
+		m_SP = 0;
+		Run(false);
+	}
+	else if (m_SP > 100) m_SP = 100;
 }
 
 void Player::Respawn(){
@@ -492,6 +510,14 @@ void Player::CheckIfReady(){
 	else readyToStart = false;
 	
 	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
+}
+
+void Player::Run(bool runStatus){
+	if(isRunning != runStatus){
+		isRunning = runStatus;
+		if(runStatus) max_velocity += 2;
+		else max_velocity -= 2;
+	}
 }
 
 void Player::CatchObject(Potion* p){
@@ -670,6 +696,8 @@ float Player::GetHP(){ return m_HP; }
 
 float Player::GetMP(){ return m_MP; }
 
+float Player::GetSP(){ return m_SP; }
+
 float Player::GetDamageM(){ return m_DamageMult; }
 
 NetworkObject* Player::GetNetworkObject(){ return (networkObject); }
@@ -803,6 +831,8 @@ void Player::SetRotation(vector3df rotation){
 }
 
 void Player::SetHP(float HP){ m_HP = HP; }
+
+void Player::SetSP(float SP){ m_SP = SP; }
 
 void Player::SetDead(bool flag){ m_dead = flag; }
 

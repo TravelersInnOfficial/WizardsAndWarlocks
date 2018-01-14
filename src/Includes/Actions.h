@@ -18,7 +18,8 @@ enum ACTION_ENUM
 	ACTION_SELECT_SPELL_00		= 0x0C,		// Cambiar el hechizo por el 0
 	ACTION_SELECT_SPELL_01		= 0x0D, 	// Cambiar el hechizo por el 1
 	ACTION_SELECT_SPELL_02		= 0x0E,		// Cambiar el hechizo por el 2
-	ACTION_SELECT_SPELL_03		= 0x0F		// Cambiar el hechizo por el 3
+	ACTION_SELECT_SPELL_03		= 0x0F,		// Cambiar el hechizo por el 3
+	ACTION_RUN					= 0x10		// Empezamos a Correr
 };
 
 #endif

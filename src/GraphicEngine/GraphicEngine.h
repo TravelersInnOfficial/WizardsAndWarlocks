@@ -100,7 +100,7 @@ public:
     /**
      * Draws the MANA and the HEALTH bar
     */
-    void drawManaAndHealth(int h, int m);
+    void drawManaAndHealth(int h, int m, int s);
 
     /**
      * Draws the spell selector bar

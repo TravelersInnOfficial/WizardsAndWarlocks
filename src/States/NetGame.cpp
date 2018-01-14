@@ -128,7 +128,7 @@ void NetGame::Draw(){
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->DrawOverlays(deltaTime);
-		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP());
+		g_engine->drawManaAndHealth(playerOne->GetHP(), playerOne->GetMP(),  playerOne->GetSP());
 		spellManager->DrawHUDSpells(playerOne);
 	}
 	

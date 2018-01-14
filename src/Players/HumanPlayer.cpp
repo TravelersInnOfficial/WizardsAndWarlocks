@@ -214,6 +214,9 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
 		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
 		
+		if(controller->IsKeyPressed(ACTION_RUN)){ this->Run(true); }
+		if(controller->IsKeyReleased(ACTION_RUN)){ this->Run(false); }
+		
 		// Acciones
 		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
 

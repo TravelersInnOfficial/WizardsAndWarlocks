@@ -182,7 +182,7 @@ void GraphicEngine::drawOverlays(int type){
 	}
 }
 
-void GraphicEngine::drawManaAndHealth(int h, int m){
+void GraphicEngine::drawManaAndHealth(int h, int m, int s){
 	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
 
@@ -193,27 +193,30 @@ void GraphicEngine::drawManaAndHealth(int h, int m){
 
 	float yInitH = H * 0.05;
 	float yInitM = H * 0.09;
-
-	// float yInitH = H - (H * 0.14);
-	// float yInitM = H - (H * 0.10);
+	float yInitS = H * 0.13;
 
 	float yEndH = yInitH + size;
 	float yEndM = yInitM + size;
+	float yEndS = yInitS + size;
 
 	float hP = h/100.0f;
 	float mP = m/100.0f;
+	float sP = s/100.0f;
 
 
 	// Black Bar
 	vector3df color(0,0,0);
 	draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
 	draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
+	draw2DRectangle(color, xInit, yInitS, xEnd, yEndS);
 	
 	// Helath & Mana Bar
-	color = vector3df(255,0,0);
+	color = vector3df(255, 0, 0);
 	draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
-	color = vector3df(0,0,255);
+	color = vector3df(0, 0, 255);
 	draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+	color = vector3df(255, 255, 0);
+	draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
 }
 
 void GraphicEngine::drawSpellSelector(std::vector<std::string> texturePaths,std::vector<float> cooldowns,std::vector<float> totalcooldowns, std::vector<float> castings, std::vector<float> totalcastings, int selectedSpell){
