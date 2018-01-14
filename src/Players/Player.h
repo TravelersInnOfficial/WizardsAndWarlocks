@@ -31,7 +31,7 @@ class Player: public Entidad{
 
 		// Draw
 		void Draw();
-		void DrawManaAndHealth();
+		void DrawBars();
 		void DrawSpellSelector();
 
 		// Controller

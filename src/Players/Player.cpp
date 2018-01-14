@@ -853,11 +853,11 @@ void Player::SetBillboard(){
 }
 
 void Player::Draw(){
-	DrawManaAndHealth();
+	DrawBars();
 	DrawSpellSelector();
 }
 
-void Player::DrawManaAndHealth(){
+void Player::DrawBars(){
 
 	int W = engine->GetScreenWidth();		
 	int H = engine->GetScreenHeight();
@@ -869,27 +869,33 @@ void Player::DrawManaAndHealth(){
 
 	float yInitH = H * 0.05;	// Calculate the Init of the bar on Y axis
 	float yInitM = H * 0.09;
+	float yInitS = H * 0.13;
 
 	// float yInitH = H - (H * 0.14);
 	// float yInitM = H - (H * 0.10);
 
 	float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
 	float yEndM = yInitM + size;
+	float yEndS = yInitS + size;
 
 	float hP = m_HP/100.0f;		// % of the life
 	float mP = m_MP/100.0f;		// % of the mana
+	float sP = m_SP/100.0f;		// % of the stamina
 
 
 	// Black Bar
 	vector3df color(0,0,0);
 	engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
 	engine->draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
+	engine->draw2DRectangle(color, xInit, yInitS, xEnd, yEndS);
 	
 	// Helath & Mana Bar
 	color = vector3df(255,0,0);
 	engine->draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
 	color = vector3df(0,0,255);
 	engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+	color = vector3df(255, 255, 0);
+	engine->draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
 }
 
 void Player::DrawSpellSelector(){
