@@ -64,7 +64,9 @@ enum ObjectVariable{
 	PLAYER_CREATE_CHAR			=	18,
 	PLAYER_READY				=	19,
 	PLAYER_SPELL				=	20,
-	PLAYER_NAME					=	21
+	PLAYER_NAME					=	21,
+	PLAYER_RUN					=	22,
+	PLAYER_STAMINA				=	23
 	
 };
 

@@ -21,6 +21,7 @@ void HumanPlayer::SetNetInput(){
 		networkObject->SetVecFVar(PLAYER_POSITION, GetPos(), true, false);
 		networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 		networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
+		networkObject->SetFloatVar(PLAYER_STAMINA, m_SP, true, false);
 	}
 
 	// LO QUE SINCRONIZA EL CLIENTE (PLAYER ONE)
@@ -41,6 +42,9 @@ void HumanPlayer::SetNetInput(){
 
 		if(controller->IsKeyPressed(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 2, true, false);
 		else if(controller->IsKeyReleased(ACTION_JUMP)) networkObject->SetIntVar(PLAYER_JUMP, 3, true, false);
+
+		if(controller->IsKeyPressed(ACTION_RUN)) networkObject->SetIntVar(PLAYER_RUN, 2, true, false);
+		else if(controller->IsKeyReleased(ACTION_RUN)) networkObject->SetIntVar(PLAYER_RUN, 3, true, false);
 
 		// ACTIONS
 		if(controller->IsKeyPressed(ACTION_RAYCAST)) networkObject->SetIntVar(PLAYER_RAYCAST, 2, true, false);
@@ -75,6 +79,8 @@ void HumanPlayer::GetNetInput(){
 
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isServer = n_engine->IsServerInit();
+	
+	// LO QUE NO RECIBE EL SERVIDOR EN NINGUN CASO, YA QUE LO SINCRONIZA EL
 	if(!isServer){
 		objstate = networkObject->GetVecFVar(PLAYER_POSITION);
 		if(objstate.X != -99999){
@@ -82,35 +88,46 @@ void HumanPlayer::GetNetInput(){
 			objstate = vector3df(-99999,0,0);
 			networkObject->SetVecFVar(PLAYER_POSITION, objstate, false, false);
 		}
+
+		float life = -9999;
+		life = networkObject->GetFloatVar(PLAYER_LIFE);
+		if(life != -9999 && life != -1){
+			if(m_HP != life){
+				if(life < m_HP){
+					playHit();
+					bloodOverlayTime = 1;
+				}
+				m_HP = life;
+			}
+			life = -9999;
+			networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
+		}
+		
+		float mana = -9999;
+		mana = networkObject->GetFloatVar(PLAYER_MANA);
+		if(mana != -9999 && mana != -1){
+			m_MP = mana;
+			mana = -9999;
+			networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
+		}
+
+		float stamina = -9999;
+		stamina = networkObject->GetFloatVar(PLAYER_STAMINA);
+		if(stamina != -9999 && stamina != -1){
+			m_SP = stamina;
+			stamina = -9999;
+			networkObject->SetFloatVar(PLAYER_STAMINA, stamina, false, false);
+		}
 	}
 
+	// LO QUE SI RECIBE TANTO EL SERVIDOR COMO TODOS LOS CLIENTES
 	objstate = networkObject->GetVecFVar(PLAYER_ROTATION);
 	if(objstate.X != -99999){
 		SetRotation(objstate);
 		objstate = vector3df(-99999,0,0);
 	}
 
-	float life = -9999;
-	life = networkObject->GetFloatVar(PLAYER_LIFE);
-	if(life != -9999 && life != -1){
-		if(m_HP != life){
-			if(life < m_HP){
-				playHit();
-				bloodOverlayTime = 1;
-			}
-			m_HP = life;
-		}
-		life = -9999;
-		networkObject->SetFloatVar(PLAYER_LIFE, life, false, false);
-	}
-	
-	float mana = -9999;
-	mana = networkObject->GetFloatVar(PLAYER_MANA);
-	if(mana != -9999 && mana != -1){
-		m_MP = mana;
-		mana = -9999;
-		networkObject->SetFloatVar(PLAYER_MANA, mana, false, false);
-	}
+	// LO QUE RECIBE TANTO EL SERVIDOR COMO LOS TODOS CLIENTES, PERO NO EL PLAYER ONE DE CADA CLIENTE
 
 	if(!isPlayerOne){
 		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
@@ -188,6 +205,13 @@ void HumanPlayer::GetNetInput(){
 			controller->SetStatus(ACTION_DEPLOY_TRAP, (keyStatesENUM)keystate);
 			keystate = -1;
 			networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, keystate, false, false);
+		}
+
+		keystate = networkObject->GetIntVar(PLAYER_RUN);
+		if(keystate != -1){
+			controller->SetStatus(ACTION_RUN, (keyStatesENUM)keystate);
+			keystate = -1;
+			networkObject->SetIntVar(PLAYER_RUN, keystate, false, false);
 		}
 
 		keystate = networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);

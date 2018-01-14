@@ -247,11 +247,12 @@ void Player::Update(){
 			lastVerticalSpeed = verticalSpeed;
 		}
 
+		UpdateSP();	// Updateamos SP (sumamos o restamos segun isRunning)
+
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
-		// que si no se estaba moviendo lo frenamos 
+		// que si no se estaba moviendo lo frenamos
 		if(moving){
 			if(!stepsStarted && canJump) playFootsteps();
-			UpdateSP();	// Updateamos SP (sumamos o restamos segun isRunning)
 			moving = false;
 		}
 		else{
@@ -399,7 +400,7 @@ bool Player::ChangeMP(float MP){
 void Player::UpdateSP(){
 	float useCost = 0.5;
 
-	if(isRunning) m_SP -= useCost;
+	if(isRunning && moving) m_SP -= useCost;
 	else m_SP += (useCost/2);
 	
 	if(m_SP <= 0){
