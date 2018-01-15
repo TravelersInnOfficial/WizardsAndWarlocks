@@ -158,29 +158,30 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 
 	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
 	vector3df linear = steering.linear;
-	float dir = atan2(linear.X, linear.Z);
-	// Luego le restamos la rotacion propia del personaje 
-	dir = rotation.Y - dir;
-	dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
+	if(linear.length()>5){
+		float dir = atan2(linear.X, linear.Z);
+		// Luego le restamos la rotacion propia del personaje 
+		dir = rotation.Y - dir;
+		dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
 
-	if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
-	if(dir> 180) dir -=360;
+		if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
+		if(dir> 180) dir -=360;
 
-	float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
-	if(tempdir<=60){
-		SetController(ACTION_MOVE_UP, DOWN);
-	}
-	else if(tempdir>=120){
-		SetController(ACTION_MOVE_DOWN, DOWN);
-	}
+		float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
+		if(tempdir<=60){
+			SetController(ACTION_MOVE_UP, DOWN);
+		}
+		else if(tempdir>=120){
+			SetController(ACTION_MOVE_DOWN, DOWN);
+		}
 
-	if(dir>=30 && dir<=150){					// En el caso de derecha, izquierda lo hacemos directamente con el valor
-		SetController(ACTION_MOVE_LEFT, DOWN);
+		if(dir>=30 && dir<=150){					// En el caso de derecha, izquierda lo hacemos directamente con el valor
+			SetController(ACTION_MOVE_LEFT, DOWN);
+		}
+		else if(dir>=-120 && dir<=-30){
+			SetController(ACTION_MOVE_RIGHT, DOWN);
+		}
 	}
-	else if(dir>=-120 && dir<=-30){
-		SetController(ACTION_MOVE_RIGHT, DOWN);
-	}
-
 	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
 }

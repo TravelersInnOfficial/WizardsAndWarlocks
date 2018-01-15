@@ -82,6 +82,15 @@ bool Fountain::Use(){
 	return false;
 }
 
+bool Fountain::GetInUse(){
+	return inUse;
+}
+
+float Fountain::GetPercentualValue(){
+	float output = value/(float)maxValue;
+	return output;
+}
+
 void Fountain::Recover(){
 	value += incrementValue;
 	if(value > maxValue){
@@ -104,7 +113,7 @@ void Fountain::UpdatePosShape(){
 void Fountain::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	sense->AddSignal(id, true, AI_FOUNTAIN, 5.0f, GetKinematic(), AI_SIGHT);
+	sense->AddSignal(id, this, true, AI_FOUNTAIN, 5.0f, GetKinematic(), AI_SIGHT);
 }
 
 Kinematic Fountain::GetKinematic(){

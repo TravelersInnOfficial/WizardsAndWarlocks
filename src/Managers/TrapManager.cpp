@@ -99,6 +99,13 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End, int p
 	return toRet;
 }
 
+void TrapManager::SendAllSignal(){
+	int size = traps.size();
+	for(int i=0; i<size; i++){
+		Trap* t = traps[i];
+		t->SendSignal();
+	}
+}
 
 void TrapManager::DeleteTrap(Trap* trap){
 	int size = traps.size();

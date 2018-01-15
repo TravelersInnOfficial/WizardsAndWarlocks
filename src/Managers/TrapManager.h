@@ -29,6 +29,7 @@ public:
 	bool setPlayerTrap(Player*, TrapEnum);
 
 	void ClearTraps();
+	void SendAllSignal();
 
 	void DirectDeploy(int playerId, vector3df position, vector3df normal, int id);
 	void IdErase(int id);

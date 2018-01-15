@@ -3,6 +3,7 @@
 
 Signal::Signal(Signal* sig){
 	id = sig->GetId();
+	pointer = sig->GetPointer();
 	temporal = sig->GetTemporal();
 	code = sig->GetCode();
 	kinematic = sig->GetKinematic();
@@ -19,8 +20,9 @@ Signal::Signal(Signal* sig){
 	}
 }
 
-Signal::Signal(int i, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
+Signal::Signal(int i, void* punt, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
 	id = i;
+	pointer = punt;
 	temporal = temp;
 	code = name;
 	strength = str;
@@ -40,6 +42,10 @@ Signal::Signal(int i, bool temp, AI_code name, float str, Kinematic kin, AI_moda
 
 Signal::~Signal(){
 	delete modality;
+}
+
+void* Signal::GetPointer(){
+	return pointer;
 }
 
 Kinematic Signal::GetKinematic(){

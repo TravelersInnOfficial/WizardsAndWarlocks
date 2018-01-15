@@ -90,7 +90,7 @@ bool Grail::CheckIfWon(){
 void Grail::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	sense->AddSignal(id, true, AI_FOUNTAIN, 5.0f, GetKinematic(), AI_SIGHT);
+	sense->AddSignal(id, this, true, AI_FOUNTAIN, 5.0f, GetKinematic(), AI_SIGHT);
 }
 
 Kinematic Grail::GetKinematic(){
