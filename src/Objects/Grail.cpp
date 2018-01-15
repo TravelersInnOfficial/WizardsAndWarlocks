@@ -45,9 +45,11 @@ Grail::~Grail(){
 }
 
 void Grail::Update(float deltaTime){
-	this->deltaTime = deltaTime;
 	
-	if(casting) casting = false;
+	if(casting){
+		timeCasting += deltaTime; 
+		casting = false; 
+	}
 	else{
 		playerOneInteraction = false;
 		timeCasting = 0.0f;
@@ -62,7 +64,6 @@ void Grail::Update(){
 
 void Grail::Interact(Player* p){
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
-		timeCasting += deltaTime;
 
 		if(timeCasting >= maxCasting){
 			recovered = true;
