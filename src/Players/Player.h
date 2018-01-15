@@ -33,6 +33,7 @@ class Player: public Entidad{
 		void Draw();
 		void DrawBars();
 		void DrawSpellSelector();
+		void DrawInventory();
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player

@@ -856,6 +856,7 @@ void Player::SetBillboard(){
 void Player::Draw(){
 	DrawBars();
 	DrawSpellSelector();
+	DrawInventory();
 }
 
 void Player::DrawBars(){
@@ -902,9 +903,6 @@ void Player::DrawBars(){
 void Player::DrawSpellSelector(){
 	SpellManager::GetInstance()->DrawHUDSpells(this, currentSpell);
 
-
-
-
 /*
 	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
@@ -936,5 +934,9 @@ void Player::DrawSpellSelector(){
 		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
 
 	}
-	*/
+*/
+}
+
+void Player::DrawInventory(){
+	if(potion != NULL) potion->DrawHUD();
 }

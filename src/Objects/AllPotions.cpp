@@ -51,7 +51,7 @@ bool ManaPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 IcePotion::IcePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 60, "./../assets/textures/potions/POT_MP.png"){
+:Potion(TScale, 60, "./../assets/textures/potions/POT_THUNDER.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_ICE.png";
 	CreatePotion(TPosition, TRotation);
 }
@@ -95,7 +95,7 @@ bool ElectricPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 FirePotion::FirePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, ""){
+:Potion(TScale, 20, "./../assets/textures/potions/POT_THUNDER.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_FIRE.png";
 	CreatePotion(TPosition, TRotation);
 }
@@ -117,7 +117,7 @@ bool FirePotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 PoisonPotion::PoisonPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, ""){
+:Potion(TScale, 20, "./../assets/textures/potions/POT_THUNDER.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_POISON.png";
 	CreatePotion(TPosition, TRotation);
 }
@@ -139,7 +139,7 @@ bool PoisonPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 DefensePotion::DefensePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, ""){
+:Potion(TScale, 20, "./../assets/textures/potions/POT_THUNDER.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_SHIELD.png";
 	CreatePotion(TPosition, TRotation);
 }
