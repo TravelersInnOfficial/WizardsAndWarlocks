@@ -44,7 +44,7 @@ void NpcSeller::Update(){
 	if (active){
 		selected = GraphicEngine::getInstance()->ReadButtonPressed();
 		switch(selected){
-			case (SELLER_M_PS_2):{
+			case (SELLER_M_ACCEPT):{
 				StopInteraction();
 				break;
 			}

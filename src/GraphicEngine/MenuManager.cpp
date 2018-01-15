@@ -2,6 +2,8 @@
 #include "./../Players/Player.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Managers/TrapManager.h"
+#include <TrapCodes.h>
 
 MenuManager* MenuManager::instance = 0;
 
@@ -129,6 +131,10 @@ void MenuManager::CreateAlliance(){
 }
 
 void MenuManager::CreateSeller(){
+	
+	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
+	if(playerOne == NULL) return;
+
 	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
 	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
 
@@ -146,10 +152,6 @@ void MenuManager::CreateSeller(){
 	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y/15,menuSize.X/2.0f,menuSize.Y/30);
 	g_engine->addStaticText(rect, L"Select the SPELLS and TRAPS you will fight with.", true, false, SELLER_M_TEXT_1, window);
 
-
-
-
-
 	// BUTTONS FOR OUR PLAYER SPELLS
 	float W =			menuSize.X;		// Ancho
 	float H =			menuSize.Y;		// Alto
@@ -159,28 +161,36 @@ void MenuManager::CreateSeller(){
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
 
-	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(playerOne);
-
-	if(playerOne != NULL){
-
-		std::vector<MenuOption> menuOptions;
-		menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
-
-		for(int i = 1; i < spells.size(); i++){
-			float xInitSpell = xInit + (sizeBox + space) * i;
-			vector4df sizeImage(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
-			vector4di finalSI(sizeImage.X, sizeImage.Y, sizeImage.X2, sizeImage.Y2);
-			std::string texturePath = spells[i]->GetHUDTexturePath();
-			g_engine->addButton(finalSI, L"", L"CURRENT SPELL", menuOptions.at(i-1), window, texturePath);
-		}
+	std::vector<MenuOption> menuOptions;
+	menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
+	for(int i = 1; i < spells.size(); i++){
+		float xInitSpell = xInit + (sizeBox + space) * i;
+		vector4df sizeImage(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		vector4di finalSizeImage(sizeImage.X, sizeImage.Y, sizeImage.X2, sizeImage.Y2);
+		std::string texturePath = spells[i]->GetHUDTexturePath();
+		g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", menuOptions.at(i-1), window, texturePath);
 	}
 
 	// BUTTONS FOR ALL THE SPELLS AVALIABLE
 
 	// BUTTON FOR OUR PLAYER TRAPS
 
+	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
+	yInit =		H * 0.5;				// Y inicial
+
+	TrapManager* trapManager = TrapManager::GetInstance();
+	std::string texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
+
+	vector4di finalSizeImage = vector4di(xInit + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
+
 	// BUTTON FOR ALL TRAPS AVALIABLE
+
+	// BUTTON FOR ACEPTAR
+	rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y*0.85,menuSize.X/2.0f,menuSize.Y*0.1);
+	g_engine->addButton(rect, L"ACCEPT", L"Accept and go back to Lobby", SELLER_M_ACCEPT, window);
+
 
 }
 

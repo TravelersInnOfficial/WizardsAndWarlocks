@@ -46,6 +46,7 @@ enum MenuOption {
 	SELLER_M_PS_3			= 26,
 	SELLER_M_PS_4			= 27,
 	SELLER_M_TRAP			= 28,
+	SELLER_M_ACCEPT			= 29
 
 
 };

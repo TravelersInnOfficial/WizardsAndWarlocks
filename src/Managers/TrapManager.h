@@ -24,6 +24,7 @@ public:
 
 	int getPlayerUsings(Player*);
 	TrapEnum getPlayerTrap(Player*);
+	std::string GetPathFromEnum(TrapEnum tKind);
 
 	bool setPlayerUsings(Player*, int);
 	bool setPlayerTrap(Player*, TrapEnum);
@@ -46,7 +47,6 @@ private:
 	int MaxUsings = 4;
 
 	TrapManager();
-	std::string GetPathFromEnum(TrapEnum tKind);
 	std::string GetPathFromUsings(int usings);
 };
 
