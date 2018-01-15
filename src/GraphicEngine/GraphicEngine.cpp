@@ -168,6 +168,10 @@ void GraphicEngine::drawOverlays(int type){
 			overlay = privateDriver->getTexture("./../assets/textures/overlays/HitMade.png");
 			break;
 		}
+		case(2):{
+			overlay = privateDriver->getTexture("./../assets/textures/overlays/Fuzzy.png");
+			break;
+		}
 		default:{
 			break;
 		}

@@ -63,6 +63,7 @@ void Player::PlayerInit(){
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
+	fuzzyOverlayTime = 0;
 	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	EffectManager::GetInstance()->CleanEffects(this);
 	stopPulse();
@@ -491,9 +492,11 @@ void Player::ReturnToLobby(){
 void Player::DrawOverlays(float deltaTime){
 	bloodOverlayTime -= deltaTime;
 	hitOverlayTime -= deltaTime;
+	fuzzyOverlayTime -= deltaTime;
 	
 	if(hitOverlayTime > 0) engine->drawOverlays(1);
 	if(bloodOverlayTime > 0) engine->drawOverlays(0);
+	if(fuzzyOverlayTime > 0) engine->drawOverlays(2);
 }
 
 void Player::CheckIfReady(){
@@ -598,6 +601,10 @@ bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::HitMade(Player* player){
 	hitOverlayTime = 0.25f;
+}
+
+void Player::ApplyFuzyEffect(){
+	fuzzyOverlayTime = 5.0f;
 }
 
 /********************************************************************************************************

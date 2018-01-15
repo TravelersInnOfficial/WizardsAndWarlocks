@@ -143,7 +143,7 @@ void Trap::Activate(Player* player){
         break;
         
         case TENUM_DISTURBANCE:
-            std::cout<<"POR HACER"<<std::endl;
+            player->ApplyFuzyEffect();
             player->ChangeHP(-10);
         break;
 

@@ -57,6 +57,7 @@ class Player: public Entidad{
 		void DrawOverlays(float deltaTime);
 		void CheckIfReady();
 		void Run(bool runningStatus);
+		void ApplyFuzyEffect();
 
 		// Spells
 		bool StartSpell();
@@ -164,7 +165,8 @@ class Player: public Entidad{
 		bool			isRunning;			// The player is running? Yes/No
 
 		float			bloodOverlayTime;	//|
-		float			hitOverlayTime;		//| Tiempo de Blood Overlay que queda
+		float			hitOverlayTime;		//|
+		float			fuzzyOverlayTime;	//| Tiempo de Blood Overlay que queda
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
