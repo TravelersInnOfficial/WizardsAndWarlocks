@@ -26,19 +26,27 @@ bool DEBUG = false;
 
 // ================================================================================================= //
 //
-//	DEBUG
+//	MASTER MOVEMENT
 //
 // ================================================================================================= //
 
-EmptyTask::EmptyTask(){}
+MasterAction::MasterAction(){
+	lastTask = -1;
+}
 
-bool EmptyTask::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"EmptyTask\n";
+bool MasterAction::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"MasterAction\n";
 
-	AIPlayer* character = bb->GetPlayer();
+	int number = (int)(bb->masterAction + AI_TASK_DEFAULT);
 
-	SteeringOutput steering;
-	character->Steering2Controller(steering);
+	if(number != lastTask){
+		lastTask = number;
+		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
+		setChild(t);
+	}
+	if(child!=NULL){
+		child->run(bb);
+	}
 	
 	return true;
 }
@@ -49,33 +57,24 @@ bool EmptyTask::run(Blackboard* bb){
 //
 // ================================================================================================= //
 
-MasterAction::MasterAction(){}
-
-bool MasterAction::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"MasterAction\n";
-
-	Task* t = (Task*)bb->GetPuntero((AI_code)(bb->masterAction + AI_TASK_DEFAULT));
-	if(t!=NULL){
-		t->run(bb);
-	}
-	return true;
+MasterMovement::MasterMovement(){
+	lastTask = -1;
 }
-
-// ================================================================================================= //
-//
-//	MASTER MOVEMENT
-//
-// ================================================================================================= //
-
-MasterMovement::MasterMovement(){}
 
 bool MasterMovement::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterMovement\n";
 
-	Task* t = (Task*)bb->GetPuntero((AI_code)(bb->masterMovement + AI_MOVE_DEFAULT));
-	if(t!=NULL){
-		t->run(bb);	
+	int number = (int)(bb->masterMovement + AI_MOVE_DEFAULT);
+
+	if(number != lastTask){
+		lastTask = number;
+		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
+		setChild(t);
 	}
+	if(child!=NULL){
+		child->run(bb);
+	}
+
 	return true;
 }
 
@@ -93,6 +92,25 @@ bool PutDefaultAction::run(Blackboard* bb){
 	bb->SetMasterAction(AI_TASK_DEFAULT);
 	bb->SetMasterMovement(AI_MOVE_DEFAULT);
 
+	return true;
+}
+
+// ================================================================================================= //
+//
+//	NO MOVE
+//
+// ================================================================================================= //
+
+NoMove::NoMove(){}
+
+bool NoMove::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"NoMove\n";
+
+	AIPlayer* character = bb->GetPlayer();
+
+	SteeringOutput steering;
+	character->Steering2Controller(steering);
+	
 	return true;
 }
 

@@ -221,7 +221,7 @@ void BehaviourTree::CreateDefuseTrap(){
 }
 
 void BehaviourTree::CreateNoMove(){
-    Task* t = new EmptyTask();
+    Task* t = new NoMove();
 
     informacion->SetPuntero(AI_MOVE_NO, t);
 
