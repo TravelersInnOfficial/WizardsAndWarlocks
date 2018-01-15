@@ -19,6 +19,8 @@ public:
 	void Update(float deltaTime);
 	void Interact(Player* p);
 	void SetFree();
+	bool GetInUse();
+	float GetPercentualValue();
 
 	// Sensorial Functions
 	void SendSignal();

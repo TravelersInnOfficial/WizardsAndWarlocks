@@ -39,7 +39,7 @@ Game::Game(){
 	spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);
 	spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
 	spellManager->AddHechizo(2, playerOne, SPELL_THUNDER);
-	spellManager->AddHechizo(3, playerOne, SPELL_POISON);
+	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
 	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
 	AL = playerManager->AddAIPlayer();

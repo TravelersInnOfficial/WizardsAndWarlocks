@@ -2,6 +2,7 @@
 // Engines
 #include "./../../GraphicEngine/GraphicEngine.h"
 // Managers
+#include "./../../Managers/TrapManager.h"
 #include "./../../Managers/PlayerManager.h"
 #include "./../../Managers/ObjectManager.h"
 
@@ -40,14 +41,26 @@ Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri
 	return s;
 }
 
-void RegionalSenseManager::AddSignal(int id, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
-	Signal* s = new Signal(id, temp, name, str, kin, mod);
+/**
+ * @brief Anyade una senyal al manager de sentidos
+ * 
+ * @param id 	- Id del emisor
+ * @param punt	- Puntero del emisor
+ * @param temp	- La senyal perdurara en memoria? Si/No
+ * @param name	- Codigo de IA que define el tipo de objeto
+ * @param str 	- Fuera de la senyal
+ * @param kin 	- Objeto kinematico del objeo
+ * @param mod 	- Modalidad de la senyal
+ */
+void RegionalSenseManager::AddSignal(int id, void* punt, bool temp, AI_code name, float str, Kinematic kin, AI_modalities mod){
+	Signal* s = new Signal(id, punt, temp, name, str, kin, mod);
 	AddSignal(s);
 }
 
 void RegionalSenseManager::CreateAllSignals(){
 	PlayerManager::GetInstance()->SendVisualSignal();
 	ObjectManager::GetInstance()->SendAllSignal();
+	TrapManager::GetInstance()->SendAllSignal();
 }
 
 void RegionalSenseManager::AddSignal(Signal* sig){

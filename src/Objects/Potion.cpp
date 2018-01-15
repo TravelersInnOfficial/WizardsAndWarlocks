@@ -95,7 +95,7 @@ void Potion::SendSignal(){
 	if(!picked){
 		RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 		// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-		sense->AddSignal(id, true, AI_POTION, 5.0f, GetKinematic(), AI_SIGHT);
+		sense->AddSignal(id, this, true, AI_POTION, 5.0f, GetKinematic(), AI_SIGHT);
 	}
 }
 

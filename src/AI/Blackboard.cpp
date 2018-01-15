@@ -75,7 +75,7 @@ void Blackboard::SetInt(AI_code name, int value){
     dataInt[name] = value;
 }
 
-void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float dur){
+void Blackboard::SetSound(int id, void* punt, AI_code name, Kinematic kin, float len, float dur){
     int size = soundSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = soundSense[i];
@@ -89,6 +89,7 @@ void Blackboard::SetSound(int id, AI_code name, Kinematic kin, float len, float 
 
     Sense_struct* s = new Sense_struct();
     s->id = id;
+    s->pointer = punt;
     s->code = name;
     s->kinematic = kin;
     s->length = len;
@@ -137,7 +138,7 @@ void Blackboard::CleanSense(int id){
     }
 }
 
-void Blackboard::SetSight(int id, AI_code name, Kinematic kin, float len, float dur){
+void Blackboard::SetSight(int id, void* punt, AI_code name, Kinematic kin, float len, float dur){
     int size = sightSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
@@ -150,6 +151,7 @@ void Blackboard::SetSight(int id, AI_code name, Kinematic kin, float len, float 
     }
     Sense_struct* s = new Sense_struct();
     s->id = id;
+    s->pointer = punt;
     s->code = name;
     s->kinematic = kin;
     s->length = len;

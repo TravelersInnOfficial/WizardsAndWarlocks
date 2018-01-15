@@ -34,10 +34,10 @@ void Sensor::Notify(Signal* sig, float currentTime){
 
 	switch(type){
 		case AI_SIGHT:
-			information->SetSight(sig->GetId(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 5000)*temporal); // Tiempo en milisegundos
+			information->SetSight(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 5000)*temporal); // Tiempo en milisegundos
 			break;
 		case AI_HEARING:
-			information->SetSound(sig->GetId(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 2000)*temporal); // Tiempo en milisengundos
+			information->SetSound(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 2000)*temporal); // Tiempo en milisengundos
 			break;
 	}
 }

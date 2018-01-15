@@ -30,10 +30,16 @@ bool DEBUG = false;
 //
 // ================================================================================================= //
 
-Debug::Debug(){}
+EmptyTask::EmptyTask(){}
 
-bool Debug::run(Blackboard* bb){
-	std::cout<<"TAREA DEBUG: HA LLEGADO HASTA AQUI\n";
+bool EmptyTask::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"EmptyTask\n";
+
+	AIPlayer* character = bb->GetPlayer();
+
+	SteeringOutput steering;
+	character->Steering2Controller(steering);
+	
 	return true;
 }
 
@@ -218,6 +224,31 @@ bool ReleaseSpell::run(Blackboard* bb){
 //
 // ================================================================================================= //
 
+UseGuivernum::UseGuivernum(){}
+
+bool UseGuivernum::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"shootBasic\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	// En el caso de que no se este casteando el hechizo
+	if(!character->GetCastingSpell()){
+			// Intetamos lanzar el hechizo
+			character->SetController(ACTION_SHOOT, PRESSED);
+			return true;
+	// En el caso de que ya se estuviera lanzando
+	}else{
+		character->SetController(ACTION_SHOOT, DOWN);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	SHOOT PROYECTILE BASIC
+//
+// ================================================================================================= //
+
 UseSpell::UseSpell(){}
 
 bool UseSpell::run(Blackboard* bb){
@@ -245,6 +276,61 @@ bool UseSpell::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	DEFUSE TRAP
+//
+// ================================================================================================= //
+
+DefuseTrap::DefuseTrap(){}
+
+bool DefuseTrap::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"DefuseTrap\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(target != NULL){
+		void* Object = BulletEngine::GetInstance()->Raycast(
+		character->GetPos(), 
+		target->kinematic.position);
+
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_TRAP){
+				bb->SetMasterMovement(AI_MOVE_NO);
+				h->Interact(character);
+				return true;
+			}
+		}else{
+			bb->CleanSense(target->id);
+		}
+	}
+	return false;
+}
+
+
+// ================================================================================================= //
+//
+//	CHECK SEE TRAPS TO DEFUSE
+//
+// ================================================================================================= //
+
+CheckSawTrap::CheckSawTrap(){}
+
+bool CheckSawTrap::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckSawTrap\n";
+
+	int number = bb->GetNumberSight(AI_TRAP);
+	if(number>0){
+		bb->SetTargetSight(AI_TRAP, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
+		bb->SetMasterMovement(AI_MOVE_GOTARGET);
+		return true;
+	}
+	return false;
+}
+
+
+// ================================================================================================= //
+//
 //	CHECK SEE FOUNTAIN TO RECOVER
 //
 // ================================================================================================= //
@@ -254,12 +340,24 @@ CheckSawFountain::CheckSawFountain(){}
 bool CheckSawFountain::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckSawFountain\n";
 
-	int number = bb->GetNumberSight(AI_FOUNTAIN);
-	if(number>0){
-		bb->SetTargetSight(AI_FOUNTAIN, AI_TARGET);
-		bb->SetMasterAction(AI_TASK_USE_FOUNT);
-		bb->SetMasterMovement(AI_MOVE_GOTARGET);
-		return true;
+	AIPlayer* character = bb->GetPlayer();
+	if(character->GetHP()<90){
+		int number = bb->GetNumberSight(AI_FOUNTAIN);
+		if(number>0){
+			bb->SetTargetSight(AI_FOUNTAIN, AI_TARGET);
+
+			Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+			if(target!=NULL){
+				Fountain* fo = (Fountain*)target->pointer;
+				if(fo!=NULL){
+					if(fo->GetPercentualValue()>0.2){
+						bb->SetMasterAction(AI_TASK_USE_FOUNT);
+						bb->SetMasterMovement(AI_MOVE_GOTARGET);
+						return true;
+					}
+				}
+			}
+		}
 	}
 	return false;
 }

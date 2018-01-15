@@ -154,7 +154,7 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 }
 
 DamageArea* ObjectManager::AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation){
-	DamageArea* ar = new DamageArea(10, emi, TPosition, TScale, TRotation);
+	DamageArea* ar = new DamageArea(3, emi, TPosition, TScale, TRotation);
 	damageAreas.push_back(ar);
 	return ar;
 }

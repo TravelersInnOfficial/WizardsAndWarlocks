@@ -56,6 +56,7 @@ private:
 	void CreateMovement();
     void PrepareSubTrees();
 
+    void CreateNoMove();        // SubArbol de no movimiento
     void CreateMoveSpell();     // SubArboles de movimiento con hechizos
     void CreateMoveDefault();   // SubArbol de movimiento por defecto
     void CreateMoveToTarget();  // SubArbol de movimiento hacia el target
@@ -63,6 +64,7 @@ private:
     void CreateCathPotion();    // SubArbol de coger una pocion
     void CreateDrinkPotion();   // SubArbol de beber una pocion
     void CreateUseFountain();   // SubArbol de usar una fuente
+    void CreateDefuseTrap();    // SubArbol de desactivar trampas
 };
 
 #endif

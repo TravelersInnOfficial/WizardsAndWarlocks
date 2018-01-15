@@ -73,6 +73,7 @@ void BehaviourTree::CreateReceive(){
     Selector* sc_checkActions = new Selector();
     sc_checkActions->addChild(new CheckUsePotion());
     sc_checkActions->addChild(new CheckPlayerSight());
+    sc_checkActions->addChild(new CheckSawTrap());
     sc_checkActions->addChild(new CheckSawFountain());
     sc_checkActions->addChild(new CheckSawPotion());
     sc_checkActions->addChild(new PutDefaultAction());
@@ -91,6 +92,8 @@ void BehaviourTree::CreateMovement(){
 }
 
 void BehaviourTree::PrepareSubTrees(){
+    // No movimiento
+    CreateNoMove();
     // Movimiento Default
     CreateMoveDefault();
     // Movimiento a un target
@@ -105,6 +108,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateDrinkPotion();
     // Usar fuente
     CreateUseFountain();
+    // Desactivar Trampa
+    CreateDefuseTrap();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -113,8 +118,8 @@ void BehaviourTree::PrepareSubTrees(){
     informacion->SetPuntero(AI_TASK_SPELL02, t_shootBasic);
 
     Secuencia* sc_distance_spell = new Secuencia();
-    sc_distance_spell->addChild(new UseSpell());
     sc_distance_spell->addChild(new CheckDistance(1.0f));
+    sc_distance_spell->addChild(new UseGuivernum());
     informacion->SetPuntero(AI_TASK_SPELL03, sc_distance_spell);
 
     tasks.push_back(t_shootBasic);
@@ -203,4 +208,22 @@ void BehaviourTree::CreateUseFountain(){
     informacion->SetPuntero(AI_TASK_USE_FOUNT, sc_useFountain);
 
     tasks.push_back(sc_useFountain);
+}
+
+void BehaviourTree::CreateDefuseTrap(){
+    Secuencia* sc_defuseTrap = new Secuencia();
+    sc_defuseTrap->addChild(new CheckDistance(2.0f));   // Distancia del raycast
+    sc_defuseTrap->addChild(new DefuseTrap());
+
+    informacion->SetPuntero(AI_TASK_DEFUSE_TRAP, sc_defuseTrap);
+
+    tasks.push_back(sc_defuseTrap);
+}
+
+void BehaviourTree::CreateNoMove(){
+    Task* t = new EmptyTask();
+
+    informacion->SetPuntero(AI_MOVE_NO, t);
+
+    tasks.push_back(t);
 }
