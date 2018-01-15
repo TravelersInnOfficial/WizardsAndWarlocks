@@ -1,5 +1,6 @@
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
+#include "./../Managers/EffectManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include "./../NetworkEngine/NetworkEngine.h"
 
@@ -15,7 +16,6 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     if(m_rotation->X >= 270) m_rotation->X = m_rotation->X - 270;
     if(m_rotation->Y >= 270) m_rotation->Y = m_rotation->Y - 270;
     if(m_rotation->Z >= 270) m_rotation->Z = m_rotation->Z - 270;
-    //m_rotation->X = 360 - m_rotation->X;
 
     m_body = new BT_GhostObject();
     m_rigidBody = new BT_Body();
@@ -57,36 +57,29 @@ void Trap::Update(){
 }
 
 void Trap::InitializeTrapData(){
-
-        switch(m_trapType){
+    switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            //std::cout<<"IM TENUM_DEATH_CLAWS"<<std::endl;
             SetTrapData(vector3df(0.5,0.001,0.5),"","Inmovilizacion mortal");
         break;
 
         case TENUM_SPIRITS:
-            //std::cout<<"IM TENUM_SPIRITS"<<std::endl;
             SetTrapData(vector3df(0.5,0.001,0.5),"","Distorsion fantasmal");
         break;
 
         case TENUM_SILENCE: 
-            //std::cout<<"IM TENUM_SILENCE"<<std::endl;
             SetTrapData(vector3df(0.5,0.001,0.5),"","Silenciar");
         break;
 
         case TENUM_TAXES:
-            //std::cout<<"IM TENUM_TAXES"<<std::endl;
             SetTrapData(vector3df(0.5,0.001,0.5),"","Te quita la poción que lleves encima");
         break;
         
         case TENUM_DISTURBANCE: 
-            //std::cout<<"IM TENUM_DISTURBANCE"<<std::endl;
             SetTrapData(vector3df(0.5,0.001,0.5),"","Locura");
         break;
 
         default:
         break;
-
     }
 }
 
@@ -126,8 +119,42 @@ void Trap::Interact(Player* p){
     }
 }
 
-void Trap::Activate(Player* player ){
-    player->ChangeHP(-50);
+void Trap::Activate(Player* player){
+
+    switch(m_trapType){
+        case TENUM_DEATH_CLAWS:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+            player->ChangeHP(-10);
+        break;
+
+        case TENUM_SPIRITS:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
+            player->ChangeHP(-10);
+        break;
+
+        case TENUM_SILENCE:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_SILENCED);
+            player->ChangeHP(-10);
+        break;
+
+        case TENUM_TAXES:
+            player->LosePotion();
+            player->ChangeHP(-10);
+        break;
+        
+        case TENUM_DISTURBANCE:
+            std::cout<<"POR HACER"<<std::endl;
+            player->ChangeHP(-10);
+        break;
+
+        case TENUM_EXPLOSIVE:
+            player->ChangeHP(-50);
+        break;
+
+        default:
+        break;
+    }
+
     TrapManager::GetInstance()->DeleteTrap(this);    
 }
 
@@ -186,6 +213,7 @@ void Trap::Erase(){
 
 void Trap::SendSignal(){
     RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+    
     // id, AI_code name, float str, Kinematic kin, AI_modalities mod
     sense->AddSignal(id, true, AI_TRAP, 5.0f, GetKinematic(), AI_SIGHT);
 }

@@ -63,7 +63,7 @@ void Player::PlayerInit(){
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
-	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
+	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	EffectManager::GetInstance()->CleanEffects(this);
 	stopPulse();
 }
@@ -533,6 +533,10 @@ void Player::DropObject(){
 	}
 }
 
+void Player::LosePotion(){
+	if(potion!=NULL) potion = NULL;
+}
+
 void Player::UseObject(){
 	if(potion!=NULL){
 		playDrink();
@@ -778,7 +782,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
-			TrapManager::GetInstance()->AddTrapToPlayer(this,TENUM_DEATH_CLAWS);
+			TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 			break;
 		}
 		default:{
@@ -902,39 +906,6 @@ void Player::DrawBars(){
 
 void Player::DrawSpellSelector(){
 	SpellManager::GetInstance()->DrawHUDSpells(this, currentSpell);
-
-/*
-	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
-	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
-
-	float sizeBox = W/20;
-
-	float xInit = W/20;
-	float xEnd =  W/10;
-
-	float yInit = H * 0.9;
-
-	float yEndH = yInitH + sizeBox;
-
-	float space = 0;
-	float outline = 5;
-
-	//draw the spells
-	vector3df color(0,0,0);
-	color = vector3df(0,255,0);
-	irr::video::ITexture* spellTexture;
-
-	for(int i = 0;i<texturePaths.size();i++){
-
-		spellTexture = privateDriver->getTexture(texturePaths[i].c_str());
-		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(xInit + space, yInitH, xInit + (xEnd - xInit) + space, yEndH);
-		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
-		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-		
-		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
-
-	}
-*/
 }
 
 void Player::DrawInventory(){

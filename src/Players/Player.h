@@ -71,6 +71,7 @@ class Player: public Entidad{
 		// Functions Object
 		void CatchObject(Potion* p);
 		void DropObject();
+		void LosePotion();
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();
