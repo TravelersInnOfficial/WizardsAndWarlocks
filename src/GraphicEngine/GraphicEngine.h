@@ -291,7 +291,7 @@ private:
      * infoText: text to help the user
      * id: id to easily access the button
     */
-    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL);
+    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL, std::string texturePath = "");
 
     /**
      * Adds an editable text box to given position

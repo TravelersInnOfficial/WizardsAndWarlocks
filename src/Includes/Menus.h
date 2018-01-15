@@ -42,6 +42,10 @@ enum MenuOption {
 
 	SELLER_M_WINDOW			= 23,
 	SELLER_M_TEXT_1			= 24,
+	SELLER_M_PS_2			= 25,
+	SELLER_M_PS_3			= 26,
+	SELLER_M_PS_4			= 27,
+	SELLER_M_TRAP			= 28,
 
 
 };

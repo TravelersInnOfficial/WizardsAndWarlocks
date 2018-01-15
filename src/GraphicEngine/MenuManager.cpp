@@ -151,12 +151,11 @@ void MenuManager::CreateSeller(){
 
 
 	// BUTTONS FOR OUR PLAYER SPELLS
-	
 	float W =			menuSize.X;		// Ancho
 	float H =			menuSize.Y;		// Alto
 	float sizeBox =		W * 0.075;		// Tamanyo de los cuadrados del hechizo
-	float xInit =		W / 20;			// X inicial del primer hechizo
-	float yInit =		H * 0.85;		// Y inicial
+	float xInit =		W * 0.25;		// X inicial del primer hechizo
+	float yInit =		H * 0.15;		// Y inicial
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
 
@@ -164,13 +163,24 @@ void MenuManager::CreateSeller(){
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(playerOne);
 
 	if(playerOne != NULL){
-		for(int i = 0; i < spells.size(); i++){
+
+		std::vector<MenuOption> menuOptions;
+		menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
+
+		for(int i = 1; i < spells.size(); i++){
 			float xInitSpell = xInit + (sizeBox + space) * i;
-			vector4df sizeImage(xInit + outline, yInit + outline, xInit + sizeBox - outline, yInit + sizeBox - outline);
+			vector4df sizeImage(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+			vector4di finalSI(sizeImage.X, sizeImage.Y, sizeImage.X2, sizeImage.Y2);
 			std::string texturePath = spells[i]->GetHUDTexturePath();
-			if(xInitSpell > 0) std::cout<<""<<std::endl;
+			g_engine->addButton(finalSI, L"", L"CURRENT SPELL", menuOptions.at(i-1), window, texturePath);
 		}
 	}
+
+	// BUTTONS FOR ALL THE SPELLS AVALIABLE
+
+	// BUTTON FOR OUR PLAYER TRAPS
+
+	// BUTTON FOR ALL TRAPS AVALIABLE
 
 }
 
