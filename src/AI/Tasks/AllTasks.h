@@ -16,10 +16,12 @@
 //
 // ================================================================================================= //
 
-class MasterAction: public Task{
+class MasterAction: public Decorador{
 public:
 	MasterAction();
 	bool run(Blackboard* bb);
+private:
+	int lastTask;
 };
 
 // ================================================================================================= //
@@ -28,10 +30,12 @@ public:
 //
 // ================================================================================================= //
 
-class MasterMovement: public Task{
+class MasterMovement: public Decorador{
 public:
 	MasterMovement();
 	bool run(Blackboard* bb);
+private:
+	int lastTask;
 };
 
 // ================================================================================================= //
@@ -52,9 +56,9 @@ public:
 //
 // ================================================================================================= //
 
-class EmptyTask: public Task{
+class NoMove: public Task{
 public:
-	EmptyTask();
+	NoMove();
 	bool run(Blackboard* bb);
 };
 
