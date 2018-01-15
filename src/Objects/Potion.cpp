@@ -111,3 +111,23 @@ Kinematic Potion::GetKinematic(){
 int Potion::GetValue(){
 	return value;
 }
+
+void Potion::DrawHUD(){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	float W =			g_engine->GetScreenWidth();
+	float H =			g_engine->GetScreenHeight();
+	float size =		W * 0.075;
+	float xInit =		W * 0.85;
+	float yInit =		H * 0.05;
+	float outline =		5;
+
+	g_engine->draw2DRectangle(vector3df(0,0,0), 
+								xInit, 
+								yInit, 
+								xInit + size, 
+								yInit + size);
+
+	vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
+	g_engine->draw2DImage(HUDTexturePath, sizeImage);
+}

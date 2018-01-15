@@ -11,7 +11,7 @@ ThunderProjectile::ThunderProjectile(vector3df pos, vector3df dir, int emi, floa
     30.0f,                      // speed of the projectile
     20 * damageMult,            // damage of the projectile
     10.0f,                      // max distance the projectile can travel
-    "./../assets/textures/projectils/thunderball.png")        // texture of the projectile
+    "./../assets/textures/projectils/SPELL_THUNDER.png")        // texture of the projectile
 {
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");

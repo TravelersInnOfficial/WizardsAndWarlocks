@@ -7,7 +7,7 @@ DragonBreath::DragonBreath(float costPM, float tCast, float tCoolDown, float opt
 	tCast,
 	tCoolDown,
 	SPELL_FIRE,
-	"./../assets/textures/HUD/Spells/fireball.png",
+	"./../assets/textures/HUD/Spells/SPELL_FIRE.png",
 	optHP,
 	optMP)
 {

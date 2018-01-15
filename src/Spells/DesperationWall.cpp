@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 DesperationWall::DesperationWall(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/wall.png", optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_WALL.png", optHP, optMP){
 	
 }
 	

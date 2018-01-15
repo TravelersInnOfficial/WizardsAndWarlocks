@@ -7,7 +7,7 @@ OgreBelch::OgreBelch(float costPM, float tCast, float tCoolDown, float optHP, fl
 	tCast, 
 	tCoolDown, 
 	SPELL_POISON, 
-	"./../assets/textures/HUD/Spells/poisonbomb.png",
+	"./../assets/textures/HUD/Spells/SPELL_POISON.png",
 	optHP, 
 	optMP)
 {

@@ -16,7 +16,8 @@ enum TrapEnum{
     TENUM_SPIRITS = 0x01,
     TENUM_SILENCE = 0x02,
     TENUM_TAXES = 0x03,
-    TENUM_DISTURBANCE = 0x04
+    TENUM_DISTURBANCE = 0x04,
+    TENUM_EXPLOSIVE = 0x05
 };
 
 #endif

@@ -33,6 +33,7 @@ class Player: public Entidad{
 		void Draw();
 		void DrawBars();
 		void DrawSpellSelector();
+		void DrawInventory();
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
@@ -70,6 +71,7 @@ class Player: public Entidad{
 		// Functions Object
 		void CatchObject(Potion* p);
 		void DropObject();
+		void LosePotion();
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();

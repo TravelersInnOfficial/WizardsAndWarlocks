@@ -12,7 +12,7 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     10.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
     20.0f,                  // max distance the projectile can travel
-    "./../assets/textures/projectils/poisonbomb.png")        // texture of the projectile
+    "./../assets/textures/projectils/SPELL_POISON.png")        // texture of the projectile
 {
     //bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,-9.8,0));
@@ -110,7 +110,7 @@ void PoisonBomb::Burst(){
 	// Aplicamos Material unlit y Textura
 	if (m_ProjectileNode) {
 		m_ProjectileNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-		m_ProjectileNode->setMaterialTexture(0, "./../assets/textures/projectils/clouds.jpeg");
+		m_ProjectileNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_POISON.png");
 	}
 
     bt_ghost = new BT_GhostObject();
