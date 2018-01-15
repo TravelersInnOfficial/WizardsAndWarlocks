@@ -264,9 +264,13 @@ void Blackboard::SetTargetSound(AI_code name, AI_code where){
 }
 
 void Blackboard::SetMasterMovement(AI_code name){
-    masterMovement = name - AI_MOVE_DEFAULT;
+    masterMovement = (int)name;
 }
 
 void Blackboard::SetMasterAction(AI_code name){
-    masterAction = name - AI_TASK_DEFAULT;
+    // En el caso de que se cambie uno de los hechizos reseteamos estos
+    if(masterAction >= AI_MOVE_SPELL00 && masterAction <= AI_MOVE_SPELL03){
+        currentPlayer->SetController(ACTION_SHOOT, RELEASED);   
+    }
+    masterAction = (int)name;
 }
