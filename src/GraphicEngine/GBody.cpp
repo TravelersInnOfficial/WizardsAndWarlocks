@@ -12,6 +12,7 @@ GBody::~GBody(){
 void GBody::setMaterialTexture(int layer, std::string path){
     GraphicEngine::getInstance()->setTextureToBody(this, layer, path);
     privateNode->setMaterialType(irr::video::EMT_SOLID);
+	privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 }
 
 void GBody::setMaterialFlag(MATERIAL_FLAG flag, bool value){

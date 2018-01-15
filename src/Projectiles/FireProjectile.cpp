@@ -11,7 +11,7 @@ FireProjectile::FireProjectile(vector3df pos, vector3df dir, int emi, float dama
     25.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
     10.0f,                  // max distance the projectile can travel
-    "./../assets/textures/projectils/fireball.png")        // texture of the projectile
+    "./../assets/textures/projectils/SPELL_FIRE.png")        // texture of the projectile
 {
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");

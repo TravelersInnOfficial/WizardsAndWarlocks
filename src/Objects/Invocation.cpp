@@ -31,7 +31,7 @@ void Invocation::CreateInvocation(vector3df TPosition, vector3df TScale, vector3
 
 	if (m_invocationNode) {
 		m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/clouds.jpeg");
+        m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_WALL.png");
     }
 
 	//Bullet Physics

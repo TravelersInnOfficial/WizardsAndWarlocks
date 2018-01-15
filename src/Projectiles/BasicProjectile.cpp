@@ -11,7 +11,7 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCO
     30.0f,                      // speed of the projectile
     10 * damageMult,            // damage of the projectile
     10.0f,                      // max distance the projectile can travel
-    "./../assets/textures/projectils/basicball.png")        // texture of the projectile
+    "./../assets/textures/projectils/SPELL_PROJECTILE.png")        // texture of the projectile
 {
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
