@@ -36,6 +36,8 @@ public:
 	void SendSignal();
 	Kinematic GetKinematic();
 
+	std::string HUDTexturePath;
+
 protected:
 	int 		value;			// Cantidad de vida a curar
 	bool 		picked;			// Ha sido pillada? Si/No
