@@ -78,6 +78,10 @@ void Trap::InitializeTrapData(){
             SetTrapData(vector3df(0.5,0.001,0.5),"","Locura");
         break;
 
+        case TENUM_EXPLOSIVE: 
+            SetTrapData(vector3df(0.5,0.001,0.5),"","Explosion");
+        break;
+
         default:
         break;
     }
