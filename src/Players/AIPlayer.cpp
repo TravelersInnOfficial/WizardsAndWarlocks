@@ -195,8 +195,8 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 
 vector2di AIPlayer::GetActionMoveIA(){
 	vector2di output(0,0);
-	output.X = behaviour->GetBlackboard()->masterAction + AI_TASK_DEFAULT;
-	output.Y = behaviour->GetBlackboard()->masterMovement + AI_MOVE_DEFAULT;
+	output.X = behaviour->GetBlackboard()->masterAction;
+	output.Y = behaviour->GetBlackboard()->masterMovement;
 	return output;
 }
 

@@ -160,13 +160,18 @@ void BehaviourTree::CreateMoveDefault(){
 }
 
 void BehaviourTree::CreateMoveSpell(){
+    Secuencia* sc_dontMove = new Secuencia();
+    sc_dontMove->addChild(new CheckDistance(9.0f));
+    sc_dontMove->addChild(new NoMove());
+
     Secuencia* sc_moveToTarget = new Secuencia();
     sc_moveToTarget->addChild(new CheckDistance(8.0f));
     sc_moveToTarget->addChild(new FleeFromTarget());
 
     Selector* sl_moveShoot = new Selector();
-    sl_moveShoot->addChild(sc_moveToTarget);
-    sl_moveShoot->addChild(new GoToTarget());
+    sl_moveShoot->addChild(sc_moveToTarget);    // [0-8] Apartarse
+    sl_moveShoot->addChild(sc_dontMove);        // [8-9] Nada
+    sl_moveShoot->addChild(new GoToTarget());   // [9- ] Acercarse
 
     informacion->SetPuntero(AI_MOVE_SPELL00, sl_moveShoot);
     informacion->SetPuntero(AI_MOVE_SPELL01, sl_moveShoot);

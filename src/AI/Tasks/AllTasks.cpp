@@ -37,7 +37,7 @@ MasterAction::MasterAction(){
 bool MasterAction::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterAction\n";
 
-	int number = (int)(bb->masterAction + AI_TASK_DEFAULT);
+	int number = (int)(bb->masterAction);
 
 	if(number != lastTask){
 		lastTask = number;
@@ -64,7 +64,7 @@ MasterMovement::MasterMovement(){
 bool MasterMovement::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterMovement\n";
 
-	int number = (int)(bb->masterMovement + AI_MOVE_DEFAULT);
+	int number = (int)(bb->masterMovement);
 
 	if(number != lastTask){
 		lastTask = number;
@@ -688,11 +688,12 @@ bool SpellSecuencia::run(Blackboard* bb){
 		Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
 		if(child!=NULL){
 			if(child->run(bb)){
-				// En el caso de que este en medio de un caseo y quiero poner otro hechizo debera hacer release
+				// En el caso de que este en medio de un casteo y quiero poner otro hechizo debera hacer release
 				if(character->GetCastingSpell() && spellsOrder[i] != character->GetCurrentSpell()){
 					return false; // El release se hace en otra tarea
 				}else{
 					character->SetCurrentSpell(spellsOrder[i]);
+					bb->SetMasterMovement((AI_code)(AI_MOVE_SPELL00+spellsOrder[i]));
 				}
 				// el spellsOrder[i] es igual al numero de hechizo que se ha conseguido lanzar
 				return true;
