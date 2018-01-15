@@ -64,7 +64,7 @@ enum SPELLCODE
 
 	// Projectil Spells
 	SPELL_BASIC,				// default code for spell
-	SPELL_PROJECTILE,
+	SPELL_PROJECTILE,			// default spell - not changable on store
 	SPELL_FIRE,
 	SPELL_POISON,
 	SPELL_THUNDER,

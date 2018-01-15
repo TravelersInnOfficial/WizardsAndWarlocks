@@ -331,14 +331,19 @@ void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, b
 	ge->setDrawBorder(false);
 }
 
-void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id, irr::gui::IGUIWindow* parent){
-	privateGUIEnv->addButton(
+void GraphicEngine::addButton(vector4di p, std::wstring text, std::wstring infoText, int id, irr::gui::IGUIWindow* parent, std::string texturePath){
+	irr::gui::IGUIButton* newButton = privateGUIEnv->addButton(
 		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),	//position
 		parent,												            //parent
 		id,													            //id
 		text.c_str(),										            //display text
 		infoText.c_str()									            //tooltip text
 	);
+	if(texturePath.length() > 0){
+		irr::video::ITexture* texture = privateDriver->getTexture(texturePath.c_str());
+		newButton->setImage(texture);
+		newButton->setScaleImage(true);
+	}
 }
 
 void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id, irr::gui::IGUIWindow* parent){
