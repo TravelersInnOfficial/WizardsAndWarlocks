@@ -32,6 +32,8 @@ public:
 	void EraseAllCharacters();
 	void ReturnAllToLobby();
 	void RefreshServerAll();
+
+	Player* GetPlayerOne();
 	Player* GetPlayerFromID(int id);
 	Player* GetPlayerFromNetID(int id);
 	vector<Player*> GetAllPlayers();

@@ -12,6 +12,7 @@
 #include "./../Objects/Grail.h"
 #include "./../Npcs/Npc.h"
 #include "./../Npcs/NpcSelector.h"
+#include "./../Npcs/NpcSeller.h"
 #include "./../Objects/Invocation.h"
 #include "./../Objects/DamageArea.h"
 #include <NPCTypes.h>

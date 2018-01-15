@@ -34,6 +34,7 @@ private:
 	void CreateAlliance();
 	void CreateMatchEnded(int option);
 	void CreateNetDebug();
+	void CreateSeller();
 
 	std::string GetStringFromPlayer(Player* player);
 

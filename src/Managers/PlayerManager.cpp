@@ -228,12 +228,24 @@ void PlayerManager::RefreshServerAll(){
 	}
 }
 
- vector<Player*> PlayerManager::GetAllPlayers(){
+Player* PlayerManager::GetPlayerOne(){
+	Player* toRet = NULL;
+
+	int size = players.size();
+	for(int i=0; i<size && toRet == NULL; i++){
+		Player* p = players[i];
+		if(p->IsPlayerOne()) toRet = p;
+	}
+
+	return(toRet);
+}
+
+vector<Player*> PlayerManager::GetAllPlayers(){
 	vector<Player*> toRet;
 	toRet.insert(toRet.end(), players.begin(), players.end() );
 	toRet.insert(toRet.end(), deadPlayers.begin(), deadPlayers.end() );
 	return(toRet);
- }
+}
 
 Player* PlayerManager::GetPlayerFromID(int id){
 	Player* toRet = NULL;

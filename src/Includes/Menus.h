@@ -6,7 +6,8 @@ enum MenuType {
 	ALLIANCE_M	= 1,
 	STORE_M		= 2,
 	ENDMATCH_M	= 3,
-	NETDEBUG_M	= 4
+	NETDEBUG_M	= 4,
+	SELLER_M	= 5
 };
 
 enum MenuOption {
@@ -37,7 +38,12 @@ enum MenuOption {
 	NETDEBUG_M_P6			= 19,
 	NETDEBUG_M_P7			= 20,
 	NETDEBUG_M_P8			= 21,
-	NETDEBUG_M_WINDOW		= 22
+	NETDEBUG_M_WINDOW		= 22,
+
+	SELLER_M_WINDOW			= 23,
+	SELLER_M_TEXT_1			= 24,
+
+
 };
 
 #endif

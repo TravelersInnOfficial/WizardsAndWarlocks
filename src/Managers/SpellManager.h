@@ -13,20 +13,28 @@ public:
 	~SpellManager();
 
 	bool AddHechizo(int num, Player* p, SPELLCODE type);
+	
 	void UpdateCooldown(float deltaTime);
 	void ResetCooldown(Player* p);
+	
 	bool LanzarHechizo(int num, Player* p);
 	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
 	void ResetHechizo(Player* p);
+	
 	float GetUtility(int num, Player* p);
+	int GetNumSpells();
+	std::vector<Hechizo*> GetSpells(Player* player);
+
 	void DrawHUDSpells(Player* p, int current);
 
 private:
 	Hechizo* CrearHechizo(SPELLCODE type);
+	
 	//Por cada hechizo que pueda tener el jugador un hastable
 	std::map<Player*, Hechizo*> hechizos[4];
 	int numHechizos = 4;
+	
 	float deltaTime;
 
 	SpellManager();

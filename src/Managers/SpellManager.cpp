@@ -148,27 +148,34 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	// COSTMP TIMECAST TIMECOOLDOWN OPTHP OPTMP
 	Hechizo* h;
 	switch(type){
-		case SPELL_BASIC:		// Hechizo instantaneo
+		case SPELL_BASIC:		// Hechizo instantaneo (Padre, no usar)
 			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, "", 1, 1);
-			break;
-		case SPELL_PROJECTILE:	//Hechizo de ataque basico
+		break;
+		
+		case SPELL_PROJECTILE:	// Hechizo de ataque basico
 			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
-			break;
-		case SPELL_FIRE:
+		break;
+		
+		case SPELL_FIRE:		// Hechizo bola fuego
 			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
-			break;
-		case SPELL_THUNDER:
+		break;
+		
+		case SPELL_THUNDER:		// Hechizo paralizador
 			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
-			break;
-		case SPELL_POISON:
+		break;
+		
+		case SPELL_POISON:		// Bomba de veneno
 			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
-			break;
+		break;
+		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
 			h = new DesperationWall(-5, 0.0f, 1.0f, 100, 50);
-			break;
-		case SPELL_BLIZZARD:		// Hechizo continuo hielo
+		break;
+		
+		case SPELL_BLIZZARD:	// Hechizo continuo hielo
 			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
-			break;
+		break;
+		
 		default:
 			h = NULL;
 	}
@@ -211,4 +218,19 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 			}
 		}
 	}
+}
+
+int SpellManager::GetNumSpells(){ return numHechizos; }
+
+std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
+	std::vector<Hechizo*> spells;
+
+	for(int i = 0; i < numHechizos;i++){
+		if(hechizos[i].find(player) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][player];
+			if(h != NULL) spells.push_back(h);
+		}
+	}
+
+	return spells;
 }
