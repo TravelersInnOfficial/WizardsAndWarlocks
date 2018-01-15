@@ -220,7 +220,7 @@ void TrapManager::DrawHUD(Player* player){
 		float H =			g_engine->GetScreenHeight();
 		float size =		W * 0.075;
 		float xInit =		W * 0.85;
-		float yInit =		H * 0.20;
+		float yInit =		H * 0.175;
 		float outline =		5;
 
 		g_engine->draw2DRectangle(vector3df(0,0,0), 
