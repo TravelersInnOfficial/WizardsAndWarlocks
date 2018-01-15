@@ -33,6 +33,9 @@ public:
     TrapEnum GetTrapType();
     int GetTrapId();
 
+    // ONLY FOR NET SYNCH
+    void ForceEffect(Player* player);
+
     // Sense Functions
     void SendSignal();
     Kinematic GetKinematic();

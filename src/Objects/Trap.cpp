@@ -105,8 +105,15 @@ void Trap::Contact(void* punt, EntityEnum tipo){
         }
 
         if(contacted && n_engine->IsServerInit()){
+            int playerAffectedId = -1;
+            if(tipo == EENUM_PLAYER){
+                Player* player = (Player*)(punt);
+                NetworkObject* no = player->GetNetworkObject();
+                if(no != NULL) playerAffectedId = no->GetObjId();
+            }
+
             Server* myServer = n_engine->GetServer();
-            if(myServer != NULL) myServer->EraseTrap(trapId);
+            if(myServer != NULL) myServer->EraseTrap(trapId, playerAffectedId);
         }
 
     }    
@@ -119,13 +126,17 @@ void Trap::Interact(Player* p){
         Deactivate(deltaTime);
         if(n_engine->IsServerInit()){
             Server* myServer = n_engine->GetServer();
-            if(myServer != NULL) myServer->EraseTrap(trapId);
+            if(myServer != NULL){
+                NetworkObject* no = p->GetNetworkObject();
+                if(no != NULL){
+                    myServer->EraseTrap(trapId, no->GetObjId());
+                }
+            }
         }
     }
 }
 
 void Trap::Activate(Player* player){
-
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
             EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
@@ -161,6 +172,36 @@ void Trap::Activate(Player* player){
     }
 
     TrapManager::GetInstance()->DeleteTrap(this);    
+}
+
+// FOR NET SYNCH
+void Trap::ForceEffect(Player* player){
+    switch(m_trapType){
+        case TENUM_DEATH_CLAWS:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+        break;
+
+        case TENUM_SPIRITS:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
+        break;
+
+        case TENUM_SILENCE:
+            EffectManager::GetInstance()->AddEffect(player, WEAK_SILENCED);
+        break;
+
+        case TENUM_TAXES:
+            player->LosePotion();
+        break;
+        
+        case TENUM_DISTURBANCE:
+            player->ApplyFuzyEffect();
+        break;
+
+        default:
+        break;
+    }
+
+    TrapManager::GetInstance()->DeleteTrap(this);  
 }
 
 void Trap::Deactivate(float deltaTime){

@@ -41,7 +41,7 @@ public:
 
 	// We manage the traps on the map
 	void SetTrap(vector3df point,vector3df normal, int playerId, int trapId);
-	void EraseTrap(int trapId);
+	void EraseTrap(int trapId, int playerAffectedId);
 
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
