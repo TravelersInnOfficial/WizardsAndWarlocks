@@ -35,16 +35,19 @@ public:
 	void IdErase(int id);
 	Trap* GetTrapWithId(int id);
 
+	void DrawHUD(Player* player);
+
 private:
 	vector<Trap*> traps;
 	std::map<Player*,TrapEnum> playerTrap;
 	std::map<Player*, int> playerUsings;
 	int lastTrapId;
+	static TrapManager* instance;
+	int MaxUsings = 4;
 
 	TrapManager();
-	static TrapManager* instance;
-
-	int MaxUsings = 4;
+	std::string GetPathFromEnum(TrapEnum tKind);
+	std::string GetPathFromUsings(int usings);
 };
 
 #endif

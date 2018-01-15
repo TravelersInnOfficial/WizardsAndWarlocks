@@ -867,10 +867,10 @@ void Player::Draw(){
 	DrawBars();
 	DrawSpellSelector();
 	DrawInventory();
+	DrawTraps();
 }
 
 void Player::DrawBars(){
-
 	int W = engine->GetScreenWidth();		
 	int H = engine->GetScreenHeight();
 
@@ -913,4 +913,8 @@ void Player::DrawSpellSelector(){
 
 void Player::DrawInventory(){
 	if(potion != NULL) potion->DrawHUD();
+}
+
+void Player::DrawTraps(){
+	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->DrawHUD(this);
 }
