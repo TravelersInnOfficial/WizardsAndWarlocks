@@ -46,8 +46,7 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
-	PlayerInit();
-
+	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
 	Respawn();
 }
@@ -64,7 +63,7 @@ void Player::PlayerInit(){
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
 	fuzzyOverlayTime = 0;
-	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
+	TrapManager::GetInstance()->setPlayerUsings(this, 4);
 	EffectManager::GetInstance()->CleanEffects(this);
 	stopPulse();
 }
@@ -777,7 +776,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			TrapManager::GetInstance()->setPlayerUsings(this,0);
+			TrapManager::GetInstance()->setPlayerUsings(this, 0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -789,7 +788,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
-			TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
+			TrapManager::GetInstance()->setPlayerUsings(this, 4);
 			break;
 		}
 		default:{
@@ -883,9 +882,6 @@ void Player::DrawBars(){
 	float yInitH = H * 0.05;	// Calculate the Init of the bar on Y axis
 	float yInitM = H * 0.09;
 	float yInitS = H * 0.13;
-
-	// float yInitH = H - (H * 0.14);
-	// float yInitM = H - (H * 0.10);
 
 	float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
 	float yEndM = yInitM + size;
