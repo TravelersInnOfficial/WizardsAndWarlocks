@@ -93,10 +93,11 @@ void Server::SetTrap(vector3df point,vector3df normal, int playerId, int trapId)
 	SendPackage(&setTrapMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 }
 
-void Server::EraseTrap(int trapId){
+void Server::EraseTrap(int trapId, int playerAffectedId){
 	RakNet::BitStream eraseTrapMessage;
 	eraseTrapMessage.Write((RakNet::MessageID)ID_ERASE_TRAP);
 	eraseTrapMessage.Write(trapId);
+	eraseTrapMessage.Write(playerAffectedId);
 	SendPackage(&eraseTrapMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 }
 

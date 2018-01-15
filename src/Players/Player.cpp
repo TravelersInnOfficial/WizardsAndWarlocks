@@ -46,7 +46,7 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
-	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
+	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_SILENCE);
 	CreatePlayerCharacter(true);
 	Respawn();
 }

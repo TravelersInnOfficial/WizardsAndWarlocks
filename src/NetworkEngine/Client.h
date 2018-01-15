@@ -39,7 +39,7 @@ public:
 	void RemovePlayer(int id);
 
 	// Manage traps
-	void EraseTrap(int idTrap);
+	void EraseTrap(int idTrap, int playerAffectedId);
 
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();

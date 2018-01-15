@@ -1,6 +1,7 @@
 #include "Client.h"
 #include "./../States/NetGame.h"
-#include ".//../Managers/TrapManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../Managers/PlayerManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -42,8 +43,13 @@ void Client::RemovePlayer(int id){
 	networkPlayers.erase(id);
 }
 
-void Client::EraseTrap(int trapId){
-	TrapManager::GetInstance()->IdErase(trapId);
+void Client::EraseTrap(int trapId, int playerAffectedId){
+	if(playerAffectedId != -1){
+		Trap* trap = TrapManager::GetInstance()->GetTrapWithId(trapId);
+		Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerAffectedId);
+		if(trap != NULL && player != NULL) trap->ForceEffect(player);
+	}
+	else TrapManager::GetInstance()->IdErase(trapId);
 }
 
 void Client::CreateNetworkObject(int id, ObjectType type){
@@ -161,9 +167,11 @@ void Client::RecievePackages(){
 			case ID_ERASE_TRAP: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				int trapId = -1;
+				int playerAffected = -1;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(trapId);
-				EraseTrap(trapId);
+				bitstream.Read(playerAffected);
+				EraseTrap(trapId, playerAffected);
 				break;
 			}
 		}
