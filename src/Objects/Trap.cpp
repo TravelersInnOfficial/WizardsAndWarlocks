@@ -66,7 +66,7 @@ void Trap::InitializeTrapData(){
             SetTrapData(vector3df(0.5,0.001,0.5),"","Distorsion fantasmal");
         break;
 
-        case TENUM_SILENCE: 
+        case TENUM_SILENCE:
             SetTrapData(vector3df(0.5,0.001,0.5),"","Silenciar");
         break;
 
@@ -83,6 +83,7 @@ void Trap::InitializeTrapData(){
         break;
 
         default:
+            SetTrapData(vector3df(0.5,0.001,0.5),"","DEFAULT TRAP");
         break;
     }
 }

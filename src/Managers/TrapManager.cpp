@@ -162,6 +162,7 @@ bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
 bool TrapManager::setPlayerUsings(Player* player, int uses){
 	bool toRet = false;
 	std::map<Player*, int>::iterator it = playerUsings.begin();
+	if(uses > MaxUsings) uses = MaxUsings;
 	
 	for(; it != playerUsings.end(); ++it){
 		if(it->first == player){
