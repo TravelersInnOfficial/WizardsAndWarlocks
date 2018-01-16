@@ -32,9 +32,9 @@ private:
 	MenuManager();
 	void CreateMain();
 	void CreateAlliance();
-	void CreateMatchEnded(int option);
+	void CreateMatchEnded(int option = -1);
 	void CreateNetDebug();
-	void CreateSeller();
+	void CreateSeller(int option = -1);
 
 	std::string GetStringFromPlayer(Player* player);
 

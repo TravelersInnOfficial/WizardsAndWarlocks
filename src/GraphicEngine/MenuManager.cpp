@@ -44,7 +44,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(SELLER_M):{
-			CreateSeller();
+			CreateSeller(option);
 			break;
 		}
 		default:{
@@ -130,8 +130,11 @@ void MenuManager::CreateAlliance(){
 	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", ALLIANCE_M_WARLOCK, window);
 }
 
-void MenuManager::CreateSeller(){
+void MenuManager::CreateSeller(int selected){
 	
+	if(selected < 0) selected = 0;
+	else if (selected > 2) selected = 2;
+
 	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
 	if(playerOne == NULL) return;
 
@@ -161,15 +164,23 @@ void MenuManager::CreateSeller(){
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
 
+
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(playerOne);
 	std::vector<MenuOption> menuOptions;
 	menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
 	for(int i = 1; i < spells.size(); i++){
+		int currentSpell = i-1;
 		float xInitSpell = xInit + (sizeBox + space) * i;
-		vector4df sizeImage(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
-		vector4di finalSizeImage(sizeImage.X, sizeImage.Y, sizeImage.X2, sizeImage.Y2);
+		
+		vector4di finalSizeImage = vector4di(xInitSpell, yInit, sizeBox, sizeBox);
+		if(currentSpell == selected){
+			std::string texturePath = "./../assets/textures/yellow.jpg";
+			g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", SELLER_M_TRAP, window, texturePath);
+		}
+
+		finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline*2, sizeBox - outline*2);
 		std::string texturePath = spells[i]->GetHUDTexturePath();
-		g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", menuOptions.at(i-1), window, texturePath);
+		g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", menuOptions.at(currentSpell), window, texturePath);
 	}
 
 	// BUTTONS FOR ALL THE SPELLS AVALIABLE
@@ -184,7 +195,6 @@ void MenuManager::CreateSeller(){
 
 	std::vector<SPELLCODE> kinds_spell;
 	kinds_spell.push_back(SPELL_SPEED); kinds_spell.push_back(SPELL_DEFENSE); kinds_spell.push_back(SPELL_INVISIBILITY); kinds_spell.push_back(SPELL_UNTARGET); kinds_spell.push_back(SPELL_FIRE); kinds_spell.push_back(SPELL_POISON); kinds_spell.push_back(SPELL_THUNDER); kinds_spell.push_back(SPELL_TELEPORT); kinds_spell.push_back(SPELL_CLEANSE); kinds_spell.push_back(SPELL_WALL); kinds_spell.push_back(SPELL_DUMMY); kinds_spell.push_back(SPELL_TELEPORTBASE); kinds_spell.push_back(SPELL_BLIZZARD);
-
 
 	int cut = 7;
 	for(int i = 0; i < menuOptions.size(); i++){
@@ -202,10 +212,13 @@ void MenuManager::CreateSeller(){
 	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
 	yInit =		H * 0.57;					// Y inicial
 
-	TrapManager* trapManager = TrapManager::GetInstance();
-	std::string texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
+	vector4di finalSizeImage = vector4di(xInit, yInit, sizeBox + outline, sizeBox + outline);
+	std::string texturePath = "./../assets/textures/yellow.jpg";
+	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
 
-	vector4di finalSizeImage = vector4di(xInit + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+	TrapManager* trapManager = TrapManager::GetInstance();
+	texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
+	finalSizeImage = vector4di(finalSizeImage.X + outline, finalSizeImage.Y + outline, finalSizeImage.X2 - outline*2, finalSizeImage.Y2 - outline*2);
 	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
 
 	// BUTTON FOR ALL TRAPS AVALIABLE
