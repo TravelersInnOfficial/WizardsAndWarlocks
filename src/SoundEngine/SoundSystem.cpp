@@ -397,6 +397,7 @@ void SoundEvent::setGain(float gain) {
 *  @param x, y, and z, new 3D position
 ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
+	if(true) return;
 	if(!isnan(pos.X)){	// Comprobamos que el valor no sea NaN
 		FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 
@@ -418,11 +419,9 @@ void SoundEvent::setPosition(vector3df pos) {
 		SoundSystem::getInstance()->setUp(attributes, up);
 
 		//Finally, set the attributes
-	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
+		if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
 	}
-	else{
-		std::cout<<"ERROR: NaN Value, SoundSystem::setPosition"<<std::endl;
-	}
+	else std::cout<<"ERROR: NaN Value, SoundSystem::setPosition"<<std::endl;
 }
 
 /*******************************************************

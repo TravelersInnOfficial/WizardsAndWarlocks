@@ -46,7 +46,7 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
-	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_SILENCE);
+	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
 	Respawn();
 }
@@ -523,10 +523,11 @@ void Player::CheckIfReady(){
 }
 
 void Player::Run(bool runStatus){
+	float factor = 5/3.0f;
 	if(isRunning != runStatus){
 		isRunning = runStatus;
-		if(runStatus) max_velocity += 2;
-		else max_velocity -= 2;
+		if(runStatus) max_velocity *= factor;
+		else max_velocity /= factor;
 	}
 }
 
