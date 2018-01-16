@@ -5,7 +5,7 @@ Graph::Graph(){
 }
 Graph::~Graph(){}
 
-void Graph::addConnection(float cost, int FromNode,int ToNode){
+void Graph::addConnection(float cost, int FromNode, int ToNode){
     Connection* c = new Connection(cost, m_nodes[FromNode], m_nodes[ToNode]);
     m_connections.push_back(c);
 }

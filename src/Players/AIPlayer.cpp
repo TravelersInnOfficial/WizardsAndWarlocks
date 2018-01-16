@@ -186,6 +186,22 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
 }
 
+// ========================================================================================= //
+//
+//	PATHFINDING
+//
+// ========================================================================================= //
+
+void AIPlayer::ShortestPath(vector3df to){
+	vector3df from = this->GetPos();
+	path = new Pathfinding();
+	/*
+	std::vector<Connection*> *c = path->makeAStar(navmesh,from,to);
+	if(c != NULL){
+
+	}
+	*/
+}
 
 // ========================================================================================= //
 //

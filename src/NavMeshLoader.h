@@ -3,12 +3,13 @@
 
 #include <iostream>
 #include "AI/Pathfinding/Graph.h"
+#include "AI/Pathfinding/NavMesh.h"
 
 class NavMeshLoader{
     public:
     NavMeshLoader();
     ~NavMeshLoader();
-    Graph LoadNavMeshGraph(std::string);
+    NavMesh LoadNavMeshGraph(std::string);
 
 };
 

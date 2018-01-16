@@ -7,6 +7,7 @@
 #include "./PlayerController.h"
 #include "./../AI/BehaviourTree.h"
 #include "./../AI/SenseManager/Sensor.h"
+#include "./../AI/Pathfinding/Pathfinding.h"
 
 class AIPlayer: public Player{
 public:
@@ -20,6 +21,7 @@ public:
 	void Debug();
 
 	void Steering2Controller(SteeringOutput steering);
+	void ShortestPath(vector3df); //Calculates the shortest path between to a position
 
 	// Controller
 	void SetController(ACTION_ENUM action, keyStatesENUM state);
@@ -38,6 +40,7 @@ private:
 
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
 	Sensor*				sensor;			// Sensor de sentidos de la IA
+	Pathfinding* 		path;			// Pathfinding assistant
 
 	bool				shootSpell; 	// Ha conseguido lanzar el hechizo en este frame? Si/No
 	bool 				castingSpell;	// Esta lanzando un hechizo? Si/No

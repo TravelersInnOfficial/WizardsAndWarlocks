@@ -26,7 +26,7 @@ Game::Game(){
 	//NavMesh
 	NavMeshLoader nm_loader;
 	navmesh = nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
-    navmesh.printActualGraphConnections();
+    //navmesh.printData();
 
 	// Sound Engine
 	createSoundEvents();
