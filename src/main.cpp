@@ -1,18 +1,9 @@
 #include <iostream>
-#include <map>
-#include <string>
-#include <chrono>
-#include <thread>
-#include <vector3d.h>
-#include <Menus.h>
-#include <StateCodes.h>
-#include "PhysicsEngine/BT_Body.h"
-#include "GraphicEngine/GraphicEngine.h"
-#include "GraphicEngine/MenuManager.h"
-#include "NetworkEngine/NetworkEngine.h"
-#include "SoundEngine/SoundSystem.h"
 #include "./Managers/StateManager.h"
-#include "./Managers/ObjectManager.h"
+#include "./PhysicsEngine/BT_Body.h"
+#include "./GraphicEngine/GraphicEngine.h"
+#include "./NetworkEngine/NetworkEngine.h"
+#include "./SoundEngine/SoundSystem.h"
 
 int main() {
 
@@ -25,7 +16,6 @@ int main() {
 	s_engine->createSystem("./../assets/banks/");
 
 	// MAIN MENU
-
 	StateManager* state = StateManager::GetInstance();
 
 	while(state->Update()){}

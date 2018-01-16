@@ -46,6 +46,12 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
+	SpellManager* spellManager = SpellManager::GetInstance();
+	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
+	spellManager->AddHechizo(1, this, SPELL_FIRE);
+	spellManager->AddHechizo(2, this, SPELL_WALL);
+	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+
 	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
 	Respawn();
