@@ -292,9 +292,7 @@ bool Player::ChangeCurrentSpell(int value){
 }
 
 void Player::SetSpell(int value){
-	currentSpell = value;
-	if(currentSpell < 0) currentSpell = 0;
-	else if (currentSpell > numberSpells) currentSpell = numberSpells;
+	ChangeCurrentSpell(value);
 }
 
 int Player::GetCurrentSpell(){
