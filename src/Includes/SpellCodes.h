@@ -55,6 +55,8 @@ que se le aplique el efecto continuamente será congelado
 */
 
 enum SPELLCODE{
+	NO_SPELL = -1,
+
 	// Effect Spells
 	SPELL_SPEED,
 	SPELL_DEFENSE,
