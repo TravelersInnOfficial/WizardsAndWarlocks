@@ -2,7 +2,7 @@
 
 	float Align::maxAngularAcceleration = 3.0f;
 	float Align::maxRotation = 10.0f;
-	float Align::targetRadius = 0;
+	float Align::targetRadius = 0.01f;
 	float Align::slowRadius = 0.2f;
 	float Align::timeToTarget = 0.1f;
 

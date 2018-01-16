@@ -398,14 +398,14 @@ void SoundEvent::setGain(float gain) {
 ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
 	
-	if(isnan(pos.X)){
+	if(false && isnan(pos.X)){
 		pos.X = 0;
 		pos.Y = 0;
 		pos.Z = 0;		
 		std::cout<<"POS = NAN"<<std::endl;
 	}
 
-	if(!isnan(pos.X)){	// Comprobamos que el valor no sea NaN
+	if(true || !isnan(pos.X)){	// Comprobamos que el valor no sea NaN
 		FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 
 		vector3df newPos(pos.X, pos.Y+0.5, pos.Z);

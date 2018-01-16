@@ -14,7 +14,6 @@ public:
 	~AIPlayer();
 
 	void Update();
-	void SetForces(vector3df v);
 	void SetAngularForce(vector3df v);
 	void Die();
 	void Debug();
