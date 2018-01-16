@@ -182,8 +182,10 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     Trap* myTrap = NULL;
     
     if(player != NULL){
+		std::cout<<"ENTRA"<<std::endl;
         int uses = getPlayerUsings(player);
-        setPlayerUsings(player, uses--);
+		uses--;
+        setPlayerUsings(player, uses);
         type = getPlayerTrap(player);
     }
 
