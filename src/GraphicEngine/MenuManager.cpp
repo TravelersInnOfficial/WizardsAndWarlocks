@@ -156,7 +156,7 @@ void MenuManager::CreateSeller(){
 	float W =			menuSize.X;		// Ancho
 	float H =			menuSize.Y;		// Alto
 	float sizeBox =		W * 0.075;		// Tamanyo de los cuadrados del hechizo
-	float xInit =		W * 0.25;		// X inicial del primer hechizo
+	float xInit =		W * 0.252;		// X inicial del primer hechizo
 	float yInit =		H * 0.15;		// Y inicial
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
@@ -173,11 +173,11 @@ void MenuManager::CreateSeller(){
 	}
 
 	// BUTTONS FOR ALL THE SPELLS AVALIABLE
+	
 
 	// BUTTON FOR OUR PLAYER TRAPS
-
 	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
-	yInit =		H * 0.5;				// Y inicial
+	yInit =		H * 0.5;					// Y inicial
 
 	TrapManager* trapManager = TrapManager::GetInstance();
 	std::string texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
@@ -186,6 +186,24 @@ void MenuManager::CreateSeller(){
 	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
 
 	// BUTTON FOR ALL TRAPS AVALIABLE
+	sizeBox =	W * 0.075;
+	xInit =		W * 0.2;
+	yInit =		H * 0.65;
+	space =		W * 0.03;
+	outline =	5;
+
+	menuOptions.clear();
+	menuOptions.push_back(SELLER_DEATH_CLAWS); menuOptions.push_back(SELLER_SPIRITS); menuOptions.push_back(SELLER_SILENCE); menuOptions.push_back(SELLER_TAXES); menuOptions.push_back(SELLER_DISTURBANCE); menuOptions.push_back(SELLER_EXPLOSIVE);
+	
+	std::vector<TrapEnum> kinds;
+	kinds.push_back(TENUM_DEATH_CLAWS); kinds.push_back(TENUM_SPIRITS); kinds.push_back(TENUM_SILENCE); kinds.push_back(TENUM_TAXES); kinds.push_back(TENUM_DISTURBANCE); kinds.push_back(TENUM_EXPLOSIVE);
+
+	for(int i = 0; i < menuOptions.size(); i++){
+		float xInitSpell = xInit + (sizeBox + space) * i;
+		finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		std::string texturePath = TrapManager::GetInstance()->GetPathFromEnum(kinds.at(i));
+		g_engine->addButton(finalSizeImage, L"", L"NEW TRAP", menuOptions.at(i), window, texturePath);
+	}
 
 	// BUTTON FOR ACEPTAR
 	rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y*0.85,menuSize.X/2.0f,menuSize.Y*0.1);
