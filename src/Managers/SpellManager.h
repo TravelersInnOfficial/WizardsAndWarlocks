@@ -27,6 +27,7 @@ public:
 	std::vector<Hechizo*> GetSpells(Player* player);
 
 	void DrawHUDSpells(Player* p, int current);
+	std::string GetPathFromEnum(SPELLCODE sKind);
 
 private:
 	Hechizo* CrearHechizo(SPELLCODE type);

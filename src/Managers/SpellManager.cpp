@@ -220,6 +220,78 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 	}
 }
 
+std::string SpellManager::GetPathFromEnum(SPELLCODE sKind){
+	std::string toRet = "./../assets/textures/HUD/Spells/";
+	
+	switch(sKind){
+        case SPELL_SPEED:
+			toRet += "SPELL_SPEED.png";
+        break;
+
+        case SPELL_DEFENSE:
+			toRet += "SPELL_DEFENSE.png";
+        break;
+
+        case SPELL_INVISIBILITY:
+			toRet += "SPELL_INVISIBILITY.png";
+        break;
+
+        case SPELL_UNTARGET:
+			toRet += "SPELL_UNTARGET.png";
+        break;
+
+        case SPELL_BASIC:
+			toRet += "SPELL_BASIC.png";
+        break;
+
+		case SPELL_PROJECTILE:
+			toRet += "SPELL_PROJECTILE.png";
+        break;
+
+		case SPELL_FIRE:
+			toRet += "SPELL_FIRE.png";
+        break;
+
+		case SPELL_POISON:
+			toRet += "SPELL_POISON.png";
+        break;
+
+		case SPELL_THUNDER:
+			toRet += "SPELL_THUNDER.png";
+        break;
+
+		case SPELL_TELEPORT:
+			toRet += "SPELL_TELEPORT.png";
+        break;
+
+		case SPELL_CLEANSE:
+			toRet += "SPELL_CLEANSE.png";
+        break;
+
+		case SPELL_WALL:
+			toRet += "SPELL_WALL.png";
+        break;
+
+		case SPELL_DUMMY:
+			toRet += "SPELL_DUMMY.png";
+        break;
+
+		case SPELL_TELEPORTBASE:
+			toRet += "SPELL_TELEPORTBASE.png";
+        break;
+
+		case SPELL_BLIZZARD:
+			toRet += "SPELL_BLIZZARD.png";
+        break;
+
+        default:
+			toRet = "";
+        break;
+    }
+
+	return toRet;
+}
+
 int SpellManager::GetNumSpells(){ return numHechizos; }
 
 std::vector<Hechizo*> SpellManager::GetSpells(Player* player){

@@ -157,7 +157,7 @@ void MenuManager::CreateSeller(){
 	float H =			menuSize.Y;		// Alto
 	float sizeBox =		W * 0.075;		// Tamanyo de los cuadrados del hechizo
 	float xInit =		W * 0.252;		// X inicial del primer hechizo
-	float yInit =		H * 0.15;		// Y inicial
+	float yInit =		H * 0.14;		// Y inicial
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
 
@@ -173,11 +173,34 @@ void MenuManager::CreateSeller(){
 	}
 
 	// BUTTONS FOR ALL THE SPELLS AVALIABLE
-	
+	sizeBox =	W * 0.075;
+	xInit =		W * 0.147;
+	yInit =		H * 0.28;
+	space =		W * 0.03;
+	outline =	5;
+
+	menuOptions.clear();
+	menuOptions.push_back(SELLER_SPEED); menuOptions.push_back(SELLER_DEFENSE); menuOptions.push_back(SELLER_INVISIBILITY); menuOptions.push_back(SELLER_UNTARGET); menuOptions.push_back(SELLER_FIRE); menuOptions.push_back(SELLER_POISON); menuOptions.push_back(SELLER_THUNDER); menuOptions.push_back(SELLER_TELEPORT); menuOptions.push_back(SELLER_CLEANSE); menuOptions.push_back(SELLER_WALL); menuOptions.push_back(SELLER_DUMMY); menuOptions.push_back(SELLER_TELEPORTBASE); menuOptions.push_back(SELLER_BLIZZAR);
+
+	std::vector<SPELLCODE> kinds_spell;
+	kinds_spell.push_back(SPELL_SPEED); kinds_spell.push_back(SPELL_DEFENSE); kinds_spell.push_back(SPELL_INVISIBILITY); kinds_spell.push_back(SPELL_UNTARGET); kinds_spell.push_back(SPELL_FIRE); kinds_spell.push_back(SPELL_POISON); kinds_spell.push_back(SPELL_THUNDER); kinds_spell.push_back(SPELL_TELEPORT); kinds_spell.push_back(SPELL_CLEANSE); kinds_spell.push_back(SPELL_WALL); kinds_spell.push_back(SPELL_DUMMY); kinds_spell.push_back(SPELL_TELEPORTBASE); kinds_spell.push_back(SPELL_BLIZZARD);
+
+
+	int cut = 7;
+	for(int i = 0; i < menuOptions.size(); i++){
+		float xInitSpell = xInit + (sizeBox + space) * i;
+
+		if(i == cut) yInit = yInit + sizeBox + space/2;
+		if(i >= cut) xInitSpell = xInit + (sizeBox + space) * (i - cut);
+
+		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		std::string texturePath = SpellManager::GetInstance()->GetPathFromEnum(kinds_spell.at(i));
+		g_engine->addButton(finalSizeImage, L"", L"NEW SPELL", menuOptions.at(i), window, texturePath);
+	}
 
 	// BUTTON FOR OUR PLAYER TRAPS
 	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
-	yInit =		H * 0.5;					// Y inicial
+	yInit =		H * 0.57;					// Y inicial
 
 	TrapManager* trapManager = TrapManager::GetInstance();
 	std::string texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
@@ -188,7 +211,7 @@ void MenuManager::CreateSeller(){
 	// BUTTON FOR ALL TRAPS AVALIABLE
 	sizeBox =	W * 0.075;
 	xInit =		W * 0.2;
-	yInit =		H * 0.65;
+	yInit =		H * 0.7;
 	space =		W * 0.03;
 	outline =	5;
 
@@ -200,7 +223,7 @@ void MenuManager::CreateSeller(){
 
 	for(int i = 0; i < menuOptions.size(); i++){
 		float xInitSpell = xInit + (sizeBox + space) * i;
-		finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
 		std::string texturePath = TrapManager::GetInstance()->GetPathFromEnum(kinds.at(i));
 		g_engine->addButton(finalSizeImage, L"", L"NEW TRAP", menuOptions.at(i), window, texturePath);
 	}
