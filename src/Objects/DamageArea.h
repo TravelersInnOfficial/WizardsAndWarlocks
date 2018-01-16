@@ -32,7 +32,8 @@ private:
 	float		currentCast;		// Tiempo que lleva de Casteo
 	float 		casting;			// Tiempo total de casteo (intervalo de tiempo entre daño y daño)
 
-	BT_GhostObject* 	bt_body;			// Cuerpo fisico de la invocacion
+	GBody*      		m_areaNode;			// Cuerpo visual del area de danyo
+	BT_GhostObject* 	bt_body;			// Cuerpo fisico del area de danyo
 };
 
 #endif
