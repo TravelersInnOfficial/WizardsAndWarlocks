@@ -132,8 +132,8 @@ void MenuManager::CreateAlliance(){
 
 void MenuManager::CreateSeller(int selected){
 	
-	if(selected < 0) selected = 0;
-	else if (selected > 2) selected = 2;
+	if(selected < 1) selected = 1;
+	else if (selected > 3) selected = 3;
 
 	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
 	if(playerOne == NULL) return;
@@ -173,7 +173,7 @@ void MenuManager::CreateSeller(int selected){
 		float xInitSpell = xInit + (sizeBox + space) * i;
 		
 		vector4di finalSizeImage = vector4di(xInitSpell, yInit, sizeBox, sizeBox);
-		if(currentSpell == selected){
+		if(currentSpell == selected - 1){
 			std::string texturePath = "./../assets/textures/yellow.jpg";
 			g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", SELLER_M_TRAP, window, texturePath);
 		}

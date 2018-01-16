@@ -33,6 +33,7 @@ class NpcSeller: public Npc{
 		void ChangeChangingSpell(int changingSpell);
 		void ChangeTrap(TrapEnum tEnum);
 		void ChangeSpell(SPELLCODE sEnum);
+		void UpdateMenu();
 };
 
 #endif

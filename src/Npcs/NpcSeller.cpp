@@ -144,6 +144,7 @@ void NpcSeller::Update(){
 
 			// ACCEPT
 			case (SELLER_M_ACCEPT):{
+				ChangeChangingSpell(1);
 				StopInteraction();
 				break;
 			}
@@ -166,14 +167,14 @@ void NpcSeller::Draw(){
 
 void NpcSeller::ChangeChangingSpell(int changingSpell){
 	this->changingSpell = changingSpell;
+	UpdateMenu();
 }
 
 void NpcSeller::ChangeTrap(TrapEnum tEnum){
 	if(hp != NULL){
 		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
 		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
-		MenuManager::GetInstance()->ClearMenu();
-		MenuManager::GetInstance()->CreateMenu(SELLER_M, changingSpell);
+		UpdateMenu();
 	}
 }
 
@@ -181,6 +182,11 @@ void NpcSeller::ChangeSpell(SPELLCODE sEnum){
 	if(hp != NULL){
 		SpellManager::GetInstance()->AddHechizo(changingSpell, hp, sEnum);
 		MenuManager::GetInstance()->ClearMenu();
-		MenuManager::GetInstance()->CreateMenu(SELLER_M, changingSpell);
+		UpdateMenu();
 	}
+}
+
+void NpcSeller::UpdateMenu(){
+	MenuManager::GetInstance()->ClearMenu();
+	MenuManager::GetInstance()->CreateMenu(SELLER_M, changingSpell);
 }
