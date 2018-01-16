@@ -169,7 +169,10 @@ void NpcSeller::ChangeChangingSpell(int changingSpell){
 }
 
 void NpcSeller::ChangeTrap(TrapEnum tEnum){
-	if(hp != NULL) TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
+	if(hp != NULL){
+		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
+		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
+	}
 }
 
 void NpcSeller::ChangeSpell(SPELLCODE sEnum){
