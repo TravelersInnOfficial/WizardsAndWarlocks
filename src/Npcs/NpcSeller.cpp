@@ -176,5 +176,5 @@ void NpcSeller::ChangeTrap(TrapEnum tEnum){
 }
 
 void NpcSeller::ChangeSpell(SPELLCODE sEnum){
-	
+	if(hp != NULL) SpellManager::GetInstance()->AddHechizo(changingSpell, hp, sEnum);
 }
