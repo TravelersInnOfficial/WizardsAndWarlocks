@@ -50,7 +50,6 @@ class Player: public Entidad{
 		void ChangeHP(float);
 		bool ChangeMP(float);
 		void UpdateSP();
-		void ChangeCurrentSpell(int);
 		void Respawn();
 		void Raycast();
 		virtual void Die();
@@ -64,6 +63,7 @@ class Player: public Entidad{
 		bool StartSpell();
 		bool ShootSpell();
 		void ResetSpell();
+		bool ChangeCurrentSpell(int);
 		int GetCurrentSpell();
 		void ResetAllSpells();
 

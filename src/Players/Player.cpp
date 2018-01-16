@@ -280,11 +280,15 @@ void Player::Update(){
 	}
 }
 
-void Player::ChangeCurrentSpell(int value){
-	int tempCurrentSpell = currentSpell + value;
-	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
-		currentSpell = tempCurrentSpell;
+bool Player::ChangeCurrentSpell(int value){
+	if(currentSpell != value){
+		if(value >=0 && value<= numberSpells){
+			ResetSpell();
+			currentSpell = value;
+			return true;
+		}
 	}
+	return false;
 }
 
 void Player::SetSpell(int value){
