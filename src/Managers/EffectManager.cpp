@@ -122,10 +122,10 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new Burned(3.0f, 3);
 			break;
 		case WEAK_FROZEN:
-			e = new Frozen(6.0f, 10.0f);
+			e = new Frozen(6.0f, 0.0f);
 			break;
 		case WEAK_PARALYZED:
-			e = new Paralyzed(2.0f, 1000.0f);
+			e = new Paralyzed(2.0f);
 			break;
 		case WEAK_SLOWEDDOWN:
 			e = new SlowedDown(4.0f, 10.0f);

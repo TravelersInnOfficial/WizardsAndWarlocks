@@ -16,6 +16,37 @@ LevelLoader::LevelLoader(){
 	
 }
 
+bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vector3df rotation){
+	POTIONTYPE pot = POTION_DEFENSE;
+	if(objectType == "LifePotion"){
+		pot = POTION_LIFE;
+	}
+	else if(objectType == "ManaPotion"){
+		pot = POTION_MANA;
+	}
+	else if(objectType == "FirePotion"){
+		pot = POTION_FIRE;
+	}
+	else if(objectType == "IcePotion"){
+		pot = POTION_ICE;
+	}
+	else if(objectType == "ElectricPotion"){
+		pot = POTION_ELECTRIC;
+	}
+	else if(objectType == "PoisonPotion"){
+		pot = POTION_POISON;
+	}
+	else if(objectType == "DefensePotion"){
+		pot = POTION_DEFENSE;
+	}
+	else{
+		return false;
+	}
+
+	ObjectManager* objManager = ObjectManager::GetInstance();
+	return objManager->AddPotion(position, size, rotation, pot) != NULL? true : false;
+}
+
 bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	ObjectManager* objManager = ObjectManager::GetInstance();
@@ -30,6 +61,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 	nlohmann::json j;
 	i >> j;
 
+	std::string type;
 	vector3df position;
 	vector3df rotation;
 	vector3df size;
@@ -41,10 +73,12 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 	for(int i = 0; !j["Objects"][i].is_null(); i++){
 		//pointer to object body
 		auto ptr = j["Objects"][i]["Body"];
+		type = j["Objects"][i]["Type"];
+		
 		//unity transform
-		position = vector3df(ptr["Position"][0], ptr["Position"][1], ptr["Position"][2]);
-		rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
-		size     = vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
+		position = vector3df(ptr["Position"][0], 	ptr["Position"][1], ptr["Position"][2]);
+		rotation = vector3df(ptr["Rotation"][0], 	ptr["Rotation"][1], ptr["Rotation"][2]);
+		size     = vector3df(ptr["Scale"][0], 		ptr["Scale"][1], 	ptr["Scale"][2]);
 
 		//Textures and objects
 		texture = ptr["Texture"];
@@ -55,54 +89,45 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
 		
 		//create object
-		if(j["Objects"][i]["Type"] == "Block"){
+		if(type == "Block"){
 			objManager->AddBlock(position, size, rotation, texture);           
 		}
-		else if(j["Objects"][i]["Type"] == "WizardSpawn"){
+		else if(type == "WizardSpawn"){
 			objManager->AddBlock(position, size, rotation, texture); 
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
-		else if(j["Objects"][i]["Type"] == "WarlockSpawn"){
+		else if(type == "WarlockSpawn"){
 			objManager->AddBlock(position, size, rotation, texture);
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}
-		else if(j["Objects"][i]["Type"] == "Switch"){
+		else if(type == "Switch"){
 			// do nothing here
 		}
-		else if(j["Objects"][i]["Type"] == "Door"){
+		else if(type == "Door"){
 			int idDoor = j["Objects"][i]["ID"];
 			doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
 		}
-		else if(j["Objects"][i]["Type"] == "LifePotion" || j["Objects"][i]["Type"] == "PotionSpawner"){
-			objManager->AddPotion(position, size, rotation, POTION_LIFE);
+		else if( SpawnPotion(type, position, size, rotation) == true ){
+			// stuff is made in the function
 		}
-		else if(j["Objects"][i]["Type"] == "ManaPotion"){
-			objManager->AddPotion(position, size, rotation, POTION_MANA);
-		}
-		else if(j["Objects"][i]["Type"] == "ElectricPotion"){
-			objManager->AddPotion(position, size, rotation, POTION_ELECTRIC);
-		}
-		else if(j["Objects"][i]["Type"] == "PlayerSpawner"){
-			objManager->AddBlock(position, size, rotation, "../assets/textures/yellow.jpg");
-		}
-		else if(j["Objects"][i]["Type"] == "Grail"){
+		else if(type == "Grail"){
 			objManager->AddGrail(position, size, rotation);
 		}
-		else if(j["Objects"][i]["Type"] == "Fountain"){
+		else if(type == "Fountain"){
 			objManager->AddFountain(position, size, rotation);
 		}
-		else if(j["Objects"][i]["Type"] == "ReadyPoint"){
+		else if(type == "ReadyPoint"){
 			objManager->AddReadyPoint(position);
 		}
-		else if(j["Objects"][i]["Type"] == "NpcSelector"){
+		else if(type == "NpcSelector"){
 			objManager->AddNpc(position, size, rotation, NPC_SELECTOR);
 		}
-		else if(j["Objects"][i]["Type"] == "NpcSeller"){
+		else if(type == "NpcSeller"){
 			objManager->AddNpc(position, size, rotation, NPC_SELLER);
 		}
-		else if(j["Objects"][i]["Type"] == "NpcPowerUp"){
+		else if(type == "NpcPowerUp"){
 			objManager->AddNpc(position, size, rotation, NPC_POWERUP);
 		}
 		else{

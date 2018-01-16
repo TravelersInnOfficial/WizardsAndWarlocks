@@ -27,6 +27,8 @@ class Frozen: public Effect{
 public:
 	Frozen(float time, int dmg);
 	void UpdateEffect(Player* p);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
 private:
 	int damage;
 };
@@ -59,11 +61,9 @@ private:
 // WEAK_PARALYZED
 class Paralyzed: public Effect{
 public:
-	Paralyzed(float time, float value);
+	Paralyzed(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
-private:
-	float factor;
 };
 
 // WEAK_SILENCED
