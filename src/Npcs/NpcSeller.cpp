@@ -172,9 +172,15 @@ void NpcSeller::ChangeTrap(TrapEnum tEnum){
 	if(hp != NULL){
 		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
 		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
+		MenuManager::GetInstance()->ClearMenu();
+		MenuManager::GetInstance()->CreateMenu(SELLER_M);
 	}
 }
 
 void NpcSeller::ChangeSpell(SPELLCODE sEnum){
-	if(hp != NULL) SpellManager::GetInstance()->AddHechizo(changingSpell, hp, sEnum);
+	if(hp != NULL){
+		SpellManager::GetInstance()->AddHechizo(changingSpell, hp, sEnum);
+		MenuManager::GetInstance()->ClearMenu();
+		MenuManager::GetInstance()->CreateMenu(SELLER_M);
+	}
 }
