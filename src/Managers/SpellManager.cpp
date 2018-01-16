@@ -32,7 +32,7 @@ SpellManager* SpellManager::GetInstance(){
  * 
  * @return 		[Se ha asignado correctamente el hechizo]
  */
-bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
+bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast){
 	bool toRet = false;
 
 	if(num >=0 && num < numHechizos){			// Comprobamos si el numero de hechizo pasado es correcto
@@ -42,15 +42,17 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
 		toRet = true;
 	}
 
-	// Si somos cliente y player one, sincronizarlo
-	NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	if(toRet && p->IsPlayerOne() && n_engine->IsClientInit()){
-		Client* client = n_engine->GetClient();
-		if(client != NULL){
-			NetworkObject* nObject = p->GetNetworkObject();
-			if(nObject != NULL){
-				int netPlayerId = nObject->GetObjId();
-				client->SetPlayerSpell(netPlayerId, num, type);
+	if(broadcast){
+		// Si somos cliente y player one, sincronizarlo
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(toRet && p->IsPlayerOne() && n_engine->IsClientInit()){
+			Client* client = n_engine->GetClient();
+			if(client != NULL){
+				NetworkObject* nObject = p->GetNetworkObject();
+				if(nObject != NULL){
+					int netPlayerId = nObject->GetObjId();
+					client->SetPlayerSpell(netPlayerId, num, type);
+				}
 			}
 		}
 	}
@@ -320,4 +322,8 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	}
 
 	return spells;
+}
+
+void SpellManager::RefreshServerAll(){
+	
 }

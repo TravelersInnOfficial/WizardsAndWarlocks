@@ -181,11 +181,16 @@ void Client::RecievePackages(){
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				int playerId = -1;
 				TrapEnum trap = TENUM_NO_TRAP;
+				int usings = -1;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(playerId);
 				bitstream.Read(trap);
+				bitstream.Read(usings);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL) TrapManager::GetInstance()->setPlayerTrap(player, trap);
+				if(player != NULL){
+					TrapManager::GetInstance()->setPlayerTrap(player, trap, false);
+					TrapManager::GetInstance()->setPlayerUsings(player, usings);
+				}
 				break;
 			}
 
@@ -200,7 +205,7 @@ void Client::RecievePackages(){
 				bitstream.Read(spellPosition);
 				bitstream.Read(spell);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell);
+				if(player != NULL) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell, false);
 				break;
 			}
 		}

@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <map>
-#include "./../Spells/AllSpells.h"
 #include <SpellCodes.h>
+#include "./../Spells/AllSpells.h"
 #include "./../Players/Player.h"
 
 class SpellManager{
@@ -12,7 +12,7 @@ public:
 	static SpellManager* GetInstance();
 	~SpellManager();
 
-	bool AddHechizo(int num, Player* p, SPELLCODE type);
+	bool AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast = true);
 	
 	void UpdateCooldown(float deltaTime);
 	void ResetCooldown(Player* p);
@@ -28,6 +28,8 @@ public:
 
 	void DrawHUDSpells(Player* p, int current);
 	std::string GetPathFromEnum(SPELLCODE sKind);
+
+	void RefreshServerAll();
 
 private:
 	Hechizo* CrearHechizo(SPELLCODE type);
