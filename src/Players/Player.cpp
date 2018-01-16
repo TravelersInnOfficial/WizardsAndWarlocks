@@ -443,6 +443,11 @@ bool Player::StartSpell(){
 }
 
 bool Player::ShootSpell(){
+	EffectManager* effectman = EffectManager::GetInstance();
+	if(effectman->CheckEffect(this, WEAK_SILENCED) && currentSpell!=0){		// if is not a basic spell or if silenced then not shoot
+		ResetSpell();
+		return false;
+	}
 	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
 }
 
