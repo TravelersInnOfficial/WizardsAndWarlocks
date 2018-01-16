@@ -140,27 +140,27 @@ void Trap::Activate(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
             EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
-            player->ChangeHP(-10);
+            player->ChangeHP(-25);
         break;
 
         case TENUM_SPIRITS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
-            player->ChangeHP(-10);
+            player->ApplyFuzyEffect();
+            player->ChangeHP(-25);
         break;
 
         case TENUM_SILENCE:
             EffectManager::GetInstance()->AddEffect(player, WEAK_SILENCED);
-            player->ChangeHP(-10);
+            player->ChangeHP(-25);
         break;
 
         case TENUM_TAXES:
             player->LosePotion();
-            player->ChangeHP(-10);
+            player->ChangeHP(-25);
         break;
         
         case TENUM_DISTURBANCE:
-            player->ApplyFuzyEffect();
-            player->ChangeHP(-10);
+            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
+            player->ChangeHP(-25);
         break;
 
         case TENUM_EXPLOSIVE:
