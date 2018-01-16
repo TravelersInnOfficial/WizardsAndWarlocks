@@ -9,6 +9,10 @@ BulletEngine* BulletEngine::GetInstance() {
     return (instance);
 }
 
+BulletEngine::~BulletEngine(){
+	EraseWorld();
+}
+
 BulletEngine::BulletEngine(){
 
 	m_broadphase = NULL;
@@ -186,5 +190,3 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
         }
 	}
 }
-
-BulletEngine::~BulletEngine(){}

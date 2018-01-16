@@ -59,6 +59,10 @@ NetGame::~NetGame(){
 bool NetGame::Input(){
 	bool end = false;
 	
+	if(!g_engine->run()){
+		return true;
+	}
+
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
 	if(g_engine->IsKeyPressed(KEY_F1)){
 		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
@@ -134,7 +138,8 @@ void NetGame::Draw(){
 	objectManager->DrawGrailGUI();
 	if(debug) f_engine->DebugDrawWorld();
 	
-	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->endScene();
 }
 
 void NetGame::setFps(){

@@ -16,6 +16,10 @@ NetworkEngine* NetworkEngine::GetInstance(){
 	return instance;
 }
 
+NetworkEngine::~NetworkEngine(){
+	EndService();
+}
+
 void NetworkEngine::Update(){
 	if (isServer && server != NULL) server->RecievePackages();
 	if (isClient && client != NULL) client->RecievePackages();

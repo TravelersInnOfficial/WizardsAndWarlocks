@@ -62,10 +62,13 @@ Game::~Game(){
 }
 
 bool Game::Input(){
-	bool end = false;
 	
+	if(!g_engine->run()){
+		return true;
+	}
+
 	// SALIR
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) return true;
 
 	// TEMPORALES
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
@@ -86,7 +89,7 @@ bool Game::Input(){
 		if(option == ENDMATCH_M_CONFIRM) RestartMatch();
 	}
 
-	return end;
+	return false;
 }
 
 void Game::Update(){
@@ -152,8 +155,8 @@ void Game::Draw(){
 		if(AL != NULL) AL->Debug();
 	}
 	
-	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
-
+	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->endScene();
 /*
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();

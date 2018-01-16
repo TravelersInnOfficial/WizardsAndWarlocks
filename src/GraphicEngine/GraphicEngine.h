@@ -24,6 +24,7 @@ public:
     */
     static GraphicEngine* getInstance();
     
+    ~GraphicEngine();
     /**
      * Executed in main while loop of the game
     */

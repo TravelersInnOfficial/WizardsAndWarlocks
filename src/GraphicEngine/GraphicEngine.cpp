@@ -46,6 +46,10 @@ GraphicEngine::GraphicEngine(){
 
 }
 
+GraphicEngine::~GraphicEngine(){
+	drop();
+}
+
 GraphicEngine* GraphicEngine::getInstance(){
 	if(instance == 0) instance = new GraphicEngine();
 	return instance;
