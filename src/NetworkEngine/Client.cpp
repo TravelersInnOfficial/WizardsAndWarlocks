@@ -1,6 +1,7 @@
 #include "Client.h"
 #include "./../States/NetGame.h"
 #include "./../Managers/TrapManager.h"
+#include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
@@ -174,6 +175,32 @@ void Client::RecievePackages(){
 				EraseTrap(trapId, playerAffected);
 				break;
 			}
+
+			// CUANDO UN PLAYER CAMBIA SUS TRAMPAS
+			case ID_CHANGE_TRAP: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int playerId = -1;
+				TrapEnum trap = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(playerId);
+				bitstream.Read(trap);
+				// TrapManager::GetInstance()->setPlayerTrap(p, trap);
+				break;
+			}
+
+			// CUANDO UN PLAYER CAMBIA SUS HECHIZOS
+			case ID_CHANGE_SPELL: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int playerId = -1;
+				int spellPosition = -1;
+				SPELLCODE spell = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(playerId);
+				bitstream.Read(spellPosition);
+				bitstream.Read(spell);
+				// SpellManager::GetInstance()->AddHechizo(spellPosition, p, spell);
+				break;
+			}
 		}
 	}
 }
@@ -343,3 +370,24 @@ void Client::SetObjectString(int objectId, ObjectVariable k, std::string v){
 }
 
 int Client::GetPlayerOneId(){ return (playerOneId); }
+
+void Client::SetPlayerTrap(int networkId, TrapEnum trap){
+	RakNet::BitStream newTrapsMessage;
+	newTrapsMessage.Write((RakNet::MessageID)ID_CHANGE_TRAP);
+	
+	newTrapsMessage.Write(networkId);
+	newTrapsMessage.Write(trap);
+
+	SendPackage(&newTrapsMessage, HIGH_PRIORITY, RELIABLE_ORDERED);
+}
+
+void Client::SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell){
+	RakNet::BitStream newSpellMessage;
+	newSpellMessage.Write((RakNet::MessageID)ID_CHANGE_SPELL);
+	
+	newSpellMessage.Write(networkId);
+	newSpellMessage.Write(spellPosition);
+	newSpellMessage.Write(spell);
+
+	SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED);
+}

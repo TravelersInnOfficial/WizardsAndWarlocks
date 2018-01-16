@@ -158,6 +158,16 @@ bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
 		}
 	}
 
+	// Si somos cliente y player one, sincronizarlo
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(player->IsPlayerOne() && n_engine->IsClientInit()){
+		Client* client = n_engine->GetClient();
+		if(client != NULL){
+			int netPlayerId = player->GetNetworkObject()->GetObjId();
+			client->SetPlayerTrap(netPlayerId, trap);
+		}
+	}
+
 	return toRet;
 }
 bool TrapManager::setPlayerUsings(Player* player, int uses){

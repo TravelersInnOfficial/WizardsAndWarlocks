@@ -5,6 +5,8 @@
 #include <cstdlib>
 #include <map>
 #include <Alliance.h>
+#include <TrapCodes.h>
+#include <SpellCodes.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
@@ -59,6 +61,10 @@ public:
 	// Name of the Client/Player
 	void SetClientName(std::string name);
 	std::string GetClientName();
+
+	// Sync player spells and traps
+	void SetPlayerTrap(int networkId, TrapEnum trap);
+	void SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell);
 
 private:
 	

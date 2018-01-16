@@ -39,6 +39,17 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
 		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
 		return true;							// Hechizo asignado
 	}
+
+	// Si somos cliente y player one, sincronizarlo
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(p->IsPlayerOne() && n_engine->IsClientInit()){
+		Client* client = n_engine->GetClient();
+		if(client != NULL){
+			int netPlayerId = p->GetNetworkObject()->GetObjId();
+			client->SetPlayerSpell(netPlayerId, num, type);
+		}
+	}
+
 	return false;								// Hechizo no asignado
 }
 
