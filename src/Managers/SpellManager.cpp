@@ -1,6 +1,7 @@
 #include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "EffectManager.h"
+#include "PlayerManager.h"
 
 
 SpellManager* SpellManager::instance = 0;
@@ -324,6 +325,31 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	return spells;
 }
 
+// For refreshing newcomers on the server
 void SpellManager::RefreshServerAll(){
-	
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsServerInit()){
+		Server* server = n_engine->GetServer();
+		if(server != NULL){
+			std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
+			for(int i = 0; i < players.size() ; i++){
+				Player* currentPlayer = players.at(i);
+				if(currentPlayer != NULL){
+					NetworkObject* nObject = currentPlayer->GetNetworkObject();
+					if(nObject != NULL){
+						int netPlayerId = nObject->GetObjId();
+						std::vector<Hechizo*> currentSpells = GetSpells(currentPlayer);
+						for(int j = 0; j < currentSpells.size(); j++){
+							Hechizo* currentSpell = currentSpells.at(j);
+							if(currentSpell != NULL){
+								SPELLCODE type = currentSpell->GetType();
+								int num = j;
+								server->SetPlayerSpell(netPlayerId, num, type);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
