@@ -17,11 +17,9 @@ int main() {
 
 	// MAIN MENU
 	StateManager* state = StateManager::GetInstance();
-
 	while(state->Update()){}
 
 	delete state;
-
 	delete f_engine;
 	delete g_engine;
 	delete s_engine;
