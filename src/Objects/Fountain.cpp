@@ -55,14 +55,12 @@ void Fountain::Update(float deltaTime){
 	if(currentTime >= maxTime){
 		if(inUse){
 			Use();
-		} 
-		else{
+		}else{
 			Recover();
 			SetFree();
 		} 
 		currentTime = 0.0f;
 	}
-	
 	inUse = false;
 }
 
