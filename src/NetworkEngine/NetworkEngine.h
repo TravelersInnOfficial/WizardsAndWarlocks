@@ -15,6 +15,7 @@ public:
 	// Returns Instance of the engine. If it not created, this method initializes it.
 	static NetworkEngine* GetInstance();
 
+	~NetworkEngine();
 	// Start a Server, must declare port before
 	// Or
 	// Start a Client, must declare IP && port before

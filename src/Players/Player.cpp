@@ -46,7 +46,13 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
-	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_SILENCE);
+	SpellManager* spellManager = SpellManager::GetInstance();
+	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
+	spellManager->AddHechizo(1, this, SPELL_FIRE);
+	spellManager->AddHechizo(2, this, SPELL_WALL);
+	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+
+	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
 	Respawn();
 }
@@ -280,17 +286,19 @@ void Player::Update(){
 	}
 }
 
-void Player::ChangeCurrentSpell(int value){
-	int tempCurrentSpell = currentSpell + value;
-	if(tempCurrentSpell >=0 && tempCurrentSpell<= numberSpells){
-		currentSpell = tempCurrentSpell;
+bool Player::ChangeCurrentSpell(int value){
+	if(currentSpell != value){
+		if(value >=0 && value<= numberSpells){
+			ResetSpell();
+			currentSpell = value;
+			return true;
+		}
 	}
+	return false;
 }
 
 void Player::SetSpell(int value){
-	currentSpell = value;
-	if(currentSpell < 0) currentSpell = 0;
-	else if (currentSpell > numberSpells) currentSpell = numberSpells;
+	ChangeCurrentSpell(value);
 }
 
 int Player::GetCurrentSpell(){
@@ -443,6 +451,11 @@ bool Player::StartSpell(){
 }
 
 bool Player::ShootSpell(){
+	EffectManager* effectman = EffectManager::GetInstance();
+	if(effectman->CheckEffect(this, WEAK_SILENCED) && currentSpell!=0){		// if is not a basic spell or if silenced then not shoot
+		ResetSpell();
+		return false;
+	}
 	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
 }
 
@@ -516,10 +529,11 @@ void Player::CheckIfReady(){
 }
 
 void Player::Run(bool runStatus){
+	float factor = 5/3.0f;
 	if(isRunning != runStatus){
 		isRunning = runStatus;
-		if(runStatus) max_velocity += 2;
-		else max_velocity -= 2;
+		if(runStatus) max_velocity *= factor;
+		else max_velocity /= factor;
 	}
 }
 
@@ -867,10 +881,10 @@ void Player::Draw(){
 	DrawBars();
 	DrawSpellSelector();
 	DrawInventory();
+	DrawTraps();
 }
 
 void Player::DrawBars(){
-
 	int W = engine->GetScreenWidth();		
 	int H = engine->GetScreenHeight();
 
@@ -913,4 +927,8 @@ void Player::DrawSpellSelector(){
 
 void Player::DrawInventory(){
 	if(potion != NULL) potion->DrawHUD();
+}
+
+void Player::DrawTraps(){
+	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->DrawHUD(this);
 }

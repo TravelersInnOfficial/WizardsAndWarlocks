@@ -36,6 +36,14 @@ void Frozen::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
 }
 
+void Frozen::ApplyEffect(Player* p){
+	p->max_velocity /= 1000.0f;
+}
+
+void Frozen::RemoveEffect(Player* p){
+	p->max_velocity *= 1000.0f;
+}
+
 //================================================================
 // POISONED
 //================================================================
@@ -71,16 +79,15 @@ void SlowedDown::RemoveEffect(Player* p){
 //================================================================
 // PARALYZED
 //================================================================
-Paralyzed::Paralyzed(float time, float value):Effect(time, WEAK_PARALYZED){
-	factor = value;
+Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
 }
 
 void Paralyzed::ApplyEffect(Player* p){
-	p->max_velocity /= factor;
+	p->max_velocity /= 1000.0f;
 }
 
 void Paralyzed::RemoveEffect(Player* p){
-	p->max_velocity *= factor;
+	p->max_velocity *= 1000.0f;
 }
 
 //================================================================

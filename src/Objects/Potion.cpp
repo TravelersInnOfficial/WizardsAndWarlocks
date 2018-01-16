@@ -118,7 +118,7 @@ void Potion::DrawHUD(){
 	float W =			g_engine->GetScreenWidth();
 	float H =			g_engine->GetScreenHeight();
 	float size =		W * 0.075;
-	float xInit =		W * 0.85;
+	float xInit =		W * 0.87;
 	float yInit =		H * 0.05;
 	float outline =		5;
 

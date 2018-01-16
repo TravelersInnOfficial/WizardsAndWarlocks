@@ -54,8 +54,7 @@ Hechizo que crea un área en la que el enemigo recibe daño, es ralentizado. En 
 que se le aplique el efecto continuamente será congelado
 */
 
-enum SPELLCODE
-{
+enum SPELLCODE{
 	// Effect Spells
 	SPELL_SPEED,
 	SPELL_DEFENSE,

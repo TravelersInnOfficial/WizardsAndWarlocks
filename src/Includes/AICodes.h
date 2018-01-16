@@ -1,8 +1,7 @@
 #ifndef AICODES_H
 #define AICODES_H
 
-enum AI_code
-{
+enum AI_code{
 	AI_CHARACTER		= 0x00,	// Personaje de la IA
 	AI_TARGET			= 0x01,	// (Puntero) Target de la IA (Kinematic Object)
 	// SUB ARBOLES DE LAS TAREAS

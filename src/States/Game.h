@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+#include "./State.h"
+
 #include "./../LevelLoader.h"
 #include "./../Players/HumanPlayer.h"
 #include "./../Npcs/Npc.h"
@@ -30,7 +32,7 @@
 
 #include "./../NavMeshLoader.h"
 
-class Game{
+class Game: public State{
 public:
 
 	Game();

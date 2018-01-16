@@ -6,6 +6,8 @@
 #include <Menus.h>
 #include <Alliance.h>
 #include <KeyStates.h>
+#include <TrapCodes.h>
+#include <SpellCodes.h>
 #include "./Npc.h"
 #include "./../Players/Player.h"
 #include "./../Players/HumanPlayer.h"
@@ -23,8 +25,15 @@ class NpcSeller: public Npc{
 		void StopInteraction();
 		void Update();
 		void Draw();
+
 	private:
 		HumanPlayer* hp;
+		int changingSpell = 1;
+
+		void ChangeChangingSpell(int changingSpell);
+		void ChangeTrap(TrapEnum tEnum);
+		void ChangeSpell(SPELLCODE sEnum);
+		void UpdateMenu();
 };
 
 #endif

@@ -8,7 +8,7 @@ ifeq ($(OS),Windows_NT)
 	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
-    CXXFLAGS			:= -O3 -ffast-math -g -Wall -std=c++11
+    CXXFLAGS			:= -O3 -g -Wall -std=c++11
     CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes
     LDFLAGS				:= -L./libs/fmod
     LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio

@@ -2,6 +2,8 @@
 #include "./../Players/Player.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Managers/TrapManager.h"
+#include <TrapCodes.h>
 
 MenuManager* MenuManager::instance = 0;
 
@@ -42,7 +44,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(SELLER_M):{
-			CreateSeller();
+			CreateSeller(option);
 			break;
 		}
 		default:{
@@ -128,7 +130,14 @@ void MenuManager::CreateAlliance(){
 	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", ALLIANCE_M_WARLOCK, window);
 }
 
-void MenuManager::CreateSeller(){
+void MenuManager::CreateSeller(int selected){
+	
+	if(selected < 1) selected = 1;
+	else if (selected > 3) selected = 3;
+
+	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
+	if(playerOne == NULL) return;
+
 	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
 	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
 
@@ -146,41 +155,96 @@ void MenuManager::CreateSeller(){
 	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y/15,menuSize.X/2.0f,menuSize.Y/30);
 	g_engine->addStaticText(rect, L"Select the SPELLS and TRAPS you will fight with.", true, false, SELLER_M_TEXT_1, window);
 
-
-
-
-
 	// BUTTONS FOR OUR PLAYER SPELLS
 	float W =			menuSize.X;		// Ancho
 	float H =			menuSize.Y;		// Alto
 	float sizeBox =		W * 0.075;		// Tamanyo de los cuadrados del hechizo
-	float xInit =		W * 0.25;		// X inicial del primer hechizo
-	float yInit =		H * 0.15;		// Y inicial
+	float xInit =		W * 0.252;		// X inicial del primer hechizo
+	float yInit =		H * 0.14;		// Y inicial
 	float space =		W * 0.03;		// Espacio entre hechizos
 	float outline =		5;				// Borde de los hechizo
 
-	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
+
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(playerOne);
-
-	if(playerOne != NULL){
-
-		std::vector<MenuOption> menuOptions;
-		menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
-
-		for(int i = 1; i < spells.size(); i++){
-			float xInitSpell = xInit + (sizeBox + space) * i;
-			vector4df sizeImage(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
-			vector4di finalSI(sizeImage.X, sizeImage.Y, sizeImage.X2, sizeImage.Y2);
-			std::string texturePath = spells[i]->GetHUDTexturePath();
-			g_engine->addButton(finalSI, L"", L"CURRENT SPELL", menuOptions.at(i-1), window, texturePath);
+	std::vector<MenuOption> menuOptions;
+	menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
+	for(int i = 1; i < spells.size(); i++){
+		int currentSpell = i-1;
+		float xInitSpell = xInit + (sizeBox + space) * i;
+		
+		vector4di finalSizeImage = vector4di(xInitSpell, yInit, sizeBox, sizeBox);
+		if(currentSpell == selected - 1){
+			std::string texturePath = "./../assets/textures/yellow.jpg";
+			g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", SELLER_M_TRAP, window, texturePath);
 		}
+
+		finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline*2, sizeBox - outline*2);
+		std::string texturePath = spells[i]->GetHUDTexturePath();
+		g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", menuOptions.at(currentSpell), window, texturePath);
 	}
 
 	// BUTTONS FOR ALL THE SPELLS AVALIABLE
+	sizeBox =	W * 0.075;
+	xInit =		W * 0.147;
+	yInit =		H * 0.28;
+	space =		W * 0.03;
+	outline =	5;
+
+	menuOptions.clear();
+	menuOptions.push_back(SELLER_SPEED); menuOptions.push_back(SELLER_DEFENSE); menuOptions.push_back(SELLER_INVISIBILITY); menuOptions.push_back(SELLER_UNTARGET); menuOptions.push_back(SELLER_FIRE); menuOptions.push_back(SELLER_POISON); menuOptions.push_back(SELLER_THUNDER); menuOptions.push_back(SELLER_TELEPORT); menuOptions.push_back(SELLER_CLEANSE); menuOptions.push_back(SELLER_WALL); menuOptions.push_back(SELLER_DUMMY); menuOptions.push_back(SELLER_TELEPORTBASE); menuOptions.push_back(SELLER_BLIZZAR);
+
+	std::vector<SPELLCODE> kinds_spell;
+	kinds_spell.push_back(SPELL_SPEED); kinds_spell.push_back(SPELL_DEFENSE); kinds_spell.push_back(SPELL_INVISIBILITY); kinds_spell.push_back(SPELL_UNTARGET); kinds_spell.push_back(SPELL_FIRE); kinds_spell.push_back(SPELL_POISON); kinds_spell.push_back(SPELL_THUNDER); kinds_spell.push_back(SPELL_TELEPORT); kinds_spell.push_back(SPELL_CLEANSE); kinds_spell.push_back(SPELL_WALL); kinds_spell.push_back(SPELL_DUMMY); kinds_spell.push_back(SPELL_TELEPORTBASE); kinds_spell.push_back(SPELL_BLIZZARD);
+
+	int cut = 7;
+	for(int i = 0; i < menuOptions.size(); i++){
+		float xInitSpell = xInit + (sizeBox + space) * i;
+
+		if(i == cut) yInit = yInit + sizeBox + space/2;
+		if(i >= cut) xInitSpell = xInit + (sizeBox + space) * (i - cut);
+
+		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		std::string texturePath = SpellManager::GetInstance()->GetPathFromEnum(kinds_spell.at(i));
+		g_engine->addButton(finalSizeImage, L"", L"NEW SPELL", menuOptions.at(i), window, texturePath);
+	}
 
 	// BUTTON FOR OUR PLAYER TRAPS
+	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
+	yInit =		H * 0.57;					// Y inicial
+
+	vector4di finalSizeImage = vector4di(xInit, yInit, sizeBox + outline, sizeBox + outline);
+	std::string texturePath = "./../assets/textures/yellow.jpg";
+	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
+
+	TrapManager* trapManager = TrapManager::GetInstance();
+	texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
+	finalSizeImage = vector4di(finalSizeImage.X + outline, finalSizeImage.Y + outline, finalSizeImage.X2 - outline*2, finalSizeImage.Y2 - outline*2);
+	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
 
 	// BUTTON FOR ALL TRAPS AVALIABLE
+	sizeBox =	W * 0.075;
+	xInit =		W * 0.2;
+	yInit =		H * 0.7;
+	space =		W * 0.03;
+	outline =	5;
+
+	menuOptions.clear();
+	menuOptions.push_back(SELLER_DEATH_CLAWS); menuOptions.push_back(SELLER_SPIRITS); menuOptions.push_back(SELLER_SILENCE); menuOptions.push_back(SELLER_TAXES); menuOptions.push_back(SELLER_DISTURBANCE); menuOptions.push_back(SELLER_EXPLOSIVE);
+	
+	std::vector<TrapEnum> kinds;
+	kinds.push_back(TENUM_DEATH_CLAWS); kinds.push_back(TENUM_SPIRITS); kinds.push_back(TENUM_SILENCE); kinds.push_back(TENUM_TAXES); kinds.push_back(TENUM_DISTURBANCE); kinds.push_back(TENUM_EXPLOSIVE);
+
+	for(int i = 0; i < menuOptions.size(); i++){
+		float xInitSpell = xInit + (sizeBox + space) * i;
+		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
+		std::string texturePath = TrapManager::GetInstance()->GetPathFromEnum(kinds.at(i));
+		g_engine->addButton(finalSizeImage, L"", L"NEW TRAP", menuOptions.at(i), window, texturePath);
+	}
+
+	// BUTTON FOR ACEPTAR
+	rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y*0.85,menuSize.X/2.0f,menuSize.Y*0.1);
+	g_engine->addButton(rect, L"ACCEPT", L"Accept and go back to Lobby", SELLER_M_ACCEPT, window);
+
 
 }
 

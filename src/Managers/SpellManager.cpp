@@ -33,7 +33,7 @@ SpellManager* SpellManager::GetInstance(){
  * @return 		[Se ha asignado correctamente el hechizo]
  */
 bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
-	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+	if(num >=0 && num < numHechizos){			// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
 		if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
 		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
@@ -147,11 +147,9 @@ float SpellManager::GetUtility(int num, Player* p){
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	// COSTMP TIMECAST TIMECOOLDOWN OPTHP OPTMP
 	Hechizo* h;
+	
 	switch(type){
-		case SPELL_BASIC:		// Hechizo instantaneo (Padre, no usar)
-			h = new Hechizo(-70, 2.0f, 5.0f, SPELL_BASIC, "", 1, 1);
-		break;
-		
+		default:				// Para los que aun no existan
 		case SPELL_PROJECTILE:	// Hechizo de ataque basico
 			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
 		break;
@@ -175,10 +173,8 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
 			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
 		break;
-		
-		default:
-			h = NULL;
 	}
+
 	return h;
 }
 
@@ -218,6 +214,78 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 			}
 		}
 	}
+}
+
+std::string SpellManager::GetPathFromEnum(SPELLCODE sKind){
+	std::string toRet = "./../assets/textures/HUD/Spells/";
+	
+	switch(sKind){
+        case SPELL_SPEED:
+			toRet += "SPELL_SPEED.png";
+        break;
+
+        case SPELL_DEFENSE:
+			toRet += "SPELL_DEFENSE.png";
+        break;
+
+        case SPELL_INVISIBILITY:
+			toRet += "SPELL_INVISIBILITY.png";
+        break;
+
+        case SPELL_UNTARGET:
+			toRet += "SPELL_UNTARGET.png";
+        break;
+
+        case SPELL_BASIC:
+			toRet += "SPELL_BASIC.png";
+        break;
+
+		case SPELL_PROJECTILE:
+			toRet += "SPELL_PROJECTILE.png";
+        break;
+
+		case SPELL_FIRE:
+			toRet += "SPELL_FIRE.png";
+        break;
+
+		case SPELL_POISON:
+			toRet += "SPELL_POISON.png";
+        break;
+
+		case SPELL_THUNDER:
+			toRet += "SPELL_THUNDER.png";
+        break;
+
+		case SPELL_TELEPORT:
+			toRet += "SPELL_TELEPORT.png";
+        break;
+
+		case SPELL_CLEANSE:
+			toRet += "SPELL_CLEANSE.png";
+        break;
+
+		case SPELL_WALL:
+			toRet += "SPELL_WALL.png";
+        break;
+
+		case SPELL_DUMMY:
+			toRet += "SPELL_DUMMY.png";
+        break;
+
+		case SPELL_TELEPORTBASE:
+			toRet += "SPELL_TELEPORTBASE.png";
+        break;
+
+		case SPELL_BLIZZARD:
+			toRet += "SPELL_BLIZZARD.png";
+        break;
+
+        default:
+			toRet = "";
+        break;
+    }
+
+	return toRet;
 }
 
 int SpellManager::GetNumSpells(){ return numHechizos; }

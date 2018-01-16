@@ -254,12 +254,12 @@ void HumanPlayer::CheckInput(){
 
 		// Cambiar hechizos
 		bool spellChanged = false;
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); spellChanged = true;}
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); spellChanged = true; }
-		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_00)){ currentSpell = 0; spellChanged = true; }
-		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ currentSpell = 1; spellChanged = true; }
-		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ currentSpell = 2; spellChanged = true; }
-		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ currentSpell = 3; spellChanged = true; }
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ spellChanged = ChangeCurrentSpell(currentSpell +1);}
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ spellChanged = ChangeCurrentSpell(currentSpell -1); }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_00)){ spellChanged = ChangeCurrentSpell(0); }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ spellChanged = ChangeCurrentSpell(1); }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ spellChanged = ChangeCurrentSpell(2); }
+		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ spellChanged = ChangeCurrentSpell(3); }
 		if(spellChanged && networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 		
 		// Trampas

@@ -12,7 +12,7 @@ class BulletEngine{
 public:
 
 	static BulletEngine* GetInstance();
-	
+
 	void CreateWorld();
     void UpdateWorld();
     void EraseWorld();

@@ -36,17 +36,8 @@ Game::Game(){
 
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
-	spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);
-	spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
-	spellManager->AddHechizo(2, playerOne, SPELL_THUNDER);
-	spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
-	//effectManager->AddEffect(playerOne, WEAK_MADNESS);
 
 	AL = playerManager->AddAIPlayer();
-	spellManager->AddHechizo(0, AL, SPELL_PROJECTILE);
-	spellManager->AddHechizo(1, AL, SPELL_FIRE);
-	spellManager->AddHechizo(2, AL, SPELL_WALL);
-	spellManager->AddHechizo(3, AL, SPELL_BLIZZARD);
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
@@ -62,10 +53,13 @@ Game::~Game(){
 }
 
 bool Game::Input(){
-	bool end = false;
 	
+	if(!g_engine->run()){
+		return true;
+	}
+
 	// SALIR
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) return true;
 
 	// TEMPORALES
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
@@ -86,7 +80,7 @@ bool Game::Input(){
 		if(option == ENDMATCH_M_CONFIRM) RestartMatch();
 	}
 
-	return end;
+	return false;
 }
 
 void Game::Update(){
@@ -152,8 +146,8 @@ void Game::Draw(){
 		if(AL != NULL) AL->Debug();
 	}
 	
-	GraphicEngine::getInstance()->drawAllGUI();	// Draws the MENU (if one is activated)
-
+	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->endScene();
 /*
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();

@@ -2,6 +2,7 @@
 #include "PlayerManager.h"
 #include <vector3d.h>
 #include "./../NetworkEngine/NetworkEngine.h"
+#include "./../GraphicEngine/GraphicEngine.h"
 
 TrapManager* TrapManager::instance = 0;
 
@@ -181,8 +182,10 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     Trap* myTrap = NULL;
     
     if(player != NULL){
+		std::cout<<"ENTRA"<<std::endl;
         int uses = getPlayerUsings(player);
-        setPlayerUsings(player, uses--);
+		uses--;
+        setPlayerUsings(player, uses);
         type = getPlayerTrap(player);
     }
 
@@ -204,5 +207,85 @@ Trap* TrapManager::GetTrapWithId(int id){
 		if(t != NULL && t->GetTrapId() == id) toRet = t;
 	}
 
+	return toRet;
+}
+
+void TrapManager::DrawHUD(Player* player){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
+	if(kindImagePath.length() > 0){
+
+		std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
+
+		float W =			g_engine->GetScreenWidth();
+		float H =			g_engine->GetScreenHeight();
+		float size =		W * 0.075;
+		float xInit =		W * 0.85;
+		float yInit =		H * 0.175;
+		float outline =		5;
+
+		g_engine->draw2DRectangle(vector3df(0,0,0), 
+									xInit, 
+									yInit, 
+									xInit + size, 
+									yInit + size);
+
+		vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
+		g_engine->draw2DImage(kindImagePath, sizeImage);
+
+		g_engine->draw2DRectangle(vector3df(0,0,0), 
+							xInit + size, 
+							yInit, 
+							xInit + size + size/2, 
+							yInit + size);
+
+		vector4df sizeCounter(xInit + size, sizeImage.Y, xInit + size + size/2, sizeImage.Y2);
+		g_engine->draw2DImage(countImagePath, sizeCounter);
+
+		
+	}
+}
+
+std::string TrapManager::GetPathFromEnum(TrapEnum tKind){
+	std::string toRet = "./../assets/textures/HUD/Traps/";
+	
+	switch(tKind){
+        case TENUM_DEATH_CLAWS:
+			toRet += "TENUM_DEATH_CLAWS.png";
+        break;
+
+        case TENUM_SPIRITS:
+			toRet += "TENUM_SPIRITS.png";
+        break;
+
+        case TENUM_SILENCE:
+			toRet += "TENUM_SILENCE.png";
+        break;
+
+        case TENUM_TAXES:
+			toRet += "TENUM_TAXES.png";
+        break;
+        
+        case TENUM_DISTURBANCE:
+			toRet += "TENUM_DISTURBANCE.png";
+        break;
+
+        case TENUM_EXPLOSIVE:
+			toRet += "TENUM_EXPLOSIVE.png";
+        break;
+
+        default:
+			toRet = "";
+        break;
+    }
+
+	return toRet;
+}
+
+std::string TrapManager::GetPathFromUsings(int usings){
+	if(usings < 0) usings = 0;
+	else if(usings > MaxUsings) usings = MaxUsings;
+	std::string toRet = "./../assets/textures/HUD/Counter/" + std::to_string(usings) + ".png";
 	return toRet;
 }

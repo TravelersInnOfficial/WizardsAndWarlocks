@@ -19,11 +19,12 @@
 #include "./../NetworkEngine/NetworkEngine.h"
 
 #include "./../LevelLoader.h"
+#include "./State.h"
 
 #include <SpellCodes.h>
 #include <EffectCodes.h>
 
-class NetGame{
+class NetGame: public State{
 public:
 
 	static NetGame* GetInstance();
