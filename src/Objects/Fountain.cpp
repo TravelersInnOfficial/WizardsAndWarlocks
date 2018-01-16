@@ -53,8 +53,13 @@ void Fountain::Update(float deltaTime){
 	currentTime += deltaTime;
 
 	if(currentTime >= maxTime){
-		if(inUse) Use();
-		else Recover();
+		if(inUse){
+			Use();
+		} 
+		else{
+			Recover();
+			SetFree();
+		} 
 		currentTime = 0.0f;
 	}
 	
@@ -71,7 +76,7 @@ void Fountain::SetFree(){
 }
 
 bool Fountain::Use(){
-	if(user){
+	if(user!=NULL){
 		if(incrementUse<=value){		
 			value -= incrementUse;
 			user->ChangeHP(incrementUse);
@@ -99,8 +104,10 @@ void Fountain::Recover(){
 }
 
 void Fountain::Interact(Player* p){
+	if(user==NULL){
+		user = p;
+	}
 	inUse = true;
-	user = p;
 }
 
 void Fountain::UpdatePosShape(){
