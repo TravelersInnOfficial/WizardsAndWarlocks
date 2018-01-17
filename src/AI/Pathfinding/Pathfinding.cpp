@@ -189,7 +189,7 @@ std::list<Connection*> *Pathfinding::AStar( vector3df from,vector3df to){
 }
 
 
-std::list<Connection*> *Pathfinding::DijkstraPF(Graph* g, Node* StartNode, Node* EndNode){
+std::list<Connection*> *Pathfinding::DijkstraPF( Node* StartNode, Node* EndNode){
     //Initialize the record for the start node
     m_startRecord->m_node = StartNode;
     m_startRecord->m_connection = NULL;

@@ -1,7 +1,6 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
-#include "Graph.h"
 #include "List.h"
 #include "./../../Objects/NavMesh.h"
 
@@ -18,7 +17,7 @@ class Pathfinding{
     Node* StartNode;
     Node* EndNode;
 
-    std::list<Connection*> *DijkstraPF(Graph* g, Node* StartNode, Node* GoalNode);
+    std::list<Connection*> *DijkstraPF(Node* StartNode, Node* GoalNode);
 
 };
 
