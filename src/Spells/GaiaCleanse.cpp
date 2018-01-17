@@ -17,6 +17,7 @@ GaiaCleanse::GaiaCleanse(float costPM, float tCast, float tCoolDown, float optHP
 
 void GaiaCleanse::Lanzar(Player* p){
 	EffectManager::GetInstance()->CleanEffects(p);
+	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************

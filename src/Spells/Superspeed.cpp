@@ -17,6 +17,7 @@ Superspeed::Superspeed(float costPM, float tCast, float tCoolDown, float optHP, 
 
 void Superspeed::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_SPEED);
+	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************

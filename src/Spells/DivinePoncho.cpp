@@ -17,6 +17,7 @@ DivinePoncho::DivinePoncho(float costPM, float tCast, float tCoolDown, float opt
 
 void DivinePoncho::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_UNTARGET);
+	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************

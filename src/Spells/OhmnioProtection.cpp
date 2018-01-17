@@ -17,6 +17,7 @@ OhmnioProtection::OhmnioProtection(float costPM, float tCast, float tCoolDown, f
 
 void OhmnioProtection::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_DEFENSE);
+	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************

@@ -33,6 +33,7 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
 		base = NULL;
 		justPlaced = true;
 	}
+	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************
