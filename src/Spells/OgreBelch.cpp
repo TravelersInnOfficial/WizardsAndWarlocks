@@ -15,18 +15,17 @@ OgreBelch::OgreBelch(float costPM, float tCast, float tCoolDown, float optHP, fl
 }
 
 void OgreBelch::Lanzar(Player* p){
+	vector3df pos = p->GetHeadPos();
 	vector3df rot = p->GetRot();
-
 	rot.X = -rot.X;
 
-	vector3df pos = p->GetHeadPos();
-	float max = 0;
+	float max = 1;
 	pos.X = pos.X + sin(rot.Y)*cos(rot.X)*max;
 	pos.Y = pos.Y + sin(rot.X)*max;
 	pos.Z = pos.Z + cos(rot.Y)*cos(rot.X)*max;
+	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 
 	BulletManager* bullman = BulletManager::GetInstance();
-	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), POISON_BOMB);
 
 	Hechizo::Lanzar(p);

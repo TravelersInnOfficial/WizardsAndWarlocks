@@ -78,7 +78,7 @@ void PoisonBomb::UpdatePosShape(){
         // Gas bomb update
         ghostScale += 0.005;
         bt_ghost->SetScale(ghostScale);
-        m_ProjectileNode->setScale(vector3df(ghostScale*1.7));
+        m_ProjectileNode->setScale(vector3df(ghostScale*2));
 
         if(ghostScale > 3.0f){
             BulletManager::GetInstance()->AddToDeleteProyecil(this);
