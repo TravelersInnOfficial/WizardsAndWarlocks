@@ -66,6 +66,7 @@ class Player: public Entidad{
 		bool ChangeCurrentSpell(int);
 		int GetCurrentSpell();
 		void ResetAllSpells();
+		void ResetDieSpells();
 
 		// Sensorial Functions
 		void SendSignal();
@@ -135,6 +136,7 @@ class Player: public Entidad{
 		void SetMatchStatus(bool started);
 		void SetSpell(int value);
 		void SetName(std::string newName);
+		void SetVisible(bool);
 
 		virtual ~Player();
 
@@ -142,7 +144,8 @@ class Player: public Entidad{
 		float 			max_velocity;				// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
 		float 			m_DamageMult;				// Multiplicador de danyo del jugador
 		float 			m_Defense;					// Divisor del danyo recibido
-		EFFECTCODE 		m_shotEffect;
+		EFFECTCODE 		m_shotEffect;				// Efecto que aplicara al impactar la
+		bool 			m_visible;					// Is player visible?
 
 	protected:
 

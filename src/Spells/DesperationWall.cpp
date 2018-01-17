@@ -19,7 +19,7 @@ void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en
 	rot.Y = rot.Y * 180 / M_PI;
 
 	pos.Y += 0.25;
-	objectMaster->AddInvocation(pos, vector3df(1.75,2.0,0.25), rot);
+	objectMaster->AddInvocation(pos, vector3df(1.75,2.0,0.25), rot, INVO_WALL);
 
 	Hechizo::Lanzar(p);
 }

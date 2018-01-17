@@ -147,7 +147,7 @@ int TrapManager::getPlayerUsings(Player* player){
 	return -1;
 }
 
-bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
+bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap, bool broadcast){
 	bool toRet = false;
 	std::map<Player*, TrapEnum>::iterator it = playerTrap.begin();
 	
@@ -155,6 +155,18 @@ bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap){
 		if(it->first == player){
 			it->second = trap;
 			toRet = true;
+		}
+	}
+
+	if(broadcast){
+		// Si somos cliente y player one, sincronizarlo
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(player->IsPlayerOne() && n_engine->IsClientInit()){
+			Client* client = n_engine->GetClient();
+			if(client != NULL){
+				int netPlayerId = player->GetNetworkObject()->GetObjId();
+				client->SetPlayerTrap(netPlayerId, trap);
+			}
 		}
 	}
 
@@ -182,7 +194,6 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     Trap* myTrap = NULL;
     
     if(player != NULL){
-		std::cout<<"ENTRA"<<std::endl;
         int uses = getPlayerUsings(player);
 		uses--;
         setPlayerUsings(player, uses);
@@ -288,4 +299,18 @@ std::string TrapManager::GetPathFromUsings(int usings){
 	else if(usings > MaxUsings) usings = MaxUsings;
 	std::string toRet = "./../assets/textures/HUD/Counter/" + std::to_string(usings) + ".png";
 	return toRet;
+}
+
+// For refreshing newcomers on the server
+void TrapManager::RefreshServerAll(){
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsServerInit()){
+		Server* server = n_engine->GetServer();
+		if(server != NULL){
+			for (std::map<Player*, TrapEnum>::iterator it=playerTrap.begin(); it!=playerTrap.end(); ++it){
+				int netPlayerId = it->first->GetNetworkObject()->GetObjId();
+				server->SetPlayerTrap(netPlayerId, it->second, getPlayerUsings(it->first));
+			}
+		}
+	}
 }

@@ -65,6 +65,7 @@ void Player::PlayerInit(){
 	m_DamageMult = 1;
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
+	m_visible = true;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -380,7 +381,12 @@ void Player::ChangeHP(float HP){
 			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
 			bloodOverlayTime = 1;
 		}
-		m_HP += HP / m_Defense;
+		// Solo le aplica danyo si su armadura es inferior a 5
+		if(m_Defense<5.0f){
+			m_HP += HP / m_Defense;
+		}else{
+			bloodOverlayTime = 0;
+		}
 	}
 	
 	// AMBOS
@@ -463,6 +469,10 @@ void Player::ResetAllSpells(){
 	SpellManager::GetInstance()->ResetHechizo(this);
 }
 
+void Player::ResetDieSpells(){
+	SpellManager::GetInstance()->ResetDieHechizo(this);
+}
+
 void Player::ResetSpell(){
 	SpellManager::GetInstance()->ResetHechizo(currentSpell,this);
 }
@@ -470,13 +480,16 @@ void Player::ResetSpell(){
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
+	if(m_visible){
+		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
+	}
 	if(moving){
 		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
 	}
 }
 
 void Player::Die(){
+	ResetDieSpells();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event
@@ -870,6 +883,17 @@ void Player::SetName(std::string newName){
 	if(!name.empty()){
 		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 		else SetBillboard();
+	}
+}
+
+void Player::SetVisible(bool visible){
+	if(!visible) {
+		m_visible = false;
+		m_playerNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+	}
+	else{
+		m_visible = true;
+	 	m_playerNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 	}
 }
 

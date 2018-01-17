@@ -147,9 +147,26 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 	return n;
 }
 
-Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	Invocation* in = new Invocation(100, 10, TPosition, TScale, TRotation);
-	invocations.push_back(in);
+Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type){
+	Invocation* in = NULL;
+	switch(type){
+		case INVO_WALL:
+			in = new InvocationWall(100, 10, TPosition, TScale, TRotation);
+		break;
+
+		case INVO_WIZARD:
+			in = new Dummy(100, 10, true, TPosition, TScale, TRotation);
+		break;
+
+		case INVO_WARLOCK:
+			in = new Dummy(100, 10, false, TPosition, TScale, TRotation);
+		break;
+
+		case INVO_TELEPORT:
+			in = new BaseT(TPosition,  TScale, TRotation);
+		break;
+	}
+	if(in!=NULL)invocations.push_back(in);
 	return in;
 }
 
@@ -274,6 +291,17 @@ void ObjectManager::DeletePotion(Potion* potion){
 		if(p == potion){
 			potions.erase(potions.begin() + i);
 			delete p;
+		}
+	}
+}
+
+void ObjectManager::DeleteBlock(Block* block){
+	int size = blocks.size();
+	for(int i=size-1; i>=0; i--){
+		Block* b = blocks[i];
+		if(b == block){
+			blocks.erase(blocks.begin() + i);
+			delete b;
 		}
 	}
 }

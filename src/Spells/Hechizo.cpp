@@ -24,6 +24,11 @@ Hechizo::~Hechizo(){
 	if(shotEvent!=NULL)shotEvent->release();
 }
 
+void Hechizo::DieReset(){
+	timeCasting = 0.0f;
+	lanzable = false;
+}
+
 void Hechizo::ResetSpell(){
 	timeCasting = 0.0f;
 	lanzable = false;

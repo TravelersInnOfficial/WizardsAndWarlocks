@@ -14,6 +14,7 @@ public:
 	void EmpezarCast();
 	void ResetCooldown();
 	virtual void ResetSpell();
+	virtual void DieReset();
 	bool ComprobarCast(float deltaTime);
 	virtual void Lanzar(Player* p);
 	float GetCurrentCooldown();

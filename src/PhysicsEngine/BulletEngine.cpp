@@ -131,7 +131,7 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
     return NULL;
 }
 
-void BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal){
+bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal){
 	btVector3 Start(S.X, S.Y, S.Z);
 	btVector3 End(E.X, E.Y, E.Z);
 
@@ -152,8 +152,10 @@ void BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df
 			point->X = P.getX();
 			point->Y = P.getY();
 			point->Z = P.getZ();
+			return true;
 		}
 	}
+	return false;
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){

@@ -2,6 +2,7 @@
 #define DesperationWall_H
 
 #include <iostream>
+#include <InvocationCodes.h>
 
 #include "Hechizo.h"
 #include "./../Players/Player.h"

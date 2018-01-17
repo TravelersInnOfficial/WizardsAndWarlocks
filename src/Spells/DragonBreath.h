@@ -3,7 +3,6 @@
 
 #include "Hechizo.h"
 #include "./../Players/Player.h"
-#include <BulletCodes.h>
 
 class DragonBreath: public Hechizo{
 public:
@@ -13,8 +12,6 @@ public:
 protected:	
 	//Sound Functions
 	void createSoundEvent();
-	
-private:
 	
 };
 

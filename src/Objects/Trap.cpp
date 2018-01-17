@@ -182,7 +182,7 @@ void Trap::ForceEffect(Player* player){
         break;
 
         case TENUM_SPIRITS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
+            player->ApplyFuzyEffect();
         break;
 
         case TENUM_SILENCE:
@@ -194,7 +194,7 @@ void Trap::ForceEffect(Player* player){
         break;
         
         case TENUM_DISTURBANCE:
-            player->ApplyFuzyEffect();
+            EffectManager::GetInstance()->AddEffect(player, WEAK_MADNESS);
         break;
 
         default:
