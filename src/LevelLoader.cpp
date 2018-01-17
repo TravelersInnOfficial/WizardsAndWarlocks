@@ -1,5 +1,6 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
+#include "Managers/BulletManager.h"
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
 #include "Managers/TrapManager.h"
@@ -51,6 +52,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
+	BulletManager::GetInstance()->DeleteAllProyectiles();
 	PlayerManager::GetInstance()->ResetAllSpells();
 	TrapManager::GetInstance()->ClearTraps();
 
