@@ -2,6 +2,7 @@
 #include "../Players/Player.h"
 #include "../Managers/EffectManager.h"
 #include "./../Managers/BulletManager.h"
+#include <cmath>
 
 PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
 : Projectile(
@@ -9,9 +10,9 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     dir,                    // direction of the projectile
     emi,                    // player id 
     0.2f,                   // radius of the projectile
-    10.0f,                  // speed of the projectile
+    15.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
-    20.0f,                  // max distance the projectile can travel
+    25.0f,                  // max distance the projectile can travel
     "./../assets/textures/projectils/SPELL_POISON.png")        // texture of the projectile
 {
     //bt_body->SetCollisionFlags("no_contact");
@@ -19,14 +20,15 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     
     ready2Burst = false;
     bursted = false;
-    lastHeight = -1;
     ghostScale = 1;
-    framecap = 0;
 }
 
 PoisonBomb::~PoisonBomb(){
+    if(bt_ghost != NULL){
     bt_ghost->Erase();
     delete bt_ghost;
+        bt_ghost = NULL;
+    }
 }
 
 /**
@@ -49,37 +51,34 @@ void PoisonBomb::ContactAction(Player* p){
 void PoisonBomb::ContactBehavior(){
     if(!ready2Burst && !bursted){
         ready2Burst = true;
-        lastHeight = bt_body->GetPosition().Y;
     }
 }
 
+// update modified of projectile
 void PoisonBomb::UpdatePosShape(){
     if (!bursted){
         bt_body->Update();
         vector3df pos = bt_body->GetPosition();
         m_ProjectileNode->setPosition(pos);
 
-        float actualHeight = pos.Y;
-        if (ready2Burst && framecap++>10){
+        float yvel = bt_body->GetLinearVelocity().Y;
+        //std::cout<<"YVEL: " << yvel <<"\n";
+        if (ready2Burst){
         
-            float heightDiff = actualHeight - lastHeight;
-            if (heightDiff < 0.0005 && heightDiff >=0) {
+            if (fabs(yvel) < 0.000317574){
                 // bomb is in the correct surface
                 Burst();
                 ready2Burst = false;
             }
             //else 
-            //    std::cout<<"LH: "<< lastHeight << " PY: " << actualHeight << " DIFF: " << heightDiff<<"\n";
-            
-            lastHeight = actualHeight;
-            framecap = 0;
+                //std::cout<<"NO COLLIDE: LY: "<< lastHeight << " Y: " << actualHeight << " DIST: " << heightDiff << " R,B: "<< ready2Burst << ", " << bursted << std::endl;
         }
     }
     else{
         // Gas bomb update
         ghostScale += 0.005;
         bt_ghost->SetScale(ghostScale);
-        m_ProjectileNode->setScale(vector3df(ghostScale*1.7));
+        m_ProjectileNode->setScale(vector3df(ghostScale*2));
 
         if(ghostScale > 3.0f){
             BulletManager::GetInstance()->AddToDeleteProyecil(this);

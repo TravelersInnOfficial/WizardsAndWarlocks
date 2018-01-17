@@ -19,8 +19,6 @@ private:
 
     bool ready2Burst;
     bool bursted;
-    int framecap;
-    float lastHeight;
     float ghostScale;
 
     
