@@ -14,12 +14,12 @@
 
 class Invocation: public Entidad{
 public:
-	Invocation(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Invocation(int HP);
 	~Invocation();
-	bool Update(float deltaTime);
+	virtual bool Update(float deltaTime);
 	void Update();
 	void ChangeHP(int value);
-	void Contact(void* punt, EntityEnum tipo);
+	virtual void Contact(void* punt, EntityEnum tipo);
 
 	// Sense Functios
 	void SendSignal();
@@ -28,12 +28,10 @@ public:
 	//Sound Functions
 	void playSpawnEvent(vector3df pos);
 
-private:
-	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	void createSoundEvent();
+protected:
+	virtual void createSoundEvent();
 
 	int 		m_HP;						// Vida de la invocacion
-	float 		currentTime;				// Tiempo 
 
 	BT_Body* 	bt_body;					// Cuerpo fisico de la invocacion
     GBody*    	m_invocationNode;			// Cuerpo visual de la invocacion

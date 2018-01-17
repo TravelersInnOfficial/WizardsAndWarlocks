@@ -1,7 +1,7 @@
 #include "Projectile.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Players/Player.h"
-#include "./../Objects/Invocation.h"
+#include "./../Invocations/Invocation.h"
 #include "./../Managers/PlayerManager.h"
 
 Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture){

@@ -6,3 +6,8 @@
 #include "OgreBelch.h"
 #include "OdinFury.h"
 #include "Teleport.h"
+#include "Superspeed.h"
+#include "DivinePoncho.h"
+#include "OhmnioProtection.h"
+#include "GaiaCleanse.h"
+#include "SpellDummy.h"

@@ -380,7 +380,12 @@ void Player::ChangeHP(float HP){
 			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
 			bloodOverlayTime = 1;
 		}
-		m_HP += HP / m_Defense;
+		// Solo le aplica danyo si su armadura es inferior a 5
+		if(m_Defense<5.0f){
+			m_HP += HP / m_Defense;
+		}else{
+			bloodOverlayTime = 0;
+		}
 	}
 	
 	// AMBOS

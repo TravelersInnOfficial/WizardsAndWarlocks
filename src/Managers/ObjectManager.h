@@ -4,20 +4,22 @@
 #include <iostream>
 #include <vector>
 
-#include "./../Objects/Block.h"
-#include "./../Objects/Door.h"
+#include "./../Invocations/AllInvocations.h"
+#include "./../Objects/DamageArea.h"
+#include "./../Objects/Fountain.h"
+#include "./../Npcs/NpcSelector.h"
 #include "./../Objects/Switch.h"
 #include "./../Objects/Potion.h"
-#include "./../Objects/Fountain.h"
-#include "./../Objects/Grail.h"
-#include "./../Npcs/Npc.h"
-#include "./../Npcs/NpcSelector.h"
 #include "./../Npcs/NpcSeller.h"
-#include "./../Objects/Invocation.h"
-#include "./../Objects/DamageArea.h"
+#include "./../Objects/Block.h"
+#include "./../Objects/Grail.h"
+#include "./../Objects/Door.h"
+#include "./../Npcs/Npc.h"
+
+#include <InvocationCodes.h>
+#include <PotionTypes.h>
 #include <NPCTypes.h>
 #include <Alliance.h>
-#include <PotionTypes.h>
 
 class ObjectManager{
 public:
@@ -33,7 +35,7 @@ public:
 	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
-	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
 	DamageArea* AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
