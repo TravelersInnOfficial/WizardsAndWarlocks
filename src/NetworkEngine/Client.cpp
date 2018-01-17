@@ -3,6 +3,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Managers/NetworkManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -178,6 +179,7 @@ void Client::RecievePackages(){
 
 			// CUANDO UN PLAYER CAMBIA SUS TRAMPAS
 			case ID_CHANGE_TRAP: {
+				NetworkManager::GetInstance()->Update();
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				int playerId = -1;
 				TrapEnum trap = TENUM_NO_TRAP;
@@ -196,6 +198,7 @@ void Client::RecievePackages(){
 
 			// CUANDO UN PLAYER CAMBIA SUS HECHIZOS
 			case ID_CHANGE_SPELL: {
+				NetworkManager::GetInstance()->Update();
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				int playerId = -1;
 				int spellPosition = -1;
