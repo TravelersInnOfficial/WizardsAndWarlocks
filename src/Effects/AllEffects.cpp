@@ -262,8 +262,9 @@ Invisible::Invisible(float time):Effect(time, POWERUP_INVISIBLE){
 }
 
 void Invisible::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->SetVisible(false);
 }
 
 void Invisible::RemoveEffect(Player* p){
+	p->SetVisible(true);	
 }

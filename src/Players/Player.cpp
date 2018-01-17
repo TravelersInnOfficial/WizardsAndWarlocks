@@ -50,7 +50,7 @@ Player::Player(bool isPlayer1){
 	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
 	spellManager->AddHechizo(1, this, SPELL_FIRE);
 	spellManager->AddHechizo(2, this, SPELL_WALL);
-	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+	spellManager->AddHechizo(3, this, SPELL_INVISIBILITY);
 
 	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
@@ -65,6 +65,7 @@ void Player::PlayerInit(){
 	m_DamageMult = 1;
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
+	m_visible = true;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -470,7 +471,9 @@ void Player::ResetSpell(){
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
+	if(m_visible){
+		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
+	}
 	if(moving){
 		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
 	}
@@ -870,6 +873,17 @@ void Player::SetName(std::string newName){
 	if(!name.empty()){
 		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 		else SetBillboard();
+	}
+}
+
+void Player::SetVisible(bool visible){
+	if(!visible) {
+		m_visible = false;
+		m_playerNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+	}
+	else{
+		m_visible = true;
+	 	m_playerNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 	}
 }
 

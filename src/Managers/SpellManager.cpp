@@ -2,7 +2,7 @@
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "EffectManager.h"
 #include "PlayerManager.h"
-
+#include "./../Spells/SpellsInclude.h"
 
 SpellManager* SpellManager::instance = 0;
 
@@ -194,6 +194,9 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		case SPELL_TELEPORT:	// Hechizo de teleport
 			h = new Teleport(-10, 0.0f, 1.0f, 100, 100);
+		break;
+		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
+			h = new InvisibilityCape(-20, 2.0f, 10.0f, 100, 100);
 		break;
 	}
 

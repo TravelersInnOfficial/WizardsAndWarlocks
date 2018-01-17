@@ -170,7 +170,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new PoisonShots(7.0f);
 			break;
 		case POWERUP_INVISIBLE:
-			e = new Invisible(7.0f);
+			e = new Invisible(5.0f);
 			break;
 		
 		default:

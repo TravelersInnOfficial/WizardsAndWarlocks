@@ -6,3 +6,4 @@
 #include "OgreBelch.h"
 #include "OdinFury.h"
 #include "Teleport.h"
+#include "InvisibilityCape.h"

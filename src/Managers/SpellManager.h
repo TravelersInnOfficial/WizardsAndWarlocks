@@ -4,7 +4,7 @@
 #include <iostream>
 #include <map>
 #include <SpellCodes.h>
-#include "./../Spells/AllSpells.h"
+#include "../Spells/Hechizo.h"
 #include "./../Players/Player.h"
 
 class SpellManager{
