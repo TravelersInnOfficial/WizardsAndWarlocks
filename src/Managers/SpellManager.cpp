@@ -1,6 +1,7 @@
 #include "SpellManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "EffectManager.h"
+#include "PlayerManager.h"
 
 
 SpellManager* SpellManager::instance = 0;
@@ -32,14 +33,32 @@ SpellManager* SpellManager::GetInstance(){
  * 
  * @return 		[Se ha asignado correctamente el hechizo]
  */
-bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type){
+bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast){
+	bool toRet = false;
+
 	if(num >=0 && num < numHechizos){			// Comprobamos si el numero de hechizo pasado es correcto
 		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
 		if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
 		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
-		return true;							// Hechizo asignado
+		toRet = true;
 	}
-	return false;								// Hechizo no asignado
+
+	if(broadcast){
+		// Si somos cliente y player one, sincronizarlo
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(toRet && p->IsPlayerOne() && n_engine->IsClientInit()){
+			Client* client = n_engine->GetClient();
+			if(client != NULL){
+				NetworkObject* nObject = p->GetNetworkObject();
+				if(nObject != NULL){
+					int netPlayerId = nObject->GetObjId();
+					client->SetPlayerSpell(netPlayerId, num, type);
+				}
+			}
+		}
+	}
+
+	return toRet;
 }
 
 /**
@@ -304,4 +323,33 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	}
 
 	return spells;
+}
+
+// For refreshing newcomers on the server
+void SpellManager::RefreshServerAll(){
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsServerInit()){
+		Server* server = n_engine->GetServer();
+		if(server != NULL){
+			std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
+			for(int i = 0; i < players.size() ; i++){
+				Player* currentPlayer = players.at(i);
+				if(currentPlayer != NULL){
+					NetworkObject* nObject = currentPlayer->GetNetworkObject();
+					if(nObject != NULL){
+						int netPlayerId = nObject->GetObjId();
+						std::vector<Hechizo*> currentSpells = GetSpells(currentPlayer);
+						for(int j = 0; j < currentSpells.size(); j++){
+							Hechizo* currentSpell = currentSpells.at(j);
+							if(currentSpell != NULL){
+								SPELLCODE type = currentSpell->GetType();
+								int num = j;
+								server->SetPlayerSpell(netPlayerId, num, type);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

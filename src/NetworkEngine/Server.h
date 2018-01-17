@@ -4,6 +4,8 @@
 #include <iostream>
 #include <map>
 #include <Alliance.h>
+#include <TrapCodes.h>
+#include <SpellCodes.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
@@ -54,6 +56,10 @@ public:
 	void SetObjectIntVec(	int objectId, ObjectVariable k, vector3di v,	bool expandClientChange);
 	void SetObjectFloatVec(	int objectId, ObjectVariable k, vector3df v,	bool expandClientChange);
 	void SetObjectString(	int objectId, ObjectVariable k, std::string v,	bool expandClientChange);
+
+	// Sync player spells and traps
+	void SetPlayerTrap(int networkId, TrapEnum trap, int usings);
+	void SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell);
 
 private:
 	

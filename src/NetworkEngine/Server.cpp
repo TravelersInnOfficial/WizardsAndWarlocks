@@ -181,6 +181,8 @@ void Server::RecievePackages(){
 				}
 
 				PlayerManager::GetInstance()->RefreshServerAll();
+				TrapManager::GetInstance()->RefreshServerAll();
+				SpellManager::GetInstance()->RefreshServerAll();
 
 				break;
 			}
@@ -236,6 +238,52 @@ void Server::RecievePackages(){
 				propagateEndMatch.Write(winnerAlliance);
 				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 				
+				break;
+			}
+
+			// CUANDO UN PLAYER CAMBIA SUS TRAMPAS
+			case ID_CHANGE_TRAP: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int playerId = -1;
+				TrapEnum trap = TENUM_NO_TRAP;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(playerId);
+				bitstream.Read(trap);
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
+				if(player != NULL){
+					TrapManager::GetInstance()->setPlayerTrap(player, trap);
+					
+					RakNet::BitStream newTrapsMessage;
+					newTrapsMessage.Write((RakNet::MessageID)ID_CHANGE_TRAP);
+					newTrapsMessage.Write(playerId);
+					newTrapsMessage.Write(trap);
+					newTrapsMessage.Write(TrapManager::GetInstance()->getPlayerUsings(player));
+					SendPackage(&newTrapsMessage, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+				}
+				break;
+			}
+
+			// CUANDO UN PLAYER CAMBIA SUS HECHIZOS
+			case ID_CHANGE_SPELL: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int playerId = -1;
+				int spellPosition = -1;
+				SPELLCODE spell = NO_SPELL;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(playerId);
+				bitstream.Read(spellPosition);
+				bitstream.Read(spell);
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
+				if(player != NULL){
+					SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell);
+
+					RakNet::BitStream newSpellMessage;
+					newSpellMessage.Write((RakNet::MessageID)ID_CHANGE_SPELL);
+					newSpellMessage.Write(playerId);
+					newSpellMessage.Write(spellPosition);
+					newSpellMessage.Write(spell);
+					SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, true);
+				}
 				break;
 			}
 		}
@@ -398,4 +446,22 @@ void Server::EndMatch(Alliance winnerAlliance){
 	propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
 	propagateEndMatch.Write(winnerAlliance);
 	SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::SetPlayerTrap(int networkId, TrapEnum trap, int usings){
+	RakNet::BitStream newTrapsMessage;
+	newTrapsMessage.Write((RakNet::MessageID)ID_CHANGE_TRAP);
+	newTrapsMessage.Write(networkId);
+	newTrapsMessage.Write(trap);
+	newTrapsMessage.Write(usings);
+	SendPackage(&newTrapsMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell){
+	RakNet::BitStream newSpellMessage;
+	newSpellMessage.Write((RakNet::MessageID)ID_CHANGE_SPELL);
+	newSpellMessage.Write(networkId);
+	newSpellMessage.Write(spellPosition);
+	newSpellMessage.Write(spell);
+	SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 }

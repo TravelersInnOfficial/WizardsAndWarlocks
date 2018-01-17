@@ -27,7 +27,7 @@ public:
 	std::string GetPathFromEnum(TrapEnum tKind);
 
 	bool setPlayerUsings(Player*, int);
-	bool setPlayerTrap(Player*, TrapEnum);
+	bool setPlayerTrap(Player*, TrapEnum, bool broadcast = true);
 
 	void ClearTraps();
 	void SendAllSignal();
@@ -37,6 +37,8 @@ public:
 	Trap* GetTrapWithId(int id);
 
 	void DrawHUD(Player* player);
+
+	void RefreshServerAll();
 
 private:
 	vector<Trap*> traps;
