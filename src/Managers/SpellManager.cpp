@@ -151,6 +151,17 @@ void SpellManager::ResetHechizo(Player* p){
 	}
 }
 
+void SpellManager::ResetDieHechizo(Player* p){
+	for(int i=0; i<numHechizos; i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			if(h!=NULL){
+				h->DieReset();
+			}
+		}
+	}
+}
+
 float SpellManager::GetUtility(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		if(hechizos[num].find(p) != hechizos[num].end()){
@@ -192,12 +203,37 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
 			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
 		break;
+
 		case SPELL_TELEPORT:	// Hechizo de teleport
 			h = new Teleport(-10, 0.0f, 1.0f, 100, 100);
 		break;
 		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
 			h = new InvisibilityCape(-20, 2.0f, 10.0f, 100, 100);
 		break;
+		case SPELL_SPEED:
+			h = new Superspeed(-10, 0.0f, 4.0f, 100, 100);
+		break;
+
+		case SPELL_UNTARGET:
+			h = new DivinePoncho(-10, 0.0f, 4.0f, 100, 100);
+		break;
+
+		case SPELL_DEFENSE:
+			h = new OhmnioProtection(-10, 0.0f, 7.0f, 100, 100);
+		break;
+
+		case SPELL_CLEANSE:
+			h = new GaiaCleanse(-10, 0.0f, 5.0f, 100, 100);
+		break;
+
+		case SPELL_DUMMY:
+			h = new SpellDummy(-10, 0.0f, 3.0f, 100, 100);
+		break;
+
+		case SPELL_TELEPORTBASE:
+			h = new TeleportBase(-10, 0.0f, 3.0f, 100, 100);
+		break;
+
 	}
 
 	return h;

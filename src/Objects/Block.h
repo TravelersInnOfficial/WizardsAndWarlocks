@@ -15,6 +15,7 @@ public:
     ~Block();
     
     Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture);  
+    vector3df GetPosition();
 
     void Update();
 

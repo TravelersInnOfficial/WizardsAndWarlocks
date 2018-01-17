@@ -50,7 +50,7 @@ Player::Player(bool isPlayer1){
 	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
 	spellManager->AddHechizo(1, this, SPELL_FIRE);
 	spellManager->AddHechizo(2, this, SPELL_WALL);
-	spellManager->AddHechizo(3, this, SPELL_INVISIBILITY);
+	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
 
 	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
@@ -381,7 +381,12 @@ void Player::ChangeHP(float HP){
 			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
 			bloodOverlayTime = 1;
 		}
-		m_HP += HP / m_Defense;
+		// Solo le aplica danyo si su armadura es inferior a 5
+		if(m_Defense<5.0f){
+			m_HP += HP / m_Defense;
+		}else{
+			bloodOverlayTime = 0;
+		}
 	}
 	
 	// AMBOS
@@ -464,6 +469,10 @@ void Player::ResetAllSpells(){
 	SpellManager::GetInstance()->ResetHechizo(this);
 }
 
+void Player::ResetDieSpells(){
+	SpellManager::GetInstance()->ResetDieHechizo(this);
+}
+
 void Player::ResetSpell(){
 	SpellManager::GetInstance()->ResetHechizo(currentSpell,this);
 }
@@ -480,6 +489,7 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	ResetDieSpells();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event

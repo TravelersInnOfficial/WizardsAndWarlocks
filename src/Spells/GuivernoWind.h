@@ -11,6 +11,7 @@ public:
 	GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 	void ResetSpell();
+	void DieReset();
 	
 protected:	
 	//Sound Functions

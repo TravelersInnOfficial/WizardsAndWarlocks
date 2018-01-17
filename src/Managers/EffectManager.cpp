@@ -158,7 +158,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			break;
 		*/
 		case POWERUP_SPEED:
-			e = new SpeedUp(10.0f);
+			e = new SpeedUp(4.0f);
 			break;
 		case POWERUP_UNTARGET:
 			e = new Untargetable(4.0f);

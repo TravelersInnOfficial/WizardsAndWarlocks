@@ -20,6 +20,7 @@ public:
 	bool LanzarHechizo(int num, Player* p);
 	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
+	void ResetDieHechizo(Player* p);
 	void ResetHechizo(Player* p);
 	
 	float GetUtility(int num, Player* p);

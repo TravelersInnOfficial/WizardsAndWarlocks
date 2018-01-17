@@ -21,6 +21,10 @@ void GuivernoWind::Lanzar(Player* p){
 	}
 }
 
+void GuivernoWind::DieReset(){
+	ResetSpell();
+}
+
 void GuivernoWind::ResetSpell(){
 	Hechizo::ResetSpell();
 	if(area!=NULL){

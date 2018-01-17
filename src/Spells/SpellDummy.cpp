@@ -1,12 +1,12 @@
-#include "DesperationWall.h"
+#include "SpellDummy.h"
 #include "./../Managers/ObjectManager.h"
 
-DesperationWall::DesperationWall(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_WALL.png", optHP, optMP){
+SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
+:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
 	
 }
 	
-void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
+void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
 	ObjectManager* objectMaster = ObjectManager::GetInstance();
 	vector3df pos = p->GetPos();
 	vector3df rot = p->GetRot();
@@ -19,7 +19,12 @@ void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en
 	rot.Y = rot.Y * 180 / M_PI;
 
 	pos.Y += 0.25;
-	objectMaster->AddInvocation(pos, vector3df(1.75,2.0,0.25), rot, INVO_WALL);
+
+	if(p->GetAlliance() == ALLIANCE_WIZARD){
+		objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WIZARD);
+	}else{
+		objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WARLOCK);
+	}
 
 	Hechizo::Lanzar(p);
 }

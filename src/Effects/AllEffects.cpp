@@ -206,12 +206,12 @@ SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
 }
 
 void SpeedUp::ApplyEffect(Player* p){
-	p->max_velocity *= 1.5f;
+	p->max_velocity *= 3.0f;
 	// TODO: APPLY COOLDOWN REDUCTION
 }
 
 void SpeedUp::RemoveEffect(Player* p){
-	p->max_velocity /= 1.5f;
+	p->max_velocity /= 3.0f;
 }
 
 //================================================================
@@ -221,10 +221,11 @@ Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
 }
 
 void Untargetable::ApplyEffect(Player* p){
-	// TODO: FINISH EFFECT
+	p->m_Defense *= 10.0f;
 }
 
 void Untargetable::RemoveEffect(Player* p){
+	p->m_Defense /= 10.0f;
 }
 
 //================================================================
