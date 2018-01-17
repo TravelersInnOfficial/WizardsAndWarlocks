@@ -47,3 +47,7 @@ void Block::UpdatePosShape(){
     vector3df pos = physBody->GetPosition();
     graphBody->setPosition(pos);
 }
+
+vector3df Block::GetPosition(){
+	return physBody->GetPosition();
+}

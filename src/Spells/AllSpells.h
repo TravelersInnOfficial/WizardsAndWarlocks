@@ -11,3 +11,4 @@
 #include "OhmnioProtection.h"
 #include "GaiaCleanse.h"
 #include "SpellDummy.h"
+#include "TeleportBase.h"

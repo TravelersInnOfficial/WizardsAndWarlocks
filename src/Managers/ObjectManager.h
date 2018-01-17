@@ -27,7 +27,7 @@ public:
 	~ObjectManager();
 
 	// Adders
-	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture=0);
+	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
 	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
@@ -58,6 +58,7 @@ public:
 
 	// Deleters
 	void DeletePotion(Potion* p);
+	void DeleteBlock(Block* b);
 
 	// Actions
 	void ClearMap();

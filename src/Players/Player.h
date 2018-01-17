@@ -66,6 +66,7 @@ class Player: public Entidad{
 		bool ChangeCurrentSpell(int);
 		int GetCurrentSpell();
 		void ResetAllSpells();
+		void ResetDieSpells();
 
 		// Sensorial Functions
 		void SendSignal();

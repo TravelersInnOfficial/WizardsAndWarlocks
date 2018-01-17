@@ -151,6 +151,17 @@ void SpellManager::ResetHechizo(Player* p){
 	}
 }
 
+void SpellManager::ResetDieHechizo(Player* p){
+	for(int i=0; i<numHechizos; i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			if(h!=NULL){
+				h->DieReset();
+			}
+		}
+	}
+}
+
 float SpellManager::GetUtility(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		if(hechizos[num].find(p) != hechizos[num].end()){
@@ -216,6 +227,11 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		case SPELL_DUMMY:
 			h = new SpellDummy(-10, 0.0f, 3.0f, 100, 100);
 		break;
+
+		case SPELL_TELEPORTBASE:
+			h = new TeleportBase(-10, 0.0f, 3.0f, 100, 100);
+		break;
+
 	}
 
 	return h;

@@ -4,7 +4,8 @@
 enum InvoEnum{
 	INVO_WALL,
 	INVO_WIZARD,
-	INVO_WARLOCK
+	INVO_WARLOCK,
+	INVO_TELEPORT
 };
 
 #endif

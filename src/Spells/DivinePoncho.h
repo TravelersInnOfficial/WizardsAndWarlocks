@@ -13,8 +13,8 @@ public:
 protected:	
 	//Sound Functions
 	void createSoundEvent();
-	
 private:
+
 };
 
 #endif
