@@ -426,7 +426,6 @@ void Player::UpdateSP(){
 
 void Player::Respawn(){
 	// CreatePlayerCharacter();
-	ResetDieSpells();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -490,6 +489,7 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	ResetDieSpells();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event

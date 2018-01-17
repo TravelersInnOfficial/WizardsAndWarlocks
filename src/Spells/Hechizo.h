@@ -13,13 +13,14 @@ public:
 
 	void EmpezarCast();
 	void ResetCooldown();
+	virtual void WasteMana(Player* p);
 	virtual void ResetSpell();
 	virtual void DieReset();
 	bool ComprobarCast(float deltaTime);
 	virtual void Lanzar(Player* p);
 	float GetCurrentCooldown();
 	void DecCooldown(float time);
-	bool CheckMP(float MP);
+	virtual bool CheckMP(float MP);
 
 	// Utility
 	float GetUtility(Player* p);

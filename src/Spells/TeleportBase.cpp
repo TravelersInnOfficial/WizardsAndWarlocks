@@ -15,6 +15,19 @@ void TeleportBase::DieReset(){
 	}
 }
 
+void TeleportBase::WasteMana(Player* p){
+	if(base == NULL){
+		p->ChangeMP(costePM);
+	}
+}
+
+bool TeleportBase::CheckMP(float MP){
+	if(base!=NULL){
+		return true;
+	}
+	return -costePM<=MP;
+}
+
 void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
 	if(base == NULL){
 		vector3df rot = p->GetRot();
