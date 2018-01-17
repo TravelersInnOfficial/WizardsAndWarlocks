@@ -21,6 +21,14 @@ void Teleport::Lanzar(Player* p){
 	rot.X = -rot.X;
 
 	vector3df pos = p->GetHeadPos();
+
+	float startDist = 0.5f;
+	vector3df start(
+				pos.X + sin(rot.Y)*cos(rot.X)*startDist,
+				pos.Y + sin(rot.X)*startDist,
+				pos.Z + cos(rot.Y)*cos(rot.X)*startDist
+	);
+
 	vector3df end(
 				pos.X + sin(rot.Y)*cos(rot.X)*distTeleport,
 				pos.Y + sin(rot.X)*distTeleport,
@@ -30,7 +38,7 @@ void Teleport::Lanzar(Player* p){
 	vector3df point;
 	vector3df normal;
 
-	if(!BulletEngine::GetInstance()->Raycast(pos, end, &point, &normal)){
+	if(!BulletEngine::GetInstance()->Raycast(start, end, &point, &normal)){
 		point = end;
 	}
 
