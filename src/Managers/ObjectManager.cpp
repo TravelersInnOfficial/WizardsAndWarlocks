@@ -159,6 +159,10 @@ DamageArea* ObjectManager::AddDamageArea(int emi, vector3df TPosition, vector3df
 	return ar;
 }
 
+void ObjectManager::AddNavmesh(NavMesh navm){
+	navmesh = navm;
+}
+
 // ===================================================================================================== //
 //
 // SENSE FUNCTIONS
@@ -234,6 +238,8 @@ vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
 }
 
 vector4df ObjectManager::GetReadyZone(){ return readyZone; }
+
+NavMesh ObjectManager::GetNavMesh(){return navmesh;}
 
 // ===================================================================================================== //
 //

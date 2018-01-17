@@ -25,8 +25,7 @@ Game::Game(){
 
 	//NavMesh
 	NavMeshLoader nm_loader;
-	navmesh = nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
-    //navmesh.printData();
+	nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
 
 	// Sound Engine
 	createSoundEvents();
@@ -38,6 +37,7 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
 	AL = playerManager->AddAIPlayer();
+	AL->ShortestPath(vector3df(19.66,0.19,22));
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));

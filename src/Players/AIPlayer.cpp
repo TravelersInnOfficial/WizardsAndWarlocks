@@ -7,6 +7,8 @@ AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();
 	behaviour->SetPlayer(this);
 
+	path = new Pathfinding();
+
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
 
@@ -16,6 +18,7 @@ AIPlayer::AIPlayer():Player(false){
 
 AIPlayer::~AIPlayer(){
 	delete behaviour;
+	delete path;
 }
 
 void AIPlayer::Update(){
@@ -189,12 +192,24 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 void AIPlayer::ShortestPath(vector3df to){
 	vector3df from = this->GetPos();
 	path = new Pathfinding();
-	/*
-	std::vector<Connection*> *c = path->makeAStar(navmesh,from,to);
-	if(c != NULL){
-
+	//std::list<Connection*> *c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
+	std::list<Connection*> *c = path->AStar(from,to);
+	if(c!=NULL){
+		//TODO::MOVE
+		std::cout<<"The path is:"<<std::endl;
+		std::list<Connection*>::iterator it = c->begin();
+		for(;it!=c->end(); ++it){
+			Connection *con =  *it;
+			int from = con->getFromNode()->getNodeID();
+			int to = con->getToNode()->getNodeID();
+			std::cout<<"from node "<<from<<" >> to node "<<to<<std::endl;
+			//vector3df from = con->getFromNode()->getPosition();
+			//vector3df to = con->getToNode()->getPosition();
+		}
+	}else{
+		std::cout<<"I found nothing :("<<std::endl;
 	}
-	*/
+	
 }
 
 // ========================================================================================= //

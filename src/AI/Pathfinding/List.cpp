@@ -13,11 +13,9 @@ List::~List(){
 void List::add(NodeRecord* nr){
     int pos = getNodeRecordPosition(nr->m_node);
     if(pos != -1){
-        std::cout<<"The node was in the list, update"<<std::endl;
         m_list[pos] = nr;
     }
     else{
-        std::cout<<"the node was not in the list"<<std::endl;
         insertNode(nr);
     }
 }
@@ -93,25 +91,10 @@ void List::insertNode(NodeRecord* nr){
 
 
 NodeRecord* List::getMin(){
-std::cout<<"*****************GETMIN()*****************"<<std::endl;
-    printListOfNodes();
-    //cojemos el primero del heap
     NodeRecord* min = m_list[0];
-    std::cout<<"list size: "<<m_list.size()<<std::endl;
-    //if the list has more than one element
-    //if(m_list.size() != 1){
-        //lo sustituimos por el ultimo y lo eliminamos del final
-        std::cout<<"initial node before "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_estimatedTotalCost<<std::endl;
-        m_list[0] = m_list[m_list.size()-1];
-        std::cout<<"initial node now "<<m_list[0]->m_node->getRegionName()<<", "<<m_list[0]->m_estimatedTotalCost<<std::endl;
-        m_list.erase(m_list.end()-1);
-        std::cout<<"NEW list size: "<<m_list.size()<<std::endl;
-
-        //ordenamos el heap desde el primer elemento
-        heapify(0);
-        printListOfNodes();
-    //}
-std::cout<<"*****************GETMIN RETURNS "<< min->m_node->getRegionName() <<"*****************"<<std::endl;
+    m_list[0] = m_list[m_list.size()-1];
+    m_list.erase(m_list.end()-1);
+    heapify(0);
     return min;
 }
 

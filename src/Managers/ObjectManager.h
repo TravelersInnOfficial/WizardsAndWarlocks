@@ -18,6 +18,7 @@
 #include <NPCTypes.h>
 #include <Alliance.h>
 #include <PotionTypes.h>
+#include "./../Objects/NavMesh.h"
 
 class ObjectManager{
 public:
@@ -37,6 +38,7 @@ public:
 	DamageArea* AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
+	void AddNavmesh(NavMesh);
 
 	// SenseFunctions
 	void SendAllSignal();
@@ -49,6 +51,7 @@ public:
 	// Getters
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 	vector4df GetReadyZone();
+	NavMesh GetNavMesh();
 
 	// Drawers
 	void DrawNpcMenu();
@@ -88,7 +91,7 @@ private:
 	vector<vector3df>			warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	Grail*						grail;			// El grail de la partida, unico
 	vector4df					readyZone;		// Zona de READY
-
+	NavMesh						navmesh;		// Malla de movimiento para la IA del nivel, única
 	ObjectManager();
 	static ObjectManager* instance; 
 };

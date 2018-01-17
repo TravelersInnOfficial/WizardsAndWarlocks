@@ -2,14 +2,13 @@
 #define NAVMESHLOADER_H
 
 #include <iostream>
-#include "AI/Pathfinding/Graph.h"
-#include "AI/Pathfinding/NavMesh.h"
+#include "Objects/NavMesh.h"
 
 class NavMeshLoader{
     public:
     NavMeshLoader();
     ~NavMeshLoader();
-    NavMesh LoadNavMeshGraph(std::string);
+    void LoadNavMeshGraph(std::string);
 
 };
 

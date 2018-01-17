@@ -1,55 +1,85 @@
 #include "NavMesh.h"
 
 NavMesh::NavMesh(){
-    /*
-    m_nodes =  new std::vector<Node*>();
-    m_connections = new std::vector<Connection*>();
-    m_triangles = new std::vector<Triangle*>();
-    */
-    m_graph = new Graph();
+
 }
 
 NavMesh::NavMesh(std::vector<Node*> nodes, std::vector<Connection*> connections, std::vector<Triangle*> triangles){
     m_nodes = nodes;
     m_connections = connections;
     m_triangles = triangles;
-    m_graph = new Graph();
 }
 
 NavMesh::~NavMesh(){
-    /*
-    for(int i = 0; i<m_connections->size();i++){
-        delete m_connections->at(i);
+    for(int i=m_connections.size()-1; i>=0; i--){
+        m_connections.erase(m_connections.begin()+i);
     }
-    for(int i = 0; i<m_triangles->size();i++){
-        delete m_triangles->at(i);
+    m_connections.clear();
+
+    for(int i=m_triangles.size()-1; i>=0; i--){
+        m_triangles.erase(m_triangles.begin()+i);
     }
-    for(int i = 0; i<m_nodes->size();i++){
-        delete m_nodes->at(i);
-    }*/
-    //
-    //delete m_connections;
-    //delete m_triangles;
-    //delete m_graph;
+    m_triangles.clear();
+
+    for(int i=m_nodes.size()-1; i>=0; i--){
+        m_nodes.erase(m_nodes.begin()+i);
+    }
+    m_nodes.clear();
+}
+
+void NavMesh::addNode(int id, vector3df position){
+    Node* n =  new Node(id,position);
+    m_nodes.push_back(n);
+}
+
+void NavMesh::addConnection(float cost, int from_index, int to_index){
+    Node *from = m_nodes[from_index];
+    Node *to = m_nodes[to_index];
+    Connection* c = new Connection(cost, from, to);
+    m_connections.push_back(c);
+}
+
+void NavMesh::addTriangle(int vertex1, int vertex2, int vertex3){
+    Node *v1 = m_nodes[vertex1];
+    Node *v2 = m_nodes[vertex2];
+    Node *v3 = m_nodes[vertex3];
+    Triangle *t = new Triangle();
+    t->vertices.push_back(v1);
+    t->vertices.push_back(v2);
+    t->vertices.push_back(v3);
+    m_triangles.push_back(t);
 }
 
 std::vector<Node*> *NavMesh::searchNearestNodes(vector3df point){
     bool flag = false;
     std::vector<vector3df> tri;
-    std::vector<Node*> *arr = new std::vector<Node*>();
-    for(int i = 0;i<m_triangles.size();i++){
-        tri.push_back(m_triangles[i]->vertices[0]->getPosition());
-        tri.push_back(m_triangles[i]->vertices[1]->getPosition());
-        tri.push_back(m_triangles[i]->vertices[2]->getPosition());
+    std::vector<Node*> *arr = NULL;
+
+    int i = 0;
+    for(;i<m_triangles.size();i++){
+        vector3df v1 = m_triangles[i]->vertices[0]->getPosition();
+        vector3df v2 = m_triangles[i]->vertices[1]->getPosition();
+        vector3df v3 = m_triangles[i]->vertices[2]->getPosition();
+
+        tri.push_back(v1);
+        tri.push_back(v2);
+        tri.push_back(v3);
+
         flag = pointInTriangle(point,tri);
-        if(flag){ 
-            arr->push_back(m_triangles[i]->vertices[0]);
-            arr->push_back(m_triangles[i]->vertices[1]);
-            arr->push_back(m_triangles[i]->vertices[2]);
-            return arr;
+            if(flag){ 
+                arr = new std::vector<Node*>();
+                
+                Node *n1 = m_triangles[i]->vertices[0];                
+                Node *n2 = m_triangles[i]->vertices[1];
+                Node *n3 = m_triangles[i]->vertices[2];
+                arr->push_back(n1);
+                arr->push_back(n2);
+                arr->push_back(n3);
+                break;
+            }
+            tri.clear();
         }
-    }
-    return NULL;
+    return arr;
 }
 
 bool NavMesh::pointInTriangle(vector3df point, std::vector<vector3df> triangle){
@@ -64,9 +94,11 @@ bool NavMesh::pointInTriangle(vector3df point, std::vector<vector3df> triangle){
     as well. If the point was on the same side of AB as C and is also on the same side
     of BC as A and on the same side of CA as B, then it is in the triangle.
     */
-    if(sameSide(point, triangle[0], triangle[1], triangle[2]) 
-    && sameSide(point, triangle[1], triangle[0], triangle[2])
-    && sameSide(point, triangle[2], triangle[0], triangle[1])) return true;
+
+    bool ss_ABC = sameSide(point, triangle[0], triangle[1], triangle[2]);
+    bool ss_BAC = sameSide(point, triangle[1], triangle[0], triangle[2]);
+    bool ss_CAB = sameSide(point, triangle[2], triangle[0], triangle[1]);
+    if(ss_ABC && ss_BAC && ss_CAB) return true;
     return false;
 }
 
@@ -91,10 +123,6 @@ bool NavMesh::sameSide(vector3df p1, vector3df p2, vector3df A, vector3df B){
 
 std::vector<Triangle*> NavMesh::getTriangles(){
     return m_triangles;
-}
-    
-Graph NavMesh::getGraph(){
-    return *m_graph;
 }
 
 void NavMesh::printData(){
