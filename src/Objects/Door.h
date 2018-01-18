@@ -17,6 +17,7 @@ public:
 	~Door();
 	void Interact(Player* p);
 	void Interact();
+	void NetInteract();
 	void Update();
 
 	// Sense Functions

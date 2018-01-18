@@ -273,6 +273,15 @@ vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
 
 vector4df ObjectManager::GetReadyZone(){ return readyZone; }
 
+int ObjectManager::GetDoorVecPos(Door* door){
+	int toRet = -1;
+	for(int i = 0; i < doors.size() && toRet == -1; i++){
+		Door* auxDoor = doors.at(i);
+		if(auxDoor != NULL && door != NULL && auxDoor == door) toRet = i;
+	}
+	return toRet;
+}
+
 NavMesh ObjectManager::GetNavMesh(){return navmesh;}
 
 // ===================================================================================================== //
@@ -517,5 +526,12 @@ void ObjectManager::UpdateDamageAreas(float deltaTime){
 			damageAreas.erase(damageAreas.begin() + i);
 			delete ar;
 		}
+	}
+}
+
+void ObjectManager::UseNetworkDoor(int doorVecPos){
+	if(doorVecPos < doors.size()){
+		Door* doorToInteract = doors.at(doorVecPos);
+		if(doorToInteract != NULL) doorToInteract->NetInteract();
 	}
 }

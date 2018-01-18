@@ -1,4 +1,5 @@
 #include "Door.h"
+#include "./../Managers/ObjectManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
@@ -62,18 +63,34 @@ void Door::Interact(Player* p){
 }
 
 void Door::Interact(){
- 
-    if(!working){
-        working = true;
-        increment = -increment;
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	
+    if(!n_engine->IsClientInit()){
+        if(!working){
+            working = true;
+            increment = -increment;
+            if (isOpen) playClose();
+            else playOpen();
+        }
+    }
+    
+    if (n_engine->IsServerInit()){
+        Server* server = n_engine->GetServer();
+        if(server != NULL){
+            int pos = ObjectManager::GetInstance()->GetDoorVecPos(this);
+            server->NotifyDoorInteracted(pos);
+        }
+    }
+}
 
-        //Play the sound event
-        if (isOpen) {
-            playClose();
-            isOpen = false;
-        } else {
-            playOpen();
-            isOpen = true;
+void Door::NetInteract(){
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsClientInit()){
+        if(!working){
+            working = true;
+            increment = -increment;
+            if (isOpen) playClose();
+            else playOpen();
         }
     }
 }
@@ -132,8 +149,10 @@ void Door::createSoundEvents() {
 
 void Door::playClose() {
     SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["close"], bt_body->GetPosition());
+    isOpen = false;
 }
 
 void Door::playOpen() {
     SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["open"], bt_body->GetPosition());
+    isOpen = true;
 }

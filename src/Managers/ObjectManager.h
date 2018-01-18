@@ -72,6 +72,10 @@ public:
 	bool CheckIfWon();
 	void Update(float deltaTime);
 
+	// Door Sync
+	int GetDoorVecPos(Door* door);
+	void UseNetworkDoor(int doorVecPos);
+
 private:
 
 	// Updates

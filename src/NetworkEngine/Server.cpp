@@ -464,3 +464,10 @@ void Server::SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell){
 	newSpellMessage.Write(spell);
 	SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 }
+
+void Server::NotifyDoorInteracted(int doorPos){
+	RakNet::BitStream doorInteractMessage;
+	doorInteractMessage.Write((RakNet::MessageID)ID_DOOR_INTERACTED);
+	doorInteractMessage.Write(doorPos);
+	SendPackage(&doorInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}

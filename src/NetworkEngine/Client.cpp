@@ -211,6 +211,16 @@ void Client::RecievePackages(){
 				if(player != NULL) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell, false);
 				break;
 			}
+
+			// CUANDO SE INTERACCIONA CON UNA PUERTA
+			case ID_DOOR_INTERACTED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int doorVecPos = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(doorVecPos);
+				ObjectManager::GetInstance()->UseNetworkDoor(doorVecPos);
+				break;
+			}
 		}
 	}
 }

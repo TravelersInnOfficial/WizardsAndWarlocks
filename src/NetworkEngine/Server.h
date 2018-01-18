@@ -61,6 +61,9 @@ public:
 	void SetPlayerTrap(int networkId, TrapEnum trap, int usings);
 	void SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell);
 
+	// Sync doors
+	void NotifyDoorInteracted(int doorPos);
+
 private:
 	
 	int lastObjectId = -1;									// ID of the last object created on the server
