@@ -52,5 +52,7 @@ void StateManager::LoadState(State_Code code){
 		case STATE_NETGAME:
 			currentState =  NetGame::GetInstance();
 			break;
+		case WITHOUT_STATE:
+			break;
 	}
 }
