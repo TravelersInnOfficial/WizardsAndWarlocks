@@ -5,9 +5,10 @@
 #include <vector>
 
 #include "./../Invocations/AllInvocations.h"
-#include "./../Objects/DamageArea.h"
+#include "./../DamageAreas/AllDamageAreas.h"
 #include "./../Objects/Fountain.h"
 #include "./../Npcs/NpcSelector.h"
+#include "./../Objects/NavMesh.h"
 #include "./../Objects/Switch.h"
 #include "./../Objects/Potion.h"
 #include "./../Npcs/NpcSeller.h"
@@ -18,10 +19,9 @@
 
 #include <InvocationCodes.h>
 #include <PotionTypes.h>
+#include <AreaCodes.h>
 #include <NPCTypes.h>
 #include <Alliance.h>
-#include <PotionTypes.h>
-#include "./../Objects/NavMesh.h"
 
 class ObjectManager{
 public:
@@ -38,7 +38,7 @@ public:
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
-	DamageArea* AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
 	void AddNavmesh(NavMesh);
