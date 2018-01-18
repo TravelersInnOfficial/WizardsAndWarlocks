@@ -1,5 +1,5 @@
-#ifndef BLOCK_H
-#define BLOCK_H
+#ifndef PROP_H
+#define PROP_H
 
 #include "../Entidad.h"
 #include "../GraphicEngine/GBody.h"
@@ -7,13 +7,11 @@
 #include <ColliderMasks.h>
 #include <vector3d.h>
 
-class Block : public Entidad{
-
+class Prop : public Entidad{
 public:
+    Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string model, std::string tex);
+    ~Prop();
     
-    Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture);  
-    ~Block();
-
     void Update();
     vector3df GetPosition();
 

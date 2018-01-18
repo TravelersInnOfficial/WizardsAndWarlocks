@@ -257,6 +257,16 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
 }
 
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
+	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+
+	body->setPosition(position);
+	body->setRotation(rotation);
+	body->setScale(scale);
+
+	return body;
+}
+
 void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
 	irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
 		irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z),

@@ -12,6 +12,7 @@
 #include "./../Objects/Potion.h"
 #include "./../Npcs/NpcSeller.h"
 #include "./../Objects/Block.h"
+#include "./../Objects/Prop.h"
 #include "./../Objects/Grail.h"
 #include "./../Objects/Door.h"
 #include "./../Npcs/Npc.h"
@@ -30,6 +31,7 @@ public:
 
 	// Adders
 	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
+	Prop* AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
 	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
@@ -78,14 +80,16 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
+	void UpdateProps();
 	void UpdateNpcs();
 	void UpdateInvocations(float deltaTime);
 	void UpdateDamageAreas(float deltaTime);
 
 
 	vector<Invocation*>			invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
-	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo
+	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
 	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
+	vector<Prop*>				props;			// Vector donde se almacenan todos los props (decoracion)
 	vector<Door*>				doors;			// Vector donde se almacenan todas las puertas
 	vector<Switch*>				switchs;		// Vector donde se almacenan todos los interruptores
 	vector<Potion*>				potions;		// Vector donde se almacenan todas las pociones

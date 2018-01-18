@@ -154,10 +154,21 @@ public:
         );
 
     /**
-     * Adds a mesh to scene and returns body
-     * path: path to .obj mesh
+     * @brief Adds a mesh to scene and returns body
+     * @param path: path to .obj mesh
     */
     GBody* addObjMeshSceneNode(std::string path);
+
+    /**
+     * @brief Adds a mesh to scene and returns body
+     * 
+     * @param path: path to .obj mesh
+     * @param position: vector of object position
+     * @param rotation: vector of object rotation
+     * @param scale:    vector of object scale
+     * @return GBody* Graphic body
+     */
+    GBody* addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale = vector3df(1,1,1));
 
     /**
      * Creates a fly straight animator, which lets the attached scene node fly or move along a line between two points

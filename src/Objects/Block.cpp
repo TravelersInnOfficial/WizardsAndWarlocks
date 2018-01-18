@@ -1,10 +1,6 @@
 #include "Block.h"
 #include "../GraphicEngine/GraphicEngine.h"
 
-Block::Block(){
-	
-}
-
 Block::~Block(){
 	physBody->Erase();
     graphBody->Erase();	
@@ -22,9 +18,10 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::st
 	// Create an Irrlicht cube
 	graphBody = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-
-	if(texture == "") graphBody->setMaterialTexture(0, texture);
-	else graphBody->setMaterialTexture(0, texture);
+	if (texture == "")
+		graphBody->setMaterialTexture(0, "../assets/textures/none.png");
+	else 
+		graphBody->setMaterialTexture(0, texture);
 
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 	graphBody->setAutomaticCulling();

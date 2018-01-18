@@ -29,6 +29,13 @@ Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 	return b;
 }
 
+
+Prop* ObjectManager::AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture){
+	Prop* p = new Prop(pos, rot, size, model, texture);
+	props.push_back(p);
+	return p;
+}
+
 void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
 	if(playerAlliance == ALLIANCE_WIZARD) wizardSpawn.push_back(TPosition);
 	else warlockSpawn.push_back(TPosition);
@@ -319,6 +326,13 @@ void ObjectManager::ClearMap(){
 		delete b;
 	}
 	blocks.clear();
+
+	size = props.size();
+	for(int i=0; i<size; i++){
+		Prop* p = props[i];
+		delete p;
+	}
+	props.clear();
 	
 	size = doors.size();
 	for(int i=0; i<size; i++){
@@ -444,6 +458,14 @@ void ObjectManager::UpdateBlocks(){
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
 		b->Update();
+	}
+}
+
+void ObjectManager::UpdateProps(){
+	int size = props.size();
+	for(int i=0; i<size; i++){
+		Prop* p = props[i];
+		p->Update();
 	}
 }
 

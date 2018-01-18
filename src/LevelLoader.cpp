@@ -94,6 +94,9 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		if(type == "Block"){
 			objManager->AddBlock(position, size, rotation, texture);           
 		}
+		else if(type == "Prop"){
+			objManager->AddProp(position, size, rotation, model, texture); 
+		}
 		else if(type == "WizardSpawn"){
 			objManager->AddBlock(position, size, rotation, texture); 
 			position.Y += 1;
