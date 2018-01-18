@@ -5,8 +5,7 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
     GraphicEngine* engine = GraphicEngine::getInstance();
 	
 	if(model != ""){
-        float TMass = 0;
-        clase = EENUM_FLOOR;
+        clase = EENUM_PROP;
 
         // Create an Irrlicht model
         graphBody = engine->addObjMeshSceneNode(model, TPosition, TRotation, TScale);
@@ -25,7 +24,7 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
         physBody->Rotate(TRotation);
         physBody->AssignPointer(this);
         */
-        
+
     }else{
         cout<<"ERROR: No model passed to prop \n"; 
     }
