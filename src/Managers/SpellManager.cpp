@@ -389,7 +389,6 @@ void SpellManager::ErasePlayer(Player* player){
 		hechizos[i].erase(player);
 	}
 	*/
-
 }
 
 // For refreshing newcomers on the server
