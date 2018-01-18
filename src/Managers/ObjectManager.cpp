@@ -361,6 +361,7 @@ void ObjectManager::ClearMap(){
 	size = npcs.size();
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
+		n->StopInteraction();
 		delete n;
 	}
 	npcs.clear();
@@ -462,6 +463,14 @@ void ObjectManager::UpdateNpcs(){
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
 		n->Update();
+	}
+}
+
+void ObjectManager::StopInteractionsNPC(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->StopInteraction();
 	}
 }
 

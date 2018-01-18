@@ -493,6 +493,7 @@ void Player::SendSignal(){
 
 void Player::Die(){
 	ResetDieSpells();
+	ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event

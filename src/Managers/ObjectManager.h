@@ -63,6 +63,7 @@ public:
 	// Deleters
 	void DeletePotion(Potion* p);
 	void DeleteBlock(Block* b);
+	void StopInteractionsNPC();
 
 	// Actions
 	void ClearMap();
