@@ -58,29 +58,29 @@ enum SPELLCODE{
 	NO_SPELL = -1,
 
 	// Effect Spells
-	SPELL_SPEED,
-	SPELL_DEFENSE,
-	SPELL_INVISIBILITY,
-	SPELL_UNTARGET,
+	SPELL_SPEED = 0,
+	SPELL_DEFENSE = 1,
+	SPELL_INVISIBILITY = 2,
+	SPELL_UNTARGET = 3,
 
 	// Projectil Spells
-	SPELL_BASIC,				// default code for spell
-	SPELL_PROJECTILE,			// default spell - not changable on store
-	SPELL_FIRE,
-	SPELL_POISON,
-	SPELL_THUNDER,
+	SPELL_BASIC = 4,				// default code for spell
+	SPELL_PROJECTILE = 5,			// default spell - not changable on store
+	SPELL_FIRE = 6,
+	SPELL_POISON = 7,
+	SPELL_THUNDER = 8,
 
 	// Special Spells
-	SPELL_TELEPORT,
-	SPELL_CLEANSE,
+	SPELL_TELEPORT = 9,
+	SPELL_CLEANSE = 10,
 
 	// Invocation Spells
-	SPELL_WALL,
-	SPELL_DUMMY,
-	SPELL_TELEPORTBASE,
+	SPELL_WALL = 11,
+	SPELL_DUMMY = 12,
+	SPELL_TELEPORTBASE = 13,
 
 	// Continuous Spells
-	SPELL_BLIZZARD
+	SPELL_BLIZZARD = 14
 };
 
 #endif
