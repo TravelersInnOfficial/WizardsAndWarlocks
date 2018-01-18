@@ -76,6 +76,9 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
+
+	delete controller;
+
 	if(bt_body != NULL){
 		bt_body->Erase();
 		delete bt_body;
@@ -86,7 +89,11 @@ Player::~Player(){
 		m_playerNode->Erase();
 		delete m_playerNode;
 		m_playerNode = NULL;
-	}	
+	}
+
+	TrapManager::GetInstance()->ErasePlayer(this);
+	SpellManager::GetInstance()->ErasePlayer(this);
+
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -426,7 +433,6 @@ void Player::UpdateSP(){
 
 void Player::Respawn(){
 	// CreatePlayerCharacter();
-	ResetDieSpells();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -490,6 +496,8 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	ResetDieSpells();
+	ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event

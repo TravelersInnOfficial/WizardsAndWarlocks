@@ -26,7 +26,7 @@ void BaseT::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TR
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5);
 	bt_body = new BT_Body();
-	bt_body->CreateBox(TPosition, HalfExtents, 50, 2.3, vector3df(0,0,0),C_POTION, potionCW);
+	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, vector3df(0,0,0),C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
 }

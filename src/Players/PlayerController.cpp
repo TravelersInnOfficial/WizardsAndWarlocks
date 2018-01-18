@@ -6,6 +6,8 @@ Key_player::Key_player(TKEY_CODE k, ACTION_ENUM a){
 	action = a;
 }
 
+Key_player::~Key_player(){}
+
 void Key_player::SetStatus(keyStatesENUM k){
 	status = k;
 }
@@ -24,9 +26,6 @@ ACTION_ENUM Key_player::GetAction(){
 
 keyStatesENUM Key_player::GetStatus(){
 	return status;
-}
-
-Key_player::~Key_player(){
 }
 
 

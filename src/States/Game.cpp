@@ -1,5 +1,5 @@
 #include "Game.h"
-#include "./../Objects/DamageArea.h"
+#include <AreaCodes.h>
 
 Game::Game(){
 

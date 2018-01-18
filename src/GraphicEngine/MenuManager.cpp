@@ -274,7 +274,7 @@ void MenuManager::CreateMatchEnded(int option){
 }
 
 void MenuManager::CreateNetDebug(){
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X - 300, 0, screenSize.X, 200);
+	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X - 350, 0, screenSize.X, 200);
 
  	netDebugWindow = g_engine->privateGUIEnv->addWindow(
         menuWindow,
@@ -324,6 +324,15 @@ void MenuManager::UpdateNetDebug(){
 }
 
 std::string MenuManager::GetStringFromPlayer(Player* player){
+	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(player);
+	std::string spells_s = "";
+	for(int i = 1; i < spells.size(); i++){
+		if(spells.at(i) != NULL){
+			int spelltype = spells.at(i)->GetType();
+			spells_s += std::to_string(spelltype) + " ";
+		}
+	}
+
 	std::string toRet = player->GetName()
 						+ "     |     "
 						+ std::to_string((int)player->GetHP())
@@ -334,6 +343,8 @@ std::string MenuManager::GetStringFromPlayer(Player* player){
 						+" SP.     |     Char: "
 						+ std::to_string(player->GetHasCharacter())
 						+ "     |     N_ID: "
-						+ std::to_string(player->GetNetworkObject()->GetObjId());
+						+ std::to_string(player->GetNetworkObject()->GetObjId())
+						+ "     |     SPELLS: "
+						+ spells_s;
 	return(toRet);
 }

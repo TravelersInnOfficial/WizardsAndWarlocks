@@ -174,7 +174,7 @@ void Trap::Activate(Player* player){
     TrapManager::GetInstance()->DeleteTrap(this);    
 }
 
-// FOR NET SYNCH
+// FOR NET SYNC
 void Trap::ForceEffect(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:

@@ -5,6 +5,7 @@
 
 NpcSeller::NpcSeller(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
+	hp = NULL;
 }
 
 NpcSeller::~NpcSeller(){
@@ -144,7 +145,6 @@ void NpcSeller::Update(){
 
 			// ACCEPT
 			case (SELLER_M_ACCEPT):{
-				ChangeChangingSpell(1);
 				StopInteraction();
 				break;
 			}
@@ -156,10 +156,15 @@ void NpcSeller::Update(){
 }
 
 void NpcSeller::StopInteraction(){
-	MenuManager::GetInstance()->ClearMenu();
-	hp->ToggleMenu(false);
-	hp = NULL;
-	active = false;
+	if(active){
+		ChangeChangingSpell(1);
+		MenuManager::GetInstance()->ClearMenu();
+		if(hp != NULL){
+			hp->ToggleMenu(false);
+			hp = NULL;
+			active = false;
+		}
+	}
 }
 
 void NpcSeller::Draw(){

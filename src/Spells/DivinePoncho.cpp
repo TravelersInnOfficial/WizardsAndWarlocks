@@ -6,7 +6,7 @@ DivinePoncho::DivinePoncho(float costPM, float tCast, float tCoolDown, float opt
 	costPM,
 	tCast,
 	tCoolDown,
-	SPELL_FIRE,
+	SPELL_UNTARGET,
 	"./../assets/textures/HUD/Spells/SPELL_UNTARGET.png",
 	optHP,
 	optMP)

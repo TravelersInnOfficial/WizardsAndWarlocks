@@ -39,6 +39,10 @@ void Hechizo::ResetCooldown(){
 	ResetSpell();
 }
 
+void Hechizo::WasteMana(Player* p){
+	p->ChangeMP(costePM);
+}
+
 /**
  * @brief Pone las variables aptas para empezar el casteo
  */

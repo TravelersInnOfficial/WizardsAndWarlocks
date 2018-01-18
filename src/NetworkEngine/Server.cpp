@@ -124,7 +124,7 @@ void Server::RecievePackages(){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
-				
+
 				// Si la partida ha empezado negamos la conexion
 				if(!NetGame::GetInstance()->GetLobbyState()){
 					RakNet::BitStream bitstream;
@@ -149,7 +149,7 @@ void Server::RecievePackages(){
 				
 				// Guardamos la correspondencia entre cliente y jugador (GUID -- Player ID)
 				clientToPlayer[id] = newPlayerId;
-				
+
 				// Le decimos al cliente nuevo cual es su PLAYER ONE
 				RakNet::BitStream bitstream2;
 				bitstream2.Write((RakNet::MessageID)ID_CREATE_PLAYER_ONE);
@@ -190,7 +190,6 @@ void Server::RecievePackages(){
 			// CUANDO SE DESCONECTA UN CLIENTE
 			case ID_CONNECTION_LOST: 
 			case ID_DISCONNECTION_NOTIFICATION: {
-
 				// Delete the player from the server
 				int id = RemovePlayer(packet->guid);
 

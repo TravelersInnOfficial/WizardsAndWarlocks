@@ -12,6 +12,8 @@ public:
 	TeleportBase(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
 	void Lanzar(Player* p);
 	void DieReset();
+	void WasteMana(Player* p);
+	bool CheckMP(float MP);
 
 protected:	
 	//Sound Functions

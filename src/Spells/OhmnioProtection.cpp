@@ -6,7 +6,7 @@ OhmnioProtection::OhmnioProtection(float costPM, float tCast, float tCoolDown, f
 	costPM,
 	tCast,
 	tCoolDown,
-	SPELL_FIRE,
+	SPELL_DEFENSE,
 	"./../assets/textures/HUD/Spells/SPELL_DEFENSE.png",
 	optHP,
 	optMP)

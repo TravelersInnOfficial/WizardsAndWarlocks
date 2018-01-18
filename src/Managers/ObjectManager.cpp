@@ -177,9 +177,19 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 	return in;
 }
 
-DamageArea* ObjectManager::AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation){
-	DamageArea* ar = new DamageArea(3, emi, TPosition, TScale, TRotation);
-	damageAreas.push_back(ar);
+DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type){
+	DamageArea* ar = NULL;
+
+	switch(type){
+		case AREA_ICE:
+			ar = new IceArea(3, TPosition, TScale, TRotation);
+		break;
+
+		case AREA_POISON:
+			ar = new PoisonArea(0, TPosition, TScale, TRotation);
+		break;
+	}
+	if(ar!=NULL) damageAreas.push_back(ar);
 	return ar;
 }
 
@@ -365,6 +375,7 @@ void ObjectManager::ClearMap(){
 	size = npcs.size();
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
+		n->StopInteraction();
 		delete n;
 	}
 	npcs.clear();
@@ -474,6 +485,14 @@ void ObjectManager::UpdateNpcs(){
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
 		n->Update();
+	}
+}
+
+void ObjectManager::StopInteractionsNPC(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->StopInteraction();
 	}
 }
 

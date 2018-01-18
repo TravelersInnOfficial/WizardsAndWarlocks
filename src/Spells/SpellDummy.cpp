@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_DUMMY,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
 	
 }
 	

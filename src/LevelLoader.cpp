@@ -1,5 +1,6 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
+#include "Managers/SpellManager.h"
 #include "Managers/BulletManager.h"
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
@@ -49,7 +50,9 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
-
+	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
+	SpellManager::GetInstance()->ResetAllDieHechizo();
+	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
 	BulletManager::GetInstance()->DeleteAllProyectiles();
