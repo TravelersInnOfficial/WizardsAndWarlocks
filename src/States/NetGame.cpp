@@ -48,11 +48,11 @@ NetGame::NetGame(){
 }
 
 NetGame::~NetGame(){
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que estar despues del player
 	delete networkManager;
 }
 

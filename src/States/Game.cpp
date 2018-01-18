@@ -43,11 +43,11 @@ Game::Game(){
 }
 
 Game::~Game(){
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que eliminarse despues de el player
 	delete senseManager;
 }
 

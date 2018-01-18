@@ -11,11 +11,7 @@ SpellManager::SpellManager(){
 
 SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
-		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
-		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
-			Hechizo* h = it->second;			// Cargamos el hechizo
-			delete h;
-		}
+		hechizos[i].clear();
 	}
 }
 
@@ -378,7 +374,7 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 }
 
 void SpellManager::ErasePlayer(Player* player){
-	/*
+	
 	ResetDieHechizo(player);
 
 	for(int i=0; i < numHechizos; i++){
@@ -388,7 +384,7 @@ void SpellManager::ErasePlayer(Player* player){
 		}
 		hechizos[i].erase(player);
 	}
-	*/
+	
 }
 
 // For refreshing newcomers on the server
