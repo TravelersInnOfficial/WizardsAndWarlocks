@@ -38,6 +38,7 @@ public:
 
 	void DrawHUD(Player* player);
 
+	void ErasePlayer(Player* player);
 	void RefreshServerAll();
 
 private:

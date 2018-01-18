@@ -31,6 +31,7 @@ public:
 	void DrawHUDSpells(Player* p, int current);
 	std::string GetPathFromEnum(SPELLCODE sKind);
 
+	void ErasePlayer(Player* player);
 	void RefreshServerAll();
 
 private:

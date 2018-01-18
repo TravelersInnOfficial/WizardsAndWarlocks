@@ -377,6 +377,21 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	return spells;
 }
 
+void SpellManager::ErasePlayer(Player* player){
+	/*
+	ResetDieHechizo(player);
+
+	for(int i=0; i < numHechizos; i++){
+		if(hechizos[i].find(player) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][player];
+			if(h!=NULL) delete h;
+		}
+		hechizos[i].erase(player);
+	}
+	*/
+
+}
+
 // For refreshing newcomers on the server
 void SpellManager::RefreshServerAll(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
