@@ -9,7 +9,9 @@ StateManager::StateManager(){
 }
 
 StateManager::~StateManager(){
-	delete currentState;
+	if(currentState != NULL){
+		delete currentState;	
+	}
 }
 
 StateManager* StateManager::GetInstance(){
@@ -53,6 +55,7 @@ void StateManager::LoadState(State_Code code){
 			currentState =  NetGame::GetInstance();
 			break;
 		case WITHOUT_STATE:
+			currentState = NULL;
 			break;
 	}
 }

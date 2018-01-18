@@ -76,6 +76,8 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
+
+	delete controller;
 	if(bt_body != NULL){
 		bt_body->Erase();
 		delete bt_body;
@@ -87,6 +89,7 @@ Player::~Player(){
 		delete m_playerNode;
 		m_playerNode = NULL;
 	}	
+
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
