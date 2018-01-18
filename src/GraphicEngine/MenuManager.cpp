@@ -326,9 +326,10 @@ void MenuManager::UpdateNetDebug(){
 std::string MenuManager::GetStringFromPlayer(Player* player){
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(player);
 	std::string spells_s = "";
-	for(int i = 0; i < spells.size(); i++){
+	for(int i = 1; i < spells.size(); i++){
 		if(spells.at(i) != NULL){
-			spells_s += std::to_string(spells.at(i)->GetType()) + " ";
+			int spelltype = spells.at(i)->GetType();
+			spells_s += std::to_string(spelltype) + " ";
 		}
 	}
 

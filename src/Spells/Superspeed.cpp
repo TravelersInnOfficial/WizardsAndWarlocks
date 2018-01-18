@@ -6,7 +6,7 @@ Superspeed::Superspeed(float costPM, float tCast, float tCoolDown, float optHP, 
 	costPM,
 	tCast,
 	tCoolDown,
-	SPELL_FIRE,
+	SPELL_SPEED,
 	"./../assets/textures/HUD/Spells/SPELL_SPEED.png",
 	optHP,
 	optMP)

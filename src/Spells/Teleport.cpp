@@ -6,7 +6,7 @@ Teleport::Teleport(float costPM, float tCast, float tCoolDown, float optHP, floa
 	costPM,
 	tCast,
 	tCoolDown,
-	SPELL_FIRE,
+	SPELL_TELEPORT,
 	"./../assets/textures/HUD/Spells/SPELL_TELEPORT.png",
 	optHP,
 	optMP)

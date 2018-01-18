@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 TeleportBase::TeleportBase(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_TELEPORTBASE,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
 	base = NULL;
 	justPlaced = false;
 }

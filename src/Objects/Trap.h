@@ -33,7 +33,7 @@ public:
     TrapEnum GetTrapType();
     int GetTrapId();
 
-    // ONLY FOR NET SYNCH
+    // ONLY FOR NET SYNC
     void ForceEffect(Player* player);
 
     // Sense Functions
