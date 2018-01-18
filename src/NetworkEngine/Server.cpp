@@ -124,7 +124,6 @@ void Server::RecievePackages(){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
-				std::cout<<"EMPIEZA"<<std::endl;
 				// Si la partida ha empezado negamos la conexion
 				if(!NetGame::GetInstance()->GetLobbyState()){
 					RakNet::BitStream bitstream;
@@ -183,8 +182,6 @@ void Server::RecievePackages(){
 				PlayerManager::GetInstance()->RefreshServerAll();
 				TrapManager::GetInstance()->RefreshServerAll();
 				SpellManager::GetInstance()->RefreshServerAll();
-
-				std::cout<<"ACABA"<<std::endl;
 
 				break;
 			}
