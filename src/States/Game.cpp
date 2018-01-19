@@ -21,6 +21,8 @@ Game::Game(){
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
+	mute = false;
+	captured = false;
 	secondCounter = 0;
 
 	//NavMesh
@@ -69,6 +71,19 @@ bool Game::Input(){
 
 	// DEBUG
 	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
+
+	if(g_engine->IsKeyPressed(KEY_F2)){
+		float vol = 1;
+		if(!mute) vol = 0;
+		SoundSystem::getInstance()->setVolume(vol);
+		mute = !mute;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F3)){
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(!captured);
+		captured = !captured;
+	}
 
 	// SONIDO
 	//if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);

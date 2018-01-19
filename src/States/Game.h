@@ -60,6 +60,8 @@ private:
 	bool lobbyState;
 	bool gameEnded;
 	bool debug;
+	bool mute;
+	bool captured;
 
 	SpellManager* 			spellManager;
 	BulletManager* 			bulletManager;
