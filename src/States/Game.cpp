@@ -147,7 +147,8 @@ void Game::Draw(){
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 	g_engine->endScene();
-/*
+
+	/*
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();
 	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
@@ -167,7 +168,7 @@ void Game::Draw(){
 		g_engine->paintLineDebug(pointA, pointB, color);
 
 	}
-*/
+	*/
 
 }
 
