@@ -101,12 +101,12 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddProp(position, size, rotation, model, texture); 
 		}
 		else if(type == "WizardSpawn"){
-			objManager->AddBlock(position, size, rotation, texture); 
+			objManager->AddProp(position, size, rotation, model, texture); 
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
 		else if(type == "WarlockSpawn"){
-			objManager->AddBlock(position, size, rotation, texture);
+			objManager->AddProp(position, size, rotation, model, texture); 
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}

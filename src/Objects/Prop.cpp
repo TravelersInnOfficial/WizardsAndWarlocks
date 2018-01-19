@@ -15,7 +15,8 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
         graphBody->setTriangleSelector();
 
     }else{
-        cout<<"ERROR: No model passed to prop \n"; 
+        graphBody = engine->addCube2Scene(TPosition, TRotation, TScale);
+        graphBody->setMaterialTexture(0, tex);
     }
 }
 

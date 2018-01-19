@@ -38,10 +38,14 @@ void Frozen::UpdateEffect(Player* p){
 
 void Frozen::ApplyEffect(Player* p){
 	p->max_velocity /= 1000.0f;
+	p->canJump = false;
+	p->m_Able2Jump = false;
 }
 
 void Frozen::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
+	p->canJump = true;
+	p->m_Able2Jump = true;
 }
 
 //================================================================
@@ -84,10 +88,14 @@ Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
 
 void Paralyzed::ApplyEffect(Player* p){
 	p->max_velocity /= 1000.0f;
+	p->canJump = false;
+	p->m_Able2Jump = false;
 }
 
 void Paralyzed::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
+	p->canJump = true;
+	p->m_Able2Jump = true;	
 }
 
 //================================================================

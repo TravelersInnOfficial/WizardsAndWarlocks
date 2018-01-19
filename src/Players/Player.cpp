@@ -66,6 +66,7 @@ void Player::PlayerInit(){
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
 	m_visible = true;
+	m_Able2Jump = true;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -257,7 +258,7 @@ void Player::Update(){
 		if(!canJump){
 			float verticalSpeed = velocity.Y;
 			float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
-			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
+			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1 && m_Able2Jump) canJump = true;
 			lastVerticalSpeed = verticalSpeed;
 		}
 
