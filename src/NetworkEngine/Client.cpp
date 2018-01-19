@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "Names.h"
 #include "./../States/NetGame.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
@@ -82,8 +83,15 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 }
 
 void Client::SetClientName(std::string name){
-	if(name.length() <= 0) name = "Player Name";
-	if(name.length() > 10) name = name.substr(0,10);
+	if(name.length() <= 0 || name.compare("Player Name") == 0){
+		int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+		std::cout<<"ARRAY: "<<arraySize<<std::endl;
+		int index = rand() % arraySize;
+		std::cout<<"RAND = "<<rand()<<std::endl;
+		name = defaultNames[index];
+	}
+
+	if(name.length() > 15) name = name.substr(0,15);
 	this->name = name;
 }
 

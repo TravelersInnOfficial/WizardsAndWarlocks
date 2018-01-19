@@ -3,6 +3,7 @@
 StateManager* StateManager::instance = 0;
 
 StateManager::StateManager(){
+	srand(time(0));
 	currentState = NULL;
 	LoadState(STATE_MENU);
 	preparedStatus = WITHOUT_STATE;
