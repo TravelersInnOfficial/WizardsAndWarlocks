@@ -1,5 +1,6 @@
 #include "Game.h"
-#include <AreaCodes.h>
+#include "./../Managers/StateManager.h"
+#include <StateCodes.h>
 
 Game::Game(){
 
@@ -58,7 +59,9 @@ bool Game::Input(){
 	}
 
 	// SALIR
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) return true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)){
+		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+	}
 
 	// TEMPORALES
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);

@@ -1,4 +1,6 @@
 #include "NetGame.h"
+#include "./../Managers/StateManager.h"
+#include <StateCodes.h>
 
 NetGame* NetGame::instance = NULL;
 
@@ -54,6 +56,7 @@ NetGame::~NetGame(){
 	delete playerManager;
 	delete spellManager;	// Tiene que estar despues del player
 	delete networkManager;
+	instance = NULL;
 }
 
 bool NetGame::Input(){
@@ -63,7 +66,7 @@ bool NetGame::Input(){
 		return true;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 	if(g_engine->IsKeyPressed(KEY_F1)){
 		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
 		debug = !debug;

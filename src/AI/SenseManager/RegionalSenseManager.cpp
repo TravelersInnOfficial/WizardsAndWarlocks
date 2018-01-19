@@ -17,7 +17,8 @@ RegionalSenseManager* RegionalSenseManager::GetInstance(){
 	return instance;
 }
 
-RegionalSenseManager::RegionalSenseManager(){}
+RegionalSenseManager::RegionalSenseManager(){
+}
 
 RegionalSenseManager::~RegionalSenseManager(){
 	int size = sensors.size();
@@ -33,6 +34,7 @@ RegionalSenseManager::~RegionalSenseManager(){
 		delete n;
 	}
 	notificationQueue.clear();
+	instance = 0;
 }
 
 Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri, float thresh, Blackboard* inf){

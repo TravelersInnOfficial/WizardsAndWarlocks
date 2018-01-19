@@ -21,6 +21,7 @@ public:
 
 	void Steering2Controller(SteeringOutput steering);
 	void ShortestPath(vector3df); //Calculates the shortest path between to a position
+	void SetRandomName();
 
 	// Controller
 	void SetController(ACTION_ENUM action, keyStatesENUM state);

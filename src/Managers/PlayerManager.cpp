@@ -27,7 +27,7 @@ PlayerManager::~PlayerManager(){
 		delete p;
 	}
 	deadPlayers.clear();
-	
+	instance = 0;
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){

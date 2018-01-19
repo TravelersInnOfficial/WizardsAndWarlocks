@@ -85,9 +85,7 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 void Client::SetClientName(std::string name){
 	if(name.length() <= 0 || name.compare("Player Name") == 0){
 		int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
-		std::cout<<"ARRAY: "<<arraySize<<std::endl;
 		int index = rand() % arraySize;
-		std::cout<<"RAND = "<<rand()<<std::endl;
 		name = defaultNames[index];
 	}
 

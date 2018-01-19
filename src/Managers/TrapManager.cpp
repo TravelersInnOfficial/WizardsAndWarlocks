@@ -23,6 +23,7 @@ TrapManager::~TrapManager(){
 	ClearTraps();
 	playerTrap.clear();
 	playerUsings.clear();
+	instance = 0;
 }
 
 void TrapManager::ClearTraps(){

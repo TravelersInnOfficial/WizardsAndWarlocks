@@ -19,6 +19,7 @@ EffectManager::~EffectManager(){
 		}
 		delete currentV;
 	}
+	instance = 0;
 }
 
 EffectManager* EffectManager::GetInstance(){

@@ -76,6 +76,7 @@ void GraphicEngine::ChangeWindowName(std::wstring newName){
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
+	InitReceiver();
 	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
 	else privateDevice->setEventReceiver(privateReceiver);
 

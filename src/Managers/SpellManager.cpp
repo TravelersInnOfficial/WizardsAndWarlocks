@@ -13,6 +13,7 @@ SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
 		hechizos[i].clear();
 	}
+	instance = 0;
 }
 
 SpellManager* SpellManager::GetInstance(){

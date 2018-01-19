@@ -10,6 +10,7 @@ ObjectManager::ObjectManager(){
 
 ObjectManager::~ObjectManager(){
 	ClearMap();
+	instance = 0;
 }
 
 ObjectManager* ObjectManager::GetInstance(){
