@@ -19,6 +19,7 @@ public:
 	void Interact();
 	void NetInteract();
 	void Update();
+	void SetBlock(bool bl);
 
 	// Sense Functions
 	void SendSignal();
@@ -36,6 +37,7 @@ private:
 
 	bool 		working;		// Se esta abriendo o cerrando? Si/No
 	bool		isOpen;			// Estado de la puerta, abierta o cerrada? true/false
+	bool 		block; 			// La puerta tiene el interact de player bloqueado? Si/No
 	int 		min;			// Minimo angulo a rotar
 	int 		max;			// Maximo angulo a rotar
 	int 		increment;		// Incremento a cada frame

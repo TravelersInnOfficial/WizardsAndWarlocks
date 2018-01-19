@@ -11,6 +11,7 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
     working = false;
     isOpen  = false; //Closed by default
     clase = EENUM_DOOR;
+    block = false;
 }
 
 Door::~Door(){
@@ -59,7 +60,9 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
 }
 
 void Door::Interact(Player* p){
-    Interact();
+    if(!block){
+        Interact();
+    }
 }
 
 void Door::Interact(){
@@ -122,6 +125,10 @@ void Door::SendSignal(){
     RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
     // id, AI_code name, float str, Kinematic kin, AI_modalities mod
     sense->AddSignal(id, this, true, AI_DOOR, 5.0f, GetKinematic(), AI_SIGHT);
+}
+
+void Door::SetBlock(bool bl){
+    block = bl;
 }
 
 Kinematic Door::GetKinematic(){
