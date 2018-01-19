@@ -24,7 +24,7 @@ NetGame::NetGame(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -117,7 +117,7 @@ void NetGame::CheckIfReady(){
 	// Si la tienen, cargamos el siguente nivel
 	if(playerManager->CheckIfReady()) {
 		LevelLoader loader;
-		loader.LoadLevel("../assets/json/map.json");
+		loader.LoadLevel("../assets/json/BasicMap.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -208,7 +208,7 @@ void NetGame::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	playerManager->ManageMatchStatus(false);
 	
