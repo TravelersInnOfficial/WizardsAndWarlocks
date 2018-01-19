@@ -56,6 +56,8 @@ public:
     */
     void ToggleMenu(bool newState);
 
+    void ToggleCameraMovement(bool newState);
+
     /// DRIVER FUNCTIONS
 
     /**

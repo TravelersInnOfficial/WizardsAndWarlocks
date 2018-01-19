@@ -30,6 +30,8 @@ NetGame::NetGame(){
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
+	mute = false;
+	captured = false;
 	secondCounter = 0;
 
 	if(n_engine->IsServerInit()) isServer = true;
@@ -70,6 +72,19 @@ bool NetGame::Input(){
 	if(g_engine->IsKeyPressed(KEY_F1)){
 		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
 		debug = !debug;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F2)){
+		float vol = 1;
+		if(!mute) vol = 0;
+		SoundSystem::getInstance()->setVolume(vol);
+		mute = !mute;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F3)){
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(!captured);
+		captured = !captured;
 	}
 
 	if(gameEnded){
