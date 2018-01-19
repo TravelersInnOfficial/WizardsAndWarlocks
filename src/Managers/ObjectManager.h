@@ -85,7 +85,6 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
-	void UpdateProps();
 	void UpdateNpcs();
 	void UpdateInvocations(float deltaTime);
 	void UpdateDamageAreas(float deltaTime);
