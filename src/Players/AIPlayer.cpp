@@ -8,7 +8,6 @@ AIPlayer::AIPlayer():Player(false){
 	behaviour->SetPlayer(this);
 
 	path = new Pathfinding();
-	path->AStar(vector3df(0,0,0), vector3df(10,0,10));
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
 	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
