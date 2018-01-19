@@ -70,18 +70,18 @@ void Door::Interact(){
 	
     if(!n_engine->IsClientInit()){
         if(!working){
+            if (n_engine->IsServerInit()){
+                Server* server = n_engine->GetServer();
+                if(server != NULL){
+                    int pos = ObjectManager::GetInstance()->GetDoorVecPos(this);
+                    server->NotifyDoorInteracted(pos);
+                }
+            }
+            
             working = true;
             increment = -increment;
             if (isOpen) playClose();
             else playOpen();
-        }
-    }
-    
-    if (n_engine->IsServerInit()){
-        Server* server = n_engine->GetServer();
-        if(server != NULL){
-            int pos = ObjectManager::GetInstance()->GetDoorVecPos(this);
-            server->NotifyDoorInteracted(pos);
         }
     }
 }
@@ -89,12 +89,10 @@ void Door::Interact(){
 void Door::NetInteract(){
     NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(n_engine->IsClientInit()){
-        if(!working){
-            working = true;
-            increment = -increment;
-            if (isOpen) playClose();
-            else playOpen();
-        }
+        working = true;
+        increment = -increment;
+        if (isOpen) playClose();
+        else playOpen();
     }
 }
 
