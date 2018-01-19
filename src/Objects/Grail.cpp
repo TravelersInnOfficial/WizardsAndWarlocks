@@ -15,9 +15,7 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	// Create an Irrlicht cube
-	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj");
-	m_grailNode->setPosition(TPosition);
-	m_grailNode->setScale(TScale);
+	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, vector3df(0,0,0), TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
