@@ -481,14 +481,6 @@ void ObjectManager::UpdateBlocks(){
 	}
 }
 
-void ObjectManager::UpdateProps(){
-	int size = props.size();
-	for(int i=0; i<size; i++){
-		Prop* p = props[i];
-		p->Update();
-	}
-}
-
 void ObjectManager::UpdateNpcs(){
 	int size = npcs.size();
 	for(int i=0; i<size; i++){

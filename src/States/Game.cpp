@@ -17,7 +17,7 @@ Game::Game(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -121,7 +121,7 @@ void Game::CheckIfReady(){
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) {
 		LevelLoader loader;
-		loader.LoadLevel("../assets/json/map.json");
+		loader.LoadLevel("../assets/json/BasicMap.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -220,7 +220,7 @@ void Game::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
