@@ -1,4 +1,5 @@
 #include "StateManager.h"
+#include <time.h>
 
 StateManager* StateManager::instance = 0;
 

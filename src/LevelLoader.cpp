@@ -117,6 +117,11 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			int idDoor = j["Objects"][i]["ID"];
 			doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
 		}
+		else if(type == "DoorBlocked"){
+			int idDoor = j["Objects"][i]["ID"];
+			doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
+			doors[idDoor]->SetBlock(true);
+		}
 		else if( SpawnPotion(type, position, size, rotation) == true ){
 			// stuff is made in the function
 		}

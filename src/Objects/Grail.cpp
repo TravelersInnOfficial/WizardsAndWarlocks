@@ -24,7 +24,7 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
     }
 
 	//Bullet Physics
-	vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
+	vector3df HalfExtents(TScale.X*0.7, TScale.Y*0.7, TScale.Z*0.7);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_GRAIL, grailCW);
 	bt_body->Rotate(TRotation);

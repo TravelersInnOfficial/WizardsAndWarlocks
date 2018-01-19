@@ -127,6 +127,7 @@ void Door::SendSignal(){
 
 void Door::SetBlock(bool bl){
     block = bl;
+    m_doorNode->setMaterialTexture(0, "./../assets/textures/doorblocked.jpg");
 }
 
 Kinematic Door::GetKinematic(){
