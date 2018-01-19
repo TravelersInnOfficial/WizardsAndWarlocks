@@ -35,6 +35,10 @@ void Dummy::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TR
 	bt_body->AssignPointer(this);
 }
 
+void Dummy::SetName(std::string name){
+	m_invocationNode->AddText(name, vector3df(0,1.25f,0), -1);
+}
+
 bool Dummy::Update(float deltaTime){
 	currentTime -= deltaTime;
 	if(currentTime<=0){

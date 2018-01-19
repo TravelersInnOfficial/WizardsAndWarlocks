@@ -26,6 +26,7 @@ Hechizo::~Hechizo(){
 
 void Hechizo::DieReset(){
 	timeCasting = 0.0f;
+	currentCooldown = 0.0f;
 	lanzable = false;
 }
 
