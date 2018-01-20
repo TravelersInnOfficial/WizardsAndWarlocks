@@ -4,6 +4,15 @@
 StateManager* StateManager::instance = 0;
 
 StateManager::StateManager(){
+
+	// Engines
+	f_engine = BulletEngine::GetInstance();
+	f_engine->CreateWorld();
+	g_engine = GraphicEngine::getInstance();
+	s_engine = SoundSystem::getInstance();
+	s_engine->createSystem("./../assets/banks/");
+	n_engine = NetworkEngine::GetInstance();
+
 	srand(time(0));
 	currentState = NULL;
 	LoadState(STATE_MENU);
@@ -14,6 +23,10 @@ StateManager::~StateManager(){
 	if(currentState != NULL){
 		delete currentState;	
 	}
+	delete f_engine;
+	delete g_engine;
+	delete s_engine;
+	delete n_engine;
 	instance = 0;
 }
 

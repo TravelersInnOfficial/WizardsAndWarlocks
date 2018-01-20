@@ -1,5 +1,6 @@
 #include "./MenuPrincipal.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include "./../GraphicEngine/MenuManager.h"
 
 MenuPrincipal::MenuPrincipal(){
@@ -24,6 +25,7 @@ bool MenuPrincipal::Input(){
 }
 
 void MenuPrincipal::Update(){
+	SoundSystem::getInstance()->Update();
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra

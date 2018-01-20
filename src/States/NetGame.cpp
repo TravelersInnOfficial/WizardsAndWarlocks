@@ -58,6 +58,14 @@ NetGame::~NetGame(){
 	delete playerManager;
 	delete spellManager;	// Tiene que estar despues del player
 	delete networkManager;
+	n_engine->EndService();
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+	}
+
 	instance = NULL;
 }
 

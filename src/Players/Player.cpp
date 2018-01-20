@@ -10,9 +10,11 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
-GraphicEngine* engine = GraphicEngine::getInstance();
+GraphicEngine* engine;
 
 Player::Player(bool isPlayer1){
+	// Inicializamos la variable global
+	engine = GraphicEngine::getInstance();
 
 	createSoundEvents();
 	changeSurface(2);
@@ -90,6 +92,12 @@ Player::~Player(){
 		m_playerNode->Erase();
 		delete m_playerNode;
 		m_playerNode = NULL;
+	}
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
 	}
 
 	TrapManager::GetInstance()->ErasePlayer(this);

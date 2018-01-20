@@ -52,6 +52,12 @@ Game::~Game(){
 	delete playerManager;
 	delete spellManager;	// Tiene que eliminarse despues de el player
 	delete senseManager;
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+	}
 }
 
 bool Game::Input(){

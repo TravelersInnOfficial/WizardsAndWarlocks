@@ -83,6 +83,8 @@ void Door::Interact(){
             if (isOpen) playClose();
             else playOpen();
         }
+    }else{
+        std::cout<<"CACHIS"<<std::endl;
     }
 }
 

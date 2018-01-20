@@ -90,6 +90,9 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	//Load the needed banks
 	loadBanks();
 
+	// Load the bus
+	ERRCHECK(FMOD_Studio_System_GetBus(system, "bus:/", &busMaster));
+
 	//Initialize other variables
 	listener = new FMOD_3D_ATTRIBUTES();
 	setPos(listener,vector3df(0.0f,0.0f,0.0f));
@@ -442,6 +445,7 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
+	ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 	ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
 }
 
