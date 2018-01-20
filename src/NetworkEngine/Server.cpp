@@ -15,7 +15,7 @@ Server::~Server(){
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
 	// Destroy the PEER interface
-	// SendShutdown();
+	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }
 
