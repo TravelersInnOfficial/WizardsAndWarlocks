@@ -253,6 +253,38 @@ void Client::RecievePackages(){
 				if(d != NULL) d->ForceOpen();
 				break;
 			}
+
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR UNA POCION
+			case ID_REFRESH_POTION: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				
+				int potionVecPos = -1;
+				bool picked = false;
+				int playerNetId = -1;
+				vector3df pos = vector3df(0, 0, 0);
+				
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(potionVecPos);
+				bitstream.Read(picked);
+
+				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
+				Potion* p = potions.at(potionVecPos);
+
+				if(p != NULL){
+					if(picked){
+						bitstream.Read(playerNetId);
+						Player* player = NULL;
+						player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetId);
+						if(player != NULL) p->NetInteract(player);
+					}
+					else{
+						bitstream.Read(pos);
+						p->SetPosition(pos);
+					}
+				}
+
+				break;
+			}
 		}
 	}
 }

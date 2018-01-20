@@ -548,3 +548,7 @@ void ObjectManager::UseNetworkPotion(int potionVecPos, Player* p){
 std::vector<Door*> ObjectManager::GetAllDoors(){
 	return(doors);
 }
+
+std::vector<Potion*> ObjectManager::GetAllPotions(){
+	return(potions);
+}

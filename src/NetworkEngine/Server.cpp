@@ -185,6 +185,7 @@ void Server::RecievePackages(){
 				TrapManager::GetInstance()->RefreshServerAll();
 				SpellManager::GetInstance()->RefreshServerAll();
 
+				// SYNC DOORS (Open State)
 				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
 				for(int i = 0; i < doors.size(); i++){
 					Door* d = doors.at(i);
@@ -193,6 +194,40 @@ void Server::RecievePackages(){
 						updateDoors.Write((RakNet::MessageID)ID_DOOR_FORCE_OPEN);
 						updateDoors.Write(i);
 						SendPackage(&updateDoors, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				// SYNC POTIONS (Owner && Pos)
+				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
+				for(int i = 0; i < potions.size(); i++){
+					Potion* p = potions.at(i);
+					if(p != NULL){
+						RakNet::BitStream updatePotions;
+						updatePotions.Write((RakNet::MessageID)ID_REFRESH_POTION);
+						updatePotions.Write(i);
+						
+						bool isPicked = false;
+						isPicked = p->GetPickedState();
+						updatePotions.Write(isPicked);
+
+						if(isPicked){
+							Player* byWho = NULL;
+							byWho = p->GetUser();
+							if(byWho != NULL){
+								NetworkObject* nObj = byWho->GetNetworkObject();
+								if(nObj != NULL){
+									int nObjId = nObj->GetObjId();
+									updatePotions.Write(nObjId);
+								}
+							}
+						}
+						else{
+							vector3df pos = vector3df(0, 0, 0);
+							pos = p->GetPosition();
+							updatePotions.Write(pos);
+						}
+
+						SendPackage(&updatePotions, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					}
 				}
 

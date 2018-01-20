@@ -58,6 +58,7 @@ public:
 	vector4df GetReadyZone();
 	NavMesh GetNavMesh();
 	std::vector<Door*> GetAllDoors();
+	std::vector<Potion*> GetAllPotions();
 
 	// Drawers
 	void DrawNpcMenu();
