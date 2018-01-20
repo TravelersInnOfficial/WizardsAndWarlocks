@@ -25,6 +25,7 @@ public:
 	int getPlayerUsings(Player*);
 	TrapEnum getPlayerTrap(Player*);
 	std::string GetPathFromEnum(TrapEnum tKind);
+	vector<Trap*> GetAllTraps();
 
 	bool setPlayerUsings(Player*, int);
 	bool setPlayerTrap(Player*, TrapEnum, bool broadcast = true);
@@ -32,7 +33,10 @@ public:
 	void ClearTraps();
 	void SendAllSignal();
 
+	// FOR NETWORK
 	void DirectDeploy(int playerId, vector3df position, vector3df normal, int id);
+	void NoPlayerDeploy(vector3df position, vector3df normal, TrapEnum type, int id);
+
 	void IdErase(int id);
 	Trap* GetTrapWithId(int id);
 

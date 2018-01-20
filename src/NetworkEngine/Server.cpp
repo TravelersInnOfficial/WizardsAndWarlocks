@@ -185,7 +185,7 @@ void Server::RecievePackages(){
 				TrapManager::GetInstance()->RefreshServerAll();
 				SpellManager::GetInstance()->RefreshServerAll();
 
-				// SYNC DOORS (Open State)
+				// SYNC DOORS AT THE BEGINING (Open State)
 				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
 				for(int i = 0; i < doors.size(); i++){
 					Door* d = doors.at(i);
@@ -197,7 +197,7 @@ void Server::RecievePackages(){
 					}
 				}
 
-				// SYNC POTIONS (Owner && Pos)
+				// SYNC POTIONS AT THE BEGINING (Owner && Pos)
 				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
 				for(int i = 0; i < potions.size(); i++){
 					Potion* p = potions.at(i);
@@ -228,6 +228,27 @@ void Server::RecievePackages(){
 						}
 
 						SendPackage(&updatePotions, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				// SYNC TRAPS AT THE BEGINING (Pos && Type)
+				std::vector<Trap*> traps = TrapManager::GetInstance()->GetAllTraps();
+				for(int i = 0; i < traps.size(); i++){
+					Trap* t = traps.at(i);
+					if(t != NULL){
+						RakNet::BitStream updateTraps;
+						vector3df pos = t->GetPosition();
+						vector3df normal = t->GetNormal();
+						int type = (int) t->GetTrapType();
+						int id = t->GetTrapId();
+
+						updateTraps.Write((RakNet::MessageID)ID_INIT_TRAPS);
+						updateTraps.Write(pos);
+						updateTraps.Write(normal);
+						updateTraps.Write(type);
+						updateTraps.Write(id);
+
+						SendPackage(&updateTraps, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					}
 				}
 

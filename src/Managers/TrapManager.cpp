@@ -206,6 +206,12 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     if(myTrap != NULL) myTrap->SetTrapId(id);
 }
 
+// Only for NETWORK
+void TrapManager::NoPlayerDeploy(vector3df position, vector3df normal, TrapEnum type, int id){
+	Trap* myTrap = AddTrap(position, normal, type);
+	if(myTrap != NULL) myTrap->SetTrapId(id);
+}
+
 void TrapManager::IdErase(int id){
 	Trap* trapToErase = GetTrapWithId(id);
 	if(trapToErase != NULL) DeleteTrap(trapToErase);
@@ -221,6 +227,10 @@ Trap* TrapManager::GetTrapWithId(int id){
 	}
 
 	return toRet;
+}
+
+vector<Trap*> TrapManager::GetAllTraps(){
+	return(traps);
 }
 
 void TrapManager::DrawHUD(Player* player){

@@ -282,7 +282,24 @@ void Client::RecievePackages(){
 						p->SetPosition(pos);
 					}
 				}
+				break;
+			}
+			
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR LAS TRAMPAS
+			case ID_INIT_TRAPS: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				vector3df pos = vector3df(0, 0, 0);
+				vector3df normal = vector3df(0, 0, 0);
+				int type = -1;
+				int id = -1;
+				
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(pos);
+				bitstream.Read(normal);
+				bitstream.Read(type);
+				bitstream.Read(id);
 
+				TrapManager::GetInstance()->NoPlayerDeploy(pos, normal, (TrapEnum)type, id);
 				break;
 			}
 		}

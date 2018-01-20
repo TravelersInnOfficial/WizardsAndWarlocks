@@ -6,6 +6,7 @@
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
+    m_normal = normal;
     m_position = new vector3df(TPosition.X, TPosition.Y, TPosition.Z);
     m_rotation = new vector3df(normal.X,normal.Y,normal.Z);
     m_trapType = trapType;
@@ -232,6 +233,10 @@ void Trap::SetType(TrapEnum trapType){
 vector3df Trap::GetPosition(){
     vector3df pos(m_position->X, m_position->Y, m_position->Z);
     return pos;
+}
+
+vector3df Trap::GetNormal(){
+    return m_normal;
 }
 
 vector3df Trap::GetDimensions(){
