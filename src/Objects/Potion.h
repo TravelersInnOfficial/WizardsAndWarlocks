@@ -17,6 +17,7 @@ public:
 	// functions from father
 	void Update();
 	void Interact(Player* p);
+	void NetInteract(Player* p);
 	
 	// functions
 	void CreatePotion(vector3df TPosition, vector3df TRotation);

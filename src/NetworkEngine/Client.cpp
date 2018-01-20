@@ -228,6 +228,19 @@ void Client::RecievePackages(){
 				ObjectManager::GetInstance()->UseNetworkDoor(doorVecPos);
 				break;
 			}
+
+			// CUANDO SE INTERACCIONA CON UNA POCION
+			case ID_POTION_INTERACTED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int potionVecPos = -1;
+				int playerNetworkId = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(potionVecPos);
+				bitstream.Read(playerNetworkId);
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetworkId);
+				if(player != NULL) ObjectManager::GetInstance()->UseNetworkPotion(potionVecPos, player);
+				break;
+			}
 		}
 	}
 }

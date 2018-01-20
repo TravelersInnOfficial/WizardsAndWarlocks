@@ -1,5 +1,10 @@
 #include "./Potion.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../NetworkEngine/NetworkEngine.h"
+#include "./../NetworkEngine/Client.h"
+#include "./../NetworkEngine/Server.h"
+
 #define MODEL_SIZE 0.136f
 
 Potion::Potion(vector3df TScale, int val, std::string tex){
@@ -44,6 +49,28 @@ void Potion::Update(){
 }
 
 void Potion::Interact(Player* p){
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+
+	// If not a client, pick up the potion
+	if(!n_engine->IsClientInit()){
+		picked = true;
+		DeletePotion();
+		p->CatchObject(this);
+
+		// If a server, send the potion signal
+		if (n_engine->IsServerInit()){
+			Server* server = n_engine->GetServer();
+			if(server != NULL){
+				int pos = ObjectManager::GetInstance()->GetPotionVecPos(this);
+				server->NotifyPotionInteracted(pos, p);
+			}
+		}
+
+	}
+}
+
+// ONLY FOR CLIENTS ON NETWORK
+void Potion::NetInteract(Player* p){
 	picked = true;
 	DeletePotion();
 	p->CatchObject(this);
@@ -73,7 +100,6 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	bt_body->CreateBox(TPosition, HalfExtents,1,1,TCenter, C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
-	//bt_body->SetCollisionFlags("no_contact");
 }
 
 void Potion::Drop(vector3df force){

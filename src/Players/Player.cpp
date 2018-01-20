@@ -587,7 +587,6 @@ void Player::UseObject(){
 	if(potion!=NULL){
 		playDrink();
 		potion->Use(this);
-		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
 }

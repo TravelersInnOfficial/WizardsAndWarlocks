@@ -74,7 +74,9 @@ public:
 
 	// Door Sync
 	int GetDoorVecPos(Door* door);
+	int GetPotionVecPos(Potion* potion);
 	void UseNetworkDoor(int doorVecPos);
+	void UseNetworkPotion(int potionVecPos, Player* p);
 
 private:
 
@@ -91,7 +93,7 @@ private:
 
 
 	vector<Invocation*>			invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
-	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
+	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
 	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
 	vector<Prop*>				props;			// Vector donde se almacenan todos los props (decoracion)
 	vector<Door*>				doors;			// Vector donde se almacenan todas las puertas

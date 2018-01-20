@@ -10,6 +10,8 @@
 #include "RakNetIncludes.h"
 #include "NetworkObject.h"
 
+class Player;
+
 class Server{
 
 public:
@@ -61,8 +63,9 @@ public:
 	void SetPlayerTrap(int networkId, TrapEnum trap, int usings);
 	void SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell);
 
-	// Sync doors
+	// Sync Others
 	void NotifyDoorInteracted(int doorPos);
+	void NotifyPotionInteracted(int potionPos, Player* p);
 
 private:
 	

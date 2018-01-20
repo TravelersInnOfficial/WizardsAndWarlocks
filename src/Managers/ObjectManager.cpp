@@ -283,6 +283,15 @@ int ObjectManager::GetDoorVecPos(Door* door){
 	return toRet;
 }
 
+int ObjectManager::GetPotionVecPos(Potion* potion){
+	int toRet = -1;
+	for(int i = 0; i < potions.size() && toRet == -1; i++){
+		Potion* auxPotion = potions.at(i);
+		if(auxPotion != NULL && potion != NULL && auxPotion == potion) toRet = i;
+	}
+	return toRet;
+}
+
 NavMesh ObjectManager::GetNavMesh(){return navmesh;}
 
 // ===================================================================================================== //
@@ -526,5 +535,12 @@ void ObjectManager::UseNetworkDoor(int doorVecPos){
 	if(doorVecPos < doors.size()){
 		Door* doorToInteract = doors.at(doorVecPos);
 		if(doorToInteract != NULL) doorToInteract->NetInteract();
+	}
+}
+
+void ObjectManager::UseNetworkPotion(int potionVecPos, Player* p){
+	if(potionVecPos < potions.size()){
+		Potion* potionToInteract = potions.at(potionVecPos);
+		if(potionToInteract != NULL) potionToInteract->NetInteract(p);
 	}
 }

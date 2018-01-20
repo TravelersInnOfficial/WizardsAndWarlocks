@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "./../States/NetGame.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Players/Player.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -470,4 +471,17 @@ void Server::NotifyDoorInteracted(int doorPos){
 	doorInteractMessage.Write((RakNet::MessageID)ID_DOOR_INTERACTED);
 	doorInteractMessage.Write(doorPos);
 	SendPackage(&doorInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::NotifyPotionInteracted(int potionPos, Player* p){
+	RakNet::BitStream potionInteractMessage;
+	potionInteractMessage.Write((RakNet::MessageID)ID_POTION_INTERACTED);
+	potionInteractMessage.Write(potionPos);
+	if(p != NULL){
+		NetworkObject* nObj = p->GetNetworkObject();
+		if(nObj != NULL){
+			potionInteractMessage.Write(p->GetNetworkObject()->GetObjId());
+			SendPackage(&potionInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+		}
+	}
 }
