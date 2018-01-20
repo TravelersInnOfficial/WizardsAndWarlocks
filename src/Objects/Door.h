@@ -17,7 +17,6 @@ public:
 	~Door();
 	void Interact(Player* p);
 	void Interact();
-	void NetInteract();
 	void Update();
 	void SetBlock(bool bl);
 
@@ -25,9 +24,15 @@ public:
 	void SendSignal();
 	Kinematic GetKinematic();
 
-	//Sound Functions
+	// Sound Functions
 	void playOpen();
 	void playClose();
+
+	// Sync Functions
+	void NetInteract();
+	void ForceOpen();
+
+	bool GetOpenState();
 
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);

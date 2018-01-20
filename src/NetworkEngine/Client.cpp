@@ -241,6 +241,18 @@ void Client::RecievePackages(){
 				if(player != NULL) ObjectManager::GetInstance()->UseNetworkPotion(potionVecPos, player);
 				break;
 			}
+
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR UNA PUERTA
+			case ID_DOOR_FORCE_OPEN: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int doorVecPos = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(doorVecPos);
+				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
+				Door* d = doors.at(doorVecPos);
+				if(d != NULL) d->ForceOpen();
+				break;
+			}
 		}
 	}
 }

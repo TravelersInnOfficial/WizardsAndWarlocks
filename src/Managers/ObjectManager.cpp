@@ -544,3 +544,7 @@ void ObjectManager::UseNetworkPotion(int potionVecPos, Player* p){
 		if(potionToInteract != NULL) potionToInteract->NetInteract(p);
 	}
 }
+
+std::vector<Door*> ObjectManager::GetAllDoors(){
+	return(doors);
+}

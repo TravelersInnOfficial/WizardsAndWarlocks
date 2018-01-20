@@ -57,6 +57,7 @@ public:
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 	vector4df GetReadyZone();
 	NavMesh GetNavMesh();
+	std::vector<Door*> GetAllDoors();
 
 	// Drawers
 	void DrawNpcMenu();

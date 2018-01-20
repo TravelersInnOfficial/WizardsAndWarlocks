@@ -185,6 +185,17 @@ void Server::RecievePackages(){
 				TrapManager::GetInstance()->RefreshServerAll();
 				SpellManager::GetInstance()->RefreshServerAll();
 
+				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
+				for(int i = 0; i < doors.size(); i++){
+					Door* d = doors.at(i);
+					if(d != NULL && d->GetOpenState()){
+						RakNet::BitStream updateDoors;
+						updateDoors.Write((RakNet::MessageID)ID_DOOR_FORCE_OPEN);
+						updateDoors.Write(i);
+						SendPackage(&updateDoors, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
 				break;
 			}
 

@@ -9,7 +9,7 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
     increment = -5;
     rotation = TRotation;
     working = false;
-    isOpen  = false; //Closed by default
+    isOpen  = false;
     clase = EENUM_DOOR;
     block = false;
 }
@@ -60,9 +60,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
 }
 
 void Door::Interact(Player* p){
-    if(!block){
-        Interact();
-    }
+    if(!block) Interact();
 }
 
 void Door::Interact(){
@@ -86,23 +84,11 @@ void Door::Interact(){
     }
 }
 
-void Door::NetInteract(){
-    NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	if(n_engine->IsClientInit()){
-        working = true;
-        increment = -increment;
-        if (isOpen) playClose();
-        else playOpen();
-    }
-}
-
 void Door::WorkDoor(){
     rotation.Y += increment;
     bt_body->Rotate(rotation);
 
-    if(rotation.Y<=min || rotation.Y>=max){
-        working = false;
-    }
+    if(rotation.Y <= min || rotation.Y >= max) working = false;
 }
 
 void Door::UpdatePosShape(){
@@ -161,4 +147,28 @@ void Door::playClose() {
 void Door::playOpen() {
     SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["open"], bt_body->GetPosition());
     isOpen = true;
+}
+
+void Door::NetInteract(){
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsClientInit()){
+        working = true;
+        increment = -increment;
+        if (isOpen) playClose();
+        else playOpen();
+    }
+}
+
+void Door::ForceOpen(){
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(true || n_engine->IsClientInit()){
+        increment *= -1;
+        rotation.Y = max;
+        bt_body->Rotate(rotation);
+        isOpen = true;
+    }
+}
+
+bool Door::GetOpenState(){
+    return(isOpen);
 }
