@@ -7,6 +7,7 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(true);
 	g_engine->ToggleMenu(true);
+	g_engine->InitReceiver();
 
 	selectedOption = NO_OPT;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);

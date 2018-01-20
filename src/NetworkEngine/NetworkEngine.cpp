@@ -9,7 +9,6 @@ NetworkEngine::NetworkEngine(){
 	isClient = false;
 	server = NULL;
 	client = NULL;
-	std::cout<<"Creado"<<std::endl;
 }
 
 NetworkEngine* NetworkEngine::GetInstance(){
