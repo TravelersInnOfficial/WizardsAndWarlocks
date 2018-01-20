@@ -5,6 +5,7 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/NetworkManager.h"
+#include "./../Managers/StateManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -150,7 +151,7 @@ void Client::RecievePackages(){
 			case ID_CONNECTION_LOST:
 			case ID_DISCONNECTION_NOTIFICATION: {
 				std::cout<<"Conexion Lost or Denied."<<std::endl;
-				exit(0);
+				StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 				break;
 			}
 
