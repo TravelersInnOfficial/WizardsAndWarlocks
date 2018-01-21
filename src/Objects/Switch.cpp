@@ -20,13 +20,12 @@ void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRota
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_switchNode = engine->addCube2Scene(vector3df(1,1,1));
-    m_switchNode->setScale(vector3df(1,1,1));
+    m_switchNode = engine->addObjMeshSceneNode("../assets/modelos/button.obj", TPosition, TRotation, TScale);
 
     // Aplicamos Material unlit y Textura
     if (m_switchNode) {
         m_switchNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-        m_switchNode->setMaterialTexture(0, "./../assets/textures/switch.png");
+        m_switchNode->setMaterialTexture(0, "./../assets/textures/button.png");
     }
 
       //BULLET
@@ -57,7 +56,7 @@ void Switch::UpdatePosShape(){
 }
 
 void Switch::Contact(void* punt, EntityEnum tipo){
-    if(tipo == EENUM_PROJECTILE){
+    if(tipo == EENUM_PROJECTILE && actualDoor != NULL){
         open = true;
         actualDoor->Interact();
     }

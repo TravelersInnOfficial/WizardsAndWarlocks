@@ -17,6 +17,7 @@ public:
 	// functions from father
 	void Update();
 	void Interact(Player* p);
+	void NetInteract(Player* p);
 	
 	// functions
 	void CreatePotion(vector3df TPosition, vector3df TRotation);
@@ -32,6 +33,12 @@ public:
 
 	//Getters
 	int GetValue();
+	bool GetPickedState();
+	Player* GetUser();
+	vector3df GetPosition();
+
+	// Setters
+	void SetPosition(vector3df pos);
 
 	// Sensorial Functions
 	void SendSignal();
@@ -40,6 +47,8 @@ public:
 protected:
 	int 		value;			// Cantidad de vida a curar
 	bool 		picked;			// Ha sido pillada? Si/No
+
+	Player* player;				// Player that posseses the potion
 
 	// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
 	vector3df 	potionScale;	// Escala de la pocion

@@ -1,15 +1,33 @@
 #include "StateManager.h"
+#include <time.h>
 
 StateManager* StateManager::instance = 0;
 
 StateManager::StateManager(){
+
+	// Engines
+	f_engine = BulletEngine::GetInstance();
+	f_engine->CreateWorld();
+	g_engine = GraphicEngine::getInstance();
+	s_engine = SoundSystem::getInstance();
+	s_engine->createSystem("./../assets/banks/");
+	n_engine = NetworkEngine::GetInstance();
+
+	srand(time(0));
 	currentState = NULL;
 	LoadState(STATE_MENU);
 	preparedStatus = WITHOUT_STATE;
 }
 
 StateManager::~StateManager(){
-	delete currentState;
+	if(currentState != NULL){
+		delete currentState;	
+	}
+	delete f_engine;
+	delete g_engine;
+	delete s_engine;
+	delete n_engine;
+	instance = 0;
 }
 
 StateManager* StateManager::GetInstance(){
@@ -41,7 +59,6 @@ void StateManager::LoadState(State_Code code){
 	if(currentState!=NULL){
 		delete currentState;
 	}
-
 	switch(code){
 		case STATE_MENU:
 			currentState = new MenuPrincipal();
@@ -52,5 +69,9 @@ void StateManager::LoadState(State_Code code){
 		case STATE_NETGAME:
 			currentState =  NetGame::GetInstance();
 			break;
+		case WITHOUT_STATE:
+			currentState = NULL;
+			break;
 	}
+
 }

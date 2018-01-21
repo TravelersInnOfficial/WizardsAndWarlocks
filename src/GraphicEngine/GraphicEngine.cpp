@@ -78,13 +78,15 @@ void GraphicEngine::ChangeWindowName(std::wstring newName){
 void GraphicEngine::ToggleMenu(bool newState){
 	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
 	else privateDevice->setEventReceiver(privateReceiver);
+	ToggleCameraMovement(!newState);
+    privateDevice->getCursorControl()->setVisible(newState);
+}
 
+void GraphicEngine::ToggleCameraMovement(bool newState){
 	if (privateCamera != NULL){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
-		if(cam != NULL) cam->setInputReceiverEnabled(!newState);
+		if(cam != NULL) cam->setInputReceiverEnabled(newState);
 	}
-    privateDevice->getCursorControl()->setVisible(newState);
-	
 }
 
 // DRIVER FUNCTIONS
@@ -255,6 +257,16 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+}
+
+GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
+	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+
+	body->setPosition(position);
+	body->setRotation(rotation);
+	body->setScale(scale);
+
+	return body;
 }
 
 void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){

@@ -90,6 +90,9 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	//Load the needed banks
 	loadBanks();
 
+	// Load the bus
+	ERRCHECK(FMOD_Studio_System_GetBus(system, "bus:/", &busMaster));
+
 	//Initialize other variables
 	listener = new FMOD_3D_ATTRIBUTES();
 	setPos(listener,vector3df(0.0f,0.0f,0.0f));
@@ -398,37 +401,32 @@ void SoundEvent::setGain(float gain) {
 ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
 	
-	if(false && isnan(pos.X)){
-		pos.X = 0;
-		pos.Y = 0;
-		pos.Z = 0;		
+	if(isnan(pos.X)){
+		pos.X = 0; pos.Y = 0; pos.Z = 0;
 		std::cout<<"POS = NAN"<<std::endl;
 	}
 
-	if(true || !isnan(pos.X)){	// Comprobamos que el valor no sea NaN
-		FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
+	FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
+	
+	// Raised by 0.5 to not get the same position as the listener
+	vector3df newPos(pos.X, pos.Y + 0.5, pos.Z);
+	SoundSystem::getInstance()->setPos(attributes, newPos);	//Set the position
 
-		vector3df newPos(pos.X, pos.Y+0.5, pos.Z);
+	//Set the forward vector
+	vector3df frwd = vector3df(0,0.5,0);
+	frwd.normalize();
+	SoundSystem::getInstance()->setForward(attributes, frwd);
+	
+	//Calculate the up vector from the forward vector
+	//Right vector x forward vector --> (forward x absolute up) x forward --> (forward x [0,1,0]) x forward
+	vector3df A = frwd; vector3df B = vector3df(0, 0, 1);
+	vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
+	A = aux; B = frwd;
+	vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
+	SoundSystem::getInstance()->setUp(attributes, up);
 
-		SoundSystem::getInstance()->setPos(attributes, newPos);	//Set the position
-
-		//Set the forward vector
-		vector3df frwd = newPos - pos;
-		frwd.normalize();
-		SoundSystem::getInstance()->setForward(attributes, frwd);
-		
-		//Calculate the up vector from the forward vector
-		//Right vector x forward vector --> (forward x absolute up) x forward --> (forward x [0,1,0]) x forward
-		vector3df A = frwd; vector3df B = vector3df(0, 0, 1);
-		vector3df aux = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-		A = aux; B = frwd;
-		vector3df up = vector3df(A.Y * B.Z - B.Y * A.Z, A.Z * B.X - B.Z * A.X, A.X * B.Y - B.X * A.Y);
-		SoundSystem::getInstance()->setUp(attributes, up);
-
-		//Finally, set the attributes
-		if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
-	}
-	else std::cout<<"ERROR: NaN Value, SoundSystem::setPosition"<<std::endl;
+	//Finally, set the attributes
+	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
 }
 
 /*******************************************************
@@ -447,6 +445,7 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
+	ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 	ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
 }
 

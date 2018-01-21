@@ -10,6 +10,7 @@ BulletManager::BulletManager(){}
 
 BulletManager::~BulletManager(){
 	DeleteAllProyectiles();
+	instance = 0;
 }
 
 BulletManager* BulletManager::GetInstance(){

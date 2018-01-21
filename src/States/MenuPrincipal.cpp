@@ -1,10 +1,13 @@
 #include "./MenuPrincipal.h"
 #include "./../GraphicEngine/GraphicEngine.h"
+#include "./../SoundEngine/SoundSystem.h"
 #include "./../GraphicEngine/MenuManager.h"
 
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(true);
+	g_engine->ToggleMenu(true);
+	g_engine->InitReceiver();
 
 	selectedOption = NO_OPT;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
@@ -23,6 +26,7 @@ bool MenuPrincipal::Input(){
 }
 
 void MenuPrincipal::Update(){
+	SoundSystem::getInstance()->Update();
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra

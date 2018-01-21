@@ -1,8 +1,9 @@
 #include "SpellDummy.h"
 #include "./../Managers/ObjectManager.h"
+#include "./../Invocations/Dummy.h"
 
 SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_DUMMY,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
 	
 }
 	
@@ -20,11 +21,15 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
 
 	pos.Y += 0.25;
 
+	Dummy* target = NULL;
+
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
-		objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WIZARD);
+		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WIZARD);
 	}else{
-		objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WARLOCK);
+		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WARLOCK);
 	}
+
+	target->SetName(p->GetName());
 
 	Hechizo::Lanzar(p);
 }

@@ -5,23 +5,24 @@
 #include <vector>
 
 #include "./../Invocations/AllInvocations.h"
-#include "./../Objects/DamageArea.h"
+#include "./../DamageAreas/AllDamageAreas.h"
 #include "./../Objects/Fountain.h"
 #include "./../Npcs/NpcSelector.h"
+#include "./../Objects/NavMesh.h"
 #include "./../Objects/Switch.h"
 #include "./../Objects/Potion.h"
 #include "./../Npcs/NpcSeller.h"
 #include "./../Objects/Block.h"
+#include "./../Objects/Prop.h"
 #include "./../Objects/Grail.h"
 #include "./../Objects/Door.h"
 #include "./../Npcs/Npc.h"
 
 #include <InvocationCodes.h>
 #include <PotionTypes.h>
+#include <AreaCodes.h>
 #include <NPCTypes.h>
 #include <Alliance.h>
-#include <PotionTypes.h>
-#include "./../Objects/NavMesh.h"
 
 class ObjectManager{
 public:
@@ -30,6 +31,7 @@ public:
 
 	// Adders
 	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
+	Prop* AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
 	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
@@ -38,7 +40,7 @@ public:
 	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
-	DamageArea* AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
 	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
 	void AddReadyPoint(vector3df TPosition);
 	void AddNavmesh(NavMesh);
@@ -55,6 +57,8 @@ public:
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 	vector4df GetReadyZone();
 	NavMesh GetNavMesh();
+	std::vector<Door*> GetAllDoors();
+	std::vector<Potion*> GetAllPotions();
 
 	// Drawers
 	void DrawNpcMenu();
@@ -63,11 +67,18 @@ public:
 	// Deleters
 	void DeletePotion(Potion* p);
 	void DeleteBlock(Block* b);
+	void StopInteractionsNPC();
 
 	// Actions
 	void ClearMap();
 	bool CheckIfWon();
 	void Update(float deltaTime);
+
+	// Door Sync
+	int GetDoorVecPos(Door* door);
+	int GetPotionVecPos(Potion* potion);
+	void UseNetworkDoor(int doorVecPos);
+	void UseNetworkPotion(int potionVecPos, Player* p);
 
 private:
 
@@ -84,8 +95,9 @@ private:
 
 
 	vector<Invocation*>			invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
-	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo
+	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
 	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
+	vector<Prop*>				props;			// Vector donde se almacenan todos los props (decoracion)
 	vector<Door*>				doors;			// Vector donde se almacenan todas las puertas
 	vector<Switch*>				switchs;		// Vector donde se almacenan todos los interruptores
 	vector<Potion*>				potions;		// Vector donde se almacenan todas las pociones

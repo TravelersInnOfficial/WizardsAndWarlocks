@@ -10,9 +10,11 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
-GraphicEngine* engine = GraphicEngine::getInstance();
+GraphicEngine* engine;
 
 Player::Player(bool isPlayer1){
+	// Inicializamos la variable global
+	engine = GraphicEngine::getInstance();
 
 	createSoundEvents();
 	changeSurface(2);
@@ -66,6 +68,7 @@ void Player::PlayerInit(){
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
 	m_visible = true;
+	m_Able2Jump = true;
 	m_dead = false;
 	bloodOverlayTime = 0;
 	hitOverlayTime = 0;
@@ -76,6 +79,9 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
+
+	delete controller;
+
 	if(bt_body != NULL){
 		bt_body->Erase();
 		delete bt_body;
@@ -86,7 +92,17 @@ Player::~Player(){
 		m_playerNode->Erase();
 		delete m_playerNode;
 		m_playerNode = NULL;
-	}	
+	}
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+	}
+
+	TrapManager::GetInstance()->ErasePlayer(this);
+	SpellManager::GetInstance()->ErasePlayer(this);
+
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -250,7 +266,7 @@ void Player::Update(){
 		if(!canJump){
 			float verticalSpeed = velocity.Y;
 			float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
-			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1) canJump = true;
+			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1 && m_Able2Jump) canJump = true;
 			lastVerticalSpeed = verticalSpeed;
 		}
 
@@ -426,7 +442,6 @@ void Player::UpdateSP(){
 
 void Player::Respawn(){
 	// CreatePlayerCharacter();
-	ResetDieSpells();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -490,6 +505,8 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	ResetDieSpells();
+	ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();	//Stop the pulse event
 	playDie(); 		//Play the sound event
@@ -570,7 +587,6 @@ void Player::UseObject(){
 	if(potion!=NULL){
 		playDrink();
 		potion->Use(this);
-		ObjectManager::GetInstance()->DeletePotion(potion);
 		potion = NULL;
 	}
 }

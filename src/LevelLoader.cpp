@@ -1,5 +1,6 @@
 #include "LevelLoader.h"
 #include "Objects/Block.h"
+#include "Managers/SpellManager.h"
 #include "Managers/BulletManager.h"
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
@@ -49,12 +50,17 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
+	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
+	SpellManager::GetInstance()->ResetAllDieHechizo();
 
+	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
 	objManager->ClearMap();
 	BulletManager::GetInstance()->DeleteAllProyectiles();
-	PlayerManager::GetInstance()->ResetAllSpells();
 	TrapManager::GetInstance()->ClearTraps();
+
+	// Reseteamos los hechizos
+	PlayerManager::GetInstance()->ResetAllSpells();
 
 	std::map<int, Door*> doors;
 	
@@ -94,13 +100,16 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		if(type == "Block"){
 			objManager->AddBlock(position, size, rotation, texture);           
 		}
+		else if(type == "Prop"){
+			objManager->AddProp(position, size, rotation, model, texture); 
+		}
 		else if(type == "WizardSpawn"){
-			objManager->AddBlock(position, size, rotation, texture); 
+			objManager->AddProp(position, size, rotation, model, texture); 
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
 		else if(type == "WarlockSpawn"){
-			objManager->AddBlock(position, size, rotation, texture);
+			objManager->AddProp(position, size, rotation, model, texture); 
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}
@@ -110,6 +119,11 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		else if(type == "Door"){
 			int idDoor = j["Objects"][i]["ID"];
 			doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
+		}
+		else if(type == "DoorBlocked"){
+			int idDoor = j["Objects"][i]["ID"];
+			doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
+			doors[idDoor]->SetBlock(true);
 		}
 		else if( SpawnPotion(type, position, size, rotation) == true ){
 			// stuff is made in the function

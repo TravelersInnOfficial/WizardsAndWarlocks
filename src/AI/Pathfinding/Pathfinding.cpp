@@ -6,14 +6,16 @@ Pathfinding::Pathfinding(){
     m_startRecord = new NodeRecord();
     m_openList = new List();
     m_closedList = new List();
+    StartNode = NULL;
+    EndNode = NULL;
 }
 
 Pathfinding::~Pathfinding(){
     delete m_startRecord;
     delete m_openList;
     delete m_closedList;
-    delete StartNode;
-    delete EndNode;
+    if(StartNode!=NULL) delete StartNode;
+    if(EndNode!=NULL) delete EndNode;
 }
 
 std::list<Connection*> *Pathfinding::AStar( vector3df from,vector3df to){

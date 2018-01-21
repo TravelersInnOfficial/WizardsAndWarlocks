@@ -2,9 +2,10 @@
 #define GuivernoWind_H
 
 #include <iostream>
+#include <AreaCodes.h>
 
 #include "Hechizo.h"
-#include "./../Objects/DamageArea.h"
+#include "./../DamageAreas/IceArea.h"
 
 class GuivernoWind: public Hechizo{
 public:
@@ -21,7 +22,7 @@ private:
 	void CreateArea(Player* p);
 	void UpdateArea(Player* p);
 	
-	DamageArea* area;
+	IceArea* area;
 	float  		dist; 		// distancia a la que aparecera el area
 };
 

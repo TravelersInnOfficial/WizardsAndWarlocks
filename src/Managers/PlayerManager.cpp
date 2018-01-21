@@ -27,7 +27,7 @@ PlayerManager::~PlayerManager(){
 		delete p;
 	}
 	deadPlayers.clear();
-	
+	instance = 0;
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
@@ -115,16 +115,25 @@ void PlayerManager::ResetAllSpells(){
 // Comprobamos TODOS las variables READY (Solo para RED)
 bool PlayerManager::CheckIfReady(){
 	bool allReady = true;
+	bool theresWizard = false;
+	bool theresWarlock = false;
 	int size = players.size();
 	
 	// Si alguno de los personajes no esta READY
 	// Devolvemos una FALSE
 	for(int i=0; i < size && allReady == true; i++){
 		Player* p = players[i];
+		
+		if(p->GetAlliance() == ALLIANCE_WARLOCK) theresWarlock = true;
+		else if(p->GetAlliance() == ALLIANCE_WIZARD) theresWizard = true;
+		
 		if(!p->GetReadyStatus()) allReady = false;
 	}
 
-	if(size < 2) allReady = false;
+	if(allReady){
+		if(size < 2 || !theresWizard || !theresWizard) allReady = false;
+	}
+
 	return allReady;
 }
 

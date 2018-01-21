@@ -1,5 +1,10 @@
 #include "./Potion.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../NetworkEngine/NetworkEngine.h"
+#include "./../NetworkEngine/Client.h"
+#include "./../NetworkEngine/Server.h"
+
 #define MODEL_SIZE 0.136f
 
 Potion::Potion(vector3df TScale, int val, std::string tex){
@@ -7,6 +12,8 @@ Potion::Potion(vector3df TScale, int val, std::string tex){
 	potionScale = TScale;
 	potionTexture = tex;
 	value = val;
+	player = NULL;
+	picked = false;
 }
 
 Potion::~Potion(){
@@ -44,13 +51,38 @@ void Potion::Update(){
 }
 
 void Potion::Interact(Player* p){
+    NetworkEngine* n_engine = NetworkEngine::GetInstance();
+
+	// If not a client, pick up the potion
+	if(!n_engine->IsClientInit()){
+		picked = true;
+		DeletePotion();
+		p->CatchObject(this);
+		player = p;
+
+		// If a server, send the potion signal
+		if (n_engine->IsServerInit()){
+			Server* server = n_engine->GetServer();
+			if(server != NULL){
+				int pos = ObjectManager::GetInstance()->GetPotionVecPos(this);
+				server->NotifyPotionInteracted(pos, p);
+			}
+		}
+
+	}
+}
+
+// ONLY FOR CLIENTS ON NETWORK
+void Potion::NetInteract(Player* p){
 	picked = true;
 	DeletePotion();
 	p->CatchObject(this);
+	player = p;
 }
 
 void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	picked = false;
+	player = NULL;
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -73,7 +105,6 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	bt_body->CreateBox(TPosition, HalfExtents,1,1,TCenter, C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
-	//bt_body->SetCollisionFlags("no_contact");
 }
 
 void Potion::Drop(vector3df force){
@@ -87,7 +118,7 @@ void Potion::DeletePotion(){
 
 void Potion::UpdatePosShape(){
 	bt_body->Update();
-    vector3df pos = bt_body->GetPosition();
+    vector3df pos = GetPosition();
     m_potionNode->setPosition(pos);
 }
 
@@ -101,7 +132,7 @@ void Potion::SendSignal(){
 
 Kinematic Potion::GetKinematic(){
 	Kinematic cKin;
-	cKin.position = bt_body->GetPosition();
+	cKin.position = GetPosition();
 	cKin.orientation =  vector2df(0,0);
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
@@ -110,6 +141,20 @@ Kinematic Potion::GetKinematic(){
 
 int Potion::GetValue(){
 	return value;
+}
+
+bool Potion::GetPickedState(){
+	return picked;
+}
+
+Player* Potion::GetUser(){
+	return player;
+}
+
+vector3df Potion::GetPosition(){
+	vector3df toRet = vector3df(0, 0, 0);
+	if(bt_body) toRet = bt_body->GetPosition();
+	return(toRet);
 }
 
 void Potion::DrawHUD(){
@@ -130,4 +175,9 @@ void Potion::DrawHUD(){
 
 	vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
 	g_engine->draw2DImage(HUDTexturePath, sizeImage);
+}
+
+void Potion::SetPosition(vector3df pos){
+    bt_body->SetPosition(pos);
+    m_potionNode->setPosition(pos);
 }

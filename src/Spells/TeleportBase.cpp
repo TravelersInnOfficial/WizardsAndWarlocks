@@ -2,7 +2,7 @@
 #include "./../Managers/ObjectManager.h"
 
 TeleportBase::TeleportBase(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
-:Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
+:Hechizo(costPM, tCast, tCoolDown, SPELL_TELEPORTBASE,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
 	base = NULL;
 	justPlaced = false;
 }
@@ -13,6 +13,19 @@ void TeleportBase::DieReset(){
 		base = NULL;
 		Hechizo::DieReset();
 	}
+}
+
+void TeleportBase::WasteMana(Player* p){
+	if(base == NULL){
+		p->ChangeMP(costePM);
+	}
+}
+
+bool TeleportBase::CheckMP(float MP){
+	if(base!=NULL){
+		return true;
+	}
+	return -costePM<=MP;
 }
 
 void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo

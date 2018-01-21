@@ -6,7 +6,6 @@ HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 }
 
 HumanPlayer::~HumanPlayer(){
-	delete controller;
 }
 
 void HumanPlayer::SetNetInput(){

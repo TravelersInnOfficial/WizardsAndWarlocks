@@ -31,9 +31,10 @@ public:
     vector3df GetPosition();
     vector3df GetDimensions();
     TrapEnum GetTrapType();
+    vector3df GetNormal();
     int GetTrapId();
 
-    // ONLY FOR NET SYNCH
+    // ONLY FOR NET SYNC
     void ForceEffect(Player* player);
 
     // Sense Functions
@@ -48,6 +49,7 @@ public:
 private:
     TrapEnum m_trapType;
 
+    vector3df m_normal;
     vector3df* m_position;
     vector3df* m_dimensions;
     vector3df* m_rotation;

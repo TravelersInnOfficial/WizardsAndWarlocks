@@ -10,6 +10,7 @@ ObjectManager::ObjectManager(){
 
 ObjectManager::~ObjectManager(){
 	ClearMap();
+	instance = 0;
 }
 
 ObjectManager* ObjectManager::GetInstance(){
@@ -27,6 +28,13 @@ Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std
 	Block* b = new Block(pos, rot, size, texture);
 	blocks.push_back(b);
 	return b;
+}
+
+
+Prop* ObjectManager::AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture){
+	Prop* p = new Prop(pos, rot, size, model, texture);
+	props.push_back(p);
+	return p;
 }
 
 void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
@@ -170,9 +178,19 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 	return in;
 }
 
-DamageArea* ObjectManager::AddDamageArea(int emi, vector3df TPosition, vector3df TScale, vector3df TRotation){
-	DamageArea* ar = new DamageArea(3, emi, TPosition, TScale, TRotation);
-	damageAreas.push_back(ar);
+DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type){
+	DamageArea* ar = NULL;
+
+	switch(type){
+		case AREA_ICE:
+			ar = new IceArea(3, TPosition, TScale, TRotation);
+		break;
+
+		case AREA_POISON:
+			ar = new PoisonArea(0, TPosition, TScale, TRotation);
+		break;
+	}
+	if(ar!=NULL) damageAreas.push_back(ar);
 	return ar;
 }
 
@@ -256,6 +274,24 @@ vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
 
 vector4df ObjectManager::GetReadyZone(){ return readyZone; }
 
+int ObjectManager::GetDoorVecPos(Door* door){
+	int toRet = -1;
+	for(int i = 0; i < doors.size() && toRet == -1; i++){
+		Door* auxDoor = doors.at(i);
+		if(auxDoor != NULL && door != NULL && auxDoor == door) toRet = i;
+	}
+	return toRet;
+}
+
+int ObjectManager::GetPotionVecPos(Potion* potion){
+	int toRet = -1;
+	for(int i = 0; i < potions.size() && toRet == -1; i++){
+		Potion* auxPotion = potions.at(i);
+		if(auxPotion != NULL && potion != NULL && auxPotion == potion) toRet = i;
+	}
+	return toRet;
+}
+
 NavMesh ObjectManager::GetNavMesh(){return navmesh;}
 
 // ===================================================================================================== //
@@ -319,6 +355,13 @@ void ObjectManager::ClearMap(){
 		delete b;
 	}
 	blocks.clear();
+
+	size = props.size();
+	for(int i=0; i<size; i++){
+		Prop* p = props[i];
+		delete p;
+	}
+	props.clear();
 	
 	size = doors.size();
 	for(int i=0; i<size; i++){
@@ -351,6 +394,7 @@ void ObjectManager::ClearMap(){
 	size = npcs.size();
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
+		n->StopInteraction();
 		delete n;
 	}
 	npcs.clear();
@@ -455,6 +499,14 @@ void ObjectManager::UpdateNpcs(){
 	}
 }
 
+void ObjectManager::StopInteractionsNPC(){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->StopInteraction();
+	}
+}
+
 void ObjectManager::UpdateInvocations(float deltaTime){
 	int size = invocations.size();
 	for(int i=size-1; i>=0; i--){
@@ -477,4 +529,26 @@ void ObjectManager::UpdateDamageAreas(float deltaTime){
 			delete ar;
 		}
 	}
+}
+
+void ObjectManager::UseNetworkDoor(int doorVecPos){
+	if(doorVecPos < doors.size()){
+		Door* doorToInteract = doors.at(doorVecPos);
+		if(doorToInteract != NULL) doorToInteract->NetInteract();
+	}
+}
+
+void ObjectManager::UseNetworkPotion(int potionVecPos, Player* p){
+	if(potionVecPos < potions.size()){
+		Potion* potionToInteract = potions.at(potionVecPos);
+		if(potionToInteract != NULL) potionToInteract->NetInteract(p);
+	}
+}
+
+std::vector<Door*> ObjectManager::GetAllDoors(){
+	return(doors);
+}
+
+std::vector<Potion*> ObjectManager::GetAllPotions(){
+	return(potions);
 }

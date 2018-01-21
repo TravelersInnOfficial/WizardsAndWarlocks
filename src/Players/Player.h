@@ -141,11 +141,13 @@ class Player: public Entidad{
 		virtual ~Player();
 
 		// public variables
-		float 			max_velocity;				// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
-		float 			m_DamageMult;				// Multiplicador de danyo del jugador
-		float 			m_Defense;					// Divisor del danyo recibido
-		EFFECTCODE 		m_shotEffect;				// Efecto que aplicara al impactar la
-		bool 			m_visible;					// Is player visible?
+		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
+		float 			m_DamageMult;		// Multiplicador de danyo del jugador
+		float 			m_Defense;			// Divisor del danyo recibido
+		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
+		bool 			m_visible;			// Is player visible?
+		bool 			canJump;			// Puede saltar?
+		bool			m_Able2Jump;			// Is able to recover jump?
 
 	protected:
 
@@ -186,7 +188,6 @@ class Player: public Entidad{
 		bool			stepsStarted;		// Han empezado a sonar los steps?
 		bool 			pulseStarted;		// Pulse sound event started?
 		bool 			moving;				// Se esta moviendo?
-		bool 			canJump;			// Puede saltar?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
 

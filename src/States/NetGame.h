@@ -58,6 +58,8 @@ private:
 	bool lobbyState;
 	bool gameEnded;
 	bool debug;
+	bool mute;
+	bool captured;
 
 	bool isServer;
 	HumanPlayer*		playerOne;

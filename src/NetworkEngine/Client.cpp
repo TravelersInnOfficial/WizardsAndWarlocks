@@ -1,9 +1,11 @@
 #include "Client.h"
+#include "Names.h"
 #include "./../States/NetGame.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/NetworkManager.h"
+#include "./../Managers/StateManager.h"
 
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -82,8 +84,13 @@ std::map<int, NetworkObject*> Client::GetNewNetworkObjects(){
 }
 
 void Client::SetClientName(std::string name){
-	if(name.length() <= 0) name = "Player Name";
-	if(name.length() > 10) name = name.substr(0,10);
+	if(name.length() <= 0 || name.compare("Player Name") == 0){
+		int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+		int index = rand() % arraySize;
+		name = defaultNames[index];
+	}
+
+	if(name.length() > 15) name = name.substr(0,15);
 	this->name = name;
 }
 
@@ -144,7 +151,7 @@ void Client::RecievePackages(){
 			case ID_CONNECTION_LOST:
 			case ID_DISCONNECTION_NOTIFICATION: {
 				std::cout<<"Conexion Lost or Denied."<<std::endl;
-				exit(0);
+				StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 				break;
 			}
 
@@ -209,6 +216,90 @@ void Client::RecievePackages(){
 				bitstream.Read(spell);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
 				if(player != NULL) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell, false);
+				break;
+			}
+
+			// CUANDO SE INTERACCIONA CON UNA PUERTA
+			case ID_DOOR_INTERACTED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int doorVecPos = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(doorVecPos);
+				ObjectManager::GetInstance()->UseNetworkDoor(doorVecPos);
+				break;
+			}
+
+			// CUANDO SE INTERACCIONA CON UNA POCION
+			case ID_POTION_INTERACTED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int potionVecPos = -1;
+				int playerNetworkId = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(potionVecPos);
+				bitstream.Read(playerNetworkId);
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetworkId);
+				if(player != NULL) ObjectManager::GetInstance()->UseNetworkPotion(potionVecPos, player);
+				break;
+			}
+
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR UNA PUERTA
+			case ID_DOOR_FORCE_OPEN: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int doorVecPos = -1;
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(doorVecPos);
+				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
+				Door* d = doors.at(doorVecPos);
+				if(d != NULL) d->ForceOpen();
+				break;
+			}
+
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR UNA POCION
+			case ID_REFRESH_POTION: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				
+				int potionVecPos = -1;
+				bool picked = false;
+				int playerNetId = -1;
+				vector3df pos = vector3df(0, 0, 0);
+				
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(potionVecPos);
+				bitstream.Read(picked);
+
+				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
+				Potion* p = potions.at(potionVecPos);
+
+				if(p != NULL){
+					if(picked){
+						bitstream.Read(playerNetId);
+						Player* player = NULL;
+						player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetId);
+						if(player != NULL) p->NetInteract(player);
+					}
+					else{
+						bitstream.Read(pos);
+						p->SetPosition(pos);
+					}
+				}
+				break;
+			}
+			
+			// CUANDO NOS CONECTAMOS Y QUEREMOS SINCRONIZAR LAS TRAMPAS
+			case ID_INIT_TRAPS: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				vector3df pos = vector3df(0, 0, 0);
+				vector3df normal = vector3df(0, 0, 0);
+				int type = -1;
+				int id = -1;
+				
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(pos);
+				bitstream.Read(normal);
+				bitstream.Read(type);
+				bitstream.Read(id);
+
+				TrapManager::GetInstance()->NoPlayerDeploy(pos, normal, (TrapEnum)type, id);
 				break;
 			}
 		}

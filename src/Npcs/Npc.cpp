@@ -18,6 +18,9 @@ void Npc::CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotat
 void Npc::Interact(Player* p){
 }
 
+void Npc::StopInteraction(){
+}
+
 void Npc::Update(){
 	
 }

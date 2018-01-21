@@ -1,4 +1,5 @@
 #include "AIPlayer.h"
+#include <Names.h>
 #include "./../Managers/SpellManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include "./../GraphicEngine/GraphicEngine.h"
@@ -14,6 +15,8 @@ AIPlayer::AIPlayer():Player(false){
 
 	shootSpell = false;
 	castingSpell = false;
+
+	SetRandomName();
 }
 
 AIPlayer::~AIPlayer(){
@@ -181,6 +184,13 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 	}
 	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
 	SetAngularForce(vector3df( 0 ,angular.Y, 0));
+}
+
+void AIPlayer::SetRandomName(){
+	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+	int index = rand() % arraySize;
+	std::string auxName = defaultNames[index];
+	SetName(auxName);
 }
 
 // ========================================================================================= //

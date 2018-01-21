@@ -11,12 +11,9 @@ SpellManager::SpellManager(){
 
 SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
-		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
-		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
-			Hechizo* h = it->second;			// Cargamos el hechizo
-			delete h;
-		}
+		hechizos[i].clear();
 	}
+	instance = 0;
 }
 
 SpellManager* SpellManager::GetInstance(){
@@ -97,7 +94,7 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
 				if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
-					p->ChangeMP(h->GetMP());
+					h->WasteMana(p);
 					h->Lanzar(p);					// Lanzamos el hechizo
 					return true;
 				}
@@ -155,6 +152,19 @@ void SpellManager::ResetDieHechizo(Player* p){
 	for(int i=0; i<numHechizos; i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
+			if(h!=NULL){
+				h->DieReset();
+			}
+		}
+	}
+}
+
+void SpellManager::ResetAllDieHechizo(){
+	std::map<Player*, Hechizo*>::iterator it;
+	for(int i=0; i<numHechizos; i++){
+		it = hechizos[i].begin();
+		for(;it!=hechizos[i].end(); it++){
+			Hechizo* h = it->second;
 			if(h!=NULL){
 				h->DieReset();
 			}
@@ -362,6 +372,20 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	}
 
 	return spells;
+}
+
+void SpellManager::ErasePlayer(Player* player){
+	
+	ResetDieHechizo(player);
+
+	for(int i=0; i < numHechizos; i++){
+		if(hechizos[i].find(player) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][player];
+			if(h!=NULL) delete h;
+		}
+		hechizos[i].erase(player);
+	}
+	
 }
 
 // For refreshing newcomers on the server

@@ -2,6 +2,7 @@
 
 NpcSelector::NpcSelector(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
+	hp = NULL;
 }
 
 NpcSelector::~NpcSelector(){
@@ -62,10 +63,15 @@ void NpcSelector::Update(){
 }
 
 void NpcSelector::StopInteraction(){
-	MenuManager::GetInstance()->ClearMenu();
-	hp->ToggleMenu(false);
-	hp = NULL;
-	active = false;
+	if(active){
+		MenuManager::GetInstance()->ClearMenu();
+
+		if(hp != NULL){
+			hp->ToggleMenu(false);
+			hp = NULL;
+			active = false;
+		}
+	}
 }
 
 void NpcSelector::Draw(){

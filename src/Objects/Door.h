@@ -18,14 +18,21 @@ public:
 	void Interact(Player* p);
 	void Interact();
 	void Update();
+	void SetBlock(bool bl);
 
 	// Sense Functions
 	void SendSignal();
 	Kinematic GetKinematic();
 
-	//Sound Functions
+	// Sound Functions
 	void playOpen();
 	void playClose();
+
+	// Sync Functions
+	void NetInteract();
+	void ForceOpen();
+
+	bool GetOpenState();
 
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
@@ -35,6 +42,7 @@ private:
 
 	bool 		working;		// Se esta abriendo o cerrando? Si/No
 	bool		isOpen;			// Estado de la puerta, abierta o cerrada? true/false
+	bool 		block; 			// La puerta tiene el interact de player bloqueado? Si/No
 	int 		min;			// Minimo angulo a rotar
 	int 		max;			// Maximo angulo a rotar
 	int 		increment;		// Incremento a cada frame

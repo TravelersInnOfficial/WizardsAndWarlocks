@@ -10,14 +10,12 @@
 class Block : public Entidad{
 
 public:
-
-    Block();
-    ~Block();
     
     Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture);  
-    vector3df GetPosition();
+    ~Block();
 
     void Update();
+    vector3df GetPosition();
 
 private:
     void UpdatePosShape();

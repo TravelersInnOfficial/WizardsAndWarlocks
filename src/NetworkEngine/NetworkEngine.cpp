@@ -1,6 +1,6 @@
 #include "NetworkEngine.h"
 
-static NetworkEngine* instance;
+static NetworkEngine* instance = 0;
 
 NetworkEngine::NetworkEngine(){
 	serverIp = "127.0.0.1";
@@ -18,6 +18,7 @@ NetworkEngine* NetworkEngine::GetInstance(){
 
 NetworkEngine::~NetworkEngine(){
 	EndService();
+	instance = 0;
 }
 
 void NetworkEngine::Update(){
@@ -52,6 +53,14 @@ bool NetworkEngine::IsServerInit(){ return(isServer); }
 bool NetworkEngine::IsClientInit(){ return(isClient); }
 
 void NetworkEngine::EndService(){
-	if(client != NULL) delete client;
-	if(server != NULL) delete server;
+	if(client != NULL){
+		delete client;
+		client = NULL;
+		isClient = false;
+	}
+	if(server != NULL) {
+		delete server;
+		server = NULL;
+		isServer = false;
+	}
 }

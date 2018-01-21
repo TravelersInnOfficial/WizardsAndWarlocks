@@ -2,7 +2,8 @@
 #define POISONBOMB_H
 
 #include "Projectile.h"
-#include "./../PhysicsEngine/BT_GhostObject.h"
+
+#include <AreaCodes.h>
 
 class PoisonBomb : public Projectile{
 
@@ -11,20 +12,12 @@ public:
     ~PoisonBomb();
 
 private:
-    void Burst();
     // Parent functions
     void UpdatePosShape();
     void ContactBehavior();
     void ContactAction(Player* p);
 
     bool ready2Burst;
-    bool bursted;
-    float ghostScale;
-
-    
-
-    // Ghost object for gas explosion
-    BT_GhostObject* bt_ghost;
     
 };
 

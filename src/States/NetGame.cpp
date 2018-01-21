@@ -1,4 +1,6 @@
 #include "NetGame.h"
+#include "./../Managers/StateManager.h"
+#include <StateCodes.h>
 
 NetGame* NetGame::instance = NULL;
 
@@ -24,10 +26,12 @@ NetGame::NetGame(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
+	mute = false;
+	captured = false;
 	secondCounter = 0;
 
 	if(n_engine->IsServerInit()) isServer = true;
@@ -48,12 +52,21 @@ NetGame::NetGame(){
 }
 
 NetGame::~NetGame(){
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que estar despues del player
 	delete networkManager;
+	n_engine->EndService();
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+	}
+
+	instance = NULL;
 }
 
 bool NetGame::Input(){
@@ -63,10 +76,23 @@ bool NetGame::Input(){
 		return true;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) end = true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 	if(g_engine->IsKeyPressed(KEY_F1)){
 		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
 		debug = !debug;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F2)){
+		float vol = 1;
+		if(!mute) vol = 0;
+		SoundSystem::getInstance()->setVolume(vol);
+		mute = !mute;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F3)){
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(!captured);
+		captured = !captured;
 	}
 
 	if(gameEnded){
@@ -117,7 +143,7 @@ void NetGame::CheckIfReady(){
 	// Si la tienen, cargamos el siguente nivel
 	if(playerManager->CheckIfReady()) {
 		LevelLoader loader;
-		loader.LoadLevel("../assets/json/map.json");
+		loader.LoadLevel("../assets/json/BasicMap.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -148,7 +174,7 @@ void NetGame::setFps(){
 		secondCounter = 0;
 		std::string myFps = to_string(int(1/deltaTime));
 		std::wstring wsTmp(myFps.begin(), myFps.end());
-		g_engine->ChangeWindowName(L"Wizards And Warlocks Master v1.0 FPS:" + wsTmp);
+		g_engine->ChangeWindowName(L"Wizards And Warlocks - FPS: " + wsTmp);
 	}
 }
 
@@ -208,7 +234,7 @@ void NetGame::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	playerManager->ManageMatchStatus(false);
 	

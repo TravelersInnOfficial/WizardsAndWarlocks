@@ -20,6 +20,7 @@ public:
 	bool LanzarHechizo(int num, Player* p);
 	bool StartHechizo(int num, Player* p);
 	void ResetHechizo(int num, Player* p);
+	void ResetAllDieHechizo();
 	void ResetDieHechizo(Player* p);
 	void ResetHechizo(Player* p);
 	
@@ -30,6 +31,7 @@ public:
 	void DrawHUDSpells(Player* p, int current);
 	std::string GetPathFromEnum(SPELLCODE sKind);
 
+	void ErasePlayer(Player* player);
 	void RefreshServerAll();
 
 private:

@@ -6,7 +6,7 @@
 class State{
 public:
 	State();
-	~State();
+	virtual ~State();
 
 	virtual bool Input();
 	virtual void Update();

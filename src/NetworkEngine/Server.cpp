@@ -1,6 +1,7 @@
 #include "Server.h"
 #include "./../States/NetGame.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Players/Player.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -15,7 +16,7 @@ Server::~Server(){
 	for(;i!=networkObjects.end(); i++) delete i->second;
 
 	// Destroy the PEER interface
-	// SendShutdown();
+	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
 }
 
@@ -124,7 +125,7 @@ void Server::RecievePackages(){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
-				
+
 				// Si la partida ha empezado negamos la conexion
 				if(!NetGame::GetInstance()->GetLobbyState()){
 					RakNet::BitStream bitstream;
@@ -149,7 +150,7 @@ void Server::RecievePackages(){
 				
 				// Guardamos la correspondencia entre cliente y jugador (GUID -- Player ID)
 				clientToPlayer[id] = newPlayerId;
-				
+
 				// Le decimos al cliente nuevo cual es su PLAYER ONE
 				RakNet::BitStream bitstream2;
 				bitstream2.Write((RakNet::MessageID)ID_CREATE_PLAYER_ONE);
@@ -184,13 +185,79 @@ void Server::RecievePackages(){
 				TrapManager::GetInstance()->RefreshServerAll();
 				SpellManager::GetInstance()->RefreshServerAll();
 
+				// SYNC DOORS AT THE BEGINING (Open State)
+				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
+				for(int i = 0; i < doors.size(); i++){
+					Door* d = doors.at(i);
+					if(d != NULL && d->GetOpenState()){
+						RakNet::BitStream updateDoors;
+						updateDoors.Write((RakNet::MessageID)ID_DOOR_FORCE_OPEN);
+						updateDoors.Write(i);
+						SendPackage(&updateDoors, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				// SYNC POTIONS AT THE BEGINING (Owner && Pos)
+				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
+				for(int i = 0; i < potions.size(); i++){
+					Potion* p = potions.at(i);
+					if(p != NULL){
+						RakNet::BitStream updatePotions;
+						updatePotions.Write((RakNet::MessageID)ID_REFRESH_POTION);
+						updatePotions.Write(i);
+						
+						bool isPicked = false;
+						isPicked = p->GetPickedState();
+						updatePotions.Write(isPicked);
+
+						if(isPicked){
+							Player* byWho = NULL;
+							byWho = p->GetUser();
+							if(byWho != NULL){
+								NetworkObject* nObj = byWho->GetNetworkObject();
+								if(nObj != NULL){
+									int nObjId = nObj->GetObjId();
+									updatePotions.Write(nObjId);
+								}
+							}
+						}
+						else{
+							vector3df pos = vector3df(0, 0, 0);
+							pos = p->GetPosition();
+							updatePotions.Write(pos);
+						}
+
+						SendPackage(&updatePotions, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
+				// SYNC TRAPS AT THE BEGINING (Pos && Type)
+				std::vector<Trap*> traps = TrapManager::GetInstance()->GetAllTraps();
+				for(int i = 0; i < traps.size(); i++){
+					Trap* t = traps.at(i);
+					if(t != NULL){
+						RakNet::BitStream updateTraps;
+						vector3df pos = t->GetPosition();
+						vector3df normal = t->GetNormal();
+						int type = (int) t->GetTrapType();
+						int id = t->GetTrapId();
+
+						updateTraps.Write((RakNet::MessageID)ID_INIT_TRAPS);
+						updateTraps.Write(pos);
+						updateTraps.Write(normal);
+						updateTraps.Write(type);
+						updateTraps.Write(id);
+
+						SendPackage(&updateTraps, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
+				}
+
 				break;
 			}
 
 			// CUANDO SE DESCONECTA UN CLIENTE
 			case ID_CONNECTION_LOST: 
 			case ID_DISCONNECTION_NOTIFICATION: {
-
 				// Delete the player from the server
 				int id = RemovePlayer(packet->guid);
 
@@ -464,4 +531,24 @@ void Server::SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell){
 	newSpellMessage.Write(spellPosition);
 	newSpellMessage.Write(spell);
 	SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::NotifyDoorInteracted(int doorPos){
+	RakNet::BitStream doorInteractMessage;
+	doorInteractMessage.Write((RakNet::MessageID)ID_DOOR_INTERACTED);
+	doorInteractMessage.Write(doorPos);
+	SendPackage(&doorInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
+void Server::NotifyPotionInteracted(int potionPos, Player* p){
+	RakNet::BitStream potionInteractMessage;
+	potionInteractMessage.Write((RakNet::MessageID)ID_POTION_INTERACTED);
+	potionInteractMessage.Write(potionPos);
+	if(p != NULL){
+		NetworkObject* nObj = p->GetNetworkObject();
+		if(nObj != NULL){
+			potionInteractMessage.Write(p->GetNetworkObject()->GetObjId());
+			SendPackage(&potionInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+		}
+	}
 }

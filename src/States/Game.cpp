@@ -1,5 +1,6 @@
 #include "Game.h"
-#include "./../Objects/DamageArea.h"
+#include "./../Managers/StateManager.h"
+#include <StateCodes.h>
 
 Game::Game(){
 
@@ -17,10 +18,12 @@ Game::Game(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
+	mute = false;
+	captured = false;
 	secondCounter = 0;
 
 	//NavMesh
@@ -43,12 +46,18 @@ Game::Game(){
 }
 
 Game::~Game(){
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que eliminarse despues de el player
 	delete senseManager;
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+	}
 }
 
 bool Game::Input(){
@@ -58,7 +67,9 @@ bool Game::Input(){
 	}
 
 	// SALIR
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) return true;
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)){
+		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+	}
 
 	// TEMPORALES
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
@@ -69,6 +80,19 @@ bool Game::Input(){
 
 	// DEBUG
 	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
+
+	if(g_engine->IsKeyPressed(KEY_F2)){
+		float vol = 1;
+		if(!mute) vol = 0;
+		SoundSystem::getInstance()->setVolume(vol);
+		mute = !mute;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F3)){
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(!captured);
+		captured = !captured;
+	}
 
 	// SONIDO
 	//if(g_engine->IsKeyPressed(KEY_KEY_M)) playerOne->changeSurface(4.0f);
@@ -121,7 +145,7 @@ void Game::CheckIfReady(){
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) {
 		LevelLoader loader;
-		loader.LoadLevel("../assets/json/map.json");
+		loader.LoadLevel("../assets/json/BasicMap.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -147,7 +171,8 @@ void Game::Draw(){
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 	g_engine->endScene();
-/*
+
+	/*
 	//TESTING NAVMESH
 	std::vector<Node*> nmn = navmesh.getNodes();
 	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
@@ -167,7 +192,7 @@ void Game::Draw(){
 		g_engine->paintLineDebug(pointA, pointB, color);
 
 	}
-*/
+	*/
 
 }
 
@@ -219,7 +244,7 @@ void Game::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby.json");
+	loader.LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);

@@ -26,6 +26,7 @@ Hechizo::~Hechizo(){
 
 void Hechizo::DieReset(){
 	timeCasting = 0.0f;
+	currentCooldown = 0.0f;
 	lanzable = false;
 }
 
@@ -37,6 +38,10 @@ void Hechizo::ResetSpell(){
 void Hechizo::ResetCooldown(){
 	currentCooldown = 0.0f;
 	ResetSpell();
+}
+
+void Hechizo::WasteMana(Player* p){
+	p->ChangeMP(costePM);
 }
 
 /**

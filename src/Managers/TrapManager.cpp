@@ -23,6 +23,7 @@ TrapManager::~TrapManager(){
 	ClearTraps();
 	playerTrap.clear();
 	playerUsings.clear();
+	instance = 0;
 }
 
 void TrapManager::ClearTraps(){
@@ -141,7 +142,8 @@ int TrapManager::getPlayerUsings(Player* player){
 	std::map<Player*, int>::iterator it = playerUsings.begin();
 	
 	for(; it != playerUsings.end(); ++it){
-		if(it->first == player) return it->second;
+		Player* p = it->first;
+		if(p != NULL && p == player) return it->second;
 	}
 
 	return -1;
@@ -204,6 +206,12 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     if(myTrap != NULL) myTrap->SetTrapId(id);
 }
 
+// Only for NETWORK
+void TrapManager::NoPlayerDeploy(vector3df position, vector3df normal, TrapEnum type, int id){
+	Trap* myTrap = AddTrap(position, normal, type);
+	if(myTrap != NULL) myTrap->SetTrapId(id);
+}
+
 void TrapManager::IdErase(int id){
 	Trap* trapToErase = GetTrapWithId(id);
 	if(trapToErase != NULL) DeleteTrap(trapToErase);
@@ -219,6 +227,10 @@ Trap* TrapManager::GetTrapWithId(int id){
 	}
 
 	return toRet;
+}
+
+vector<Trap*> TrapManager::GetAllTraps(){
+	return(traps);
 }
 
 void TrapManager::DrawHUD(Player* player){
@@ -301,6 +313,11 @@ std::string TrapManager::GetPathFromUsings(int usings){
 	return toRet;
 }
 
+void TrapManager::ErasePlayer(Player* player){
+	playerTrap.erase(player);
+	playerUsings.erase(player);
+}
+
 // For refreshing newcomers on the server
 void TrapManager::RefreshServerAll(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
@@ -308,8 +325,14 @@ void TrapManager::RefreshServerAll(){
 		Server* server = n_engine->GetServer();
 		if(server != NULL){
 			for (std::map<Player*, TrapEnum>::iterator it=playerTrap.begin(); it!=playerTrap.end(); ++it){
-				int netPlayerId = it->first->GetNetworkObject()->GetObjId();
-				server->SetPlayerTrap(netPlayerId, it->second, getPlayerUsings(it->first));
+				Player* p = it->first;
+				if(p != NULL){
+					NetworkObject* nObj = p->GetNetworkObject();
+					if(nObj != NULL){
+						int netPlayerId = nObj->GetObjId();
+						server->SetPlayerTrap(netPlayerId, it->second, getPlayerUsings(p));
+					}
+				}
 			}
 		}
 	}

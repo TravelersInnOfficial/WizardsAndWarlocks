@@ -10,7 +10,9 @@ NetworkManager* NetworkManager::GetInstance(){
 
 NetworkManager::NetworkManager(){ }
 
-NetworkManager::~NetworkManager(){ }
+NetworkManager::~NetworkManager(){
+	instance = 0;
+}
 
 void NetworkManager::Update(){
 	RetrieveObjects();

@@ -11,22 +11,18 @@
 
 class DamageArea: public Entidad{
 public:
-	DamageArea(int dam, int emi, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea(int dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~DamageArea();
-	bool Update(float deltaTime);
+
+	virtual bool Update(float deltaTime);
 	void Update();
-	void Contact(void* punt, EntityEnum tipo);
-	void Deactivate();
+
+	virtual void Contact(void* punt, EntityEnum tipo);
 
 	void SetPosition(vector3df TPosition);
 	void SetRotation(vector3df TRotation);
 
-private:
-	void CreateDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
-
-	int 		emisor;				// Emisor del area de danyo
-	bool 		activated;			// Esta activa? Deberia seguir existiendo? Si/No
-
+protected:
 	int 		damage; 			// Danyo que hacer la area
 
 	float		currentCast;		// Tiempo que lleva de Casteo
