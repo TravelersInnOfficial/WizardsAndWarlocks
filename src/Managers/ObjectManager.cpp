@@ -1,9 +1,11 @@
 #include "ObjectManager.h"
 #include "./../Objects/AllPotions.h"
+#include "./../NavMeshLoader.h"
 
 ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
+	navmesh = NULL;
 	grail = NULL;
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
@@ -194,8 +196,13 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 	return ar;
 }
 
-void ObjectManager::AddNavmesh(NavMesh navm){
-	navmesh = navm;
+void ObjectManager::AddNavmesh(std::string path){
+	if(navmesh!=NULL){
+		delete navmesh;
+	}
+	navmesh = new NavMesh();
+	NavMeshLoader nm_loader;
+	nm_loader.LoadNavMeshGraph(navmesh, path);
 }
 
 // ===================================================================================================== //
@@ -292,7 +299,7 @@ int ObjectManager::GetPotionVecPos(Potion* potion){
 	return toRet;
 }
 
-NavMesh ObjectManager::GetNavMesh(){return navmesh;}
+NavMesh* ObjectManager::GetNavMesh(){return navmesh;}
 
 // ===================================================================================================== //
 //
@@ -416,6 +423,11 @@ void ObjectManager::ClearMap(){
 	if(grail != NULL){
 		delete grail;
 		grail = NULL;
+	}
+
+	if(navmesh != NULL){
+		delete navmesh;
+		navmesh = NULL;
 	}
 
 	wizardSpawn.clear();

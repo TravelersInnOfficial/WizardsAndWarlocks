@@ -18,6 +18,8 @@ class Heuristic{
      */
     float estimate(Node*);
 
+    void setNode(Node*);
+
     private:
     Node* m_goalNode;
 };

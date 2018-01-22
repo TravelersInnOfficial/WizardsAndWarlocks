@@ -1,13 +1,15 @@
 #include "ObstacleAvoidance.h"
 #include "./../../PhysicsEngine/BulletEngine.h"
 
-float ObstacleAvoidance::avoidDistance = 2.0f;
-float ObstacleAvoidance::lookAHead = 2.5f;
-float ObstacleAvoidance::lookAHead2 = 1.0f;
+ObstacleAvoidance::ObstacleAvoidance(){
+	avoidDistance = 2.0f;
+	lookAHead = 2.5f;
+	lookAHead2 = 1.0f;	
+}
 
+ObstacleAvoidance::~ObstacleAvoidance(){}
 
 //Igual lo mejor sería hacer los tres raycast y hacer caso al que este más cerca
-
 SteeringOutput ObstacleAvoidance::GetSteering(Kinematic cKin){
 	Kinematic tKin;
 	cKin.velocity.Y = 0;

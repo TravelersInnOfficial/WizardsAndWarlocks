@@ -82,7 +82,6 @@ private:
 
 	// PARA EL DEBUG
 	AIPlayer* AL;
-	NavMesh navmesh;
 
 	void setFps();
 	void CheckIfWon();

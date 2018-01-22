@@ -23,6 +23,8 @@ public:
      */
     Node(int, vector3df);
 
+    void setData(int, vector3df);
+
     /**
      * @brief Node destructor
      * 

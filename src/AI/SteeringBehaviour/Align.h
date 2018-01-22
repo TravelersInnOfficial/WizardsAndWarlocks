@@ -8,15 +8,17 @@
 
 class Align{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
+	Align();
+	~Align();
+	SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
-	static float GetAngular(float angle, float angleSize, float rotC);
+	float GetAngular(float angle, float angleSize, float rotC);
 
-	static float maxAngularAcceleration;
-	static float maxRotation;
-	static float targetRadius;
-	static float slowRadius;
-	static float timeToTarget;
+	float maxAngularAcceleration;
+	float maxRotation;
+	float targetRadius;
+	float slowRadius;
+	float timeToTarget;
 };
 
 #endif

@@ -326,6 +326,10 @@ MenuOption GraphicEngine::ReadButtonPressed(){
 	return(privateMenuReceiver->ReadButtonPressed());
 }
 
+bool GraphicEngine::EscPressed(){
+	return (privateMenuReceiver->EscPressed());
+}
+
 std::string GraphicEngine::ReadText(MenuOption id){
 	irr::gui::IGUIElement* textElem;
 	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);

@@ -50,10 +50,11 @@ void NavMesh::addTriangle(int vertex1, int vertex2, int vertex3){
     m_triangles.push_back(t);
 }
 
-std::vector<Node*> *NavMesh::searchNearestNodes(vector3df point){
+// Si devuelve un puntero al una variable que se crea aqui, al salir del metodo se podria perder el valor
+std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
     bool flag = false;
     std::vector<vector3df> tri;
-    std::vector<Node*> *arr = NULL;
+    std::vector<Node*> arr;
 
     int i = 0;
     for(;i<m_triangles.size();i++){
@@ -67,14 +68,12 @@ std::vector<Node*> *NavMesh::searchNearestNodes(vector3df point){
 
         flag = pointInTriangle(point,tri);
             if(flag){ 
-                arr = new std::vector<Node*>();
-                
                 Node *n1 = m_triangles[i]->vertices[0];                
                 Node *n2 = m_triangles[i]->vertices[1];
                 Node *n3 = m_triangles[i]->vertices[2];
-                arr->push_back(n1);
-                arr->push_back(n2);
-                arr->push_back(n3);
+                arr.push_back(n1);
+                arr.push_back(n2);
+                arr.push_back(n3);
                 break;
             }
             tri.clear();

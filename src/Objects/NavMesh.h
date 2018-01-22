@@ -16,9 +16,12 @@ class NavMesh{
     void addNode(int id, vector3df position);
     void addConnection(float cost, int from_index, int to_index);
     void addTriangle(int vertex1, int vertex2, int vertex3);
-    std::vector<Node*> *searchNearestNodes(vector3df);
+    std::vector<Node*> searchNearestNodes(vector3df);
     std::vector<Triangle*> getTriangles();
     void printData();
+    std::vector<Node*> getNodes(){return m_nodes;}
+    std::vector<Connection*> getConnections(){return m_connections;}
+
 
     private:
     std::vector<Triangle*> m_triangles;

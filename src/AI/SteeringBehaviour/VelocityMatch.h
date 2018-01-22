@@ -7,10 +7,12 @@
 
 class VelocityMatch{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
+	VelocityMatch();
+	~VelocityMatch();
+	SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
-	static float timeToTarget;
-	static float maxAcceleration;
+	float timeToTarget;
+	float maxAcceleration;
 };
 
 

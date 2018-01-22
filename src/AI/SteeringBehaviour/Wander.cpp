@@ -1,11 +1,14 @@
 #include "Wander.h"
 
-float Wander::wanderOffset = 1.0f;
-float Wander::wanderRadius = 2.0f;
-float Wander::wanderRate = 5.0f;
-float Wander::wanderOrientation = 0.0f;
-float Wander::maxAcceleration = 30.0f;
+Wander::Wander(){
+	wanderOffset = 1.0f;
+	wanderRadius = 2.0f;
+	wanderRate = 5.0f;
+	wanderOrientation = 0.0f;
+	maxAcceleration = 30.0f;
+}
 
+Wander::~Wander(){}
 
 SteeringOutput Wander::GetSteering(Kinematic cKin){
 	Kinematic tKin;

@@ -14,8 +14,7 @@ Connection::Connection(float cost, Node* FromNode, Node* ToNode){
 }
 
 Connection::~Connection(){
-    delete m_FromNode;
-    delete m_ToNode;
+    // Los nodos se eliminan en otras clases
 }
 
 float Connection::getCost(){

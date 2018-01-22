@@ -18,7 +18,7 @@ Game::Game(){
 
 	// Level
 	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	loader.LoadLevel("./../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -27,8 +27,7 @@ Game::Game(){
 	secondCounter = 0;
 
 	//NavMesh
-	NavMeshLoader nm_loader;
-	nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
+	objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 
 	// Sound Engine
 	createSoundEvents();
@@ -43,6 +42,7 @@ Game::Game(){
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
+
 }
 
 Game::~Game(){
@@ -145,7 +145,7 @@ void Game::CheckIfReady(){
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) {
 		LevelLoader loader;
-		loader.LoadLevel("../assets/json/BasicMap.json");
+		loader.LoadLevel("../assets/json/map.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -163,7 +163,6 @@ void Game::Draw(){
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
-	
 	if(debug){
 		f_engine->DebugDrawWorld();
 		if(AL != NULL) AL->Debug();
@@ -171,10 +170,10 @@ void Game::Draw(){
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 	g_engine->endScene();
-
-	/*
+	
 	//TESTING NAVMESH
-	std::vector<Node*> nmn = navmesh.getNodes();
+	/*
+	std::vector<Node*> nmn = objectManager->GetNavMesh()->getNodes();
 	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
 	for(int i = 0; i<nmn.size(); i++){
 		vector3df position = nmn[i]->getPosition();
@@ -182,7 +181,7 @@ void Game::Draw(){
 		//vector3df p, vector3df r, vector3df s, float radius, int id
 		g_engine->addCube2Scene(position,vector3df(0,0,0), vector3df(1,1,1),0.2,i);
 	}
-	std::vector<Connection*> nmc = navmesh.getConnections();
+	std::vector<Connection*> nmc = objectManager->GetNavMesh()->getConnections();
 	//std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
 	for(int i =0; i<nmc.size();i++){
 		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;

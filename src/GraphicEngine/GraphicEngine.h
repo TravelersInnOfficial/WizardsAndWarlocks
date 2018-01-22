@@ -215,6 +215,8 @@ public:
     */
     MenuOption ReadButtonPressed();
 
+    bool EscPressed();
+
     /**
      * Reads a GUI EditBox from the reciever
     */

@@ -7,9 +7,11 @@
 
 class Flee{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
+	Flee();
+	~Flee();
+	SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
-	static float maxAcceleration;
+	float maxAcceleration;
 };
 
 

@@ -7,9 +7,11 @@
 
 class Seek{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
+	Seek();
+	~Seek();
+	SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 private:
-	static float maxAcceleration;
+	float maxAcceleration;
 };
 
 #endif

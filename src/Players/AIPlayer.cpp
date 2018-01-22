@@ -16,12 +16,59 @@ AIPlayer::AIPlayer():Player(false){
 	shootSpell = false;
 	castingSpell = false;
 
+	SetSteerings();
 	SetRandomName();
 }
 
 AIPlayer::~AIPlayer(){
 	delete behaviour;
 	delete path;
+
+	delete lookWhereYoureGoing;
+	delete obstacleAvoidance;
+	delete wander;
+	delete face;
+	delete seek;
+	delete flee;
+}
+
+void AIPlayer::SetSteerings(){
+	lookWhereYoureGoing = new LookWhereYoureGoing();
+	obstacleAvoidance = new ObstacleAvoidance();
+	followPath = new FollowPath(path);
+	wander = new Wander();
+	face = new Face();
+	seek = new Seek();
+	flee = new Flee();
+}
+
+// STEERINGS
+SteeringOutput AIPlayer::GetLookWhereYoureGoing(Kinematic cKin){
+	return lookWhereYoureGoing->GetSteering(cKin);
+}
+
+SteeringOutput AIPlayer::GetObstacleAvoid(Kinematic cKin){
+	return obstacleAvoidance->GetSteering(cKin);
+}
+
+SteeringOutput AIPlayer::GetWander(Kinematic cKin){
+	return wander->GetSteering(cKin);
+}
+
+SteeringOutput AIPlayer::GetFace(Kinematic cKin, Kinematic tKin){
+	return face->GetSteering(cKin, tKin);
+}
+
+SteeringOutput AIPlayer::GetSeek(Kinematic cKin, Kinematic tKin){
+	return seek->GetSteering(cKin, tKin);
+}
+
+SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
+	return flee->GetSteering(cKin, tKin);
+}
+
+SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
+	return followPath->GetSteering(cKin);
 }
 
 void AIPlayer::Update(){
@@ -30,8 +77,7 @@ void AIPlayer::Update(){
 		behaviour->run();
 		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 		shootSpell = false; 	// Reseteamos la variable
-		
-
+		//ShortestPath(vector3df(10,0,10));
 		Player::Update();		// Check Input
 	}
 }
@@ -201,14 +247,15 @@ void AIPlayer::SetRandomName(){
 
 void AIPlayer::ShortestPath(vector3df to){
 	vector3df from = this->GetPos();
-	path = new Pathfinding();
+	//path = new Pathfinding(); -Ya creado en el constructor
 	//std::list<Connection*> *c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
-	std::list<Connection*> *c = path->AStar(from,to);
-	if(c!=NULL){
+	std::list<Connection*> c = path->AStar(from,to);
+
+	if(c.size()>0){
 		//TODO::MOVE
 		std::cout<<"The path is:"<<std::endl;
-		std::list<Connection*>::iterator it = c->begin();
-		for(;it!=c->end(); ++it){
+		std::list<Connection*>::iterator it = c.begin();
+		for(;it!=c.end(); ++it){
 			Connection *con =  *it;
 			int from = con->getFromNode()->getNodeID();
 			int to = con->getToNode()->getNodeID();

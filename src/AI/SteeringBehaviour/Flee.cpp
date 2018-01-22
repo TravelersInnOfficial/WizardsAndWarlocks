@@ -1,6 +1,10 @@
 #include "Flee.h"
 
-float Flee::maxAcceleration = 30.0f;
+Flee::Flee(){
+	maxAcceleration = 30.0f;
+}
+
+Flee::~Flee(){}
 
 SteeringOutput Flee::GetSteering(Kinematic cKin, Kinematic tKin){
 	SteeringOutput output;

@@ -12,9 +12,7 @@ NavMeshLoader::~NavMeshLoader(){
 
 }
 
-void NavMeshLoader::LoadNavMeshGraph(std::string jsonPath){  
-    NavMesh navmesh;
-
+void NavMeshLoader::LoadNavMeshGraph(NavMesh* navmesh, std::string jsonPath){  
     //Takes path from binary location (/bin)
 	std::ifstream i(jsonPath);
 	nlohmann::json j;
@@ -42,21 +40,20 @@ void NavMeshLoader::LoadNavMeshGraph(std::string jsonPath){
             float y = j["NavMesh"][i]["Position"]["Y"];
             float z = j["NavMesh"][i]["Position"]["Z"];
             position = vector3df(x,y,z);
-            navmesh.addNode(ID,position);
+            navmesh->addNode(ID,position);
         }   	
         else if(j["NavMesh"][i]["Type"] == "Connection"){
             fromNodeIndex = j["NavMesh"][i]["Connection"]["FromNode"];
             ToNodeIndex = j["NavMesh"][i]["Connection"]["ToNode"];
             cost = j["NavMesh"][i]["Connection"]["Cost"];
-            navmesh.addConnection(cost, fromNodeIndex, ToNodeIndex);
+            navmesh->addConnection(cost, fromNodeIndex, ToNodeIndex);
 
         }
         else if(j["NavMesh"][i]["Type"] == "Triangle"){
             v0 = j["NavMesh"][i]["Vertices"][0];
             v1 = j["NavMesh"][i]["Vertices"][1];
             v2 = j["NavMesh"][i]["Vertices"][2];
-            navmesh.addTriangle(v0,v1,v2);
+            navmesh->addTriangle(v0,v1,v2);
         }
     }
-    ObjectManager::GetInstance()->AddNavmesh(navmesh);
 }

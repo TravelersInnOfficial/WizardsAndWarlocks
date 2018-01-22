@@ -12,6 +12,11 @@ Node::Node(int id, vector3df position){
     m_position = position;
 }
 
+void Node::setData(int id, vector3df position){
+    m_ID = id;
+    m_position = position;
+}
+
 Node::~Node(){
     for(int i = 0; i<m_connections.size(); i++) delete m_connections[i];
     m_connections.clear();

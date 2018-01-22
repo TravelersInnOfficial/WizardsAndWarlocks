@@ -11,7 +11,13 @@ public:
     ~List();
 
     /**
-     * @brief Returns the neares node
+     * @brief Clear the list of nodes
+     * 
+     */
+    void clear();
+
+    /**
+     * @brief Returns the nearest node
      * 
      * @param Node (Node to be checked)
      * @return NodeRecord* (Nearest node and connection)
@@ -64,17 +70,21 @@ public:
 
     int getNodeRecordPosition(Node*);
 
+    int getIndexNearestNode(vector3df pos, int start = 0);
+
+    vector3df getPosNode(int index);
+
 private:
     std::vector<NodeRecord*> m_list;
 
     //min heap functions
-    void insertNode(NodeRecord*);
     NodeRecord* getMin();
-    void swapNodes(NodeRecord*, NodeRecord*);
-    int parentNodeIndex(int);
-    int leftNodeIndex(int);
-    int rightNodeIndex(int);
-    void heapify(int);
+    void        insertNode(NodeRecord*);
+    void        swapNodes(int, int);
+    void        heapify(int);
+    int         parentNodeIndex(int);
+    int         leftNodeIndex(int);
+    int         rightNodeIndex(int);
     
 };
 

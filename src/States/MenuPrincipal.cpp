@@ -21,6 +21,11 @@ bool MenuPrincipal::Input(){
 	if(!g_engine->run()){
 		return true;
 	}
+
+	if(g_engine->EscPressed()){
+		return true;
+	}
+
 	selectedOption = g_engine->ReadButtonPressed();
 	return false;
 }
