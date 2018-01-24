@@ -148,7 +148,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		if(isPlayerOne) m_camera = engine->addCameraSceneNodeFPS(120.f, 0);
-		// if(isPlayerOne) m_thirdPCamera = new WatcherCamera(m_position, m_position);
+		if(isPlayerOne) m_thirdPCamera = new WatcherCamera(m_position);
 		hasCharacter = true;
 	}
 }
@@ -343,11 +343,11 @@ int Player::GetCurrentSpell(){
 }
 
 void Player::positionCamera(){
-	vector3df newRot = engine->getActiveCamera()->getRotation();
-	engine->getActiveCamera()->setPosition(GetHeadPos());
-	engine->getActiveCamera()->updateAbsolutePosition();
-	engine->getActiveCamera()->setRotation(newRot);
-	//m_thirdPCamera->UpdateCamera(m_position);
+	//vector3df newRot = engine->getActiveCamera()->getRotation();
+	//engine->getActiveCamera()->setPosition(GetHeadPos());
+	//engine->getActiveCamera()->updateAbsolutePosition();
+	//engine->getActiveCamera()->setRotation(newRot);
+	m_thirdPCamera->UpdateCamera(m_position);
 }
 
 void Player::checkMaxVelocity(){
