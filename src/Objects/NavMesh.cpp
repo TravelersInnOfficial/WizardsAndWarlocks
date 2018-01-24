@@ -1,4 +1,5 @@
 #include "NavMesh.h"
+#include <limits>
 
 NavMesh::NavMesh(){
 
@@ -56,7 +57,7 @@ std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
     std::vector<vector3df> tri;
     std::vector<Node*> arr;
 
-    int i = 0;
+   /* int i = 0;
     for(;i<m_triangles.size();i++){
         vector3df v1 = m_triangles[i]->vertices[0]->getPosition();
         vector3df v2 = m_triangles[i]->vertices[1]->getPosition();
@@ -67,17 +68,34 @@ std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
         tri.push_back(v3);
 
         flag = pointInTriangle(point,tri);
-            if(flag){ 
-                Node *n1 = m_triangles[i]->vertices[0];                
-                Node *n2 = m_triangles[i]->vertices[1];
-                Node *n3 = m_triangles[i]->vertices[2];
-                arr.push_back(n1);
-                arr.push_back(n2);
-                arr.push_back(n3);
-                break;
-            }
-            tri.clear();
+        if(flag){ 
+            Node *n1 = m_triangles[i]->vertices[0];                
+            Node *n2 = m_triangles[i]->vertices[1];
+            Node *n3 = m_triangles[i]->vertices[2];
+            arr.push_back(n1);
+            arr.push_back(n2);
+            arr.push_back(n3);
+            break;
         }
+        tri.clear();
+    }*/
+    float compare = std::numeric_limits<float>::max();
+
+    float value = 0;
+    int nodeValue = -1;
+
+    int size = m_nodes.size();
+    for(int i=0; i<size; i++){
+        value = (m_nodes[i]->getPosition() - point).length();
+        if(value<compare){
+            compare = value;
+            nodeValue = i;
+        }
+    }
+    if(nodeValue != -1){
+        arr.push_back(m_nodes[nodeValue]);
+    }
+
     return arr;
 }
 

@@ -2,7 +2,7 @@
 
 FollowPath::FollowPath(Pathfinding* p){
 	path = p;
-	pathOffSet = 5;
+	pathOffSet = 2;
 	currentParam = 0;
 }
 
@@ -10,10 +10,15 @@ FollowPath::~FollowPath(){
 	// El path lo eliminara el player
 }
 
+void FollowPath::ResetValues(){
+	currentParam = 0;
+}
+
 SteeringOutput FollowPath::GetSteering(Kinematic cKin){
-	std::cout<<"-asdf"<<std::endl;
+
 	// 1. Necesitamos saber en que Nodo nos encontramos
 	currentParam = path->GetIndexNearestNode(cKin.position, currentParam);
+
 	// 2. Ha ese nodo le sumamos el offset
 	vector3df posTarget = path->GetPosNode(currentParam+pathOffSet);
 

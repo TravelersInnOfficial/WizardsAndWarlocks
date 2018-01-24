@@ -25,6 +25,8 @@ public:
 
     void setData(int, vector3df);
 
+    void eraseConnection(Node* n);
+
     /**
      * @brief Node destructor
      * 

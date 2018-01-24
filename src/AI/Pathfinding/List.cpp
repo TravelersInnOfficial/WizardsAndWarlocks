@@ -44,8 +44,8 @@ void List::remove(NodeRecord* nr) {
     std::vector<int> toDelete;
     for(int i = 0; i<size; i++){
         NodeRecord* current = m_list[i]; 
-        if(nr!= current){
-            toDelete.push_back(i);
+        if(nr!= current){ 
+            m_list.erase(m_list.begin() + i);
         }
         else if(cost<=current->m_estimatedTotalCost){
             break;
@@ -90,26 +90,33 @@ int List::getNodeRecordPosition(Node* n){
 }
 
 int List::getIndexNearestNode(vector3df pos, int start){
-    vector3df nodePos = m_list[start]->m_node->getPosition();
-    nodePos = nodePos - pos;
-
-    float value = nodePos.length();
-    int output = start;
-
-    int size = m_list.size();
-    for(int i=start; i<size; i++){
-        nodePos = m_list[i]->m_node->getPosition();
+    int output = 0;
+    if(start < m_list.size()){  
+        vector3df nodePos = m_list[start]->m_node->getPosition();
         nodePos = nodePos - pos;
-        if(nodePos.length() < value){
-            value = nodePos.length();
-            output = i;
+  
+        float value = nodePos.length();
+        output = start;
+  
+        int size = m_list.size();
+        for(int i=start; i<size; i++){
+            nodePos = m_list[i]->m_node->getPosition();
+            nodePos = nodePos - pos;
+            if(nodePos.length() < value){
+                value = nodePos.length();
+                output = i;
+            }
         }
     }
     return output;
 }
 
 vector3df List::getPosNode(int index){
-    return m_list[index]->m_node->getPosition();
+    if(index < m_list.size()){
+        return m_list[index]->m_node->getPosition();
+    }
+    vector3df output(0,0,0);
+    return output;
 }
 
 void List::printListOfNodes(){
@@ -145,6 +152,7 @@ void List::insertNode(NodeRecord* nr){
 
 NodeRecord* List::getMin(){
     NodeRecord* min = m_list[0];
+    //m_list.erase(m_list.begin());
     m_list[0] = m_list[m_list.size()-1];
     m_list.erase(m_list.end()-1);
     heapify(0);

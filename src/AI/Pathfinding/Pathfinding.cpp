@@ -35,6 +35,12 @@ void Pathfinding::ResetValues(){
     // Clean Values
     m_closedList->clear();
     m_openList->clear();
+
+    int size = m_connections.size();
+    for(int i=0; i<size; i++){
+        delete m_connections[i];
+    }
+    m_connections.clear();
 }
 
 std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
@@ -64,7 +70,11 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
                 float Z = c_to.Z - from.Z;
                 float cost = sqrt((X*X) + (Y*Y) + (Z*Z));
                 nr->m_node = nearests[i];
-                nr->m_connection = new Connection(cost,StartNode,nearests[i]);
+
+                Connection* newConnection = new Connection(cost,StartNode,nearests[i]);
+                nr->m_connection = newConnection;
+                m_connections.push_back(newConnection);
+
                 nr->m_costSoFar = 0;
                 nr->m_heuristic = heur->estimate(nearests[i]);
                 nr->m_estimatedTotalCost = nr->m_costSoFar + nr->m_heuristic;
@@ -72,9 +82,10 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
                 m_openList->add(nr);
             }
         }
-        else if(finals.size() == 0){
+        if(finals.size() == 0){
             return path;
         }
+
         //TODO::check if the current node is inside the end triangle
 
         //Initialize the record for the start node
@@ -92,13 +103,13 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
         m_closedList->add(m_startRecord);
 
         //Iterate through processing each node
-        NodeRecord* current = NULL;
+        NodeRecord* current = m_startRecord;
         Node* endNode = NULL;
         float endNodeCost = 0;
         NodeRecord* endNodeRecord = new NodeRecord();
         std::vector<Connection*> nodeConnections;
         while(m_openList->size()>0){
-
+            
             //Find the smallest element in the open list (USING THE m_estimatedTotalCost)
             current = m_openList->smallestElement();
 
@@ -108,7 +119,11 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
                 if(current->m_node == finals[i]){
                         NodeRecord *nr = new NodeRecord();
                         nr->m_node = EndNode;
-                        nr->m_connection = new Connection(0,current->m_node,EndNode);
+
+                        Connection* newConnection = new Connection(0,current->m_node,EndNode);
+                        nr->m_connection = newConnection;
+                        m_connections.push_back(newConnection);
+
                         nr->m_heuristic = 0;
                         nr->m_estimatedTotalCost = 0;
                         m_openList->add(nr);
@@ -123,7 +138,7 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
             nodeConnections = current->m_node->getOutgoingConnections();
             //Loop through each connection in turn
             if(nodeConnections.size()==0) break;
-            
+
             for(int i = 0; i < nodeConnections.size();i++){
                 //Get the cost estimate for the end node 
                 endNode = nodeConnections[i]->getToNode();
@@ -189,12 +204,11 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
             //ALREADY REMOVED WHEN GET SMALLESTELEMENT
             //m_openList->remove(current);
             m_closedList->add(current);
-            
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
         if(current!=NULL && current->m_node == EndNode){
-            while( current!=NULL && current->m_node != StartNode){  
+            while( current!=NULL && current->m_node != StartNode){
                 path.push_back(current->m_connection);
                 current = m_closedList->find(current->m_connection->getFromNode());
             }

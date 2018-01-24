@@ -20,7 +20,8 @@ class Pathfinding{
     Heuristic* heur;
     List* m_openList;
     List* m_closedList;
-    //NodeRecord* m_startRecord;    
+    //NodeRecord* m_startRecord;
+    std::vector<Connection*> m_connections; 
     Node* StartNode;    // Nodo que se crea en la clase y que tenemos que reiniciar 
     Node* EndNode;      // Nodo que se crea en la clase y que tenemos que reiniciar
 

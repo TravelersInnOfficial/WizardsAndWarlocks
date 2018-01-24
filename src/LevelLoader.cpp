@@ -14,6 +14,8 @@
 #include <NPCTypes.h>
 #include <PotionTypes.h>
 
+#include "./GraphicEngine/GraphicEngine.h"
+
 LevelLoader::LevelLoader(){
 	
 }

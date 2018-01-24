@@ -68,16 +68,19 @@ SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
 }
 
 SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
-	return followPath->GetSteering(cKin);
+	SteeringOutput output = followPath->GetSteering(cKin);
+	Steering2Controller(output);
+	return output;
 }
 
 void AIPlayer::Update(){
 	if(hasCharacter){
 		SetAllInput(UP);
 		behaviour->run();
+		//ShortestPath(vector3df(0,0,0));
+		//GetFollowPath(GetKinematic());
 		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 		shootSpell = false; 	// Reseteamos la variable
-		//ShortestPath(vector3df(10,0,10));
 		Player::Update();		// Check Input
 	}
 }
@@ -201,7 +204,6 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 	// vector fuerza, para ver si es tan pequenyo que no deberia
 	// moverse
 
-
 	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
 	vector3df linear = steering.linear;
 	if(linear.length()>5){
@@ -246,9 +248,13 @@ void AIPlayer::SetRandomName(){
 // ========================================================================================= //
 
 void AIPlayer::ShortestPath(vector3df to){
+	// Reset del comportamiento de movimiento al realizar un nuevo path
+	followPath->ResetValues();
+
+	
 	vector3df from = this->GetPos();
 	//path = new Pathfinding(); -Ya creado en el constructor
-	//std::list<Connection*> *c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
+	//std::list<Connection*> c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
 	std::list<Connection*> c = path->AStar(from,to);
 
 	if(c.size()>0){
@@ -264,9 +270,8 @@ void AIPlayer::ShortestPath(vector3df to){
 			//vector3df to = con->getToNode()->getPosition();
 		}
 	}else{
-		std::cout<<"I found nothing :("<<std::endl;
-	}
-	
+		//std::cout<<"I found nothing :("<<std::endl;
+	}	
 }
 
 // ========================================================================================= //
