@@ -33,6 +33,8 @@ Player::Player(bool isPlayer1){
 
 	bt_body = NULL;
 	m_playerNode = NULL;
+	m_camera = NULL;
+	m_thirdPCamera = NULL;
 	networkObject = NULL;
 
 	matchStarted = false;
@@ -94,6 +96,10 @@ Player::~Player(){
 		m_playerNode = NULL;
 	}
 
+	if(m_thirdPCamera!=NULL){
+		delete m_thirdPCamera;
+		m_thirdPCamera = NULL;
+	}
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
@@ -141,12 +147,19 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
 
-		if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
+		//if(isPlayerOne) m_camera = engine->addCameraSceneNodeFPS(120.f, 0);
+		if(isPlayerOne) m_thirdPCamera = new WatcherCamera(m_position, m_position);
 		hasCharacter = true;
 	}
 }
 
+/**
+ * @brief Destoys player visual body only when game has started
+ * 
+ */
 void Player::DestroyPlayerCharacter(){
+	std::cout<<"DEAD \n";
+
 	if(bt_body != NULL){
 		bt_body->Erase();
 		delete bt_body;
@@ -158,9 +171,16 @@ void Player::DestroyPlayerCharacter(){
 		delete m_playerNode;
 		m_playerNode = NULL;
 	}
-
+	
+	if(isPlayerOne){
+		if(m_camera!=NULL){
+			m_camera->Erase();
+			
+			//vector3df cameraPos(m_position.X+2, m_position.Y+1, m_position.Z-2);
+			//m_thirdPCamera = new WatcherCamera(cameraPos, m_position);
+		}
+	}
 	CheckIfReady();
-	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
 
@@ -323,10 +343,11 @@ int Player::GetCurrentSpell(){
 }
 
 void Player::positionCamera(){
-	vector3df newRot = engine->getActiveCamera()->getRotation();
-	engine->getActiveCamera()->setPosition(GetHeadPos());
-	engine->getActiveCamera()->updateAbsolutePosition();
-	engine->getActiveCamera()->setRotation(newRot);
+	//vector3df newRot = engine->getActiveCamera()->getRotation();
+	//engine->getActiveCamera()->setPosition(GetHeadPos());
+	//engine->getActiveCamera()->updateAbsolutePosition();
+	//engine->getActiveCamera()->setRotation(newRot);
+	m_thirdPCamera->UpdateCamera(m_position);
 }
 
 void Player::checkMaxVelocity(){

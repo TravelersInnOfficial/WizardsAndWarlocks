@@ -38,7 +38,8 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
-	AL = playerManager->AddAIPlayer();
+	AL = NULL;
+	//AL = playerManager->AddAIPlayer();
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
