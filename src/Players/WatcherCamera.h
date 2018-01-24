@@ -16,15 +16,21 @@ public:
 
 private:
     void Contact(void* punt, EntityEnum tipo);
+    void ResetMousePos();
     
     GCamera* p_Camera;
     BT_Body* p_BtBody;
-    int YAngle;
-    int XZAngle;
+
+    float YAngle;           // Angulo que forma el movimiento horizontal
+    float XZAngle;          // Angulo que forma el movimiento vertical
+    float mouseVelocity;         // Velocidad, valor en grades por cada valor que se mueva el raton
+
     float cam_distance;
     bool colliding;
 
     vector2di lastCursorPosition;
+
+    int sign(float value);
 
     void UpdateAngles();
     void checkMaxVelocity();

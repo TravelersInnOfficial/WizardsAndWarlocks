@@ -10,16 +10,18 @@ WatcherCamera::WatcherCamera(vector3df position, vector3df lookat){
 	// intialize variables
 	YAngle = 0;
 	XZAngle = 0;
+	mouseVelocity = 6;
 	colliding = false;
 	cam_distance = 2;
-	engine->SetCursorPosition(vector2di(engine->GetScreenWidth()/2, engine->GetScreenHeight()/2));
+
 	lastCursorPosition = engine->GetCursorPosition();
+	ResetMousePos();
 
 	//Bullet Physics
 	//p_BtBody = NULL;
 	p_BtBody = new BT_Body();
 	position.Y+=1;
-	p_BtBody->CreateBox(position, vector3df(0.25, 0.25, 0.25), 1, 0, vector3df(0,0,0), C_CAMERA, cameraCW);
+	p_BtBody->CreateBox(position, vector3df(0.5, 0.5, 0.5), 1, 0, vector3df(0,0,0), C_CAMERA, cameraCW);
 	p_BtBody->SetGravity(vector3df(0.0f,0.0f,0.0f));
 	p_BtBody->AssignPointer(this);
 	clase = EENUM_CAMERA;
@@ -47,71 +49,43 @@ void WatcherCamera::SetTarget(vector3df lookat){
 
 void WatcherCamera::UpdateCamera(vector3df target){
 	p_BtBody->Update();
-	p_BtBody->SetLinearVelocity(vector3df(0,0,0));
+	//p_BtBody->SetLinearVelocity(vector3df(0,0,0));
 	target.Y+=0.5;
 	p_Camera->setTarget(target);
 	
 	float tx, ty, tz;
 	tx = ty = tz = 0;
 
-	// Horizontal rotation
-	//ty = cam_distance * sin(XZAngle/2 * M_PI /180);
-	//tz = cam_distance * cos(XZAngle/2 * M_PI /180);
-	//// Vertical rotation
-	//tx = cam_distance * sin(YAngle * M_PI /180);     // ßy=90 -> tx = x+2
-	//tz *= cos(YAngle * M_PI /180);                    // ßy= 0 -> tz = z-2
+	// Horizontal rotation & Vertical rotation
+	tx = sin(YAngle * M_PI /180) * cos(XZAngle * (M_PI /180)) * cam_distance;
+	ty = sin(XZAngle * (M_PI /180)) * cam_distance;
+	tz = cos(YAngle * M_PI /180) * cos(XZAngle * (M_PI /180)) * cam_distance;
 
-	tx = sin(YAngle * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-	ty = sin(XZAngle/2 * (M_PI /100)) * cam_distance;
-	tz = cos(YAngle * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-	
-	//ty = cam_distance * sin(XZAngle * (M_PI/50));
-	//tx = cam_distance * sin(YAngle * M_PI /180);     // ßy=90 -> tx = x+2
-	//tz = cam_distance * cos(YAngle * M_PI /180);     // ßy= 0 -> tz = z-2
+	vector3df newPosition(target.X + tx, target.Y + ty, target.Z + tz);
 
-	//std::cout<<"Cam Pos: "<< p_Camera->getPosition() << "| tx: " << tx <<"| ty: "<< ty <<"| tz: "<< tz<< "\n";
-	//std::cout<<"BT_Body: "<< p_BtBody->GetPosition() << "| NEWPOS: "<< newPosition;
-	
-	vector2di mousePos = GraphicEngine::getInstance()->GetCursorPosition();
-	float mouseOffset = (mousePos - lastCursorPosition).length();
+	vector3df camPos = p_BtBody->GetPosition();
+	float angle = atan2(camPos.X - target.X, camPos.Z - target.Z);
+	angle = angle * 180/M_PI;
+	angle = angle<0? angle+=360: angle;
 
-	if(false && mouseOffset<0.5) p_BtBody->SetLinearVelocity(vector3df(0.0f, 0.0f, 0.0f));
-	
-	else{
-		vector3df newPosition(target.X + tx, target.Y + ty, target.Z + tz);
+	float distance = (newPosition-camPos).length();
+	//std::cout<<"Distance queremos:" << distance << " Distancia tenemos:"<<(p_BtBody->GetPosition()-target).length()<<std::endl;
+	//std::cout<< "XZANGLE: " << XZAngle << "\n";
 
-		vector3df camPos = p_BtBody->GetPosition();
-		float angle = (float) atan2(camPos.X - target.X, camPos.Z - target.Z);
-		angle = angle * 360/M_PI;
-		angle = angle<0? angle+=720: angle;
-
-
-		float diffAngle = 3.0f;
-		if(abs(YAngle-angle)<diffAngle){
-			//std::cout<<"Minimo"<<std::endl;
-		}
-		if((YAngle-angle)>diffAngle){
-			newPosition.X = target.X + sin((angle+diffAngle) * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-			newPosition.Z = target.Z + cos((angle+diffAngle) * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-		}
-		else if((YAngle-angle)<-diffAngle){
-			newPosition.X = target.X + sin((angle-diffAngle) * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-			newPosition.Z = target.Z + cos((angle-diffAngle) * M_PI /360) * cos(XZAngle/2 * (M_PI /100)) * cam_distance;
-		}
-
-
-		float distance = (newPosition-camPos).length();
-		//std::cout<<"Distance queremos:" << distance << " Distancia tenemos:"<<(p_BtBody->GetPosition()-target).length()<<std::endl;
-		//XZANGLE: " << XZAngle << "\n";
-	
-		//std::cout<<"Distance: "<<distance<<" Angulo NewP: "<<YAngle<<" Angulo Cam: "<<angle<<std::endl;
-
-		newPosition = newPosition - p_BtBody->GetPosition();
+	//std::cout<<"Distance: "<<distance<<" Angulo NewP: "<<YAngle<<" Angulo Cam: "<<angle<<std::endl;
+	if(distance>0.1f){
+		float diffAngle = YAngle-angle;
+		/*if(abs(diffAngle)>20.0f){
+			newPosition.X = sin((angle+20.0f*sign(diffAngle)) * M_PI /180) * cos(XZAngle * (M_PI /180)) * cam_distance;
+			newPosition.Z = cos((angle+20.0f*sign(diffAngle))* M_PI /180) * cos(XZAngle * (M_PI /180)) * cam_distance;
+		}*/
+		newPosition = newPosition - camPos;
 		newPosition.normalize();
-		p_BtBody->ApplyCentralImpulse(newPosition*3);
-		p_Camera->setPosition(p_BtBody->GetPosition());
+		p_BtBody->ApplyCentralImpulse(newPosition*10);
+	}else{
+		p_BtBody->SetLinearVelocity(vector3df(0,0,0));
 	}
-
+	p_Camera->setPosition(p_BtBody->GetPosition());
 
 
 	if(colliding && cam_distance>=1){
@@ -122,9 +96,15 @@ void WatcherCamera::UpdateCamera(vector3df target){
 		//std::cout<<"AHORA NOOOOO \n";
 		//cam_distance+= 0.2;
 	}
+
 	colliding = false;
 	UpdateAngles();
 	checkMaxVelocity();
+}
+
+int WatcherCamera::sign(float value){
+	if(value>=0) return 1;
+	return -1;
 }
 
 void WatcherCamera::Contact(void* punt, EntityEnum tipo){
@@ -132,12 +112,6 @@ void WatcherCamera::Contact(void* punt, EntityEnum tipo){
 		colliding = true;
 	}
 }
-/*
-void Block::UpdatePosShape(){
-	physBody->Update();
-	vector3df pos = physBody->GetPosition();
-	graphBody->setPosition(pos);
-}*/
 
 void WatcherCamera::UpdateAngles(){
 	GraphicEngine* engine = GraphicEngine::getInstance();
@@ -146,7 +120,11 @@ void WatcherCamera::UpdateAngles(){
 	
 	vector2di mousePos = engine->GetCursorPosition();
 
+	// Reseteamos la posicion del raton al centro de la pantalla
+	ResetMousePos();
 
+/*
+	// First of all, check the X axis
 	if(mousePos.X<=0 || mousePos.X>=screenW){
 		if(mousePos.X<=0){
 			mousePos.X = screenW;
@@ -156,7 +134,6 @@ void WatcherCamera::UpdateAngles(){
 			mousePos.X = 0;
 			lastCursorPosition.X = lastCursorPosition.X>=screenW? mousePos.X-1 : mousePos.X+1;            
 		}
-		engine->SetCursorPosition(mousePos);
 	}
 	else if(mousePos.Y<=0 || mousePos.Y>=screenH){
 		if (mousePos.Y<=0){
@@ -167,28 +144,38 @@ void WatcherCamera::UpdateAngles(){
 			mousePos.Y = 0;
 			lastCursorPosition.Y = lastCursorPosition.Y>=screenH? mousePos.Y-1 : mousePos.Y+1;            
 		}
-		engine->SetCursorPosition(mousePos);
+	}
+*/
+
+	int yDiff = screenH/2 - mousePos.Y;
+	if(abs(yDiff)>5){
+		XZAngle += 5*sign(yDiff)*-1;
+		XZAngle = XZAngle>60? 60: XZAngle<-60? -60: XZAngle;
+	}
+	
+	//yDiff = yDiff>0 ? mouseVelocity	 : yDiff<0? -mouseVelocity : yDiff;
+	//xDiff = xDiff>0 ? mouseVelocity : xDiff<0? -mouseVelocity : xDiff;
+
+	int xDiff =screenW/2 - mousePos.X;
+	if(abs(xDiff)>5){
+		YAngle += 5*sign(xDiff)*-1;
+		YAngle = YAngle>360? YAngle-360: YAngle<0? YAngle+360: YAngle;
 	}
 
-	if(!(mousePos == lastCursorPosition)){
-		int yDiff = mousePos.Y - lastCursorPosition.Y;
-		yDiff = yDiff>0 ? 3 : yDiff<0? -3 : 0;
-		int xDiff = mousePos.X - lastCursorPosition.X;
-		xDiff = xDiff>0 ? 3 : xDiff<0? -3 : 0;
+	/*float maxAngle = 90; //[0, 100]
+	if(XZAngle-yDiff >-maxAngle && XZAngle-yDiff < maxAngle){
+		XZAngle -= yDiff;
+		//XZAngle = XZAngle>=720? 0: XZAngle<0? 720: XZAngle;
+		//XZAngle = XZAngle>=360? XZAngle-720: XZAngle; 
+	}*/
 
-		YAngle += xDiff;
-		YAngle = YAngle>=720? 0: YAngle<0? 720: YAngle;
+	//lastCursorPosition = mousePos;
 
-		float maxAngle = 40; //[0, 100]
-		if(XZAngle-yDiff >-maxAngle && XZAngle-yDiff < maxAngle){
-			XZAngle -= yDiff;
-			//XZAngle = XZAngle>=720? 0: XZAngle<0? 720: XZAngle;
-			//XZAngle = XZAngle>=360? XZAngle-720: XZAngle; 
-		}
+}
 
-		//std::cout<<"Last Mouse: "<< lastCursorPosition <<"| Mouse position: "<< mousePos <<"| Y: "<< YAngle<<"| XZ: "<< XZAngle<< "\n";
-		lastCursorPosition = mousePos;
-	}
+void WatcherCamera::ResetMousePos(){
+	GraphicEngine* engine = GraphicEngine::getInstance();
+	engine->SetCursorPosition(vector2di(engine->GetScreenWidth()/2, engine->GetScreenHeight()/2));
 }
 
 void WatcherCamera::checkMaxVelocity(){
