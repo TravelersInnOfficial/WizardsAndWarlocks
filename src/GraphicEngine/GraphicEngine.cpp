@@ -286,8 +286,6 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 
-	std::cout<<"add1"<<std::endl;
-
 	irr::SKeyMap keyMap[4];
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
 	keyMap[0].KeyCode = irr::KEY_KEY_W;
@@ -307,14 +305,10 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 
 	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
 
-	std::cout<<"add_end1"<<std::endl;
-
 	return privateCamera;
 }
 
 GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
-
-	std::cout<<"add2"<<std::endl;
 
 	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
 	if (oldCamera){
@@ -326,8 +320,6 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
 	irr::core::vector3df cameraLookat(lookat.X, lookat.Y, lookat.Z);	
 	privateCamera = new GCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
-
-	std::cout<<"add_end2"<<std::endl;
 
 	return privateCamera;
 }

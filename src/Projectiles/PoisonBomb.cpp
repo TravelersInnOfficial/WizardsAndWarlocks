@@ -53,7 +53,6 @@ void PoisonBomb::UpdatePosShape(){
     m_ProjectileNode->setPosition(pos);
 
     float yvel = bt_body->GetLinearVelocity().Y;
-    //std::cout<<"YVEL: " << yvel <<"\n";
     if (ready2Burst){
     
         if (fabs(yvel) < 0.000317574){
@@ -65,6 +64,5 @@ void PoisonBomb::UpdatePosShape(){
 
             BulletManager::GetInstance()->AddToDeleteProyecil(this);
         }
-        //else //std::cout<<"NO COLLIDE: LY: "<< lastHeight << " Y: " << actualHeight << " DIST: " << heightDiff << " R,B: "<< ready2Burst << ", " << bursted << std::endl;
     }
 }

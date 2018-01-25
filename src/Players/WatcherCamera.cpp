@@ -4,7 +4,7 @@ float lastDistance = 0;
 
 WatcherCamera::WatcherCamera(vector3df lookat){
 	// intialize variables
-	XAngle = 0;
+	XAngle = 180;
 	YAngle = 0;
 	maskActivated = true;
 	colliding = false;
@@ -15,39 +15,36 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	cam_distance = maxCamDistance;
 	updateCamDistancia = 0.01;
 
-	vector3df position = GetTarget(XAngle, YAngle);
-	position = position + lookat;
+	vector3df position = lookat;
+	position.Z--;
 
 	// Graphic engine
 	p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, lookat);
-	std::cout<<"se crea la camera: " << p_Camera << " en: " << this << std::endl;
 
 
 	//Bullet Physics
 	p_BtBody = new BT_Body();
 	p_BtBody->CreateBox(position, vector3df(0.5, 0.5, 0.5), 1, 0, vector3df(0,0,0), C_CAMERA, cameraCW);
 	p_BtBody->SetGravity(vector3df(0.0f,0.0f,0.0f));
-	p_BtBody->AssignPointer(this);
 	clase = EENUM_CAMERA;
 
 	ResetMousePos();
 }
 
 WatcherCamera::~WatcherCamera(){
-	std::cout<<"\nBORRANDO CAMARA SEGUIMIENTO: " << this << std::endl;
 
 	if(p_Camera!=NULL){
 		p_Camera->Erase();
 		delete p_Camera;
 		p_Camera = NULL;
 	}
+	
 	if(p_BtBody!=NULL){
 		p_BtBody->Erase();
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}
 
-	std::cout<<"CAMARA SEGUIMIENTO BORRADA: " << this << std::endl<< std::endl;
 }
 
 vector3df WatcherCamera::GetTarget(float AngleX, float AngleY){
@@ -105,9 +102,6 @@ void WatcherCamera::CheckCollision(){
 }
 
 void WatcherCamera::Contact(void* punt, EntityEnum tipo){
-
-	std::cout<<" HEMOS COLISIONADO "<<std::endl;
-
 	if(tipo == EENUM_FLOOR){
 		if(cam_distance>minCamDistance) cam_distance -= updateCamDistancia;
 		colliding = true;
@@ -115,7 +109,6 @@ void WatcherCamera::Contact(void* punt, EntityEnum tipo){
 }
 
 void WatcherCamera::CheckDistance(){
-	std::cout<<"################################# hola #################################"<<std::endl;
 	if(maskActivated && distanceTarget>maxCamDistance*2){
 		p_BtBody->SetFlags(C_NOTHING, 0);
 		maskActivated = false;

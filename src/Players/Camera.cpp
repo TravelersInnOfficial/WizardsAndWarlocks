@@ -25,9 +25,7 @@ void Camera::SetRotation(vector3df rotation){
 }
 
 vector3df Camera::GetRotation(){
-	std::cout<<"accedo a camera: " << p_Camera << " de: " << this << std::endl;
 	vector3df rotation = p_Camera->getRotation();
-    std::cout<<"Acceso correcto"<< std::endl;
 	return rotation;
 	
 }
