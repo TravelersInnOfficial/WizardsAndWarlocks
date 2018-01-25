@@ -67,10 +67,14 @@ void BulletEngine::CreateWorld(){
 
 void BulletEngine::UpdateWorld(){
 
+	std::cout<<"################## EMPIEZO A UPDATEAR EL MUNDO FISICO ##################"<<std::endl;
+
 	m_dynamicsWorld->stepSimulation(1 / 60.f, 3, btScalar(1)/btScalar(180));
 	// 1º Variable - Los FPS del juego
 	// 2º Variable - Numero maximo de interpolaciones
 	// 3º Variable - Cada cuanto interpolar
+
+	std::cout<<"################## TERMINO DE UPDATEAR EL MUNDO FISICO ##################"<<std::endl;
 }
 
 void BulletEngine::EraseWorld(){
@@ -167,6 +171,8 @@ void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeSt
 
 void BulletEngine::motorProcessCallback(btScalar timeStep){
 
+	std::cout<<"CALLBACK EMPIEZA"<<std::endl;
+
 	int numManifolds = m_dispatcher->getNumManifolds();
 	for(int i=0; i<numManifolds; i++){
 		btPersistentManifold* contactManifold = m_dispatcher->getManifoldByIndexInternal(i);
@@ -191,4 +197,6 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
             }
         }
 	}
+
+	std::cout<<"CALLBACK TERMINA"<<std::endl;
 }

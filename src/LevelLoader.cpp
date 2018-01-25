@@ -50,6 +50,9 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
+
+	std::cout<<"################################################################ EMPEZAMOS A CARGAR NIVEL"<<std::endl;
+
 	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
 	SpellManager::GetInstance()->ResetAllDieHechizo();
 
@@ -172,6 +175,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	PlayerManager* plyManager = PlayerManager::GetInstance();
 	plyManager->RestartMatchStatus();
+
+	std::cout<<"################################################################ TERMINAMOS DE CARGAR NIVEL"<<std::endl;
 
 	return true;
 }

@@ -276,6 +276,8 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
+	std::cout<<"Empezamos update de player"<<std::endl;
+
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -334,6 +336,8 @@ void Player::Update(){
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
 		checkMaxVelocity();
 	}
+
+	std::cout<<"Acabamos update de player"<<std::endl;
 }
 
 bool Player::ChangeCurrentSpell(int value){
@@ -834,6 +838,8 @@ bool Player::GetMoving(){
 
 void Player::SetAlliance(Alliance newAlliance){
 
+	std::cout<<"Empieza a cambiar"<<std::endl;
+
 	if(newAlliance == ERR_ALLIANCE) return;
 
 	playerAlliance = newAlliance;
@@ -877,6 +883,8 @@ void Player::SetAlliance(Alliance newAlliance){
 	}
 
 	SetBillboard();
+
+	std::cout<<"Acaba de cambiar"<<std::endl;
 }
 
 void Player::SetPosition(vector3df pos){

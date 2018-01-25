@@ -46,6 +46,7 @@ WatcherCamera::~WatcherCamera(){
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}
+
 	std::cout<<"CAMARA SEGUIMIENTO BORRADA: " << this << std::endl<< std::endl;
 }
 
@@ -104,14 +105,17 @@ void WatcherCamera::CheckCollision(){
 }
 
 void WatcherCamera::Contact(void* punt, EntityEnum tipo){
+
+	std::cout<<" HEMOS COLISIONADO "<<std::endl;
+
 	if(tipo == EENUM_FLOOR){
-		if(cam_distance>minCamDistance) 
-			cam_distance -= updateCamDistancia;
+		if(cam_distance>minCamDistance) cam_distance -= updateCamDistancia;
 		colliding = true;
 	}
 }
 
 void WatcherCamera::CheckDistance(){
+	std::cout<<"################################# hola #################################"<<std::endl;
 	if(maskActivated && distanceTarget>maxCamDistance*2){
 		p_BtBody->SetFlags(C_NOTHING, 0);
 		maskActivated = false;
