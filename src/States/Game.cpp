@@ -17,8 +17,7 @@ Game::Game(){
 	s_engine 		= SoundSystem::getInstance();
 
 	// Level
-	LevelLoader loader;
-	loader.LoadLevel("./../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -140,12 +139,12 @@ void Game::Update(){
 
 void Game::CheckIfReady(){
 	// Comprobamos que el jugador uno este dentro de la zona
+	if(playerOne == NULL) return;
 	playerOne->CheckIfReady();
 
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) {
-		LevelLoader loader;
-		loader.LoadLevel("../assets/json/map.json");
+		LevelLoader::LoadLevel("../assets/json/Map1.json");
 
 		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 	
@@ -160,8 +159,8 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL){
+	g_engine->drawAim(playerOne->GetMoving());
 		playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
@@ -245,8 +244,7 @@ void Game::CheckIfWon(){
 void Game::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);
