@@ -20,19 +20,13 @@ StateManager::StateManager(){
 }
 
 StateManager::~StateManager(){
-	std::cout<<"1"<<std::endl;
 	if(currentState != NULL){
 		delete currentState;	
 	}
-	std::cout<<"1"<<std::endl;
 	delete f_engine;
-	std::cout<<"1"<<std::endl;
 	delete g_engine;
-	std::cout<<"1"<<std::endl;
 	delete s_engine;
-	std::cout<<"1"<<std::endl;
 	delete n_engine;
-	std::cout<<"1"<<std::endl;
 	instance = 0;
 }
 
@@ -62,11 +56,10 @@ void StateManager::PrepareStatus(State_Code status){
 }
 
 void StateManager::LoadState(State_Code code){
-	std::cout<<"2"<<std::endl;
 	if(currentState!=NULL){
 		delete currentState;
 	}
-	std::cout<<"2"<<std::endl;
+	
 	switch(code){
 		case STATE_MENU:
 			currentState = new MenuPrincipal();
@@ -81,5 +74,4 @@ void StateManager::LoadState(State_Code code){
 			currentState = NULL;
 			break;
 	}
-	std::cout<<"2"<<std::endl;
 }

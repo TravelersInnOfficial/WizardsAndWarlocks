@@ -26,7 +26,10 @@ public:
 	void RestartMatchStatus();
 	void ResetAllSpells();
 	void ManageMatchStatus(bool ManageMatchStatus);
-	void AddToDead(Alliance alliance, Player* player);
+
+	void AddToDead(Player* player);
+	void AddToLife(Player* player);
+
 	bool CheckIfWon(Alliance alliance);
 	void CheckWon();
 	void EraseAllCharacters();
@@ -38,6 +41,10 @@ public:
 	Player* GetPlayerFromNetID(int id);
 	vector<Player*> GetAllPlayers();
 	
+	// DeadCam Functions
+	bool PlayerAlive(Player* player);				// Da la posicion del jugador target, en el caso de que no este cambia el puntero
+	Player* ChangePlayerTargetCam(Player* player);	// Cambia el jugador al que mirar en la camara de muerte
+
 private:
 
 	vector<Player*>	players;

@@ -29,6 +29,7 @@ class Player: public Entidad{
 		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update();
+		virtual void DeadUpdate();
 
 		// Draw
 		void Draw();
@@ -152,6 +153,12 @@ class Player: public Entidad{
 
 	protected:
 
+		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
+		void positionCamera();				// Actualiza la posicion de la camera
+		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
+		void createSoundEvents();			//Create the sound events needed for the player
+		void SetBillboard();				// Ponemos el billboard en el player
+
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
 		vector3df 		rotation;			// Rotacion del jugador
@@ -193,17 +200,11 @@ class Player: public Entidad{
 		bool 			moving;				// Se esta moviendo?
 		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
+		Player* 		targetDeadCam;
 
 		Potion* potion;						// Pocion en el inventario
 
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
-
-		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
-		void positionCamera();				// Actualiza la posicion de la camera
-		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
-		void createSoundEvents();			//Create the sound events needed for the player
-		void SetBillboard();				// Ponemos el billboard en el player
-
 };
 
 #endif

@@ -4,19 +4,12 @@
 #include "./../GraphicEngine/MenuManager.h"
 
 MenuPrincipal::MenuPrincipal(){
-	std::cout<<"3"<<std::endl;
 	g_engine = GraphicEngine::getInstance();
-	std::cout<<"3"<<std::endl;
 	g_engine->setCursorVisible(true);
-	std::cout<<"3"<<std::endl;
 	g_engine->ToggleMenu(true);
-	std::cout<<"3"<<std::endl;
 	g_engine->InitReceiver();
-	std::cout<<"3"<<std::endl;
 	selectedOption = NO_OPT;
-	std::cout<<"3"<<std::endl;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
-	std::cout<<"3"<<std::endl;
 }
 
 MenuPrincipal::~MenuPrincipal(){

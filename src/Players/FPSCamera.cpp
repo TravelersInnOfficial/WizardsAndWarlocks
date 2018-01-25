@@ -6,11 +6,6 @@ FPSCamera::FPSCamera(float rotateSpeed, float moveSpeed){
 }
 
 FPSCamera::~FPSCamera(){
-    if(p_Camera!=NULL){
-		p_Camera->Erase();
-		delete p_Camera;
-		p_Camera = NULL;
-	}
 }
 
 void FPSCamera::UpdateCamera(vector3df position){

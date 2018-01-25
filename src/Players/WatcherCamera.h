@@ -12,6 +12,7 @@ public:
     ~WatcherCamera();
 
     void UpdateCamera(vector3df target);
+    void SetPosition(vector3df target);
 
 private:
     void CheckDistance();

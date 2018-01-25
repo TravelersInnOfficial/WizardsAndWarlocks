@@ -10,7 +10,7 @@ public:
     virtual ~Camera();
     virtual void Contact(void* punt, EntityEnum tipo);
 
-    void SetPosition(vector3df position);
+    virtual void SetPosition(vector3df position);
     vector3df GetPosition();
 
     void SetTarget(vector3df lookat);

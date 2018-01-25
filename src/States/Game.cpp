@@ -38,8 +38,10 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
-	AL = NULL;
-	//AL = playerManager->AddAIPlayer();
+	//AL = NULL;
+	AL = playerManager->AddAIPlayer();
+	AL->SetAlliance(ALLIANCE_WARLOCK);
+	playerManager->AddAIPlayer();
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
@@ -125,7 +127,7 @@ void Game::Update(){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
-	playerManager->RespawnDeadPlayers();
+	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();

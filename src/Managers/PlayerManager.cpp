@@ -71,7 +71,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 			if(p->IsPlayerOne()) hp->SetNetInput();
 			else hp->GetNetInput();
 		}
-		p->Update();
+		p->DeadUpdate();
 	}
 }
 
@@ -137,16 +137,17 @@ bool PlayerManager::CheckIfReady(){
 	return allReady;
 }
 
+// Revisar inicio de partida, al hacer respawn se intenta volverlos a la vida otra vez
 void PlayerManager::RespawnDeadPlayers(){
 	int size = deadPlayers.size();
-	for(int i=0; i<size; i++){
+	for(int i=size-1; i>=0; i--){
 		Player* p = deadPlayers[i];
 		if(p != NULL){
+			deadPlayers.erase(deadPlayers.begin() + i);
 			players.push_back(p);
 			p->Respawn();
 		}
 	}
-	deadPlayers.clear();
 }
 
 void PlayerManager::RestartMatchStatus(){
@@ -173,11 +174,36 @@ void PlayerManager::ManageMatchStatus(bool started){
 	}
 }
 
-void PlayerManager::AddToDead(Alliance alliance, Player* player){
-	players.erase(std::remove(players.begin(), players.end(), player), players.end());
-	deadPlayers.push_back(player);
+void PlayerManager::AddToDead(Player* player){
+	// Prefiero hacerlo a mano y asi comprobar si existe o no el player
+	//players.erase(std::remove(players.begin(), players.end(), player), players.end());
+	//deadPlayers.push_back(player);
 	
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		if(p == player){		// Compruebo si el jugador realmente esta vivo
+			// En el caso de estarlo le paso del vector de Players al de DeadPlayers
+			players.erase(players.begin() + i);	
+			deadPlayers.push_back(player);
+			break;
+		}
+	}
+
 	CheckWon();
+}
+
+void PlayerManager::AddToLife(Player* player){
+	int size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* p = deadPlayers[i];
+		if(p == player){		// Compruebo si el jugador realmente esta muerto
+			// En el caso de estarlo le paso del vector de deadPlayers al de Players
+			deadPlayers.erase(deadPlayers.begin() + i);	
+			players.push_back(player);
+			break;
+		}
+	}
 }
 
 void PlayerManager::CheckWon(){
@@ -281,4 +307,34 @@ Player* PlayerManager::GetPlayerFromNetID(int id){
 	}
 
 	return toRet;
+}
+
+bool PlayerManager::PlayerAlive(Player* player){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		if(p == player){
+			return true;
+		}
+	}
+	return false;
+}	
+
+Player* PlayerManager::ChangePlayerTargetCam(Player* player){
+	int size = players.size();
+	if(size==0) return NULL; // No hay jugadores vivos
+
+	int value = -1;
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		if(p == player){
+			value = i;
+		}
+	}
+
+	// En el caso de que value == -1 siguiendo la formula se pondra el primer jugador del vector
+
+	value++;
+	value = value % size;	// El valor siempre estara entre [0, size-1]
+	return players[value];
 }

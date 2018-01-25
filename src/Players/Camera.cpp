@@ -3,11 +3,13 @@
 Camera::Camera(){}
 
 Camera::~Camera(){
+	/* La camara la elimina el propio motor grafico
 	if(p_Camera!=NULL){
 		p_Camera->Erase();
 		delete p_Camera;
 		p_Camera = NULL;
-	}
+	}*/
+	
 }
 
 void Camera::Contact(void* punt, EntityEnum tipo){}

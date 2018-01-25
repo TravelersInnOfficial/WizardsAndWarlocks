@@ -35,14 +35,17 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 }
 
 WatcherCamera::~WatcherCamera(){
-
-
 	if(p_BtBody!=NULL){
 		p_BtBody->Erase();
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}
 
+}
+
+void WatcherCamera::SetPosition(vector3df target){
+	p_BtBody->SetPosition(target);
+	p_Camera->setPosition(target);
 }
 
 vector3df WatcherCamera::GetTarget(float AngleX, float AngleY){

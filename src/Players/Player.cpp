@@ -39,6 +39,8 @@ Player::Player(bool isPlayer1){
 	m_camera = NULL;
 	networkObject = NULL;
 
+	targetDeadCam = NULL;
+
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
@@ -150,7 +152,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		// Camera
-		if(isPlayerOne) m_camera = new WatcherCamera(GetHeadPos());		
+		if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0);		
 
 		hasCharacter = true;
 	}
@@ -175,7 +177,7 @@ void Player::DestroyPlayerCharacter(){
 	
 	if(isPlayerOne && m_camera!=NULL){
 		delete m_camera;
-		m_camera = NULL;
+		m_camera = new WatcherCamera(GetPos());
 	}
 	
 	CheckIfReady();
@@ -261,6 +263,28 @@ void Player::RefreshServer(){
 	networkObject->SetFloatVar(PLAYER_LIFE, m_HP, true, false);
 	networkObject->SetFloatVar(PLAYER_MANA, m_MP, true, false);
 	networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+}
+
+void Player::DeadUpdate(){
+	if(isPlayerOne){
+		PlayerManager* playerManager = PlayerManager::GetInstance(); // GetPos
+
+		UpdateInput();
+
+		Player* newP = targetDeadCam;
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+		}
+		else if(!playerManager->PlayerAlive(targetDeadCam)){
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+		}
+
+		if(newP != targetDeadCam){
+			targetDeadCam = newP;
+			m_camera->SetPosition(targetDeadCam->GetPos());
+		}
+		m_camera->UpdateCamera(targetDeadCam->GetPos());
+	}
 }
 
 void Player::Update(){
@@ -458,7 +482,8 @@ void Player::UpdateSP(){
 }
 
 void Player::Respawn(){
-	// CreatePlayerCharacter();
+	PlayerManager::GetInstance()->AddToLife(this);
+	CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -522,19 +547,19 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
-	ResetDieSpells();
-	ObjectManager::GetInstance()->StopInteractionsNPC();
+	ResetDieSpells();										// Reseteamos los hechizos del jugador
+	ObjectManager::GetInstance()->StopInteractionsNPC();	// Paramos la posible interaccion con los NPCs
 
-	stopPulse();	//Stop the pulse event
-	playDie(); 		//Play the sound event
-	DropObject();
+	stopPulse();											// Stop the pulse event
+	playDie(); 												// Play the sound event
+	DropObject();											// Soltamos los objetos que teniamos
 
-	if(matchStarted){
-		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
-		DestroyPlayerCharacter();
+	if(true || matchStarted){						
+		PlayerManager::GetInstance()->AddToDead(this);		// Lo anyadimos a la lista de muertos
+		DestroyPlayerCharacter();							// Destruimos su cuerpo
 	}
 	
-	Respawn();
+	if(!isPlayerOne)Respawn();								// Hacemos respawn
 }
 
 void Player::ReturnToLobby(){
