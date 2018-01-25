@@ -4,7 +4,7 @@ float lastDistance = 0;
 
 WatcherCamera::WatcherCamera(vector3df lookat){
 	// intialize variables
-	XAngle = 0;
+	XAngle = 180;
 	YAngle = 0;
 	maskActivated = true;
 	colliding = false;
@@ -15,8 +15,8 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	cam_distance = maxCamDistance;
 	updateCamDistancia = 0.01;
 
-	vector3df position = GetTarget(XAngle, YAngle);
-	position = position + lookat;
+	vector3df position = lookat;
+	position.Z--;
 
 	// Graphic engine
 	p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, lookat);
@@ -28,17 +28,21 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	p_BtBody->CreateBox(position, vector3df(0.5, 0.5, 0.5), 1, 0, vector3df(0,0,0), C_CAMERA, cameraCW);
 	p_BtBody->SetGravity(vector3df(0.0f,0.0f,0.0f));
 	p_BtBody->AssignPointer(this);
+	clase = EENUM_CAMERA;
+
 
 	ResetMousePos();
 }
 
 WatcherCamera::~WatcherCamera(){
 
+
 	if(p_BtBody!=NULL){
 		p_BtBody->Erase();
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}
+
 }
 
 vector3df WatcherCamera::GetTarget(float AngleX, float AngleY){

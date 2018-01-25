@@ -136,7 +136,6 @@ void Game::Update(){
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
-
 }
 
 void Game::CheckIfReady(){

@@ -111,7 +111,6 @@ Player::~Player(){
 
 	TrapManager::GetInstance()->ErasePlayer(this);
 	SpellManager::GetInstance()->ErasePlayer(this);
-
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -151,10 +150,8 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		// Camera
-		//std::cout<<"\nCREANDO CAMARA FPS" << std::endl;		
-		//if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0.0f);
-		//std::cout<<"CAMARA FPS CREADA: "<<m_camera << std::endl << std::endl;				
-		if(isPlayerOne) m_camera = new WatcherCamera(m_position);	
+		if(isPlayerOne) m_camera = new WatcherCamera(GetHeadPos());		
+
 		hasCharacter = true;
 	}
 }
@@ -164,7 +161,6 @@ void Player::CreatePlayerCharacter(bool firstInit){
  * 
  */
 void Player::DestroyPlayerCharacter(){
-
 	if(bt_body != NULL){
 		bt_body->Erase();
 		delete bt_body;
@@ -825,9 +821,6 @@ bool Player::GetMoving(){
 }
 
 void Player::SetAlliance(Alliance newAlliance){
-
-	std::cout<<"Empieza a cambiar"<<std::endl;
-
 	if(newAlliance == ERR_ALLIANCE) return;
 
 	playerAlliance = newAlliance;
@@ -871,8 +864,6 @@ void Player::SetAlliance(Alliance newAlliance){
 	}
 
 	SetBillboard();
-
-	std::cout<<"Acaba de cambiar"<<std::endl;
 }
 
 void Player::SetPosition(vector3df pos){

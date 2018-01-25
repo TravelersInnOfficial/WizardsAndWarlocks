@@ -286,8 +286,6 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 
-	std::cout<<"add1"<<std::endl;
-
 	irr::SKeyMap keyMap[4];
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
 	keyMap[0].KeyCode = irr::KEY_KEY_W;
@@ -306,8 +304,6 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	}
 
 	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
-
-	std::cout<<"add_end1"<<std::endl;
 
 	return privateCamera;
 }

@@ -158,8 +158,6 @@ bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
-	//std::cout<<"The world just ticked by "<<(float)timeStep<<" seconds\n"<<std::endl;
-
 	BulletEngine *w = static_cast<BulletEngine *>(world->getWorldUserInfo());
 	w->motorProcessCallback(timeStep);
 }
