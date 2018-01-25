@@ -1,17 +1,16 @@
 #ifndef WATCHERCAMERA_H
 #define WATCHERCAMERA_H
 
+#include "Camera.h"
 #include "../Entidad.h"
 #include "../GraphicEngine/GraphicEngine.h"
 #include "../PhysicsEngine/BT_Body.h"
 
-class WatcherCamera : public Entidad{
+class WatcherCamera : public Camera, public Entidad{
 public:
     WatcherCamera(vector3df lookat);
     ~WatcherCamera();
 
-    void SetPosition(vector3df position);
-    void SetTarget(vector3df lookat);
     void UpdateCamera(vector3df target);
 
 private:
@@ -23,7 +22,6 @@ private:
     void ResetMousePos();
     void UpdateAngles();
     
-    GCamera* p_Camera;
     BT_Body* p_BtBody;
 
     float XAngle;           // Angulo que forma el movimiento horizontal

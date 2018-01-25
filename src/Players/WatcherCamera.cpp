@@ -19,13 +19,12 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	position = position + lookat;
 
 	// Graphic engine
-	GraphicEngine* engine = GraphicEngine::getInstance();
-	p_Camera = engine->addCameraSceneNode(position, lookat);
-	
+	p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, lookat);
+	std::cout<<"se crea la camera: " << p_Camera << " en: " << this << std::endl;
+
 
 	//Bullet Physics
 	p_BtBody = new BT_Body();
-	position.Y+=1;
 	p_BtBody->CreateBox(position, vector3df(0.5, 0.5, 0.5), 1, 0, vector3df(0,0,0), C_CAMERA, cameraCW);
 	p_BtBody->SetGravity(vector3df(0.0f,0.0f,0.0f));
 	p_BtBody->AssignPointer(this);
@@ -35,8 +34,11 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 }
 
 WatcherCamera::~WatcherCamera(){
+	std::cout<<"\nBORRANDO CAMARA SEGUIMIENTO: " << this << std::endl;
+
 	if(p_Camera!=NULL){
 		p_Camera->Erase();
+		delete p_Camera;
 		p_Camera = NULL;
 	}
 	if(p_BtBody!=NULL){
@@ -44,14 +46,7 @@ WatcherCamera::~WatcherCamera(){
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}
-}
-
-void WatcherCamera::SetPosition(vector3df position){
-	p_Camera->setPosition(position);
-}
-
-void WatcherCamera::SetTarget(vector3df lookat){
-	p_Camera->setTarget(lookat);
+	std::cout<<"CAMARA SEGUIMIENTO BORRADA: " << this << std::endl<< std::endl;
 }
 
 vector3df WatcherCamera::GetTarget(float AngleX, float AngleY){

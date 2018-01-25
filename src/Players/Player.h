@@ -17,7 +17,7 @@
 #include "./../GraphicEngine/GraphicEngine.h"
 #include "./../NetworkEngine/NetworkEngine.h"
 #include "./../SoundEngine/SoundSystem.h"
-#include "WatcherCamera.h"
+#include "Camera.h"
 
 class Potion;
 
@@ -179,8 +179,7 @@ class Player: public Entidad{
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
-		GCamera* 		m_camera;			// Camara del player en primera persona
-		WatcherCamera* 	m_thirdPCamera;		// Camara del player en tercera persona
+		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 
 		NetworkObject* 	networkObject;		// Objeto de red del jugador
 		std::string		name;				// Nombre del jugador en RED

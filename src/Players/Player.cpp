@@ -10,6 +10,9 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
+#include "WatcherCamera.h"
+#include "FPSCamera.h"
+
 GraphicEngine* engine;
 
 Player::Player(bool isPlayer1){
@@ -34,7 +37,6 @@ Player::Player(bool isPlayer1){
 	bt_body = NULL;
 	m_playerNode = NULL;
 	m_camera = NULL;
-	m_thirdPCamera = NULL;
 	networkObject = NULL;
 
 	matchStarted = false;
@@ -81,6 +83,7 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
+	std::cout<<"BORRANDO PERSONAJE" << std::endl;
 
 	delete controller;
 
@@ -96,10 +99,11 @@ Player::~Player(){
 		m_playerNode = NULL;
 	}
 
-	if(m_thirdPCamera!=NULL){
-		delete m_thirdPCamera;
-		m_thirdPCamera = NULL;
+	if(m_camera!=NULL){
+		delete m_camera;
+		m_camera = NULL;
 	}
+	
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
@@ -108,7 +112,8 @@ Player::~Player(){
 
 	TrapManager::GetInstance()->ErasePlayer(this);
 	SpellManager::GetInstance()->ErasePlayer(this);
-
+	
+	std::cout<<"PERSONAJE BORRADO" << std::endl;
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -147,8 +152,13 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
 
-		if(isPlayerOne) m_camera = engine->addCameraSceneNodeFPS(120.f, 0);
-		if(isPlayerOne) m_thirdPCamera = new WatcherCamera(m_position);
+		// Camera
+		//std::cout<<"\nCREANDO CAMARA FPS" << std::endl;		
+		//if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0.0f);
+		//std::cout<<"CAMARA FPS CREADA: "<<m_camera << std::endl << std::endl;				
+		std::cout<<"\nCREANDO CAMARA SEGUIMIENTO" << std::endl;
+		if(isPlayerOne) m_camera = new WatcherCamera(m_position);
+		std::cout<<"CAMARA SEGUIMIENTO CREADA: "<<m_camera << std::endl << std::endl;		
 		hasCharacter = true;
 	}
 }
@@ -158,7 +168,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
  * 
  */
 void Player::DestroyPlayerCharacter(){
-	std::cout<<"DEAD \n";
+	std::cout<<"DESTROY PLAYER CHARACTER" << std::endl;
 
 	if(bt_body != NULL){
 		bt_body->Erase();
@@ -172,16 +182,15 @@ void Player::DestroyPlayerCharacter(){
 		m_playerNode = NULL;
 	}
 	
-	if(isPlayerOne){
-		if(m_camera!=NULL){
-			m_camera->Erase();
-			
-			//vector3df cameraPos(m_position.X+2, m_position.Y+1, m_position.Z-2);
-			//m_thirdPCamera = new WatcherCamera(cameraPos, m_position);
-		}
+	if(isPlayerOne && m_camera!=NULL){
+		delete m_camera;
+		m_camera = NULL;
 	}
+	
 	CheckIfReady();
 	hasCharacter = false;
+
+	std::cout<<"PLAYER CHARACTER DESTROYED" << std::endl;
 }
 
 void Player::DeclareInput(){
@@ -311,11 +320,15 @@ void Player::Update(){
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
-		if(isPlayerOne){
-			vector3df newRot = engine->getActiveCamera()->getRotation();
+		if(isPlayerOne && m_camera !=NULL){
+			std::cout<<"vamos a acceder a la rotacion de: " << m_camera << std::endl;
+			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
-			positionCamera();
+			//positionCamera();
+
+			//Position camera FPS Y TPS
+			m_camera->UpdateCamera(GetHeadPos());
 		}
 
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
@@ -343,11 +356,6 @@ int Player::GetCurrentSpell(){
 }
 
 void Player::positionCamera(){
-	//vector3df newRot = engine->getActiveCamera()->getRotation();
-	//engine->getActiveCamera()->setPosition(GetHeadPos());
-	//engine->getActiveCamera()->updateAbsolutePosition();
-	//engine->getActiveCamera()->setRotation(newRot);
-	m_thirdPCamera->UpdateCamera(m_position);
 }
 
 void Player::checkMaxVelocity(){
