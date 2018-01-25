@@ -108,8 +108,6 @@ bool Game::Input(){
 }
 
 void Game::Update(){
-	
-	std::cout<<"Empezamos update de GAME"<<std::endl;
 
 	UpdateDelta();
 
@@ -138,8 +136,6 @@ void Game::Update(){
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
-
-	std::cout<<"Acabamos update de GAME"<<std::endl;
 
 }
 

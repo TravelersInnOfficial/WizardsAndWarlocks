@@ -1,8 +1,16 @@
 #include "Camera.h"
 
-Camera::~Camera(){
+Camera::Camera(){}
 
+Camera::~Camera(){
+	if(p_Camera!=NULL){
+		p_Camera->Erase();
+		delete p_Camera;
+		p_Camera = NULL;
+	}
 }
+
+void Camera::Contact(void* punt, EntityEnum tipo){}
 
 void Camera::SetPosition(vector3df position){
 	p_Camera->setPosition(position);
@@ -25,9 +33,7 @@ void Camera::SetRotation(vector3df rotation){
 }
 
 vector3df Camera::GetRotation(){
-	std::cout<<"accedo a camera: " << p_Camera << " de: " << this << std::endl;
 	vector3df rotation = p_Camera->getRotation();
-    std::cout<<"Acceso correcto"<< std::endl;
 	return rotation;
 	
 }

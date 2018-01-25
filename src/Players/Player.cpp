@@ -83,7 +83,6 @@ void Player::PlayerInit(){
 }
 
 Player::~Player(){
-	std::cout<<"BORRANDO PERSONAJE" << std::endl;
 
 	delete controller;
 
@@ -103,7 +102,7 @@ Player::~Player(){
 		delete m_camera;
 		m_camera = NULL;
 	}
-	
+
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
@@ -112,8 +111,7 @@ Player::~Player(){
 
 	TrapManager::GetInstance()->ErasePlayer(this);
 	SpellManager::GetInstance()->ErasePlayer(this);
-	
-	std::cout<<"PERSONAJE BORRADO" << std::endl;
+
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -156,9 +154,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		//std::cout<<"\nCREANDO CAMARA FPS" << std::endl;		
 		//if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0.0f);
 		//std::cout<<"CAMARA FPS CREADA: "<<m_camera << std::endl << std::endl;				
-		std::cout<<"\nCREANDO CAMARA SEGUIMIENTO" << std::endl;
-		if(isPlayerOne) m_camera = new WatcherCamera(m_position);
-		std::cout<<"CAMARA SEGUIMIENTO CREADA: "<<m_camera << std::endl << std::endl;		
+		if(isPlayerOne) m_camera = new WatcherCamera(m_position);	
 		hasCharacter = true;
 	}
 }
@@ -168,7 +164,6 @@ void Player::CreatePlayerCharacter(bool firstInit){
  * 
  */
 void Player::DestroyPlayerCharacter(){
-	std::cout<<"DESTROY PLAYER CHARACTER" << std::endl;
 
 	if(bt_body != NULL){
 		bt_body->Erase();
@@ -189,8 +184,6 @@ void Player::DestroyPlayerCharacter(){
 	
 	CheckIfReady();
 	hasCharacter = false;
-
-	std::cout<<"PLAYER CHARACTER DESTROYED" << std::endl;
 }
 
 void Player::DeclareInput(){
@@ -276,8 +269,6 @@ void Player::RefreshServer(){
 
 void Player::Update(){
 
-	std::cout<<"Empezamos update de player"<<std::endl;
-
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -323,7 +314,6 @@ void Player::Update(){
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne && m_camera !=NULL){
-			std::cout<<"vamos a acceder a la rotacion de: " << m_camera << std::endl;
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
@@ -336,8 +326,6 @@ void Player::Update(){
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
 		checkMaxVelocity();
 	}
-
-	std::cout<<"Acabamos update de player"<<std::endl;
 }
 
 bool Player::ChangeCurrentSpell(int value){

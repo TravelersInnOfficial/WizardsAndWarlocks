@@ -6,7 +6,7 @@
 #include "../GraphicEngine/GraphicEngine.h"
 #include "../PhysicsEngine/BT_Body.h"
 
-class WatcherCamera : public Camera, public Entidad{
+class WatcherCamera : public Camera{
 public:
     WatcherCamera(vector3df lookat);
     ~WatcherCamera();

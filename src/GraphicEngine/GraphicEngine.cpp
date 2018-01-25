@@ -314,8 +314,6 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 
 GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
 
-	std::cout<<"add2"<<std::endl;
-
 	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
 	if (oldCamera){
 		privateSManager->setActiveCamera(0);
@@ -326,8 +324,6 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
 	irr::core::vector3df cameraLookat(lookat.X, lookat.Y, lookat.Z);	
 	privateCamera = new GCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
-
-	std::cout<<"add_end2"<<std::endl;
 
 	return privateCamera;
 }

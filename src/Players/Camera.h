@@ -2,10 +2,13 @@
 #define CAMERA_H
 
 #include "../GraphicEngine/GCamera.h"
+#include "./../Entidad.h"
 
-class Camera{
+class Camera: public Entidad{
 public:
+	Camera();
     virtual ~Camera();
+    virtual void Contact(void* punt, EntityEnum tipo);
 
     void SetPosition(vector3df position);
     vector3df GetPosition();
