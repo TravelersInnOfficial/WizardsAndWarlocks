@@ -559,7 +559,7 @@ void Player::Die(){
 		DestroyPlayerCharacter();							// Destruimos su cuerpo
 	}
 	
-	if(!isPlayerOne)Respawn();								// Hacemos respawn
+	Respawn();								// Hacemos respawn
 }
 
 void Player::ReturnToLobby(){

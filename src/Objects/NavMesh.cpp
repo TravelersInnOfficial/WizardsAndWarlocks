@@ -53,7 +53,7 @@ void NavMesh::addTriangle(int vertex1, int vertex2, int vertex3){
 
 // Si devuelve un puntero al una variable que se crea aqui, al salir del metodo se podria perder el valor
 std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
-    bool flag = false;
+    //bool flag = false;
     std::vector<vector3df> tri;
     std::vector<Node*> arr;
 
