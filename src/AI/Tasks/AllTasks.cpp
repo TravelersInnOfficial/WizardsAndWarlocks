@@ -6,14 +6,6 @@
 #include "./../../Managers/SpellManager.h"
 #include "./../../Managers/ObjectManager.h"
 #include "./../../Managers/PlayerManager.h"
-// Steerings
-#include "./../SteeringBehaviour/Seek.h"
-#include "./../SteeringBehaviour/Flee.h"
-#include "./../SteeringBehaviour/Face.h"
-#include "./../SteeringBehaviour/Wander.h"
-#include "./../SteeringBehaviour/Arrive.h"
-#include "./../SteeringBehaviour/ObstacleAvoidance.h"
-#include "./../SteeringBehaviour/LookWhereYoureGoing.h"
 // IAPlaye
 #include "./../../Players/AIPlayer.h"
 // New information classes
@@ -546,14 +538,14 @@ bool FaceTarget::run(Blackboard* bb){
     	cKin = character->GetKinematic();
     	tKin = target->kinematic;
 
-		SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
+		SteeringOutput steering = character->GetObstacleAvoid(cKin);
     	if(steering.linear.length() == 0){
-    		steering = Wander::GetSteering(cKin);
+    		steering = character->GetWander(cKin);
 
-    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+    		SteeringOutput steering2 = character->GetFace(cKin, tKin);
     		steering.angular = steering2.angular;
     	}else{
-    		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+    		SteeringOutput steering2 = character->GetFace(cKin, tKin);
     		steering.angular = steering2.angular;
     	}
 
@@ -587,9 +579,9 @@ bool GoToTarget::run(Blackboard* bb){
     	cKin = character->GetKinematic();
     	tKin = target->kinematic;
 
-		SteeringOutput steering = Seek::GetSteering(cKin, tKin);
+		SteeringOutput steering = character->GetSeek(cKin, tKin);
 
-		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+		SteeringOutput steering2 = character->GetFace(cKin, tKin);
 		steering.angular = steering2.angular;
 
 		character->Steering2Controller(steering);
@@ -622,9 +614,9 @@ bool FleeFromTarget::run(Blackboard* bb){
     	cKin = character->GetKinematic();
     	tKin = target->kinematic;
 
-		SteeringOutput steering = Flee::GetSteering(cKin, tKin);
+		SteeringOutput steering = character->GetFlee(cKin, tKin);
 
-		SteeringOutput steering2 = Face::GetSteering(cKin, tKin);
+		SteeringOutput steering2 = character->GetFace(cKin, tKin);
 		steering.angular = steering2.angular;
 
 		character->Steering2Controller(steering);
@@ -653,11 +645,11 @@ bool T_Wander::run(Blackboard* bb){
 
 	cKin = character->GetKinematic();
 
-	SteeringOutput steering = ObstacleAvoidance::GetSteering(cKin);
+	SteeringOutput steering = character->GetObstacleAvoid(cKin);
 	if(steering.linear.length() == 0){
-		steering = Wander::GetSteering(cKin);
+		steering = character->GetWander(cKin);
 	}else{
-		SteeringOutput steering2 = LookWhereYoureGoing::GetSteering(cKin);
+		SteeringOutput steering2 = character->GetLookWhereYoureGoing(cKin);
 		steering.angular = steering2.angular;
 	}
 	

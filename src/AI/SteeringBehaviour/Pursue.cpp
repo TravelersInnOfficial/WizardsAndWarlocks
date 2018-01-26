@@ -1,6 +1,10 @@
 #include "Pursue.h"
 
-float Pursue::maxPrediction = 1.0f;
+Pursue::Pursue(){
+	maxPrediction = 1.0f;
+}
+
+Pursue::~Pursue(){}
 
 SteeringOutput Pursue::GetSteering(Kinematic cKin, Kinematic tKin){
 	vector3df direction = tKin.position - cKin.position;

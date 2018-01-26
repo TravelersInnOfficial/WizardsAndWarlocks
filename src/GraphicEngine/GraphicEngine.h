@@ -8,6 +8,7 @@
 #include "EventReceiver.h"
 #include "MenuReceiver.h"
 #include <Keycodes.h>
+#include <vector2d.h>
 #include <vector3d.h>
 #include <vector4d.h>
 #include <map>
@@ -189,12 +190,22 @@ public:
         bool pingpong = true);
 
     /**
-     * Adds a camera scene node with an animator appropriate for FPS.
-     * rotateSpeed: Speed in degress with which the camera is rotated
-     * moveSpeed: Speed in units per millisecond with which the camera is moved
-    */
+     * @brief Adds a camera scene node with an animator appropriate for FPS.
+     * 
+     * @param rotateSpeed: Speed in degress with which the camera is rotated
+     * @param moveSpeed: Speed in units per millisecond with which the camera is moved
+     * @return GCamera*: pointer to the camera created
+     */
     GCamera* addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed);
 
+    /**
+     * @brief Adds a free camera node with no event handler 
+     * 
+     * @param position: position in units where camera will be spawned
+     * @param lookat: position of the target in unit where camera will be looking
+     * @return GCamera*: pointer to the camera added
+     */
+    GCamera* addCameraSceneNode(vector3df position, vector3df lookat);
     /**
      * Returns active camera in scene
     */
@@ -215,6 +226,8 @@ public:
     */
     MenuOption ReadButtonPressed();
 
+    bool EscPressed();
+
     /**
      * Reads a GUI EditBox from the reciever
     */
@@ -233,7 +246,20 @@ public:
      */
     std::map<int,std::vector<vector3df>> Raycast(vector3df, vector3df);
 
-
+    /**
+     * @brief Returns mouse position in the screen
+     * 
+     * @return vector2di: position in the screen
+     */
+    vector2di GetCursorPosition();
+    
+    /**
+     * @brief Set mouse position in the screen
+     * 
+     * @param cursor position
+     */
+    void SetCursorPosition(vector2di cursor);
+    
     /// RECEIVER FUNCTIONS
 
     /**

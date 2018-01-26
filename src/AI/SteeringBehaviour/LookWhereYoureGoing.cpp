@@ -1,5 +1,9 @@
 #include "LookWhereYoureGoing.h"
 
+LookWhereYoureGoing::LookWhereYoureGoing(){}
+
+LookWhereYoureGoing::~LookWhereYoureGoing(){}
+
 SteeringOutput LookWhereYoureGoing::GetSteering(Kinematic cKin){
 	SteeringOutput output;
 	if(cKin.velocity.length() == 0){

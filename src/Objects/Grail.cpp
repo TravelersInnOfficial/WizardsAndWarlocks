@@ -4,6 +4,7 @@
 Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	casting = false;
 	recovered = false;
+	clase = EENUM_GRAIL;
 
 	timeCasting = 0.0f;
 	maxCasting = 5.0f;

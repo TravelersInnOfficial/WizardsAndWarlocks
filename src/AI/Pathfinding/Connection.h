@@ -26,7 +26,7 @@ public:
      * 
      */
     ~Connection();
-    
+
     /**
      * @brief Returns the non-negative cost of the Connection
      * 

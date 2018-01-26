@@ -66,7 +66,6 @@ void BulletEngine::CreateWorld(){
 }
 
 void BulletEngine::UpdateWorld(){
-
 	m_dynamicsWorld->stepSimulation(1 / 60.f, 3, btScalar(1)/btScalar(180));
 	// 1º Variable - Los FPS del juego
 	// 2º Variable - Numero maximo de interpolaciones
@@ -159,8 +158,6 @@ bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df
 }
 
 void BulletEngine::motorPreTickCallback (btDynamicsWorld *world, btScalar timeStep){
-	//std::cout<<"The world just ticked by "<<(float)timeStep<<" seconds\n"<<std::endl;
-
 	BulletEngine *w = static_cast<BulletEngine *>(world->getWorldUserInfo());
 	w->motorProcessCallback(timeStep);
 }
@@ -181,8 +178,8 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
             btManifoldPoint& pt = contactManifold->getContactPoint(j);
             if (pt.getDistance() < 0.f) {
                	if(objetoA != 0 && objetoB != 0){
-					Entidad* a = (Entidad*)(obA->getUserPointer());
-					Entidad* b = (Entidad*)(obB->getUserPointer());
+					Entidad* a = (Entidad*)objetoA;
+					Entidad* b = (Entidad*)objetoB;
 
 					a->Contact(objetoB, b->GetClase());
 					b->Contact(objetoA, a->GetClase());

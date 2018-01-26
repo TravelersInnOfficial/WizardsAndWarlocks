@@ -14,3 +14,9 @@ void GCamera::bindTargetAndRotation(bool bound){
     irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*)privateNode;
     cam->bindTargetAndRotation(bound);
 }
+
+vector3df GCamera::getTarget(){
+    irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*)privateNode;
+    irr::core::vector3df target= cam->getTarget();
+    return vector3df(target.X, target.Y, target.Z);
+}

@@ -4,7 +4,12 @@ List::List(){
 }
 
 List::~List(){
-    for(int i = 0; i<m_list.size();i++){
+    clear();
+}
+
+void List::clear(){
+    int size = m_list.size();
+    for(int i = 0; i<size;i++){
         delete m_list[i];
     }
     m_list.clear();
@@ -21,12 +26,34 @@ void List::add(NodeRecord* nr){
 }
 
 void List::remove(NodeRecord* nr) {
+    /*
     float cost = nr->m_estimatedTotalCost;
-    for(int i = 0; i<m_list.size(); i++){
-        if(nr!= m_list[i]) m_list.erase(m_list.begin() + i);
-        else if(cost<=m_list[i]->m_estimatedTotalCost){
+    int size = m_list.size();
+    for(int i = 0; i<size; i++){
+        NodeRecord* current = m_list[i]; 
+        if(nr!= current){ 
+            m_list.erase(m_list.begin() + i);
+        }
+        else if(cost<=current->m_estimatedTotalCost){
             break;
         }
+    }
+    */
+    float cost = nr->m_estimatedTotalCost;
+    int size = m_list.size();
+    std::vector<int> toDelete;
+    for(int i = 0; i<size; i++){
+        NodeRecord* current = m_list[i]; 
+        if(nr!= current){ 
+            m_list.erase(m_list.begin() + i);
+        }
+        else if(cost<=current->m_estimatedTotalCost){
+            break;
+        }
+    }
+    size = toDelete.size();
+    for(int i=size-1; i>=0; i--){
+        m_list.erase(m_list.begin() + toDelete[i]);
     }
 }
 
@@ -38,7 +65,9 @@ bool List::contains(Node* n){
 
 NodeRecord* List::find(Node* n){
     int pos = getNodeRecordPosition(n);
-    if(pos != -1 ) return m_list[pos];
+    if(pos != -1 ){
+        return m_list[pos];
+    }
     return NULL;
 }
 
@@ -51,12 +80,43 @@ int List::size(){
 }
 
 int List::getNodeRecordPosition(Node* n){
-    for(int i = 0; i<m_list.size(); i++){
+    int size = m_list.size();
+    for(int i = 0; i<size; i++){
         if(m_list[i]->m_node == n){
             return i;
         }
     }
     return -1;
+}
+
+int List::getIndexNearestNode(vector3df pos, int start){
+    int output = 0;
+    if(start < m_list.size()){  
+        vector3df nodePos = m_list[start]->m_node->getPosition();
+        nodePos = nodePos - pos;
+  
+        float value = nodePos.length();
+        output = start;
+  
+        int size = m_list.size();
+        for(int i=start; i<size; i++){
+            nodePos = m_list[i]->m_node->getPosition();
+            nodePos = nodePos - pos;
+            if(nodePos.length() < value){
+                value = nodePos.length();
+                output = i;
+            }
+        }
+    }
+    return output;
+}
+
+vector3df List::getPosNode(int index){
+    if(index < m_list.size()){
+        return m_list[index]->m_node->getPosition();
+    }
+    vector3df output(0,0,0);
+    return output;
 }
 
 void List::printListOfNodes(){
@@ -84,7 +144,7 @@ void List::insertNode(NodeRecord* nr){
     //while the parent node has bigger CostSoFar swap the nodes
     while (i != 0 && m_list[parentNodeIndex(i)]->m_estimatedTotalCost > m_list[i]->m_estimatedTotalCost)
     {
-       swapNodes(m_list[i], m_list[parentNodeIndex(i)]);
+       swapNodes(i, parentNodeIndex(i));
        i = parentNodeIndex(i);
     }
 }
@@ -92,6 +152,7 @@ void List::insertNode(NodeRecord* nr){
 
 NodeRecord* List::getMin(){
     NodeRecord* min = m_list[0];
+    //m_list.erase(m_list.begin());
     m_list[0] = m_list[m_list.size()-1];
     m_list.erase(m_list.end()-1);
     heapify(0);
@@ -112,17 +173,20 @@ void List::heapify(int root){
 
     //if the smallest is different from the root, switch the actual root and smallest and proceed to the next level of the heap
     if(min != root){
-        swapNodes(m_list[root], m_list[min]);
+        swapNodes(root, min);
         heapify(min);
     }
 }
 
-void List::swapNodes(NodeRecord* nr1, NodeRecord* nr2){
-
-    NodeRecord aux = *nr1;
+void List::swapNodes(int nr1, int nr2){
+    std::iter_swap(m_list.begin()+nr1, m_list.begin()+nr2);
+    // Al crear un NodeRecord en el metodo al salir de este se elimina
+    // Llamando a su destructor y eliminando cosas que no toca
+    /*NodeRecord aux = *nr1;
 
     *nr1 = *nr2;
     *nr2 = aux;
+    */
 }
 
 int List::parentNodeIndex(int index){

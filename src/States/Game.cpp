@@ -17,8 +17,7 @@ Game::Game(){
 	s_engine 		= SoundSystem::getInstance();
 
 	// Level
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -27,8 +26,7 @@ Game::Game(){
 	secondCounter = 0;
 
 	//NavMesh
-	NavMeshLoader nm_loader;
-	nm_loader.LoadNavMeshGraph("../assets/json/NavMesh.json");
+	//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 
 	// Sound Engine
 	createSoundEvents();
@@ -39,10 +37,12 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
+	//AL = NULL;
 	AL = playerManager->AddAIPlayer();
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
+
 }
 
 Game::~Game(){
@@ -75,7 +75,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+30);
 	if(g_engine->IsKeyPressed(KEY_KEY_K)) playerOne->ChangeMP(-5);
-	if(g_engine->IsKeyPressed(KEY_KEY_L)) playerOne->ChangeMP(+30);
+	//if(g_engine->IsKeyPressed(KEY_KEY_L)) AL->ShortestPath(playerOne->GetPos());
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->Respawn();
 
 	// DEBUG
@@ -107,11 +107,11 @@ bool Game::Input(){
 }
 
 void Game::Update(){
-	
+
 	UpdateDelta();
 
 	f_engine->UpdateWorld();
-	
+
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
@@ -124,7 +124,7 @@ void Game::Update(){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
-	playerManager->RespawnDeadPlayers();
+	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
@@ -135,17 +135,19 @@ void Game::Update(){
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
-
 }
 
 void Game::CheckIfReady(){
 	// Comprobamos que el jugador uno este dentro de la zona
+	if(playerOne == NULL) return;
 	playerOne->CheckIfReady();
 
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) {
-		LevelLoader loader;
-		loader.LoadLevel("../assets/json/BasicMap.json");
+		LevelLoader::LoadLevel("../assets/json/Map1.json");
+
+		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
+	
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -157,13 +159,12 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-	g_engine->drawAim(playerOne->GetMoving());
 	if(playerOne != NULL){
+	g_engine->drawAim(playerOne->GetMoving());
 		playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
-	
 	if(debug){
 		f_engine->DebugDrawWorld();
 		if(AL != NULL) AL->Debug();
@@ -171,29 +172,6 @@ void Game::Draw(){
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 	g_engine->endScene();
-
-	/*
-	//TESTING NAVMESH
-	std::vector<Node*> nmn = navmesh.getNodes();
-	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
-	for(int i = 0; i<nmn.size(); i++){
-		vector3df position = nmn[i]->getPosition();
-		//std::cout<<"node "<<i<<" :("<<position.X<<","<<position.Y<<","<<position.Z<<")"<<std::endl;
-		//vector3df p, vector3df r, vector3df s, float radius, int id
-		g_engine->addCube2Scene(position,vector3df(0,0,0), vector3df(1,1,1),0.2,i);
-	}
-	std::vector<Connection*> nmc = navmesh.getConnections();
-	//std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
-	for(int i =0; i<nmc.size();i++){
-		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
-		vector3df pointA = nmc[i]->getFromNode()->getPosition();
-		vector3df pointB = nmc[i]->getToNode()->getPosition();
-		vector3df color = vector3df(255,0,0);
-		g_engine->paintLineDebug(pointA, pointB, color);
-
-	}
-	*/
-
 }
 
 void Game::setFps(){
@@ -243,8 +221,7 @@ void Game::CheckIfWon(){
 void Game::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	g_engine->ToggleMenu(false);
 	playerManager->ManageMatchStatus(false);

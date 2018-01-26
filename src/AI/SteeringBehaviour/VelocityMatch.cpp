@@ -1,7 +1,11 @@
 #include "VelocityMatch.h"
 
-float VelocityMatch::timeToTarget = 0.1f;
-float VelocityMatch::maxAcceleration = 30.f;
+VelocityMatch::VelocityMatch(){
+	timeToTarget = 0.1f;
+	maxAcceleration = 30.0f;
+}
+
+VelocityMatch::~VelocityMatch(){}
 
 SteeringOutput VelocityMatch::GetSteering(Kinematic cKin, Kinematic tKin){
 	SteeringOutput output;

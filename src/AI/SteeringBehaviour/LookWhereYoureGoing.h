@@ -8,7 +8,9 @@
 
 class LookWhereYoureGoing: public Align{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin);
+	LookWhereYoureGoing();
+	~LookWhereYoureGoing();
+	SteeringOutput GetSteering(Kinematic cKin);
 private:
 };
 

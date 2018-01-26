@@ -8,7 +8,7 @@ class NavMeshLoader{
     public:
     NavMeshLoader();
     ~NavMeshLoader();
-    void LoadNavMeshGraph(std::string);
+    void LoadNavMeshGraph(NavMesh* navmesh, std::string);
 
 };
 

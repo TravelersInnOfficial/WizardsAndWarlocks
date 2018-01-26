@@ -5,7 +5,10 @@ Heuristic::Heuristic(Node* goalNode){
     m_goalNode = goalNode;
 }
 Heuristic::~Heuristic(){
-    delete m_goalNode;
+}
+
+void Heuristic::setNode(Node* goalNode){
+	m_goalNode = goalNode;
 }
 
 float Heuristic::estimate(Node* n){

@@ -59,6 +59,7 @@ void StateManager::LoadState(State_Code code){
 	if(currentState!=NULL){
 		delete currentState;
 	}
+	
 	switch(code){
 		case STATE_MENU:
 			currentState = new MenuPrincipal();
@@ -73,5 +74,4 @@ void StateManager::LoadState(State_Code code){
 			currentState = NULL;
 			break;
 	}
-
 }

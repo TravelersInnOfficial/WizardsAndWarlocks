@@ -10,7 +10,9 @@
 
 class Face: public Align{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
+	Face();
+	~Face();
+	SteeringOutput GetSteering(Kinematic cKin, Kinematic tKin);
 };
 
 

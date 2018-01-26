@@ -10,11 +10,13 @@
 
 class ObstacleAvoidance: public Seek{
 public:
-	static SteeringOutput GetSteering(Kinematic cKin);
+	ObstacleAvoidance();
+	~ObstacleAvoidance();
+	SteeringOutput GetSteering(Kinematic cKin);
 private:
-	static float avoidDistance;
-	static float lookAHead;
-	static float lookAHead2;
+	float avoidDistance;
+	float lookAHead;
+	float lookAHead2;
 };
 
 #endif

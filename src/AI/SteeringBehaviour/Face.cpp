@@ -1,5 +1,9 @@
 #include "Face.h"
 
+Face::Face(){}
+
+Face::~Face(){}
+
 SteeringOutput Face::GetSteering(Kinematic cKin, Kinematic tKin){
 	vector3df direction = tKin.position - cKin.position;
 	if (direction.length() == 0) {

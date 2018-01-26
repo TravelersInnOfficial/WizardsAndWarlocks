@@ -1,12 +1,14 @@
 #include "Arrive.h"
 
-float Arrive::slowRadius = 3.0f;
-float Arrive::targetRadius = 0.5f;
-float Arrive::maxSpeed = 30.0f;
-float Arrive::timeToTarget = 0.1f;
-float Arrive::maxAcceleration = 30.0f;
+Arrive::Arrive(){
+	slowRadius = 3.0f;
+	targetRadius = 0.5f;
+	maxSpeed = 30.0f;
+	timeToTarget = 0.1f;
+	maxAcceleration = 30.0f;
+}
 
-// Valores a probar
+Arrive::~Arrive(){}
 
 SteeringOutput Arrive::GetSteering(Kinematic cKin, Kinematic tKin){
 

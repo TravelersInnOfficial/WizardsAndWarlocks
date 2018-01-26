@@ -1,6 +1,10 @@
 #include "Seek.h"
 
-float Seek::maxAcceleration = 30.0f;
+Seek::Seek(){
+	maxAcceleration = 30.0f;
+}
+
+Seek::~Seek(){}
 
 SteeringOutput Seek::GetSteering(Kinematic cKin, Kinematic tKin){
 	SteeringOutput output;

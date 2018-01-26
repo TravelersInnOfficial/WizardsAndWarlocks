@@ -8,7 +8,6 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine->setCursorVisible(true);
 	g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
-
 	selectedOption = NO_OPT;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
 }
@@ -21,6 +20,11 @@ bool MenuPrincipal::Input(){
 	if(!g_engine->run()){
 		return true;
 	}
+
+	if(g_engine->EscPressed()){
+		return true;
+	}
+
 	selectedOption = g_engine->ReadButtonPressed();
 	return false;
 }

@@ -25,8 +25,7 @@ NetGame::NetGame(){
 	s_engine 		= SoundSystem::getInstance();
 
 	// Level
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("../assets/json/Lobby2.json");
 	lobbyState = true;
 	gameEnded = false;
 	debug = false;
@@ -142,8 +141,7 @@ void NetGame::CheckIfReady(){
 	// Comprobamos que todos los jugadores tengan su variable READY a true
 	// Si la tienen, cargamos el siguente nivel
 	if(playerManager->CheckIfReady()) {
-		LevelLoader loader;
-		loader.LoadLevel("../assets/json/BasicMap.json");
+		LevelLoader::LoadLevel("../assets/json/BasicMap.json");
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);
@@ -233,8 +231,7 @@ void NetGame::CheckIfWon(){
 void NetGame::RestartMatch(){
 	gameEnded = false;
 	lobbyState = true;
-	LevelLoader loader;
-	loader.LoadLevel("../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("../assets/json/Lobby2.json");
 	MenuManager::GetInstance()->ClearMenu();
 	playerManager->ManageMatchStatus(false);
 	
