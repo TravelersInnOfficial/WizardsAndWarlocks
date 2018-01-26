@@ -101,6 +101,8 @@ public:
     void operator=(const vector2d<T> v) { X = v.X; Y = v.Y;}
     void operator*=(const T v) { X = X*v; Y = Y*v;}
 
+    bool operator==(const vector2d<T> v) { if(v.X == X && v.Y == Y) return true; return false; }
+
     friend inline std::ostream& operator << (std::ostream &o,const vector2d<T> &v){
         o << "(" << v.X << ", " << v.Y << ")";
         return o;

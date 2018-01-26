@@ -10,6 +10,9 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
+#include "WatcherCamera.h"
+#include "FPSCamera.h"
+
 GraphicEngine* engine;
 
 Player::Player(bool isPlayer1){
@@ -33,7 +36,10 @@ Player::Player(bool isPlayer1){
 
 	bt_body = NULL;
 	m_playerNode = NULL;
+	m_camera = NULL;
 	networkObject = NULL;
+
+	targetDeadCam = NULL;
 
 	matchStarted = false;
 	hasCharacter = false;
@@ -94,6 +100,11 @@ Player::~Player(){
 		m_playerNode = NULL;
 	}
 
+	if(m_camera!=NULL){
+		delete m_camera;
+		m_camera = NULL;
+	}
+
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
@@ -102,7 +113,6 @@ Player::~Player(){
 
 	TrapManager::GetInstance()->ErasePlayer(this);
 	SpellManager::GetInstance()->ErasePlayer(this);
-
 }
 
 void Player::CreatePlayerCharacter(bool firstInit){
@@ -141,11 +151,17 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
 
-		if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0);
+		// Camera
+		if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0);		
+
 		hasCharacter = true;
 	}
 }
 
+/**
+ * @brief Destoys player visual body only when game has started
+ * 
+ */
 void Player::DestroyPlayerCharacter(){
 	if(bt_body != NULL){
 		bt_body->Erase();
@@ -158,9 +174,13 @@ void Player::DestroyPlayerCharacter(){
 		delete m_playerNode;
 		m_playerNode = NULL;
 	}
-
+	
+	if(isPlayerOne && m_camera!=NULL){
+		delete m_camera;
+		m_camera = new WatcherCamera(GetPos());
+	}
+	
 	CheckIfReady();
-	if(isPlayerOne) engine->addCameraSceneNodeFPS(120.f, 0.005);
 	hasCharacter = false;
 }
 
@@ -245,6 +265,28 @@ void Player::RefreshServer(){
 	networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 }
 
+void Player::DeadUpdate(){
+	if(isPlayerOne){
+		PlayerManager* playerManager = PlayerManager::GetInstance(); // GetPos
+
+		UpdateInput();
+
+		Player* newP = targetDeadCam;
+		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+		}
+		else if(!playerManager->PlayerAlive(targetDeadCam)){
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+		}
+
+		if(newP != targetDeadCam){
+			targetDeadCam = newP;
+			m_camera->SetPosition(targetDeadCam->GetPos());
+		}
+		m_camera->UpdateCamera(targetDeadCam->GetPos());
+	}
+}
+
 void Player::Update(){
 
 	// Actualizamos el HP con 0 para comprobar la muerte
@@ -291,11 +333,14 @@ void Player::Update(){
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
-		if(isPlayerOne){
-			vector3df newRot = engine->getActiveCamera()->getRotation();
+		if(isPlayerOne && m_camera !=NULL){
+			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
-			positionCamera();
+			//positionCamera();
+
+			//Position camera FPS Y TPS
+			m_camera->UpdateCamera(GetHeadPos());
 		}
 
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
@@ -323,10 +368,6 @@ int Player::GetCurrentSpell(){
 }
 
 void Player::positionCamera(){
-	vector3df newRot = engine->getActiveCamera()->getRotation();
-	engine->getActiveCamera()->setPosition(GetHeadPos());
-	engine->getActiveCamera()->updateAbsolutePosition();
-	engine->getActiveCamera()->setRotation(newRot);
 }
 
 void Player::checkMaxVelocity(){
@@ -441,7 +482,8 @@ void Player::UpdateSP(){
 }
 
 void Player::Respawn(){
-	// CreatePlayerCharacter();
+	PlayerManager::GetInstance()->AddToLife(this);
+	CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
 	PlayerInit();
 }
@@ -505,19 +547,19 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
-	ResetDieSpells();
-	ObjectManager::GetInstance()->StopInteractionsNPC();
+	ResetDieSpells();										// Reseteamos los hechizos del jugador
+	ObjectManager::GetInstance()->StopInteractionsNPC();	// Paramos la posible interaccion con los NPCs
 
-	stopPulse();	//Stop the pulse event
-	playDie(); 		//Play the sound event
-	DropObject();
+	stopPulse();											// Stop the pulse event
+	playDie(); 												// Play the sound event
+	DropObject();											// Soltamos los objetos que teniamos
 
-	if(matchStarted){
-		PlayerManager::GetInstance()->AddToDead(playerAlliance, this);
-		DestroyPlayerCharacter();
+	if(true || matchStarted){						
+		PlayerManager::GetInstance()->AddToDead(this);		// Lo anyadimos a la lista de muertos
+		DestroyPlayerCharacter();							// Destruimos su cuerpo
 	}
 	
-	Respawn();
+	if(!isPlayerOne)Respawn();								// Hacemos respawn
 }
 
 void Player::ReturnToLobby(){
@@ -804,7 +846,6 @@ bool Player::GetMoving(){
 }
 
 void Player::SetAlliance(Alliance newAlliance){
-
 	if(newAlliance == ERR_ALLIANCE) return;
 
 	playerAlliance = newAlliance;

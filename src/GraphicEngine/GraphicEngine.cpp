@@ -285,6 +285,7 @@ void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, v
 }
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
+
 	irr::SKeyMap keyMap[4];
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
 	keyMap[0].KeyCode = irr::KEY_KEY_W;
@@ -303,6 +304,22 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	}
 
 	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
+
+	return privateCamera;
+}
+
+GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
+
+	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
+	if (oldCamera){
+		privateSManager->setActiveCamera(0);
+		oldCamera->remove();
+		privateCamera = NULL;
+	}
+
+	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
+	irr::core::vector3df cameraLookat(lookat.X, lookat.Y, lookat.Z);	
+	privateCamera = new GCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
 
 	return privateCamera;
 }
@@ -416,6 +433,16 @@ std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vec
 	}
 
 	return NodePointData;
+}
+
+void GraphicEngine::SetCursorPosition(vector2di cursor){
+	privateDevice->getCursorControl()->setPosition(irr::core::vector2di(cursor.X, cursor.Y));
+}
+
+vector2di GraphicEngine::GetCursorPosition(){
+	irr::core::vector2di ctrlP =  privateDevice->getCursorControl()->getPosition();
+
+	return vector2di(ctrlP.X, ctrlP.Y);
 }
 
 // RECEIVER FUNCTIONS

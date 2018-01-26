@@ -37,6 +37,7 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
+	//AL = NULL;
 	AL = playerManager->AddAIPlayer();
 
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
@@ -106,11 +107,11 @@ bool Game::Input(){
 }
 
 void Game::Update(){
-	
+
 	UpdateDelta();
 
 	f_engine->UpdateWorld();
-	
+
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
@@ -123,7 +124,7 @@ void Game::Update(){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	playerManager->UpdatePlayers();
-	playerManager->RespawnDeadPlayers();
+	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
@@ -134,7 +135,6 @@ void Game::Update(){
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
 	else if (!gameEnded) CheckIfWon();
-
 }
 
 void Game::CheckIfReady(){
@@ -172,29 +172,6 @@ void Game::Draw(){
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 	g_engine->endScene();
-	
-	//TESTING NAVMESH
-	/*
-	std::vector<Node*> nmn = objectManager->GetNavMesh()->getNodes();
-	//std::cout<<"Number of Nodes: "<<nmn.size()<<std::endl;
-	for(int i = 0; i<nmn.size(); i++){
-		vector3df position = nmn[i]->getPosition();
-		//std::cout<<"node "<<i<<" :("<<position.X<<","<<position.Y<<","<<position.Z<<")"<<std::endl;
-		//vector3df p, vector3df r, vector3df s, float radius, int id
-		g_engine->addCube2Scene(position,vector3df(0,0,0), vector3df(1,1,1),0.2,i);
-	}
-	std::vector<Connection*> nmc = objectManager->GetNavMesh()->getConnections();
-	//std::cout<<"Number of Connections: "<<nmc.size()<<std::endl;
-	for(int i =0; i<nmc.size();i++){
-		//std::cout<<"PRINTING CONNECTION: "<<i<<std::endl;
-		vector3df pointA = nmc[i]->getFromNode()->getPosition();
-		vector3df pointB = nmc[i]->getToNode()->getPosition();
-		vector3df color = vector3df(255,0,0);
-		g_engine->paintLineDebug(pointA, pointB, color);
-
-	}
-	*/
-
 }
 
 void Game::setFps(){

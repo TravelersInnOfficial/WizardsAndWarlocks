@@ -14,7 +14,8 @@ enum CollisionTypes {
 	C_WALL			= BIT(6),
 	C_PROJECTILE	= BIT(7),
 	C_TRAP			= BIT(8),
-	C_NPC			= BIT(9)
+	C_NPC			= BIT(9),
+	C_CAMERA		= BIT(10)
 };
 
 static int doorCW			= C_PLAYER
@@ -54,7 +55,10 @@ static int switchCW			= C_PROJECTILE
 
 static int wallCW			= C_PROJECTILE
 							| C_PLAYER
-							| C_POTION;
+							| C_POTION
+							| C_CAMERA;
+
+static int cameraCW			= C_WALL;
 
 static int projectileCW		= C_WALL
 							| C_PLAYER

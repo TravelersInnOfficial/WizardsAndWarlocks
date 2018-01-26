@@ -8,7 +8,6 @@ Entidad::Entidad(){
 }
 
 Entidad::~Entidad(){
-	
 }
 
 EntityEnum Entidad::GetClase(){

@@ -85,6 +85,10 @@ void AIPlayer::Update(){
 	}
 }
 
+void AIPlayer::DeadUpdate(){
+	
+}
+
 void AIPlayer::SetAngularForce(vector3df v){
 	if(hasCharacter){
 		bt_body->SetAngularVelocity(v);

@@ -222,6 +222,12 @@ void BT_Body::SetCCD(float treshold, float size){
 	m_RigidBody->setCcdSweptSphereRadius(size);		// Radius that fits inside object
 }
 
+void BT_Body::SetFlags(CollisionTypes mask, int collideWith){
+	BulletEngine* f_engine = BulletEngine::GetInstance();
+	f_engine->RemoveRigidBody(m_RigidBody);
+	f_engine->AddRigidBody(m_RigidBody, mask, collideWith);
+}
+
 void BT_Body::Erase(){
 	BulletEngine::GetInstance()->RemoveRigidBody(m_RigidBody);
     delete m_RigidBody->getMotionState();

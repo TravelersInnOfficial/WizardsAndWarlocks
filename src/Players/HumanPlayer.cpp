@@ -267,6 +267,6 @@ void HumanPlayer::CheckInput(){
 }
 
 void HumanPlayer::Update(){
-	Player::Update();
 	if(!menuActivated) UpdateInput();
+	Player::Update();
 }

@@ -5,6 +5,7 @@ DamageArea::DamageArea(int dam, float cast, vector3df TPosition, vector3df TScal
 	damage = dam;
 	casting = cast;
 	currentCast = 0.0f;
+	clase = EENUM_DAMAGEAREA;
 }
 	
 DamageArea::~DamageArea(){
