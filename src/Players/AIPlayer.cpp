@@ -259,8 +259,9 @@ void AIPlayer::ShortestPath(vector3df to){
 	vector3df from = this->GetPos();
 	//path = new Pathfinding(); -Ya creado en el constructor
 	//std::list<Connection*> c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
-	std::list<Connection*> c = path->AStar(from,to);
+	path->AStar(from,to);
 
+/*
 	if(c.size()>0){
 		//TODO::MOVE
 		std::cout<<"The path is:"<<std::endl;
@@ -275,7 +276,7 @@ void AIPlayer::ShortestPath(vector3df to){
 		}
 	}else{
 		//std::cout<<"I found nothing :("<<std::endl;
-	}	
+	}*/	
 }
 
 // ========================================================================================= //

@@ -2,6 +2,8 @@
 #include "Heuristic.h"
 #include "./../../Managers/ObjectManager.h"
 
+#include <algorithm>
+
 Pathfinding::Pathfinding(){
     heur = new Heuristic();
     //m_startRecord = new NodeRecord();
@@ -21,33 +23,48 @@ Pathfinding::~Pathfinding(){
 }
 
  vector3df Pathfinding::GetPosNode(int index){
-    if(index > (m_closedList->size()-1)){
-        index = m_closedList->size()-1;
+    if(index >= m_path.size()){
+        index = m_path.size()-1;
+        if(index < 0) return vector3df(0,0,0);
     }
-    return m_closedList->getPosNode(index);
+    return m_path[index]->getPosition();
  }
 
 int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
-    return m_closedList->getIndexNearestNode(pos, start);
+    int output = 0;
+    if(start < m_path.size()){  
+        vector3df nodePos = m_path[start]->getPosition();
+        nodePos = nodePos - pos;
+  
+        float value = nodePos.length();
+        output = start;
+  
+        int size = m_path.size();
+        for(int i=start; i<size; i++){
+            nodePos = m_path[i]->getPosition();
+            nodePos = nodePos - pos;
+            if(nodePos.length() < value){
+                value = nodePos.length();
+                output = i;
+            }
+        }
+    }
+    return output;
 }
 
 void Pathfinding::ResetValues(){
-    // Clean Values
-    m_closedList->clear();
-    m_openList->clear();
+    m_closedList->clear();              // Limpiamos la ClosedList
+    m_openList->clear();                // Limpiamos la OpenList
 
     int size = m_connections.size();
     for(int i=0; i<size; i++){
-        delete m_connections[i];
+        delete m_connections[i];        // Eliminamos las conexiones creadas en esta clase que no se van a usar mas
     }
-    m_connections.clear();
+    m_connections.clear();              // Limpiamos las conexiones, puesto que han sido eliminadas
 }
 
-std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
-   ResetValues();
-
-    // Output Value
-    std::list<Connection*> path;
+void Pathfinding::AStar( vector3df from,vector3df to){
+    m_path.clear();                     // Limpiamos el vector de nodos, no se han creado variables en este vector
 
     // Put values
     StartNode->setData(-1,from);
@@ -83,7 +100,7 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
             }
         }
         if(finals.size() == 0){
-            return path;
+            return;
         }
 
         //TODO::check if the current node is inside the end triangle
@@ -209,14 +226,15 @@ std::list<Connection*> Pathfinding::AStar( vector3df from,vector3df to){
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
         if(current!=NULL && current->m_node == EndNode){
             while( current!=NULL && current->m_node != StartNode){
-                path.push_back(current->m_connection);
+                m_path.push_back(current->m_node);
                 current = m_closedList->find(current->m_connection->getFromNode());
             }
-            path.reverse();
+            m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode
+            std::reverse(m_path.begin(), m_path.end());
         }
     }
 
-    return path;
+    ResetValues();  // Una vez ya se ha creado el camino ya podemos limpiar los datos extras que se han creado
 }
 
 

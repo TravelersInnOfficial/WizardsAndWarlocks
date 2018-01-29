@@ -11,7 +11,7 @@ class Pathfinding{
     ~Pathfinding();
 
     void ResetValues();
-    std::list<Connection*> AStar(vector3df , vector3df);
+    void AStar(vector3df , vector3df);
 
     int         GetIndexNearestNode(vector3df pos, int start=0);
     vector3df   GetPosNode(int index);
@@ -20,10 +20,13 @@ class Pathfinding{
     Heuristic* heur;
     List* m_openList;
     List* m_closedList;
-    //NodeRecord* m_startRecord;
-    std::vector<Connection*> m_connections; 
-    Node* StartNode;    // Nodo que se crea en la clase y que tenemos que reiniciar 
-    Node* EndNode;      // Nodo que se crea en la clase y que tenemos que reiniciar
+
+    std::vector<Connection*> m_connections;
+
+    std::vector<Node*> m_path;  // Vector de nodos que marca el camino que ha de seguir la IA
+
+    Node* StartNode;            // Nodo que se crea en la clase y que tenemos que reiniciar 
+    Node* EndNode;              // Nodo que se crea en la clase y que tenemos que reiniciar
 
     std::list<Connection*> *DijkstraPF(Node* StartNode, Node* GoalNode);
 
