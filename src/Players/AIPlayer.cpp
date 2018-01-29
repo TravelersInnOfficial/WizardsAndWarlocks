@@ -76,9 +76,9 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 void AIPlayer::Update(){
 	if(hasCharacter){
 		SetAllInput(UP);
-		behaviour->run();
+		//behaviour->run();
 		//ShortestPath(vector3df(0,0,0));
-		//GetFollowPath(GetKinematic());
+		GetFollowPath(GetKinematic());
 		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update();		// Check Input

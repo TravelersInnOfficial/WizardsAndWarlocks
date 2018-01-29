@@ -75,7 +75,7 @@ bool Game::Input(){
 	if(g_engine->IsKeyPressed(KEY_KEY_I)) playerOne->ChangeHP(-5);
 	if(g_engine->IsKeyPressed(KEY_KEY_O)) playerOne->ChangeHP(+30);
 	if(g_engine->IsKeyPressed(KEY_KEY_K)) playerOne->ChangeMP(-5);
-	//if(g_engine->IsKeyPressed(KEY_KEY_L)) AL->ShortestPath(playerOne->GetPos());
+	if(g_engine->IsKeyPressed(KEY_KEY_L)) AL->ShortestPath(playerOne->GetPos());
 	if(g_engine->IsKeyPressed(KEY_KEY_P)) playerOne->Respawn();
 
 	// DEBUG
@@ -146,7 +146,7 @@ void Game::CheckIfReady(){
 	if(playerOne->GetReadyStatus()) {
 		LevelLoader::LoadLevel("../assets/json/Map1.json");
 
-		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
+		objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 	
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);

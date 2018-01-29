@@ -39,21 +39,22 @@ void List::remove(NodeRecord* nr) {
         }
     }
     */
+
     float cost = nr->m_estimatedTotalCost;
     int size = m_list.size();
-    std::vector<int> toDelete;
     for(int i = 0; i<size; i++){
         NodeRecord* current = m_list[i]; 
-        if(nr!= current){ 
-            m_list.erase(m_list.begin() + i);
+        if(nr == current){
+            //m_list.erase(m_list.begin() + i);
+            //cambiamos el seleccionado por el ultimo y hacemos un heapify
+            m_list[i] = m_list[m_list.size()-1];
+            m_list.erase(m_list.end()-1);
+            heapify(i);
+            break;
         }
         else if(cost<=current->m_estimatedTotalCost){
             break;
         }
-    }
-    size = toDelete.size();
-    for(int i=size-1; i>=0; i--){
-        m_list.erase(m_list.begin() + toDelete[i]);
     }
 }
 
