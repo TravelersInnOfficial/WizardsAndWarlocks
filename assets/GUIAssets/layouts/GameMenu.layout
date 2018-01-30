@@ -8,30 +8,13 @@
         <Property name="HorzFormatting" value="Tiled" />
         <Property name="VertFormatting" value="Tiled" />
         <Property name="MousePassThroughEnabled" value="true" />
-        <Window type="Generic/Image" name="TopBar" >
-            <Property name="Area" value="{{0,0},{0,0},{1,0},{0,0}}" />
-            <Property name="Image" value="GameMenuImages/TopBar" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
-            <Property name="AspectMode" value="Expand" />
-            <Property name="AspectRatio" value="13.714" />
-            <Property name="MousePassThroughEnabled" value="true" />
-        </Window>
-        <Window type="Generic/Image" name="BotBar" >
-            <Property name="Area" value="{{0,-1},{0,1},{1,-1},{0,1}}" />
-            <Property name="Image" value="GameMenuImages/BotBar" />
-            <Property name="MaxSize" value="{{1,0},{1,0}}" />
-            <Property name="AspectMode" value="Expand" />
-            <Property name="AspectRatio" value="13.714" />
-            <Property name="VerticalAlignment" value="Bottom" />
-            <Property name="MousePassThroughEnabled" value="true" />
-        </Window>
         <Window type="DefaultWindow" name="InnerPartContainer" >
-            <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,0}}" />
+            <Property name="Area" value="{{0,0},{0,-0.5},{1,0},{0.8,-17.5}}" />
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="VerticalAlignment" value="Centre" />
             <Property name="MousePassThroughEnabled" value="true" />
             <Window type="DefaultWindow" name="OuterRingsContainer" >
-                <Property name="Area" value="{{0,0},{0,0},{1,0},{1,0}}" />
+                <Property name="Area" value="{{0,0},{0,-0.5},{1,0},{1,-1.5}}" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="VerticalAlignment" value="Centre" />
                 <Property name="HorizontalAlignment" value="Centre" />
@@ -71,7 +54,7 @@
             <Property name="MaxSize" value="{{1,0},{1,0}}" />
             <Property name="MousePassThroughEnabled" value="true" />
             <Window type="DefaultWindow" name="LeftArrowArea" >
-                <Property name="Area" value="{{0.345,5},{0.806,-43},{0.395,5},{0.866,-40}}" />
+                <Property name="Area" value="{{0.345,-2},{0.806,-64},{0.395,49},{0.866,-17}}" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="AlwaysOnTop" value="true" />
             </Window>
@@ -82,9 +65,10 @@
                 <Property name="AspectMode" value="Expand" />
                 <Property name="AlwaysOnTop" value="true" />
                 <Property name="HorizontalAlignment" value="Centre" />
+                <Property name="MousePassThroughEnabled" value="true" />
             </Window>
             <Window type="DefaultWindow" name="RightArrowArea" >
-                <Property name="Area" value="{{0.605,-4},{0.806,-43},{0.655,-3},{0.866,-40}}" />
+                <Property name="Area" value="{{0.605,-50},{0.806,-68},{0.655,3},{0.866,-15}}" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
                 <Property name="AlwaysOnTop" value="true" />
             </Window>
@@ -95,6 +79,7 @@
                 <Property name="AspectMode" value="Expand" />
                 <Property name="AlwaysOnTop" value="true" />
                 <Property name="HorizontalAlignment" value="Centre" />
+                <Property name="MousePassThroughEnabled" value="true" />
             </Window>
             <Window type="Generic/Label" name="NavigationLabel" >
                 <Property name="Area" value="{{0,3},{0.802,-40},{0.2,3},{0.843667,-26}}" />
@@ -105,11 +90,41 @@
                 <Property name="NormalTextColour" value="FFFFFFFF" />
                 <Property name="DisabledTextColour" value="FF0094FF" />
                 <Property name="HorizontalAlignment" value="Centre" />
+                <Property name="MousePassThroughEnabled" value="true" />
             </Window>
-            <Window type="DefaultWindow" name="NaviCenterContainer" >
-                <Property name="Area" value="{{0,-7},{0,3},{1,-7},{1,3}}" />
+        </Window>
+        <Window type="Generic/Image" name="TopBar" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{0,0}}" />
+            <Property name="Image" value="GameMenuImages/TopBar" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AspectMode" value="Expand" />
+            <Property name="AspectRatio" value="13.714" />
+            <Property name="MousePassThroughEnabled" value="true" />
+        </Window>
+        <Window type="Generic/Image" name="BotBar" >
+            <Property name="Area" value="{{0,0},{0,-1},{1,0},{0,1}}" />
+            <Property name="Image" value="GameMenuImages/BotBar" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="AspectMode" value="Expand" />
+            <Property name="AspectRatio" value="13.714" />
+            <Property name="VerticalAlignment" value="Bottom" />
+            <Property name="MousePassThroughEnabled" value="true" />
+        </Window>
+        <Window type="DefaultWindow" name="TitleContainer" >
+            <Property name="Area" value="{{0,0},{0,0},{1,0},{0.8,218}}" />
+            <Property name="MaxSize" value="{{1,0},{1,0}}" />
+            <Property name="MinSize" value="{{1,1},{0,0}}" />
+            <Property name="VerticalAlignment" value="Centre" />
+            <Property name="MousePassThroughEnabled" value="true" />
+            <Window type="Generic/Label" name="Title" >
+                <Property name="Area" value="{{0,0},{0.18,0},{1,-1222},{0.33,-40}}" />
+                <Property name="Font" value="GreatVibes-22" />
+                <Property name="Text" value="WIZARDS AND WARLOCKS" />
                 <Property name="MaxSize" value="{{1,0},{1,0}}" />
+                <Property name="MinSize" value="{{0.5,0},{0,0}}" />
                 <Property name="AlwaysOnTop" value="true" />
+                <Property name="NormalTextColour" value="FFFFFFFF" />
+                <Property name="HorizontalAlignment" value="Centre" />
                 <Property name="MousePassThroughEnabled" value="true" />
             </Window>
         </Window>
