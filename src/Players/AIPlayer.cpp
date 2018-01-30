@@ -69,6 +69,7 @@ SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
 
 SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 	SteeringOutput output = followPath->GetSteering(cKin);
+	output.angular = lookWhereYoureGoing->GetSteering(cKin).angular;
 	Steering2Controller(output);
 	return output;
 }
@@ -76,10 +77,7 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 void AIPlayer::Update(){
 	if(hasCharacter){
 		SetAllInput(UP);
-		//behaviour->run();
-		//ShortestPath(vector3df(0,0,0));
-		GetFollowPath(GetKinematic());
-		// En el caso de que se cumpla alguna de las condiciones de muerte lo matamos
+		behaviour->run();
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update();		// Check Input
 	}

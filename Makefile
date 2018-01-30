@@ -9,7 +9,7 @@ ifeq ($(OS),Windows_NT)
 else
     Target				:= WizardsAndWarlocks
     CXXFLAGS			:= -O3 -g -Wall -std=c++11
-    CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes -I/usr/local/include/cegui-0
+    CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes -isystem /usr/local/include/cegui-0
     LDFLAGS				:= -L./libs/Linux
     LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio -lCEGUIBase-0 -lCEGUIIrrlichtRenderer-0
 endif

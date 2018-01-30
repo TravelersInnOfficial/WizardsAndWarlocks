@@ -6,7 +6,6 @@
 
 Pathfinding::Pathfinding(){
     heur = new Heuristic();
-    //m_startRecord = new NodeRecord();
     m_openList = new List();
     m_closedList = new List();
     StartNode = new Node();
@@ -14,12 +13,12 @@ Pathfinding::Pathfinding(){
 }
 
 Pathfinding::~Pathfinding(){
-    //delete m_startRecord;  // Se elimina con el m_closedList
     delete m_openList;
     delete m_closedList;
     delete heur;
     delete StartNode;
     delete EndNode;
+    m_path.clear();        // Se limpia el vector de Nodos
 }
 
  vector3df Pathfinding::GetPosNode(int index){
