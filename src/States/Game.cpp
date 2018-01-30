@@ -39,7 +39,8 @@ Game::Game(){
 
 	//AL = NULL;
 	AL = playerManager->AddAIPlayer();
-
+	AL->SetAlliance(ALLIANCE_WARLOCK);
+ 	playerManager->AddAIPlayer();
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 
