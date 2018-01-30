@@ -554,12 +554,11 @@ void Player::Die(){
 	playDie(); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
-	if(true || matchStarted){						
+	if(matchStarted){						
 		PlayerManager::GetInstance()->AddToDead(this);		// Lo anyadimos a la lista de muertos
 		DestroyPlayerCharacter();							// Destruimos su cuerpo
 	}
-	
-	Respawn();								// Hacemos respawn
+	else Respawn();											// Hacemos respawn
 }
 
 void Player::ReturnToLobby(){

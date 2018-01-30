@@ -10,15 +10,6 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine->InitReceiver();
 	selectedOption = NO_OPT;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
-
-	gui_engine = GUIEngine::GetInstance();
-	gui_engine->CreateFromFile(GUI_SCHEMES, "GameMenu.scheme");
-	gui_engine->CreateFromFile(GUI_SCHEMES, "Generic.scheme");
-	gui_engine->CreateFromFile(GUI_SCHEMES, "TaharezLook.scheme");
-	gui_engine->CreateFromFile(GUI_FONTS, "GreatVibes-22.font");
-	gui_engine->ChangeCursor("GameMenuImages/MouseCursor");
-	GUIWindow* myRootWindow = gui_engine->CreateLayoutWindow("GameMenu.layout");
-	gui_engine->SetRoot(myRootWindow);
 }
 
 MenuPrincipal::~MenuPrincipal(){
@@ -65,7 +56,6 @@ void MenuPrincipal::Update(){
 void MenuPrincipal::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAllGUI();
-	gui_engine->Draw();
 	g_engine->endScene();
 }
 
