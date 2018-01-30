@@ -2,16 +2,16 @@ ifeq ($(OS),Windows_NT)
     Target				:= WizardsAndWarlocks.exe
     CXXFLAGS			:= -O3 -ffast-math -Wall -std=c++11 -m64
     CPPFLAGS        	:= -I./src/Includes -I/mingw64/include -I/mingw64/include/bullet
-    LDFLAGS				:= -L/mingw64/lib
-    LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64
+    LDFLAGS				:= -L/mingw64/lib -L./libs/Windows
+    LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64 -lCEGUIBase-0 -lCEGUIIrrlichtRenderer-0
 	ICO 				:= assets/game-icon-res.rc
 	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
     CXXFLAGS			:= -O3 -g -Wall -std=c++11
-    CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes
+    CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes -I/usr/local/include/cegui-0
     LDFLAGS				:= -L./libs/Linux
-    LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio
+    LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio -lCEGUIBase-0 -lCEGUIIrrlichtRenderer-0
 endif
 
 BinPath 			:= ./bin

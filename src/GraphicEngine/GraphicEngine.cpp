@@ -513,3 +513,7 @@ irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string
 	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, wText.c_str(), parent, dim, auxPos, id);
 	return board;
 }
+
+irr::IrrlichtDevice* GraphicEngine::GetIrrlichtDevice(){
+	return privateDevice;
+}

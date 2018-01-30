@@ -16,6 +16,7 @@
 
 class GraphicEngine{
     friend class MenuManager;
+    friend class GUIEngine;
 
 public:
     /// DEVICE FUNCTIONS
@@ -339,6 +340,11 @@ private:
      * text: text to initally display in the box
     */
     void addEditBox(vector4di p, std::wstring text = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL);
+
+    /**
+     * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
+    */
+    irr::IrrlichtDevice* GetIrrlichtDevice();
 
 };
 
