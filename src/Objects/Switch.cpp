@@ -8,9 +8,6 @@ Switch::Switch(vector3df TPosition, vector3df TScale, vector3df TRotation, vecto
 }
 
 Switch::~Switch(){
-    bt_body->Erase();
-    m_switchNode->Erase();
-
     delete bt_body;
     delete m_switchNode;
 }

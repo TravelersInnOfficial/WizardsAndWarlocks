@@ -17,13 +17,8 @@ Potion::Potion(vector3df TScale, int val, std::string tex){
 }
 
 Potion::~Potion(){
-	if(!picked){
-		bt_body->Erase();
-    	m_potionNode->Erase();	
-	}
-
-    delete bt_body;
-    delete m_potionNode;
+	if(bt_body != NULL) delete bt_body;
+	if(m_potionNode != NULL) delete m_potionNode;
 }
 
 bool Potion::CheckUse(Player* p){
@@ -112,8 +107,14 @@ void Potion::Drop(vector3df force){
 }
 
 void Potion::DeletePotion(){
-	bt_body->Erase();
-	m_potionNode->Erase();
+	if(bt_body != NULL){
+		delete bt_body;
+		bt_body = NULL;
+	}
+	if(m_potionNode != NULL){
+		delete m_potionNode;
+		m_potionNode = NULL;
+	}
 }
 
 void Potion::UpdatePosShape(){

@@ -249,10 +249,6 @@ TrapEnum Trap::GetTrapType(){
 }
 
 void Trap::Erase(){
-    m_rigidBody->Erase();
-    m_body->Erase();
-    g_body->Erase();
-
     delete m_rigidBody;
     delete m_body;
     delete g_body;

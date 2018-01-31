@@ -36,7 +36,6 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 
 WatcherCamera::~WatcherCamera(){
 	if(p_BtBody!=NULL){
-		p_BtBody->Erase();
 		delete p_BtBody;
 		p_BtBody = NULL;
 	}

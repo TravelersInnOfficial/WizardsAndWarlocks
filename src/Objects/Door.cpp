@@ -15,9 +15,6 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
 }
 
 Door::~Door(){
-    bt_body->Erase();
-    m_doorNode->Erase();
-
     delete bt_body;
     delete m_doorNode;
 }

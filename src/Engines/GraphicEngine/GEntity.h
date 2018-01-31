@@ -6,61 +6,59 @@
 class GEntity{
 
 public:
-    
-    /**
-     * Set body position
-     * pos: vector x,y,z of body position
-    */
-    void setPosition(vector3df pos);
+	
+	/**
+	 * Set body position
+	 * pos: vector x,y,z of body position
+	*/
+	void setPosition(vector3df pos);
 
-    /**
-     * Set body rotation
-     * rot: vector x,y,z of body rotation
-    */
-    void setRotation(vector3df rot);
+	/**
+	 * Set body rotation
+	 * rot: vector x,y,z of body rotation
+	*/
+	void setRotation(vector3df rot);
 
-    /**
-     * Rotates body
-     * rot: vector x,y,z of body rotation
-    */
-    void Rotate(vector3df rot);
-    
-    /**
-     * Get body scale
-    */
-    void setScale(vector3df scale);
-    
-    /**
-     * Get body position
-    */
-    vector3df getPosition();
+	/**
+	 * Rotates body
+	 * rot: vector x,y,z of body rotation
+	*/
+	void Rotate(vector3df rot);
+	
+	/**
+	 * Get body scale
+	*/
+	void setScale(vector3df scale);
+	
+	/**
+	 * Get body position
+	*/
+	vector3df getPosition();
 
-    /**
-     * Get body rotation
-    */
-    vector3df getRotation();
+	/**
+	 * Get body rotation
+	*/
+	vector3df getRotation();
 
-    /**
-     * Set body scale
-    */
-    vector3df getScale();
+	/**
+	 * Set body scale
+	*/
+	vector3df getScale();
 
-    /**
-     * Updates the absolute position based on the relative and the parents position of camera
-    */
-    void updateAbsolutePosition();
+	/**
+	 * Updates the absolute position based on the relative and the parents position of camera
+	*/
+	void updateAbsolutePosition();
 
-    /**
-     * Enables or disables automatic culling based on the bounding box.
-    */
-    void setAutomaticCulling();
-
-    //
-    void Erase();
+	/**
+	 * Enables or disables automatic culling based on the bounding box.
+	*/
+	void setAutomaticCulling();
 
 protected:
 
-    irr::scene::ISceneNode* privateNode;
+	irr::scene::ISceneNode* privateNode;
+	void Erase();
   
 };
 

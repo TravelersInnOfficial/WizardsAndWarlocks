@@ -21,6 +21,5 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
 }
 
 Prop::~Prop(){
-    graphBody->Erase();
     delete graphBody;
 }

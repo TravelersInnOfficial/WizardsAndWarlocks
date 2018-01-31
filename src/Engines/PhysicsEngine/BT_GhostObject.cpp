@@ -11,7 +11,9 @@ BT_GhostObject::BT_GhostObject(){
      m_center = new vector3df(0,0,0);
 }
 
-BT_GhostObject::~BT_GhostObject(){}
+BT_GhostObject::~BT_GhostObject(){
+    Erase();
+}
 
 void BT_GhostObject::CreateGhostBox(vector3df position,vector3df rotation, vector3df dimensions, vector3df center){
     m_body = new btGhostObject();

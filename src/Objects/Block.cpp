@@ -2,9 +2,6 @@
 #include <GraphicEngine/GraphicEngine.h>
 
 Block::~Block(){
-	physBody->Erase();
-    graphBody->Erase();	
-
 	delete graphBody;
 	delete physBody;
 }

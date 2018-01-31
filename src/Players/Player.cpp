@@ -89,13 +89,11 @@ Player::~Player(){
 	delete controller;
 
 	if(bt_body != NULL){
-		bt_body->Erase();
 		delete bt_body;
 		bt_body = NULL;
 	}
 
     if(m_playerNode != NULL){
-		m_playerNode->Erase();
 		delete m_playerNode;
 		m_playerNode = NULL;
 	}
@@ -164,13 +162,11 @@ void Player::CreatePlayerCharacter(bool firstInit){
  */
 void Player::DestroyPlayerCharacter(){
 	if(bt_body != NULL){
-		bt_body->Erase();
 		delete bt_body;
 		bt_body = NULL;
 	}
 
     if(m_playerNode != NULL){
-		m_playerNode->Erase();
 		delete m_playerNode;
 		m_playerNode = NULL;
 	}

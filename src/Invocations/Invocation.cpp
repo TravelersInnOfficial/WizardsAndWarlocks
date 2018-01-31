@@ -9,9 +9,6 @@ Invocation::Invocation(int HP){
 
 Invocation::~Invocation(){
 	spawnEvent->release();
-	bt_body->Erase();
-    m_invocationNode->Erase();	
-
 	delete m_invocationNode;
 	delete bt_body;
 }
