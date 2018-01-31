@@ -65,6 +65,7 @@ private:
     void CreateDrinkPotion();   // SubArbol de beber una pocion
     void CreateUseFountain();   // SubArbol de usar una fuente
     void CreateDefuseTrap();    // SubArbol de desactivar trampas
+    void CreateEscapeMove();    // SubArbol de huir
 };
 
 #endif

@@ -2,7 +2,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/EffectManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
-#include "./../NetworkEngine/NetworkEngine.h"
+#include <NetworkEngine/NetworkEngine.h>
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;

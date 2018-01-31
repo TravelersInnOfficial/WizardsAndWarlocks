@@ -1,7 +1,7 @@
 #ifndef PROP_H
 #define PROP_H
 
-#include "../GraphicEngine/GBody.h"
+#include <GraphicEngine/GBody.h>
 #include <vector3d.h>
 
 class Prop{

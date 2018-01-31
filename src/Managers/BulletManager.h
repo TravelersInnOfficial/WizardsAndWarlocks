@@ -6,8 +6,8 @@
 #include "./../Projectiles/Projectile.h"
 #include <BulletCodes.h>
 #include <EffectCodes.h>
-#include "./../PhysicsEngine/BT_Body.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
 
 class BulletManager{
 public:

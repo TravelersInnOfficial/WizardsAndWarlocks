@@ -70,13 +70,21 @@ void BehaviourTree::SetPlayer(AIPlayer* p){
 
 void BehaviourTree::CreateReceive(){
 
+    Selector* sl_checkPlayer = new Selector();          // Selector para las comprobacion de vision de player
+    sl_checkPlayer->addChild(new CheckPlayerEscape());
+    sl_checkPlayer->addChild(new CheckPlayerAttack());
+
+    Secuencia* sc_seePlayers = new Secuencia();         // Secuencia de comprobaciones por vision de player
+    sc_seePlayers->addChild(new CheckPlayerSight());
+    sc_seePlayers->addChild(sl_checkPlayer);
+
     Selector* sc_checkActions = new Selector();
-    sc_checkActions->addChild(new CheckUsePotion());
-    sc_checkActions->addChild(new CheckPlayerSight());
-    sc_checkActions->addChild(new CheckSawTrap());
-    sc_checkActions->addChild(new CheckSawFountain());
-    sc_checkActions->addChild(new CheckSawPotion());
-    sc_checkActions->addChild(new PutDefaultAction());
+    sc_checkActions->addChild(new CheckUsePotion());    // Comprobamos si usar una pocion
+    sc_checkActions->addChild(sc_seePlayers);           // Comprobamos si estamos viendo algun jugador
+    sc_checkActions->addChild(new CheckSawTrap());      // Comprobamos si hemos visto alguna trampa
+    sc_checkActions->addChild(new CheckSawFountain());  // Comprobamos si hemos visto alguna fuente
+    sc_checkActions->addChild(new CheckSawPotion());    // Comprobamos si hemos visto alguan fuente
+    sc_checkActions->addChild(new PutDefaultAction());  // Accion por defecto
 
     SetRootReceive(sc_checkActions);
 }
@@ -110,6 +118,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateUseFountain();
     // Desactivar Trampa
     CreateDefuseTrap();
+    // Escapar
+    CreateEscapeMove();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -229,6 +239,14 @@ void BehaviourTree::CreateNoMove(){
     Task* t = new NoMove();
 
     informacion->SetPuntero(AI_MOVE_NO, t);
+
+    tasks.push_back(t);
+}
+
+void BehaviourTree::CreateEscapeMove(){
+    Task* t = new NoMove();
+
+    informacion->SetPuntero(AI_TASK_ESCAPE, t);
 
     tasks.push_back(t);
 }

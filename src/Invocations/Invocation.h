@@ -6,9 +6,9 @@
 #include <kinematicTypes.h>
 #include <ColliderMasks.h>
 
-#include "./../PhysicsEngine/BT_Body.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../SoundEngine/SoundSystem.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
 #include "./../Entidad.h"
 
 

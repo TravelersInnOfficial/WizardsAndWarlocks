@@ -1,8 +1,8 @@
 #include "TrapManager.h"
 #include "PlayerManager.h"
 #include <vector3d.h>
-#include "./../NetworkEngine/NetworkEngine.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
 
 TrapManager* TrapManager::instance = 0;
 

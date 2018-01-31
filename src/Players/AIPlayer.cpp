@@ -2,7 +2,7 @@
 #include <Names.h>
 #include "./../Managers/SpellManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 AIPlayer::AIPlayer():Player(false){
 	behaviour = new BehaviourTree();

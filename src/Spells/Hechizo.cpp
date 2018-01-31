@@ -1,6 +1,6 @@
 #include "Hechizo.h"
 #include "./../Managers/BulletManager.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP){
 	costePM = costPM;

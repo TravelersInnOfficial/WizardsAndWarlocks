@@ -6,8 +6,8 @@
 #include "./Door.h"
 #include "./../Entidad.h"
 
-#include "./../PhysicsEngine/BT_Body.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
 #include <ColliderMasks.h>
 
 class Switch: public Entidad{

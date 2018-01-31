@@ -13,10 +13,10 @@
 #include <kinematicTypes.h>
 #include "./PlayerController.h"
 #include "./../Entidad.h"
-#include "./../PhysicsEngine/BT_Body.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../NetworkEngine/NetworkEngine.h"
-#include "./../SoundEngine/SoundSystem.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include <SoundEngine/SoundSystem.h>
 #include "Camera.h"
 
 class Potion;

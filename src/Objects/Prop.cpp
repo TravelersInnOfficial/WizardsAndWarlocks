@@ -1,5 +1,5 @@
 #include "Prop.h"
-#include "../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string model, std::string tex){
     GraphicEngine* engine = GraphicEngine::getInstance();

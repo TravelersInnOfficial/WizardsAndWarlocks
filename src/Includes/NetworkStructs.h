@@ -1,7 +1,7 @@
 #ifndef NETWORKSTRUCTS_H
 #define NETWORKSTRUCTS_H
 
-#include "./../NetworkEngine/RakNetIncludes.h"
+#include <NetworkEngine/RakNetIncludes.h>
 
 enum GameMessages{
 	ID_PLAYER_JOIN			= ID_USER_PACKET_ENUM +  1,

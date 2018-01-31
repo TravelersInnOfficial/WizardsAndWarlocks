@@ -2,6 +2,9 @@
 #include "./../Managers/StateManager.h"
 #include <StateCodes.h>
 
+#include "./../AI/RoomGraph/LoaderRoomGraph.h"
+#include "./../AI/RoomGraph/RoomGraph.h"
+
 Game::Game(){
 
 	spellManager 	= SpellManager::GetInstance();
@@ -24,9 +27,6 @@ Game::Game(){
 	mute = false;
 	captured = false;
 	secondCounter = 0;
-
-	//NavMesh
-	//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 
 	// Sound Engine
 	createSoundEvents();
@@ -147,7 +147,8 @@ void Game::CheckIfReady(){
 		LevelLoader::LoadLevel("../assets/json/Map1.json");
 
 		objectManager->AddNavmesh("./../assets/json/NavMesh.json");
-	
+		objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
+
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);

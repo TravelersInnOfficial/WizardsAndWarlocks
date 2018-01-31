@@ -1,5 +1,5 @@
 #include "SpellManager.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 #include "EffectManager.h"
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"
@@ -207,7 +207,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-5, 0.0f, 1.0f, 100, 50);
+			h = new DesperationWall(-5, 0.0f, 1.0f, 50, 100);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
