@@ -10,6 +10,8 @@
 #include "Modality.h"
 #include "./../Blackboard.h"
 
+class GraphicEngine;
+
 struct Notification{
 	float time;
 	Sensor* sensor;
@@ -36,6 +38,7 @@ private:
 	std::vector<Notification*> notificationQueue;
 
 	RegionalSenseManager();
+	GraphicEngine* g_engine;
 	static RegionalSenseManager* instance;
 };
 

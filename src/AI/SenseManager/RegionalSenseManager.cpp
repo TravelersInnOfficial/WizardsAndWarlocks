@@ -6,8 +6,6 @@
 #include "./../../Managers/PlayerManager.h"
 #include "./../../Managers/ObjectManager.h"
 
-GraphicEngine* g_engine = GraphicEngine::getInstance(); 
-
 RegionalSenseManager* RegionalSenseManager::instance = 0;
 
 RegionalSenseManager* RegionalSenseManager::GetInstance(){
@@ -18,6 +16,7 @@ RegionalSenseManager* RegionalSenseManager::GetInstance(){
 }
 
 RegionalSenseManager::RegionalSenseManager(){
+	g_engine = GraphicEngine::getInstance();
 }
 
 RegionalSenseManager::~RegionalSenseManager(){

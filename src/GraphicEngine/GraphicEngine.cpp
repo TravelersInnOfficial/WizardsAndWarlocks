@@ -1,9 +1,7 @@
 #include "GraphicEngine.h"
-
 static GraphicEngine* instance;
 
 GraphicEngine::GraphicEngine(){
-
 	privateCamera = NULL;
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
