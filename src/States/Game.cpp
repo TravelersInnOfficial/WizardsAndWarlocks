@@ -28,10 +28,6 @@ Game::Game(){
 	captured = false;
 	secondCounter = 0;
 
-	// RoomGraph
-	RoomGraph* rooms = new RoomGraph();
-	LoaderRoomGraph::LoadRoomGraph(rooms, "./../assets/json/map_rooms.json");
-
 	// Sound Engine
 	createSoundEvents();
 
@@ -151,7 +147,8 @@ void Game::CheckIfReady(){
 		LevelLoader::LoadLevel("../assets/json/Map1.json");
 
 		objectManager->AddNavmesh("./../assets/json/NavMesh.json");
-	
+		objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
+
 		lobbyState = false;
 		playerManager->ManageMatchStatus(true);
 		g_engine->ToggleMenu(false);

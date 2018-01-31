@@ -22,9 +22,6 @@ RoomInfo* RoomGraph::AddRoom(int id, vector3df position){
 }
 
 bool RoomGraph::AddConnection(int first, int second){
-
-	std::cout<<"Conexion de: "<<first<<" a: "<<second<<std::endl;
-
 	RoomInfo* firstRoom = NULL;
 	RoomInfo* secondRoom = NULL;
 	int size = m_rooms.size();
