@@ -201,8 +201,7 @@ void ObjectManager::AddNavmesh(std::string path){
 		delete navmesh;
 	}
 	navmesh = new NavMesh();
-	NavMeshLoader nm_loader;
-	nm_loader.LoadNavMeshGraph(navmesh, path);
+	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
 }
 
 // ===================================================================================================== //

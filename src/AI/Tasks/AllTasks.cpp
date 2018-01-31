@@ -435,6 +435,47 @@ bool CheckDistance::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	CHECK PLAYER ATTACK
+//
+// ================================================================================================= //
+
+	CheckPlayerAttack::CheckPlayerAttack(){}
+
+	bool CheckPlayerAttack::run(Blackboard* bb){
+		if(DEBUG) std::cout<<"CheckPlayerAttack\n";
+
+		AIPlayer* character = bb->GetPlayer();
+		// if(Meter condicion para atacar)
+		AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+
+		bb->SetTargetSight(enemy, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+		return true;
+	}
+
+// ================================================================================================= //
+//
+//	CHECK PLAYER ESCAPE
+//
+// ================================================================================================= //
+
+CheckPlayerEscape::CheckPlayerEscape(){}
+
+bool CheckPlayerEscape::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckPlayerEscape\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	float character_HP = character->GetHP();
+
+	if(character_HP<25.0f){	// Si la vida del personaje es inferior al 25% escapa
+		bb->SetMasterAction(AI_TASK_ESCAPE);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	CHECK PLAYER HEARING
 //
 // ================================================================================================= //
@@ -470,8 +511,6 @@ bool CheckPlayerSight::run(Blackboard* bb){
 	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
 	int number = bb->GetNumberSight(enemy);
 	if(number>0){
-		bb->SetTargetSight(enemy, AI_TARGET);
-		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
 		return true;
 	}
 	return false;

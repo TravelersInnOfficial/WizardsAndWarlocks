@@ -2,6 +2,9 @@
 #include "./../Managers/StateManager.h"
 #include <StateCodes.h>
 
+#include "./../AI/RoomGraph/LoaderRoomGraph.h"
+#include "./../AI/RoomGraph/RoomGraph.h"
+
 Game::Game(){
 
 	spellManager 	= SpellManager::GetInstance();
@@ -25,8 +28,9 @@ Game::Game(){
 	captured = false;
 	secondCounter = 0;
 
-	//NavMesh
-	//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
+	// RoomGraph
+	RoomGraph* rooms = new RoomGraph();
+	LoaderRoomGraph::LoadRoomGraph(rooms, "./../assets/json/map_rooms.json");
 
 	// Sound Engine
 	createSoundEvents();
