@@ -6,6 +6,7 @@
 
 #include "./../Invocations/AllInvocations.h"
 #include "./../DamageAreas/AllDamageAreas.h"
+#include "./../AI/RoomGraph/RoomGraph.h"
 #include "./../Objects/Fountain.h"
 #include "./../Npcs/NpcSelector.h"
 #include "./../Objects/NavMesh.h"
@@ -17,6 +18,7 @@
 #include "./../Objects/Grail.h"
 #include "./../Objects/Door.h"
 #include "./../Npcs/Npc.h"
+
 
 #include <InvocationCodes.h>
 #include <PotionTypes.h>
@@ -30,20 +32,21 @@ public:
 	~ObjectManager();
 
 	// Adders
-	Block* AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
-	Prop* AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
-	Door* AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Grail* AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	Switch* AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Switch* AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Potion* AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
-	Fountain* AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	Npc* AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
+	Block* 		AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
+	Prop* 		AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
+	Door* 		AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Grail* 		AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Switch* 	AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Switch* 	AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Potion* 	AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
+	Fountain* 	AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Npc* 		AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
 	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
-	void AddSpawner(Alliance playerAlliance, vector3df TPosition);
-	void AddReadyPoint(vector3df TPosition);
-	void AddNavmesh(std::string path);
+	void 		AddSpawner(Alliance playerAlliance, vector3df TPosition);
+	void 		AddReadyPoint(vector3df TPosition);
+	void 		AddNavmesh(std::string path);
+	void 		AddRoomGraph(std::string path);
 
 	// SenseFunctions
 	void SendAllSignal();
@@ -57,8 +60,9 @@ public:
 	vector3df GetRandomSpawnPoint(Alliance playerAlliance);
 	vector4df GetReadyZone();
 	NavMesh* GetNavMesh();
-	std::vector<Door*> GetAllDoors();
+	std::vector<Door*> 	GetAllDoors();
 	std::vector<Potion*> GetAllPotions();
+	void CopyRoomGraph(RoomGraph* copy);
 
 	// Drawers
 	void DrawNpcMenu();
@@ -108,6 +112,8 @@ private:
 	Grail*						grail;			// El grail de la partida, unico
 	vector4df					readyZone;		// Zona de READY
 	NavMesh*					navmesh;		// Malla de movimiento para la IA del nivel, única
+	RoomGraph*					roomGraph;		// Grafo de habitaciones del nivel, utilizado por la IA
+
 	ObjectManager();
 	static ObjectManager* instance; 
 };

@@ -1,4 +1,5 @@
 #include "ObjectManager.h"
+#include "./../AI/RoomGraph/LoaderRoomGraph.h"
 #include "./../Objects/AllPotions.h"
 #include "./../NavMeshLoader.h"
 
@@ -6,6 +7,7 @@ ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
 	navmesh = NULL;
+	roomGraph = NULL;
 	grail = NULL;
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
@@ -204,6 +206,14 @@ void ObjectManager::AddNavmesh(std::string path){
 	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
 }
 
+void ObjectManager::AddRoomGraph(std::string path){
+	if(roomGraph!=NULL){
+		delete roomGraph;
+	}
+	roomGraph = new RoomGraph();
+	LoaderRoomGraph::LoadRoomGraph(roomGraph, path);
+}
+
 // ===================================================================================================== //
 //
 // SENSE FUNCTIONS
@@ -299,6 +309,12 @@ int ObjectManager::GetPotionVecPos(Potion* potion){
 }
 
 NavMesh* ObjectManager::GetNavMesh(){return navmesh;}
+
+void ObjectManager::CopyRoomGraph(RoomGraph* copy){
+	if(roomGraph!=NULL){
+		roomGraph->CopyGraph(copy);
+	}
+}
 
 // ===================================================================================================== //
 //
@@ -427,6 +443,11 @@ void ObjectManager::ClearMap(){
 	if(navmesh != NULL){
 		delete navmesh;
 		navmesh = NULL;
+	}
+
+	if(roomGraph != NULL){
+		delete roomGraph;
+		roomGraph = NULL;
 	}
 
 	wizardSpawn.clear();
