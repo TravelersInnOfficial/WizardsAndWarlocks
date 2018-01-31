@@ -1,5 +1,5 @@
 #include "ObstacleAvoidance.h"
-#include "./../../PhysicsEngine/BulletEngine.h"
+#include <PhysicsEngine/BulletEngine.h>
 
 ObstacleAvoidance::ObstacleAvoidance(){
 	avoidDistance = 2.0f;

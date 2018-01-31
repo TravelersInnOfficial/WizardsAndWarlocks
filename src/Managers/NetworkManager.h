@@ -5,9 +5,9 @@
 #include <cstdlib>
 #include <map>
 #include <NetworkStructs.h>
-#include "./../NetworkEngine/NetworkEngine.h"
-#include "./../NetworkEngine/Server.h"
-#include "./../NetworkEngine/Client.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/Server.h>
+#include <NetworkEngine/Client.h>
 #include "./PlayerManager.h"
 #include "./../Players/Player.h"
 

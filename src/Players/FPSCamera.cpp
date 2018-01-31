@@ -1,5 +1,5 @@
 #include "FPSCamera.h"
-#include "../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 FPSCamera::FPSCamera(float rotateSpeed, float moveSpeed){
     p_Camera = GraphicEngine::getInstance()->addCameraSceneNodeFPS(rotateSpeed, moveSpeed);

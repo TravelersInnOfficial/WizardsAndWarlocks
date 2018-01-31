@@ -1,5 +1,5 @@
 #include "Blackboard.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 #include "./../Players/AIPlayer.h"
 
 Sense_struct::~Sense_struct(){

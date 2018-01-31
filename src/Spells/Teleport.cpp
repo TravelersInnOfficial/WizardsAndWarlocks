@@ -1,5 +1,5 @@
 #include "Teleport.h"
-#include "./../PhysicsEngine/BulletEngine.h"
+#include <PhysicsEngine/BulletEngine.h>
 
 Teleport::Teleport(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

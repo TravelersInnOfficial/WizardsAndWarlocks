@@ -5,7 +5,7 @@
 #include <vector>
 #include <algorithm>
 
-#include "./../GraphicEngine/MenuManager.h"
+#include <GraphicEngine/MenuManager.h>
 #include "./../Players/Player.h"
 #include "./../Players/HumanPlayer.h"
 #include "./../Players/AIPlayer.h"

@@ -1,9 +1,9 @@
 #include "./Potion.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include "./../Managers/ObjectManager.h"
-#include "./../NetworkEngine/NetworkEngine.h"
-#include "./../NetworkEngine/Client.h"
-#include "./../NetworkEngine/Server.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/Client.h>
+#include <NetworkEngine/Server.h>
 
 #define MODEL_SIZE 0.136f
 

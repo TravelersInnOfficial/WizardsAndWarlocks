@@ -6,8 +6,8 @@
 #include <kinematicTypes.h>
 
 #include "./../Players/Player.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../PhysicsEngine/BT_Body.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <PhysicsEngine/BT_Body.h>
 class Player;
 
 class Potion:public Entidad{

@@ -5,8 +5,8 @@
 #include <vector3d.h>
 #include <ColliderMasks.h>
 
-#include "./../PhysicsEngine/BT_GhostObject.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <GraphicEngine/GraphicEngine.h>
 #include "./../Entidad.h"
 
 class DamageArea: public Entidad{

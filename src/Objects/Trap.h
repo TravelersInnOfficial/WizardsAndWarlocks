@@ -3,8 +3,8 @@
 
 #include <vector3d.h>
 #include <TrapCodes.h>
-#include "./../PhysicsEngine/BT_GhostObject.h"
-#include "./../GraphicEngine/GBody.h"
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <GraphicEngine/GBody.h>
 #include "./../Players/Player.h"
 #include "./../Entidad.h"
 
