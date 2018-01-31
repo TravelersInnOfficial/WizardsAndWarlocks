@@ -1,6 +1,8 @@
 #ifndef BLACKBOARD_H
 #define BLACKBOARD_H
 
+#include "./RoomGraph/RoomGraph.h"
+
 #include <iostream>
 #include <map>
 #include <AICodes.h>
@@ -58,6 +60,7 @@ public:
 private:
 
     AIPlayer*                   currentPlayer;          // Jugador al que le pertenece el blackboard
+    RoomGraph*                  roomGraph;              // Grafo de las habitacion del mapa actual
 
     Blackboard* 			    blackboardParent;       // El blackboard padre del que pillar la informacion que pueda faltar
 

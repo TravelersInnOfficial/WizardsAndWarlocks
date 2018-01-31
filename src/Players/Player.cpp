@@ -7,6 +7,7 @@
 #include "./../Managers/PlayerManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
+#include <SpellCodes.h>
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
@@ -503,16 +504,21 @@ void Player::Raycast(){
 }
 
 bool Player::StartSpell(){
+	// Get the code of the currentSpell
+	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
-	if(effectman->CheckEffect(this, WEAK_SILENCED) && currentSpell!=0){		// if is not a basic spell or if silenced then not shoot
+	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
 		return false;
 	}
 	return SpellManager::GetInstance()->StartHechizo(currentSpell,this);
 }
 
 bool Player::ShootSpell(){
+	// Get the code of the currentSpell
+	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
-	if(effectman->CheckEffect(this, WEAK_SILENCED) && currentSpell!=0){		// if is not a basic spell or if silenced then not shoot
+	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
+		
 		ResetSpell();
 		return false;
 	}
