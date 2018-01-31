@@ -16,6 +16,7 @@
 
 class GraphicEngine{
     friend class MenuManager;
+    friend class GUIEngine;
 
 public:
     /// DEVICE FUNCTIONS
