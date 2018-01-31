@@ -1,7 +1,7 @@
 #include "Modality.h"
 #include "Signal.h"
 #include "Sensor.h"
-#include "./../../PhysicsEngine/BulletEngine.h"
+#include <PhysicsEngine/BulletEngine.h>
 #include "./../../Entidad.h"
 #include "./../../Players/Player.h"
 

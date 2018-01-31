@@ -18,10 +18,10 @@
 #include "./../Managers/TrapManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
-#include "./../PhysicsEngine/BulletEngine.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../GraphicEngine/MenuManager.h"
-#include "./../SoundEngine/SoundSystem.h"
+#include <PhysicsEngine/BulletEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/MenuManager.h>
+#include <SoundEngine/SoundSystem.h>
 
 //Enums
 #include <SpellCodes.h>

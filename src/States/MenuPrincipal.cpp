@@ -1,7 +1,7 @@
 #include "./MenuPrincipal.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../SoundEngine/SoundSystem.h"
-#include "./../GraphicEngine/MenuManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
+#include <GraphicEngine/MenuManager.h>
 
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();

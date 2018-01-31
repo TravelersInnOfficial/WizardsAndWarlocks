@@ -2,8 +2,8 @@
 #define BLOCK_H
 
 #include "../Entidad.h"
-#include "../GraphicEngine/GBody.h"
-#include "../PhysicsEngine/BT_Body.h"
+#include <GraphicEngine/GBody.h>
+#include <PhysicsEngine/BT_Body.h>
 #include <ColliderMasks.h>
 #include <vector3d.h>
 

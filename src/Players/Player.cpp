@@ -1,5 +1,5 @@
 #include "./Player.h"
-#include "./../PhysicsEngine/BulletEngine.h"
+#include <PhysicsEngine/BulletEngine.h>
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"

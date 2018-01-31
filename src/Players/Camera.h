@@ -1,7 +1,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "../GraphicEngine/GCamera.h"
+#include <GraphicEngine/GCamera.h>
 #include "./../Entidad.h"
 
 class Camera: public Entidad{

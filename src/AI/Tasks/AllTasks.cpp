@@ -1,7 +1,7 @@
 #include "AllTasks.h"
 // Engines
-#include "./../../GraphicEngine/GraphicEngine.h"
-#include "./../../PhysicsEngine/BulletEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <PhysicsEngine/BulletEngine.h>
 // Managers
 #include "./../../Managers/SpellManager.h"
 #include "./../../Managers/ObjectManager.h"

@@ -1,5 +1,5 @@
 #include "Block.h"
-#include "../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 Block::~Block(){
 	physBody->Erase();

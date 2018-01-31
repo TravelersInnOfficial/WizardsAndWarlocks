@@ -13,10 +13,10 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/NetworkManager.h"
 
-#include "./../PhysicsEngine/BulletEngine.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../SoundEngine/SoundSystem.h"
-#include "./../NetworkEngine/NetworkEngine.h"
+#include <PhysicsEngine/BulletEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
+#include <NetworkEngine/NetworkEngine.h>
 
 #include "./../LevelLoader.h"
 #include "./State.h"

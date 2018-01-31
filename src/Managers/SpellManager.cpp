@@ -1,5 +1,5 @@
 #include "SpellManager.h"
-#include "./../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 #include "EffectManager.h"
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"

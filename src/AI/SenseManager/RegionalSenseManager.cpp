@@ -1,6 +1,6 @@
 #include "RegionalSenseManager.h"
 // Engines
-#include "./../../GraphicEngine/GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 // Managers
 #include "./../../Managers/TrapManager.h"
 #include "./../../Managers/PlayerManager.h"

@@ -6,9 +6,9 @@
 #include "./../Entidad.h"
 #include "./../Players/Player.h"
 
-#include "./../PhysicsEngine/BT_Body.h"
-#include "./../GraphicEngine/GraphicEngine.h"
-#include "./../SoundEngine/SoundSystem.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
 #include <ColliderMasks.h>
 
 class Door: public Entidad{

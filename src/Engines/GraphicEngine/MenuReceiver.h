@@ -1,6 +1,6 @@
 #include <iostream>
 #include "./irrlicht/irrlicht.h"
-#include "./../SoundEngine/SoundSystem.h"
+#include <SoundEngine/SoundSystem.h>
 #include <Menus.h>
 #include <Keycodes.h>
 
