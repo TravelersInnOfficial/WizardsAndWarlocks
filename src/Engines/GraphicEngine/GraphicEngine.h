@@ -13,6 +13,7 @@
 #include <vector4d.h>
 #include <map>
 #include <vector>
+#include <OverlayCodes.h>
 
 class GraphicEngine{
     friend class MenuManager;
@@ -99,7 +100,7 @@ public:
     /**
      * Draws all the efects activated
     */
-    void drawOverlays(int type = -1);
+    void drawOverlays(OverlayCodes type);
 
     /**
      * Returns the height of the screen

@@ -94,7 +94,7 @@ void HumanPlayer::GetNetInput(){
 			if(m_HP != life){
 				if(life < m_HP){
 					playHit();
-					bloodOverlayTime = 1;
+					overlayManager->SetTime(BLOOD, 1);
 				}
 				m_HP = life;
 			}

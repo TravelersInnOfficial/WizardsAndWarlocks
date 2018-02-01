@@ -155,7 +155,6 @@ void NetGame::Draw(){
 
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
-		playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 	}
 	

@@ -37,10 +37,11 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
-	//AL = NULL;
-	AL = playerManager->AddAIPlayer();
-	AL->SetAlliance(ALLIANCE_WARLOCK);
- 	playerManager->AddAIPlayer();
+	AL = NULL;
+	//AL = playerManager->AddAIPlayer();
+	//AL->SetAlliance(ALLIANCE_WARLOCK);
+	//playerManager->AddAIPlayer();
+	
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 
@@ -161,17 +162,18 @@ void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 	if(playerOne != NULL){
+	
 	g_engine->drawAim(playerOne->GetMoving());
-		playerOne->DrawOverlays(deltaTime);
-		playerOne->Draw();
-		objectManager->DrawGrailGUI();
+		playerOne->Draw();					// PLAYER GUI
+		objectManager->DrawGrailGUI();		// GRAIL GUI
 	}
+
 	if(debug){
 		f_engine->DebugDrawWorld();
 		if(AL != NULL) AL->Debug();
 	}
 	
-	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->drawAllGUI();	// MENU
 	g_engine->endScene();
 }
 
