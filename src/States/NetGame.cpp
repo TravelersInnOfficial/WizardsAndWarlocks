@@ -102,7 +102,7 @@ bool NetGame::Input(){
 	return end;
 }
 
-void NetGame::Update(){
+void NetGame::Update(float deltaTime){
 
 	UpdateDelta();
 

@@ -323,7 +323,7 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
-	privateCamera->privateNode = privateSManager->getActiveCamera();
+	if(privateCamera != NULL) privateCamera->privateNode = privateSManager->getActiveCamera();
 	return privateCamera;
 }
 

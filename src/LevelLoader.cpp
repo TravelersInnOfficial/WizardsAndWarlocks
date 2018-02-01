@@ -54,16 +54,16 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
-	SpellManager::GetInstance()->ResetAllDieHechizo();
+	//SpellManager::GetInstance()->ResetAllDieHechizo();
 
 	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
-	objManager->ClearMap();
-	BulletManager::GetInstance()->DeleteAllProyectiles();
-	TrapManager::GetInstance()->ClearTraps();
+	//objManager->ClearMap();
+	//BulletManager::GetInstance()->DeleteAllProyectiles();
+	//TrapManager::GetInstance()->ClearTraps();
 
 	// Reseteamos los hechizos
-	PlayerManager::GetInstance()->ResetAllSpells();
+	//PlayerManager::GetInstance()->ResetAllSpells();
 
 	std::map<int, Door*> doors;
 	
@@ -173,8 +173,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		}
 	}
 
-	PlayerManager* plyManager = PlayerManager::GetInstance();
-	plyManager->RestartMatchStatus();
+	//PlayerManager* plyManager = PlayerManager::GetInstance();
+	//plyManager->RestartMatchStatus();
 
 	return true;
 }

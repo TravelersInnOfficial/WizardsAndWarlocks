@@ -280,7 +280,7 @@ void Player::DeadUpdate(){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}
-		m_camera->UpdateCamera(targetDeadCam->GetPos());
+		if(targetDeadCam!=NULL) m_camera->UpdateCamera(targetDeadCam->GetPos());
 	}
 }
 
@@ -556,11 +556,10 @@ void Player::Die(){
 	playDie(); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
-	if(matchStarted){						
-		PlayerManager::GetInstance()->AddToDead(this);		// Lo anyadimos a la lista de muertos
+	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
+	if(matchStarted){				
 		DestroyPlayerCharacter();							// Destruimos su cuerpo
 	}
-	else Respawn();											// Hacemos respawn
 }
 
 void Player::ReturnToLobby(){

@@ -38,15 +38,11 @@ public:
 	Game();
 	~Game();
 	bool Input();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void RestartMatch();
 	void CheckIfReady();
-
-	float GetTotalTime();
-	float GetDeltaTime();
-	void UpdateDelta();
 
 	//Sound Functions
 	void playEvent(SoundEvent* event, vector3df pos);
@@ -54,8 +50,6 @@ public:
 
 private:
 
-	float timeStart;
-	float deltaTime;
 	float secondCounter;
 	bool lobbyState;
 	bool gameEnded;
@@ -83,7 +77,7 @@ private:
 	// PARA EL DEBUG
 	AIPlayer* AL;
 
-	void setFps();
+	void setFps(float deltaTime);
 	void CheckIfWon();
 	
 };

@@ -30,7 +30,7 @@ public:
 	static NetGame* GetInstance();
 	~NetGame();
 	bool Input();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void RestartMatch();

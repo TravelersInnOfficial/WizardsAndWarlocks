@@ -46,6 +46,7 @@ public:
 	Player* ChangePlayerTargetCam(Player* player);	// Cambia el jugador al que mirar en la camara de muerte
 
 private:
+	Player*		playerOne;
 
 	vector<Player*>	players;
 	vector<Player*>	deadPlayers;

@@ -31,9 +31,6 @@ Game::Game(){
 	// Sound Engine
 	createSoundEvents();
 
-	// Graphic Engine
-	timeStart = g_engine->getTime() * 0.001;
-
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
@@ -106,9 +103,7 @@ bool Game::Input(){
 	return false;
 }
 
-void Game::Update(){
-
-	UpdateDelta();
+void Game::Update(float deltaTime){
 
 	f_engine->UpdateWorld();
 
@@ -130,7 +125,7 @@ void Game::Update(){
 	g_engine->UpdateReceiver();
 	
 
-	setFps();
+	setFps(deltaTime);
 
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
@@ -162,7 +157,7 @@ void Game::Draw(){
 	g_engine->drawAll();
 	if(playerOne != NULL){
 	g_engine->drawAim(playerOne->GetMoving());
-		playerOne->DrawOverlays(deltaTime);
+		//playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
@@ -175,7 +170,7 @@ void Game::Draw(){
 	g_engine->endScene();
 }
 
-void Game::setFps(){
+void Game::setFps(float deltaTime){
 	secondCounter += deltaTime;
 	if(secondCounter >= 0.5){
 		secondCounter = 0;
@@ -183,16 +178,6 @@ void Game::setFps(){
 		std::wstring wsTmp(myFps.begin(), myFps.end());
 		g_engine->ChangeWindowName(L"Wizards And Warlocks Master v1.0 FPS: " + wsTmp);
 	}
-}
-
-float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
-
-float Game::GetDeltaTime(){ return deltaTime; }
-
-void Game::UpdateDelta(){
-	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
 }
 
 void Game::CheckIfWon(){

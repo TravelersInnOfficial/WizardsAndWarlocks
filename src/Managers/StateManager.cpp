@@ -4,6 +4,9 @@
 StateManager* StateManager::instance = 0;
 
 StateManager::StateManager(){
+	// DeltaTime
+	timeStart = 0.0f;
+	deltaTime = 0.0f;
 
 	// Engines
 	f_engine = BulletEngine::GetInstance();
@@ -45,8 +48,10 @@ bool StateManager::Update(){
 	}
 
 	bool end = currentState->Input();
-	currentState->Update();
+	currentState->Update(deltaTime);
 	currentState->Draw();
+	
+	UpdateDelta();
 
 	return !end;
 }
@@ -65,7 +70,7 @@ void StateManager::LoadState(State_Code code){
 			currentState = new MenuPrincipal();
 			break;
 		case STATE_GAME:
-			currentState = new Game();
+			currentState = new SinglePlayerGame();
 			break;
 		case STATE_NETGAME:
 			currentState =  NetGame::GetInstance();
@@ -74,4 +79,10 @@ void StateManager::LoadState(State_Code code){
 			currentState = NULL;
 			break;
 	}
+}
+
+void StateManager::UpdateDelta(){
+	float currentTime = g_engine->getTime() * 0.001;
+	deltaTime = currentTime - timeStart;
+	timeStart = currentTime;
 }

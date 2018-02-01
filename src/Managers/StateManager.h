@@ -2,7 +2,7 @@
 #define STATEMANAGER_H
 
 // Estados
-#include "./../States/Game.h"
+#include "./../States/SinglePlayerGame.h"
 #include "./../States/MenuPrincipal.h"
 #include "./../States/NetGame.h"
 #include "./../States/State.h"
@@ -25,6 +25,8 @@ public:
 	bool Update();
 	void LoadState(State_Code code);
 private:
+	void UpdateDelta();
+
 	State_Code 	preparedStatus;
 	State*		currentState; 
 
@@ -32,6 +34,9 @@ private:
 	GraphicEngine*	g_engine;
 	SoundSystem*	s_engine;
 	NetworkEngine*	n_engine;
+
+	float deltaTime;
+	float timeStart;
 
 	StateManager();
 	static StateManager* instance;
