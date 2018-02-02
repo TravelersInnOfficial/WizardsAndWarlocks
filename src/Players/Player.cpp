@@ -11,8 +11,8 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
-#include "WatcherCamera.h"
-#include "FPSCamera.h"
+#include "./../Cameras/WatcherCamera.h"
+#include "./../Cameras/FPSCamera.h"
 
 GraphicEngine* engine;
 

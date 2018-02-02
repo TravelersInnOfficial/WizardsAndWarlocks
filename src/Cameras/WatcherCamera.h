@@ -2,7 +2,7 @@
 #define WATCHERCAMERA_H
 
 #include "Camera.h"
-#include "../Entidad.h"
+#include "./../Entidad.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include <PhysicsEngine/BT_Body.h>
 
