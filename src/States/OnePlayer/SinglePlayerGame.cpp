@@ -1,6 +1,6 @@
 #include "SinglePlayerGame.h"
-#include "./Lobby.h"
-#include "./Match.h"
+#include "Lobby.h"
+#include "Match.h"
 
 SinglePlayerGame::SinglePlayerGame(){
 	m_stateGame 	= new Lobby(this);

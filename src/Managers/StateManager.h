@@ -12,6 +12,7 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <SoundEngine/SoundSystem.h>
 
+#include "./../ResourceManager.h"
 #include <iostream>
 #include <StateCodes.h>
 
@@ -37,6 +38,7 @@ private:
 
 	float deltaTime;
 	float timeStart;
+	bool resourcesLoaded;
 
 	StateManager();
 	static StateManager* instance;
