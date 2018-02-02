@@ -2,7 +2,7 @@
 #define STATEMANAGER_H
 
 // Estados
-#include "./../States/SinglePlayerGame.h"
+#include "./../States/OnePlayer/SinglePlayerGame.h"
 #include "./../States/MenuPrincipal.h"
 #include "./../States/NetGame.h"
 #include "./../States/State.h"

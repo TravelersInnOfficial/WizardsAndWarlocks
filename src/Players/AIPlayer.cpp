@@ -74,12 +74,12 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 	return output;
 }
 
-void AIPlayer::Update(){
+void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
 		SetAllInput(UP);
 		behaviour->run();
 		shootSpell = false; 	// Reseteamos la variable
-		Player::Update();		// Check Input
+		Player::Update(deltaTime);		// Check Input
 	}
 }
 

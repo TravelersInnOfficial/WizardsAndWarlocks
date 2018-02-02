@@ -1,6 +1,6 @@
-#include "Lobby.h"
+#include "Match.h"
 
-Lobby::Lobby(SinglePlayerGame* fat){
+Match::Match(SinglePlayerGame* fat){
 	father = fat;
 
 	f_engine 		= BulletEngine::GetInstance();
@@ -16,36 +16,31 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	senseManager	= RegionalSenseManager::GetInstance();
 	
 	// Level
-	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("../assets/json/Map1.json");
+
+	objectManager->AddNavmesh("./../assets/json/NavMesh.json");
+	objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
 
 	playerOne = playerManager->GetPlayerOne();
 	if(playerOne == NULL){
 		playerOne = playerManager->AddHumanPlayer(true);
 	}
 
-	// Ponemos a false el inicio de la partida de los players
-	playerManager->ManageMatchStatus(false);
+	// Ponemos a true el inicio de la partida
+	playerManager->ManageMatchStatus(true);
 }
 
-Lobby::~Lobby(){
+Match::~Match(){
 	// Los motores los eliminara el StateManager
 	// Los managers los eliminara el SinglePlayerManager
 }
 
-bool Lobby::Input(){
-	if(g_engine->IsKeyPressed(KEY_KEY_V)){
-		playerManager->AddAIPlayer();
-	}
-
-	if(g_engine->IsKeyPressed(KEY_KEY_B)){
-		Player* p = playerManager->AddAIPlayer();
-		p->SetAlliance(ALLIANCE_WARLOCK);
-	}
+bool Match::Input(){
 
 	return false;
 }
 
-void Lobby::Update(float deltaTime){
+void Match::Update(float deltaTime){
 	f_engine->UpdateWorld();
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
@@ -56,15 +51,15 @@ void Lobby::Update(float deltaTime){
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
-	playerManager->UpdatePlayers();
-	playerManager->RespawnDeadPlayers();
+	playerManager->UpdatePlayers(deltaTime);
+	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 	g_engine->UpdateReceiver();
 
-	CheckIfReady();
+	CheckIfWon();
 }
 
-void Lobby::Draw(){
+void Match::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 
@@ -84,24 +79,26 @@ void Lobby::Draw(){
 	g_engine->endScene();
 }
 
-void Lobby::CheckIfReady(){
-	// Comprobamos que el jugador uno este dentro de la zona
-	if(playerOne == NULL) return;
-	playerOne->CheckIfReady();
+void Match::CheckIfWon(){
+	Alliance whosWon = NO_ALLIANCE;
 
-	// Si esta dentro de la zona, cargamos el siguiente nivel
-	if(playerOne->GetReadyStatus()) {
+	if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = ALLIANCE_WIZARD;
+	else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
 
-		father->StartGame();
+	if(whosWon != NO_ALLIANCE){
+		GraphicEngine::getInstance()->InitReceiver();
+		if(playerOne != NULL) {
+			playerOne->SetAllInput(UP);
 
-		//LevelLoader::LoadLevel("../assets/json/Map1.json");
+			//Play sound event when you lose or win
+			//if (playerOne->GetAlliance() != whosWon) playEvent(soundEvents["defeat"]);
+			//else playEvent(soundEvents["victory"]);
 
-		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
-		//objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
+			//g_engine->ToggleMenu(true);
+			//MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
 
-		//playerManager->ManageMatchStatus(true);
-		//g_engine->ToggleMenu(false);
-		//MenuManager::GetInstance()->ClearMenu();
+			father->ReturnLobby();
+		}
 	}
 
 }

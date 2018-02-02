@@ -1,22 +1,7 @@
 #ifndef LOBBY_H
 #define LOBBY_H
 
-// Motores
-#include <PhysicsEngine/BulletEngine.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <GraphicEngine/MenuManager.h>
-#include <SoundEngine/SoundSystem.h>
-// Managers
-#include "./../Managers/SpellManager.h"
-#include "./../Managers/BulletManager.h"
-#include "./../Managers/EffectManager.h"
-#include "./../Managers/ObjectManager.h"
-#include "./../Managers/PlayerManager.h"
-#include "./../Managers/StateManager.h"
-#include "./../Managers/TrapManager.h"
-#include "./../AI/SenseManager/RegionalSenseManager.h"
-
-#include "./State.h"
+#include "./../State.h"
 #include "./SinglePlayerGame.h"
 
 #include "./../LevelLoader.h"

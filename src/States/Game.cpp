@@ -34,10 +34,11 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
-	//AL = NULL;
-	AL = playerManager->AddAIPlayer();
-	AL->SetAlliance(ALLIANCE_WARLOCK);
- 	playerManager->AddAIPlayer();
+	AL = NULL;
+	//AL = playerManager->AddAIPlayer();
+	//AL->SetAlliance(ALLIANCE_WARLOCK);
+	//playerManager->AddAIPlayer();
+	
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 
@@ -118,7 +119,7 @@ void Game::Update(float deltaTime){
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
-	playerManager->UpdatePlayers();
+	playerManager->UpdatePlayers(deltaTime);
 	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
@@ -155,18 +156,19 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
+
 	if(playerOne != NULL){
-	g_engine->drawAim(playerOne->GetMoving());
-		//playerOne->DrawOverlays(deltaTime);
+		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
+
 	if(debug){
 		f_engine->DebugDrawWorld();
 		if(AL != NULL) AL->Debug();
 	}
 	
-	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->drawAllGUI();	// MENU
 	g_engine->endScene();
 }
 

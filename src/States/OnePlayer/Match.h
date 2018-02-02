@@ -1,7 +1,7 @@
 #ifndef MATCH_H
 #define MATCH_H
 
-#include "./State.h"
+#include "./../State.h"
 #include "./SinglePlayerGame.h"
 
 class Match: public State{

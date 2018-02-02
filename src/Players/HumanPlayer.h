@@ -15,7 +15,7 @@ public:
 	void GetNetInput();
 	void SetNetInput();
 
-	void Update();
+	void Update(float deltaTime);
 
 	void ToggleMenu(bool newState);
 

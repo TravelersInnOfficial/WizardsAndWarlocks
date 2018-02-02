@@ -73,7 +73,6 @@ bool SinglePlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(KEY_ESCAPE)){
-		std::cout<<"h"<<std::endl;
 		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 	}
 

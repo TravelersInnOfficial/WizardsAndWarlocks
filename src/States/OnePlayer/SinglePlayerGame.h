@@ -10,7 +10,7 @@
 #include "./../Managers/StateManager.h"
 #include "./../Managers/TrapManager.h"
 
-#include "./State.h"
+#include "./../State.h"
 
 class SinglePlayerGame: public State{
 public:

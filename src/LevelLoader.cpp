@@ -173,8 +173,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		}
 	}
 
-	//PlayerManager* plyManager = PlayerManager::GetInstance();
-	//plyManager->RestartMatchStatus();
+	PlayerManager* plyManager = PlayerManager::GetInstance();
+	plyManager->RestartMatchStatus();
 
 	return true;
 }

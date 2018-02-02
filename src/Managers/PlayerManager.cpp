@@ -53,7 +53,7 @@ AIPlayer* PlayerManager::AddAIPlayer(){
 	return p;
 }
 
-void PlayerManager::UpdatePlayers(bool isNetGame){
+void PlayerManager::UpdatePlayers(float deltaTime, bool isNetGame){
 	DeletePlayers();
 	// Actualizamos los personajes vivos
 	int size = players.size();
@@ -68,7 +68,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 			hp->GetNetInput();
 		}
 
-		p->Update();		
+		p->Update(deltaTime);		
 	}
 	
 	// Actualizamos los personajes muertos (camara libre)

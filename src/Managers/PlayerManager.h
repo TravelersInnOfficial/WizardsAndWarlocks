@@ -17,7 +17,7 @@ public:
 
 	Player* AddHumanPlayer(bool isPlayer1 = true);
 	AIPlayer* AddAIPlayer();
-	void UpdatePlayers(bool isNetGame = false);
+	void UpdatePlayers(float deltaTime, bool isNetGame = false);
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
 	void SendVisualSignal();
