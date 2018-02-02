@@ -144,7 +144,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new Madness(4.0f);
 			break;
 		case WEAK_DEATHSNARE:
-			e = new DeathSnare(3.0f, 6);
+			e = new DeathSnare(3.0f, 1);
 			break;
 
 		case POWERUP_DAMAGE:
