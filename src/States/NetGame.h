@@ -83,7 +83,7 @@ private:
 	void CheckIfWon();
 
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
-	void createSoundEvents();			//Create the sound events
+	void createSoundEvents();							//Create the sound events
 
 };
 

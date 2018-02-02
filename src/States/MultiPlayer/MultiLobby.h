@@ -5,7 +5,7 @@
 
 class MultiLobby: public State{
 
-}
+};
 
 
 #endif

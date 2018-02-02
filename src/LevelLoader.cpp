@@ -22,39 +22,24 @@ LevelLoader::LevelLoader(){
 
 bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vector3df rotation){
 	POTIONTYPE pot = POTION_DEFENSE;
-	if(objectType == "LifePotion"){
-		pot = POTION_LIFE;
-	}
-	else if(objectType == "ManaPotion"){
-		pot = POTION_MANA;
-	}
-	else if(objectType == "FirePotion"){
-		pot = POTION_FIRE;
-	}
-	else if(objectType == "IcePotion"){
-		pot = POTION_ICE;
-	}
-	else if(objectType == "ElectricPotion"){
-		pot = POTION_ELECTRIC;
-	}
-	else if(objectType == "PoisonPotion"){
-		pot = POTION_POISON;
-	}
-	else if(objectType == "DefensePotion"){
-		pot = POTION_DEFENSE;
-	}
-	else{
-		return false;
-	}
+
+	if(objectType == "LifePotion") pot = POTION_LIFE;
+	else if(objectType == "ManaPotion") pot = POTION_MANA;
+	else if(objectType == "FirePotion") pot = POTION_FIRE;
+	else if(objectType == "IcePotion") pot = POTION_ICE;
+	else if(objectType == "ElectricPotion") pot = POTION_ELECTRIC;
+	else if(objectType == "PoisonPotion") pot = POTION_POISON;
+	else if(objectType == "DefensePotion") pot = POTION_DEFENSE;
+	else return false;
 
 	ObjectManager* objManager = ObjectManager::GetInstance();
-	return objManager->AddPotion(position, size, rotation, pot) != NULL? true : false;
+	return objManager->AddPotion(position, size, rotation, pot) != NULL ? true : false;
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
 
 	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
-	//SpellManager::GetInstance()->ResetAllDieHechizo();
+	//zSpellManager::GetInstance()->ResetAllDieHechizo();
 
 	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
