@@ -267,6 +267,6 @@ void HumanPlayer::CheckInput(){
 }
 
 void HumanPlayer::Update(float deltaTime){
-	if(!menuActivated) UpdateInput();
 	Player::Update(deltaTime);
+	if(!menuActivated) UpdateInput();
 }
