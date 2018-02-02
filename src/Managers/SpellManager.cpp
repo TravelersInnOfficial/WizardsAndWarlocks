@@ -32,12 +32,24 @@ SpellManager* SpellManager::GetInstance(){
  */
 bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast){
 	bool toRet = false;
+	bool alreadyHas = false;
 
 	if(num >=0 && num < numHechizos){			// Comprobamos si el numero de hechizo pasado es correcto
-		Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
-		if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
-		hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
-		toRet = true;
+
+		for(int i = 1; i < numHechizos && !alreadyHas; i++){
+			Hechizo* hAux = hechizos[i][p];
+			if(hAux != NULL){
+				SPELLCODE currentSpell = hAux->GetType();
+				if(currentSpell == type) alreadyHas = true;	
+			}
+		}
+
+		if(!alreadyHas){
+			Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
+			if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
+			hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
+			toRet = true;
+		}
 	}
 
 	if(broadcast){
