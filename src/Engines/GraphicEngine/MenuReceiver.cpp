@@ -30,7 +30,8 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 		}
 	}
 
-	return false;
+	//return false;
+	return CIMGUIEventReceiver::OnEvent(event);
 }
 
 bool MenuReceiver::EscPressed(){

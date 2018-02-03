@@ -5,7 +5,8 @@
 
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
-	g_engine->setCursorVisible(true);
+	GUI_engine		= GUIEngine::GetInstance();
+	g_engine->setCursorVisible(false);
 	g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
 	selectedOption = NO_OPT;
@@ -51,11 +52,14 @@ void MenuPrincipal::Update(){
 		MenuManager::GetInstance()->ClearMenu();
 		g_engine->ToggleMenu(false);
 	}
+	GUI_engine->update();
+	MenuManager::GetInstance()->Update();
 }
 
 void MenuPrincipal::Draw(){
 	g_engine->beginSceneDefault();
-	g_engine->drawAllGUI();
+	//g_engine->drawAllGUI();
+	GUI_engine->draw();
 	g_engine->endScene();
 }
 

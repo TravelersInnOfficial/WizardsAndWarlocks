@@ -22,6 +22,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <GraphicEngine/MenuManager.h>
 #include <SoundEngine/SoundSystem.h>
+#include <GUIEngine/GUIEngine.h>
 
 //Enums
 #include <SpellCodes.h>
@@ -74,6 +75,7 @@ private:
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
+	GUIEngine* 			GUI_engine;
 
 	HumanPlayer*		playerOne;
 

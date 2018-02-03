@@ -77,7 +77,8 @@ void GraphicEngine::ToggleMenu(bool newState){
 	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
 	else privateDevice->setEventReceiver(privateReceiver);
 	ToggleCameraMovement(!newState);
-    privateDevice->getCursorControl()->setVisible(newState);
+    //privateDevice->getCursorControl()->setVisible(newState);
+	privateDevice->getCursorControl()->setVisible(false);
 }
 
 void GraphicEngine::ToggleCameraMovement(bool newState){
@@ -514,4 +515,7 @@ irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string
 
 irr::IrrlichtDevice* GraphicEngine::GetIrrlichtDevice(){
 	return privateDevice;
+}
+MenuReceiver* GraphicEngine::GetMenuReceiver(){
+	return privateMenuReceiver;
 }

@@ -345,7 +345,7 @@ private:
      * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
     */
     irr::IrrlichtDevice* GetIrrlichtDevice();
-
+    MenuReceiver* GetMenuReceiver();
 };
 
 #endif

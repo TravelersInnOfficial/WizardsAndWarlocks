@@ -27,7 +27,7 @@ MenuManager* MenuManager::GetInstance(){
 void MenuManager::CreateMenu(MenuType type, int option){
 	switch(type){
 		case(MAIN_M):{
-			CreateMain();
+			currentMenu = new MainMenu();
 			break;
 		}
 		case(ALLIANCE_M):{
@@ -53,6 +53,10 @@ void MenuManager::CreateMenu(MenuType type, int option){
 	}
 }
 
+void MenuManager::Update(){
+	currentMenu->Update(true);
+}
+
 void MenuManager::ClearMenu(){
 	int size = loadedOptions.size();
 	for(int i=0; i<size; i++){
@@ -68,41 +72,6 @@ void MenuManager::ClearElement(MenuOption elementID){
 	irr::gui::IGUIElement* elem;
 	elem = g_engine->privateGUIEnv->getRootGUIElement()->getElementFromId(elementID, true);
 	if(elem!= NULL) elem->remove();
-}
-
-void MenuManager::CreateMain(){
-
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
-	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
-
- 	irr::gui::IGUIWindow* window = g_engine->privateGUIEnv->addWindow(
-        menuWindow,
-        false,
-        L"Start your Game",
-		0,
-		MAIN_M_WINDOW
-	);
-	window->getCloseButton()->setVisible(false);
-	window->setDraggable(false);
-	loadedOptions.push_back(MAIN_M_WINDOW);
-
-	vector4di rect = vector4di(menuSize.X/10.0f,menuSize.Y/3,menuSize.X/4.5f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Single Player", L"To play single player", MAIN_M_SINGLE, window);
-
-	rect = vector4di(menuSize.X/1.59f,menuSize.Y/3.75f,menuSize.X/9,menuSize.Y/30);
-	g_engine->addStaticText(rect, L"Multi Player", true, false, MAIN_M_TEXT_1, window);
-
-	rect = vector4di(menuSize.X/2.3f,menuSize.Y/3,menuSize.X/4.5f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Conect to Game", L"To start a client (FILL IP)", MAIN_M_CLIENT, window);
-
-	rect = vector4di(menuSize.X/1.4f,menuSize.Y/3,menuSize.X/4.5f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Host a Game", L"To start a server on this computer", MAIN_M_SERVER, window);
-
-	rect = vector4di(menuSize.X/2.3f,menuSize.Y/1.4f,menuSize.X/4.5f,menuSize.Y/30);
-	g_engine->addEditBox(rect, L"127.0.0.1", MAIN_M_IP, window);
-
-	rect = vector4di(menuSize.X/2.3f,menuSize.Y/1.3f,menuSize.X/4.5f,menuSize.Y/30);
-	g_engine->addEditBox(rect, L"Player Name", MAIN_M_NAME, window);
 }
 
 void MenuManager::CreateAlliance(){

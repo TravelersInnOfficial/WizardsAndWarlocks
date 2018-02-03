@@ -18,6 +18,7 @@ Game::Game(){
 	f_engine 		= BulletEngine::GetInstance();
 	g_engine 		= GraphicEngine::getInstance();
 	s_engine 		= SoundSystem::getInstance();
+	GUI_engine		= GUIEngine::GetInstance();
 
 	// Level
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
@@ -115,7 +116,7 @@ void Game::Update(){
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
-
+	GUI_engine->update();
 	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
 	senseManager->SendSignals();				// Update de las notificaciones sensoriales
 
@@ -160,6 +161,7 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
+	GUI_engine->draw();
 	if(playerOne != NULL){
 	g_engine->drawAim(playerOne->GetMoving());
 		playerOne->DrawOverlays(deltaTime);

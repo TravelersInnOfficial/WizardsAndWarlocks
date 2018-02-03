@@ -6,6 +6,7 @@
 
 #include "./../Managers/StateManager.h"
 #include "./State.h"
+#include "./../Menus/MainMenu.h"
 
 class MenuPrincipal: public State{
 public:
@@ -21,6 +22,7 @@ private:
 	void PrepareGame();
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
+	GUIEngine* 		GUI_engine;
 	MenuOption 		selectedOption;		// Opcion dada en el menu
 };
 
