@@ -9,7 +9,7 @@ bool State::Input(){
 	return true;
 }
 
-void State::Update(){
+void State::Update(float deltaTime){
 	std::cout<<"UPDATE DEL ESTADO"<<std::endl;
 }
 

@@ -26,7 +26,6 @@ class Player;
 class Entidad{
 public:
 	Entidad();
-	virtual void Update();
 	virtual void Contact(void* punt, EntityEnum tipo);
 	virtual void Interact(Player* p);
 	EntityEnum GetClase();

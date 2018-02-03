@@ -5,8 +5,9 @@
 NetGame* NetGame::instance = NULL;
 
 NetGame* NetGame::GetInstance(){
-	if(instance == NULL) instance = new NetGame();
-	return instance;
+	//if(instance == NULL) instance = new NetGame();
+	std::cout<<"Meck"<<std::endl;
+	return NULL;
 }
 
 NetGame::NetGame(){
@@ -102,7 +103,7 @@ bool NetGame::Input(){
 	return end;
 }
 
-void NetGame::Update(){
+void NetGame::Update(float deltaTime){
 
 	UpdateDelta();
 
@@ -113,7 +114,7 @@ void NetGame::Update(){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
-	playerManager->UpdatePlayers(true);
+	playerManager->UpdatePlayers(deltaTime, true);
 
 	networkManager->Update();
 	bulletManager->Update();
@@ -155,7 +156,6 @@ void NetGame::Draw(){
 
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
-		playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 	}
 	
@@ -194,19 +194,11 @@ void NetGame::CreatePlayer(NetworkObject* nObject, bool isPlayerOne, std::string
 	if(!isServer && playerOne == NULL && isPlayerOne) {
 		playerOne = (HumanPlayer*)playerManager->AddHumanPlayer();
 		playerOne->SetNetworkObject(nObject);
-		spellManager->AddHechizo(0, playerOne, SPELL_PROJECTILE);
-		spellManager->AddHechizo(1, playerOne, SPELL_FIRE);
-		spellManager->AddHechizo(2, playerOne, SPELL_WALL);
-		spellManager->AddHechizo(3, playerOne, SPELL_BLIZZARD);
 		p = (Player*) playerOne;
 	}
 	else{
 		Player* newPlayer = playerManager->AddHumanPlayer(false);
 		newPlayer->SetNetworkObject(nObject);
-		spellManager->AddHechizo(0, newPlayer, SPELL_PROJECTILE);
-		spellManager->AddHechizo(1, newPlayer, SPELL_FIRE);
-		spellManager->AddHechizo(2, newPlayer, SPELL_WALL);
-		spellManager->AddHechizo(3, newPlayer, SPELL_BLIZZARD);
 		p = (Player*) newPlayer;
 	}
 

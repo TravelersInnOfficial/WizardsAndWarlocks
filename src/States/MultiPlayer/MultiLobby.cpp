@@ -1,0 +1,114 @@
+#include "MultiLobby.h"
+
+MultiLobby::MultiLobby(MultiPlayerGame* fat){
+	father = fat;
+
+	f_engine 		= BulletEngine::GetInstance();
+	g_engine 		= GraphicEngine::getInstance();
+	s_engine 		= SoundSystem::getInstance();
+	n_engine 		= NetworkEngine::GetInstance();
+
+	spellManager 	= SpellManager::GetInstance();
+	bulletManager 	= BulletManager::GetInstance();
+	effectManager 	= EffectManager::GetInstance();
+	objectManager	= ObjectManager::GetInstance();
+	playerManager	= PlayerManager::GetInstance();
+	trapManager		= TrapManager::GetInstance();
+	networkManager	= NetworkManager::GetInstance();
+	
+	// Level
+	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
+
+	if(n_engine->IsServerInit()){
+		isServer = true;
+	}
+	else if(n_engine->IsClientInit()){
+		isServer = false;
+	}
+
+	networkObject = networkManager->GetMultiGame();
+	playerOne = playerManager->GetPlayerOne();
+
+	// GraphicEngine
+	if(playerOne==NULL) g_engine->addCameraSceneNodeFPS(120.f, 0.005);
+
+	// Ponemos a false el inicio de la partida de los players
+	playerManager->ManageMatchStatus(false);
+
+	if(networkObject!=NULL && isServer)networkObject->SetBoolVar(MULTIGAME_BACK_LOBBY, false, true, false);
+}
+
+MultiLobby::~MultiLobby(){
+	// Los motores los eliminara el StateManager
+	// Los managers los eliminara el SinglePlayerManager
+}
+
+bool MultiLobby::Input(){
+	return false;
+}
+
+void MultiLobby::UpdateLobby(float deltaTime){
+
+	n_engine->Update();
+	f_engine->UpdateWorld();
+
+	if(g_engine->getActiveCamera() != NULL){
+		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
+	}
+
+	playerManager->UpdatePlayers(deltaTime, true);
+
+	networkManager->Update();
+	bulletManager->Update();
+	spellManager->UpdateCooldown(deltaTime);
+	effectManager->UpdateEffects(deltaTime);
+	objectManager->Update(deltaTime);
+	trapManager->Update(deltaTime);
+	playerManager->RespawnDeadPlayers();
+	MenuManager::GetInstance()->UpdateNetDebug();
+	g_engine->UpdateReceiver();
+
+	// START/END MATCH
+	if(networkObject!=NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)){
+		father->StartGame();
+	}
+
+	CheckIfReady();
+}
+
+void MultiLobby::Update(float deltaTime){
+	if(playerOne == NULL && !isServer){
+		playerOne = playerManager->GetPlayerOne();
+	}
+	if(networkObject == NULL){
+		networkObject = networkManager->GetMultiGame();
+	}
+	UpdateLobby(deltaTime);
+}
+
+
+void MultiLobby::Draw(){
+
+	if(playerOne != NULL){
+		g_engine->drawAim(playerOne->GetMoving());
+		playerOne->Draw();
+	}
+	
+	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+}
+
+void MultiLobby::CheckIfReady(){
+	// Comprobamos que el jugador uno este dentro de la zona
+	if(playerOne != NULL) playerOne->CheckIfReady();
+
+	// Comprobamos que todos los jugadores tengan su variable READY a true
+	// Si la tienen, cargamos el siguente nivel
+	if(isServer && playerManager->CheckIfReady()) {
+		networkObject->SetBoolVar(MULTIGAME_CHANGE, true, true, false);
+		//LevelLoader::LoadLevel("../assets/json/BasicMap.json");
+		//lobbyState = false;
+		//playerManager->ManageMatchStatus(true);
+		//g_engine->ToggleMenu(false);
+		//MenuManager::GetInstance()->ClearMenu();
+	}
+}

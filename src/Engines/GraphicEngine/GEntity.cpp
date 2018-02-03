@@ -24,8 +24,6 @@ void GEntity::Rotate(vector3df rot){
     privateNode->updateAbsolutePosition();
 }
 
-
-
 void GEntity::setScale(vector3df scale){
     privateNode->setScale(irr::core::vector3df(scale.X, scale.Y, scale.Z));
 }

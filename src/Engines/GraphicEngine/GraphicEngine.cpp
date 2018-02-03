@@ -161,28 +161,12 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 	draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
 }
 
-void GraphicEngine::drawOverlays(int type){
+void GraphicEngine::drawOverlays(OverlayCodes type){
+	std::string overlayTexture = OverlayPath[type];
 	irr::video::ITexture* overlay = NULL;
-	
-	switch(type){
-		case(0):{
-			overlay = privateDriver->getTexture("./../assets/textures/overlays/BloodSplatter.png");
-			break;
-		}
-		case(1):{
-			overlay = privateDriver->getTexture("./../assets/textures/overlays/HitMade.png");
-			break;
-		}
-		case(2):{
-			overlay = privateDriver->getTexture("./../assets/textures/overlays/Fuzzy.png");
-			break;
-		}
-		default:{
-			break;
-		}
-	}
+	overlay = privateDriver->getTexture(overlayTexture.c_str());
 
-	if(overlay != NULL){
+	if(overlayTexture.length() > 0){
 		const irr::core::dimension2du& size = privateDriver->getScreenSize();
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
 		const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
@@ -324,7 +308,7 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
-	privateCamera->privateNode = privateSManager->getActiveCamera();
+	if(privateCamera != NULL) privateCamera->privateNode = privateSManager->getActiveCamera();
 	return privateCamera;
 }
 

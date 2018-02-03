@@ -140,7 +140,7 @@ void Trap::Interact(Player* p){
 void Trap::Activate(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+            EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
             player->ChangeHP(-25);
         break;
 
@@ -179,7 +179,7 @@ void Trap::Activate(Player* player){
 void Trap::ForceEffect(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+            EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
         break;
 
         case TENUM_SPIRITS:
@@ -249,10 +249,6 @@ TrapEnum Trap::GetTrapType(){
 }
 
 void Trap::Erase(){
-    m_rigidBody->Erase();
-    m_body->Erase();
-    g_body->Erase();
-
     delete m_rigidBody;
     delete m_body;
     delete g_body;

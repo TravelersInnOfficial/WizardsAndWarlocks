@@ -9,9 +9,6 @@ DamageArea::DamageArea(int dam, float cast, vector3df TPosition, vector3df TScal
 }
 	
 DamageArea::~DamageArea(){
-	bt_body->Erase();
-	m_areaNode->Erase();
-
 	delete m_areaNode;
 	delete bt_body;
 }

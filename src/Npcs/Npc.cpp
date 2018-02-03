@@ -5,9 +5,6 @@ Npc::Npc(){
 }
 
 Npc::~Npc(){
-	pBody->Erase();
-    gBody->Erase();	
-
 	delete gBody;
 	delete pBody;
 }

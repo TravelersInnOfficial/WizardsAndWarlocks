@@ -20,8 +20,10 @@ public:
 	~NetworkManager();
 
 	void Update();
+	NetworkObject* GetMultiGame();
 
 private:
+	NetworkObject* multiGame;
 
 	std::map<int, NetworkObject*> networkObjects;			// Map of Network Objects
 	std::map<int, NetworkObject*> newNetworkObjects;		// Map of Network Objects not spawned

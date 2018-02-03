@@ -1,9 +1,14 @@
 #include "RoomGraph.h"
 
-RoomGraph::RoomGraph(){}
+#include <limits>
+
+RoomGraph::RoomGraph(){
+	m_actualRoom = NULL;
+}
 
 RoomGraph::RoomGraph(RoomGraph* graph){
 	graph->CopyGraph(this);
+	m_actualRoom = NULL;
 }
 
 RoomGraph::~RoomGraph(){
@@ -69,4 +74,29 @@ void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 			copyGraph->AddConnection(info->GetId(), infoConnections[j]);
 		}
 	}
+}
+
+void RoomGraph::InitRoom(vector3df pos){
+    float compare = std::numeric_limits<float>::max();
+    RoomInfo* nearest = NULL;
+
+	int size = m_rooms.size();
+	for(int i=0; i<size; i++){
+		RoomInfo* info = m_rooms[i];
+		vector3df difPos = pos - info->GetPosition();
+		float value = difPos.length();	// Sacamos la distancia entre la posicion y la habitacion
+		if(value<compare){
+			compare = value;
+			nearest = info;
+		}
+	}
+
+	if(m_actualRoom != nearest){
+		if(m_actualRoom != NULL){
+			// Cambios a hacer al cambiar de habitacion
+			// Tipo el security level
+		}
+		m_actualRoom = nearest;
+	}
+
 }

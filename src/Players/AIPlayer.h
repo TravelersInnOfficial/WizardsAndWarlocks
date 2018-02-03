@@ -15,7 +15,7 @@ public:
 	AIPlayer();
 	~AIPlayer();
 
-	void Update();
+	void Update(float deltaTime);
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
 	void Die();

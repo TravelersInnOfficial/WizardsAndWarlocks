@@ -24,10 +24,6 @@ Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float ve
 
 Projectile::~Projectile(){
 	delete direction;
-
-	bt_body->Erase();
-	m_ProjectileNode->Erase();
-
 	delete bt_body;
 	delete m_ProjectileNode;
 }

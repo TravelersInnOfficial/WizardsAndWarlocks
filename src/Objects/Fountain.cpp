@@ -17,9 +17,6 @@ Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 }
 
 Fountain::~Fountain(){
-	bt_body->Erase();
-    m_fountainNode->Erase();	
-
     delete bt_body;
     delete m_fountainNode;
 }

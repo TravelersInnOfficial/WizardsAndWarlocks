@@ -7,6 +7,8 @@ GBody::GBody(irr::scene::ISceneNode* node){
 }
 
 GBody::~GBody(){
+	// Remove()
+	Erase();
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
@@ -41,7 +43,6 @@ void GBody::AddText(std::string text, vector3df position, int id){
 		irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
 		board->setSize(dim);
 
-	}else{
- 	   board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);	
 	}
+	else board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 }

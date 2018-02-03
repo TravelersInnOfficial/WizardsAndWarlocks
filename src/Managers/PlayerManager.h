@@ -17,7 +17,7 @@ public:
 
 	Player* AddHumanPlayer(bool isPlayer1 = true);
 	AIPlayer* AddAIPlayer();
-	void UpdatePlayers(bool isNetGame = false);
+	void UpdatePlayers(float deltaTime, bool isNetGame = false);
 	void AddToDeletePlayer(int networkId);
 	void DeletePlayers();
 	void SendVisualSignal();
@@ -46,6 +46,7 @@ public:
 	Player* ChangePlayerTargetCam(Player* player);	// Cambia el jugador al que mirar en la camara de muerte
 
 private:
+	Player*		playerOne;
 
 	vector<Player*>	players;
 	vector<Player*>	deadPlayers;
