@@ -1,6 +1,6 @@
 #include "SinglePlayerGame.h"
-#include "./Lobby.h"
-#include "./Match.h"
+#include "Lobby.h"
+#include "Match.h"
 
 SinglePlayerGame::SinglePlayerGame(){
 	spellManager 	= SpellManager::GetInstance();

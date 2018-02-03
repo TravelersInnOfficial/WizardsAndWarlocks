@@ -146,6 +146,7 @@
 #endif // defined(_MSC_VER)
 
 // To build this library as static library, you have to define _IRRIMGUI_STATIC_LIB_ during compilation!
+#define _IRRIMGUI_STATIC_LIB_
 #ifndef _IRRIMGUI_STATIC_LIB_
 #ifdef _IRRIMGUI_EXPORTS_
 #define IRRIMGUI_DLL_API __declspec(dllexport)

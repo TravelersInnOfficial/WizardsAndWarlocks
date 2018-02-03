@@ -20,6 +20,7 @@ StateManager::StateManager(){
 	currentState = NULL;
 	LoadState(STATE_MENU);
 	preparedStatus = WITHOUT_STATE;
+	resourcesLoaded = false;
 }
 
 StateManager::~StateManager(){
@@ -34,9 +35,7 @@ StateManager::~StateManager(){
 }
 
 StateManager* StateManager::GetInstance(){
-	if(instance==0){
-		instance = new StateManager();
-	}
+	if(instance==0) instance = new StateManager();
 	return instance;
 }
 
@@ -70,9 +69,17 @@ void StateManager::LoadState(State_Code code){
 			currentState = new MenuPrincipal();
 			break;
 		case STATE_GAME:
+			if(!resourcesLoaded){
+				resourcesLoaded = true;
+				ResourceManager::LoadResources();
+			}
 			currentState = new SinglePlayerGame();
 			break;
 		case STATE_NETGAME:
+			if(!resourcesLoaded){
+				resourcesLoaded = true;
+				ResourceManager::LoadResources();
+			}
 			currentState =  new MultiPlayerGame();
 			break;
 		case WITHOUT_STATE:

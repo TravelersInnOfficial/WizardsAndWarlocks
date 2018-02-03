@@ -17,7 +17,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <SoundEngine/SoundSystem.h>
-#include "Camera.h"
+#include "./../Cameras/Camera.h"
 #include "./../Managers/OverlayManager.h"
 
 class Potion;
