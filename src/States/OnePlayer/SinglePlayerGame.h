@@ -11,6 +11,7 @@
 #include "./../Managers/TrapManager.h"
 
 #include "./../State.h"
+#include "./../LevelLoader.h"
 
 class SinglePlayerGame: public State{
 public:
@@ -36,6 +37,12 @@ private:
 	RegionalSenseManager* 	senseManager;
 
 	GraphicEngine*			g_engine;
+	BulletEngine*			f_engine;
+
+	bool 	captured;
+	bool 	mute;
+	bool 	debug;
+
 };
 
 #endif

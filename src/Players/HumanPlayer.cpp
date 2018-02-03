@@ -94,7 +94,7 @@ void HumanPlayer::GetNetInput(){
 			if(m_HP != life){
 				if(life < m_HP){
 					playHit();
-					overlayManager->SetTime(BLOOD, 1);
+					if(overlayManager!=NULL)overlayManager->SetTime(BLOOD, 1);
 				}
 				m_HP = life;
 			}
@@ -127,7 +127,6 @@ void HumanPlayer::GetNetInput(){
 	}
 
 	// LO QUE RECIBE TANTO EL SERVIDOR COMO LOS TODOS CLIENTES, PERO NO EL PLAYER ONE DE CADA CLIENTE
-
 	if(!isPlayerOne){
 		objstate_int = networkObject->GetIntVar(PLAYER_SPELL);
 		if(objstate_int != -99999){

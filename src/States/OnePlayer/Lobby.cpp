@@ -65,23 +65,16 @@ void Lobby::Update(float deltaTime){
 }
 
 void Lobby::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
 
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
-		//playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
 
-	/*if(debug){
-		f_engine->DebugDrawWorld();
-		if(AL != NULL) AL->Debug();
-	}*/
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
-	g_engine->endScene();
+
 }
 
 void Lobby::CheckIfReady(){

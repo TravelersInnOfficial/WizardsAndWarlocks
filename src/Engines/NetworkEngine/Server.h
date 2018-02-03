@@ -69,6 +69,9 @@ public:
 
 private:
 	
+	int multiGameId;
+	NetworkObject* multiGameObject;
+
 	int lastObjectId = -1;									// ID of the last object created on the server
 	std::map<int, NetworkObject*> networkObjects;			// Map of Network Objects on the server
 	std::map<int, NetworkObject*> newNetworkObjects;		// Map of Network Objects on the server that haven't been retrieved
@@ -76,8 +79,6 @@ private:
 
 	int lastPlayerId = -1;								// ID of the last player connected to the server
 	std::map<int, RakNet::RakNetGUID> networkPlayers;	// Map of Players conected to the server
-	
-
 	std::map<int, int> clientToPlayer;					// Client(k) To Player object(v) map
 
 	RakNet::RakPeerInterface *peer;						// Peer Interface

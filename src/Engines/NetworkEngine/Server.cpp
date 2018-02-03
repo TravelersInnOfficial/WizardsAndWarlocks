@@ -8,6 +8,16 @@ Server::Server(int serverPort, int maxClients){
 	descriptor = RakNet::SocketDescriptor(serverPort, 0);
 	peer->Startup(maxClients, &descriptor, 1);
 	peer->SetMaximumIncomingConnections(maxClients);
+
+	// Creo el NetworkObject del juego multijugador
+	lastObjectId += 1;
+	multiGameId = lastObjectId;
+	multiGameObject = new NetworkObject(lastObjectId, ID_MULTIGAME_O);
+	networkObjects[lastObjectId] = multiGameObject;
+	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
+	// Inicializo su variable
+	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, true);
+	multiGameObject->SetBoolVar(MULTIGAME_BACK_LOBBY, false, true, true);
 }
 
 Server::~Server(){
@@ -127,12 +137,12 @@ void Server::RecievePackages(){
 			case ID_NEW_INCOMING_CONNECTION: {
 
 				// Si la partida ha empezado negamos la conexion
-				if(!NetGame::GetInstance()->GetLobbyState()){
+				/*if(!NetGame::GetInstance()->GetLobbyState()){
 					RakNet::BitStream bitstream;
 					bitstream.Write((RakNet::MessageID)ID_DISCONNECTION_NOTIFICATION);
 					SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					continue;
-				}
+				}*/
 
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
@@ -291,7 +301,7 @@ void Server::RecievePackages(){
 
 			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_MATCH_ENDED: {
-
+				/*
 				// Leer quien ha ganado
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				Alliance winnerAlliance;
@@ -304,7 +314,7 @@ void Server::RecievePackages(){
 				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
 				propagateEndMatch.Write(winnerAlliance);
 				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
-				
+				*/
 				break;
 			}
 

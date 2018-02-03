@@ -1,20 +1,20 @@
-#ifndef LOBBY_H
-#define LOBBY_H
+#ifndef MULTIMATCH_H
+#define MULTIMATCH_H
 
+#include "./MultiPlayerGame.h"
 #include "./../State.h"
-#include "./SinglePlayerGame.h"
 
-class Lobby: public State{
+class MultiMatch: public State{
 public:
-	Lobby(SinglePlayerGame* fat);
-	~Lobby();
+	MultiMatch(MultiPlayerGame* fat);
+	~MultiMatch();
 
 	bool Input();
 	void Update(float deltaTime);
 	void Draw();
 private:
-	void CheckIfReady();
-	
+	void CheckIfWon();
+	void MatchEnded(Alliance winnerAlliance);
 	// Nos guardamos los managers que hay actualmente creados
 	// Pero sera el SinglePlayerGame quien se encargara de eliminarlos
 	SpellManager* 			spellManager;
@@ -23,15 +23,19 @@ private:
 	ObjectManager*			objectManager;
 	PlayerManager*			playerManager;
 	TrapManager*			trapManager;
-	RegionalSenseManager* 	senseManager;
+	NetworkManager*		 	networkManager;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;
 	SoundSystem*		s_engine;
+	NetworkEngine*		n_engine;
 
-	SinglePlayerGame* 	father;
+	MultiPlayerGame* 	father;
 
 	Player* playerOne;
+	NetworkObject* 	networkObject;
+
+	bool	isServer;
 };
 
 #endif

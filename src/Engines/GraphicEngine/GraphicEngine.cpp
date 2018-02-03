@@ -9,7 +9,7 @@ GraphicEngine::GraphicEngine(){
 	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
 	nulldevice -> drop();
-	deskres = irr::core::dimension2d<unsigned int>(900,600);
+	deskres = irr::core::dimension2d<unsigned int>(300,200);
 
 	privateDevice = irr::createDevice(
 		irr::video::EDT_OPENGL,                             //Driver

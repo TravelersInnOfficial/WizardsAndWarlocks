@@ -50,7 +50,7 @@ bool StateManager::Update(){
 	bool end = currentState->Input();
 	currentState->Update(deltaTime);
 	currentState->Draw();
-	
+
 	UpdateDelta();
 
 	return !end;
@@ -73,7 +73,7 @@ void StateManager::LoadState(State_Code code){
 			currentState = new SinglePlayerGame();
 			break;
 		case STATE_NETGAME:
-			currentState =  NetGame::GetInstance();
+			currentState =  new MultiPlayerGame();
 			break;
 		case WITHOUT_STATE:
 			currentState = NULL;

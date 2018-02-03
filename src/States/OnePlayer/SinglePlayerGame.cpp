@@ -3,8 +3,6 @@
 #include "./Match.h"
 
 SinglePlayerGame::SinglePlayerGame(){
-	m_stateGame 	= new Lobby(this);
-
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
@@ -14,11 +12,17 @@ SinglePlayerGame::SinglePlayerGame(){
 	senseManager	= RegionalSenseManager::GetInstance();
 
 	g_engine		= GraphicEngine::getInstance();
+	f_engine		= BulletEngine::GetInstance();
+
+	m_stateGame 	= new Lobby(this);
+
+	debug 		= false;
+	mute 		= false;
+	captured 	= false;
 }
 
 SinglePlayerGame::~SinglePlayerGame(){
 	delete m_stateGame;
-
 	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
@@ -76,6 +80,22 @@ bool SinglePlayerGame::Input(){
 		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 	}
 
+	// DEBUG
+	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
+
+	if(g_engine->IsKeyPressed(KEY_F2)){
+		float vol = 1;
+		if(!mute) vol = 0;
+		SoundSystem::getInstance()->setVolume(vol);
+		mute = !mute;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_F3)){
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(!captured);
+		captured = !captured;
+	}
+
 	return m_stateGame->Input();
 }
 
@@ -84,5 +104,15 @@ void SinglePlayerGame::Update(float deltaTime){
 }
 
 void SinglePlayerGame::Draw(){
+	g_engine->beginSceneDefault();
+	g_engine->drawAll();
+
 	m_stateGame->Draw();
+
+	if(debug){
+		f_engine->DebugDrawWorld();
+		//if(AL != NULL) AL->Debug();
+	}
+
+	g_engine->endScene();
 }

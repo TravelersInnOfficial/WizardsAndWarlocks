@@ -28,6 +28,10 @@ Match::Match(SinglePlayerGame* fat){
 
 	// Ponemos a true el inicio de la partida
 	playerManager->ManageMatchStatus(true);
+
+	// Si estaba algun menu activado lo desactivamos
+	g_engine->ToggleMenu(false);
+	MenuManager::GetInstance()->ClearMenu();
 }
 
 Match::~Match(){
@@ -60,23 +64,14 @@ void Match::Update(float deltaTime){
 }
 
 void Match::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
 
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
-		//playerOne->DrawOverlays(deltaTime);
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
-
-	/*if(debug){
-		f_engine->DebugDrawWorld();
-		if(AL != NULL) AL->Debug();
-	}*/
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
-	g_engine->endScene();
 }
 
 void Match::CheckIfWon(){
