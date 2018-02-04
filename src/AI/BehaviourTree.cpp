@@ -131,6 +131,8 @@ void BehaviourTree::PrepareSubTrees(){
     // Escapar
     CreateEscapeMove();
     // Explorar
+    CreateExploreMove();
+    // Explorar Tarea
     CreateExploreTask();
 
     // DECLARANDO FUNCIONES DE ATAQUE
@@ -256,7 +258,7 @@ void BehaviourTree::CreateNoMove(){
 }
 
 void BehaviourTree::CreateEscapeMove(){
-    Task* t = new NoMove(); // POR HACER
+    Task* t = new EmptyTask(); // POR HACER
 
     informacion->SetPuntero(AI_TASK_ESCAPE, t);
 
@@ -264,9 +266,13 @@ void BehaviourTree::CreateEscapeMove(){
 }
 
 void BehaviourTree::CreateExploreTask(){
-    Task* t = new NoMove(); // POR HACER
-
+    Task* t = new EmptyTask();
     informacion->SetPuntero(AI_TASK_EXPLORE, t);
+    tasks.push_back(t);
+}
 
+void BehaviourTree::CreateExploreMove(){
+    Task* t = new WhereExplore();
+    informacion->SetPuntero(AI_MOVE_EXPLORE, t);
     tasks.push_back(t);
 }
