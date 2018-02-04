@@ -31,6 +31,8 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
+
+	if(networkObject != NULL && isServer) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
 }
 
 MultiLobby::~MultiLobby(){
@@ -73,9 +75,7 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	g_engine->UpdateReceiver();
 
 	// START/END MATCH
-	if(networkObject!=NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)){
-		father->StartGame();
-	}
+	if(networkObject!=NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)) father->StartGame();
 
 	CheckIfReady();
 }
