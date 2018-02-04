@@ -1,4 +1,5 @@
 #include "MultiLobby.h"
+#include <GraphicEngine/MenuManager.h>
 
 MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	father = fat;
@@ -19,12 +20,8 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	// Level
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 
-	if(n_engine->IsServerInit()){
-		isServer = true;
-	}
-	else if(n_engine->IsClientInit()){
-		isServer = false;
-	}
+	if(n_engine->IsServerInit()) isServer = true;
+	else if(n_engine->IsClientInit()) isServer = false;
 
 	networkObject = networkManager->GetMultiGame();
 	playerOne = playerManager->GetPlayerOne();
@@ -34,8 +31,6 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
-
-	if(networkObject!=NULL && isServer)networkObject->SetBoolVar(MULTIGAME_BACK_LOBBY, false, true, false);
 }
 
 MultiLobby::~MultiLobby(){
@@ -44,6 +39,15 @@ MultiLobby::~MultiLobby(){
 }
 
 bool MultiLobby::Input(){
+	// Leemos si el boton del menu de fin de juego se ha leido
+	if(MenuManager::GetInstance()->CheckIfExists(ENDMATCH_M_WINDOW)){
+		int option = g_engine->ReadButtonPressed();
+		if(option == ENDMATCH_M_CONFIRM){
+			g_engine->ToggleCameraMovement(true);
+			g_engine->ToggleMenu(false);
+			MenuManager::GetInstance()->ClearMenu();
+		}
+	}
 	return false;
 }
 
@@ -77,18 +81,13 @@ void MultiLobby::UpdateLobby(float deltaTime){
 }
 
 void MultiLobby::Update(float deltaTime){
-	if(playerOne == NULL && !isServer){
-		playerOne = playerManager->GetPlayerOne();
-	}
-	if(networkObject == NULL){
-		networkObject = networkManager->GetMultiGame();
-	}
+	if(playerOne == NULL && !isServer) playerOne = playerManager->GetPlayerOne();
+	if(networkObject == NULL) networkObject = networkManager->GetMultiGame();
 	UpdateLobby(deltaTime);
 }
 
 
 void MultiLobby::Draw(){
-
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();

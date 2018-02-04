@@ -348,3 +348,11 @@ std::string MenuManager::GetStringFromPlayer(Player* player){
 						+ spells_s;
 	return(toRet);
 }
+
+bool MenuManager::CheckIfExists(MenuOption elementID){
+	bool toRet = false;
+	for(int i = 0; i < loadedOptions.size() && !toRet; i++){
+		if(elementID == loadedOptions.at(i)) toRet = true;
+	}
+	return toRet;
+}

@@ -77,7 +77,7 @@ enum ObjectVariable{
 	PLAYER_STAMINA				=	23,
 	// ########################## MULTIGAME #####################
 	MULTIGAME_CHANGE			=	24,
-	MULTIGAME_BACK_LOBBY		=	25
+	MULTIGAME_WINNER_ALLIANCE	=	25
 	
 };
 

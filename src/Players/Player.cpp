@@ -574,16 +574,15 @@ void Player::SendSignal(){
 
 void Player::Die(){
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
-	ObjectManager::GetInstance()->StopInteractionsNPC();	// Paramos la posible interaccion con los NPCs
+
+	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();											// Stop the pulse event
 	playDie(); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
 	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
-	if(matchStarted){				
-		DestroyPlayerCharacter();							// Destruimos su cuerpo
-	}
+	if(matchStarted) DestroyPlayerCharacter();				// Destruimos cuerpo fisico
 }
 
 void Player::ReturnToLobby(){
@@ -871,7 +870,6 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			TrapManager::GetInstance()->setPlayerUsings(this, 0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
