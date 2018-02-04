@@ -69,7 +69,6 @@ void Lobby::Draw(){
 	if(playerOne != NULL){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
-		objectManager->DrawGrailGUI();
 	}
 
 	

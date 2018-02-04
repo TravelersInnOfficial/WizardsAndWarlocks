@@ -114,6 +114,6 @@ void MultiMatch::Draw(){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}
-	
+	objectManager->DrawGrailGUI();
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 }

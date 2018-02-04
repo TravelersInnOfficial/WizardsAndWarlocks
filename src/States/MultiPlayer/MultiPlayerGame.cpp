@@ -64,7 +64,7 @@ void MultiPlayerGame::ChangeMode(){
 			delete m_stateGame;
 			CleanGame();
 			m_stateGame = new MultiMatch(this);
-			playerManager->RestartMatchStatus();
+			playerManager->InitGame();
 			m_changeMode = 0;
 			break;
 	}

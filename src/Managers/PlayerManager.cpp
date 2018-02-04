@@ -163,9 +163,28 @@ void PlayerManager::RestartMatchStatus(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
-		if(p != NULL) p->Respawn();
+		p->Respawn();
 	}
 	RespawnDeadPlayers();
+	warlocksWin = false;
+	wizardsWin = false;
+}
+
+void PlayerManager::InitGame(){
+	// Pasamos al vector de vivos a todos los jugadores
+	int size = deadPlayers.size();
+	for(int i=size-1; i>=0; i--){
+		Player* p = deadPlayers[i];
+		players.push_back(p);
+	}
+	deadPlayers.clear();
+	// Inicializamos la partida de todos los jugadores
+	size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->InitGame();
+	}
+	// Cambiamos las variables de partida
 	warlocksWin = false;
 	wizardsWin = false;
 }

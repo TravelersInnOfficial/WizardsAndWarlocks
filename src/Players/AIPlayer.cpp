@@ -42,6 +42,11 @@ void AIPlayer::SetSteerings(){
 	flee = new Flee();
 }
 
+void AIPlayer::InitGame(){
+	behaviour->LoadRoomGraph();
+	Player::InitGame();
+}
+
 // STEERINGS
 SteeringOutput AIPlayer::GetLookWhereYoureGoing(Kinematic cKin){
 	return lookWhereYoureGoing->GetSteering(cKin);
@@ -77,7 +82,7 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
 		SetAllInput(UP);
-		behaviour->run();
+		behaviour->Update();
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update(deltaTime);		// Check Input
 	}

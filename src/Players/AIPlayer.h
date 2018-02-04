@@ -19,6 +19,9 @@ public:
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
 	void Die();
+	void InitGame();
+
+	// Draw
 	void Debug();
 
 	void Steering2Controller(SteeringOutput steering);

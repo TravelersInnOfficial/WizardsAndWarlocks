@@ -69,6 +69,10 @@ Player::Player(bool isPlayer1){
 	Respawn();
 }
 
+void Player::InitGame(){
+	Respawn();
+}
+
 void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;

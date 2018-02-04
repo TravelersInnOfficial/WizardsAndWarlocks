@@ -23,6 +23,8 @@ public:
 	void SendVisualSignal();
 	bool CheckIfReady();
 	void RespawnDeadPlayers();
+
+	void InitGame();
 	void RestartMatchStatus();
 	void ResetAllSpells();
 	void ManageMatchStatus(bool ManageMatchStatus);
