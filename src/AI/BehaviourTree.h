@@ -28,7 +28,9 @@ public:
 
     BehaviourTree();
     ~BehaviourTree();
-    void run();
+
+    void Update();
+    void Run();
 
     // Setters
     void SetRootReceive(Task* t);
@@ -39,6 +41,7 @@ public:
 
     // Functions
     void ResetInformacion();
+    void LoadRoomGraph();
 
     // Getters
     Blackboard* GetBlackboard();

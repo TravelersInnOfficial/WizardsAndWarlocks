@@ -19,13 +19,14 @@ public:
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
 	void Die();
+	void InitGame();
+
+	// Draw
 	void Debug();
 
 	void Steering2Controller(SteeringOutput steering);
 	void ShortestPath(vector3df); //Calculates the shortest path between to a positio
 
-	// Controller
-	void SetController(ACTION_ENUM action, keyStatesENUM state);
 	void CheckInput();
 
 	// Getters

@@ -61,6 +61,7 @@ class Player: public Entidad{
 		void CheckIfReady();
 		void Run(bool runningStatus);
 		void ApplyFuzyEffect();
+		virtual void InitGame();
 
 		// Spells
 		bool StartSpell();
@@ -81,6 +82,9 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();
+
+		// Controller
+		void SetController(ACTION_ENUM action, keyStatesENUM state);
 
 		// Network Functions
 		void GetNetInput();

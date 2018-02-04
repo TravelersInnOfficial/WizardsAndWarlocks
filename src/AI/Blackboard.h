@@ -29,7 +29,10 @@ public:
     Blackboard();
     ~Blackboard();
 
+    void LoadRoomGraph();
+    void UpdateRoomGraph();
     void SetPlayer(AIPlayer* p);
+
     AIPlayer* GetPlayer();
     AI_code GetEnemyAlliance();
     //Information

@@ -94,6 +94,7 @@ void HumanPlayer::GetNetInput(){
 			if(m_HP != life){
 				if(life < m_HP){
 					playHit();
+					SetController(ACTION_RAYCAST, RELEASED);
 					if(overlayManager!=NULL)overlayManager->SetTime(BLOOD, 1);
 				}
 				m_HP = life;

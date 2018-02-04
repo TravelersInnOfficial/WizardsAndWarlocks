@@ -13,9 +13,11 @@ public:
 	~RoomGraph();
 
 	void InitRoom(vector3df pos);
+	void UpdateExplore(float rotY);
 
 	RoomInfo* AddRoom(int id, vector3df position);
 	bool AddConnection(int first, int second);
+	bool RoomExplored();
 	void CopyGraph(RoomGraph* copyGraph);
 private:
 	std::vector<RoomInfo*>	m_rooms;

@@ -19,7 +19,12 @@ BehaviourTree::~BehaviourTree(){
     tasks.clear();
 }
 
-void BehaviourTree::run(){
+void BehaviourTree::Update(){
+    informacion->UpdateRoomGraph();
+    Run();
+}
+
+void BehaviourTree::Run(){
     rootRecive->run(informacion);
     rootAction->run(informacion);
     rootMove->run(informacion);
@@ -40,6 +45,10 @@ void BehaviourTree::SetRootMove(Task* t){
 void BehaviourTree::ResetInformacion(){
     informacion->CleanPuntero(AI_TARGET);
     informacion->CleanSense();
+}
+
+void BehaviourTree::LoadRoomGraph(){
+    informacion->LoadRoomGraph();
 }
 
 void BehaviourTree::SetInformation(Blackboard* bb){
