@@ -1,6 +1,8 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
 #include <Assets.h>
+bool exit_menu = false;
+bool options_menu = false;
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
@@ -36,33 +38,18 @@ void MultiPlayer(){
     std::cout<<"Start a new MULTIPLAYER game"<<std::endl;
 }
 void GameOptions(){
-    std::cout<<"Start OPTIONS manager"<<std::endl;
+    options_menu = true;
 }
 void ExitGame(){
-    std::cout<<"EXIT the game"<<std::endl;
-    
-    ImGui::OpenPopup("Exit the game");
-    if (ImGui::BeginPopupModal("Exit the game", NULL, ImGuiWindowFlags_AlwaysAutoResize))
-    {
-        ImGui::Text("Are you sure?\n\n");
-        ImGui::Separator();
-
-        if (ImGui::Button("YES", ImVec2(120,0))) {
-                GraphicEngine::getInstance()->drop();
-            }
-        ImGui::SameLine();
-        if (ImGui::Button("NO", ImVec2(120,0))) { ImGui::CloseCurrentPopup(); }
-        ImGui::EndPopup();
-    }
-    GraphicEngine::getInstance()->drop();
+    exit_menu = true;
 }
- void (*actions[N_BUTTONS])() = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
+void (*actions[N_BUTTONS])() = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
 
 void MainMenu::Update(bool open){
 
     //HELP WINDOWS
-    ImGui::ShowTestWindow();
-    ImGui::ShowMetricsWindow();
+    //ImGui::ShowTestWindow();
+    //ImGui::ShowMetricsWindow();
 
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
@@ -78,14 +65,46 @@ void MainMenu::Update(bool open){
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
 
         if(ImGui::ImageButton(imageid[i],buttonSize)){
-            std::cout<<"button "<<i<<" clicked"<<std::endl;
             actions[i]();
         }
-        
+
         ImGui::PopStyleColor(3);
         ImGui::PopID();
         if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
     }
+
+     //EXIT MENU POPUP
+        if(exit_menu){
+            ImGui::OpenPopup("Exit?");
+            if (ImGui::BeginPopupModal("Exit?")){
+                ImGui::Text("Are you sure?\n\n");
+                ImGui::Separator();
+                if(ImGui::Button("YES", ImVec2(120,0))){
+                    GraphicEngine::getInstance()->drop();
+                }
+                ImGui::SameLine();
+                if(ImGui::Button("NO", ImVec2(120,0))){ 
+                    ImGui::CloseCurrentPopup(); 
+                    exit_menu = false;
+                }
+                ImGui::EndPopup();
+            }
+        }
+
+        //OPTIONS POPUP
+        if(options_menu){
+            ImGui::OpenPopup("Options");
+            if (ImGui::BeginPopupModal("Options")){
+                ImGui::Text("SOON\n\n");
+                ImGui::Separator();
+                if(ImGui::Button("OK", ImVec2(120,0))){
+                    ImGui::CloseCurrentPopup(); 
+                    options_menu = false;
+                }
+                ImGui::EndPopup();
+            }
+        }
+        
     ImGui::End();
 }
 
