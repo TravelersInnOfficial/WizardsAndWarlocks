@@ -59,7 +59,7 @@ void SinglePlayerGame::ChangeMode(){
 			delete m_stateGame;						// Eliminamos el estado que haya actualmente
 			CleanGame();							// Limpiamos el juego
 			m_stateGame = new Match(this);			// Cargamos la partida
-			playerManager->InitGame();	// Posicionamos los jugadores
+			playerManager->InitGame();				// Posicionamos los jugadores
 			m_changeMode = 0;
 			break;
 		case 2:

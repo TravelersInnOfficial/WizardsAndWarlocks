@@ -69,6 +69,7 @@ private:
     void CreateUseFountain();   // SubArbol de usar una fuente
     void CreateDefuseTrap();    // SubArbol de desactivar trampas
     void CreateEscapeMove();    // SubArbol de huir
+    void CreateExploreTask();   // SubArbol de exploracion
 };
 
 #endif

@@ -111,3 +111,9 @@ void RoomGraph::UpdateExplore(float rotY){
 	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(rotY);
 }
 
+float RoomGraph::WhereExplore(){
+	float output = 0;
+	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore();
+	return output;
+}
+

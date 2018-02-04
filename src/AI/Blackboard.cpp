@@ -50,6 +50,16 @@ AIPlayer* Blackboard::GetPlayer(){
     }
 }
 
+RoomGraph* Blackboard::GetRoomGraph(){
+    if(roomGraph != NULL){
+        return roomGraph;
+    }else if(blackboardParent != NULL){
+        return blackboardParent->GetRoomGraph();
+    }else{
+        return NULL;
+    }
+}
+
 void Blackboard::SaveParent(Blackboard* parent){
     blackboardParent = parent;
 }
