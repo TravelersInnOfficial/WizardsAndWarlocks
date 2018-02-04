@@ -15,7 +15,8 @@ enum CollisionTypes {
 	C_PROJECTILE	= BIT(7),
 	C_TRAP			= BIT(8),
 	C_NPC			= BIT(9),
-	C_CAMERA		= BIT(10)
+	C_CAMERA		= BIT(10),
+	C_DAMAGEAREA	= BIT(12)
 };
 
 static int doorCW			= C_PLAYER
@@ -39,13 +40,13 @@ static int playerCW			= C_WALL
 							| C_TRAP
 							| C_PROJECTILE
 							| C_PLAYER
-							| C_NPC;
+							| C_NPC
+							| C_DAMAGEAREA;
 
 static int fountainCW		= C_WALL
 							| C_DOOR
 							| C_GRAIL
 							| C_FOUNTAIN
-							| C_TRAP
 							| C_PROJECTILE
 							| C_PLAYER;
 
@@ -86,5 +87,7 @@ static int raycastCW		= C_DOOR
 							| C_TRAP
 							| C_NPC
 							| C_PLAYER;
+
+static int damageareaCW		= C_PLAYER;
 
 #endif

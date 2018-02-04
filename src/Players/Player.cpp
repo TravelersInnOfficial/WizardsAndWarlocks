@@ -437,18 +437,22 @@ void Player::Jump(){
 
 void Player::ChangeHP(float HP){
 
-	// MULTIJUGADOR
+	// SERVIDOR
 	if(networkObject != NULL){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
-		if(isServer) m_HP += HP / m_Defense;
+		if(isServer){
+			if(HP < 0) SetController(ACTION_RAYCAST, RELEASED);
+			m_HP += HP / m_Defense;
+		}
 	}
 
 	// UN JUGADOR
 	else{
 		if (HP < 0) {
-			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
+			if (m_HP + HP > 0) playHit(); //We want to play while its alive but not when it dies
 			if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 1);
+			SetController(ACTION_RAYCAST, RELEASED);
 		}
 
 		// Solo le aplica danyo si su armadura es inferior a 5
@@ -463,6 +467,10 @@ void Player::ChangeHP(float HP){
 		m_dead = true;
 		if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 0);
 	}
+}
+
+void Player::SetController(ACTION_ENUM action, keyStatesENUM state){
+	controller->SetStatus(action, state);
 }
 
 bool Player::ChangeMP(float MP){
@@ -529,11 +537,13 @@ bool Player::ShootSpell(){
 	// Get the code of the currentSpell
 	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
+	
 	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
-		
 		ResetSpell();
 		return false;
 	}
+
+	SetController(ACTION_RAYCAST, RELEASED);
 	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
 }
 
