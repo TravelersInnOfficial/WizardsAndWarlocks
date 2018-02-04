@@ -8,10 +8,16 @@ NetworkManager* NetworkManager::GetInstance(){
 	return instance;
 }
 
-NetworkManager::NetworkManager(){ }
+NetworkManager::NetworkManager(){ 
+	multiGame = NULL;
+}
 
 NetworkManager::~NetworkManager(){
 	instance = 0;
+}
+
+NetworkObject* NetworkManager::GetMultiGame(){
+	return multiGame;
 }
 
 void NetworkManager::Update(){
@@ -47,7 +53,7 @@ void NetworkManager::SpawnNewObjects(){
 				break;
 			}
 			case ID_PLAYER_O:{
-				NetGame* gameInstance = NetGame::GetInstance();
+				//NetGame* gameInstance = NetGame::GetInstance();
 				bool playerOne = false;
 				std::string name = "";
 
@@ -57,7 +63,12 @@ void NetworkManager::SpawnNewObjects(){
 					name = n_engine->GetClient()->GetClientName();
 				}
 
-				gameInstance->CreatePlayer(row->second, playerOne, name);
+				PlayerManager* playerManager = PlayerManager::GetInstance();
+				Player* player = playerManager->AddHumanPlayer(playerOne);
+				player->SetNetworkObject(row->second);
+				if(name.length() > 0) player->SetName(name);
+
+				//gameInstance->CreatePlayer(row->second, playerOne, name);
 				break;
 			}
 			case ID_POTION_O:{
@@ -79,6 +90,10 @@ void NetworkManager::SpawnNewObjects(){
 				break;
 			}
 			case ID_PROYECTIL_O:{
+				break;
+			}
+			case ID_MULTIGAME_O:{
+				multiGame = row->second;
 				break;
 			}
 		}
@@ -119,6 +134,9 @@ void NetworkManager::EraseObjects(){
 				break;
 			}
 			case ID_PROYECTIL_O:{
+				break;
+			}
+			case ID_MULTIGAME_O:{
 				break;
 			}
 		}

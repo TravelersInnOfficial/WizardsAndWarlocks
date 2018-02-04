@@ -28,7 +28,9 @@ public:
 
     BehaviourTree();
     ~BehaviourTree();
-    void run();
+
+    void Update();
+    void Run();
 
     // Setters
     void SetRootReceive(Task* t);
@@ -39,6 +41,7 @@ public:
 
     // Functions
     void ResetInformacion();
+    void LoadRoomGraph();
 
     // Getters
     Blackboard* GetBlackboard();
@@ -66,6 +69,8 @@ private:
     void CreateUseFountain();   // SubArbol de usar una fuente
     void CreateDefuseTrap();    // SubArbol de desactivar trampas
     void CreateEscapeMove();    // SubArbol de huir
+    void CreateExploreTask();   // SubArbol de tarea explorar
+    void CreateExploreMove();   // SubArbol de exploracion
 };
 
 #endif

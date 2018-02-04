@@ -2,7 +2,7 @@
 #define WATCHERCAMERA_H
 
 #include "Camera.h"
-#include "../Entidad.h"
+#include "./../Entidad.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include <PhysicsEngine/BT_Body.h>
 
@@ -24,6 +24,8 @@ private:
     void UpdateAngles();
     
     BT_Body* p_BtBody;
+
+    vector2di lastPos;      // Ultima posicion en la que se ha encontrado el raton
 
     float XAngle;           // Angulo que forma el movimiento horizontal
     float YAngle;           // Angulo que forma el movimiento vertical

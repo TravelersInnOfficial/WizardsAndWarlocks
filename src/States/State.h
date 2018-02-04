@@ -9,7 +9,7 @@ public:
 	virtual ~State();
 
 	virtual bool Input();
-	virtual void Update();
+	virtual void Update(float deltaTime = 0.0f);
 	virtual void Draw();
 private:
 };

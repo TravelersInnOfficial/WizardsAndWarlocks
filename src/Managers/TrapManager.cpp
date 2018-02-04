@@ -59,14 +59,17 @@ void TrapManager::AddTrapToPlayer(Player* player, TrapEnum trap){
 
 bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End){
 	bool toRet = false;
-	
 	int uses = getPlayerUsings(player);
-	if(uses == 0) return false;
-	if(DeployTrap(getPlayerTrap(player),Start,End, player->GetId())){
-		uses--;
-		setPlayerUsings(player,uses);
-		toRet = true;
-		
+
+	Alliance alliance = NO_ALLIANCE;
+	if(player != NULL) alliance = player->GetAlliance();
+
+	if(uses > 0 && alliance == ALLIANCE_WARLOCK){
+		if(DeployTrap(getPlayerTrap(player),Start,End, player->GetId())){
+			uses--;
+			setPlayerUsings(player,uses);
+			toRet = true;
+		}
 	}
 
 	return toRet;

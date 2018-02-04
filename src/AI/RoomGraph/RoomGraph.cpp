@@ -57,6 +57,18 @@ bool RoomGraph::AddConnection(int first, int second){
 	return false;
 }
 
+bool RoomGraph::RoomExplored(){
+	bool output = false;
+	if(m_actualRoom!=NULL) output = m_actualRoom->GetExplored();
+	return output;
+}
+
+vector3df RoomGraph::RoomPos(){
+	vector3df output;
+	if(m_actualRoom!=NULL) output = m_actualRoom->GetPosition();
+	return output;
+}
+
 void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 	// Copiar todas las habitaciones
 	int size = m_rooms.size();
@@ -77,6 +89,7 @@ void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 }
 
 void RoomGraph::InitRoom(vector3df pos){
+
     float compare = std::numeric_limits<float>::max();
     RoomInfo* nearest = NULL;
 
@@ -98,5 +111,15 @@ void RoomGraph::InitRoom(vector3df pos){
 		}
 		m_actualRoom = nearest;
 	}
-
 }
+
+void RoomGraph::UpdateExplore(float rotY){
+	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(rotY);
+}
+
+float RoomGraph::WhereExplore(){
+	float output = 0;
+	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore();
+	return output;
+}
+

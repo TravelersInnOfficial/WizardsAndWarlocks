@@ -11,6 +11,7 @@ PlayerManager* PlayerManager::GetInstance(){
 PlayerManager::PlayerManager(){
 	wizardsWin = false;
 	warlocksWin = false;
+	playerOne = NULL;
 }
 
 PlayerManager::~PlayerManager(){
@@ -27,11 +28,19 @@ PlayerManager::~PlayerManager(){
 		delete p;
 	}
 	deadPlayers.clear();
+
 	instance = 0;
+	wizardsWin = false;
+	warlocksWin = false;
+	playerOne = NULL;
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 	Player* p = new HumanPlayer(isPlayer1);
+	// En el caso de que sea el jugador 1 no slo guardamos
+	if(isPlayer1){
+		playerOne = p;
+	}
 	players.push_back(p);
 	p->SetAlliance(ALLIANCE_WARLOCK);
 	return p;
@@ -44,7 +53,7 @@ AIPlayer* PlayerManager::AddAIPlayer(){
 	return p;
 }
 
-void PlayerManager::UpdatePlayers(bool isNetGame){
+void PlayerManager::UpdatePlayers(float deltaTime, bool isNetGame){
 	DeletePlayers();
 	// Actualizamos los personajes vivos
 	int size = players.size();
@@ -59,7 +68,7 @@ void PlayerManager::UpdatePlayers(bool isNetGame){
 			hp->GetNetInput();
 		}
 
-		p->Update();		
+		p->Update(deltaTime);		
 	}
 	
 	// Actualizamos los personajes muertos (camara libre)
@@ -154,9 +163,28 @@ void PlayerManager::RestartMatchStatus(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
-		if(p != NULL) p->Respawn();
+		p->Respawn();
 	}
 	RespawnDeadPlayers();
+	warlocksWin = false;
+	wizardsWin = false;
+}
+
+void PlayerManager::InitGame(){
+	// Pasamos al vector de vivos a todos los jugadores
+	int size = deadPlayers.size();
+	for(int i=size-1; i>=0; i--){
+		Player* p = deadPlayers[i];
+		players.push_back(p);
+	}
+	deadPlayers.clear();
+	// Inicializamos la partida de todos los jugadores
+	size = players.size();
+	for(int i=0; i<size; i++){
+		Player* p = players[i];
+		p->InitGame();
+	}
+	// Cambiamos las variables de partida
 	warlocksWin = false;
 	wizardsWin = false;
 }
@@ -264,15 +292,7 @@ void PlayerManager::RefreshServerAll(){
 }
 
 Player* PlayerManager::GetPlayerOne(){
-	Player* toRet = NULL;
-
-	int size = players.size();
-	for(int i=0; i<size && toRet == NULL; i++){
-		Player* p = players[i];
-		if(p->IsPlayerOne()) toRet = p;
-	}
-
-	return(toRet);
+	return playerOne;
 }
 
 vector<Player*> PlayerManager::GetAllPlayers(){

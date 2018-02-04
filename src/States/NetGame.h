@@ -30,7 +30,7 @@ public:
 	static NetGame* GetInstance();
 	~NetGame();
 	bool Input();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void RestartMatch();
@@ -83,7 +83,7 @@ private:
 	void CheckIfWon();
 
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
-	void createSoundEvents();			//Create the sound events
+	void createSoundEvents();							//Create the sound events
 
 };
 

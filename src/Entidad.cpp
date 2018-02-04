@@ -18,6 +18,5 @@ int Entidad::GetId(){
 	return id;
 }
 
-void Entidad::Update(){}
 void Entidad::Contact(void* punt, EntityEnum tipo){}
 void Entidad::Interact(Player* p){}

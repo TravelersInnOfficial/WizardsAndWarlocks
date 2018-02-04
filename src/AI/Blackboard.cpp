@@ -1,5 +1,6 @@
 #include "Blackboard.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include "./../Managers/ObjectManager.h"
 #include "./../Players/AIPlayer.h"
 
 Sense_struct::~Sense_struct(){
@@ -8,6 +9,7 @@ Sense_struct::~Sense_struct(){
 Blackboard::Blackboard(){
     blackboardParent = NULL;
     currentPlayer = NULL;
+    roomGraph = NULL;
     
     masterMovement = 0;
     masterAction = 0;
@@ -15,6 +17,23 @@ Blackboard::Blackboard(){
 
 Blackboard::~Blackboard(){
     CleanSense();
+}
+
+void Blackboard::LoadRoomGraph(){
+    if(roomGraph!=NULL){
+        delete roomGraph;
+    }
+    roomGraph = new RoomGraph();
+    ObjectManager::GetInstance()->CopyRoomGraph(roomGraph);
+    UpdateRoomGraph();
+}
+
+void Blackboard::UpdateRoomGraph(){
+    if(roomGraph!=NULL){
+        vector3df pos = currentPlayer->GetPos();
+        roomGraph->InitRoom(pos);
+        roomGraph->UpdateExplore(currentPlayer->GetRotY());
+    }
 }
 
 void Blackboard::SetPlayer(AIPlayer* p){
@@ -26,6 +45,16 @@ AIPlayer* Blackboard::GetPlayer(){
         return currentPlayer;
     }else if(blackboardParent != NULL){
         return blackboardParent->GetPlayer();
+    }else{
+        return NULL;
+    }
+}
+
+RoomGraph* Blackboard::GetRoomGraph(){
+    if(roomGraph != NULL){
+        return roomGraph;
+    }else if(blackboardParent != NULL){
+        return blackboardParent->GetRoomGraph();
     }else{
         return NULL;
     }

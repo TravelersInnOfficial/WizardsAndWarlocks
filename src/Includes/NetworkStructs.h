@@ -44,7 +44,8 @@ enum ObjectType{
 	ID_SWITCH_O 		= 5,
 	ID_GRAIL_O 			= 6,
 	ID_TRAP_O			= 7,
-	ID_PROYECTIL_O		= 8
+	ID_PROYECTIL_O		= 8,
+	ID_MULTIGAME_O		= 9
 };
 
 enum ObjectVariable{
@@ -73,7 +74,10 @@ enum ObjectVariable{
 	PLAYER_SPELL				=	20,
 	PLAYER_NAME					=	21,
 	PLAYER_RUN					=	22,
-	PLAYER_STAMINA				=	23
+	PLAYER_STAMINA				=	23,
+	// ########################## MULTIGAME #####################
+	MULTIGAME_CHANGE			=	24,
+	MULTIGAME_WINNER_ALLIANCE	=	25
 	
 };
 

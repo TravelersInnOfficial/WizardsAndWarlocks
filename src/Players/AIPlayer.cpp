@@ -37,9 +37,15 @@ void AIPlayer::SetSteerings(){
 	obstacleAvoidance = new ObstacleAvoidance();
 	followPath = new FollowPath(path);
 	wander = new Wander();
+	align = new Align();
 	face = new Face();
 	seek = new Seek();
 	flee = new Flee();
+}
+
+void AIPlayer::InitGame(){
+	behaviour->LoadRoomGraph();
+	Player::InitGame();
 }
 
 // STEERINGS
@@ -67,6 +73,10 @@ SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
 	return flee->GetSteering(cKin, tKin);
 }
 
+SteeringOutput AIPlayer::GetAlign(Kinematic cKin, Kinematic tKin){
+	return align->GetSteering(cKin, tKin);
+}
+
 SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 	SteeringOutput output = followPath->GetSteering(cKin);
 	output.angular = lookWhereYoureGoing->GetSteering(cKin).angular;
@@ -74,12 +84,12 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 	return output;
 }
 
-void AIPlayer::Update(){
+void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
 		SetAllInput(UP);
-		behaviour->run();
+		behaviour->Update();
 		shootSpell = false; 	// Reseteamos la variable
-		Player::Update();		// Check Input
+		Player::Update(deltaTime);		// Check Input
 	}
 }
 
@@ -194,10 +204,6 @@ void AIPlayer::CheckInput(){
 	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	// Trampas
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
-}
-
-void AIPlayer::SetController(ACTION_ENUM action, keyStatesENUM state){
-	controller->SetStatus(action, state);
 }
 
 void AIPlayer::Steering2Controller(SteeringOutput steering){

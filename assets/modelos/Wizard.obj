@@ -1,7 +1,7 @@
 # Blender v2.79 (sub 0) OBJ File: 'Players.blend'
 # www.blender.org
 mtllib Wizard.mtl
-o Cube.002
+o Wizard_Cube.000
 v -0.264121 -0.023884 -0.054949
 v -0.000000 0.011476 -0.361141
 v 0.264121 -0.023884 -0.054949

@@ -198,10 +198,14 @@ void DeathSnare::UpdateEffect(Player* p){
 void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
+	p->canJump = false;
+	p->m_Able2Jump = false;
 }
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
+	p->canJump = true;
+	p->m_Able2Jump = true;
 }
 
 void DeathSnare::createSoundEvent() {

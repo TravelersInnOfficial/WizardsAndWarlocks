@@ -27,7 +27,7 @@ SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)
 OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
 
 # Assuming four folders to ignore
-GAMEOBJ				 = $(shell find src \( -path "src/PhysicsEngine" -o -path "src/SoundEngine" -o -path "src/GraphicEngine" -o -path "src/NetworkEngine" \) -prune -o -name "*.cpp" -print)
+GAMEOBJ				 = $(shell find src \( -path "src/Engines" \) -prune -o -name "*.cpp" -print)
 SOFTCLEAN			 = $(patsubst src/%.cpp,obj/%.o,$(GAMEOBJ))
 SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 

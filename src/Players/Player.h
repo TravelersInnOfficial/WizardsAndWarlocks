@@ -17,7 +17,8 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <SoundEngine/SoundSystem.h>
-#include "Camera.h"
+#include "./../Cameras/Camera.h"
+#include "./../Managers/OverlayManager.h"
 
 class Potion;
 
@@ -28,7 +29,7 @@ class Player: public Entidad{
 		void CreatePlayerCharacter(bool firstInit = false);
 		void DestroyPlayerCharacter();
 		void PlayerInit();
-		virtual void Update();
+		virtual void Update(float deltaTime);
 		virtual void DeadUpdate();
 
 		// Draw
@@ -56,10 +57,11 @@ class Player: public Entidad{
 		void Raycast();
 		virtual void Die();
 		void ReturnToLobby();
-		void DrawOverlays(float deltaTime);
+		void DrawOverlays();
 		void CheckIfReady();
 		void Run(bool runningStatus);
 		void ApplyFuzyEffect();
+		virtual void InitGame();
 
 		// Spells
 		bool StartSpell();
@@ -80,6 +82,9 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();
+
+		// Controller
+		void SetController(ACTION_ENUM action, keyStatesENUM state);
 
 		// Network Functions
 		void GetNetInput();
@@ -143,7 +148,7 @@ class Player: public Entidad{
 
 		virtual ~Player();
 
-		// public variables
+		// Public variables
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
 		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 		float 			m_Defense;			// Divisor del danyo recibido
@@ -179,9 +184,7 @@ class Player: public Entidad{
 		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
 		bool			isRunning;			// The player is running? Yes/No
 
-		float			bloodOverlayTime;	//|
-		float			hitOverlayTime;		//|
-		float			fuzzyOverlayTime;	//| Tiempo de Blood Overlay que queda
+		OverlayManager* overlayManager;
 		
 		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 

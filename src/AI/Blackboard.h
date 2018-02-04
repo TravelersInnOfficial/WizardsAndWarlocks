@@ -29,8 +29,12 @@ public:
     Blackboard();
     ~Blackboard();
 
+    void LoadRoomGraph();
+    void UpdateRoomGraph();
     void SetPlayer(AIPlayer* p);
+
     AIPlayer* GetPlayer();
+    RoomGraph* GetRoomGraph();
     AI_code GetEnemyAlliance();
     //Information
     void*   GetPuntero(AI_code name);

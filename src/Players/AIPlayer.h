@@ -15,17 +15,18 @@ public:
 	AIPlayer();
 	~AIPlayer();
 
-	void Update();
+	void Update(float deltaTime);
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
 	void Die();
+	void InitGame();
+
+	// Draw
 	void Debug();
 
 	void Steering2Controller(SteeringOutput steering);
 	void ShortestPath(vector3df); //Calculates the shortest path between to a positio
 
-	// Controller
-	void SetController(ACTION_ENUM action, keyStatesENUM state);
 	void CheckInput();
 
 	// Getters
@@ -38,6 +39,7 @@ public:
 	void SetCurrentSpell(int num);
 
 	// Steerings
+	SteeringOutput GetAlign(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetFace(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetSeek(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetFlee(Kinematic cKin, Kinematic tKin);
@@ -59,6 +61,7 @@ private:
 	ObstacleAvoidance*  	obstacleAvoidance;
 	FollowPath*				followPath;
 	Wander*					wander;
+	Align*					align;
 	Face*					face;
 	Seek*					seek;
 	Flee*					flee;

@@ -11,14 +11,17 @@
 #include <TrapCodes.h>
 #include "./../Objects/Potion.h"
 
-#include "WatcherCamera.h"
-#include "FPSCamera.h"
+#include "./../Cameras/WatcherCamera.h"
+#include "./../Cameras/FPSCamera.h"
 
 GraphicEngine* engine;
 
 Player::Player(bool isPlayer1){
 	// Inicializamos la variable global
 	engine = GraphicEngine::getInstance();
+
+	if(isPlayer1) overlayManager = new OverlayManager();
+	else overlayManager = NULL;
 
 	createSoundEvents();
 	changeSurface(2);
@@ -66,6 +69,10 @@ Player::Player(bool isPlayer1){
 	Respawn();
 }
 
+void Player::InitGame(){
+	Respawn();
+}
+
 void Player::PlayerInit(){
 	potion = NULL;
 	m_HP = 100;
@@ -77,9 +84,13 @@ void Player::PlayerInit(){
 	m_visible = true;
 	m_Able2Jump = true;
 	m_dead = false;
-	bloodOverlayTime = 0;
-	hitOverlayTime = 0;
-	fuzzyOverlayTime = 0;
+
+	if(overlayManager != NULL){
+		overlayManager->SetTime(BLOOD, 0);
+		overlayManager->SetTime(HITLANDED, 0);
+		overlayManager->SetTime(FUZZY, 0);
+	}
+
 	TrapManager::GetInstance()->setPlayerUsings(this, 4);
 	EffectManager::GetInstance()->CleanEffects(this);
 	stopPulse();
@@ -88,6 +99,8 @@ void Player::PlayerInit(){
 Player::~Player(){
 
 	delete controller;
+
+	delete overlayManager;
 
 	if(bt_body != NULL){
 		delete bt_body;
@@ -151,7 +164,12 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		// Camera
-		if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0);		
+		if(isPlayerOne){ 
+			if(m_camera!=NULL){
+				delete m_camera;
+			}
+			m_camera = new FPSCamera(120.0f, 0);		
+		}
 
 		hasCharacter = true;
 	}
@@ -280,11 +298,11 @@ void Player::DeadUpdate(){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}
-		m_camera->UpdateCamera(targetDeadCam->GetPos());
+		if(targetDeadCam!=NULL) m_camera->UpdateCamera(targetDeadCam->GetPos());
 	}
 }
 
-void Player::Update(){
+void Player::Update(float deltaTime){
 
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
@@ -342,6 +360,8 @@ void Player::Update(){
 
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
 		checkMaxVelocity();
+
+		if(overlayManager!=NULL) overlayManager->Update(deltaTime);
 	}
 }
 
@@ -422,25 +442,27 @@ void Player::Jump(){
 
 void Player::ChangeHP(float HP){
 
-	// MULTIJUGADOR
+	// SERVIDOR
 	if(networkObject != NULL){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
-		if(isServer) m_HP += HP / m_Defense;
+		if(isServer){
+			if(HP < 0) SetController(ACTION_RAYCAST, RELEASED);
+			m_HP += HP / m_Defense;
+		}
 	}
 
 	// UN JUGADOR
 	else{
 		if (HP < 0) {
-			if (m_HP + HP > 0) 	playHit(); //We want to play while its alive but not when it dies
-			bloodOverlayTime = 1;
+			if (m_HP + HP > 0) playHit(); //We want to play while its alive but not when it dies
+			if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 1);
+			SetController(ACTION_RAYCAST, RELEASED);
 		}
+
 		// Solo le aplica danyo si su armadura es inferior a 5
-		if(m_Defense<5.0f){
-			m_HP += HP / m_Defense;
-		}else{
-			bloodOverlayTime = 0;
-		}
+		if(m_Defense<5.0f) m_HP += HP / m_Defense;
+		else if(overlayManager != NULL)  overlayManager->SetTime(BLOOD, 0);
 	}
 	
 	// AMBOS
@@ -448,8 +470,12 @@ void Player::ChangeHP(float HP){
 	else if(m_HP <= 0){
 		m_HP = 0;
 		m_dead = true;
-		bloodOverlayTime = 0;
+		if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 0);
 	}
+}
+
+void Player::SetController(ACTION_ENUM action, keyStatesENUM state){
+	controller->SetStatus(action, state);
 }
 
 bool Player::ChangeMP(float MP){
@@ -458,7 +484,6 @@ bool Player::ChangeMP(float MP){
 	if(m_MP + MP >= 0){
 		m_MP += MP;
 		toRet = true;
-
 		if(m_MP>100) m_MP = 100;
 	}
 
@@ -517,11 +542,13 @@ bool Player::ShootSpell(){
 	// Get the code of the currentSpell
 	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
+	
 	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
-		
 		ResetSpell();
 		return false;
 	}
+
+	SetController(ACTION_RAYCAST, RELEASED);
 	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
 }
 
@@ -539,28 +566,23 @@ void Player::ResetSpell(){
 
 void Player::SendSignal(){
 	RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+
 	// id, AI_code name, float str, Kinematic kin, AI_modalities mod
-	if(m_visible){
-		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
-	}
-	if(moving){
-		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
-	}
+	if(m_visible) sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_SIGHT);
+	if(moving) sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
 }
 
 void Player::Die(){
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
-	ObjectManager::GetInstance()->StopInteractionsNPC();	// Paramos la posible interaccion con los NPCs
+
+	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();											// Stop the pulse event
 	playDie(); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
-	if(matchStarted){						
-		PlayerManager::GetInstance()->AddToDead(this);		// Lo anyadimos a la lista de muertos
-		DestroyPlayerCharacter();							// Destruimos su cuerpo
-	}
-	else Respawn();											// Hacemos respawn
+	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
+	if(matchStarted) DestroyPlayerCharacter();				// Destruimos cuerpo fisico
 }
 
 void Player::ReturnToLobby(){
@@ -574,14 +596,8 @@ void Player::ReturnToLobby(){
 	}
 }
 
-void Player::DrawOverlays(float deltaTime){
-	bloodOverlayTime -= deltaTime;
-	hitOverlayTime -= deltaTime;
-	fuzzyOverlayTime -= deltaTime;
-	
-	if(hitOverlayTime > 0) engine->drawOverlays(1);
-	if(bloodOverlayTime > 0) engine->drawOverlays(0);
-	if(fuzzyOverlayTime > 0) engine->drawOverlays(2);
+void Player::DrawOverlays(){
+	if(overlayManager != NULL && isPlayerOne) overlayManager->Draw();	
 }
 
 void Player::CheckIfReady(){
@@ -686,11 +702,11 @@ void Player::UpdatePosShape(){
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::HitMade(Player* player){
-	hitOverlayTime = 0.25f;
+	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.25f);
 }
 
 void Player::ApplyFuzyEffect(){
-	fuzzyOverlayTime = 5.0f;
+	if(overlayManager != NULL) overlayManager->SetTime(FUZZY, 5.0f);
 }
 
 /********************************************************************************************************
@@ -758,20 +774,13 @@ void Player::stopPulse() {
 //Update the event positions for continuous events or usable while moving events (like spells)
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
-		if (soundEvents["footsteps"] != NULL) {
-			//Update footsteps
-			soundEvents["footsteps"]->setPosition(GetHeadPos());
-			
-			//Also the spells
-			
-		}
+		//Update footsteps
+		if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setPosition(GetHeadPos());
 	}
 }
 
 void Player::changeSurface(float n) {
-	if (soundEvents["footsteps"] != NULL) {
-		soundEvents["footsteps"]->setParamValue("Surface", n);
-	}
+	if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setParamValue("Surface", n);
 }
 /********************************************************************************************************
  ********************************************** GETERS **************************************************
@@ -868,7 +877,6 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			TrapManager::GetInstance()->setPlayerUsings(this, 0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -967,6 +975,7 @@ void Player::SetBillboard(){
 }
 
 void Player::Draw(){
+	DrawOverlays();
 	DrawBars();
 	DrawSpellSelector();
 	DrawInventory();

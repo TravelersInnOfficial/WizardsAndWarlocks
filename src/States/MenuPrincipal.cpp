@@ -29,7 +29,7 @@ bool MenuPrincipal::Input(){
 	return false;
 }
 
-void MenuPrincipal::Update(){
+void MenuPrincipal::Update(float deltaTime){
 	SoundSystem::getInstance()->Update();
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){

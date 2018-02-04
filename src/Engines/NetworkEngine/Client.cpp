@@ -97,7 +97,6 @@ void Client::SetClientName(std::string name){
 std::string Client::GetClientName(){ return (name); }
 
 void Client::RecievePackages(){
-
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
 		switch (packet->data[0]) {
 
@@ -150,7 +149,6 @@ void Client::RecievePackages(){
 			case ID_INCOMPATIBLE_PROTOCOL_VERSION:
 			case ID_CONNECTION_LOST:
 			case ID_DISCONNECTION_NOTIFICATION: {
-				std::cout<<"Conexion Lost or Denied."<<std::endl;
 				StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 				break;
 			}
@@ -164,11 +162,11 @@ void Client::RecievePackages(){
 
 			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_MATCH_ENDED: {
-				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				/*RakNet::BitStream bitstream(packet->data, packet->length, false);
 				Alliance winnerAlliance;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(winnerAlliance);
-				NetGame::GetInstance()->MatchEnded(winnerAlliance);
+				NetGame::GetInstance()->MatchEnded(winnerAlliance);*/
 				break;
 			}
 
@@ -282,6 +280,7 @@ void Client::RecievePackages(){
 						p->SetPosition(pos);
 					}
 				}
+				
 				break;
 			}
 			

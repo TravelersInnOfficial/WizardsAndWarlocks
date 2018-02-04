@@ -31,16 +31,21 @@ Game::Game(){
 	// Sound Engine
 	createSoundEvents();
 
-	// Graphic Engine
-	timeStart = g_engine->getTime() * 0.001;
-
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
+<<<<<<< HEAD
 	//AL = NULL;
 	//AL = playerManager->AddAIPlayer();
 	//AL->SetAlliance(ALLIANCE_WARLOCK);
  	//playerManager->AddAIPlayer();
+=======
+	AL = NULL;
+	//AL = playerManager->AddAIPlayer();
+	//AL->SetAlliance(ALLIANCE_WARLOCK);
+	//playerManager->AddAIPlayer();
+	
+>>>>>>> f321cecc54838ade733947c728642759393ac69d
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 
@@ -106,9 +111,7 @@ bool Game::Input(){
 	return false;
 }
 
-void Game::Update(){
-
-	UpdateDelta();
+void Game::Update(float deltaTime){
 
 	f_engine->UpdateWorld();
 
@@ -123,14 +126,14 @@ void Game::Update(){
 	spellManager->UpdateCooldown(deltaTime);
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
-	playerManager->UpdatePlayers();
+	playerManager->UpdatePlayers(deltaTime);
 	//playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 
 	g_engine->UpdateReceiver();
 	
 
-	setFps();
+	setFps(deltaTime);
 
 	// START/END MATCH
 	if(lobbyState) CheckIfReady();
@@ -160,22 +163,23 @@ void Game::CheckIfReady(){
 void Game::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
+
 	if(playerOne != NULL){
-	g_engine->drawAim(playerOne->GetMoving());
-		playerOne->DrawOverlays(deltaTime);
+		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 		objectManager->DrawGrailGUI();
 	}
+
 	if(debug){
 		f_engine->DebugDrawWorld();
 		//if(AL != NULL) AL->Debug();
 	}
 	
-	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
+	g_engine->drawAllGUI();	// MENU
 	g_engine->endScene();
 }
 
-void Game::setFps(){
+void Game::setFps(float deltaTime){
 	secondCounter += deltaTime;
 	if(secondCounter >= 0.5){
 		secondCounter = 0;
@@ -183,16 +187,6 @@ void Game::setFps(){
 		std::wstring wsTmp(myFps.begin(), myFps.end());
 		g_engine->ChangeWindowName(L"Wizards And Warlocks Master v1.0 FPS: " + wsTmp);
 	}
-}
-
-float Game::GetTotalTime(){ return GraphicEngine::getInstance()->getTime(); }
-
-float Game::GetDeltaTime(){ return deltaTime; }
-
-void Game::UpdateDelta(){
-	float currentTime = GraphicEngine::getInstance()->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
 }
 
 void Game::CheckIfWon(){
@@ -228,6 +222,7 @@ void Game::RestartMatch(){
 	playerManager->ManageMatchStatus(false);
 	playerManager->ReturnAllToLobby();
 }
+
 /********************************************************************************************************
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/

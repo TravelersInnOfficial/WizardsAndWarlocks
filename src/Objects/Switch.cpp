@@ -17,7 +17,7 @@ void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRota
     GraphicEngine* engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_switchNode = engine->addObjMeshSceneNode("../assets/modelos/button.obj", TPosition, TRotation, TScale);
+    m_switchNode = engine->addObjMeshSceneNode("./../assets/modelos/button.obj", TPosition, TRotation, TScale);
 
     // Aplicamos Material unlit y Textura
     if (m_switchNode) {
