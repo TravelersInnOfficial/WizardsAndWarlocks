@@ -17,7 +17,7 @@ Server::Server(int serverPort, int maxClients){
 	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
 	// Inicializo su variable
 	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, true);
-	multiGameObject->SetBoolVar(MULTIGAME_BACK_LOBBY, false, true, true);
+	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, true);
 }
 
 Server::~Server(){

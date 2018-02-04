@@ -20,6 +20,7 @@ public:
 	void ClearMenu();
 	void ClearElement(MenuOption elementID);
 	void UpdateNetDebug();
+	bool CheckIfExists(MenuOption elementID);
 
 private:
 

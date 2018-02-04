@@ -22,16 +22,10 @@ Match::Match(SinglePlayerGame* fat){
 	objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
 
 	playerOne = playerManager->GetPlayerOne();
-	if(playerOne == NULL){
-		playerOne = playerManager->AddHumanPlayer(true);
-	}
 
 	// Ponemos a true el inicio de la partida
 	playerManager->ManageMatchStatus(true);
-
-	// Si estaba algun menu activado lo desactivamos
-	g_engine->ToggleMenu(false);
-	MenuManager::GetInstance()->ClearMenu();
+	gameEnded = false;
 
 	father->PlayEvent("ghosts", vector3df(-0.245, 1.14, 17.25));
 	father->PlayEvent("waterdrops", vector3df(-0.245, 1.20, 17.25));
@@ -43,6 +37,11 @@ Match::~Match(){
 }
 
 bool Match::Input(){
+
+	if(gameEnded){
+		int option = g_engine->ReadButtonPressed();
+		if(option == ENDMATCH_M_CONFIRM) father->ReturnLobby();
+	}
 
 	return false;
 }
@@ -85,17 +84,17 @@ void Match::CheckIfWon(){
 
 	if(whosWon != NO_ALLIANCE){
 		GraphicEngine::getInstance()->InitReceiver();
+		gameEnded = true;
 		if(playerOne != NULL) {
 			playerOne->SetAllInput(UP);
 
 			//Play sound event when you lose or win
-			//if (playerOne->GetAlliance() != whosWon) playEvent(soundEvents["defeat"]);
-			//else playEvent(soundEvents["victory"]);
+			if (playerOne->GetAlliance() != whosWon) father->PlayEvent("defeat");
+			else father->PlayEvent("victory");
 
-			//g_engine->ToggleMenu(true);
-			//MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
-
-			father->ReturnLobby();
+			g_engine->ToggleCameraMovement(false);
+			g_engine->ToggleMenu(true);
+			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
 		}
 	}
 

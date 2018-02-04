@@ -18,6 +18,11 @@ MultiPlayerGame::MultiPlayerGame(){
 	networkManager	= NetworkManager::GetInstance();
 
 	m_stateGame 	= new MultiLobby(this);
+	
+	// Si estaba algun menu activado lo desactivamos
+	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleMenu(false);
+	MenuManager::GetInstance()->ClearMenu();
 
 	debug 		= false;
 	mute 		= false;
@@ -71,24 +76,16 @@ void MultiPlayerGame::ChangeMode(){
 }
 
 void MultiPlayerGame::CleanGame(){
-	// Limpiamos los objetos
-	objectManager->ClearMap();
-	// Limpiamos los proyectiles
-	bulletManager->DeleteAllProyectiles();
-	// Limpiamos las trampas
-	trapManager->ClearTraps();
-	// Limpiamos los hechizos
-	spellManager->ResetAllDieHechizo();
+	objectManager->ClearMap(); 				// Limpiamos los objetos
+	bulletManager->DeleteAllProyectiles();	// Limpiamos los proyectiles
+	trapManager->ClearTraps();				// Limpiamos las trampas
+	spellManager->ResetAllDieHechizo();		// Limpiamos los hechizos
 }
 
 bool MultiPlayerGame::Input(){
-	if(!g_engine->run()){
-		return true;
-	}
+	if(!g_engine->run()) return true;
 
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)){
-		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
-	}
+	if(g_engine->IsKeyPressed(KEY_ESCAPE)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 
 	// DEBUG
 	if(g_engine->IsKeyPressed(KEY_F1)) {
@@ -113,9 +110,7 @@ bool MultiPlayerGame::Input(){
 }
 
 void MultiPlayerGame::Update(float deltaTime){
-	if(m_changeMode != 0){
-		ChangeMode();
-	}
+	if(m_changeMode != 0) ChangeMode();
 	m_stateGame->Update(deltaTime);
 }
 
@@ -123,14 +118,8 @@ void MultiPlayerGame::Update(float deltaTime){
 void MultiPlayerGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
-
 	m_stateGame->Draw();
-
-	if(debug){
-		f_engine->DebugDrawWorld();
-		//if(AL != NULL) AL->Debug();
-	}
-
+	if(debug) f_engine->DebugDrawWorld();
 	g_engine->endScene();
 }
 

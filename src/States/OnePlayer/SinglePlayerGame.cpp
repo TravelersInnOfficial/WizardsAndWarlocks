@@ -81,6 +81,11 @@ void SinglePlayerGame::CleanGame(){
 	trapManager->ClearTraps();
 	// Limpiamos los hechizos
 	spellManager->ResetAllDieHechizo();
+
+	// Si estaba algun menu activado lo desactivamos
+	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleMenu(false);
+	MenuManager::GetInstance()->ClearMenu();
 }
 
 bool SinglePlayerGame::Input(){
