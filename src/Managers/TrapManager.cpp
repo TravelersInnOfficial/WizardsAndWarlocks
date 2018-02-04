@@ -66,6 +66,7 @@ bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End
 		uses--;
 		setPlayerUsings(player,uses);
 		toRet = true;
+		
 	}
 
 	return toRet;

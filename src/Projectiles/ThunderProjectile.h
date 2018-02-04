@@ -10,7 +10,6 @@ public:
 
 private:
     void ContactAction(Player* p);
-
 };
 
 #endif

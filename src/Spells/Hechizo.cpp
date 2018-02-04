@@ -152,8 +152,8 @@ SPELLCODE Hechizo::GetType(){
 
 void Hechizo::createSoundEvent(){}
 
-void Hechizo::playShotEvent(vector3df pos) {
-	SoundSystem::getInstance()->playEvent(shotEvent, pos);
+void Hechizo::playSoundEvent(SoundEvent* event, vector3df pos) {
+	SoundSystem::getInstance()->playEvent(event, pos);
 }
 
 SoundEvent* Hechizo::getShotEvent() {

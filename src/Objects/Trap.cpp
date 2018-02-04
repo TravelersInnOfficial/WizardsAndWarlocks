@@ -36,6 +36,9 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
     m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0));
     m_body->AssignPointer(this);
+
+    createSoundEvent();
+    playPlaceEvent(TPosition);
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
@@ -140,7 +143,7 @@ void Trap::Interact(Player* p){
 void Trap::Activate(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+            EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
             player->ChangeHP(-25);
         break;
 
@@ -179,7 +182,7 @@ void Trap::Activate(Player* player){
 void Trap::ForceEffect(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
-            EffectManager::GetInstance()->AddEffect(player, WEAK_PARALYZED);
+            EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
         break;
 
         case TENUM_SPIRITS:
@@ -280,4 +283,15 @@ void Trap::SetTrapId(int id){
 
 int Trap::GetTrapId(){
     return(trapId);
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+void Trap::createSoundEvent() {
+	placeEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Trap");
+}
+
+void Trap::playPlaceEvent(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(placeEvent, pos);
 }

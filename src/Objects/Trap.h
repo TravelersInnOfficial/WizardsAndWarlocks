@@ -5,6 +5,7 @@
 #include <TrapCodes.h>
 #include <PhysicsEngine/BT_GhostObject.h>
 #include <GraphicEngine/GBody.h>
+#include <SoundEngine/SoundSystem.h>
 #include "./../Players/Player.h"
 #include "./../Entidad.h"
 
@@ -43,8 +44,13 @@ public:
 
     void Erase();
     ~Trap();
-    
 
+    //Sound Functions
+    void playPlaceEvent(vector3df pos);
+
+protected:
+    SoundEvent* placeEvent;
+    void createSoundEvent();
 
 private:
     TrapEnum m_trapType;

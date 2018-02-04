@@ -88,12 +88,13 @@ class Player: public Entidad{
 		void RefreshServer();				// Updatea la Red con los valores de VIDA, MANA y ALIANZA
 		void HitMade(Player* player);
 
-		//Sound Function
+		//Sound Functions
 		void playFootsteps();				//Plays the footsteps sound
 		void playDrink();					//PLays the drink potion sound
 		void playDie();						//Plays the die sound
 		void playHit();						//Plays the damage hit sound
 		void playPulse();					//Plays the heart pulse sound
+		void playLosePotion();				//Plays the lose potion sound
 		void stopFootsteps();				//Stops the footsteps sound
 		void stopPulse();
 		void UpdateSoundsPosition();		//Updates the continuous sounds

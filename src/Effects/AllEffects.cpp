@@ -18,16 +18,23 @@
 //================================================================
 Burned::Burned(float time, int d):Effect(time, WEAK_BURNED){
 	damage = d;
+	createSoundEvent();
+	playEffectEvent();
 }
 
 void Burned::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
 }
 
+void Burned::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Burn");
+}
+
 //================================================================
 // FROZEN
 //================================================================
 Frozen::Frozen(float time, int d):Effect(time, WEAK_FROZEN){
+	createSoundEvent();
 	damage = d;
 }
 
@@ -37,6 +44,7 @@ void Frozen::UpdateEffect(Player* p){
 }
 
 void Frozen::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
 	p->m_Able2Jump = false;
@@ -48,15 +56,25 @@ void Frozen::RemoveEffect(Player* p){
 	p->m_Able2Jump = true;
 }
 
+void Frozen::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Freezing");
+}
+
 //================================================================
 // POISONED
 //================================================================
 Poisoned::Poisoned(float time, int d):Effect(time, WEAK_POISONED){
+	createSoundEvent();
+	playEffectEvent();
 	damage = d;
 }
 
 void Poisoned::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
+}
+
+void Poisoned::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Poison");
 }
 
 // ===============================================================================================//
@@ -69,6 +87,8 @@ void Poisoned::UpdateEffect(Player* p){
 // SLOWED DOWN
 //================================================================
 SlowedDown::SlowedDown(float time, float value):Effect(time, WEAK_SLOWEDDOWN){
+	createSoundEvent();
+	playEffectEvent();
 	factor = value;
 }
 
@@ -80,13 +100,18 @@ void SlowedDown::RemoveEffect(Player* p){
 	p->max_velocity *= factor;
 }
 
+void SlowedDown::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Slow Down");
+}
 //================================================================
 // PARALYZED
 //================================================================
 Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
+	createSoundEvent();
 }
 
 void Paralyzed::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
 	p->m_Able2Jump = false;
@@ -98,22 +123,32 @@ void Paralyzed::RemoveEffect(Player* p){
 	p->m_Able2Jump = true;	
 }
 
+void Paralyzed::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Paralysis");
+}
+
 //================================================================
 // SILENCED
 //================================================================
 Silenced::Silenced(float time):Effect(time, WEAK_SILENCED){
+	createSoundEvent();
 }
 
 void Silenced::ApplyEffect(Player* p){
+	playEffectEvent();
 }
 
 void Silenced::RemoveEffect(Player* p){
 }
 
+void Silenced::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Silence");
+}
 //================================================================
 // MADNESS
 //================================================================
 Madness::~Madness(){
+	
 }
 
 Madness::Madness(float time):Effect(time, WEAK_MADNESS){
@@ -121,10 +156,11 @@ Madness::Madness(float time):Effect(time, WEAK_MADNESS){
 	actions.push_back(ACTION_MOVE_DOWN);
 	actions.push_back(ACTION_MOVE_LEFT);
 	actions.push_back(ACTION_MOVE_RIGHT);
+	createSoundEvent();
 }
 
 void Madness::ApplyEffect(Player* p){
-	
+	playEffectEvent();
 	std::random_shuffle ( actions.begin(), actions.end() );
 	
 	// create random key assign
@@ -133,16 +169,25 @@ void Madness::ApplyEffect(Player* p){
 
 }
 
+void Madness::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
+}
+
 void Madness::RemoveEffect(Player* p){
 	p->GetController()->SwapActions(actions[0], actions[1]);
 	p->GetController()->SwapActions(actions[2], actions[3]);
 	actions.clear();
 }
 
+void Madness::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Madness");
+}
+
 //================================================================
 // DeathSnare
 //================================================================
 DeathSnare::DeathSnare(float time, int d):Effect(time, WEAK_DEATHSNARE){
+	createSoundEvent();
 	damage=d;
 }
 
@@ -151,11 +196,16 @@ void DeathSnare::UpdateEffect(Player* p){
 }
 
 void DeathSnare::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 }
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
+}
+
+void DeathSnare::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Death Snare"); //MORTAL INMOVILITATION
 }
 
 
@@ -164,12 +214,14 @@ void DeathSnare::RemoveEffect(Player* p){
 ////////////////////////////////////////////
 
 //================================================================
-// DAMAGE UP
+// DAMAGE UP (TARION)
 //================================================================
 DamageUp::DamageUp(float time):Effect(time, POWERUP_DAMAGE){
+	createSoundEvent();
 }
 
 void DamageUp::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->m_DamageMult *= 1.6;
 }
 
@@ -177,18 +229,28 @@ void DamageUp::RemoveEffect(Player* p){
 	p->m_DamageMult /= 1.6;				// 1.6 * 0.625 = 1
 }
 
+void DamageUp::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Imprecantes Tarion");
+}
+
 //================================================================
-// DEFENSE UP
+// DEFENSE UP (OHMIO)
 //================================================================
 DefenseUp::DefenseUp(float time):Effect(time, POWERUP_DEFENSE){
+	createSoundEvent();
 }
 
 void DefenseUp::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->m_Defense *= 1.6;
 }
 
 void DefenseUp::RemoveEffect(Player* p){
 	p->m_Defense /= 1.6;
+}
+
+void DefenseUp::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Ohmio Protection");
 }
 
 /*
@@ -208,27 +270,37 @@ void ElementUp::RemoveEffect(Player* p){
 */
 
 //================================================================
-// SPEED UP
+// SPEED UP (Hermes)
 //================================================================
 SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
+	createSoundEvent();
 }
 
 void SpeedUp::ApplyEffect(Player* p){
 	p->max_velocity *= 3.0f;
 	// TODO: APPLY COOLDOWN REDUCTION
+	std::cout << "debug1" << std::endl;
+	playEffectEvent();
+	std::cout << "debug2" << std::endl;
 }
 
 void SpeedUp::RemoveEffect(Player* p){
 	p->max_velocity /= 3.0f;
 }
 
+void SpeedUp::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Hermes' Slippers");
+}
+
 //================================================================
-// UNTARGETABLE
+// UNTARGETABLE (Poncho)
 //================================================================
 Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
+	createSoundEvent();
 }
 
 void Untargetable::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->m_Defense *= 10.0f;
 }
 
@@ -236,13 +308,19 @@ void Untargetable::RemoveEffect(Player* p){
 	p->m_Defense /= 10.0f;
 }
 
+void Untargetable::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Divina Poncho");
+}
+
 //================================================================
 // FIRE SHOTS
 //================================================================
 FireShots::FireShots(float time):Effect(time, POWERUP_FIRE){
+	createSoundEvent();
 }
 
 void FireShots::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
@@ -250,13 +328,19 @@ void FireShots::RemoveEffect(Player* p){
 	p->m_shotEffect = WEAK_BASIC;
 }
 
+void FireShots::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Beelzebub's Staff");
+}
+
 //================================================================
 // POISON SHOTS
 //================================================================
 PoisonShots::PoisonShots(float time):Effect(time, POWERUP_POISON){
+	createSoundEvent();
 }
 
 void PoisonShots::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
@@ -264,16 +348,26 @@ void PoisonShots::RemoveEffect(Player* p){
 	p->m_shotEffect = WEAK_BASIC;
 }
 
+void PoisonShots::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Mandrake Tusk");
+}
+
 //================================================================
 // INVISIBLE
 //================================================================
 Invisible::Invisible(float time):Effect(time, POWERUP_INVISIBLE){
+	createSoundEvent();
 }
 
 void Invisible::ApplyEffect(Player* p){
+	playEffectEvent();
 	p->SetVisible(false);
 }
 
 void Invisible::RemoveEffect(Player* p){
 	p->SetVisible(true);	
+}
+
+void Invisible::createSoundEvent() {
+	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Invisibility Cape");
 }

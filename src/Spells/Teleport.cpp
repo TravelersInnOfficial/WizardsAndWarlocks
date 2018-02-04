@@ -41,8 +41,12 @@ void Teleport::Lanzar(Player* p){
 	if(!BulletEngine::GetInstance()->Raycast(start, end, &point, &normal)){
 		point = end;
 	}
-
+	//playShotEvent(shotEvent); //Play the sound
 	p->SetPosition(point);
+	
+	playSoundEvent(voiceEvent, pos); //Play voice event
+	playSoundEvent(shotEvent, pos); //Play shot event
+
 	Hechizo::Lanzar(p);
 }
 
@@ -50,5 +54,6 @@ void Teleport::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void Teleport::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Teleport");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Teleport");
 }

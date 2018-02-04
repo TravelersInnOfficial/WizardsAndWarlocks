@@ -272,7 +272,7 @@ void NetGame::createSoundEvents() {
 	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
 	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
 	SoundEvent * ghosts  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
-	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/WaterDrops");
+	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/Water Drops");
 
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;

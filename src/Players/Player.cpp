@@ -624,6 +624,7 @@ void Player::DropObject(){
 
 void Player::LosePotion(){
 	if(potion!=NULL) potion = NULL;
+	playLosePotion();
 }
 
 void Player::UseObject(){
@@ -698,18 +699,20 @@ void Player::ApplyFuzyEffect(){
  
 void Player::createSoundEvents() {
 	//Create the events
-	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
-	SoundEvent * drink 	   = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
-	SoundEvent * die       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
-	SoundEvent * hit       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
-	SoundEvent * pulse     = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
-	
+	SoundEvent * footsteps  = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
+	SoundEvent * drink 	    = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
+	SoundEvent * die        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
+	SoundEvent * hit        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	SoundEvent * pulse      = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
+	SoundEvent * losepotion = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Caronte Taxes");
+
 	//Store them at the player's sounds map
-	soundEvents["footsteps"] = footsteps;
-	soundEvents["drink"] 	 = drink;
-	soundEvents["die"] 		 = die;
-	soundEvents["hit"] 		 = hit;
-	soundEvents["pulse"]     = pulse;
+	soundEvents["footsteps"]  = footsteps;
+	soundEvents["drink"] 	  = drink;
+	soundEvents["die"] 		  = die;
+	soundEvents["hit"] 		  = hit;
+	soundEvents["pulse"]      = pulse;
+	soundEvents["losepotion"] = losepotion;
 }
 
 void Player::playFootsteps() {
@@ -734,6 +737,10 @@ void Player::playPulse() {
 		pulseStarted = true;
 		SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
 	}
+}
+
+void Player::playLosePotion() {
+	SoundSystem::getInstance()->playEvent(soundEvents["losepotion"], GetPos());
 }
 
 void Player::stopFootsteps() {

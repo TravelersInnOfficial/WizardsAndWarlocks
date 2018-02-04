@@ -4,7 +4,7 @@
 #include "./../Invocations/Invocation.h"
 #include "./../Managers/PlayerManager.h"
 
-Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture){
+Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture, std::string soundPath){
 	impact = false;
 	initPos = pos;
 	direction = new vector3df(dir.X, dir.Y, dir.Z);
@@ -19,6 +19,7 @@ Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float ve
 
 	m_Texture = texture;
 	clase = EENUM_PROJECTILE;
+	createSoundEvent(soundPath);
 	CreateProjectile();
 }
 
@@ -26,6 +27,7 @@ Projectile::~Projectile(){
 	delete direction;
 	delete bt_body;
 	delete m_ProjectileNode;
+	if (soundEvent != NULL) soundEvent->release();
 }
 
 void Projectile::CreateProjectile(){
@@ -49,6 +51,9 @@ void Projectile::CreateProjectile(){
 
     vector3df vel(velocity * direction->X, velocity * direction->Y, velocity * direction->Z);
     bt_body->SetLinearVelocity(vel);
+	
+	playSoundEvent(initPos);
+	
 }
 
 void Projectile::Update(){
@@ -58,6 +63,12 @@ void Projectile::Update(){
 	vector3df pos = bt_body->GetPosition();
 	vector3df vectorDistance = pos - initPos;
 
+	//Update the sound event position
+	if (soundEvent != NULL) {
+		std::cout << "update" << std::endl;
+		soundEvent->setPosition(pos);
+	}
+	
 	float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
 
 	if(currentDistance >= maxDistance){
@@ -130,4 +141,22 @@ void Projectile::ContactBehavior(){
  */
 void Projectile::ContactAction(Player* p){
 	p->ChangeHP(-damage);
+}
+
+void Projectile::createSoundEvent(std::string soundPath) {
+	if (soundPath != "") {
+		soundEvent = SoundSystem::getInstance()->createEvent(soundPath);
+		std::cout << "no esta vacio" << std::endl;
+	} else {
+		std::cout << "esta vacio" << std::endl;
+		soundEvent = NULL;
+	}
+}
+
+void Projectile::playSoundEvent(vector3df pos) {
+	if (soundEvent != NULL) {
+		std::cout << "no es null" << std::endl;
+		SoundSystem::getInstance()->playEvent(soundEvent, pos);
+	}
+	
 }

@@ -13,9 +13,7 @@ Invocation::~Invocation(){
 	delete bt_body;
 }
 
-void Invocation::Update(){
-	//P KE NO WARNEE
-}
+void Invocation::Update(){}
 
 bool Invocation::Update(float deltaTime){
 	return true;
@@ -44,10 +42,11 @@ Kinematic Invocation::GetKinematic(){
     cKin.rotation = vector2df(0,0);
     return cKin;
 }
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+void Invocation::createSoundEvent(){}
 
-void Invocation::createSoundEvent(){
-	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DesperationWallSpawn");
-}
 
 void Invocation::playSpawnEvent(vector3df pos){
 	SoundSystem::getInstance()->playEvent(spawnEvent, pos);

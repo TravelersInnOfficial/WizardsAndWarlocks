@@ -38,9 +38,9 @@ Game::Game(){
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
 	//AL = NULL;
-	AL = playerManager->AddAIPlayer();
-	AL->SetAlliance(ALLIANCE_WARLOCK);
- 	playerManager->AddAIPlayer();
+	//AL = playerManager->AddAIPlayer();
+	//AL->SetAlliance(ALLIANCE_WARLOCK);
+ 	//playerManager->AddAIPlayer();
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 
@@ -168,7 +168,7 @@ void Game::Draw(){
 	}
 	if(debug){
 		f_engine->DebugDrawWorld();
-		if(AL != NULL) AL->Debug();
+		//if(AL != NULL) AL->Debug();
 	}
 	
 	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
@@ -237,7 +237,7 @@ void Game::createSoundEvents() {
 	SoundEvent * defeat  = SoundSystem::getInstance()->createEvent("event:/Music/Defeat");
 	SoundEvent * victory = SoundSystem::getInstance()->createEvent("event:/Music/Victory");
 	SoundEvent * ghosts  = SoundSystem::getInstance()->createEvent("event:/Ambience/Ghosts");
-	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/WaterDrops");
+	SoundEvent * waterDrops  = SoundSystem::getInstance()->createEvent("event:/Ambience/Water Drops");
 
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;

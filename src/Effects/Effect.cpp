@@ -1,4 +1,5 @@
 #include "Effect.h"
+#include "./../Managers/PlayerManager.h"
 
 /**
  * @brief Constructor basico de hechizo
@@ -9,6 +10,7 @@ Effect::Effect(float time, EFFECTCODE cod){
 	maxTime = time;
 	currentTime = time;
 	code = cod;
+	createSoundEvent();
 }
 
 Effect::~Effect(){}
@@ -44,7 +46,7 @@ void Effect::ResetTime(){
  * @param p Jugador al que se le aplicara
  */
 void Effect::ApplyEffect(Player* p){
-
+	
 }
 
 /**
@@ -72,4 +74,16 @@ void Effect::RemoveEffect(Player* p){
  */
 EFFECTCODE Effect::getCode(){
 	return code;
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+void Effect::createSoundEvent() {
+
+}
+
+void Effect::playEffectEvent() {
+	vector3df pos = PlayerManager::GetInstance()->GetPlayerOne()->GetPos();
+	SoundSystem::getInstance()->playEvent(effectEvent, pos);
 }

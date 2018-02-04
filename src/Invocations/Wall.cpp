@@ -3,7 +3,9 @@
 InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
 	currentTime = time;
+	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
+	
 }
 
 bool InvocationWall::Update(float deltaTime){
@@ -40,6 +42,11 @@ void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vec
 	bt_body->AssignPointer(this);
 }
 
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+
 void InvocationWall::createSoundEvent(){
-	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DesperationWallSpawn");
+	std::cout << "debug1" << std::endl;
+	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Desperation Wall");
 }

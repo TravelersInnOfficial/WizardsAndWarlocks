@@ -17,6 +17,7 @@ DivinePoncho::DivinePoncho(float costPM, float tCast, float tCoolDown, float opt
 
 void DivinePoncho::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_UNTARGET);
+	playSoundEvent(voiceEvent, p->GetPos());
 	Hechizo::Lanzar(p);
 }
 
@@ -24,5 +25,5 @@ void DivinePoncho::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void DivinePoncho::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Divina Poncho");
 }

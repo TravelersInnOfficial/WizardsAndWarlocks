@@ -16,7 +16,6 @@ private:
     void UpdatePosShape();
     void ContactBehavior();
     void ContactAction(Player* p);
-
     bool ready2Burst;
     
 };
