@@ -58,6 +58,10 @@ void MenuPrincipal::Update(float deltaTime){
 
 void MenuPrincipal::Draw(){
 	g_engine->beginSceneDefault();
+	
+	//BACKGROUND IMAGE
+    g_engine->draw2DImage(background, vector4df(0,0,g_engine->GetScreenWidth(),g_engine->GetScreenHeight()));
+	
 	//g_engine->drawAllGUI();
 	GUI_engine->draw();
 	g_engine->endScene();

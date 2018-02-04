@@ -77,8 +77,11 @@ enum GAMETEXTURES {
 	TEXTURE_negro,
 	TEXTURE_yellow,
 	TEXTURE_madera,
-	TEXTURE_MENU_BUTTON,
-	TEXTURE_MENU_BUTTON_PRESSED
+	TEXTURE_MAINMENU_SINGLEPLAYER,
+	TEXTURE_MAINMENU_MULTIPLAYER,
+	TEXTURE_MAINMENU_OPTIONS,
+	TEXTURE_MAINMENU_EXIT,
+	TEXTURE_MAINMENU_BACKGROUND
 };
 
 enum GAMEMESHES {
@@ -172,8 +175,11 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
 	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
 	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
-	m[TEXTURE_MENU_BUTTON]					= "./../assets/textures/GUI/Menus/menu_button.png";
-	m[TEXTURE_MENU_BUTTON_PRESSED]			= "./../assets/textures/GUI/Menus/menu_button_pressed.png";
+	m[TEXTURE_MAINMENU_SINGLEPLAYER]		= "./../assets/textures/GUI/Menus/MainMenu/single_player_button.png";
+	m[TEXTURE_MAINMENU_MULTIPLAYER]			= "./../assets/textures/GUI/Menus/MainMenu/multiplayer_button.png";
+	m[TEXTURE_MAINMENU_OPTIONS]				= "./../assets/textures/GUI/Menus/MainMenu/options_button.png";
+	m[TEXTURE_MAINMENU_EXIT]				= "./../assets/textures/GUI/Menus/MainMenu/exit_button.png";
+	m[TEXTURE_MAINMENU_BACKGROUND]			= "./../assets/textures/GUI/Menus/MainMenu/background.png";
 
 	return m;
 };

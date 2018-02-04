@@ -35,7 +35,7 @@ protected:
     
     ImGuiWindowFlags w_flags;
     WindowOptions w_opt;
-    ImGuiStyle m_style;
+    ImGuiStyle& m_style = ImGui::GetStyle();
     
     const char * m_id;
     float m_width;

@@ -17,7 +17,7 @@ GUIEngine* GUIEngine::GetInstance(){
 }
 
 GUIEngine::~GUIEngine(){
-    //m_GUIHandler->drop();
+    m_GUIHandler->drop();
 }
 
 void GUIEngine::ToggleMenu(){

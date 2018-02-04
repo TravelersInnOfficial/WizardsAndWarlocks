@@ -17,6 +17,8 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 private:
+    std::string background = "./../assets/textures/GUI/Menus/MainMenu/background.png";
+	
 	void PrepareServer();
 	void PrepareClient();
 	void PrepareGame();
