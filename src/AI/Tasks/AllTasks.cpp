@@ -6,8 +6,9 @@
 #include "./../../Managers/SpellManager.h"
 #include "./../../Managers/ObjectManager.h"
 #include "./../../Managers/PlayerManager.h"
-// IAPlaye
+// IAPlayer
 #include "./../../Players/AIPlayer.h"
+#include "./../RoomGraph/RoomGraph.h"
 // New information classes
 #include <vector2d.h>
 #include <kinematicTypes.h>
@@ -131,6 +132,55 @@ bool CatchPotion::run(Blackboard* bb){
 			}
 		}
 		bb->CleanSense(target->id);
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	WHERE EXPLORE
+//
+// ================================================================================================= //
+
+WhereExplore::WhereExplore(){}
+
+bool WhereExplore::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"Where Explore\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	RoomGraph* room = bb->GetRoomGraph();
+	if(room!=NULL && character!=NULL){
+		float dir = room->WhereExplore();
+
+		Kinematic cKin;
+		Kinematic tKin;
+
+		cKin = character->GetKinematic();
+		tKin.orientation = vector2df(cKin.orientation.X, dir);
+
+		
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK EXPLORE
+//
+// ================================================================================================= //
+
+CheckExplore::CheckExplore(){}
+	
+bool CheckExplore::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"Check Explore\n";
+
+	RoomGraph* room = bb->GetRoomGraph();
+	if(room!=NULL){
+		if(!room->RoomExplored()){
+			bb->SetMasterAction(AI_TASK_EXPLORE);
+			bb->SetMasterMovement(AI_MOVE_GOTARGET);
+			return true;
+		}
 	}
 	return false;
 }
