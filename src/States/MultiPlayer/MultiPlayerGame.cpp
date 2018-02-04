@@ -132,7 +132,7 @@ void MultiPlayerGame::CreateSoundEvents() {
 	SoundEvent* defeat  = s_engine->createEvent("event:/Music/Defeat");
 	SoundEvent* victory = s_engine->createEvent("event:/Music/Victory");
 	SoundEvent* ghosts  = s_engine->createEvent("event:/Ambience/Ghosts");
-	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/WaterDrops");
+	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/Water Drops");
 
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;

@@ -34,18 +34,11 @@ Game::Game(){
 	// Jugador
 	playerOne = (HumanPlayer*) playerManager->AddHumanPlayer();
 
-<<<<<<< HEAD
-	//AL = NULL;
-	//AL = playerManager->AddAIPlayer();
-	//AL->SetAlliance(ALLIANCE_WARLOCK);
- 	//playerManager->AddAIPlayer();
-=======
 	AL = NULL;
-	//AL = playerManager->AddAIPlayer();
-	//AL->SetAlliance(ALLIANCE_WARLOCK);
-	//playerManager->AddAIPlayer();
-	
->>>>>>> f321cecc54838ade733947c728642759393ac69d
+	AL = playerManager->AddAIPlayer();
+	AL->SetAlliance(ALLIANCE_WARLOCK);
+ 	playerManager->AddAIPlayer();
+
 	playEvent(soundEvents["ghosts"], vector3df(-0.245, 1.14, 17.25));
 	playEvent(soundEvents["waterdrops"], vector3df(-0.245, 1.20, 17.25));
 

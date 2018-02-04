@@ -47,6 +47,5 @@ void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vec
  ********************************************************************************************************/
 
 void InvocationWall::createSoundEvent(){
-	std::cout << "debug1" << std::endl;
 	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Desperation Wall");
 }

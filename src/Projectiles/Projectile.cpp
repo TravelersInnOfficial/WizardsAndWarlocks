@@ -65,7 +65,6 @@ void Projectile::Update(){
 
 	//Update the sound event position
 	if (soundEvent != NULL) {
-		std::cout << "update" << std::endl;
 		soundEvent->setPosition(pos);
 	}
 	
@@ -146,16 +145,13 @@ void Projectile::ContactAction(Player* p){
 void Projectile::createSoundEvent(std::string soundPath) {
 	if (soundPath != "") {
 		soundEvent = SoundSystem::getInstance()->createEvent(soundPath);
-		std::cout << "no esta vacio" << std::endl;
 	} else {
-		std::cout << "esta vacio" << std::endl;
 		soundEvent = NULL;
 	}
 }
 
 void Projectile::playSoundEvent(vector3df pos) {
 	if (soundEvent != NULL) {
-		std::cout << "no es null" << std::endl;
 		SoundSystem::getInstance()->playEvent(soundEvent, pos);
 	}
 	
