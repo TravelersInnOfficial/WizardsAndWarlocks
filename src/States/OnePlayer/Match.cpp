@@ -32,6 +32,9 @@ Match::Match(SinglePlayerGame* fat){
 	// Si estaba algun menu activado lo desactivamos
 	g_engine->ToggleMenu(false);
 	MenuManager::GetInstance()->ClearMenu();
+
+	father->PlayEvent("ghosts", vector3df(-0.245, 1.14, 17.25));
+	father->PlayEvent("waterdrops", vector3df(-0.245, 1.20, 17.25));
 }
 
 Match::~Match(){

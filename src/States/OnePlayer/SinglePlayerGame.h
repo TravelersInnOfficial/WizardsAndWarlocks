@@ -13,6 +13,8 @@
 #include "./../State.h"
 #include "./../LevelLoader.h"
 
+#include <SoundEngine/SoundSystem.h>
+
 class SinglePlayerGame: public State{
 public:
 	SinglePlayerGame();
@@ -25,7 +27,13 @@ public:
 	bool Input();
 	void Update(float deltaTime);
 	void Draw();
+
+	//Sound Functions
+	void PlayEvent(std::string event, vector3df pos);
+	void PlayEvent(std::string event);
 private:
+	void ChangeMode();
+
 	State*	m_stateGame;
 
 	SpellManager* 			spellManager;
@@ -38,10 +46,16 @@ private:
 
 	GraphicEngine*			g_engine;
 	BulletEngine*			f_engine;
+	SoundSystem*			s_engine;
 
 	bool 	captured;
 	bool 	mute;
 	bool 	debug;
+
+	int 	m_changeMode;
+
+	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+	void CreateSoundEvents();							//Create the sound events
 
 };
 
