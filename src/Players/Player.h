@@ -82,6 +82,9 @@ class Player: public Entidad{
 		void DeployTrap();
 		bool HasObject();
 
+		// Controller
+		void SetController(ACTION_ENUM action, keyStatesENUM state);
+
 		// Network Functions
 		void GetNetInput();
 		void SetNetInput();

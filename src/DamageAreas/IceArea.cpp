@@ -1,5 +1,6 @@
 #include "IceArea.h"
 #include "./../Players/Player.h"
+#include <ColliderMasks.h>
 
 
 IceArea::IceArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
@@ -11,12 +12,8 @@ IceArea::IceArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRota
 IceArea::~IceArea(){}
 
 bool IceArea::Update(float deltaTime){
-	if(!activated){
-		return false;
-	}
-	if(currentCast<=0){
-		currentCast = casting;
-	}
+	if(!activated) return false;
+	if(currentCast<=0) currentCast = casting;
 	currentCast -= deltaTime;
 	return true;
 }
@@ -53,7 +50,7 @@ void IceArea::CreateIceArea(vector3df TPosition, vector3df TScale, vector3df TRo
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5);
 	bt_body = new BT_GhostObject();
-	bt_body->CreateGhostBox(TPosition, TRotation, HalfExtents);
+	bt_body->CreateGhostBox(TPosition, TRotation, HalfExtents, vector3df(0,0,0), C_DAMAGEAREA, damageareaCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
 }

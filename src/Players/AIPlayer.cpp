@@ -196,10 +196,6 @@ void AIPlayer::CheckInput(){
 	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 }
 
-void AIPlayer::SetController(ACTION_ENUM action, keyStatesENUM state){
-	controller->SetStatus(action, state);
-}
-
 void AIPlayer::Steering2Controller(SteeringOutput steering){
 	// Ahora mismo por muy pequenya que sea la fuerza la IA se mueve
 	// Puede que en un futuro lo mejor sea comprobar el length del 

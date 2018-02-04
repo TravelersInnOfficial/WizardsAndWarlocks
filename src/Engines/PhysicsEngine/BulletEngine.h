@@ -18,7 +18,7 @@ public:
     void EraseWorld();
 
     void AddRigidBody(btRigidBody*, CollisionTypes mask = C_NOTHING, int collideWith = 0);
-	void AddGhostBody(btGhostObject*);
+	void AddGhostBody(btGhostObject*, CollisionTypes mask = C_NOTHING, int collideWith = 0);
 
     void RemoveRigidBody(btRigidBody*);
     void RemoveGhostObject(btGhostObject*);

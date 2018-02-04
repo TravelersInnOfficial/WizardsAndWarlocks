@@ -3,6 +3,7 @@
 #include "./../Managers/EffectManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include <NetworkEngine/NetworkEngine.h>
+#include <ColliderMasks.h>
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     clase = EENUM_TRAP;
@@ -34,7 +35,7 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     g_body->setMaterialFlag(EMF_LIGHTING,false);
 
     vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
-    m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0));
+    m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0), C_TRAP, trapCW);
     m_body->AssignPointer(this);
 }
 

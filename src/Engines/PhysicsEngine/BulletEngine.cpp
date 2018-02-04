@@ -91,13 +91,12 @@ void BulletEngine::AddRigidBody(btRigidBody* rigidBody, CollisionTypes mask, int
 	m_dynamicsWorld->addRigidBody(rigidBody, mask, collideWith);
 }
 
-void BulletEngine::AddGhostBody(btGhostObject* ghostBody){
-	m_dynamicsWorld->addCollisionObject(ghostBody);
+void BulletEngine::AddGhostBody(btGhostObject* ghostBody, CollisionTypes mask, int collideWith){
+	m_dynamicsWorld->addCollisionObject(ghostBody, mask, collideWith);
 	m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 }
 
-void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){
-	//m_dynamicsWorld->removeCollisionObject(rigidBody);
+void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){;
 	m_dynamicsWorld->removeRigidBody(rigidBody);
 }
 
