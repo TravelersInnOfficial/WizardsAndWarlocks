@@ -1,12 +1,16 @@
 #include "Menu.h"
 
 Menu::Menu(){
-    m_id = "";
     g_engine = GraphicEngine::getInstance();
-    screenWidth = g_engine->GetScreenWidth();
-    screenHeight = g_engine->GetScreenHeight();
+    gui_engine = GUIEngine::GetInstance();
+    pDevice = gui_engine->GetPDevice();
+    GUI = gui_engine->GetGuiHandler();
+
+    m_id = "";
     m_width = 0;
     m_height = 0;
+    screenWidth = g_engine->GetScreenWidth();
+    screenHeight = g_engine->GetScreenHeight();
 
     w_flags = 0;
     CalculateFlags();

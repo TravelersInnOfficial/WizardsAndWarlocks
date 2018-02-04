@@ -4,8 +4,9 @@ GUIEngine* GUIEngine::instance = 0;
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();
-    irr::IrrlichtDevice * pDevice = g_engine->GetIrrlichtDevice();
+    pDevice = g_engine->GetIrrlichtDevice();
     m_EventReceiver = g_engine->GetMenuReceiver();
+    
     // Create GUI object
     m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
 }
@@ -31,3 +32,6 @@ void GUIEngine::update(){
 void GUIEngine::draw(){
    m_GUIHandler->drawAll();
 }
+
+IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}
+irr::IrrlichtDevice* GUIEngine::GetPDevice(){return pDevice;}

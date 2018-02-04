@@ -28,12 +28,16 @@ public:
     void SetHeight(float);
     
 protected:
-
+    GUIEngine* gui_engine;
     GraphicEngine* g_engine;
-    const char * m_id;
+    irr::IrrlichtDevice* pDevice;
+    IrrIMGUI::IIMGUIHandle * GUI;
+    
     ImGuiWindowFlags w_flags;
     WindowOptions w_opt;
     ImGuiStyle m_style;
+    
+    const char * m_id;
     float m_width;
     float m_height;
     float screenWidth;

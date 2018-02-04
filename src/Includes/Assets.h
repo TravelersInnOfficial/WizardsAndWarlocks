@@ -76,7 +76,9 @@ enum GAMETEXTURES {
 	TEXTURE_marbre5,
 	TEXTURE_negro,
 	TEXTURE_yellow,
-	TEXTURE_madera
+	TEXTURE_madera,
+	TEXTURE_MENU_BUTTON,
+	TEXTURE_MENU_BUTTON_PRESSED
 };
 
 enum GAMEMESHES {
@@ -170,6 +172,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
 	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
 	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
+	m[TEXTURE_MENU_BUTTON]					= "./../assets/textures/GUI/Menus/menu_button.png";
+	m[TEXTURE_MENU_BUTTON_PRESSED]			= "./../assets/textures/GUI/Menus/menu_button_pressed.png";
 
 	return m;
 };

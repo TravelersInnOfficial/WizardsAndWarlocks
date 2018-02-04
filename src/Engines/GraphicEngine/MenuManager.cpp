@@ -31,7 +31,8 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(ALLIANCE_M):{
-			CreateAlliance();
+			currentMenu = new AllianceMenu();
+			//CreateAlliance();
 			break;
 		}
 		case(ENDMATCH_M):{
