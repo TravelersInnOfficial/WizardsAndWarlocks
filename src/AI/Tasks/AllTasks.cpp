@@ -19,7 +19,7 @@ bool DEBUG = false;
 
 // ================================================================================================= //
 //
-//	MASTER MOVEMENT
+//	MASTER ACTION
 //
 // ================================================================================================= //
 
@@ -68,6 +68,18 @@ bool MasterMovement::run(Blackboard* bb){
 		child->run(bb);
 	}
 
+	return true;
+}
+
+// ================================================================================================= //
+//
+//	EMPTY TASK
+//
+// ================================================================================================= //
+
+EmptyTask::EmptyTask(){}
+
+bool EmptyTask::run(Blackboard* bb){
 	return true;
 }
 
@@ -151,13 +163,25 @@ bool WhereExplore::run(Blackboard* bb){
 	RoomGraph* room = bb->GetRoomGraph();
 	if(room!=NULL && character!=NULL){
 		float dir = room->WhereExplore();
+		vector3df center = room->RoomPos();
+
+		float max = 2.0f;
+		center.X = center.X + sin(dir)*max;
+		center.Z = center.Z + cos(dir)*max;
 
 		Kinematic cKin;
 		Kinematic tKin;
 
 		cKin = character->GetKinematic();
 		tKin.orientation = vector2df(cKin.orientation.X, dir);
+		tKin.position = center;
 
+		SteeringOutput steering 	= character->GetSeek(cKin, tKin);
+		SteeringOutput steering2 	= character->GetLookWhereYoureGoing(cKin);
+		//SteeringOutput steering2 	= character->GetAlign(cKin, tKin);
+		steering.angular = steering2.angular;
+
+		character->Steering2Controller(steering);
 		
 	}
 	return false;
@@ -178,7 +202,7 @@ bool CheckExplore::run(Blackboard* bb){
 	if(room!=NULL){
 		if(!room->RoomExplored()){
 			bb->SetMasterAction(AI_TASK_EXPLORE);
-			bb->SetMasterMovement(AI_MOVE_GOTARGET);
+			bb->SetMasterMovement(AI_MOVE_EXPLORE);
 			return true;
 		}
 	}

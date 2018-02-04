@@ -164,7 +164,12 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		// Camera
-		if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0);		
+		if(isPlayerOne){ 
+			if(m_camera!=NULL){
+				delete m_camera;
+			}
+			m_camera = new FPSCamera(120.0f, 0);		
+		}
 
 		hasCharacter = true;
 	}

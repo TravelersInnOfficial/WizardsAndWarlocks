@@ -19,6 +19,7 @@ public:
 	void CopyGraph(RoomGraph* copyGraph);
 
 	// ACTUAL ROOMINFO
+	vector3df RoomPos();
 	bool RoomExplored();
 	float WhereExplore();
 	void UpdateExplore(float rotY);

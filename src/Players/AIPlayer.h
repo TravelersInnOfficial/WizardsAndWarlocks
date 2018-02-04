@@ -39,6 +39,7 @@ public:
 	void SetCurrentSpell(int num);
 
 	// Steerings
+	SteeringOutput GetAlign(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetFace(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetSeek(Kinematic cKin, Kinematic tKin);
 	SteeringOutput GetFlee(Kinematic cKin, Kinematic tKin);
@@ -60,6 +61,7 @@ private:
 	ObstacleAvoidance*  	obstacleAvoidance;
 	FollowPath*				followPath;
 	Wander*					wander;
+	Align*					align;
 	Face*					face;
 	Seek*					seek;
 	Flee*					flee;
