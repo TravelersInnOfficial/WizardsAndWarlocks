@@ -7,6 +7,7 @@ MultiPlayerGame::MultiPlayerGame(){
 	g_engine		= GraphicEngine::getInstance();
 	f_engine		= BulletEngine::GetInstance();
 	n_engine		= NetworkEngine::GetInstance();
+	s_engine		= SoundSystem::getInstance();
 	// Managers
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
@@ -23,6 +24,8 @@ MultiPlayerGame::MultiPlayerGame(){
 	captured 	= false;
 
 	m_changeMode = 0;
+
+	CreateSoundEvents();
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
@@ -130,3 +133,29 @@ void MultiPlayerGame::Draw(){
 
 	g_engine->endScene();
 }
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+
+void MultiPlayerGame::CreateSoundEvents() {
+	//Create the sound events
+	SoundEvent* defeat  = s_engine->createEvent("event:/Music/Defeat");
+	SoundEvent* victory = s_engine->createEvent("event:/Music/Victory");
+	SoundEvent* ghosts  = s_engine->createEvent("event:/Ambience/Ghosts");
+	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/WaterDrops");
+
+	//Store them at the map
+	soundEvents["defeat"]  = defeat;
+	soundEvents["victory"] = victory;
+	soundEvents["ghosts"]  = ghosts;
+	soundEvents["waterdrops"]  = waterDrops;
+}
+void MultiPlayerGame::PlayEvent(std::string event, vector3df pos) {
+	s_engine->playEvent(soundEvents[event], pos);
+}
+
+void MultiPlayerGame::PlayEvent(std::string event) {
+	s_engine->playEvent(soundEvents[event]);
+}
+
