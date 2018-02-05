@@ -255,8 +255,6 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	
 	newEvent->setInstance(eventInst);	//Set the event instance
 	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
-	std::cout << "debug4" << std::endl;
-	std::cout << eventPath << std::endl;
 	return newEvent;
 }
 

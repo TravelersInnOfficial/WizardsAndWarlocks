@@ -71,9 +71,8 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
 	
-	
+	//if(isServer)
 	playerManager->RespawnDeadPlayers();
-	
 	
 	MenuManager::GetInstance()->UpdateNetDebug();
 	g_engine->UpdateReceiver();

@@ -283,9 +283,7 @@ SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
 void SpeedUp::ApplyEffect(Player* p){
 	p->max_velocity *= 3.0f;
 	// TODO: APPLY COOLDOWN REDUCTION
-	std::cout << "debug1" << std::endl;
 	playEffectEvent();
-	std::cout << "debug2" << std::endl;
 }
 
 void SpeedUp::RemoveEffect(Player* p){
