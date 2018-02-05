@@ -70,12 +70,16 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
+	
+	
 	playerManager->RespawnDeadPlayers();
+	
+	
 	MenuManager::GetInstance()->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
 	// START/END MATCH
-	if(networkObject!=NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)) father->StartGame();
+	if(networkObject != NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)) father->StartGame();
 
 	CheckIfReady();
 }

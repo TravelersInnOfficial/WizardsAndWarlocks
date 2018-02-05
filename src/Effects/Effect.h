@@ -21,6 +21,7 @@ public:
 	void playEffectEvent();
 	
 protected:
+	Player* myPlayer;
 	float maxTime;			// Tiempo de duracion del efecto
 	float currentTime;		// Tiempo actual de duracion del efecto
 	EFFECTCODE code;

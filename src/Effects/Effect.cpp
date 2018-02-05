@@ -10,6 +10,7 @@ Effect::Effect(float time, EFFECTCODE cod){
 	maxTime = time;
 	currentTime = time;
 	code = cod;
+	myPlayer = NULL;
 	createSoundEvent();
 }
 
@@ -46,7 +47,7 @@ void Effect::ResetTime(){
  * @param p Jugador al que se le aplicara
  */
 void Effect::ApplyEffect(Player* p){
-	
+	myPlayer = p;
 }
 
 /**
@@ -55,7 +56,7 @@ void Effect::ApplyEffect(Player* p){
  * @param p Jugador al que se le aplicara
  */
 void Effect::UpdateEffect(Player* p){
-	
+	myPlayer = p;
 }
 
 /**
@@ -64,7 +65,7 @@ void Effect::UpdateEffect(Player* p){
  * @param p Jugador al que se le quita el efecto
  */
 void Effect::RemoveEffect(Player* p){
-
+	myPlayer = p;
 }
 
 /**
@@ -84,8 +85,13 @@ void Effect::createSoundEvent() {
 }
 
 void Effect::playEffectEvent() {
-	Player* p = PlayerManager::GetInstance()->GetPlayerOne();
 	vector3df pos = vector3df(0,0,0);
+	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne(); 
+	Player* p = NULL;
+
+	if(myPlayer != NULL) p = myPlayer;
+	else if (playerOne != NULL) p = playerOne;
 	if(p != NULL) pos = p->GetPos();
+
 	SoundSystem::getInstance()->playEvent(effectEvent, pos);
 }

@@ -235,6 +235,18 @@ void Player::CheckInput(){}
 
 void Player::GetNetInput(){
 
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+
+	if(!isServer){
+		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
+		if(doRespawn){
+			Respawn();
+			doRespawn = false;
+			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
+		}
+	}
+
 	if(!isPlayerOne){
 		int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
 		if(alliance != (int)NO_ALLIANCE){
@@ -248,13 +260,6 @@ void Player::GetNetInput(){
 			CreatePlayerCharacter();
 			doCreateChar = false;
 			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
-		}
-
-		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
-		if(doRespawn){
-			Respawn();
-			doRespawn = false;
-			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
 		}
 
 		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
@@ -352,7 +357,6 @@ void Player::Update(float deltaTime){
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
-			//positionCamera();
 
 			//Position camera FPS Y TPS
 			m_camera->UpdateCamera(GetHeadPos());
@@ -504,6 +508,14 @@ void Player::UpdateSP(){
 }
 
 void Player::Respawn(){
+
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+	if(isServer && networkObject != NULL){
+		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+		networkObject->SetBoolVar(PLAYER_RESPAWN, false, false, false);
+	}
+
 	PlayerManager::GetInstance()->AddToLife(this);
 	CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
@@ -586,14 +598,17 @@ void Player::Die(){
 }
 
 void Player::ReturnToLobby(){
-	if(isPlayerOne && networkObject != NULL) CheckIfReady();
 
-	CreatePlayerCharacter();
-	Respawn();
-	if(networkObject != NULL){
-		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
-		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+	if(networkObject == NULL) Respawn();
+
+	else if(networkObject != NULL){
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		bool isServer = n_engine->IsServerInit();
+
+		if(isPlayerOne) networkObject->SetBoolVar(PLAYER_READY, false, true, false);
+		else if(isServer) Respawn();
 	}
+
 }
 
 void Player::DrawOverlays(){
@@ -601,18 +616,23 @@ void Player::DrawOverlays(){
 }
 
 void Player::CheckIfReady(){
+	readyToStart = false;
 	
 	if(hasCharacter){
 		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
 
 		bool ready = true;
-		if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
+		
+		if(		m_position.X < readyZone.X
+			|| 	m_position.X > readyZone.X2
+			|| 	m_position.Z < readyZone.Y
+			|| 	m_position.Z > readyZone.Y2){
+			
 			ready = false;
 		}
 
 		readyToStart = ready;
 	}
-	else readyToStart = false;
 	
 	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
 }
