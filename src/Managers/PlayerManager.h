@@ -45,7 +45,7 @@ public:
 	
 	// DeadCam Functions
 	bool PlayerAlive(Player* player);				// Da la posicion del jugador target, en el caso de que no este cambia el puntero
-	Player* ChangePlayerTargetCam(Player* player);	// Cambia el jugador al que mirar en la camara de muerte
+	Player* ChangePlayerTargetCam(Player* player, Alliance alli);	// Cambia el jugador al que mirar en la camara de muerte
 
 private:
 	Player*		playerOne;
