@@ -165,9 +165,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 
 		// Camera
 		if(isPlayerOne){ 
-			if(m_camera!=NULL){
-				delete m_camera;
-			}
+			if(m_camera!=NULL) delete m_camera;
 			m_camera = new FPSCamera(120.0f, 0);		
 		}
 
@@ -195,7 +193,6 @@ void Player::DestroyPlayerCharacter(){
 		m_camera = new WatcherCamera(GetPos());
 	}
 	
-	CheckIfReady();
 	hasCharacter = false;
 }
 
@@ -238,6 +235,7 @@ void Player::GetNetInput(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isServer = n_engine->IsServerInit();
 
+	// El server no debe leerlo
 	if(!isServer){
 		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
 		if(doRespawn){
@@ -247,6 +245,14 @@ void Player::GetNetInput(){
 		}
 	}
 
+	// Solo el server debe leerlo
+	/*if(isServer){
+		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
+		readyToStart = isReady;
+	}*/
+
+	// Tanto el server como el cliente deben leerlo
+	// Pero solo si no es el PLAYER ONE
 	if(!isPlayerOne){
 		int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
 		if(alliance != (int)NO_ALLIANCE){
@@ -261,9 +267,6 @@ void Player::GetNetInput(){
 			doCreateChar = false;
 			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
 		}
-
-		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
-		readyToStart = isReady;
 
 		string auxName = networkObject->GetStringVar(PLAYER_NAME);
 		if(auxName.length() > 0){
@@ -615,26 +618,55 @@ void Player::DrawOverlays(){
 	if(overlayManager != NULL && isPlayerOne) overlayManager->Draw();	
 }
 
-void Player::CheckIfReady(){
+/*void Player::CheckIfReady(){
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+
+	if(!isServer){
+		readyToStart = false;
+
+		if(hasCharacter){
+			vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
+
+			bool ready = true;
+
+			if(		m_position.X < readyZone.X
+				|| 	m_position.X > readyZone.X2
+				|| 	m_position.Z < readyZone.Y
+				|| 	m_position.Z > readyZone.Y2){
+				
+				ready = false;
+			}
+
+			readyToStart = ready;
+		}
+
+		if(networkObject != NULL){
+			networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
+			networkObject->SetBoolVar(PLAYER_READY, false, false, false);
+		}
+	}
+}*/
+
+bool Player::CheckIfReady(){
 	readyToStart = false;
-	
+
 	if(hasCharacter){
 		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
 
 		bool ready = true;
-		
+
 		if(		m_position.X < readyZone.X
 			|| 	m_position.X > readyZone.X2
 			|| 	m_position.Z < readyZone.Y
 			|| 	m_position.Z > readyZone.Y2){
-			
-			ready = false;
+			ready = false;	
 		}
 
 		readyToStart = ready;
 	}
-	
-	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
+
+	return readyToStart;
 }
 
 void Player::Run(bool runStatus){

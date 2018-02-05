@@ -58,7 +58,7 @@ class Player: public Entidad{
 		virtual void Die();
 		void ReturnToLobby();
 		void DrawOverlays();
-		void CheckIfReady();
+		bool CheckIfReady();
 		void Run(bool runningStatus);
 		void ApplyFuzyEffect();
 		virtual void InitGame();

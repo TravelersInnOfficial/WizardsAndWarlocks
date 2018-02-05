@@ -136,12 +136,10 @@ bool PlayerManager::CheckIfReady(){
 		if(p->GetAlliance() == ALLIANCE_WARLOCK) theresWarlock = true;
 		else if(p->GetAlliance() == ALLIANCE_WIZARD) theresWizard = true;
 		
-		if(!p->GetReadyStatus()) allReady = false;
+		if(!p->CheckIfReady()) allReady = false;
 	}
 
-	if(allReady){
-		if(size < 2 || !theresWizard || !theresWizard) allReady = false;
-	}
+	if(allReady && (size < 2 || !theresWizard || !theresWizard)) allReady = false;
 
 	return allReady;
 }
