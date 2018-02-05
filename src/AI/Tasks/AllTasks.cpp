@@ -150,6 +150,75 @@ bool CatchPotion::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	ROOM TRAVEL
+//
+// ================================================================================================= //
+
+TravelRoom::TravelRoom(){}
+
+bool TravelRoom::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"TravelRoom\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	RoomGraph* room = bb->GetRoomGraph();
+	if(character!=NULL && room!=NULL){
+		vector3df pos = room->NextRoomPos();
+		character->ShortestPath(pos);
+
+		std::cout<<"Lets Go"<<std::endl;
+
+		Kinematic cKin = character->GetKinematic();
+
+		SteeringOutput steering = character->GetFollowPath(cKin);
+
+		character->Steering2Controller(steering);
+
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	SET ROOM TRAVEL
+//
+// ================================================================================================= //
+
+SetRoomTravel::SetRoomTravel(){}
+	
+bool SetRoomTravel::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"SetRoomTravel\n";
+
+	RoomGraph* room = bb->GetRoomGraph();
+	if(room != NULL){
+		room->NextRoom();
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK TRAVEL
+//
+// ================================================================================================= //
+
+CheckTravel::CheckTravel(){}
+
+bool CheckTravel::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckTravel\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character!=NULL){
+		bb->SetMasterAction(AI_TASK_TRAVEL);
+		bb->SetMasterMovement(AI_MOVE_TRAVEL);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	WHERE EXPLORE
 //
 // ================================================================================================= //
@@ -165,7 +234,8 @@ bool WhereExplore::run(Blackboard* bb){
 		float dir = room->WhereExplore();
 		vector3df center = room->RoomPos();
 
-		float max = 2.0f;
+		// ----------------------------------------- Calculamos donde debe ir a explorar 
+		float max = 1.0f;
 		center.X = center.X + sin(dir)*max;
 		center.Z = center.Z + cos(dir)*max;
 
@@ -175,10 +245,14 @@ bool WhereExplore::run(Blackboard* bb){
 		cKin = character->GetKinematic();
 		tKin.orientation = vector2df(cKin.orientation.X, dir);
 		tKin.position = center;
-
-		SteeringOutput steering 	= character->GetSeek(cKin, tKin);
-		SteeringOutput steering2 	= character->GetLookWhereYoureGoing(cKin);
-		//SteeringOutput steering2 	= character->GetAlign(cKin, tKin);
+		// ------------------------------------------ Hacemos que vaya hasta esa posicion
+		SteeringOutput steering2;
+		SteeringOutput steering = character->GetSeek(cKin, tKin);
+		// ------------------------------------------ En el caso de que este lejos mirara en la direccion que camina
+		float length = (cKin.position - center).length();
+		if(length<0.5) steering2 = character->GetLookWhereYoureGoing(cKin);
+		// ------------------------------------------ En el caso de que este cerca mirara a la esquina que toque
+		else steering2 = character->GetAlign(cKin, tKin);
 		steering.angular = steering2.angular;
 
 		character->Steering2Controller(steering);

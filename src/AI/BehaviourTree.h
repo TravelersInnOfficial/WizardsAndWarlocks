@@ -71,6 +71,8 @@ private:
     void CreateEscapeMove();    // SubArbol de huir
     void CreateExploreTask();   // SubArbol de tarea explorar
     void CreateExploreMove();   // SubArbol de exploracion
+    void CreateTravelTask();    // SubArbol de mirar a que habitacion ir
+    void CreateTravelMove();    // SubArbol de moverse hasta la habitacion
 };
 
 #endif

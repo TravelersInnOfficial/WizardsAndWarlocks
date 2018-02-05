@@ -17,6 +17,7 @@ Blackboard::Blackboard(){
 
 Blackboard::~Blackboard(){
     CleanSense();
+    delete roomGraph;
 }
 
 void Blackboard::LoadRoomGraph(){

@@ -91,6 +91,7 @@ void BehaviourTree::CreateReceive(){
     sc_checkActions->addChild(new CheckUsePotion());    // Comprobamos si usar una pocion
     sc_checkActions->addChild(sc_seePlayers);           // Comprobamos si estamos viendo algun jugador
     sc_checkActions->addChild(new CheckExplore());      // Comprobamos si hemos explorado la habitacion
+    sc_checkActions->addChild(new CheckTravel());
     sc_checkActions->addChild(new CheckSawTrap());      // Comprobamos si hemos visto alguna trampa
     sc_checkActions->addChild(new CheckSawFountain());  // Comprobamos si hemos visto alguna fuente
     sc_checkActions->addChild(new CheckSawPotion());    // Comprobamos si hemos visto alguan fuente
@@ -134,6 +135,10 @@ void BehaviourTree::PrepareSubTrees(){
     CreateExploreMove();
     // Explorar Tarea
     CreateExploreTask();
+    // Travel Task
+    CreateTravelTask();
+    // Travel Move 
+    CreateTravelMove();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -274,5 +279,17 @@ void BehaviourTree::CreateExploreTask(){
 void BehaviourTree::CreateExploreMove(){
     Task* t = new WhereExplore();
     informacion->SetPuntero(AI_MOVE_EXPLORE, t);
+    tasks.push_back(t);
+}
+
+void BehaviourTree::CreateTravelTask(){
+    Task* t = new SetRoomTravel();
+    informacion->SetPuntero(AI_TASK_TRAVEL, t);
+    tasks.push_back(t);
+}
+
+void BehaviourTree::CreateTravelMove(){
+    Task* t = new TravelRoom();
+    informacion->SetPuntero(AI_MOVE_TRAVEL, t);
     tasks.push_back(t);
 }

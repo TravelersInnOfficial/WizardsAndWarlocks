@@ -23,9 +23,16 @@ public:
 	bool RoomExplored();
 	float WhereExplore();
 	void UpdateExplore(float rotY);
+
+	// NEXT ROOM
+	void NextRoom();
+	vector3df NextRoomPos();
 private:
+	void ShuffleVector();
+
 	std::vector<RoomInfo*>	m_rooms;
 	RoomInfo*				m_actualRoom;
+	RoomInfo*				m_nextRoom;
 };
 
 #endif

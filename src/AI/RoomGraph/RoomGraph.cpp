@@ -4,11 +4,13 @@
 
 RoomGraph::RoomGraph(){
 	m_actualRoom = NULL;
+	m_nextRoom = NULL;
 }
 
 RoomGraph::RoomGraph(RoomGraph* graph){
 	graph->CopyGraph(this);
 	m_actualRoom = NULL;
+	m_nextRoom = NULL;
 }
 
 RoomGraph::~RoomGraph(){
@@ -121,5 +123,43 @@ float RoomGraph::WhereExplore(){
 	float output = 0;
 	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore();
 	return output;
+}
+
+void RoomGraph::NextRoom(){
+	if(m_nextRoom!=NULL){
+		if(m_nextRoom == m_actualRoom){
+			m_nextRoom = NULL;
+		}
+	}
+	if(m_nextRoom == NULL){
+		ShuffleVector();
+		int size = m_rooms.size();
+		for(int i=0; i<size; i++){
+			bool explored = m_rooms[i]->GetExplored();
+			if(!explored){
+				m_nextRoom = m_rooms[i];
+				break;
+			}
+		}
+	}
+}
+
+vector3df RoomGraph::NextRoomPos(){
+	vector3df output;
+	if(m_nextRoom!=NULL){
+		output = m_nextRoom->GetPosition();
+	}
+	return output;
+}
+
+void RoomGraph::ShuffleVector(){
+	int n = m_rooms.size();
+	while(n>1){
+		int k = rand() % n;
+		n--;
+		RoomInfo* temp = m_rooms[k];
+		m_rooms[k] = m_rooms[n];
+		m_rooms[n] = temp;
+	}
 }
 
