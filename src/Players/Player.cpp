@@ -296,10 +296,10 @@ void Player::DeadUpdate(){
 
 		Player* newP = targetDeadCam;
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
-			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
 		}
 		else if(!playerManager->PlayerAlive(targetDeadCam)){
-			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
 		}
 
 		if(newP != targetDeadCam){
@@ -617,36 +617,6 @@ void Player::ReturnToLobby(){
 void Player::DrawOverlays(){
 	if(overlayManager != NULL && isPlayerOne) overlayManager->Draw();	
 }
-
-/*void Player::CheckIfReady(){
-	NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	bool isServer = n_engine->IsServerInit();
-
-	if(!isServer){
-		readyToStart = false;
-
-		if(hasCharacter){
-			vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
-
-			bool ready = true;
-
-			if(		m_position.X < readyZone.X
-				|| 	m_position.X > readyZone.X2
-				|| 	m_position.Z < readyZone.Y
-				|| 	m_position.Z > readyZone.Y2){
-				
-				ready = false;
-			}
-
-			readyToStart = ready;
-		}
-
-		if(networkObject != NULL){
-			networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
-			networkObject->SetBoolVar(PLAYER_READY, false, false, false);
-		}
-	}
-}*/
 
 bool Player::CheckIfReady(){
 	readyToStart = false;
@@ -1027,11 +997,15 @@ void Player::SetBillboard(){
 }
 
 void Player::Draw(){
-	DrawOverlays();
-	DrawBars();
-	DrawSpellSelector();
-	DrawInventory();
-	DrawTraps();
+	if(m_dead && targetDeadCam!=NULL){
+		targetDeadCam->Draw();
+	}else{	
+		DrawOverlays();
+		DrawBars();
+		DrawSpellSelector();
+		DrawInventory();
+		DrawTraps();
+	}
 }
 
 void Player::DrawBars(){

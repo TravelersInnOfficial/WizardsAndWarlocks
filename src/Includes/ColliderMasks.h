@@ -88,6 +88,16 @@ static int raycastCW		= C_DOOR
 							| C_NPC
 							| C_PLAYER;
 
+static int noPlayerRaycastCW		= C_DOOR
+									| C_GRAIL
+									| C_POTION
+									| C_FOUNTAIN
+									| C_SWITCH
+									| C_WALL
+									| C_PROJECTILE
+									| C_TRAP
+									| C_NPC;
+
 static int damageareaCW		= C_PLAYER;
 
 #endif
