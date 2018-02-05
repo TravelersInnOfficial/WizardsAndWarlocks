@@ -11,7 +11,7 @@ OgreBelch::OgreBelch(float costPM, float tCast, float tCoolDown, float optHP, fl
 	optHP, 
 	optMP)
 {
-	
+	createSoundEvent();
 }
 
 void OgreBelch::Lanzar(Player* p){
@@ -27,7 +27,10 @@ void OgreBelch::Lanzar(Player* p){
 
 	BulletManager* bullman = BulletManager::GetInstance();
 	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), POISON_BOMB);
-
+	
+	playSoundEvent(voiceEvent, pos); //Play voice event
+	playSoundEvent(shotEvent, pos); //Play shot event
+	
 	Hechizo::Lanzar(p);
 }
 
@@ -35,5 +38,6 @@ void OgreBelch::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void OgreBelch::createSoundEvent() {
-	
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Eructam Troglodytam");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Eructam Troglodytam");
 }

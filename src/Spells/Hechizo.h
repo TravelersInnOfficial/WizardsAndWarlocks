@@ -54,12 +54,14 @@ protected:
 	std::string HUDTexturePath; // Textura de la miniatura en el hud 
 
 	SoundEvent* shotEvent;		//Shot sound event
+	SoundEvent* voiceEvent;		//Voice sound event
 
 	SPELLCODE type;
 
 	//Sound Functions
 	virtual void createSoundEvent();
-	void playShotEvent(vector3df pos);
+	void playSoundEvent(SoundEvent* event,vector3df pos);
+	
 };
 
 #endif

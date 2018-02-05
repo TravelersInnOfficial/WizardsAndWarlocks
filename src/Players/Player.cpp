@@ -164,7 +164,10 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		bt_body->AssignPointer(this);
 
 		// Camera
-		if(isPlayerOne) m_camera = new FPSCamera(120.0f, 0);		
+		if(isPlayerOne){ 
+			if(m_camera!=NULL) delete m_camera;
+			m_camera = new FPSCamera(120.0f, 0);		
+		}
 
 		hasCharacter = true;
 	}
@@ -190,7 +193,6 @@ void Player::DestroyPlayerCharacter(){
 		m_camera = new WatcherCamera(GetPos());
 	}
 	
-	CheckIfReady();
 	hasCharacter = false;
 }
 
@@ -230,6 +232,27 @@ void Player::CheckInput(){}
 
 void Player::GetNetInput(){
 
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+
+	// El server no debe leerlo
+	if(!isServer){
+		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
+		if(doRespawn){
+			Respawn();
+			doRespawn = false;
+			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
+		}
+	}
+
+	// Solo el server debe leerlo
+	/*if(isServer){
+		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
+		readyToStart = isReady;
+	}*/
+
+	// Tanto el server como el cliente deben leerlo
+	// Pero solo si no es el PLAYER ONE
 	if(!isPlayerOne){
 		int alliance = networkObject->GetIntVar(PLAYER_ALLIANCE);
 		if(alliance != (int)NO_ALLIANCE){
@@ -244,16 +267,6 @@ void Player::GetNetInput(){
 			doCreateChar = false;
 			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
 		}
-
-		bool doRespawn = networkObject->GetBoolVar(PLAYER_RESPAWN);
-		if(doRespawn){
-			Respawn();
-			doRespawn = false;
-			networkObject->SetBoolVar(PLAYER_RESPAWN, doRespawn, false, false);
-		}
-
-		bool isReady = networkObject->GetBoolVar(PLAYER_READY);
-		readyToStart = isReady;
 
 		string auxName = networkObject->GetStringVar(PLAYER_NAME);
 		if(auxName.length() > 0){
@@ -283,10 +296,10 @@ void Player::DeadUpdate(){
 
 		Player* newP = targetDeadCam;
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
-			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
 		}
 		else if(!playerManager->PlayerAlive(targetDeadCam)){
-			newP = playerManager->ChangePlayerTargetCam(targetDeadCam);
+			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
 		}
 
 		if(newP != targetDeadCam){
@@ -347,7 +360,6 @@ void Player::Update(float deltaTime){
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
-			//positionCamera();
 
 			//Position camera FPS Y TPS
 			m_camera->UpdateCamera(GetHeadPos());
@@ -499,6 +511,14 @@ void Player::UpdateSP(){
 }
 
 void Player::Respawn(){
+
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isServer = n_engine->IsServerInit();
+	if(isServer && networkObject != NULL){
+		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+		networkObject->SetBoolVar(PLAYER_RESPAWN, false, false, false);
+	}
+
 	PlayerManager::GetInstance()->AddToLife(this);
 	CreatePlayerCharacter();
 	SetPosition(ObjectManager::GetInstance()->GetRandomSpawnPoint(playerAlliance));
@@ -569,48 +589,54 @@ void Player::SendSignal(){
 
 void Player::Die(){
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
-	ObjectManager::GetInstance()->StopInteractionsNPC();	// Paramos la posible interaccion con los NPCs
+
+	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();											// Stop the pulse event
 	playDie(); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
 	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
-	if(matchStarted){				
-		DestroyPlayerCharacter();							// Destruimos su cuerpo
-	}
+	if(matchStarted) DestroyPlayerCharacter();				// Destruimos cuerpo fisico
 }
 
 void Player::ReturnToLobby(){
-	if(isPlayerOne && networkObject != NULL) CheckIfReady();
 
-	CreatePlayerCharacter();
-	Respawn();
-	if(networkObject != NULL){
-		networkObject->SetBoolVar(PLAYER_CREATE_CHAR, true, true, false);
-		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
+	if(networkObject == NULL) Respawn();
+
+	else if(networkObject != NULL){
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		bool isServer = n_engine->IsServerInit();
+
+		if(isPlayerOne) networkObject->SetBoolVar(PLAYER_READY, false, true, false);
+		else if(isServer) Respawn();
 	}
+
 }
 
 void Player::DrawOverlays(){
 	if(overlayManager != NULL && isPlayerOne) overlayManager->Draw();	
 }
 
-void Player::CheckIfReady(){
-	
+bool Player::CheckIfReady(){
+	readyToStart = false;
+
 	if(hasCharacter){
 		vector4df readyZone = ObjectManager::GetInstance()->GetReadyZone();
 
 		bool ready = true;
-		if(m_position.X < readyZone.X || m_position.X > readyZone.X2 || m_position.Z < readyZone.Y || m_position.Z > readyZone.Y2){
-			ready = false;
+
+		if(		m_position.X < readyZone.X
+			|| 	m_position.X > readyZone.X2
+			|| 	m_position.Z < readyZone.Y
+			|| 	m_position.Z > readyZone.Y2){
+			ready = false;	
 		}
 
 		readyToStart = ready;
 	}
-	else readyToStart = false;
-	
-	if(networkObject != NULL) networkObject->SetBoolVar(PLAYER_READY, readyToStart, true, false);
+
+	return readyToStart;
 }
 
 void Player::Run(bool runStatus){
@@ -636,6 +662,7 @@ void Player::DropObject(){
 
 void Player::LosePotion(){
 	if(potion!=NULL) potion = NULL;
+	playLosePotion();
 }
 
 void Player::UseObject(){
@@ -710,18 +737,20 @@ void Player::ApplyFuzyEffect(){
  
 void Player::createSoundEvents() {
 	//Create the events
-	SoundEvent * footsteps = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
-	SoundEvent * drink 	   = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
-	SoundEvent * die       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
-	SoundEvent * hit       = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
-	SoundEvent * pulse     = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
-	
+	SoundEvent * footsteps  = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Footsteps");
+	SoundEvent * drink 	    = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Drink");
+	SoundEvent * die        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Die");
+	SoundEvent * hit        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
+	SoundEvent * pulse      = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
+	SoundEvent * losepotion = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Caronte Taxes");
+
 	//Store them at the player's sounds map
-	soundEvents["footsteps"] = footsteps;
-	soundEvents["drink"] 	 = drink;
-	soundEvents["die"] 		 = die;
-	soundEvents["hit"] 		 = hit;
-	soundEvents["pulse"]     = pulse;
+	soundEvents["footsteps"]  = footsteps;
+	soundEvents["drink"] 	  = drink;
+	soundEvents["die"] 		  = die;
+	soundEvents["hit"] 		  = hit;
+	soundEvents["pulse"]      = pulse;
+	soundEvents["losepotion"] = losepotion;
 }
 
 void Player::playFootsteps() {
@@ -746,6 +775,10 @@ void Player::playPulse() {
 		pulseStarted = true;
 		SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["pulse"],GetPos());
 	}
+}
+
+void Player::playLosePotion() {
+	SoundSystem::getInstance()->playEvent(soundEvents["losepotion"], GetPos());
 }
 
 void Player::stopFootsteps() {
@@ -866,7 +899,6 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			TrapManager::GetInstance()->setPlayerUsings(this, 0);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -965,11 +997,15 @@ void Player::SetBillboard(){
 }
 
 void Player::Draw(){
-	DrawOverlays();
-	DrawBars();
-	DrawSpellSelector();
-	DrawInventory();
-	DrawTraps();
+	if(m_dead && targetDeadCam!=NULL){
+		targetDeadCam->Draw();
+	}else{	
+		DrawOverlays();
+		DrawBars();
+		DrawSpellSelector();
+		DrawInventory();
+		DrawTraps();
+	}
 }
 
 void Player::DrawBars(){

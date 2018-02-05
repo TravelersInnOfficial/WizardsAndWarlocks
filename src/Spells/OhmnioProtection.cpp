@@ -17,6 +17,7 @@ OhmnioProtection::OhmnioProtection(float costPM, float tCast, float tCoolDown, f
 
 void OhmnioProtection::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_DEFENSE);
+	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
 	Hechizo::Lanzar(p);
 }
 
@@ -24,5 +25,5 @@ void OhmnioProtection::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void OhmnioProtection::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Ohmio Protection");
 }

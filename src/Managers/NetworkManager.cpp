@@ -1,5 +1,4 @@
 #include "NetworkManager.h"
-#include "./../States/NetGame.h"
 
 NetworkManager* NetworkManager::instance = 0;
 

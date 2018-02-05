@@ -15,8 +15,10 @@ public:
 private:
 	void CheckIfWon();
 	void MatchEnded(Alliance winnerAlliance);
+
 	// Nos guardamos los managers que hay actualmente creados
 	// Pero sera el SinglePlayerGame quien se encargara de eliminarlos
+	
 	SpellManager* 			spellManager;
 	BulletManager* 			bulletManager;
 	EffectManager* 			effectManager;
@@ -34,6 +36,8 @@ private:
 
 	Player* playerOne;
 	NetworkObject* 	networkObject;
+	bool gameEnded;
+	bool winnerMenuCreated;
 
 	bool	isServer;
 };

@@ -37,6 +37,7 @@ void AIPlayer::SetSteerings(){
 	obstacleAvoidance = new ObstacleAvoidance();
 	followPath = new FollowPath(path);
 	wander = new Wander();
+	align = new Align();
 	face = new Face();
 	seek = new Seek();
 	flee = new Flee();
@@ -70,6 +71,10 @@ SteeringOutput AIPlayer::GetSeek(Kinematic cKin, Kinematic tKin){
 
 SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
 	return flee->GetSteering(cKin, tKin);
+}
+
+SteeringOutput AIPlayer::GetAlign(Kinematic cKin, Kinematic tKin){
+	return align->GetSteering(cKin, tKin);
 }
 
 SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){

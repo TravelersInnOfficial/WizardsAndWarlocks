@@ -14,7 +14,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	playerManager	= PlayerManager::GetInstance();
 	trapManager		= TrapManager::GetInstance();
 	senseManager	= RegionalSenseManager::GetInstance();
-	
+
 	// Level
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 

@@ -11,7 +11,7 @@ OdinFury::OdinFury(float costPM, float tCast, float tCoolDown, float optHP, floa
 	optHP, 
 	optMP)
 {
-	
+	createSoundEvent();
 }
 
 void OdinFury::Lanzar(Player* p){
@@ -28,7 +28,10 @@ void OdinFury::Lanzar(Player* p){
 	BulletManager* bullman = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_THUNDER);
-
+	
+	playSoundEvent(voiceEvent, pos); //Play voice event
+	playSoundEvent(shotEvent, pos); //Play shot event
+	
 	Hechizo::Lanzar(p);
 }
 
@@ -36,5 +39,6 @@ void OdinFury::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void OdinFury::createSoundEvent() {
-
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Furore Othinus");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Furore Othinus");
 }

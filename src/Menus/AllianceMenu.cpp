@@ -16,9 +16,9 @@ AllianceMenu::~AllianceMenu(){}
 void AllianceMenu::Update(bool open){
     ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(screenWidth/3,screenHeight/5));
+    ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::Begin(m_id,&open,w_flags);
-    for(int i = 0; i<sizeof(buttonKeys); i++){
+    for(int i = 0; i<N_BUTTONS_ALLIANCE; i++){
         ImGui::PushID(i);
         if(ImGui::Button(buttonKeys[i], buttonSize)){
             std::cout<<"button "<<i<<" clicked"<<std::endl;
@@ -28,5 +28,9 @@ void AllianceMenu::Update(bool open){
         
         if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
     }
+    //HELP WINDOWS
+    ImGui::ShowTestWindow();
+    ImGui::ShowMetricsWindow();
+
     ImGui::End();
 }

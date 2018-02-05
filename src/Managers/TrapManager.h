@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <vector3d.h>
+#include <Alliance.h>
 #include "./../Objects/Trap.h"
 #include "./../Players/Player.h"
 

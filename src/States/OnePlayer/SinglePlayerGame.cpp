@@ -59,7 +59,7 @@ void SinglePlayerGame::ChangeMode(){
 			delete m_stateGame;						// Eliminamos el estado que haya actualmente
 			CleanGame();							// Limpiamos el juego
 			m_stateGame = new Match(this);			// Cargamos la partida
-			playerManager->InitGame();	// Posicionamos los jugadores
+			playerManager->InitGame();				// Posicionamos los jugadores
 			m_changeMode = 0;
 			break;
 		case 2:
@@ -81,6 +81,11 @@ void SinglePlayerGame::CleanGame(){
 	trapManager->ClearTraps();
 	// Limpiamos los hechizos
 	spellManager->ResetAllDieHechizo();
+
+	// Si estaba algun menu activado lo desactivamos
+	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleMenu(false);
+	MenuManager::GetInstance()->ClearMenu();
 }
 
 bool SinglePlayerGame::Input(){
@@ -141,7 +146,7 @@ void SinglePlayerGame::CreateSoundEvents() {
 	SoundEvent* defeat  = s_engine->createEvent("event:/Music/Defeat");
 	SoundEvent* victory = s_engine->createEvent("event:/Music/Victory");
 	SoundEvent* ghosts  = s_engine->createEvent("event:/Ambience/Ghosts");
-	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/WaterDrops");
+	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/Water Drops");
 
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;

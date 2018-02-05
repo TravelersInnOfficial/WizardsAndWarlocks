@@ -19,6 +19,7 @@ public:
 	Burned(float time, int dmg);
 	void UpdateEffect(Player* p);
 private:
+	void createSoundEvent();
 	int damage;
 };
 
@@ -30,6 +31,7 @@ public:
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	void createSoundEvent();
 	int damage;
 };
 
@@ -39,6 +41,7 @@ public:
 	Poisoned(float time, int dmg);
 	void UpdateEffect(Player* p);
 private:
+	void createSoundEvent();
 	int damage;
 };
 
@@ -55,6 +58,7 @@ public:
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	void createSoundEvent();
 	float factor;
 };
 
@@ -64,6 +68,8 @@ public:
 	Paralyzed(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // WEAK_SILENCED
@@ -72,6 +78,8 @@ public:
 	Silenced(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // WEAK_GHOSTDISTORSION
@@ -80,6 +88,8 @@ public:
 	GhostDistorsion(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // WEAK_MADNESS
@@ -87,9 +97,11 @@ class Madness: public Effect{
 public:
 	~Madness();
 	Madness(float time);
+	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	void createSoundEvent();
 	std::vector<ACTION_ENUM> actions;
 };
 
@@ -107,6 +119,7 @@ public:
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	void createSoundEvent();
 	int damage;
 };
 
@@ -120,6 +133,8 @@ public:
 	DamageUp(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // POWERUP_DEFENSE
@@ -128,6 +143,8 @@ public:
 	DefenseUp(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 /*
@@ -146,6 +163,8 @@ public:
 	SpeedUp(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // POWERUP_UNTARGET
@@ -154,6 +173,8 @@ public:
 	Untargetable(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // POWERUP_FIRE
@@ -162,6 +183,8 @@ public:
 	FireShots(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // POWERUP_POISON
@@ -170,6 +193,8 @@ public:
 	PoisonShots(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 // POWERUP_INVISIBLE
@@ -178,6 +203,8 @@ public:
 	Invisible(float time);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+private:
+	void createSoundEvent();
 };
 
 #endif

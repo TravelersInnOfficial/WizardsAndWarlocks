@@ -255,7 +255,6 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	
 	newEvent->setInstance(eventInst);	//Set the event instance
 	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
-	
 	return newEvent;
 }
 
@@ -401,6 +400,7 @@ void SoundEvent::setGain(float gain) {
 ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
 	
+	
 	if(isnan(pos.X)){
 		pos.X = 0; pos.Y = 0; pos.Z = 0;
 		std::cout<<"POS = NAN"<<std::endl;
@@ -411,7 +411,7 @@ void SoundEvent::setPosition(vector3df pos) {
 	// Raised by 0.5 to not get the same position as the listener
 	vector3df newPos(pos.X, pos.Y + 0.5, pos.Z);
 	SoundSystem::getInstance()->setPos(attributes, newPos);	//Set the position
-
+	
 	//Set the forward vector
 	vector3df frwd = vector3df(0,0.5,0);
 	frwd.normalize();
@@ -445,8 +445,10 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
-	ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
-	ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
+	if (soundInstance != NULL) {
+		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
+	}
 }
 
 /*******************************************************

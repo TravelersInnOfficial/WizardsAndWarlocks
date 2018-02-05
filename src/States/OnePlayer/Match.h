@@ -33,6 +33,7 @@ private:
 	SinglePlayerGame* 	father;
 
 	Player* playerOne;
+	bool gameEnded;
 };
 
 #endif

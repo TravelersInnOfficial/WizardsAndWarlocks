@@ -15,6 +15,7 @@ public:
 private:
 	void UpdateLobby(float deltaTime);
 	void CheckIfReady();
+	
 	// Nos guardamos los managers que hay actualmente creados
 	// Pero sera el SinglePlayerGame quien se encargara de eliminarlos
 	SpellManager* 			spellManager;

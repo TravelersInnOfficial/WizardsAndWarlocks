@@ -4,7 +4,9 @@ Dummy::Dummy(int HP, float time, bool alli, vector3df TPosition, vector3df TScal
 :Invocation(HP){
 	currentTime = time;
 	alliance = alli;
+	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
+	
 }
 
 void Dummy::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -55,4 +57,8 @@ void Dummy::UpdatePosShape(){
 	bt_body->Update();
     vector3df pos = bt_body->GetPosition();
     m_invocationNode->setPosition(pos);
+}
+
+void Dummy::createSoundEvent(){
+	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Dummy");
 }

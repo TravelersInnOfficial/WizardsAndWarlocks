@@ -20,10 +20,6 @@ GUIEngine::~GUIEngine(){
     m_GUIHandler->drop();
 }
 
-void GUIEngine::ToggleMenu(){
-    
-}
-
 void GUIEngine::update(){
     // create the GUI elements
     m_GUIHandler->startGUI();

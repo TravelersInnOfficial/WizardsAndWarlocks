@@ -1,7 +1,10 @@
 #include "Server.h"
-#include "./../States/NetGame.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Players/Player.h"
+
+#include "./../Managers/TrapManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/ObjectManager.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -15,9 +18,10 @@ Server::Server(int serverPort, int maxClients){
 	multiGameObject = new NetworkObject(lastObjectId, ID_MULTIGAME_O);
 	networkObjects[lastObjectId] = multiGameObject;
 	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
+	
 	// Inicializo su variable
-	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, true);
-	multiGameObject->SetBoolVar(MULTIGAME_BACK_LOBBY, false, true, true);
+	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
+	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
 }
 
 Server::~Server(){

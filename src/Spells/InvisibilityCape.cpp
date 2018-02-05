@@ -16,9 +16,10 @@ InvisibilityCape::InvisibilityCape(float costPM, float tCast, float tCoolDown, f
 
 void InvisibilityCape::Lanzar(Player* p){
     EffectManager::GetInstance()->AddEffect(p, POWERUP_INVISIBLE);
+	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
     Hechizo::Lanzar(p);
 }
 
 void InvisibilityCape::createSoundEvent(){
-
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Invisibility Cape");
 }

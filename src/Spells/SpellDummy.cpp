@@ -4,7 +4,7 @@
 
 SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_DUMMY,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){
-	
+	createSoundEvent();
 }
 	
 void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
@@ -30,10 +30,13 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
 	}
 
 	target->SetName(p->GetName());
-
+	playSoundEvent(voiceEvent, pos); //Play voice event
 	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
+void SpellDummy::createSoundEvent() {
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Dummy");
+}

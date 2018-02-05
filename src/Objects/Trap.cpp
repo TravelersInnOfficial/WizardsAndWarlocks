@@ -37,6 +37,9 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
     vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
     m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0), C_TRAP, trapCW);
     m_body->AssignPointer(this);
+
+    createSoundEvent();
+    playPlaceEvent(TPosition);
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
@@ -281,4 +284,15 @@ void Trap::SetTrapId(int id){
 
 int Trap::GetTrapId(){
     return(trapId);
+}
+
+/********************************************************************************************************
+ ****************************************** SOUND FUNCTIONS *********************************************
+ ********************************************************************************************************/
+void Trap::createSoundEvent() {
+	placeEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Trap");
+}
+
+void Trap::playPlaceEvent(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(placeEvent, pos);
 }

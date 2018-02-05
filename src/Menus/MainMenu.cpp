@@ -1,6 +1,6 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
-#include <Assets.h>
+
 bool exit_menu = false;
 bool options_menu = false;
 
@@ -9,11 +9,12 @@ MainMenu::MainMenu(){
 
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
+    
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5)); //widget items spacing
     ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     
     //BUTTONS DATA
-    for(int i = 0; i<N_BUTTONS;i++){
+    for(int i = 0; i<N_BUTTONS_MAIN;i++){
         texture[i] = pDevice->getVideoDriver()->getTexture(buttonLayouts[i]);
         imageid[i] = GUI->createTexture(texture[i]);
     }
@@ -21,7 +22,7 @@ MainMenu::MainMenu(){
 
     //WIDGET SIZE
     m_width = texture[0]->getSize().Width + 30;
-    m_height = screenHeight/2;
+    m_height = texture[0]->getSize().Height * N_BUTTONS_MAIN + 50;
 
 }
 MainMenu::~MainMenu(){
@@ -43,21 +44,17 @@ void GameOptions(){
 void ExitGame(){
     exit_menu = true;
 }
-void (*actions[N_BUTTONS])() = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
+void (*actions[N_BUTTONS_MAIN])() = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
 
 void MainMenu::Update(bool open){
 
-    //HELP WINDOWS
-    //ImGui::ShowTestWindow();
-    //ImGui::ShowMetricsWindow();
-
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(screenWidth/3,screenHeight/5));
+    ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
     ImGui::Begin(m_id,&open,w_flags);
-    for(int i = 0; i<N_BUTTONS; i++){
+    for(int i = 0; i<N_BUTTONS_MAIN; i++){
         ImGui::PushID(i);
         //NEXT BUTTON STYLE
         ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
@@ -104,6 +101,10 @@ void MainMenu::Update(bool open){
                 ImGui::EndPopup();
             }
         }
+
+    //HELP WINDOWS
+    //ImGui::ShowTestWindow();
+    //ImGui::ShowMetricsWindow();
         
     ImGui::End();
 }

@@ -25,6 +25,8 @@ private:
     
     BT_Body* p_BtBody;
 
+    vector2di lastPos;      // Ultima posicion en la que se ha encontrado el raton
+
     float XAngle;           // Angulo que forma el movimiento horizontal
     float YAngle;           // Angulo que forma el movimiento vertical
     float mouseVelocity;    // Velocidad, valor en grades por cada valor que se mueva el raton

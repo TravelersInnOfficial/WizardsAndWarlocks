@@ -29,7 +29,10 @@ void DragonBreath::Lanzar(Player* p){
 	BulletManager* bullman = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_FIRE);
-	playShotEvent(pos); //Play sound event
+	
+	playSoundEvent(voiceEvent, pos); //Play voice event
+	playSoundEvent(shotEvent, pos); //Play shot event
+	
 	Hechizo::Lanzar(p);
 }
 
@@ -37,5 +40,6 @@ void DragonBreath::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void DragonBreath::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Dragon Breath");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Dragon Breath");
 }

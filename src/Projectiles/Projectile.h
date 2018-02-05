@@ -7,14 +7,16 @@
 
 #include <PhysicsEngine/BT_Body.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
 #include <ColliderMasks.h>
 
 class Projectile: public Entidad{
 public:
-    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, int damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp");
+    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, int damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp", std::string soundPath = "");
     ~Projectile();
     void Update();
     void Contact(void* punt, EntityEnum tipo);
+    void playSoundEvent(vector3df pos);
 
     BT_Body* GetBody();
     GBody* GetShape();
@@ -22,9 +24,11 @@ public:
 protected:
     void CreateProjectile();
 	void NormalizeDir();
+    void createSoundEvent(std::string soundPath);
 	virtual void UpdatePosShape();
     virtual void ContactBehavior();
     virtual void ContactAction(Player* p) = 0;
+    
 
     int             emisor;             // Creador del proyectil
     bool            impact;             // Ha llegado a hacer hit? Si/No
@@ -40,6 +44,8 @@ protected:
     BT_Body*        bt_body;            // Cuerpo fisico del proyectil
     GBody*          m_ProjectileNode;    // Cuerpo visual del proyectil
     std::string     m_Texture;
+    std::string     soundPath;
+    SoundEvent*     soundEvent;
 };
 
 #endif

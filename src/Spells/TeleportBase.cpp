@@ -3,8 +3,10 @@
 
 TeleportBase::TeleportBase(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_TELEPORTBASE,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
+	createSoundEvent();
 	base = NULL;
 	justPlaced = false;
+	
 }
 
 void TeleportBase::DieReset(){
@@ -34,12 +36,16 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
 		rot.X = 0; rot.Y = 0;
 		vector3df pos = p->GetPos();
 
-		base = (BaseT*)ObjectManager::GetInstance()->AddInvocation(pos, vector3df(1,1,1), rot, INVO_TELEPORT);
+		playSoundEvent(voiceEvent, pos); //Play the voice event
 
+		base = (BaseT*)ObjectManager::GetInstance()->AddInvocation(pos, vector3df(1,1,1), rot, INVO_TELEPORT);
 		justPlaced = true;
 	}
 	else{
 		vector3df pos = base->GetPosition();
+
+		playSoundEvent(shotEvent, pos);		//Play the teleport sound
+
 		p->SetPosition(pos);
 
 		base->Deactivate();
@@ -53,5 +59,7 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void TeleportBase::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Teleport");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Teleport Base");
 }
+

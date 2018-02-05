@@ -24,6 +24,7 @@ public:
 	~RoomInfo();
 	bool AddNextRoom(RoomInfo* next);
 	void UpdateExplore(float rotY);
+	float WhereExplore();
 
 	// GETTERS
 	int GetId();

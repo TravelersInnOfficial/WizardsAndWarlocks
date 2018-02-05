@@ -16,9 +16,6 @@ public:
     void update();
     void draw();
 
-    void ToggleMenu();
-
-
 private:
     static GUIEngine* instance; 
 

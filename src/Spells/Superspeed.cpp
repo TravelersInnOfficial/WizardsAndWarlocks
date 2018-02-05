@@ -17,6 +17,7 @@ Superspeed::Superspeed(float costPM, float tCast, float tCoolDown, float optHP, 
 
 void Superspeed::Lanzar(Player* p){
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_SPEED);
+	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
 	Hechizo::Lanzar(p);
 }
 
@@ -24,5 +25,5 @@ void Superspeed::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void Superspeed::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Hermes' Slippers");
 }

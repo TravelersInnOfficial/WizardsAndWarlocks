@@ -15,11 +15,11 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     15.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
     25.0f,                  // max distance the projectile can travel
-    "./../assets/textures/projectils/SPELL_POISON.png")        // texture of the projectile
+    "./../assets/textures/projectils/SPELL_POISON.png",        // texture of the projectile
+    "event:/Spells/Projectiles/Eructam Troglodytam")             //Sound event
 {
     //bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,-9.8,0));
-    
     ready2Burst = false;
 }
 

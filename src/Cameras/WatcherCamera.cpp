@@ -21,6 +21,8 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	// Graphic engine
 	p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, lookat);
 
+	// LastPos
+	lastPos =  GraphicEngine::getInstance()->GetCursorPosition();
 
 	//Bullet Physics
 	p_BtBody = new BT_Body();
@@ -30,8 +32,6 @@ WatcherCamera::WatcherCamera(vector3df lookat){
 	p_BtBody->AssignPointer(this);
 	clase = EENUM_CAMERA;
 
-
-	ResetMousePos();
 }
 
 WatcherCamera::~WatcherCamera(){
@@ -125,29 +125,28 @@ void WatcherCamera::UpdateAngles(){
 	int screenH = engine->GetScreenHeight();
 	
 	vector2di mousePos = engine->GetCursorPosition();
+	vector2di dirMouse = lastPos - mousePos;
 
-	// Reseteamos la posicion del raton al centro de la pantalla
-	ResetMousePos();
+	lastPos = mousePos;
+	if(lastPos.X<=0 || lastPos.Y<=0 || lastPos.X>=screenW || lastPos.Y>=screenH){
+		lastPos = vector2di(screenW/2, screenH/2);
+	}
+	engine->SetCursorPosition(lastPos);
 
 	// Update the Y angle
-	int yDiff = screenH/2 - mousePos.Y;
+	int yDiff = dirMouse.Y;
 	if(abs(yDiff)>5){
 		YAngle += 5*sign(yDiff)*-1;
 		YAngle = YAngle>60? 60: YAngle<-60? -60: YAngle;
 	}
 
 	// Update the X angle
-	int xDiff =screenW/2 - mousePos.X;
+	int xDiff = dirMouse.X;
 	if(abs(xDiff)>5){
 		XAngle += 5*sign(xDiff)*-1;
 		XAngle = XAngle>360? XAngle-360: XAngle<0? XAngle+360: XAngle;
 	}
 
-}
-
-void WatcherCamera::ResetMousePos(){
-	GraphicEngine* engine = GraphicEngine::getInstance();
-	engine->SetCursorPosition(vector2di(engine->GetScreenWidth()/2, engine->GetScreenHeight()/2));
 }
 
 void WatcherCamera::CheckMaxVelocity(){

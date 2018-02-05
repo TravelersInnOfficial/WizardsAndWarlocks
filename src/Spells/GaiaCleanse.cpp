@@ -17,6 +17,8 @@ GaiaCleanse::GaiaCleanse(float costPM, float tCast, float tCoolDown, float optHP
 
 void GaiaCleanse::Lanzar(Player* p){
 	EffectManager::GetInstance()->CleanEffects(p);
+	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
+	playSoundEvent(shotEvent, p->GetPos()); //Play voice event
 	Hechizo::Lanzar(p);
 }
 
@@ -24,5 +26,6 @@ void GaiaCleanse::Lanzar(Player* p){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void GaiaCleanse::createSoundEvent() {
-	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/DragonBreathShot");
+	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Gaia Aqua");
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Gaia Aqua");
 }

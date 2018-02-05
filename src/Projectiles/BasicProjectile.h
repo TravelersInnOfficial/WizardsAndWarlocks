@@ -11,6 +11,7 @@ public:
 
 private:
     void ContactAction(Player* p);
+    void createSoundEvent();
     EFFECTCODE contactEffect;
 
 };

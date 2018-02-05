@@ -3,7 +3,7 @@
 
 DesperationWall::DesperationWall(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_WALL,"./../assets/textures/HUD/Spells/SPELL_WALL.png", optHP, optMP){
-	
+	createSoundEvent();	
 }
 	
 void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
@@ -20,10 +20,13 @@ void DesperationWall::Lanzar(Player* p){	// Estaria bien que se pusiera justo en
 
 	pos.Y += 0.25;
 	objectMaster->AddInvocation(pos, vector3df(1.75,2.0,0.25), rot, INVO_WALL);
-
+	playSoundEvent(voiceEvent, pos);
 	Hechizo::Lanzar(p);
 }
 
 /********************************************************************************************************
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
+void DesperationWall::createSoundEvent() {
+	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Desperation Wall");
+}

@@ -136,12 +136,10 @@ bool PlayerManager::CheckIfReady(){
 		if(p->GetAlliance() == ALLIANCE_WARLOCK) theresWarlock = true;
 		else if(p->GetAlliance() == ALLIANCE_WIZARD) theresWizard = true;
 		
-		if(!p->GetReadyStatus()) allReady = false;
+		if(!p->CheckIfReady()) allReady = false;
 	}
 
-	if(allReady){
-		if(size < 2 || !theresWizard || !theresWizard) allReady = false;
-	}
+	if(allReady && (size < 2 || !theresWizard || !theresWizard)) allReady = false;
 
 	return allReady;
 }
@@ -340,21 +338,31 @@ bool PlayerManager::PlayerAlive(Player* player){
 	return false;
 }	
 
-Player* PlayerManager::ChangePlayerTargetCam(Player* player){
+Player* PlayerManager::ChangePlayerTargetCam(Player* player, Alliance alli){
 	int size = players.size();
 	if(size==0) return NULL; // No hay jugadores vivos
 
 	int value = -1;
+	int secondValue = -1;
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
 		if(p == player){
-			value = i;
+			value = i;			// Nos guardamos la posicion del jugador actual
+		}
+
+		if(secondValue == -1 && p->GetAlliance()==alli){
+			secondValue = i;	// Nos guardamos la posicion del primer jugador del vector con la alianza correcta
+		}
+		else if(value != -1 && i>value && p->GetAlliance()==alli){
+			secondValue = i;	// Comparamos con la posicion del player actual para quedarnos con justo el siguiente
+			break;
 		}
 	}
 
 	// En el caso de que value == -1 siguiendo la formula se pondra el primer jugador del vector
-
-	value++;
-	value = value % size;	// El valor siempre estara entre [0, size-1]
-	return players[value];
+	if(secondValue!=-1){
+		return players[secondValue];
+	}else{
+		return NULL;
+	}
 }

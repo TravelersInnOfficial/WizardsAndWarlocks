@@ -63,6 +63,12 @@ bool RoomGraph::RoomExplored(){
 	return output;
 }
 
+vector3df RoomGraph::RoomPos(){
+	vector3df output;
+	if(m_actualRoom!=NULL) output = m_actualRoom->GetPosition();
+	return output;
+}
+
 void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 	// Copiar todas las habitaciones
 	int size = m_rooms.size();
@@ -109,5 +115,11 @@ void RoomGraph::InitRoom(vector3df pos){
 
 void RoomGraph::UpdateExplore(float rotY){
 	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(rotY);
+}
+
+float RoomGraph::WhereExplore(){
+	float output = 0;
+	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore();
+	return output;
 }
 

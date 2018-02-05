@@ -13,7 +13,7 @@ public:
 	void Lanzar(Player* p);
 
 protected:	
-
+	void createSoundEvent();
 private:
 	
 };

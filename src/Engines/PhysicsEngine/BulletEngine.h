@@ -25,8 +25,8 @@ public:
 
     void DebugDrawWorld();
 
-    void* Raycast(vector3df Start, vector3df End);
-    bool Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal);
+    void* Raycast(vector3df Start, vector3df End, int collisionFilter = raycastCW);
+    bool Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal, int collisionFilter = raycastCW);
 
 	static void motorPreTickCallback(btDynamicsWorld*, btScalar);
 	void motorProcessCallback(btScalar);
