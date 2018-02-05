@@ -165,8 +165,6 @@ bool TravelRoom::run(Blackboard* bb){
 		vector3df pos = room->NextRoomPos();
 		character->ShortestPath(pos);
 
-		std::cout<<"Lets Go"<<std::endl;
-
 		Kinematic cKin = character->GetKinematic();
 
 		SteeringOutput steering = character->GetFollowPath(cKin);
@@ -193,6 +191,49 @@ bool SetRoomTravel::run(Blackboard* bb){
 	if(room != NULL){
 		room->NextRoom();
 		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK DOOR IN FRONT
+//
+// ================================================================================================= //
+
+CheckDoorInFront::CheckDoorInFront(float dist){
+	raycastDistance = dist;
+}
+
+bool CheckDoorInFront::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckDoorInFront\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character!=NULL){
+		// Obtenemos la posicion inicial y final de raycast
+		vector3df charPos = character->GetPos();
+		vector3df endPos;
+		// Calculamos la posicion final del raycast
+		vector3df rot = character->GetRot();
+		rot.X = -rot.X;
+		endPos.X = charPos.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
+		endPos.Y = charPos.Y + sin(rot.X)*raycastDistance;
+		endPos.Z = charPos.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
+
+		void* Object = BulletEngine::GetInstance()->Raycast(
+		charPos, 
+		endPos);
+
+		// Miramos si encontramos una puerta en el camino
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_DOOR){
+				Door* door = (Door*)Object;
+				if(!door->GetOpenState()){
+					door->Interact(character);
+				}
+			}
+		}
 	}
 	return false;
 }
@@ -309,6 +350,7 @@ bool UsePotion::run(Blackboard* bb){
 // ================================================================================================= //
 
 UseFountain::UseFountain(){}
+
 bool UseFountain::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"UseFountain\n";
 

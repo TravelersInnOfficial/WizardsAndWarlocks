@@ -63,7 +63,14 @@ void Pathfinding::ResetValues(){
 }
 
 void Pathfinding::AStar( vector3df from,vector3df to){
-    m_path.clear();                     // Limpiamos el vector de nodos, no se han creado variables en este vector
+    if(m_path.size()>0){ 
+        float dirFinal = (to - m_path[m_path.size() - 1]->getPosition()).length();
+        if(dirFinal > 1){
+            m_path.clear();         // Limpiamos el vector de nodos, no se han creado variables en este vector
+        }else{
+            return;
+        }
+    }
 
     // Put values
     StartNode->setData(-1,from);

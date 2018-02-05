@@ -283,9 +283,12 @@ void BehaviourTree::CreateExploreMove(){
 }
 
 void BehaviourTree::CreateTravelTask(){
-    Task* t = new SetRoomTravel();
-    informacion->SetPuntero(AI_TASK_TRAVEL, t);
-    tasks.push_back(t);
+    Secuencia* sc_travelTask = new Secuencia();
+    sc_travelTask->addChild(new SetRoomTravel());
+    sc_travelTask->addChild(new CheckDoorInFront(2.0f));
+
+    informacion->SetPuntero(AI_TASK_TRAVEL, sc_travelTask);
+    tasks.push_back(sc_travelTask);
 }
 
 void BehaviourTree::CreateTravelMove(){

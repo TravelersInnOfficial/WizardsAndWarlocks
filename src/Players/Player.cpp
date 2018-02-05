@@ -295,14 +295,17 @@ void Player::DeadUpdate(){
 		UpdateInput();
 
 		Player* newP = targetDeadCam;
+		bool setPos = false;
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
 			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
+			setPos = true;
 		}
 		else if(!playerManager->PlayerAlive(targetDeadCam)){
 			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
+			setPos = true;
 		}
 
-		if(newP != targetDeadCam){
+		if(setPos){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}

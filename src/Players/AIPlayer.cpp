@@ -49,35 +49,44 @@ void AIPlayer::InitGame(){
 }
 
 // STEERINGS
+static bool DEBUG_STR = false;
 SteeringOutput AIPlayer::GetLookWhereYoureGoing(Kinematic cKin){
+	if(DEBUG_STR) std::cout<<"LookWhereYoureGoing\n";
 	return lookWhereYoureGoing->GetSteering(cKin);
 }
 
 SteeringOutput AIPlayer::GetObstacleAvoid(Kinematic cKin){
+	if(DEBUG_STR) std::cout<<"ObstacleAvoid\n";
 	return obstacleAvoidance->GetSteering(cKin);
 }
 
 SteeringOutput AIPlayer::GetWander(Kinematic cKin){
+	if(DEBUG_STR) std::cout<<"Wander\n";
 	return wander->GetSteering(cKin);
 }
 
 SteeringOutput AIPlayer::GetFace(Kinematic cKin, Kinematic tKin){
+	if(DEBUG_STR) std::cout<<"Face\n";
 	return face->GetSteering(cKin, tKin);
 }
 
 SteeringOutput AIPlayer::GetSeek(Kinematic cKin, Kinematic tKin){
+	if(DEBUG_STR) std::cout<<"Seek\n";
 	return seek->GetSteering(cKin, tKin);
 }
 
 SteeringOutput AIPlayer::GetFlee(Kinematic cKin, Kinematic tKin){
+	if(DEBUG_STR) std::cout<<"Flee\n";
 	return flee->GetSteering(cKin, tKin);
 }
 
 SteeringOutput AIPlayer::GetAlign(Kinematic cKin, Kinematic tKin){
+	if(DEBUG_STR) std::cout<<"Align\n";
 	return align->GetSteering(cKin, tKin);
 }
 
 SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
+	if(DEBUG_STR) std::cout<<"FollowPath\n";
 	SteeringOutput output = followPath->GetSteering(cKin);
 	output.angular = lookWhereYoureGoing->GetSteering(cKin).angular;
 	Steering2Controller(output);
