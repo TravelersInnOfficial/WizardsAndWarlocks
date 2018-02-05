@@ -84,6 +84,8 @@ void Effect::createSoundEvent() {
 }
 
 void Effect::playEffectEvent() {
-	vector3df pos = PlayerManager::GetInstance()->GetPlayerOne()->GetPos();
+	Player* p = PlayerManager::GetInstance()->GetPlayerOne();
+	vector3df pos = vector3df(0,0,0);
+	if(p != NULL) pos = p->GetPos();
 	SoundSystem::getInstance()->playEvent(effectEvent, pos);
 }

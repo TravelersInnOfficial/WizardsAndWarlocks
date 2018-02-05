@@ -8,6 +8,7 @@ MultiPlayerGame::MultiPlayerGame(){
 	f_engine		= BulletEngine::GetInstance();
 	n_engine		= NetworkEngine::GetInstance();
 	s_engine		= SoundSystem::getInstance();
+	
 	// Managers
 	spellManager 	= SpellManager::GetInstance();
 	bulletManager 	= BulletManager::GetInstance();
@@ -17,6 +18,7 @@ MultiPlayerGame::MultiPlayerGame(){
 	trapManager		= TrapManager::GetInstance();
 	networkManager	= NetworkManager::GetInstance();
 
+	// Creamos un nuevo MultiLobby
 	m_stateGame 	= new MultiLobby(this);
 	
 	// Si estaba algun menu activado lo desactivamos
@@ -24,18 +26,18 @@ MultiPlayerGame::MultiPlayerGame(){
 	g_engine->ToggleMenu(false);
 	MenuManager::GetInstance()->ClearMenu();
 
+	// Inicializamos nuestras variables
 	debug 		= false;
 	mute 		= false;
 	captured 	= false;
-
 	m_changeMode = 0;
 
+	// Y creamos los eventos de sonido
 	CreateSoundEvents();
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
 	delete m_stateGame;
-
 	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
@@ -46,12 +48,14 @@ MultiPlayerGame::~MultiPlayerGame(){
 	n_engine->EndService();
 }
 
+// Ponemos el modo LOBBY en el siguiente Update
 void MultiPlayerGame::ReturnLobby(){
 	m_changeMode = 1;
 }
 
+// Ponemos el modo PARTIDA en el sigueinte Update
 void MultiPlayerGame::StartGame(){
-	m_changeMode = 2; // Modo Partida
+	m_changeMode = 2;
 }
 
 void MultiPlayerGame::ChangeMode(){
@@ -60,16 +64,24 @@ void MultiPlayerGame::ChangeMode(){
 			// Eliminamos el estado que haya actualmente
 			delete m_stateGame;
 			CleanGame();
+
+			// Creamos una nueva instancia del modo al que vamos a entrar
 			m_stateGame = new MultiLobby(this);
 			playerManager->RestartMatchStatus();
+
+			// Reinicializamos el changeMode
 			m_changeMode = 0;
 			break;
 		case 2:
 			// Eliminamos el estado que haya actualmente
 			delete m_stateGame;
 			CleanGame();
+
+			// Creamos una nueva instancia del modo al que vamos a entrar
 			m_stateGame = new MultiMatch(this);
 			playerManager->InitGame();
+
+			// Reinicializamos el changeMode
 			m_changeMode = 0;
 			break;
 	}
@@ -140,6 +152,7 @@ void MultiPlayerGame::CreateSoundEvents() {
 	soundEvents["ghosts"]  = ghosts;
 	soundEvents["waterdrops"]  = waterDrops;
 }
+
 void MultiPlayerGame::PlayEvent(std::string event, vector3df pos) {
 	s_engine->playEvent(soundEvents[event], pos);
 }
