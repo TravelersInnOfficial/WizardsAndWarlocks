@@ -30,6 +30,7 @@ public:
 	float	GetMP();
 	SPELLCODE GetType();
 	SoundEvent* getShotEvent();
+	SoundEvent* getVoiceEvent();
 
 	// Draw
 	void DrawHUD(float initX, float initY, float size, float outline, bool current);

@@ -25,6 +25,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
+	
 }
 
 Lobby::~Lobby(){
@@ -60,7 +61,7 @@ void Lobby::Update(float deltaTime){
 	playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 	g_engine->UpdateReceiver();
-
+	
 	CheckIfReady();
 }
 

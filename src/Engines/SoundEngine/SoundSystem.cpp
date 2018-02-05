@@ -233,7 +233,7 @@ FMOD_STUDIO_EVENTDESCRIPTION* SoundSystem::createDescription(const char* path, F
 SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	FMOD_STUDIO_EVENTDESCRIPTION* eventDesc  = NULL;					//Initialize the event description
 	FMOD_STUDIO_EVENTINSTANCE* eventInst     = NULL;					//Initialize the event instance
-	SoundEvent* newEvent					   = NULL; 					//Initialize the event
+	SoundEvent* newEvent					 = NULL; 					//Initialize the event
 	
 	//Search the description to know if it's already created
 	if (eventDescriptions[eventPath] != NULL) 

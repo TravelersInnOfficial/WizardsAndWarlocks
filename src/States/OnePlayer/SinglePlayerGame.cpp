@@ -147,12 +147,13 @@ void SinglePlayerGame::CreateSoundEvents() {
 	SoundEvent* victory = s_engine->createEvent("event:/Music/Victory");
 	SoundEvent* ghosts  = s_engine->createEvent("event:/Ambience/Ghosts");
 	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/Water Drops");
-
+	
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;
 	soundEvents["victory"] = victory;
 	soundEvents["ghosts"]  = ghosts;
 	soundEvents["waterdrops"]  = waterDrops;
+	
 }
 void SinglePlayerGame::PlayEvent(std::string event, vector3df pos) {
 	s_engine->playEvent(soundEvents[event], pos);

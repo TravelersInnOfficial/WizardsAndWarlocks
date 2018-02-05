@@ -18,6 +18,7 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 	type = code;
 	HUDTexturePath = HUDMiniature;
 	shotEvent = NULL;
+	voiceEvent = NULL;
 }
 
 Hechizo::~Hechizo(){
@@ -158,6 +159,10 @@ void Hechizo::playSoundEvent(SoundEvent* event, vector3df pos) {
 
 SoundEvent* Hechizo::getShotEvent() {
 	return shotEvent;
+}
+
+SoundEvent* Hechizo::getVoiceEvent() {
+	return voiceEvent;
 }
 
 std::string Hechizo::GetHUDTexturePath(){

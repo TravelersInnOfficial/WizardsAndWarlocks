@@ -280,6 +280,9 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 			if (h->getShotEvent() != NULL) {
 				h->getShotEvent()->setPosition(p->GetHeadPos()); //Update the event position
 			}
+			if (h->getVoiceEvent() != NULL) {
+				h->getVoiceEvent()->setPosition(p->GetHeadPos()); //Update the event position
+			}
 		}
 	}
 }
