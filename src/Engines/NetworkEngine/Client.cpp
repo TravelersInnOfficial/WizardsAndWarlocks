@@ -1,6 +1,5 @@
 #include "Client.h"
 #include "Names.h"
-#include "./../States/NetGame.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"

@@ -22,7 +22,7 @@ void Teleport::Lanzar(Player* p){
 
 	vector3df pos = p->GetHeadPos();
 
-	float startDist = 0.5f;
+	float startDist = 0.0f;
 	vector3df start(
 				pos.X + sin(rot.Y)*cos(rot.X)*startDist,
 				pos.Y + sin(rot.X)*startDist,
@@ -37,11 +37,8 @@ void Teleport::Lanzar(Player* p){
 
 	vector3df point;
 	vector3df normal;
+	if(!BulletEngine::GetInstance()->Raycast(start, end, &point, &normal, noPlayerRaycastCW)) point = end;
 
-	if(!BulletEngine::GetInstance()->Raycast(start, end, &point, &normal)){
-		point = end;
-	}
-	//playShotEvent(shotEvent); //Play the sound
 	p->SetPosition(point);
 	
 	playSoundEvent(voiceEvent, pos); //Play voice event

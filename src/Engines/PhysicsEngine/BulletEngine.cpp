@@ -109,14 +109,14 @@ void BulletEngine::DebugDrawWorld(){
 	m_dynamicsWorld->debugDrawWorld();
 }
 
-void* BulletEngine::Raycast(vector3df S, vector3df E){
+void* BulletEngine::Raycast(vector3df S, vector3df E, int collisionFilter){
 
 	btVector3 Start(S.X, S.Y, S.Z);
 	btVector3 End(E.X, E.Y, E.Z);
 
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
-	RayCallback.m_collisionFilterMask = raycastCW;
+	RayCallback.m_collisionFilterMask = collisionFilter;
 	RayCallback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
     m_dynamicsWorld->rayTest(Start, End, RayCallback);
 
@@ -129,13 +129,13 @@ void* BulletEngine::Raycast(vector3df S, vector3df E){
     return NULL;
 }
 
-bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal){
+bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal, int collisionFilter){
 	btVector3 Start(S.X, S.Y, S.Z);
 	btVector3 End(E.X, E.Y, E.Z);
 
 	btCollisionWorld::ClosestRayResultCallback RayCallback(Start, End);
 
-	RayCallback.m_collisionFilterMask = raycastCW;
+	RayCallback.m_collisionFilterMask = collisionFilter;
 	RayCallback.m_collisionFilterGroup = btBroadphaseProxy::AllFilter;
 	m_dynamicsWorld->rayTest(Start, End, RayCallback);
 

@@ -1,7 +1,10 @@
 #include "Server.h"
-#include "./../States/NetGame.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Players/Player.h"
+
+#include "./../Managers/TrapManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/ObjectManager.h"
 
 Server::Server(int serverPort, int maxClients){
 	peer = RakNet::RakPeerInterface::GetInstance();
