@@ -31,10 +31,7 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	playerOne = playerManager->GetPlayerOne();
 	networkObject = networkManager->GetMultiGame();
 
-	if(networkObject != NULL && isServer){
-		networkObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
-		networkObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
-	}
+	if(networkObject != NULL) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
 
 	// Si estaba algun menu activado lo desactivamos
 	g_engine->ToggleCameraMovement(true);
@@ -53,34 +50,12 @@ void MultiMatch::CheckIfWon(){
 	if(isServer){
 		if(objectManager->CheckIfWon() || playerManager->CheckIfWon(ALLIANCE_WIZARD)) whosWon = ALLIANCE_WIZARD;
 		else if (playerManager->CheckIfWon(ALLIANCE_WARLOCK)) whosWon = ALLIANCE_WARLOCK;
-		//std::cout<<"RED: "<<networkObject->GetIntVar(MULTIGAME_WINNER_ALLIANCE)<<std::endl;
-		//std::cout<<"COMPROBACION: "<<whosWon<<std::endl;
 		if(whosWon != NO_ALLIANCE && whosWon != ERR_ALLIANCE) MatchEnded(whosWon);
 	}
 }
 
 void MultiMatch::MatchEnded(Alliance winnerAlliance){
-	
 	if(isServer) networkObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)winnerAlliance, true, false);
-	std::cout<<"MATCH HA TERMINADO, HA GANADO: "<<winnerAlliance<<std::endl;
-
-	/*g_engine->ToggleCameraMovement(false);
-	g_engine->ToggleMenu(true);
-	MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);*/
-
-	//Play sound event when you lose or win
-	/*if (playerOne != NULL) {
-		if (playerOne->GetAlliance() != winnerAlliance)  playEvent(soundEvents["defeat"]);
-		else playEvent(soundEvents["victory"]);
-	}*/
-	//GraphicEngine::getInstance()->InitReceiver();
-	//playerManager->EraseAllCharacters();
-	//if(playerOne != NULL) {
-		//MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, (int)winnerAlliance);
-		//g_engine->ToggleMenu(true);
-	//	playerOne->SetAllInput(UP);
-	//}
-	
 }
 
 bool MultiMatch::Input(){
@@ -112,10 +87,9 @@ void MultiMatch::Update(float deltaTime){
 	// Comprobamos si terminamos la partida
 	Alliance winnerAlliance = (Alliance) networkObject->GetIntVar(MULTIGAME_WINNER_ALLIANCE);
 	if(networkObject != NULL &&  winnerAlliance != NO_ALLIANCE && winnerAlliance != ERR_ALLIANCE){
-		std::cout<<winnerAlliance<<std::endl;
-		networkObject->SetBoolVar(MULTIGAME_WINNER_ALLIANCE, (int) NO_ALLIANCE, false, false);
-		
+
 		if(!isServer && !winnerMenuCreated){
+			networkObject->SetBoolVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, false, false);
 			winnerMenuCreated = true;
 
 			if(playerOne != NULL) {

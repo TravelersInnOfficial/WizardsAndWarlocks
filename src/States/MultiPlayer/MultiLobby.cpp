@@ -32,7 +32,10 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
 
-	if(networkObject != NULL && isServer) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
+	if(networkObject){
+		networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
+		networkObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, false, false);
+	}
 }
 
 MultiLobby::~MultiLobby(){
@@ -70,12 +73,17 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
+	
 	playerManager->RespawnDeadPlayers();
+	
 	MenuManager::GetInstance()->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
-	// START/END MATCH
-	if(networkObject!=NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)) father->StartGame();
+	// Empezamos la partida si recibimos un TRUE en MULTIGAME_CHANGE (lo volvemos a poner a FALSE)
+	if(networkObject != NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)){
+		networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
+		father->StartGame();
+	}
 
 	CheckIfReady();
 }
@@ -97,17 +105,7 @@ void MultiLobby::Draw(){
 }
 
 void MultiLobby::CheckIfReady(){
-	// Comprobamos que el jugador uno este dentro de la zona
-	if(playerOne != NULL) playerOne->CheckIfReady();
-
 	// Comprobamos que todos los jugadores tengan su variable READY a true
 	// Si la tienen, cargamos el siguente nivel
-	if(isServer && playerManager->CheckIfReady()) {
-		networkObject->SetBoolVar(MULTIGAME_CHANGE, true, true, false);
-		//LevelLoader::LoadLevel("../assets/json/BasicMap.json");
-		//lobbyState = false;
-		//playerManager->ManageMatchStatus(true);
-		//g_engine->ToggleMenu(false);
-		//MenuManager::GetInstance()->ClearMenu();
-	}
+	if(isServer && playerManager->CheckIfReady()) networkObject->SetBoolVar(MULTIGAME_CHANGE, true, true, false);
 }
