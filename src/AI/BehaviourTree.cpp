@@ -139,6 +139,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateTravelTask();
     // Travel Move 
     CreateTravelMove();
+    // Move Open Door
+    CreateOpenDoor();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -164,7 +166,6 @@ void BehaviourTree::CreateShootSpell(){
     d_attack->setChild(sc_attack);
 
     informacion->SetPuntero(AI_TASK_SHOOT_SPELL, d_attack);
-
     tasks.push_back(d_attack);
 }
 
@@ -184,7 +185,6 @@ void BehaviourTree::CreateMoveDefault(){
     sl_movement->addChild(new T_Wander());
 
     informacion->SetPuntero(AI_MOVE_DEFAULT, sl_movement);
-
     tasks.push_back(sl_movement);
 }
 
@@ -216,21 +216,18 @@ void BehaviourTree::CreateCathPotion(){
     sc_catchPotion->addChild(new CatchPotion());
 
     informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
-
     tasks.push_back(sc_catchPotion);
 }
 
 void BehaviourTree::CreateMoveToTarget(){
     Task* t = new GoToTarget();
     informacion->SetPuntero(AI_MOVE_GOTARGET, t);
-
     tasks.push_back(t);
 }
 
 void BehaviourTree::CreateDrinkPotion(){
     Task* t = new UsePotion();
     informacion->SetPuntero(AI_TASK_DRINK_POT, t);
-
     tasks.push_back(t);
 }
 
@@ -240,7 +237,6 @@ void BehaviourTree::CreateUseFountain(){
     sc_useFountain->addChild(new UseFountain());
 
     informacion->SetPuntero(AI_TASK_USE_FOUNT, sc_useFountain);
-
     tasks.push_back(sc_useFountain);
 }
 
@@ -250,23 +246,18 @@ void BehaviourTree::CreateDefuseTrap(){
     sc_defuseTrap->addChild(new DefuseTrap());
 
     informacion->SetPuntero(AI_TASK_DEFUSE_TRAP, sc_defuseTrap);
-
     tasks.push_back(sc_defuseTrap);
 }
 
 void BehaviourTree::CreateNoMove(){
     Task* t = new NoMove();
-
     informacion->SetPuntero(AI_MOVE_NO, t);
-
     tasks.push_back(t);
 }
 
 void BehaviourTree::CreateEscapeMove(){
     Task* t = new EmptyTask(); // POR HACER
-
     informacion->SetPuntero(AI_TASK_ESCAPE, t);
-
     tasks.push_back(t);
 }
 
@@ -294,5 +285,11 @@ void BehaviourTree::CreateTravelTask(){
 void BehaviourTree::CreateTravelMove(){
     Task* t = new TravelRoom();
     informacion->SetPuntero(AI_MOVE_TRAVEL, t);
+    tasks.push_back(t);
+}
+
+void BehaviourTree::CreateOpenDoor(){
+    Task* t = new NoMove();
+    informacion->SetPuntero(AI_MOVE_OPEN_DOOR, t);
     tasks.push_back(t);
 }

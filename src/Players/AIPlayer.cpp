@@ -49,7 +49,7 @@ void AIPlayer::InitGame(){
 }
 
 // STEERINGS
-static bool DEBUG_STR = false;
+static bool DEBUG_STR = true;
 SteeringOutput AIPlayer::GetLookWhereYoureGoing(Kinematic cKin){
 	if(DEBUG_STR) std::cout<<"LookWhereYoureGoing\n";
 	return lookWhereYoureGoing->GetSteering(cKin);

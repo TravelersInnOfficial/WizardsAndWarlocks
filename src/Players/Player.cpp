@@ -305,7 +305,7 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
-		if(setPos){
+		if(setPos && targetDeadCam!=NULL){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}

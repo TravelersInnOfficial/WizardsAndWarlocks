@@ -30,14 +30,15 @@ enum AI_code{
 	AI_MOVE_DEFAULT		= 0x16,	// (Puntero) SubArbol de decisiones de movimiento basico
 	AI_MOVE_NO			= 0x17,	// (Puntero) SubArbol de decisiones sin movimiento
 	AI_MOVE_TRAVEL		= 0x18,	// (Puntero) SubArbol de decisiones de moverse a salas
-	AI_MOVE_EXPLORE		= 0x19,	// (Puntero) SubArbol de decisiones de movimiento exploracion
-	AI_MOVE_GOTARGET	= 0x1A, // (Puntero) SubArbol de decisiones de movimiento hacia el target
-	AI_MOVE_SPELL00 	= 0x1B,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
-	AI_MOVE_SPELL01 	= 0x1C,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
-	AI_MOVE_SPELL02 	= 0x1D, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
-	AI_MOVE_SPELL03 	= 0x1E, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
+	AI_MOVE_OPEN_DOOR	= 0x19,	// (Puntero) SubArbol de decisiones de moverse delante de puerta
+	AI_MOVE_EXPLORE		= 0x1A,	// (Puntero) SubArbol de decisiones de movimiento exploracion
+	AI_MOVE_GOTARGET	= 0x1B, // (Puntero) SubArbol de decisiones de movimiento hacia el target
+	AI_MOVE_SPELL00 	= 0x1C,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
+	AI_MOVE_SPELL01 	= 0x1D,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
+	AI_MOVE_SPELL02 	= 0x1E, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
+	AI_MOVE_SPELL03 	= 0x1F, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
 	// VARIABLES DE BLACKBOARD
-	AI_TARGET			= 0x1F,	// (Puntero) Target de la IA (Kinematic Object)
+	AI_TARGET			= 0x20,	// (Puntero) Target de la IA (Kinematic Object)
 };
 
 enum AI_modalities

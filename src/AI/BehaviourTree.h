@@ -73,6 +73,7 @@ private:
     void CreateExploreMove();   // SubArbol de exploracion
     void CreateTravelTask();    // SubArbol de mirar a que habitacion ir
     void CreateTravelMove();    // SubArbol de moverse hasta la habitacion
+    void CreateOpenDoor();      // SubArbol de movimiento para ponerse delante de la puerta
 };
 
 #endif
