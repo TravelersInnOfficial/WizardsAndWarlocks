@@ -1,4 +1,5 @@
 #include "RoomInfo.h"
+#include <Constants.h>
 
 RoomInfo::RoomInfo(int id, vector3df pos){
 	m_id = id;
