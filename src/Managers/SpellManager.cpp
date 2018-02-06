@@ -261,7 +261,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 
 		case SPELL_DUMMY:
-			h = new SpellDummy(-10, 0.0f, 3.0f, 100, 100);
+			h = new SpellDummy(-0, 0.0f, 0.1f, 100, 100);
 		break;
 
 		case SPELL_TELEPORTBASE:

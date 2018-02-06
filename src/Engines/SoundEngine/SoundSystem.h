@@ -224,7 +224,6 @@ public:
 
 protected:
     FMOD_STUDIO_EVENTINSTANCE* soundInstance;
-
     /*******************************************************
      * @brief Sets the event instance
      * @return FMOD_STUDIO_EVENTINSTANCE* 
