@@ -155,7 +155,7 @@ class Player: public Entidad{
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
 		bool 			m_visible;			// Is player visible?
 		bool 			canJump;			// Puede saltar?
-		bool			m_Able2Jump;			// Is able to recover jump?
+		bool			m_Able2Jump;		// Is able to recover jump?
 
 	protected:
 

@@ -45,6 +45,8 @@ Player::Player(bool isPlayer1){
 
 	targetDeadCam = NULL;
 
+	canJump = true;
+	m_Able2Jump = true;
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
