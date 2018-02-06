@@ -126,6 +126,12 @@ public:
      ******************************************************/
     void checkAndStopEvent(SoundEvent* event);
 
+    /******************************************************
+     * @brief Erase an soundEvent from the map
+     * @param event to erase
+     ******************************************************/
+    void eraseSoundEvent(SoundEvent* event);
+
 private:
     const char * banksPath;
 	FMOD_STUDIO_SYSTEM* system;

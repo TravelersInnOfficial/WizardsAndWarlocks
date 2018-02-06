@@ -90,3 +90,26 @@ int RoomInfo::GetId(){
 vector3df RoomInfo::GetPosition(){
 	return m_position;
 }
+
+RoomInfo* RoomInfo::GetNextRoom(){
+	ShuffleVector();
+	int size = m_nextRooms.size();
+	for(int i=0; i<size; i++){
+		bool explored = m_nextRooms[i]->GetExplored();
+		if(!explored){
+			return m_nextRooms[i];
+		}
+	}
+	return NULL;
+}
+
+void RoomInfo::ShuffleVector(){
+	int n = m_nextRooms.size();
+	while(n>1){
+		int k = rand() % n;
+		n--;
+		RoomInfo* temp = m_nextRooms[k];
+		m_nextRooms[k] = m_nextRooms[n];
+		m_nextRooms[n] = temp;
+	}
+}

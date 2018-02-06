@@ -99,7 +99,6 @@ void Player::PlayerInit(){
 Player::~Player(){
 
 	delete controller;
-
 	delete overlayManager;
 
 	if(bt_body != NULL){
@@ -121,9 +120,10 @@ Player::~Player(){
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
 		even->release();
+		delete even;
 	}
 
-	TrapManager::GetInstance()->ErasePlayer(this);
+	TrapManager::GetInstance()->ErasePlayer(this);	
 	SpellManager::GetInstance()->ErasePlayer(this);
 }
 
@@ -305,7 +305,7 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
-		if(setPos && targetDeadCam!=NULL){
+		if(setPos && newP!=NULL){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}

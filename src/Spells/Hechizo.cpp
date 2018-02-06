@@ -22,7 +22,14 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 }
 
 Hechizo::~Hechizo(){
-	if(shotEvent!=NULL)shotEvent->release();
+	if(shotEvent!=NULL){
+		shotEvent->release();
+		delete shotEvent;
+	}
+	if(voiceEvent!=NULL){
+		voiceEvent->release();
+		delete voiceEvent;
+	}
 }
 
 void Hechizo::DieReset(){

@@ -25,6 +25,7 @@ public:
 	bool AddNextRoom(RoomInfo* next);
 	void UpdateExplore(float rotY);
 	float WhereExplore();
+	RoomInfo* GetNextRoom();
 
 	// GETTERS
 	int GetId();
@@ -32,6 +33,8 @@ public:
 	vector3df GetPosition();
 	std::vector<int> GetConnections();
 private:
+	void ShuffleVector();
+
 	int						m_id; 				// Id de la habitacion
 	vector3df 				m_position;			// Posicion central de la habitacion
 	float					m_securityLevel;	// Nivel de seguridad de la habitacion

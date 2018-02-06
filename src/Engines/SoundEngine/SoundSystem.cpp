@@ -37,7 +37,7 @@ SoundSystem::~SoundSystem() {
 	}
 	soundEvents.clear();	//Clear the sound events map
 
-	//Deete the event descriptions
+	//Delete the event descriptions
 	std::map<std::string, FMOD_STUDIO_EVENTDESCRIPTION*>::iterator iteven = eventDescriptions.begin();
 	for(; iteven!=eventDescriptions.end(); iteven++){
 		FMOD_STUDIO_EVENTDESCRIPTION* even = iteven->second;
@@ -335,6 +335,20 @@ void SoundSystem::checkAndStopEvent(SoundEvent* event) {
     if (event->isPlaying()) event->stop();
 }
 
+/******************************************************
+ * @brief Erase an soundEvent from the map
+ * @param event to erase
+ ******************************************************/
+void SoundSystem::eraseSoundEvent(SoundEvent* event){
+	//Delete the sound event instances
+	std::map<std::string, SoundEvent*>::iterator itSe = soundEvents.begin();
+	for(; itSe!=soundEvents.end(); itSe++){
+		SoundEvent* even = itSe->second;
+		if(even == event){
+			soundEvents.erase(itSe);
+		}
+	}
+}
 
 /********************************************************************************************************
 ********************************************** Sound Event *********************************************
@@ -428,6 +442,8 @@ void SoundEvent::setPosition(vector3df pos) {
 
 	//Finally, set the attributes
 	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
+
+	delete attributes;
 }
 
 /*******************************************************
@@ -449,6 +465,7 @@ void SoundEvent::release() {
 	if (soundInstance != NULL) {
 		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
+		SoundSystem::getInstance()->eraseSoundEvent(this);
 	}
 }
 

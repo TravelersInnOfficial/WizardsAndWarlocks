@@ -5,7 +5,6 @@ InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3d
 	currentTime = time;
 	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
-	
 }
 
 bool InvocationWall::Update(float deltaTime){

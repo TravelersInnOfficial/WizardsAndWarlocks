@@ -46,6 +46,9 @@ GraphicEngine::GraphicEngine(){
 
 GraphicEngine::~GraphicEngine(){
 	drop();
+	
+	delete privateReceiver;
+	delete privateMenuReceiver;
 }
 
 GraphicEngine* GraphicEngine::getInstance(){
@@ -282,6 +285,7 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	if (oldCamera){
 		privateSManager->setActiveCamera(0);
 		oldCamera->remove();
+		delete privateCamera;
 		privateCamera = NULL;
 	}
 

@@ -231,7 +231,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-5, 0.0f, 1.0f, 50, 100);
+			h = new DesperationWall(-0, 0.0f, 0.1f, 50, 100);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
@@ -404,11 +404,12 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 void SpellManager::ErasePlayer(Player* player){
 	
 	ResetDieHechizo(player);
-
 	for(int i=0; i < numHechizos; i++){
 		if(hechizos[i].find(player) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][player];
-			if(h!=NULL) delete h;
+			if(h!=NULL){
+				delete h;
+			}
 		}
 		hechizos[i].erase(player);
 	}

@@ -28,11 +28,11 @@ SinglePlayerGame::SinglePlayerGame(){
 
 SinglePlayerGame::~SinglePlayerGame(){
 	delete m_stateGame;
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que eliminarse despues de el playerManager NECESARIO
 	delete trapManager;
 	delete senseManager;
 
@@ -41,6 +41,7 @@ SinglePlayerGame::~SinglePlayerGame(){
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
 		even->release();
+		delete even;
 	}
 }
 
