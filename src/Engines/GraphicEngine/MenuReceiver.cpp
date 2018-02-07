@@ -1,4 +1,6 @@
 #include "MenuReceiver.h"
+#include <IrrIMGUI/IrrIMGUI.h>
+#include <irrlicht/irrlicht.h>
 
 MenuReceiver::MenuReceiver() {
 	escape = false;
@@ -22,8 +24,13 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 				SoundEvent* click = SoundSystem::getInstance()->createEvent("event:/HUD/Click");
 				SoundSystem::getInstance()->playEvent(click);
 				selectedOption = (MenuOption)id;
+				std::cout<<"selectedd option "<<selectedOption<<std::endl;
 				break;
 			}
+			//case ImGui::GetIO()->
+			/*
+			for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseClicked(i)) 
+			*/
 			default:{
 				break;
 			}

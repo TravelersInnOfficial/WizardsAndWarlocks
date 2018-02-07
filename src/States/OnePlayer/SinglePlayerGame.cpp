@@ -1,6 +1,8 @@
 #include "SinglePlayerGame.h"
 #include "Lobby.h"
 #include "Match.h"
+#include <GUIEngine/GUIEngine.h>
+#include <GraphicEngine/MenuManager.h>
 
 SinglePlayerGame::SinglePlayerGame(){
 	spellManager 	= SpellManager::GetInstance();
@@ -121,6 +123,8 @@ void SinglePlayerGame::Update(float deltaTime){
 		ChangeMode();
 	}
 	m_stateGame->Update(deltaTime);
+	//GUIEngine::GetInstance()->Update();
+	MenuManager::GetInstance()->Update();
 }
 
 void SinglePlayerGame::Draw(){
@@ -133,7 +137,8 @@ void SinglePlayerGame::Draw(){
 		f_engine->DebugDrawWorld();
 		//if(AL != NULL) AL->Debug();
 	}
-
+	//GUIEngine::GetInstance()->Draw();
+	MenuManager::GetInstance()->Draw();
 	g_engine->endScene();
 }
 

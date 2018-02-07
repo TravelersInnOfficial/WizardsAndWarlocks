@@ -20,12 +20,12 @@ GUIEngine::~GUIEngine(){
     m_GUIHandler->drop();
 }
 
-void GUIEngine::update(){
+void GUIEngine::Update(){
     // create the GUI elements
     m_GUIHandler->startGUI();
 }
 
-void GUIEngine::draw(){
+void GUIEngine::Draw(){
    m_GUIHandler->drawAll();
 }
 

@@ -13,8 +13,8 @@ class GUIEngine{
 public:
 	static GUIEngine* GetInstance();
     ~GUIEngine();
-    void update();
-    void draw();
+    void Update();
+    void Draw();
 
 private:
     static GUIEngine* instance; 

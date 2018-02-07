@@ -1,4 +1,5 @@
 #include "AllianceMenu.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 AllianceMenu::AllianceMenu(){
     m_id = "AllianceMenu";
@@ -11,26 +12,37 @@ AllianceMenu::AllianceMenu(){
     ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 }
+
 AllianceMenu::~AllianceMenu(){}
 
-void AllianceMenu::Update(bool open){
+void AllianceMenu::setPlayerWarlock(bool* open){
+    *open = false;
+    GraphicEngine::getInstance()->ToggleMenu(false);
+}
+
+void AllianceMenu::setPlayerWizard(bool* open){
+    *open = false;
+    GraphicEngine::getInstance()->ToggleMenu(false);
+}
+
+void AllianceMenu::Update(bool* open){
     ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
-    ImGui::Begin(m_id,&open,w_flags);
-    for(int i = 0; i<N_BUTTONS_ALLIANCE; i++){
+    ImGui::Begin(m_id,open,w_flags);
+    for(int i = 0; i<N_BUTTONS; i++){
         ImGui::PushID(i);
         if(ImGui::Button(buttonKeys[i], buttonSize)){
             std::cout<<"button "<<i<<" clicked"<<std::endl;
-            //actions[i]();
+            actions[i](open);
         }
         ImGui::PopID();
         
         if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
     }
     //HELP WINDOWS
-    ImGui::ShowTestWindow();
-    ImGui::ShowMetricsWindow();
+    //ImGui::ShowTestWindow();
+    //ImGui::ShowMetricsWindow();
 
     ImGui::End();
 }

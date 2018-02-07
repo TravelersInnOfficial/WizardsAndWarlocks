@@ -17,6 +17,7 @@ public:
 	static MenuManager* GetInstance();
 	~MenuManager();
 	void Update();
+	void Draw();
 
 	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
@@ -26,6 +27,7 @@ public:
 
 private:
 	Menu* currentMenu;
+	bool open_menu;
 
 	static MenuManager*	instance; 
 	std::vector<int>	loadedOptions;
@@ -34,11 +36,7 @@ private:
 	irr::gui::IGUIWindow* netDebugWindow;
 
 	MenuManager();
-	void CreateAlliance();
-	void CreateMatchEnded(int option = -1);
 	void CreateNetDebug();
-	void CreateSeller(int option = -1);
-
 	std::string GetStringFromPlayer(Player* player);
 
 };

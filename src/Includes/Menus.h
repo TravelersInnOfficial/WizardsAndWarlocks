@@ -3,11 +3,12 @@
 
 enum MenuType {
 	MAIN_M		= 0,
-	ALLIANCE_M	= 1,
-	STORE_M		= 2,
-	ENDMATCH_M	= 3,
-	NETDEBUG_M	= 4,
-	SELLER_M	= 5
+	OPTIONS_M	= 1, 
+	ALLIANCE_M	= 2,
+	STORE_M		= 3,
+	ENDMATCH_M	= 4,
+	NETDEBUG_M	= 5,
+	SELLER_M	= 6
 };
 
 enum MenuOption {

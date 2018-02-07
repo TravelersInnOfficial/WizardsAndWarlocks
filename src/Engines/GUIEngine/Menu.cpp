@@ -20,7 +20,7 @@ Menu::~Menu(){}
 
 std::string Menu::GetID(){return m_id;}
 
-void Menu::Update(bool open){std::cout<<"REACHED MENU INTERFACE UPDATE"<<std::endl;}
+void Menu::Update(bool* open){std::cout<<"REACHED MENU INTERFACE UPDATE"<<std::endl;}
 
 void Menu::CalculateFlags(){
     w_flags = 0;

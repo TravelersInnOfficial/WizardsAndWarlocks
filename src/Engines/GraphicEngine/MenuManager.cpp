@@ -4,6 +4,7 @@
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
 #include <TrapCodes.h>
+#include <GUIEngine/GUIEngine.h>
 
 MenuManager* MenuManager::instance = 0;
 
@@ -13,6 +14,7 @@ MenuManager::MenuManager(){
 	screenSize.X = res.Width;
 	screenSize.Y = res.Height;
 	netDebugWindow = NULL;
+	open_menu = false;
 }
 
 MenuManager::~MenuManager(){
@@ -28,15 +30,24 @@ void MenuManager::CreateMenu(MenuType type, int option){
 	switch(type){
 		case(MAIN_M):{
 			currentMenu = new MainMenu();
+			open_menu = true;
+			break;
+		}
+		case(OPTIONS_M):{
+			currentMenu = new OptionsMenu();
+			open_menu = true;
 			break;
 		}
 		case(ALLIANCE_M):{
 			currentMenu = new AllianceMenu();
-			//CreateAlliance();
+			open_menu = true;
 			break;
 		}
+
 		case(ENDMATCH_M):{
-			CreateMatchEnded(option);
+			currentMenu = new EndMatchMenu();
+			open_menu = true;
+			//CreateMatchEnded(option);
 			break;
 		}
 		case(NETDEBUG_M):{
@@ -45,19 +56,34 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(SELLER_M):{
-			CreateSeller(option);
+			currentMenu = new ShopMenu();
+			open_menu = true;
+			//CreateSeller(option);
 			break;
 		}
 		default:{
+			currentMenu = NULL;
+			open_menu = false;
 			break;
 		}
 	}
 }
 
 void MenuManager::Update(){
-	currentMenu->Update(true);
+	//std::cout<<"OPEN VALUE? "<<open_menu<<std::endl;
+	if(currentMenu != NULL && open_menu){ 
+		GUIEngine::GetInstance()->Update();
+		currentMenu->Update(&open_menu);
+	}
 }
 
+void MenuManager::Draw(){
+	if(currentMenu != NULL && open_menu){ 
+		GUIEngine::GetInstance()->Draw();
+	}
+}
+
+/******** OLD FUNCTIONS ********/
 void MenuManager::ClearMenu(){
 	int size = loadedOptions.size();
 	for(int i=0; i<size; i++){
@@ -73,174 +99,6 @@ void MenuManager::ClearElement(MenuOption elementID){
 	irr::gui::IGUIElement* elem;
 	elem = g_engine->privateGUIEnv->getRootGUIElement()->getElementFromId(elementID, true);
 	if(elem!= NULL) elem->remove();
-}
-
-void MenuManager::CreateAlliance(){
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
-	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
-
- 	irr::gui::IGUIWindow* window = g_engine->privateGUIEnv->addWindow(
-        menuWindow,
-        false,
-        L"Select Alliance",
-		0,
-		ALLIANCE_M_WINDOW
-	);
-	window->setDraggable(false);
-	window->getCloseButton()->setVisible(false);
-	loadedOptions.push_back(ALLIANCE_M_WINDOW);
-
-	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/7.0f)/2),menuSize.Y/4,menuSize.X/7.0f,menuSize.Y/30);
-	g_engine->addStaticText(rect, L"Select your Alliance, Human.", true, false, ALLIANCE_M_TEXT_1, window);
-	
-	rect = vector4di(menuSize.X/9.0f,menuSize.Y/3,menuSize.X/3.5f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Play as a Wizard", L"Be a Wizard and get back the Grail", ALLIANCE_M_WIZARD, window);
-
-	rect = vector4di(menuSize.X/1.67f,menuSize.Y/3,menuSize.X/3.5f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Play as a Warlock", L"Be a Warlock and protect the Grail", ALLIANCE_M_WARLOCK, window);
-}
-
-void MenuManager::CreateSeller(int selected){
-	
-	if(selected < 1) selected = 1;
-	else if (selected > 3) selected = 3;
-
-	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne();
-	if(playerOne == NULL) return;
-
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
-	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
-
- 	irr::gui::IGUIWindow* window = g_engine->privateGUIEnv->addWindow(
-        menuWindow,
-        false,
-        L"Select Spells",
-		0,
-		SELLER_M_WINDOW
-	);
-	window->setDraggable(false);
-	window->getCloseButton()->setVisible(false);
-	loadedOptions.push_back(SELLER_M_WINDOW);
-
-	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y/15,menuSize.X/2.0f,menuSize.Y/30);
-	g_engine->addStaticText(rect, L"Select the SPELLS and TRAPS you will fight with.", true, false, SELLER_M_TEXT_1, window);
-
-	// BUTTONS FOR OUR PLAYER SPELLS
-	float W =			menuSize.X;		// Ancho
-	float H =			menuSize.Y;		// Alto
-	float sizeBox =		W * 0.075;		// Tamanyo de los cuadrados del hechizo
-	float xInit =		W * 0.252;		// X inicial del primer hechizo
-	float yInit =		H * 0.14;		// Y inicial
-	float space =		W * 0.03;		// Espacio entre hechizos
-	float outline =		5;				// Borde de los hechizo
-
-
-	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(playerOne);
-	std::vector<MenuOption> menuOptions;
-	menuOptions.push_back(SELLER_M_PS_2); menuOptions.push_back(SELLER_M_PS_3); menuOptions.push_back(SELLER_M_PS_4);
-	for(int i = 1; i < spells.size(); i++){
-		int currentSpell = i-1;
-		float xInitSpell = xInit + (sizeBox + space) * i;
-		
-		vector4di finalSizeImage = vector4di(xInitSpell, yInit, sizeBox, sizeBox);
-		if(currentSpell == selected - 1){
-			std::string texturePath = "./../assets/textures/yellow.jpg";
-			g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", SELLER_M_TRAP, window, texturePath);
-		}
-
-		finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline*2, sizeBox - outline*2);
-		std::string texturePath = spells[i]->GetHUDTexturePath();
-		g_engine->addButton(finalSizeImage, L"", L"CURRENT SPELL", menuOptions.at(currentSpell), window, texturePath);
-	}
-
-	// BUTTONS FOR ALL THE SPELLS AVALIABLE
-	sizeBox =	W * 0.075;
-	xInit =		W * 0.147;
-	yInit =		H * 0.28;
-	space =		W * 0.03;
-	outline =	5;
-
-	menuOptions.clear();
-	menuOptions.push_back(SELLER_SPEED); menuOptions.push_back(SELLER_DEFENSE); menuOptions.push_back(SELLER_INVISIBILITY); menuOptions.push_back(SELLER_UNTARGET); menuOptions.push_back(SELLER_FIRE); menuOptions.push_back(SELLER_POISON); menuOptions.push_back(SELLER_THUNDER); menuOptions.push_back(SELLER_TELEPORT); menuOptions.push_back(SELLER_CLEANSE); menuOptions.push_back(SELLER_WALL); menuOptions.push_back(SELLER_DUMMY); menuOptions.push_back(SELLER_TELEPORTBASE); menuOptions.push_back(SELLER_BLIZZAR);
-
-	std::vector<SPELLCODE> kinds_spell;
-	kinds_spell.push_back(SPELL_SPEED); kinds_spell.push_back(SPELL_DEFENSE); kinds_spell.push_back(SPELL_INVISIBILITY); kinds_spell.push_back(SPELL_UNTARGET); kinds_spell.push_back(SPELL_FIRE); kinds_spell.push_back(SPELL_POISON); kinds_spell.push_back(SPELL_THUNDER); kinds_spell.push_back(SPELL_TELEPORT); kinds_spell.push_back(SPELL_CLEANSE); kinds_spell.push_back(SPELL_WALL); kinds_spell.push_back(SPELL_DUMMY); kinds_spell.push_back(SPELL_TELEPORTBASE); kinds_spell.push_back(SPELL_BLIZZARD);
-
-	int cut = 7;
-	for(int i = 0; i < menuOptions.size(); i++){
-		float xInitSpell = xInit + (sizeBox + space) * i;
-
-		if(i == cut) yInit = yInit + sizeBox + space/2;
-		if(i >= cut) xInitSpell = xInit + (sizeBox + space) * (i - cut);
-
-		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
-		std::string texturePath = SpellManager::GetInstance()->GetPathFromEnum(kinds_spell.at(i));
-		g_engine->addButton(finalSizeImage, L"", L"NEW SPELL", menuOptions.at(i), window, texturePath);
-	}
-
-	// BUTTON FOR OUR PLAYER TRAPS
-	xInit =		W * 0.5 - sizeBox/2;		// X inicial del primer hechizo
-	yInit =		H * 0.57;					// Y inicial
-
-	vector4di finalSizeImage = vector4di(xInit, yInit, sizeBox + outline, sizeBox + outline);
-	std::string texturePath = "./../assets/textures/yellow.jpg";
-	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
-
-	TrapManager* trapManager = TrapManager::GetInstance();
-	texturePath = trapManager->GetPathFromEnum(trapManager->getPlayerTrap(playerOne));
-	finalSizeImage = vector4di(finalSizeImage.X + outline, finalSizeImage.Y + outline, finalSizeImage.X2 - outline*2, finalSizeImage.Y2 - outline*2);
-	g_engine->addButton(finalSizeImage, L"", L"CURRENT TRAP", SELLER_M_TRAP, window, texturePath);
-
-	// BUTTON FOR ALL TRAPS AVALIABLE
-	sizeBox =	W * 0.075;
-	xInit =		W * 0.2;
-	yInit =		H * 0.7;
-	space =		W * 0.03;
-	outline =	5;
-
-	menuOptions.clear();
-	menuOptions.push_back(SELLER_DEATH_CLAWS); menuOptions.push_back(SELLER_SPIRITS); menuOptions.push_back(SELLER_SILENCE); menuOptions.push_back(SELLER_TAXES); menuOptions.push_back(SELLER_DISTURBANCE); menuOptions.push_back(SELLER_EXPLOSIVE);
-	
-	std::vector<TrapEnum> kinds;
-	kinds.push_back(TENUM_DEATH_CLAWS); kinds.push_back(TENUM_SPIRITS); kinds.push_back(TENUM_SILENCE); kinds.push_back(TENUM_TAXES); kinds.push_back(TENUM_DISTURBANCE); kinds.push_back(TENUM_EXPLOSIVE);
-
-	for(int i = 0; i < menuOptions.size(); i++){
-		float xInitSpell = xInit + (sizeBox + space) * i;
-		vector4di finalSizeImage = vector4di(xInitSpell + outline, yInit + outline, sizeBox - outline, sizeBox - outline);
-		std::string texturePath = TrapManager::GetInstance()->GetPathFromEnum(kinds.at(i));
-		g_engine->addButton(finalSizeImage, L"", L"NEW TRAP", menuOptions.at(i), window, texturePath);
-	}
-
-	// BUTTON FOR ACEPTAR
-	rect = vector4di(menuSize.X/2-((menuSize.X/2.0f)/2),menuSize.Y*0.85,menuSize.X/2.0f,menuSize.Y*0.1);
-	g_engine->addButton(rect, L"ACCEPT", L"Accept and go back to Lobby", SELLER_M_ACCEPT, window);
-
-
-}
-
-void MenuManager::CreateMatchEnded(int option){
-	irr::core::rect<irr::s32> menuWindow = irr::core::rect<irr::s32>(screenSize.X/30,screenSize.Y/30,screenSize.X - screenSize.X/30, screenSize.Y - screenSize.Y/30);
-	vector2di menuSize = vector2di(menuWindow.getWidth(), menuWindow.getHeight());
-
- 	irr::gui::IGUIWindow* window = g_engine->privateGUIEnv->addWindow(
-        menuWindow,
-        false,
-        L"Match Ended",
-		0,
-		ENDMATCH_M_WINDOW
-	);
-	window->setDraggable(false);
-	window->getCloseButton()->setVisible(false);
-	loadedOptions.push_back(ENDMATCH_M_WINDOW);
-
-	std::wstring winner = L"THE WIZARDS WON!";
-	if (option != (int)ALLIANCE_WIZARD) winner = L"THE WARLOCKS WON!";
-
-	vector4di rect = vector4di(menuSize.X/2-((menuSize.X/9.0f)/2),menuSize.Y/4,menuSize.X/9.0f,menuSize.Y/30);
-	g_engine->addStaticText(rect, winner, true, false, ENDMATCH_M_TEXT_1, window);
-
-	rect = vector4di(menuSize.X/2-((menuSize.X/3.0f)/2),menuSize.Y/3,menuSize.X/3.0f,menuSize.Y/3);
-	g_engine->addButton(rect, L"Accept", L"Go Back to the Lobby", ENDMATCH_M_CONFIRM, window);
 }
 
 void MenuManager::CreateNetDebug(){

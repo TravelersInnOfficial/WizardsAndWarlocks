@@ -1,12 +1,12 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
 
-bool exit_menu = false;
-bool options_menu = false;
+bool m_options = false;
+bool m_exit = false;
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
-
+    //actions[N_BUTTONS] = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
     
@@ -14,7 +14,7 @@ MainMenu::MainMenu(){
     ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     
     //BUTTONS DATA
-    for(int i = 0; i<N_BUTTONS_MAIN;i++){
+    for(int i = 0; i<N_BUTTONS;i++){
         texture[i] = pDevice->getVideoDriver()->getTexture(buttonLayouts[i]);
         imageid[i] = GUI->createTexture(texture[i]);
     }
@@ -22,39 +22,41 @@ MainMenu::MainMenu(){
 
     //WIDGET SIZE
     m_width = texture[0]->getSize().Width + 30;
-    m_height = texture[0]->getSize().Height * N_BUTTONS_MAIN + 50;
+    m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
 
 }
 MainMenu::~MainMenu(){
     
 }
 
-void SinglePlayer(){
-    std::cout<<"Start a new SINGLE PLAYER game"<<std::endl;
+void MainMenu::SinglePlayer(bool* open){
+    //std::cout<<"Start a new SINGLE PLAYER game"<<std::endl;
+     //std::cout<<"OPEN VALUE TRUE? "<<*open;
+    *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
     ImGui::GetIO().MouseDrawCursor = false;
     StateManager::GetInstance()->PrepareStatus(STATE_GAME);
 }
-void MultiPlayer(){
+
+void MainMenu::MultiPlayer(bool* open){
     std::cout<<"Start a new MULTIPLAYER game"<<std::endl;
 }
-void GameOptions(){
-    options_menu = true;
+void MainMenu::GameOptions(bool * open){
+    m_options = true;
 }
-void ExitGame(){
-    exit_menu = true;
+void MainMenu::ExitGame(bool * open){
+    m_exit = true;
 }
-void (*actions[N_BUTTONS_MAIN])() = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
 
-void MainMenu::Update(bool open){
-
+void MainMenu::Update(bool* open){
+    //std::cout<<"OPEN VALUE TRUE? "<<*open<<std::endl;
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
-    ImGui::Begin(m_id,&open,w_flags);
-    for(int i = 0; i<N_BUTTONS_MAIN; i++){
+    ImGui::Begin(m_id,open,w_flags);
+    for(int i = 0; i<N_BUTTONS; i++){
         ImGui::PushID(i);
         //NEXT BUTTON STYLE
         ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
@@ -62,7 +64,7 @@ void MainMenu::Update(bool open){
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
 
         if(ImGui::ImageButton(imageid[i],buttonSize)){
-            actions[i]();
+            actions[i](open);
         }
 
         ImGui::PopStyleColor(3);
@@ -71,36 +73,36 @@ void MainMenu::Update(bool open){
     }
 
      //EXIT MENU POPUP
-        if(exit_menu){
-            ImGui::OpenPopup("Exit?");
-            if (ImGui::BeginPopupModal("Exit?")){
-                ImGui::Text("Are you sure?\n\n");
-                ImGui::Separator();
-                if(ImGui::Button("YES", ImVec2(120,0))){
-                    GraphicEngine::getInstance()->drop();
-                }
-                ImGui::SameLine();
-                if(ImGui::Button("NO", ImVec2(120,0))){ 
-                    ImGui::CloseCurrentPopup(); 
-                    exit_menu = false;
-                }
-                ImGui::EndPopup();
+    if(m_exit){
+        ImGui::OpenPopup("Exit?");
+        if (ImGui::BeginPopupModal("Exit?")){
+            ImGui::Text("Are you sure?\n\n");
+            ImGui::Separator();
+            if(ImGui::Button("YES", ImVec2(120,0))){
+                GraphicEngine::getInstance()->drop();
             }
+            ImGui::SameLine();
+            if(ImGui::Button("NO", ImVec2(120,0))){ 
+                ImGui::CloseCurrentPopup(); 
+                m_exit = false;
+            }
+            ImGui::EndPopup();
         }
+    }
 
-        //OPTIONS POPUP
-        if(options_menu){
-            ImGui::OpenPopup("Options");
-            if (ImGui::BeginPopupModal("Options")){
-                ImGui::Text("SOON\n\n");
-                ImGui::Separator();
-                if(ImGui::Button("OK", ImVec2(120,0))){
-                    ImGui::CloseCurrentPopup(); 
-                    options_menu = false;
-                }
-                ImGui::EndPopup();
+    //OPTIONS POPUP
+    if(m_options){
+        ImGui::OpenPopup("Options");
+        if (ImGui::BeginPopupModal("Options")){
+            ImGui::Text("SOON\n\n");
+            ImGui::Separator();
+            if(ImGui::Button("OK", ImVec2(120,0))){
+                ImGui::CloseCurrentPopup(); 
+                m_options = false;
             }
+            ImGui::EndPopup();
         }
+    }
 
     //HELP WINDOWS
     //ImGui::ShowTestWindow();

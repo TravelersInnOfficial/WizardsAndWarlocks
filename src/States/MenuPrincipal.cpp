@@ -34,6 +34,7 @@ void MenuPrincipal::Update(float deltaTime){
 	SoundSystem::getInstance()->Update();
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
+		std::cout<<"SELECTED OPTION: "<<selectedOption<<std::endl;
 		// Dependiendo de la seleccion hacemos una cosa u otra
 		switch(selectedOption){
 			case MAIN_M_CLIENT:{
@@ -52,7 +53,7 @@ void MenuPrincipal::Update(float deltaTime){
 		MenuManager::GetInstance()->ClearMenu();
 		g_engine->ToggleMenu(false);
 	}
-	GUI_engine->update();
+	//GUI_engine->Update();
 	MenuManager::GetInstance()->Update();
 }
 
@@ -63,7 +64,8 @@ void MenuPrincipal::Draw(){
     g_engine->draw2DImage(background, vector4df(0,0,g_engine->GetScreenWidth(),g_engine->GetScreenHeight()));
 	
 	//g_engine->drawAllGUI();
-	GUI_engine->draw();
+	GUI_engine->Draw();
+	//MenuManager::GetInstance()->Draw();
 	g_engine->endScene();
 }
 

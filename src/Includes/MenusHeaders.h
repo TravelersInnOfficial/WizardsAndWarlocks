@@ -1,2 +1,5 @@
 #include "./../Menus/MainMenu.h"
+#include "./../Menus/OptionsMenu.h"
 #include "./../Menus/AllianceMenu.h"
+#include "./../Menus/EndMatchMenu.h"
+#include "./../Menus/ShopMenu.h"
