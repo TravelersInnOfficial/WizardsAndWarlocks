@@ -1,5 +1,6 @@
 #include "AllianceMenu.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include "./../Managers/ObjectManager.h"
 
 AllianceMenu::AllianceMenu(){
     m_id = "AllianceMenu";
@@ -18,11 +19,13 @@ AllianceMenu::~AllianceMenu(){}
 void AllianceMenu::setPlayerWarlock(bool* open){
     *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
+    ObjectManager::GetInstance()->StopInteractionsNPC();
 }
 
 void AllianceMenu::setPlayerWizard(bool* open){
     *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
+    ObjectManager::GetInstance()->StopInteractionsNPC();
 }
 
 void AllianceMenu::Update(bool* open){

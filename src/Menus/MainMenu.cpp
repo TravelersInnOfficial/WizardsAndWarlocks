@@ -6,7 +6,6 @@ bool m_exit = false;
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
-    //actions[N_BUTTONS] = {SinglePlayer,MultiPlayer,GameOptions,ExitGame};
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
     

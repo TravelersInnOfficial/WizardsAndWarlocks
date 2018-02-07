@@ -30,7 +30,6 @@ private:
 
     typedef void (*METHOD_PTR)(bool*);
     METHOD_PTR actions[N_BUTTONS] = {&MainMenu::SinglePlayer,&MainMenu::MultiPlayer,&MainMenu::GameOptions,&MainMenu::ExitGame};
-
 };
 
 #endif

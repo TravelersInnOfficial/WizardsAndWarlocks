@@ -29,24 +29,24 @@ MenuManager* MenuManager::GetInstance(){
 void MenuManager::CreateMenu(MenuType type, int option){
 	switch(type){
 		case(MAIN_M):{
-			currentMenu = new MainMenu();
 			open_menu = true;
+			currentMenu = new MainMenu();
 			break;
 		}
 		case(OPTIONS_M):{
-			currentMenu = new OptionsMenu();
 			open_menu = true;
+			currentMenu = new OptionsMenu();
 			break;
 		}
 		case(ALLIANCE_M):{
-			currentMenu = new AllianceMenu();
 			open_menu = true;
+			currentMenu = new AllianceMenu();
 			break;
 		}
 
 		case(ENDMATCH_M):{
-			currentMenu = new EndMatchMenu();
 			open_menu = true;
+			currentMenu = new EndMatchMenu();
 			//CreateMatchEnded(option);
 			break;
 		}
@@ -56,8 +56,8 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(SELLER_M):{
-			currentMenu = new ShopMenu();
 			open_menu = true;
+			currentMenu = new ShopMenu();
 			//CreateSeller(option);
 			break;
 		}
