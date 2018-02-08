@@ -56,6 +56,8 @@ SoundSystem::~SoundSystem() {
 	delete listener;	//Delete the sound listener
 
 	ERRCHECK(FMOD_Studio_System_Release(system));	//Delete the sound system
+
+	instance = NULL;
 }
 
 /******************************************************
@@ -236,11 +238,12 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	SoundEvent* newEvent					 = NULL; 					//Initialize the event
 	
 	//Search the description to know if it's already created
-	if (eventDescriptions[eventPath] != NULL){
+	if (eventDescriptions.find(eventPath) != eventDescriptions.end()){
 		eventDesc = eventDescriptions[eventPath];				 //Set it to the eventDesc var
 	} else {
 		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
-		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
+		// Se hace en el metodo de arriba
+		//eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
 
 	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));		//Set the event instance
@@ -254,7 +257,8 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	else if (eventPath.find("CommonSound") != -1)	newEvent = new CommonSoundEvent();	//Set the event
 	
 	newEvent->setInstance(eventInst);	//Set the event instance
-	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
+	newEvent->setDescription(eventDesc);
+	//soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
 
 	return newEvent;
 }
@@ -322,8 +326,7 @@ void SoundSystem::playEvent(SoundEvent* event) {
  * @brief Stops an event that is being played
  * @param eventPath path of the event to stop
  ******************************************************/
-void SoundSystem::stopEvent(SoundEvent* event) {
-    
+void SoundSystem::stopEvent(SoundEvent* event) {   
     event->stop();
 }
 
@@ -359,6 +362,7 @@ void SoundSystem::eraseSoundEvent(SoundEvent* event){
 ******************************************************/
 SoundEvent::SoundEvent() {
 	soundInstance = NULL;
+	soundDescription = NULL;
 }
 
 /******************************************************
@@ -465,8 +469,10 @@ bool SoundEvent::isPlaying() {
  *******************************************************/
 void SoundEvent::release() {
 	if (soundInstance != NULL) {
-		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
+		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+
 		SoundSystem::getInstance()->eraseSoundEvent(this);
 	}
 }
@@ -494,4 +500,8 @@ FMOD_STUDIO_EVENTINSTANCE* SoundEvent::getInstance() {
  *******************************************************/
 void SoundEvent::setInstance(FMOD_STUDIO_EVENTINSTANCE * instance) {
 	soundInstance = instance;
+}
+
+void SoundEvent::setDescription(FMOD_STUDIO_EVENTDESCRIPTION* description){
+	soundDescription = description;
 }
