@@ -52,7 +52,7 @@ class Player: public Entidad{
 		void Jump();
 		void ChangeHP(float);
 		bool ChangeMP(float);
-		void UpdateSP();
+		void UpdateSP(float deltaTime);
 		void Respawn();
 		void Raycast();
 		virtual void Die();

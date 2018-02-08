@@ -82,7 +82,7 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
  * @details [long description]
  */
 void SpellManager::UpdateCooldown(float deltaTime){
-	this->deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
+	m_deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
 		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
@@ -90,7 +90,7 @@ void SpellManager::UpdateCooldown(float deltaTime){
 			Player*  p = it->first;				//Load the player
 			updateSoundEvents(h, p);			//Update the sound events
 			if(h->GetCurrentCooldown()>0){	 	// Comprobamos si esta en cooldown
-				h->DecCooldown(this->deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
+				h->DecCooldown(m_deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
 			}
 			
 
@@ -112,8 +112,8 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
-				if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
-					h->WasteMana(p);
+				if(h->ComprobarCast(m_deltaTime)){	// Empezamos a Castearlo
+					h->WasteMana(p, m_deltaTime);
 					h->Lanzar(p);					// Lanzamos el hechizo
 					return true;
 				}
@@ -244,7 +244,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
-			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
+			h = new GuivernoWind(-2, 0.0f, 0.0f, 100, 75);
 		break;
 
 		case SPELL_TELEPORT:	// Hechizo de teleport
