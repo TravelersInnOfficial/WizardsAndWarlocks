@@ -24,7 +24,8 @@ public:
 
 	void PrepareStatus(State_Code status);
 	bool Update();
-	void LoadState(State_Code code);
+	void LoadState(State_Code code, bool* end = NULL);
+	void CloseGame();
 private:
 	void UpdateDelta();
 

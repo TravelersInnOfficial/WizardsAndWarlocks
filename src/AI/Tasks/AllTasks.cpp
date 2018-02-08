@@ -232,6 +232,9 @@ bool CheckDoorInFront::run(Blackboard* bb){
 				if(!door->GetOpenState()){
 					door->Interact(character);
 				}
+				else{
+
+				}
 			}
 		}
 	}
@@ -276,7 +279,7 @@ bool WhereExplore::run(Blackboard* bb){
 		vector3df center = room->RoomPos();
 
 		// ----------------------------------------- Calculamos donde debe ir a explorar 
-		float max = 1.0f;
+		float max = 1.5f;
 		center.X = center.X + sin(dir)*max;
 		center.Z = center.Z + cos(dir)*max;
 
@@ -288,13 +291,24 @@ bool WhereExplore::run(Blackboard* bb){
 		tKin.position = center;
 		// ------------------------------------------ Hacemos que vaya hasta esa posicion
 		SteeringOutput steering2;
-		SteeringOutput steering = character->GetSeek(cKin, tKin);
+		//SteeringOutput steering = character->GetSeek(cKin, tKin);
+		SteeringOutput steering = character->GetObstacleAvoid(cKin);
+    	if(steering.linear.length() == 0){
+    		steering = character->GetSeek(cKin, tKin);
+
+    		SteeringOutput steering2 = character->GetLookWhereYoureGoing(cKin);
+    		steering.angular = steering2.angular;
+    	}else{
+    		SteeringOutput steering2 = character->GetLookWhereYoureGoing(cKin);
+    		steering.angular = steering2.angular;
+    	}
 		// ------------------------------------------ En el caso de que este lejos mirara en la direccion que camina
-		float length = (cKin.position - center).length();
-		if(length<0.5) steering2 = character->GetLookWhereYoureGoing(cKin);
+		//float length = (cKin.position - center).length();
+		//if(length<0.5) steering2 = character->GetLookWhereYoureGoing(cKin);
+		//steering2 = character->GetFace(cKin, tKin);
 		// ------------------------------------------ En el caso de que este cerca mirara a la esquina que toque
-		else steering2 = character->GetAlign(cKin, tKin);
-		steering.angular = steering2.angular;
+		//else steering2 = character->GetAlign(cKin, tKin);
+		//steering.angular = steering2.angular;
 
 		character->Steering2Controller(steering);
 		

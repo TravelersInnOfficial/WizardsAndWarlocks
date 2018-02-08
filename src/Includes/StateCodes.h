@@ -6,7 +6,8 @@ enum State_Code{
 	STATE_MENU,				// Estado de menu de la partida
 	STATE_GAME,				// Estado de partida normal
 	STATE_NETGAME_CLIENT,	// Estado de partida en red Cliente
-	STATE_NETGAME_SERVER	// Estado de partida en red Servidor
+	STATE_NETGAME_SERVER,	// Estado de partida en red Servidor
+	STATE_CLOSE_GAME		// Estado de cierre de juego
 };
 
 #endif

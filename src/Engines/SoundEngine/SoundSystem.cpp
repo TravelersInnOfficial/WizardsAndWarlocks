@@ -470,7 +470,6 @@ void SoundEvent::release() {
 
 	if (soundInstance != NULL) {
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
-		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 
 		SoundSystem::getInstance()->eraseSoundEvent(this);
 	}

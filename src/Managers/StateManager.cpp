@@ -43,16 +43,23 @@ StateManager* StateManager::GetInstance(bool isServer){
 	return instance;
 }
 
+void StateManager::CloseGame(){
+	preparedStatus = STATE_CLOSE_GAME;
+}
+
 bool StateManager::Update(){
+	bool end = false;
 	// En el caso de que haya un estado preparado lo cambiamos
 	if(preparedStatus != WITHOUT_STATE){
-		LoadState(preparedStatus);
+		LoadState(preparedStatus, &end);
 		preparedStatus = WITHOUT_STATE;
 	}
 
-	bool end = currentState->Input();
-	currentState->Update(deltaTime);
-	currentState->Draw();
+	if(!end){	// Aun no se ha llamado para cerrar el juego
+		end = currentState->Input();
+		currentState->Update(deltaTime);
+		currentState->Draw();
+	}
 
 	UpdateDelta();
 
@@ -63,9 +70,10 @@ void StateManager::PrepareStatus(State_Code status){
 	preparedStatus  = status;
 }
 
-void StateManager::LoadState(State_Code code){
+void StateManager::LoadState(State_Code code, bool* end){
 	if(currentState!=NULL){
 		delete currentState;
+		currentState = NULL;
 	}
 	
 	switch(code){
@@ -93,6 +101,9 @@ void StateManager::LoadState(State_Code code){
 			}
 			n_engine->StartServer();
 			currentState =  new MultiPlayerGame();
+			break;
+		case STATE_CLOSE_GAME:
+			*end = true;
 			break;
 		case WITHOUT_STATE:
 			currentState = NULL;
