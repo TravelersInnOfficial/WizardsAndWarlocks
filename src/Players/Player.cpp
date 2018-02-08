@@ -341,7 +341,7 @@ void Player::Update(float deltaTime){
 			lastVerticalSpeed = verticalSpeed;
 		}
 
-		UpdateSP();	// Updateamos SP (sumamos o restamos segun isRunning)
+		UpdateSP(deltaTime);	// Updateamos SP (sumamos o restamos segun isRunning)
 
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
 		// que si no se estaba moviendo lo frenamos
@@ -503,8 +503,8 @@ bool Player::ChangeMP(float MP){
 	return (toRet);
 }
 
-void Player::UpdateSP(){
-	float useCost = 0.5;
+void Player::UpdateSP(float deltaTime){
+	float useCost = 30*deltaTime;	// 30 = Consumo en 1 segundo
 
 	if(isRunning && moving) m_SP -= useCost;
 	else m_SP += (useCost/2);

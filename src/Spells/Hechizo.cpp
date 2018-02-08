@@ -51,7 +51,7 @@ void Hechizo::ResetCooldown(){
 	ResetSpell();
 }
 
-void Hechizo::WasteMana(Player* p){
+void Hechizo::WasteMana(Player* p, float deltaTime){
 	p->ChangeMP(costePM);
 }
 
