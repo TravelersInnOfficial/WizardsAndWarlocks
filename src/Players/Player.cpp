@@ -120,7 +120,8 @@ Player::~Player(){
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
-		even->release();
+		if (even->isPlaying()) even->stop();	//Stop the sound if its playing
+		even->release();						//Release the sound
 	}
 
 	TrapManager::GetInstance()->ErasePlayer(this);

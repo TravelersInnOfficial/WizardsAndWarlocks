@@ -8,9 +8,14 @@ Invocation::Invocation(int HP){
 }
 
 Invocation::~Invocation(){
-	spawnEvent->release();
+	if (spawnEvent != NULL) {
+		if (spawnEvent->isPlaying()) spawnEvent->stop();
+		spawnEvent->release();
+	}
+	
 	delete m_invocationNode;
 	delete bt_body;
+
 }
 
 void Invocation::Update(){}

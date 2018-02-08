@@ -14,7 +14,12 @@ Effect::Effect(float time, EFFECTCODE cod){
 	createSoundEvent();
 }
 
-Effect::~Effect(){}
+Effect::~Effect(){
+	if (effectEvent != NULL) {
+	 	if (effectEvent->isPlaying()) effectEvent->stop();
+		 effectEvent->release();
+	}
+}
 
 /**
  * @brief Compruebo si ha llegado el final del efecto

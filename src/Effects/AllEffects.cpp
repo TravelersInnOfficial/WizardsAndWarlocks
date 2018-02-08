@@ -63,7 +63,7 @@ void Frozen::createSoundEvent() {
 }
 
 //================================================================
-// POISONED
+// terED
 //================================================================
 Poisoned::Poisoned(float time, int d):Effect(time, WEAK_POISONED){
 	createSoundEvent();
