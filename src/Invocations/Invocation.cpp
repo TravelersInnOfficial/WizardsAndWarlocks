@@ -7,11 +7,15 @@ Invocation::Invocation(int HP){
 }
 
 Invocation::~Invocation(){
-	spawnEvent->release();
-	delete spawnEvent;
-
+	if (spawnEvent != NULL) {
+		if (spawnEvent->isPlaying()) spawnEvent->stop();
+		spawnEvent->release();
+		delete spawnEvent;
+	}
+	
 	delete m_invocationNode;
 	delete bt_body;
+
 }
 
 void Invocation::Update(){}

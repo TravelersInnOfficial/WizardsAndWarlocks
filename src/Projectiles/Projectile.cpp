@@ -27,7 +27,9 @@ Projectile::~Projectile(){
 	delete direction;
 	delete bt_body;
 	delete m_ProjectileNode;
-	if (soundEvent != NULL){ 
+	
+	if (soundEvent != NULL){
+		if (soundEvent->isPlaying()) soundEvent->stop();
 		soundEvent->release();
 		delete soundEvent;
 	}

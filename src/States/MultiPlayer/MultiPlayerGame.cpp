@@ -4,9 +4,9 @@
 
 MultiPlayerGame::MultiPlayerGame(){
 	// Motores
+	n_engine		= NetworkEngine::GetInstance();
 	g_engine		= GraphicEngine::getInstance();
 	f_engine		= BulletEngine::GetInstance();
-	n_engine		= NetworkEngine::GetInstance();
 	s_engine		= SoundSystem::getInstance();
 	
 	// Managers
@@ -135,11 +135,13 @@ void MultiPlayerGame::Update(float deltaTime){
 
 
 void MultiPlayerGame::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
-	m_stateGame->Draw();
-	if(debug) f_engine->DebugDrawWorld();
-	g_engine->endScene();
+	if(n_engine != NULL && !n_engine->IsServerInit()){
+		g_engine->beginSceneDefault();
+		g_engine->drawAll();
+		m_stateGame->Draw();
+		if(debug) f_engine->DebugDrawWorld();
+		g_engine->endScene();
+	}
 }
 
 /********************************************************************************************************

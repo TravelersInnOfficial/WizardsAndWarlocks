@@ -233,10 +233,10 @@ FMOD_STUDIO_EVENTDESCRIPTION* SoundSystem::createDescription(const char* path, F
  * @param std::string path of the event
  ******************************************************/
 SoundEvent* SoundSystem::createEvent(std::string eventPath) {
+	
 	FMOD_STUDIO_EVENTDESCRIPTION* eventDesc  = NULL;					//Initialize the event description
 	FMOD_STUDIO_EVENTINSTANCE* eventInst     = NULL;					//Initialize the event instance
 	SoundEvent* newEvent					 = NULL; 					//Initialize the event
-	
 	//Search the description to know if it's already created
 	if (eventDescriptions.find(eventPath) != eventDescriptions.end()){
 		eventDesc = eventDescriptions[eventPath];				 //Set it to the eventDesc var
@@ -245,7 +245,7 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 		// Se hace en el metodo de arriba
 		//eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
-
+	
 	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));		//Set the event instance
 
 	//Dertermine wich type of sound event will create
@@ -422,7 +422,6 @@ void SoundEvent::setPosition(vector3df pos) {
 	
 	if(isnan(pos.X)){
 		pos.X = 0; pos.Y = 0; pos.Z = 0;
-		std::cout<<"POS = NAN"<<std::endl;
 	}
 
 	FMOD_3D_ATTRIBUTES* attributes = NULL;
@@ -468,8 +467,8 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
-	if (soundInstance != NULL) {
 
+	if (soundInstance != NULL) {
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
 		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 

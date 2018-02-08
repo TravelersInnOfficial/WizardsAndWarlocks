@@ -65,9 +65,10 @@ void BulletEngine::CreateWorld(){
 
 }
 
-void BulletEngine::UpdateWorld(){
-	m_dynamicsWorld->stepSimulation(1 / 60.f, 3, btScalar(1)/btScalar(180));
-	// 1º Variable - Los FPS del juego
+void BulletEngine::UpdateWorld(float deltaTime){
+	float steps = 3;
+	m_dynamicsWorld->stepSimulation(deltaTime, steps, btScalar(deltaTime/steps));
+	// 1º Variable - Tiempo desde la ultima llamada
 	// 2º Variable - Numero maximo de interpolaciones
 	// 3º Variable - Cada cuanto interpolar
 }

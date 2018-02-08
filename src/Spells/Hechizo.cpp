@@ -22,13 +22,16 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 }
 
 Hechizo::~Hechizo(){
-	if(shotEvent!=NULL){
-		shotEvent->release();
-		delete shotEvent;
-	}
-	if(voiceEvent!=NULL){
-		voiceEvent->release();
+	if (voiceEvent != NULL) {
+		if (voiceEvent->isPlaying()) voiceEvent->stop();	//Stop the sound if its playing
+		voiceEvent->release();		//Release the sound
 		delete voiceEvent;
+	}
+
+	if(shotEvent!=NULL) {
+		if (shotEvent->isPlaying()) shotEvent->stop();		//Stop the sound if its playing
+		shotEvent->release();			//Release the sound
+		delete shotEvent;
 	}
 }
 
