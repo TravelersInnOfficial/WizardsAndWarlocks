@@ -15,9 +15,10 @@ Effect::Effect(float time, EFFECTCODE cod){
 }
 
 Effect::~Effect(){
-	if(effectEvent!=NULL){
-		effectEvent->release();
-		delete effectEvent;
+	if (effectEvent != NULL) {
+	 	if (effectEvent->isPlaying()) effectEvent->stop();
+		 effectEvent->release();
+		 delete effectEvent;
 	}
 }
 

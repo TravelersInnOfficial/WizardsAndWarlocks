@@ -95,6 +95,7 @@ void Trap::InitializeTrapData(){
 
 void Trap::Contact(void* punt, EntityEnum tipo){
     NetworkEngine* n_engine = NetworkEngine::GetInstance();
+        
 	if(!n_engine->IsClientInit()){
 
         bool contacted = false;
@@ -105,6 +106,7 @@ void Trap::Contact(void* punt, EntityEnum tipo){
             contacted = true;
         }
         else if(tipo == EENUM_PROJECTILE){
+            playExplodeEvent(m_rigidBody->GetPosition());   
             TrapManager::GetInstance()->DeleteTrap(this);
             contacted = true;
         }
@@ -170,6 +172,7 @@ void Trap::Activate(Player* player){
 
         case TENUM_EXPLOSIVE:
             player->ChangeHP(-50);
+            playExplodeEvent(m_rigidBody->GetPosition());
         break;
 
         default:
@@ -260,6 +263,9 @@ void Trap::Erase(){
     delete m_position;
     delete m_rotation;
     delete m_dimensions;
+
+    if (placeEvent != NULL ) placeEvent->release();
+    if (explodeEvent != NULL ) explodeEvent->release();
 }
 
 void Trap::SendSignal(){
@@ -291,8 +297,14 @@ int Trap::GetTrapId(){
  ********************************************************************************************************/
 void Trap::createSoundEvent() {
 	placeEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Trap");
+    explodeEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Explosion");
+}
+
+void Trap::playExplodeEvent(vector3df pos) {
+	SoundSystem::getInstance()->playEvent(explodeEvent, pos);
 }
 
 void Trap::playPlaceEvent(vector3df pos) {
+    std::cout << "debug2" << std::endl;
 	SoundSystem::getInstance()->playEvent(placeEvent, pos);
 }

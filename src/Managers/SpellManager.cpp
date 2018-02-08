@@ -7,12 +7,19 @@
 SpellManager* SpellManager::instance = 0;
 
 SpellManager::SpellManager(){
+	createSoundEvent();
 }
 
 SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
 		hechizos[i].clear();
 	}
+	if (noManaEvent != NULL) {
+		if (noManaEvent->isPlaying()) noManaEvent->stop();
+		noManaEvent->release();
+	}
+	
+
 	instance = 0;
 }
 
@@ -131,6 +138,8 @@ bool SpellManager::StartHechizo(int num, Player* p){
 				if(h->CheckMP(mana)){
 					h->EmpezarCast();
 					return true;			
+				} else {
+					SoundSystem::getInstance()->playEvent(noManaEvent);
 				}
 			}
 		}
@@ -443,4 +452,8 @@ void SpellManager::RefreshServerAll(){
 			}
 		}
 	}
+}
+
+void SpellManager::createSoundEvent() {
+	noManaEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Spell Disabled");
 }

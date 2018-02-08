@@ -10,6 +10,8 @@ protected:
 	bool escape;
     MenuOption selectedOption = NO_OPT;
     virtual bool OnEvent(const irr::SEvent& event);
+    SoundEvent* soundEvent;
+    void createSoundEvent();
     
 
 public:

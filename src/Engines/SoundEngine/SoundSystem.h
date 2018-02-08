@@ -223,13 +223,14 @@ public:
     FMOD_STUDIO_EVENTINSTANCE* getInstance();
 
 protected:
+    FMOD_STUDIO_EVENTDESCRIPTION* soundDescription;
     FMOD_STUDIO_EVENTINSTANCE* soundInstance;
     /*******************************************************
      * @brief Sets the event instance
      * @return FMOD_STUDIO_EVENTINSTANCE* 
      *******************************************************/
     void setInstance(FMOD_STUDIO_EVENTINSTANCE * instance);
-    
+    void setDescription(FMOD_STUDIO_EVENTDESCRIPTION* description);
 };
 
 #endif /* SoundSystem_h */
