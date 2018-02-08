@@ -104,7 +104,7 @@ void MainMenu::Update(bool* open){
     }
 
     //HELP WINDOWS
-    //ImGui::ShowTestWindow();
+    ImGui::ShowTestWindow();
     //ImGui::ShowMetricsWindow();
         
     ImGui::End();

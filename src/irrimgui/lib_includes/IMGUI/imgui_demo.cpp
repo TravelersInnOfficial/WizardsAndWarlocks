@@ -876,8 +876,7 @@ void ImGui::ShowDemoWindow(bool* p_open)
                     if (ImGui::ColorButton("##palette", saved_palette[n], ImGuiColorEditFlags_NoAlpha | ImGuiColorEditFlags_NoPicker | ImGuiColorEditFlags_NoTooltip, ImVec2(20,20)))
                         color = ImVec4(saved_palette[n].x, saved_palette[n].y, saved_palette[n].z, color.w); // Preserve alpha!
 
-                    if (ImGui::BeginDragDropTarget())
-                    {
+                    if (ImGui::BeginDragDropTarget()){
                         if (const ImGuiPayload* payload = AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_3F))
                             memcpy((float*)&saved_palette[n], payload->Data, sizeof(float) * 3);
                         if (const ImGuiPayload* payload = AcceptDragDropPayload(IMGUI_PAYLOAD_TYPE_COLOR_4F))
