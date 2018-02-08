@@ -18,7 +18,7 @@
 
 class StateManager{
 public:
-	static StateManager* GetInstance();
+	static StateManager* GetInstance(bool isServer = false);
 
 	~StateManager();
 
@@ -40,7 +40,7 @@ private:
 	float timeStart;
 	bool resourcesLoaded;
 
-	StateManager();
+	StateManager(bool isServer = false);
 	static StateManager* instance;
 };
 

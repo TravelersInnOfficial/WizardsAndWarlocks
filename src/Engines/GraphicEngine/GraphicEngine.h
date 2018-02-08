@@ -24,7 +24,7 @@ public:
     /**
      * Returns Instance of the engine. If it not created, this method initializes it.
     */
-    static GraphicEngine* getInstance();
+    static GraphicEngine* getInstance(bool isServer = false);
     
     ~GraphicEngine();
     /**
@@ -293,10 +293,8 @@ public:
     */
     bool IsKeyPressed(TKEY_CODE code);
 
-    //
     keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
-    //
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
 
     void Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal);
@@ -304,7 +302,8 @@ public:
     irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 
 private:
-    GraphicEngine();
+    GraphicEngine(bool isServer = false);
+    bool m_isServer;
 
     /** Irrlicht provisional devices*/
     irr::IrrlichtDevice*        privateDevice;
@@ -313,7 +312,7 @@ private:
     irr::gui::IGUIEnvironment*  privateGUIEnv;
     EventReceiver* privateReceiver;
     MenuReceiver* privateMenuReceiver;
-    GCamera* privateCamera;
+    GCamera* privateCamera;    
 
     /**
      * Adds a static text

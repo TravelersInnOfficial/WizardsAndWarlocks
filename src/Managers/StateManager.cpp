@@ -3,22 +3,26 @@
 
 StateManager* StateManager::instance = 0;
 
-StateManager::StateManager(){
+StateManager::StateManager(bool isServer){
 	// DeltaTime
 	timeStart = 0.0f;
 	deltaTime = 0.0f;
 
 	// Engines
+	g_engine = GraphicEngine::getInstance(isServer);
 	f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
-	g_engine = GraphicEngine::getInstance();
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
 	n_engine = NetworkEngine::GetInstance();
 
 	srand(time(0));
 	currentState = NULL;
-	LoadState(STATE_MENU);
+	
+	State_Code firstState = STATE_MENU;
+	if(isServer) firstState = STATE_NETGAME_SERVER;
+	
+	LoadState(firstState);
 	preparedStatus = WITHOUT_STATE;
 	resourcesLoaded = false;
 }
@@ -34,8 +38,8 @@ StateManager::~StateManager(){
 	instance = 0;
 }
 
-StateManager* StateManager::GetInstance(){
-	if(instance==0) instance = new StateManager();
+StateManager* StateManager::GetInstance(bool isServer){
+	if(instance==0) instance = new StateManager(isServer);
 	return instance;
 }
 
@@ -75,11 +79,19 @@ void StateManager::LoadState(State_Code code){
 			}
 			currentState = new SinglePlayerGame();
 			break;
-		case STATE_NETGAME:
+		case STATE_NETGAME_CLIENT:
 			if(!resourcesLoaded){
 				resourcesLoaded = true;
 				ResourceManager::LoadResources();
 			}
+			currentState =  new MultiPlayerGame();
+			break;
+		case STATE_NETGAME_SERVER:
+			if(!resourcesLoaded){
+				resourcesLoaded = true;
+				ResourceManager::LoadResources();
+			}
+			n_engine->StartServer();
 			currentState =  new MultiPlayerGame();
 			break;
 		case WITHOUT_STATE:

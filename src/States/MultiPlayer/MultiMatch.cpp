@@ -65,7 +65,7 @@ bool MultiMatch::Input(){
 void MultiMatch::Update(float deltaTime){
 
 	n_engine->Update();
-	f_engine->UpdateWorld();
+	f_engine->UpdateWorld(deltaTime);
 
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());

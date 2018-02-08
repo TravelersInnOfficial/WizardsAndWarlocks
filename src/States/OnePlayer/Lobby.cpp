@@ -47,7 +47,7 @@ bool Lobby::Input(){
 }
 
 void Lobby::Update(float deltaTime){
-	f_engine->UpdateWorld();
+	f_engine->UpdateWorld(deltaTime);
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
