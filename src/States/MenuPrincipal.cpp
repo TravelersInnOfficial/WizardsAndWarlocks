@@ -40,13 +40,12 @@ void MenuPrincipal::Update(float deltaTime){
 				break;
 			}
 			case MAIN_M_SERVER:{
-				std::string path = "./WizardsAndWarlocks -s &";
+				std::string path = "./WizardsAndWarlocks -i &";
 				#ifdef _WIN64
-					path = "START /B WizardsAndWarlocks.exe -s";
+					path = "START /B WizardsAndWarlocks.exe -i";
 				#endif
 				std::system(path.c_str());
 				PrepareClient();
-				// PrepareServer();
 				break;
 			}
 			default:{

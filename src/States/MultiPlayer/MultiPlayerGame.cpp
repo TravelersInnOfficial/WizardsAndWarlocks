@@ -135,12 +135,21 @@ void MultiPlayerGame::Update(float deltaTime){
 
 
 void MultiPlayerGame::Draw(){
-	if(n_engine != NULL && !n_engine->IsServerInit()){
-		g_engine->beginSceneDefault();
-		g_engine->drawAll();
-		m_stateGame->Draw();
-		if(debug) f_engine->DebugDrawWorld();
-		g_engine->endScene();
+	if(n_engine != NULL){
+		bool draw = true;
+		
+		if(n_engine->IsServerInit()){
+			Server* myServer = n_engine->GetServer();
+			if(myServer != NULL && myServer->GetCreatedFromGame()) draw = false;
+		}
+
+		if(draw){
+			g_engine->beginSceneDefault();
+			g_engine->drawAll();
+			m_stateGame->Draw();
+			if(debug) f_engine->DebugDrawWorld();
+			g_engine->endScene();
+		}
 	}
 }
 

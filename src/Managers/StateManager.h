@@ -18,7 +18,7 @@
 
 class StateManager{
 public:
-	static StateManager* GetInstance(bool isServer = false);
+	static StateManager* GetInstance(bool isServer = false, bool ingameServer = false);
 
 	~StateManager();
 
@@ -39,9 +39,11 @@ private:
 
 	float deltaTime;
 	float timeStart;
+	float minFrameTime;
+
 	bool resourcesLoaded;
 
-	StateManager(bool isServer = false);
+	StateManager(bool isServer = false, bool ingameServer = false);
 	static StateManager* instance;
 };
 

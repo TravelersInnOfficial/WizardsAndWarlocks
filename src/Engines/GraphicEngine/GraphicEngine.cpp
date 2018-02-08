@@ -34,10 +34,19 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 	if(!privateDevice) exit(1);
 
-	if(isServer) privateDevice->minimizeWindow();
 
 	//caption of the window
-	privateDevice->setWindowCaption(L"Wizards And Warlocks");
+	std::wstring windowCaption = L"Wizards And Warlocks";
+
+	if(isServer){
+		privateDevice->minimizeWindow();
+		windowCaption = L"Wizards And Warlocks - Server Instance";
+	}
+
+	privateDevice->setWindowCaption(windowCaption.c_str());
+
+	// Minimize and change name
+	privateDevice->run();
 
 	//Initialize private pointers
 	privateDriver = privateDevice->getVideoDriver();
