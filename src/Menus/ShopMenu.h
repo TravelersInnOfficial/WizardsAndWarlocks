@@ -4,6 +4,10 @@
 #include <GUIEngine/Menu.h>
 #include <ItemsData.h>
 #include <Assets.h>
+struct DDFlags{
+    bool parentNullID = true;
+
+};
 
 class ShopMenu : public Menu{
     public:
@@ -13,7 +17,7 @@ class ShopMenu : public Menu{
 
     private:
     void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[]);
-    void load_items(const char* id, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * descriptions[]);
+    void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
 
     static const int N_OSPELLS = 4;
     static const int N_DSPELLS = 2;
@@ -23,6 +27,8 @@ class ShopMenu : public Menu{
     static const int N_SOCKETS = 3;
 
     ImVec2 buttonSize;
+    ImGuiDragDropFlags imgui_ddflags;
+    DDFlags ddflags;
 
     irr::video::ITexture* o_spelltexture[N_OSPELLS];
     irr::video::ITexture* d_spelltexture[N_DSPELLS];
@@ -36,8 +42,6 @@ class ShopMenu : public Menu{
     IrrIMGUI::IGUITexture * trap_imageid[N_TRAPS];
     IrrIMGUI::IGUITexture * empty_imageid[N_SOCKETS];
     IrrIMGUI::IGUITexture * const_empty_image;
-     
-    IrrIMGUI::IGUITexture * selected;
 
     const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
 

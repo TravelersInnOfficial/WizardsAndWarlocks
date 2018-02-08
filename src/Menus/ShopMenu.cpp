@@ -1,4 +1,5 @@
 #include "ShopMenu.h"
+#include "./../Managers/StateManager.h"
 
 ShopMenu::ShopMenu(){
     m_id = "ShopMenu";
@@ -23,6 +24,9 @@ ShopMenu::ShopMenu(){
 
     const_empty_image = GUI->createTexture(empty_texture);
     buttonSize = ImVec2(trap_texture[0]->getSize().Width/10,trap_texture[0]->getSize().Height/10);
+
+    imgui_ddflags = 0;
+    if (ddflags.parentNullID)  imgui_ddflags |= ImGuiDragDropFlags_SourceAllowNullID;
 }
 
 ShopMenu::~ShopMenu(){}
@@ -34,22 +38,28 @@ void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::IText
     }
 }
 
-void ShopMenu::load_items(const char* id, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * descriptions[]){
+void ShopMenu::load_items(const char* id, const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],const char * names[], const char * descriptions[]){
     ImGui::Columns(cols, id, false);
     for(int i = 0; i<total; i++){
         ImGui::PushID(i);
-        //if(ImGui::Button(o_spellKeys[i], buttonSize)){
         if(ImGui::ImageButton(imageids[i],buttonSize)){
-            std::cout<<"button "<<i<<" clicked"<<std::endl;
-            //actions[i](open);
+            //std::cout<<"button "<<i<<" clicked"<<std::endl;
         }
         if(ImGui::BeginDragDropSource()){
-            ImGui::SetDragDropPayload("image_spell", &imageids[i], sizeof(IrrIMGUI::IGUITexture), ImGuiCond_Once);
+            ImGui::SetDragDropPayload(type, &imageids[i], sizeof(IrrIMGUI::IGUITexture), ImGuiCond_Once);
+            ImGui::Image(imageids[i],buttonSize);
             ImGui::EndDragDropSource();
         }
         ImGui::PopID();
         
-        if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
+        if (ImGui::IsItemHovered()){ 
+            ImGui::BeginTooltip();
+
+            ImGui::Text("%s\n",names[i]);
+            ImGui::Text("%s\n",descriptions[i]);
+
+            ImGui::EndTooltip();
+        }
         ImGui::NextColumn();
     }
 
@@ -58,7 +68,7 @@ void ShopMenu::load_items(const char* id, int total, int cols, IrrIMGUI::IGUITex
 }
 
 void ShopMenu::Update(bool* open){
-    ImGui::ShowTestWindow();
+    //ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::Begin(m_id,open,w_flags);
@@ -70,9 +80,8 @@ void ShopMenu::Update(bool* open){
         ImGui::PopID();
 
         if (ImGui::BeginDragDropTarget()){
-            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("image_spell")){
+            if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("image_spell",imgui_ddflags)){
                 memcpy((float*)&empty_imageid[i], payload->Data, sizeof(IrrIMGUI::IGUITexture));
-                //*selected = const_empty_image;
             }
             ImGui::EndDragDropTarget();
         }
@@ -81,11 +90,17 @@ void ShopMenu::Update(bool* open){
     ImGui::Columns(1);
     ImGui::Separator();
 
-    load_items("ofensive_spells_columns", N_OSPELLS, 4, o_spellimageid, o_spell_descriptions);
-    load_items("defensive_spells_columns", N_DSPELLS, 4, d_spellimageid, d_spell_descriptions);
-    load_items("tactic_spells_columns", N_TSPELLS, 4, t_spellimageid, t_spell_descriptions);
-    load_items("traps_columns", N_TRAPS, 3, trap_imageid, trap_descriptions); 
-
+    load_items("ofensive_spells_columns","image_spell", N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
+    load_items("defensive_spells_columns", "image_spell", N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
+    load_items("tactic_spells_columns", "image_spell", N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
+    load_items("traps_columns", "image_trap", N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
+    
+    if(ImGui::Button("Close",ImVec2(100,50))){
+        *open = false;
+        GraphicEngine::getInstance()->ToggleMenu(false);
+        ImGui::GetIO().MouseDrawCursor = false;
+        StateManager::GetInstance()->PrepareStatus(STATE_GAME);
+    }
     //HELP WINDOWS
     //ImGui::ShowTestWindow();
     //ImGui::ShowMetricsWindow();
