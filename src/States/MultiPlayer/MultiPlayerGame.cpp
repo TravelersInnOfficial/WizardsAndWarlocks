@@ -4,9 +4,9 @@
 
 MultiPlayerGame::MultiPlayerGame(){
 	// Motores
+	n_engine		= NetworkEngine::GetInstance();
 	g_engine		= GraphicEngine::getInstance();
 	f_engine		= BulletEngine::GetInstance();
-	n_engine		= NetworkEngine::GetInstance();
 	s_engine		= SoundSystem::getInstance();
 	
 	// Managers
@@ -38,14 +38,21 @@ MultiPlayerGame::MultiPlayerGame(){
 
 MultiPlayerGame::~MultiPlayerGame(){
 	delete m_stateGame;
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;		// Tiene que eliminarse despues de el playerManager NECESARIO
 	delete trapManager;
 	delete networkManager;
 	n_engine->EndService();
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+		delete even;
+	}
 }
 
 // Ponemos el modo LOBBY en el siguiente Update
@@ -128,11 +135,13 @@ void MultiPlayerGame::Update(float deltaTime){
 
 
 void MultiPlayerGame::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
-	m_stateGame->Draw();
-	if(debug) f_engine->DebugDrawWorld();
-	g_engine->endScene();
+	if(n_engine != NULL && !n_engine->IsServerInit()){
+		g_engine->beginSceneDefault();
+		g_engine->drawAll();
+		m_stateGame->Draw();
+		if(debug) f_engine->DebugDrawWorld();
+		g_engine->endScene();
+	}
 }
 
 /********************************************************************************************************

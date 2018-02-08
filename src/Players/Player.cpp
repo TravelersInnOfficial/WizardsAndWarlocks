@@ -45,6 +45,8 @@ Player::Player(bool isPlayer1){
 
 	targetDeadCam = NULL;
 
+	canJump = true;
+	m_Able2Jump = true;
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
@@ -99,7 +101,6 @@ void Player::PlayerInit(){
 Player::~Player(){
 
 	delete controller;
-
 	delete overlayManager;
 
 	if(bt_body != NULL){
@@ -121,10 +122,11 @@ Player::~Player(){
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
 		if (even->isPlaying()) even->stop();	//Stop the sound if its playing
-		even->release();						//Release the sound
+		even->release();
+		delete even;						//Release the sound
 	}
 
-	TrapManager::GetInstance()->ErasePlayer(this);
+	TrapManager::GetInstance()->ErasePlayer(this);	
 	SpellManager::GetInstance()->ErasePlayer(this);
 }
 
@@ -306,7 +308,7 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
-		if(setPos && targetDeadCam!=NULL){
+		if(setPos && newP!=NULL){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}

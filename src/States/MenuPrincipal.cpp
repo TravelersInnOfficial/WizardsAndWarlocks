@@ -40,7 +40,13 @@ void MenuPrincipal::Update(float deltaTime){
 				break;
 			}
 			case MAIN_M_SERVER:{
-				PrepareServer();
+				std::string path = "./WizardsAndWarlocks -s &";
+				#ifdef _WIN64
+					path = "START /B WizardsAndWarlocks.exe -s";
+				#endif
+				std::system(path.c_str());
+				PrepareClient();
+				// PrepareServer();
 				break;
 			}
 			default:{
@@ -69,13 +75,9 @@ void MenuPrincipal::PrepareClient(){
 	n_engine->SetIp(g_engine->ReadText(MAIN_M_IP));
 	n_engine->StartClient();
 	n_engine->GetClient()->SetClientName(g_engine->ReadText(MAIN_M_NAME));
-	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME);
+	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_CLIENT);
 }
 
 void MenuPrincipal::PrepareServer(){
-	NetworkEngine* n_engine;
-	n_engine = NetworkEngine::GetInstance();
-	n_engine->StartServer();
-	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME);
+	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_SERVER);
 }
-

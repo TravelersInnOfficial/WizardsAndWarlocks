@@ -15,6 +15,14 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
 }
 
 Door::~Door(){
+    std::map<std::string, SoundEvent*>::iterator itSe = soundEvents.begin();
+    for(; itSe!=soundEvents.end(); itSe++){
+        SoundEvent* even = itSe->second;
+        even->release();
+        delete even;
+    }
+    soundEvents.clear();
+
     delete bt_body;
     delete m_doorNode;
 }
@@ -128,8 +136,8 @@ Kinematic Door::GetKinematic(){
 
 void Door::createSoundEvents() {
     //Create the events
-    SoundEvent * close = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Close");
-    SoundEvent * open  = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Open");
+    SoundEvent* close = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Close");
+    SoundEvent* open  = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Doors/Open");
     
     //Store them at the player's sounds map
     soundEvents["close"] = close;

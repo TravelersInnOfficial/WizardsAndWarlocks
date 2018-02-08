@@ -14,7 +14,7 @@ public:
 	static BulletEngine* GetInstance();
 
 	void CreateWorld();
-    void UpdateWorld();
+    void UpdateWorld(float deltaTime);
     void EraseWorld();
 
     void AddRigidBody(btRigidBody*, CollisionTypes mask = C_NOTHING, int collideWith = 0);

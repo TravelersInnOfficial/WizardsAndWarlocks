@@ -4,13 +4,13 @@
 Invocation::Invocation(int HP){
 	m_HP = HP;
 	clase = EENUM_INVOCATION;
-	createSoundEvent();
 }
 
 Invocation::~Invocation(){
 	if (spawnEvent != NULL) {
 		if (spawnEvent->isPlaying()) spawnEvent->stop();
 		spawnEvent->release();
+		delete spawnEvent;
 	}
 	
 	delete m_invocationNode;

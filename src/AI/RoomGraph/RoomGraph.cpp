@@ -132,15 +132,7 @@ void RoomGraph::NextRoom(){
 		}
 	}
 	if(m_nextRoom == NULL){
-		ShuffleVector();
-		int size = m_rooms.size();
-		for(int i=0; i<size; i++){
-			bool explored = m_rooms[i]->GetExplored();
-			if(!explored){
-				m_nextRoom = m_rooms[i];
-				break;
-			}
-		}
+		m_nextRoom = m_actualRoom->GetNextRoom();
 	}
 }
 

@@ -1,30 +1,43 @@
 #include "GraphicEngine.h"
 static GraphicEngine* instance;
 
-GraphicEngine::GraphicEngine(){
+GraphicEngine::GraphicEngine(bool isServer){
+	m_isServer = isServer;
+
+	privateDevice = NULL;
+	privateDriver = NULL;
+	privateSManager = NULL;
+	privateGUIEnv = NULL;
+	privateReceiver = NULL;
+	privateMenuReceiver = NULL;
 	privateCamera = NULL;
+
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
 
 	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
 	nulldevice -> drop();
-	deskres = irr::core::dimension2d<unsigned int>(900,600);
+	
+	deskres = irr::core::dimension2d<unsigned int>(900, 600);
+	if(isServer) deskres = irr::core::dimension2d<unsigned int>(1, 1);
 
 	privateDevice = irr::createDevice(
-		irr::video::EDT_OPENGL,                             //Driver
-		deskres,      										//Size of window
-		16,                                                 //bits
-		false,                                              //fullscreen
-		false,                                              //stencil buffer
-		true,                                               //vsync
-		privateMenuReceiver                                 //event receiver
+		irr::video::EDT_OPENGL,			//Driver
+		deskres,						//Size of window
+		16,								//bits
+		false,							//fullscreen
+		false,							//stencil buffer
+		true,							//vsync
+		privateMenuReceiver				//event receiver
 	);
 
 	if(!privateDevice) exit(1);
 
+	if(isServer) privateDevice->minimizeWindow();
+
 	//caption of the window
-	privateDevice->setWindowCaption(L"Wizards And Warlocks Master v1.0");
+	privateDevice->setWindowCaption(L"Wizards And Warlocks");
 
 	//Initialize private pointers
 	privateDriver = privateDevice->getVideoDriver();
@@ -33,9 +46,9 @@ GraphicEngine::GraphicEngine(){
 
 	// Set GUI Alpha
 	for (int i = 0; i < irr::gui::EGDC_COUNT; ++i){
-        irr::video::SColor col = privateGUIEnv->getSkin()->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
-        col.setAlpha(255);
-        privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
+		irr::video::SColor col = privateGUIEnv->getSkin()->getColor((irr::gui::EGUI_DEFAULT_COLOR)i);
+		col.setAlpha(255);
+		privateGUIEnv->getSkin()->setColor((irr::gui::EGUI_DEFAULT_COLOR)i, col);
 	}
 
 	// Sky Dome
@@ -46,38 +59,48 @@ GraphicEngine::GraphicEngine(){
 
 GraphicEngine::~GraphicEngine(){
 	drop();
+	if(privateReceiver != NULL) delete privateReceiver;
+	if(privateMenuReceiver != NULL) delete privateMenuReceiver;
 }
 
-GraphicEngine* GraphicEngine::getInstance(){
-	if(instance == 0) instance = new GraphicEngine();
+GraphicEngine* GraphicEngine::getInstance(bool isServer){
+	if(instance == 0) instance = new GraphicEngine(isServer);
 	return instance;
 }
 
 bool GraphicEngine::run(){
-	return privateDevice->run();
+	bool toRet = false;
+	if(privateDevice != NULL) toRet = privateDevice->run();
+	return toRet;
 }
 
 bool GraphicEngine::drop(){
-	return privateDevice->drop();
+	bool toRet = false;
+	if(privateDevice != NULL) toRet = privateDevice->drop();
+	return toRet;
 }
 
 void GraphicEngine::setCursorVisible(bool visible){
-	privateDevice->getCursorControl()->setVisible(visible);
+	if(privateDevice != NULL) privateDevice->getCursorControl()->setVisible(visible);
 }
 
 int GraphicEngine::getTime(){
-	return privateDevice->getTimer()->getTime();
+	float toRet = 0;
+	if(privateDevice != NULL) toRet = privateDevice->getTimer()->getTime();
+	return toRet;
 }
 
 void GraphicEngine::ChangeWindowName(std::wstring newName){
-	privateDevice->setWindowCaption(newName.c_str());
+	if(privateDevice != NULL) privateDevice->setWindowCaption(newName.c_str());
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
-	if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
-	else privateDevice->setEventReceiver(privateReceiver);
-	ToggleCameraMovement(!newState);
-    privateDevice->getCursorControl()->setVisible(newState);
+	if(privateDevice != NULL){
+		if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
+		else privateDevice->setEventReceiver(privateReceiver);
+		ToggleCameraMovement(!newState);
+		privateDevice->getCursorControl()->setVisible(newState);
+	}
 }
 
 void GraphicEngine::ToggleCameraMovement(bool newState){
@@ -89,152 +112,184 @@ void GraphicEngine::ToggleCameraMovement(bool newState){
 
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
-	return privateDriver->beginScene();
+	bool toRet = false;
+	if(privateDriver != NULL) toRet = privateDriver->beginScene();
+	return toRet;
 }
 
 bool GraphicEngine::beginSceneDefault(){
-	return privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
+	bool toRet = false;
+	if(privateDriver != NULL) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
+	return toRet;
 }
 
 bool GraphicEngine::endScene(){
-	return privateDriver->endScene();
+	bool toRet = false;
+	if(privateDriver != NULL) toRet = privateDriver->endScene();
+	return toRet;
 }
 
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
-	body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
+	if(privateDriver != NULL) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-	irr::video::SColorf fromC;
-	fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
+	if(privateDriver != NULL){
+		irr::video::SColorf fromC;
+		fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
 
-	irr::core::vector3df from(f.X, f.Y, f.Z);
-	irr::core::vector3df to(t.X, t.Y, t.Z);
+		irr::core::vector3df from(f.X, f.Y, f.Z);
+		irr::core::vector3df to(t.X, t.Y, t.Z);
 
-	irr::core::matrix4 id;
-	id.makeIdentity();
-	privateDriver->setTransform(irr::video::ETS_WORLD, id);
-	privateDriver->draw3DLine(from, to, fromC.toSColor());
+		irr::core::matrix4 id;
+		id.makeIdentity();
+		privateDriver->setTransform(irr::video::ETS_WORLD, id);
+		privateDriver->draw3DLine(from, to, fromC.toSColor());
+	}
 }
 
 void GraphicEngine::drawAim(bool moving){
-	irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
-	irr::u32 size = 15;
-	irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
-	irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
+	if(privateDriver != NULL){
+		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
+		irr::u32 size = 15;
+		irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
+		irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
 
-	irr::u32 rDist = 0;
-	if(moving) rDist = 30;
-	else{// Not moving
-		rDist = 4;
-		// Draws center point
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+		irr::u32 rDist = 0;
+		if(moving) rDist = 30;
+		
+		// Not moving, Draws center point
+		else{
+			rDist = 4;
+			privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+		}
+
+		//Draw Crosshair
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH - rDist - size	, cenW + 1				, cenH - rDist			)); //above
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + rDist		, cenH - 1	 			, cenW + rDist + size	, cenH + 1				)); //right
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH + rDist			, cenW + 1				, cenH + rDist + size	)); //down
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
 	}
-
-	//Draw crosshair
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH - rDist - size	, cenW + 1				, cenH - rDist			)); //above
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + rDist		, cenH - 1	 			, cenW + rDist + size	, cenH + 1				)); //right
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH + rDist			, cenW + 1				, cenH + rDist + size	)); //down
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
-	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
-	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
+	if(privateDriver != NULL){
+		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
+		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
 
-	float size = 20;
-	float xInit = W/2 - 200;
-	
-	float xEnd =  W/2 + 200;
-	float yInit = H/2 + H/4;
+		float size = 20;
+		float xInit = W/2 - 200;
 
-	float yEnd = yInit + size;
-	float hP = currentValue/maxValue;
+		float xEnd =  W/2 + 200;
+		float yInit = H/2 + H/4;
 
-	// Black Bar
-	vector3df color(0,0,0);
-	draw2DRectangle(color, xInit, yInit, xEnd, yEnd);
-	
-	// Helath & Mana Bar
-	color = vector3df(51, 171, 249);
-	draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
+		float yEnd = yInit + size;
+		float hP = currentValue/maxValue;
+
+		// Black Bar
+		vector3df color(0,0,0);
+		draw2DRectangle(color, xInit, yInit, xEnd, yEnd);
+
+		// Helath & Mana Bar
+		color = vector3df(51, 171, 249);
+		draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
+	}
 }
 
 void GraphicEngine::drawOverlays(OverlayCodes type){
-	std::string overlayTexture = OverlayPath[type];
-	irr::video::ITexture* overlay = NULL;
-	overlay = privateDriver->getTexture(overlayTexture.c_str());
+	if(privateDriver != NULL){
+		std::string overlayTexture = OverlayPath[type];
+		irr::video::ITexture* overlay = NULL;
+		overlay = privateDriver->getTexture(overlayTexture.c_str());
 
-	if(overlayTexture.length() > 0){
-		const irr::core::dimension2du& size = privateDriver->getScreenSize();
-		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-		const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
-		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
-		privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+		if(overlayTexture.length() > 0){
+			const irr::core::dimension2du& size = privateDriver->getScreenSize();
+			irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+			const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
+			irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
+			privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+		}
 	}
 }
 
 int GraphicEngine::GetScreenHeight(){
-	irr::u32 W = (irr::u32) privateDriver->getScreenSize().Height;
-	return (int)W;
+	int toRet = 0;
+	if(privateDriver != NULL){
+		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Height;
+		toRet = (int)W;
+	}
+	return toRet;
 }
 
 int GraphicEngine::GetScreenWidth(){
-	irr::u32 H = (irr::u32) privateDriver->getScreenSize().Width;
-	return (int)H;
+	int toRet = 0;
+	if(privateDriver != NULL){
+		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Width;
+		toRet = (int)H;
+	}
+	return toRet;
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
-
-	irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
-
-	irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
-
-	const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
-	
-	irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-		
-	privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
+	if(privateDriver != NULL){
+		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
+		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
+		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
+		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
+		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
+	}
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
-	privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
+	if(privateDriver != NULL){
+		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
+		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
+	}
 }
 
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
-	privateSManager->drawAll();
+	if(privateSManager != NULL) privateSManager->drawAll();
 }
 
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
-	GBody * gb = new GBody(
-		privateSManager->addCubeSceneNode(
-			size,   //size
-			0,      //parent
-			id,     //id
-			irr::core::vector3df(p.X, p.Y, p.Z),    //position
-			irr::core::vector3df(0,0, 0),    		//rotation
-			irr::core::vector3df(s.X, s.Y, s.Z)     //scale
-	));
+	GBody* gb = NULL;
 
-	gb->Rotate(vector3df(r.X, r.Y, 0));
-	gb->Rotate(vector3df(0, 0, r.Z));
+	if(privateSManager != NULL){
+		gb = new GBody(
+			privateSManager->addCubeSceneNode(
+				size,   //size
+				0,      //parent
+				id,     //id
+				irr::core::vector3df(p.X, p.Y, p.Z),    //position
+				irr::core::vector3df(0,0, 0),    		//rotation
+				irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+			)
+		);
+
+		gb->Rotate(vector3df(r.X, r.Y, 0));
+		gb->Rotate(vector3df(0, 0, r.Z));
+	}
 
 	return gb;
 }
 
 GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
-	return new GBody(
-		privateSManager->addSphereSceneNode(
-			radius,     //size
-			16,         //polycount
-			0,          //parent
-			id,         //id
-			irr::core::vector3df(p.X, p.Y, p.Z),    //position
-			irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
-			irr::core::vector3df(s.X, s.Y, s.Z)     //scale
-	));
+	GBody* gb = NULL;
+	if(privateSManager != NULL){
+		gb = new GBody(
+			privateSManager->addSphereSceneNode(
+				radius,     //size
+				16,         //polycount
+				0,          //parent
+				id,         //id
+				irr::core::vector3df(p.X, p.Y, p.Z),    //position
+				irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
+				irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+			)
+		);
+	}
+	return gb;
 }
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
@@ -282,6 +337,7 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	if (oldCamera){
 		privateSManager->setActiveCamera(0);
 		oldCamera->remove();
+		delete privateCamera;
 		privateCamera = NULL;
 	}
 

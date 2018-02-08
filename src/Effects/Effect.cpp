@@ -18,6 +18,7 @@ Effect::~Effect(){
 	if (effectEvent != NULL) {
 	 	if (effectEvent->isPlaying()) effectEvent->stop();
 		 effectEvent->release();
+		 delete effectEvent;
 	}
 }
 
