@@ -7,6 +7,7 @@ StateManager::StateManager(bool isServer){
 	// DeltaTime
 	timeStart = 0.0f;
 	deltaTime = 0.0f;
+	minFrameTime = (1.0f / 120.0f) * 1000;
 
 	// Engines
 	g_engine = GraphicEngine::getInstance(isServer);
@@ -101,7 +102,17 @@ void StateManager::LoadState(State_Code code){
 }
 
 void StateManager::UpdateDelta(){
-	float currentTime = g_engine->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
+
+	// Capping FPS & Calculating deltaTime
+	deltaTime = 0;
+	timeStart = g_engine->getTime();
+	float currentTime = timeStart;
+	
+	while(deltaTime < minFrameTime){
+		deltaTime = currentTime - timeStart;
+		g_engine->run();
+		currentTime = g_engine->getTime();
+	}
+
+	deltaTime *= 0.001;
 }

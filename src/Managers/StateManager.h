@@ -38,6 +38,8 @@ private:
 
 	float deltaTime;
 	float timeStart;
+	float minFrameTime;
+
 	bool resourcesLoaded;
 
 	StateManager(bool isServer = false);
