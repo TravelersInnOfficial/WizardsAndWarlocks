@@ -2,17 +2,18 @@
 
 static NetworkEngine* instance = 0;
 
-NetworkEngine::NetworkEngine(){
+NetworkEngine::NetworkEngine(bool serverCreatedFromGame){
 	serverIp = "127.0.0.1";
 	serverPort = 60000;
 	isServer = false;
 	isClient = false;
 	server = NULL;
 	client = NULL;
+	if(serverCreatedFromGame) StartServer(serverCreatedFromGame);
 }
 
-NetworkEngine* NetworkEngine::GetInstance(){
-	if(instance == 0) instance = new NetworkEngine();
+NetworkEngine* NetworkEngine::GetInstance(bool serverCreatedFromGame){
+	if(instance == 0) instance = new NetworkEngine(serverCreatedFromGame);
 	return instance;
 }
 
@@ -26,15 +27,15 @@ void NetworkEngine::Update(){
 	if (isClient && client != NULL) client->RecievePackages();
 }
 
-void NetworkEngine::StartServer(){
-	if(!isClient){
+void NetworkEngine::StartServer(bool serverCreatedFromGame){
+	if(!isClient && !isServer){
 		isServer = true;
-		server = new Server(serverPort, maxClients);
+		server = new Server(serverPort, maxClients, serverCreatedFromGame);
 	}
 }
 
 void NetworkEngine::StartClient(){
-	if(!isServer){
+	if(!isClient && !isServer){
 		isClient = true;
 		client = new Client(serverIp, serverPort);
 	}

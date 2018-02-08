@@ -18,7 +18,7 @@ public:
 
 	// We pass the port we're listening to
 	// And the max connections we allow simultaneously
-	Server(int serverPort, int maxClients);
+	Server(int serverPort, int maxClients, bool createdFromGame = false);
 	~Server();
 
 	void SendShutdown();
@@ -50,6 +50,7 @@ public:
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
 	std::map<int, NetworkObject*> GetToEraseNetworkObjects();
+	bool GetCreatedFromGame();
 
 	// Send object state change
 	void SetObjectBool(		int objectId, ObjectVariable k, bool v,			bool expandClientChange);
@@ -70,6 +71,7 @@ public:
 private:
 	
 	int multiGameId;
+	bool createdFromGame;
 	NetworkObject* multiGameObject;
 
 	int lastObjectId = -1;									// ID of the last object created on the server

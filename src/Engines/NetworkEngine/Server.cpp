@@ -6,7 +6,9 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/ObjectManager.h"
 
-Server::Server(int serverPort, int maxClients){
+Server::Server(int serverPort, int maxClients, bool createdFromGame){
+	this->createdFromGame = createdFromGame;
+
 	peer = RakNet::RakPeerInterface::GetInstance();
 	descriptor = RakNet::SocketDescriptor(serverPort, 0);
 	peer->Startup(maxClients, &descriptor, 1);
@@ -565,4 +567,8 @@ void Server::NotifyPotionInteracted(int potionPos, Player* p){
 			SendPackage(&potionInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 		}
 	}
+}
+
+bool Server::GetCreatedFromGame(){
+	return createdFromGame;
 }
