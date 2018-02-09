@@ -29,6 +29,7 @@ void GuivernoWind::DieReset(){
 void GuivernoWind::ResetSpell(){
 	Hechizo::ResetSpell();
 	shotEvent->setParamValue("Maintain click", 0.90f);
+
 	if(area!=NULL){
 		area->Deactivate();
 		area = NULL;
@@ -40,6 +41,7 @@ void GuivernoWind::CreateArea(Player* p){
 	vector3df rot = p->GetRot();
 
 	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
+	shotEvent->setParamValue("Maintain click", 0.00f);
 	playSoundEvent(shotEvent, p->GetPos()); //Play voice event
 
 	rot.Z = 0.0f; rot.X = 0.0f;
