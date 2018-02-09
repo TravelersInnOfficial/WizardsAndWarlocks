@@ -9,7 +9,7 @@ MainMenu::MainMenu(){
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
     
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5)); //widget items spacing
+    //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5)); //widget items spacing
     ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     
     //BUTTONS DATA
@@ -54,6 +54,7 @@ void MainMenu::Update(bool* open){
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
+    //ImGui::NewFrame();
     ImGui::Begin(m_id,open,w_flags);
     for(int i = 0; i<N_BUTTONS; i++){
         ImGui::PushID(i);
@@ -106,8 +107,9 @@ void MainMenu::Update(bool* open){
     //HELP WINDOWS
     ImGui::ShowTestWindow();
     //ImGui::ShowMetricsWindow();
-        
+    //ImGui::PopStyleVar();
     ImGui::End();
+    //ImGui::EndFrame();
 }
 
 

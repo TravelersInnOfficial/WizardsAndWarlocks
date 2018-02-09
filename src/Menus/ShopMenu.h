@@ -10,20 +10,20 @@ struct DDFlags{
 };
 
 class ShopMenu : public Menu{
-    public:
+public:
     ShopMenu();
     ~ShopMenu();
     void Update(bool* open);
 
-    private:
+private:
     void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[]);
+    void load_sockets(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],std::vector<IrrIMGUI::IGUITexture*> &items_selected);
     void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
-
+   
     static const int N_OSPELLS = 4;
     static const int N_DSPELLS = 2;
     static const int N_TSPELLS = 7;
     static const int N_TRAPS = 6;
-
     static const int N_SOCKETS = 3;
 
     ImVec2 buttonSize;
@@ -40,8 +40,16 @@ class ShopMenu : public Menu{
     IrrIMGUI::IGUITexture * d_spellimageid[N_DSPELLS];
     IrrIMGUI::IGUITexture * t_spellimageid[N_TSPELLS];
     IrrIMGUI::IGUITexture * trap_imageid[N_TRAPS];
-    IrrIMGUI::IGUITexture * empty_imageid[N_SOCKETS];
+    IrrIMGUI::IGUITexture * empty_spell_imageid[N_SOCKETS];
+    IrrIMGUI::IGUITexture * empty_trap_imageid[1];
     IrrIMGUI::IGUITexture * const_empty_image;
+
+    std::vector<IrrIMGUI::IGUITexture*> selected_spells;
+    std::vector<IrrIMGUI::IGUITexture*> selected_trap;
+
+    IrrIMGUI::IGUITexture * selected;
+
+    bool item_landed;
 
     const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
 

@@ -2,6 +2,7 @@
 #define GUIENGINE_H
 
 #include <IrrIMGUI/IrrIMGUI.h>
+#include <IMGUI/imgui.h>
 #include <irrlicht/irrlicht.h>
 #include <vector3d.h>
 #include <iostream>

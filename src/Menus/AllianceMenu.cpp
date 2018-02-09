@@ -10,7 +10,7 @@ AllianceMenu::AllianceMenu(){
 
     buttonSize = ImVec2(120,60);
     m_style.WindowBorderSize = 1.0f;
-    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
+    //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 }
 
@@ -29,9 +29,11 @@ void AllianceMenu::setPlayerWizard(bool* open){
 }
 
 void AllianceMenu::Update(bool* open){
-    ImGui::ShowTestWindow();
+    //ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
+
+    //ImGui::NewFrame();
     ImGui::Begin(m_id,open,w_flags);
     for(int i = 0; i<N_BUTTONS; i++){
         ImGui::PushID(i);
@@ -46,6 +48,7 @@ void AllianceMenu::Update(bool* open){
     //HELP WINDOWS
     //ImGui::ShowTestWindow();
     //ImGui::ShowMetricsWindow();
-
+    //ImGui::PopStyleVar();
     ImGui::End();
+    //ImGui::EndFrame();
 }
