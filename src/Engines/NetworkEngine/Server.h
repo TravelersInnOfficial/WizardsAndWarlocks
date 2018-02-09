@@ -70,10 +70,14 @@ public:
 	void NotifyDoorInteracted(int doorPos);
 	void NotifyPotionInteracted(int potionPos, Player* p);
 
+	// Setters
+	void SetName(std::string serverName);
+
 private:
 	
 	int multiGameId;
 	NetworkObject* multiGameObject;
+	std::string serverName;
 
 	bool createdFromGame;
 	float maxTimeToConnectPlayerOne;	

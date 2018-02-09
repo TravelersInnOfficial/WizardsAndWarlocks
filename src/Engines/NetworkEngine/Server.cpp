@@ -8,6 +8,8 @@
 #include "./../Managers/StateManager.h"
 
 Server::Server(int serverPort, int maxClients, bool createdFromGame){
+
+	this->serverName = "Unknown Castle";
 	this->createdFromGame = createdFromGame;
 
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -581,22 +583,17 @@ bool Server::GetCreatedFromGame(){
 }
 
 void Server::SetServerData(bool isLobby){
-	std::string name = "LobbyOne";
-	
 	std::string stringToSend = "";
-	stringToSend =  std::to_string(networkPlayers.size());
-	stringToSend += std::to_string(isLobby);
-	
-	int nameSize = stringToSend.length();
-	std::string nameSize_s = std::to_string(nameSize);
-	if(nameSize < 10) nameSize_s = "0" + nameSize_s;
-	stringToSend += nameSize_s;
-
-	stringToSend += name;
+	stringToSend =  std::to_string(networkPlayers.size());		// 0 to 8, 1 Char
+	stringToSend += std::to_string(isLobby);					// 0 or 1, 1 Char
+	stringToSend += serverName;									// Max 20 Chars?
 	
 	char const* pchar = stringToSend.c_str();
-	int pcharSize = (int) strlen(pchar) + 1;
+	int pcharSize = (int) strlen(pchar) + 1;					// + 1 Empty Char to Finish
 	
 	peer->SetOfflinePingResponse(pchar, pcharSize);
-	std::cout << "Bits to write: " << pcharSize << std::endl;
+}
+
+void Server::SetName(std::string serverName){
+	this->serverName = serverName.substr(0, 20);
 }

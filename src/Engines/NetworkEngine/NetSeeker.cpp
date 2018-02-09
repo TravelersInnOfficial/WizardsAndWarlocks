@@ -51,22 +51,27 @@ void NetSeeker::Recieve(){
 				std::string ip = packet->systemAddress.ToString();
 				ip = TreatIp(ip);
 
+				// READ NUMBER OF PLAYERS
+				int playerCount = (int)(data[0] - '0');
+
 				// READ STATE
 				bool lobbyState = false;
-				if(data[0] == '1') lobbyState = true;
-
-				// READ NUMBER OF PLAYERS
-				//int playerCount = atoi(data[1]);
-				int playerCount = (int)(data[1] - '0');
-				std::cout<<playerCount<<std::endl;
+				if(data[1] == '1') lobbyState = true;
 
 				// READ NAME
+				unsigned int startingPoint = 3;
+				unsigned int nameLength = dataLength - startingPoint;
+				std::string name = "";
+				for(int i = startingPoint - 1; i <= nameLength + startingPoint; i++){
+					name += data[i];
+				}
 
 				// SET SERVER DATA
 				ServerData newServerData;
 				newServerData.ip = ip;
 				newServerData.lobbyState = lobbyState;
 				newServerData.playerCount = playerCount;
+				newServerData.name = name;
 
 				newServers.push_back(newServerData);
 				break;

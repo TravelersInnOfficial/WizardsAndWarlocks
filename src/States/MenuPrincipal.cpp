@@ -72,10 +72,12 @@ void MenuPrincipal::UpdateSeeker(float deltaTime){
 		std::cout<<"----------------------"<<std::endl;
 		std::cout<<"NEW LIST OF SERVERS: "<<std::endl;
 		
-		if(newServerList.size() == 0) std::cout<<"Currently there's no servers"<<std::endl;
+		if(newServerList.size() == 0) std::cout<<"No server available"<<std::endl;
 		else{
 			for(int i = 0; i < newServerList.size(); i++){
-				std::cout<<"LOBBY Nº "<< i+1 <<" - IP: "<<newServerList.at(i).ip<<std::endl;
+				std::cout<<newServerList.at(i).name<<" - IP: "<<newServerList.at(i).ip;
+				std::cout<<":60000. Players: "<<newServerList.at(i).playerCount<<"/8";
+				std::cout<<". Game Started: "<<!newServerList.at(i).lobbyState<<"."<<std::endl;
 			}
 		}
 		

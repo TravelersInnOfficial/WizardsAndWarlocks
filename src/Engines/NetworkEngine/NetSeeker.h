@@ -8,7 +8,6 @@
 #include <vector>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include <stdlib.h>
 
 class NetSeeker{
 
