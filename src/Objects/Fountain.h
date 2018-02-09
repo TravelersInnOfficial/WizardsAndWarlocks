@@ -8,6 +8,7 @@
 
 #include <PhysicsEngine/BT_Body.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
 #include <ColliderMasks.h>
 
 class Fountain: public Entidad{
@@ -25,11 +26,16 @@ public:
 	// Sensorial Functions
 	void SendSignal();
 	Kinematic GetKinematic();
+
+	//Sound functions
+	void playSoundEvent(SoundEvent* event);
+
 private:
 	void Recover();
 	bool Use();
 	void UpdatePosShape();
 	void CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	void createSoundEvent();
 
 	bool 		inUse;				// Esta en uso? Si/No
 	Player* 	user;				// Jugador que la esta utilizando
@@ -44,6 +50,8 @@ private:
 
 	BT_Body*        bt_body;		// Cuerpo fisico de la fuente
     GBody*          m_fountainNode;	// Cuerpo visual de la fuente
+	SoundEvent*		useEvent;
+	SoundEvent*		cantUseEvent;		
 };
 
 #endif

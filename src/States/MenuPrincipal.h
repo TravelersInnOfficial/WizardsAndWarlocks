@@ -19,10 +19,16 @@ public:
 	void Update(float deltaTime);
 	void Draw();
 
+	void playMenuMusic();
+
 private:
 	void PrepareServer();
 	void PrepareClient(bool proprietary = false);
 	void PrepareGame();
+
+	void createSoundEvent();
+	SoundEvent*		menuMusic;
+
 	void UpdateSeeker(float deltaTime);
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
