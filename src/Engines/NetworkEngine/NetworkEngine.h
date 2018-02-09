@@ -16,18 +16,19 @@ public:
 	static NetworkEngine* GetInstance(bool serverCreatedFromGame = false);
 
 	~NetworkEngine();
+	
 	// Start a Server, must declare port before
 	// Or
 	// Start a Client, must declare IP && port before
 	void StartServer(bool serverCreatedFromGame = false);
-	void StartClient();
+	void StartClient(bool proprietary = false);
 
 	// We retrieve our SERVER or the CLIENT to operate
 	Server* GetServer();
 	Client* GetClient();
 
 	// We recieve the packages of our peer
-	void Update();
+	void Update(float deltaTime = 0, bool isLobby = false);
 
 	// Manage the IP we're going to send the packages to
 	// "127.0.0.1" format

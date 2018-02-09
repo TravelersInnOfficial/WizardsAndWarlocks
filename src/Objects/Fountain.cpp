@@ -20,6 +20,10 @@ Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 Fountain::~Fountain(){
     delete bt_body;
     delete m_fountainNode;
+
+	if (!useEvent->isPlaying()) useEvent->stop();
+	useEvent->release();
+	delete useEvent;
 }
 
 void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -89,13 +93,14 @@ bool Fountain::Use(){
 				if (value == 0) {
 					if (useEvent->isPlaying()) useEvent->stop();
 				} else {
-					playSoundEvent();	//Play the sound
+					playSoundEvent(useEvent);	//Play the sound
 					useEvent->setParamValue("Fountain reserve", value); //Set event parameter for pitch modification
 				}
 				
 				return true;
 			} else {	//If the fountain has no reserve, stop the sound
 				if (useEvent->isPlaying()) useEvent->stop();
+				playSoundEvent(cantUseEvent);
 			}	
 		} else {
 			SetFree(); 	//Free the fountain when the user has everything maxed
@@ -120,8 +125,12 @@ void Fountain::Recover(){
 
 void Fountain::Interact(Player* p){
 	if(user==NULL){
-		if (p->GetHP() < 100 || p->GetMP() < 100) //Only interact when you something is below 100
+		if (p->GetHP() < 100 || p->GetMP() < 100) { //Only interact when you something is below 100
 			user = p;
+			
+		} else {
+			playSoundEvent(cantUseEvent);
+		}
 	}
 	inUse = true;
 }
@@ -150,9 +159,10 @@ Kinematic Fountain::GetKinematic(){
 
 void Fountain::createSoundEvent() {
 	useEvent = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Fountains/Fountain");
+	cantUseEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Spell Disabled");
 }
 
-void Fountain::playSoundEvent() {
-	if (!useEvent->isPlaying())
-		SoundSystem::getInstance()->playEvent(useEvent, bt_body->GetPosition());
+void Fountain::playSoundEvent(SoundEvent* event) {
+	if (!event->isPlaying())
+		SoundSystem::getInstance()->playEvent(event, bt_body->GetPosition());
 }

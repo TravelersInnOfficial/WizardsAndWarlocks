@@ -34,6 +34,13 @@ MultiPlayerGame::MultiPlayerGame(){
 
 	// Y creamos los eventos de sonido
 	CreateSoundEvents();
+
+	// Si es un servidor creado INGAME lo muteamos
+	Server* myServer = n_engine->GetServer();
+	if(myServer != NULL && myServer->GetCreatedFromGame()){
+		mute = true;
+		SoundSystem::getInstance()->setVolume(0);
+	}
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
@@ -113,10 +120,13 @@ bool MultiPlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
-		float vol = 1;
-		if(!mute) vol = 0;
-		SoundSystem::getInstance()->setVolume(vol);
-		mute = !mute;
+		Server* myServer = n_engine->GetServer();
+		if(myServer == NULL || (myServer != NULL && !myServer->GetCreatedFromGame())){	
+			float vol = 1;
+			if(!mute) vol = 0;
+			SoundSystem::getInstance()->setVolume(vol);
+			mute = !mute;
+		}
 	}
 
 	if(g_engine->IsKeyPressed(KEY_F3)){

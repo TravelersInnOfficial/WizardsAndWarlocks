@@ -28,7 +28,7 @@ public:
 	Kinematic GetKinematic();
 
 	//Sound functions
-	void playSoundEvent();
+	void playSoundEvent(SoundEvent* event);
 
 private:
 	void Recover();
@@ -50,7 +50,8 @@ private:
 
 	BT_Body*        bt_body;		// Cuerpo fisico de la fuente
     GBody*          m_fountainNode;	// Cuerpo visual de la fuente
-	SoundEvent*		useEvent;			
+	SoundEvent*		useEvent;
+	SoundEvent*		cantUseEvent;		
 };
 
 #endif

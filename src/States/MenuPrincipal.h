@@ -7,6 +7,8 @@
 #include "./../Managers/StateManager.h"
 #include "./State.h"
 
+#include <NetworkEngine/NetSeeker.h>
+
 class MenuPrincipal: public State{
 public:
 	MenuPrincipal();
@@ -15,16 +17,24 @@ public:
 	bool Input();
 	void Update(float deltaTime);
 	void Draw();
+
 	void playMenuMusic();
+
 private:
 	void PrepareServer();
-	void PrepareClient();
+	void PrepareClient(bool proprietary = false);
 	void PrepareGame();
+
 	void createSoundEvent();
+	SoundEvent*		menuMusic;
+
+	void UpdateSeeker(float deltaTime);
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
 	MenuOption 		selectedOption;		// Opcion dada en el menu
-	SoundEvent*		menuMusic;
+	
+	NetSeeker*		netSeeker;
+	std::vector<std::string> lobbyList;
 };
 
 
