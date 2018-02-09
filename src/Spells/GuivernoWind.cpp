@@ -27,9 +27,9 @@ void GuivernoWind::DieReset(){
 }
 
 void GuivernoWind::ResetSpell(){
-	Hechizo::ResetSpell();
 	shotEvent->setParamValue("Maintain click", 0.90f);
-
+	Hechizo::ResetSpell();
+	
 	if(area!=NULL){
 		area->Deactivate();
 		area = NULL;
