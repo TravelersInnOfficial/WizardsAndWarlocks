@@ -93,7 +93,7 @@ void HumanPlayer::GetNetInput(){
 		if(life != -9999 && life != -1){
 			if(m_HP != life){
 				if(life < m_HP){
-					playHit();
+					playSoundEvent(soundEvents["hit"]);
 					SetController(ACTION_RAYCAST, RELEASED);
 					if(overlayManager!=NULL)overlayManager->SetTime(BLOOD, 1);
 				}

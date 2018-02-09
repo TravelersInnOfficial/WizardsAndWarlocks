@@ -95,13 +95,13 @@ class Player: public Entidad{
 
 		//Sound Functions
 		void playFootsteps();				//Plays the footsteps sound
-		void playDrink();					//PLays the drink potion sound
-		void playDie();						//Plays the die sound
-		void playHit();						//Plays the damage hit sound
 		void playPulse();					//Plays the heart pulse sound
-		void playLosePotion();				//Plays the lose potion sound
+
+		void playSoundEvent(SoundEvent* event);		//Plays the parameter event
+
 		void stopFootsteps();				//Stops the footsteps sound
-		void stopPulse();
+		void stopPulse();					//Stops the pulse sound
+		
 		void UpdateSoundsPosition();		//Updates the continuous sounds
 		void changeSurface(float n);		//Changes the surface parameter of the event
 

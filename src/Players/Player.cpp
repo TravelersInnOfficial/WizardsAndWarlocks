@@ -468,7 +468,7 @@ void Player::ChangeHP(float HP){
 	// UN JUGADOR
 	else{
 		if (HP < 0) {
-			if (m_HP + HP > 0) playHit(); //We want to play while its alive but not when it dies
+			if (m_HP + HP > 0) playSoundEvent(soundEvents["hit"]); //We want to play while its alive but not when it dies
 			if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 1);
 			SetController(ACTION_RAYCAST, RELEASED);
 		}
@@ -553,9 +553,14 @@ bool Player::StartSpell(){
 	// Get the code of the currentSpell
 	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
-	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
+	if((effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE)
+	 || !SpellManager::GetInstance()->StartHechizo(currentSpell, this)){		// if is not a basic spell or if silenced then not shoot
+		playSoundEvent(soundEvents["nomana"]);
 		return false;
 	}
+
+	
+
 	return SpellManager::GetInstance()->StartHechizo(currentSpell,this);
 }
 
@@ -599,7 +604,7 @@ void Player::Die(){
 	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();											// Stop the pulse event
-	playDie(); 												// Play the sound event
+	playSoundEvent(soundEvents["die"]); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
 	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
@@ -668,12 +673,12 @@ void Player::DropObject(){
 
 void Player::LosePotion(){
 	if(potion!=NULL) potion = NULL;
-	playLosePotion();
+	playSoundEvent(soundEvents["losepotion"]);
 }
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		playDrink();
+		playSoundEvent(soundEvents["drink"]);
 		potion->Use(this);
 		potion = NULL;
 	}
@@ -749,6 +754,7 @@ void Player::createSoundEvents() {
 	SoundEvent * hit        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
 	SoundEvent * pulse      = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
 	SoundEvent * losepotion = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Caronte Taxes");
+	SoundEvent * nomana		= SoundSystem::getInstance()->createEvent("event:/HUD/Spell Disabled");
 
 	//Store them at the player's sounds map
 	soundEvents["footsteps"]  = footsteps;
@@ -757,23 +763,12 @@ void Player::createSoundEvents() {
 	soundEvents["hit"] 		  = hit;
 	soundEvents["pulse"]      = pulse;
 	soundEvents["losepotion"] = losepotion;
+	soundEvents["nomana"] 	  = nomana;
 }
 
 void Player::playFootsteps() {
 	stepsStarted = true;
 	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["footsteps"], GetPos());
-}
-
-void Player::playDrink() {
-	SoundSystem::getInstance()->playEvent(soundEvents["drink"], GetPos());
-}
-
-void Player::playDie() {
-	SoundSystem::getInstance()->playEvent(soundEvents["die"], GetPos());
-}
-
-void Player::playHit() {
-	SoundSystem::getInstance()->playEvent(soundEvents["hit"], GetPos());
 }
 
 void Player::playPulse() {
@@ -783,8 +778,8 @@ void Player::playPulse() {
 	}
 }
 
-void Player::playLosePotion() {
-	SoundSystem::getInstance()->playEvent(soundEvents["losepotion"], GetPos());
+void Player::playSoundEvent(SoundEvent* event) {
+	SoundSystem::getInstance()->playEvent(event, GetPos());
 }
 
 void Player::stopFootsteps() {

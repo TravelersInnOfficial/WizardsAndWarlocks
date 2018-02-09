@@ -9,7 +9,10 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
 	selectedOption = NO_OPT;
+	createSoundEvent();
+	playMenuMusic();
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
+	
 }
 
 MenuPrincipal::~MenuPrincipal(){
@@ -34,6 +37,7 @@ void MenuPrincipal::Update(float deltaTime){
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra
+		if (menuMusic->isPlaying()) menuMusic->stop();
 		switch(selectedOption){
 			case MAIN_M_CLIENT:{
 				PrepareClient();
@@ -79,4 +83,12 @@ void MenuPrincipal::PrepareClient(){
 
 void MenuPrincipal::PrepareServer(){
 	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_SERVER);
+}
+
+void MenuPrincipal::createSoundEvent() {
+	menuMusic = SoundSystem::getInstance()->createEvent("event:/Music/Menu Music");
+}
+
+void MenuPrincipal::playMenuMusic() {
+	SoundSystem::getInstance()->playEvent(menuMusic);
 }
