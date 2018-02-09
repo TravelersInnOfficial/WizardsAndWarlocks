@@ -305,6 +305,5 @@ void Trap::playExplodeEvent(vector3df pos) {
 }
 
 void Trap::playPlaceEvent(vector3df pos) {
-    std::cout << "debug2" << std::endl;
 	SoundSystem::getInstance()->playEvent(placeEvent, pos);
 }

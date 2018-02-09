@@ -3,18 +3,19 @@
 
 StateManager* StateManager::instance = 0;
 
-StateManager::StateManager(bool isServer){
+StateManager::StateManager(bool isServer, bool ingameServer){
 	// DeltaTime
 	timeStart = 0.0f;
 	deltaTime = 0.0f;
+	minFrameTime = (1.0f / 240.0f) * 1000;
 
 	// Engines
-	g_engine = GraphicEngine::getInstance(isServer);
+	g_engine = GraphicEngine::getInstance(ingameServer);
 	f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
-	n_engine = NetworkEngine::GetInstance();
+	n_engine = NetworkEngine::GetInstance(ingameServer);
 
 	srand(time(0));
 	currentState = NULL;
@@ -28,9 +29,7 @@ StateManager::StateManager(bool isServer){
 }
 
 StateManager::~StateManager(){
-	if(currentState != NULL){
-		delete currentState;	
-	}
+	if(currentState != NULL) delete currentState;
 	delete f_engine;
 	delete g_engine;
 	delete s_engine;
@@ -38,21 +37,28 @@ StateManager::~StateManager(){
 	instance = 0;
 }
 
-StateManager* StateManager::GetInstance(bool isServer){
-	if(instance==0) instance = new StateManager(isServer);
+StateManager* StateManager::GetInstance(bool isServer, bool ingameServer){
+	if(instance==0) instance = new StateManager(isServer, ingameServer);
 	return instance;
 }
 
+void StateManager::CloseGame(){
+	preparedStatus = STATE_CLOSE_GAME;
+}
+
 bool StateManager::Update(){
+	bool end = false;
 	// En el caso de que haya un estado preparado lo cambiamos
 	if(preparedStatus != WITHOUT_STATE){
-		LoadState(preparedStatus);
+		LoadState(preparedStatus, &end);
 		preparedStatus = WITHOUT_STATE;
 	}
 
-	bool end = currentState->Input();
-	currentState->Update(deltaTime);
-	currentState->Draw();
+	if(!end){	// Aun no se ha llamado para cerrar el juego
+		end = currentState->Input();
+		currentState->Update(deltaTime);
+		currentState->Draw();
+	}
 
 	UpdateDelta();
 
@@ -63,9 +69,10 @@ void StateManager::PrepareStatus(State_Code status){
 	preparedStatus  = status;
 }
 
-void StateManager::LoadState(State_Code code){
+void StateManager::LoadState(State_Code code, bool* end){
 	if(currentState!=NULL){
 		delete currentState;
+		currentState = NULL;
 	}
 	
 	switch(code){
@@ -94,6 +101,9 @@ void StateManager::LoadState(State_Code code){
 			n_engine->StartServer();
 			currentState =  new MultiPlayerGame();
 			break;
+		case STATE_CLOSE_GAME:
+			*end = true;
+			break;
 		case WITHOUT_STATE:
 			currentState = NULL;
 			break;
@@ -101,7 +111,17 @@ void StateManager::LoadState(State_Code code){
 }
 
 void StateManager::UpdateDelta(){
-	float currentTime = g_engine->getTime() * 0.001;
-	deltaTime = currentTime - timeStart;
-	timeStart = currentTime;
+
+	// Capping FPS & Calculating deltaTime
+	deltaTime = 0;
+	timeStart = g_engine->getTime();
+	float currentTime = timeStart;
+	
+	while(deltaTime < minFrameTime){
+		deltaTime = currentTime - timeStart;
+		g_engine->run();
+		currentTime = g_engine->getTime();
+	}
+
+	deltaTime *= 0.001;
 }

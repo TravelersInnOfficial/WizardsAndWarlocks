@@ -13,7 +13,7 @@ public:
 
 	void EmpezarCast();
 	void ResetCooldown();
-	virtual void WasteMana(Player* p);
+	virtual void WasteMana(Player* p, float deltaTime);
 	virtual void ResetSpell();
 	virtual void DieReset();
 	bool ComprobarCast(float deltaTime);
