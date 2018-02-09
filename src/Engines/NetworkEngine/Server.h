@@ -21,13 +21,15 @@ public:
 	Server(int serverPort, int maxClients, bool createdFromGame = false);
 	~Server();
 
+	void Update(float deltaTime);
+
 	void SendShutdown();
 
 	// Sends game-level packages
 	void SendPackage(RakNet::BitStream*, PacketPriority, PacketReliability, RakNet::AddressOrGUID, bool broadcast);
 
 	// Reads game-level packages
-	void RecievePackages();
+	void RecievePackages(bool isLobby = false);
 
 	// We manage the Object-Level packages
 	void ModifyObject(RakNet::BitStream* bitstream);
@@ -71,8 +73,11 @@ public:
 private:
 	
 	int multiGameId;
-	bool createdFromGame;
 	NetworkObject* multiGameObject;
+
+	bool createdFromGame;
+	float maxTimeToConnectPlayerOne;	
+	RakNet::RakNetGUID playerOneID;
 
 	int lastObjectId = -1;									// ID of the last object created on the server
 	std::map<int, NetworkObject*> networkObjects;			// Map of Network Objects on the server
@@ -86,6 +91,8 @@ private:
 	RakNet::RakPeerInterface *peer;						// Peer Interface
 	RakNet::Packet *packet;								// Packet to send and recieve
 	RakNet::SocketDescriptor descriptor;				// Socket Descriptor
+
+	void CheckIfPlayerOneConnected(float deltaTime);
 
 };
 

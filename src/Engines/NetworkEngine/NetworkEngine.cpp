@@ -22,8 +22,11 @@ NetworkEngine::~NetworkEngine(){
 	instance = 0;
 }
 
-void NetworkEngine::Update(){
-	if (isServer && server != NULL) server->RecievePackages();
+void NetworkEngine::Update(float deltaTime, bool isLobby){
+	if (isServer && server != NULL){
+		server->Update(deltaTime);
+		server->RecievePackages(isLobby);
+	}
 	if (isClient && client != NULL) client->RecievePackages();
 }
 

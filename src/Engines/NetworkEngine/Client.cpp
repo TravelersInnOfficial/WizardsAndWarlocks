@@ -9,6 +9,7 @@
 Client::Client(std::string serverIp, int serverPort){
 	peer = RakNet::RakPeerInterface::GetInstance();
 	peer->Startup(1, &descriptor, 1);
+	peer->SetTimeoutTime(15000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 	peer->Connect(serverIp.c_str(), serverPort, 0, 0);
 	playerOneId = -1;
 }

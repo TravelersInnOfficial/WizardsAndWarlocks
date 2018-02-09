@@ -5,6 +5,7 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/ObjectManager.h"
+#include "./../Managers/StateManager.h"
 
 Server::Server(int serverPort, int maxClients, bool createdFromGame){
 	this->createdFromGame = createdFromGame;
@@ -24,6 +25,9 @@ Server::Server(int serverPort, int maxClients, bool createdFromGame){
 	// Inicializo su variable
 	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
 	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
+
+	maxTimeToConnectPlayerOne = 15;
+	playerOneID = RakNet::UNASSIGNED_RAKNET_GUID;
 }
 
 Server::~Server(){
@@ -34,6 +38,17 @@ Server::~Server(){
 	// Destroy the PEER interface
 	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
+}
+
+void Server::Update(float deltaTime){
+	if(createdFromGame) CheckIfPlayerOneConnected(deltaTime);
+}
+
+void Server::CheckIfPlayerOneConnected(float deltaTime){
+	if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID){
+		maxTimeToConnectPlayerOne -= deltaTime;
+		if(maxTimeToConnectPlayerOne <= 0) StateManager::GetInstance()->CloseGame();
+	}
 }
 
 void Server::SendShutdown(){
@@ -134,7 +149,7 @@ std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 	return(toRet);
 }
 
-void Server::RecievePackages(){
+void Server::RecievePackages(bool isLobby){
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
 		switch (packet->data[0]) {
@@ -143,15 +158,17 @@ void Server::RecievePackages(){
 			case ID_NEW_INCOMING_CONNECTION: {
 
 				// Si la partida ha empezado negamos la conexion
-				/*if(!NetGame::GetInstance()->GetLobbyState()){
+				if(!isLobby){
 					RakNet::BitStream bitstream;
 					bitstream.Write((RakNet::MessageID)ID_DISCONNECTION_NOTIFICATION);
 					SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					continue;
-				}*/
+				}
 
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
+
+				if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
 
 				// Notificamos a todos los usuarios de que se ha conectado un player
 				RakNet::BitStream bitstream;
@@ -294,6 +311,7 @@ void Server::RecievePackages(){
 				disconnectClient.Write(id);
 				SendPackage(&disconnectClient, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 
+				if(createdFromGame && playerOneID == packet->guid) StateManager::GetInstance()->CloseGame();
 				break;
 			}
 
