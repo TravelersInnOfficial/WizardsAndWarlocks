@@ -242,8 +242,6 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 		eventDesc = eventDescriptions[eventPath];				 //Set it to the eventDesc var
 	} else {
 		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
-		// Se hace en el metodo de arriba
-		//eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
 	
 	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));		//Set the event instance
@@ -467,10 +465,8 @@ bool SoundEvent::isPlaying() {
  * Releases the event and destroys it after it has stop ped
  *******************************************************/
 void SoundEvent::release() {
-
 	if (soundInstance != NULL) {
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
-
 		SoundSystem::getInstance()->eraseSoundEvent(this);
 	}
 }
