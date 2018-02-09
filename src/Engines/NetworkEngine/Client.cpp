@@ -134,7 +134,6 @@ void Client::RecievePackages(){
 				int id;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(id);
-				//RemovePlayer(id);
 				break;
 			}
 
@@ -159,16 +158,6 @@ void Client::RecievePackages(){
 			case ID_OBJECT_STATUS_CHAGED: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
 				ModifyObject(&bitstream);
-				break;
-			}
-
-			// CUANDO SE TERMINA UNA PARTIDA
-			case ID_MATCH_ENDED: {
-				/*RakNet::BitStream bitstream(packet->data, packet->length, false);
-				Alliance winnerAlliance;
-				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
-				bitstream.Read(winnerAlliance);
-				NetGame::GetInstance()->MatchEnded(winnerAlliance);*/
 				break;
 			}
 

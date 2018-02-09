@@ -324,7 +324,7 @@ void Server::RecievePackages(bool isLobby){
 			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_IDENTIFY_PROPRIETARY: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
+				if(createdFromGame && playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
 				break;
 			}
 

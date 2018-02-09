@@ -3,6 +3,7 @@
 #include <SoundEngine/SoundSystem.h>
 #include <GraphicEngine/MenuManager.h>
 
+
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(true);
@@ -10,10 +11,12 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine->InitReceiver();
 	selectedOption = NO_OPT;
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
+	netSeeker = new NetSeeker();
 }
 
 MenuPrincipal::~MenuPrincipal(){
 	g_engine->setCursorVisible(false);
+	delete netSeeker;
 }
 
 bool MenuPrincipal::Input(){
@@ -25,7 +28,9 @@ bool MenuPrincipal::Input(){
 }
 
 void MenuPrincipal::Update(float deltaTime){
+	UpdateSeeker(deltaTime);
 	SoundSystem::getInstance()->Update();
+	
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra
@@ -50,6 +55,25 @@ void MenuPrincipal::Update(float deltaTime){
 		}
 		MenuManager::GetInstance()->ClearMenu();
 		g_engine->ToggleMenu(false);
+	}
+}
+
+void MenuPrincipal::UpdateSeeker(float deltaTime){
+	netSeeker->Update(deltaTime);
+	std::vector<std::string> newLobbyList = netSeeker->GetList();
+	if(lobbyList.size() != newLobbyList.size()){
+		std::cout<<"----------------------"<<std::endl;
+		std::cout<<"NEW LIST OF LOBBYS: "<<std::endl;
+		
+		if(newLobbyList.size() == 0) std::cout<<"Currently there's no Lobbys"<<std::endl;
+		else{
+			for(int i = 0; i < newLobbyList.size(); i++){
+				std::cout<<"LOBBY Nº "<< i+1 <<" - IP: "<<newLobbyList.at(i)<<std::endl;
+			}
+		}
+		
+		std::cout<<"----------------------"<<std::endl;
+		lobbyList = newLobbyList;
 	}
 }
 
