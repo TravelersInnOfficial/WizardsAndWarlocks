@@ -40,7 +40,7 @@ void MenuPrincipal::Update(float deltaTime){
 					path = "START /B WizardsAndWarlocks.exe -i";
 				#endif
 				std::system(path.c_str());
-				PrepareClient();
+				PrepareClient(true);
 				break;
 			}
 			default:{
@@ -63,11 +63,11 @@ void MenuPrincipal::PrepareGame(){
 	StateManager::GetInstance()->PrepareStatus(STATE_GAME);
 }
 
-void MenuPrincipal::PrepareClient(){
+void MenuPrincipal::PrepareClient(bool proprietary){
 	NetworkEngine* n_engine;
 	n_engine = NetworkEngine::GetInstance();
 	n_engine->SetIp(g_engine->ReadText(MAIN_M_IP));
-	n_engine->StartClient();
+	n_engine->StartClient(proprietary);
 	n_engine->GetClient()->SetClientName(g_engine->ReadText(MAIN_M_NAME));
 	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_CLIENT);
 }

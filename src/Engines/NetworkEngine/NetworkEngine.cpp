@@ -37,10 +37,10 @@ void NetworkEngine::StartServer(bool serverCreatedFromGame){
 	}
 }
 
-void NetworkEngine::StartClient(){
+void NetworkEngine::StartClient(bool proprietary){
 	if(!isClient && !isServer){
 		isClient = true;
-		client = new Client(serverIp, serverPort);
+		client = new Client(serverIp, serverPort, proprietary);
 	}
 }
 

@@ -17,7 +17,7 @@ public:
 
 	// We pass the IP we're gonna connect to 
 	// And the port we're talking to
-	Client(std::string serverIp = "127.0.0.1", int serverPort = 6000);
+	Client(std::string serverIp = "127.0.0.1", int serverPort = 6000, bool proprietary = false);
 	~Client();
 
 	// Sends game-level packages
@@ -70,6 +70,7 @@ private:
 	
 	int playerOneId;
 	std::string name;
+	bool proprietary;
 
 	std::map<int, NetworkObject*> networkObjects;			// Vector of Network Objects on the Client
 	std::map<int, NetworkObject*> newNetworkObjects;		// Vector of Network Objects on the Client that haven't been retrieved
@@ -82,6 +83,7 @@ private:
 	RakNet::SocketDescriptor descriptor;				// Socket Descriptor
 
 	void SetTrap(int trapId, RakNet::BitStream* bitstream);
+	void SendProprietary();
 
 };
 

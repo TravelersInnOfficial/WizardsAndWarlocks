@@ -21,7 +21,7 @@ public:
 	// Or
 	// Start a Client, must declare IP && port before
 	void StartServer(bool serverCreatedFromGame = false);
-	void StartClient();
+	void StartClient(bool proprietary = false);
 
 	// We retrieve our SERVER or the CLIENT to operate
 	Server* GetServer();

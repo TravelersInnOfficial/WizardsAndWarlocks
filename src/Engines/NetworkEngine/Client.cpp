@@ -6,12 +6,13 @@
 #include "./../Managers/NetworkManager.h"
 #include "./../Managers/StateManager.h"
 
-Client::Client(std::string serverIp, int serverPort){
+Client::Client(std::string serverIp, int serverPort, bool proprietary){
 	peer = RakNet::RakPeerInterface::GetInstance();
 	peer->Startup(1, &descriptor, 1);
 	peer->SetTimeoutTime(15000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
 	peer->Connect(serverIp.c_str(), serverPort, 0, 0);
 	playerOneId = -1;
+	this->proprietary = proprietary;
 }
 
 Client::~Client(){
@@ -122,6 +123,7 @@ void Client::RecievePackages(){
 				int id;
 				bitstream.Read(id);
 				playerOneId = id;
+				if(proprietary) SendProprietary();
 
 				break;
 			}
@@ -490,4 +492,10 @@ void Client::SetPlayerSpell(int networkId, int spellPosition, SPELLCODE spell){
 	newSpellMessage.Write(spell);
 
 	SendPackage(&newSpellMessage, HIGH_PRIORITY, RELIABLE_ORDERED);
+}
+
+void Client::SendProprietary(){
+	RakNet::BitStream stateChange;
+	stateChange.Write((RakNet::MessageID)ID_IDENTIFY_PROPRIETARY);
+	SendPackage(&stateChange, HIGH_PRIORITY, RELIABLE_ORDERED);
 }

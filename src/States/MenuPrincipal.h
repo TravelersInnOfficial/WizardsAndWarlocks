@@ -17,7 +17,7 @@ public:
 	void Draw();
 private:
 	void PrepareServer();
-	void PrepareClient();
+	void PrepareClient(bool proprietary = false);
 	void PrepareGame();
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego

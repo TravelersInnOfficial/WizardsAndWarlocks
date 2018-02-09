@@ -168,8 +168,6 @@ void Server::RecievePackages(bool isLobby){
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
 
-				if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
-
 				// Notificamos a todos los usuarios de que se ha conectado un player
 				RakNet::BitStream bitstream;
 				bitstream.Write((RakNet::MessageID)ID_PLAYER_JOIN);
@@ -324,21 +322,9 @@ void Server::RecievePackages(bool isLobby){
 			}
 
 			// CUANDO SE TERMINA UNA PARTIDA
-			case ID_MATCH_ENDED: {
-				/*
-				// Leer quien ha ganado
+			case ID_IDENTIFY_PROPRIETARY: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				Alliance winnerAlliance;
-				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
-				bitstream.Read(winnerAlliance);
-				NetGame::GetInstance()->MatchEnded(winnerAlliance);
-
-				// Propagarlo a todos los clientes
-				RakNet::BitStream propagateEndMatch;
-				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
-				propagateEndMatch.Write(winnerAlliance);
-				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
-				*/
+				if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
 				break;
 			}
 
