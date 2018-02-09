@@ -37,50 +37,75 @@ void NetSeeker::Ask(){
 
 // Llamar a cada sec para actualizar las IP y las que no salgan, eliminarlas de la lista
 void NetSeeker::Recieve(){
-	std::vector<std::string> ips;
+	std::vector<ServerData> newServers;
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
 		switch (packet->data[0]) {
 			case ID_UNCONNECTED_PONG: {
+
+				// READ BITSTREAM (data = INICIO, dataLength = FINAL)
+				unsigned char* data = packet->data + sizeof(unsigned char) + sizeof(RakNet::TimeMS);
+				unsigned int dataLength = packet->length - sizeof(unsigned char) - sizeof(RakNet::TimeMS);
+
+				// READ THE IP
 				std::string ip = packet->systemAddress.ToString();
-				ips.push_back(TreatIp(ip));
+				ip = TreatIp(ip);
+
+				// READ STATE
+				bool lobbyState = false;
+				if(data[0] == '1') lobbyState = true;
+
+				// READ NUMBER OF PLAYERS
+				//int playerCount = atoi(data[1]);
+				int playerCount = (int)(data[1] - '0');
+				std::cout<<playerCount<<std::endl;
+
+				// READ NAME
+
+				// SET SERVER DATA
+				ServerData newServerData;
+				newServerData.ip = ip;
+				newServerData.lobbyState = lobbyState;
+				newServerData.playerCount = playerCount;
+
+				newServers.push_back(newServerData);
 				break;
 			}
 
-			default:{
-				break;
-			}
+			default:{ break; }
 		}
 	}
 
-	RegisterIp(ips);	// Registramos todas las IP
+	RegisterServers(newServers);
 }
 
 // Guardarlas en la lista, comprobar si existen e intentar mantener el mismo orden
-void NetSeeker::RegisterIp(std::vector<std::string> ips){
+void NetSeeker::RegisterServers(std::vector<ServerData> newServers){
 
-	// Eliminamos los que ya no existan
-	// Si no lo encontramos, no existe asi que lo eliminamos
-	for(int i = 0; i < lobbys.size(); i++){
-		int pos = Find(lobbys[i], ips);
-		if(pos == -1) lobbys.erase(lobbys.begin() + i);
+	// Actualizamos los viejos eliminando los que ya no existan
+	for(int i = 0; i < servers.size(); i++){
+		int pos = Find(servers[i], newServers);
+		if(pos == -1) servers.erase(servers.begin() + i);
+		else{
+			servers.at(i) = newServers.at(pos);
+			newServers.erase(newServers.begin() + pos);
+		}
 	}
 	
 	// Metemos los nuevos
-	// Si no lo encontramos, no existe asi que lo creamos
-	for(int i = 0; i < ips.size(); i++){
-		int pos = Find(ips[i], lobbys);
-		if(pos == -1) lobbys.push_back(ips[i]);
+	for(int i = 0; i < newServers.size(); i++){
+		int pos = Find(newServers[i], servers);
+		if(pos == -1) servers.push_back(newServers[i]);
 	}
 
 }
 
 // Buscamos los strings en un vector de string
-int NetSeeker::Find(std::string toFind, std::vector<std::string> where){
+int NetSeeker::Find(ServerData toFind, std::vector<ServerData> where){
 	int toRet = -1;
 	
 	for(int i = 0; i < where.size() && toRet == -1; i++){
-		int found = strcmp(toFind.c_str(), where.at(i).c_str());
+		int found = strcmp(toFind.ip.c_str(), where.at(i).ip.c_str());
 		if(found == 0) toRet = i;
 	}
 
@@ -93,6 +118,6 @@ std::string NetSeeker::TreatIp(std::string ip){
 	return ip;
 }
 
-std::vector<std::string> NetSeeker::GetList(){
-	return(lobbys);
+std::vector<ServerData> NetSeeker::GetList(){
+	return(servers);
 }

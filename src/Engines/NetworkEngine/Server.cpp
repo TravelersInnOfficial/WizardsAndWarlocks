@@ -151,6 +151,9 @@ std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 
 void Server::RecievePackages(bool isLobby){
 
+	// Set PONG data
+	SetServerData(isLobby);
+
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
 		switch (packet->data[0]) {
 
@@ -575,4 +578,25 @@ void Server::NotifyPotionInteracted(int potionPos, Player* p){
 
 bool Server::GetCreatedFromGame(){
 	return createdFromGame;
+}
+
+void Server::SetServerData(bool isLobby){
+	std::string name = "LobbyOne";
+	
+	std::string stringToSend = "";
+	stringToSend =  std::to_string(networkPlayers.size());
+	stringToSend += std::to_string(isLobby);
+	
+	int nameSize = stringToSend.length();
+	std::string nameSize_s = std::to_string(nameSize);
+	if(nameSize < 10) nameSize_s = "0" + nameSize_s;
+	stringToSend += nameSize_s;
+
+	stringToSend += name;
+	
+	char const* pchar = stringToSend.c_str();
+	int pcharSize = (int) strlen(pchar) + 1;
+	
+	peer->SetOfflinePingResponse(pchar, pcharSize);
+	std::cout << "Bits to write: " << pcharSize << std::endl;
 }

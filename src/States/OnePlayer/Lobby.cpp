@@ -83,19 +83,6 @@ void Lobby::CheckIfReady(){
 	playerOne->CheckIfReady();
 
 	// Si esta dentro de la zona, cargamos el siguiente nivel
-	if(playerOne->GetReadyStatus()) {
-
-		father->StartGame();
-
-		//LevelLoader::LoadLevel("../assets/json/Map1.json");
-
-		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
-		//objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
-
-		//playerManager->ManageMatchStatus(true);
-		//g_engine->ToggleMenu(false);
-		//MenuManager::GetInstance()->ClearMenu();
-	}
-
+	if(playerOne->GetReadyStatus()) father->StartGame();
 }
 

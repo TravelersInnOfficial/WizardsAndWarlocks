@@ -93,6 +93,7 @@ private:
 	RakNet::SocketDescriptor descriptor;				// Socket Descriptor
 
 	void CheckIfPlayerOneConnected(float deltaTime);
+	void SetServerData(bool isLobby);
 
 };
 

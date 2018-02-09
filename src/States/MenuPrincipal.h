@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <Menus.h>
+#include <NetworkStructs.h>
 
 #include "./../Managers/StateManager.h"
 #include "./State.h"
@@ -28,7 +29,7 @@ private:
 	MenuOption 		selectedOption;		// Opcion dada en el menu
 	
 	NetSeeker*		netSeeker;
-	std::vector<std::string> lobbyList;
+	std::vector<ServerData> serverList;
 	
 };
 

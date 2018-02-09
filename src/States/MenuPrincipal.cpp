@@ -3,7 +3,6 @@
 #include <SoundEngine/SoundSystem.h>
 #include <GraphicEngine/MenuManager.h>
 
-
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(true);
@@ -30,7 +29,7 @@ bool MenuPrincipal::Input(){
 void MenuPrincipal::Update(float deltaTime){
 	UpdateSeeker(deltaTime);
 	SoundSystem::getInstance()->Update();
-	
+
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra
@@ -60,20 +59,20 @@ void MenuPrincipal::Update(float deltaTime){
 
 void MenuPrincipal::UpdateSeeker(float deltaTime){
 	netSeeker->Update(deltaTime);
-	std::vector<std::string> newLobbyList = netSeeker->GetList();
-	if(lobbyList.size() != newLobbyList.size()){
+	std::vector<ServerData> newServerList = netSeeker->GetList();
+	if(serverList.size() != newServerList.size()){
 		std::cout<<"----------------------"<<std::endl;
-		std::cout<<"NEW LIST OF LOBBYS: "<<std::endl;
+		std::cout<<"NEW LIST OF SERVERS: "<<std::endl;
 		
-		if(newLobbyList.size() == 0) std::cout<<"Currently there's no Lobbys"<<std::endl;
+		if(newServerList.size() == 0) std::cout<<"Currently there's no servers"<<std::endl;
 		else{
-			for(int i = 0; i < newLobbyList.size(); i++){
-				std::cout<<"LOBBY Nº "<< i+1 <<" - IP: "<<newLobbyList.at(i)<<std::endl;
+			for(int i = 0; i < newServerList.size(); i++){
+				std::cout<<"LOBBY Nº "<< i+1 <<" - IP: "<<newServerList.at(i).ip<<std::endl;
 			}
 		}
 		
 		std::cout<<"----------------------"<<std::endl;
-		lobbyList = newLobbyList;
+		serverList = newServerList;
 	}
 }
 

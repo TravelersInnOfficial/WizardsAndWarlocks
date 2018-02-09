@@ -8,6 +8,7 @@
 #include <vector>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
+#include <stdlib.h>
 
 class NetSeeker{
 
@@ -16,10 +17,10 @@ public:
 	~NetSeeker();
 
 	void Update(float deltaTime = 0);
-	std::vector<std::string> GetList();
+	std::vector<ServerData> GetList();
 
 private:
-	std::vector<std::string> lobbys;
+	std::vector<ServerData> servers;
 
 	RakNet::RakPeerInterface *peer;
 	RakNet::Packet *packet;
@@ -30,9 +31,9 @@ private:
 
 	void Ask();
 	void Recieve();
-	void RegisterIp(std::vector<std::string> ips);
+	void RegisterServers(std::vector<ServerData> newServers);
 	std::string TreatIp(std::string ip);
-	int Find(std::string toFind, std::vector<std::string> where);
+	int Find(ServerData toFind, std::vector<ServerData> where);
 	void SendShutdown();
 
 };

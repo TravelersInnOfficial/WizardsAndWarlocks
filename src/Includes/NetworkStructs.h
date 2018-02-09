@@ -1,7 +1,15 @@
 #ifndef NETWORKSTRUCTS_H
 #define NETWORKSTRUCTS_H
 
+#include <iostream>
 #include <NetworkEngine/RakNetIncludes.h>
+
+struct ServerData{
+	int playerCount;
+	bool lobbyState;
+	std::string name;
+	std::string ip;
+};
 
 enum GameMessages{
 	ID_PLAYER_JOIN			= ID_USER_PACKET_ENUM +  1,
