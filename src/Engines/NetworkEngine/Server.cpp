@@ -30,6 +30,8 @@ Server::Server(int serverPort, int maxClients, bool createdFromGame){
 
 	maxTimeToConnectPlayerOne = 15;
 	playerOneID = RakNet::UNASSIGNED_RAKNET_GUID;
+
+	SetServerData(true);
 }
 
 Server::~Server(){
