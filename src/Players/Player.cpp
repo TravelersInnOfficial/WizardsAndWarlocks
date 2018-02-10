@@ -33,6 +33,7 @@ Player::Player(bool isPlayer1){
 
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
+	max_velocityY = 6.0f;
 
 	playerAlliance = NO_ALLIANCE;
 	isPlayerOne = isPlayer1;
@@ -335,7 +336,6 @@ void Player::Update(float deltaTime){
 
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
-		vector3df velocity = bt_body->GetLinearVelocity();
 		CheckIfCanJump(deltaTime);		// Comprobamos si podemos saltar
 		UpdateSP(deltaTime);			// Updateamos SP (sumamos o restamos segun isRunning)
 
@@ -348,6 +348,7 @@ void Player::Update(float deltaTime){
 		// Si no se estaba moviendo lo frenamos
 		else{
 			if(stepsStarted) stopFootsteps();
+			vector3df velocity = bt_body->GetLinearVelocity();
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
@@ -399,16 +400,27 @@ void Player::positionCamera(){
 void Player::checkMaxVelocity(){
 	if(hasCharacter){
 		vector3df velocity = bt_body->GetLinearVelocity();
-		vector3df auxVelocity(velocity.X,0,velocity.Z);
-		float speed = auxVelocity.length();
 		
-		float velY = velocity.Y;
-		if(speed > max_velocity) {
-			auxVelocity.X *= max_velocity/speed;
-			auxVelocity.Z *= max_velocity/speed;
-			auxVelocity.setY(velY);
-			bt_body->SetLinearVelocity(auxVelocity);
+		// Fix velocity HORIZONTAL
+		vector3df auxVelocityH(velocity.X,0,velocity.Z);
+		float speedH = auxVelocityH.length();
+		if(speedH > max_velocity) {
+			auxVelocityH.X *= max_velocity/speedH;
+			auxVelocityH.setY(velocity.Y);
+			auxVelocityH.Z *= max_velocity/speedH;
+			bt_body->SetLinearVelocity(auxVelocityH);
 		}
+
+		// Fix velocity VERTICAL
+		vector3df auxVelocityV(0, velocity.Y, 0);
+		float speedV = auxVelocityV.length();
+		if(speedV > max_velocityY) {
+			auxVelocityV.setX(auxVelocityH.X);
+			auxVelocityV.Y *= max_velocityY/speedV;
+			auxVelocityV.setZ(auxVelocityH.Z);
+			bt_body->SetLinearVelocity(auxVelocityV);
+		}
+
 	}
 }
 

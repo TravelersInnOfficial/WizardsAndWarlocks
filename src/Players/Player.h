@@ -150,6 +150,7 @@ class Player: public Entidad{
 
 		// Public variables
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
+		float 			max_velocityY;
 		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 		float 			m_Defense;			// Divisor del danyo recibido
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
