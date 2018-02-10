@@ -42,11 +42,9 @@ Player::Player(bool isPlayer1){
 	m_playerNode = NULL;
 	m_camera = NULL;
 	networkObject = NULL;
-
 	targetDeadCam = NULL;
 
-	canJump = true;
-	m_Able2Jump = true;
+	canJump = false;
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
@@ -54,6 +52,10 @@ Player::Player(bool isPlayer1){
 	stepsStarted = false;
 	pulseStarted = false;
 	isRunning = false;
+
+	currentJumpCheckTime = .05f;
+	maxJumpCheckTime = .05f;
+	CheckIfCanJump(0, true);
 
 	name = "";
 
@@ -84,8 +86,8 @@ void Player::PlayerInit(){
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
 	m_visible = true;
-	m_Able2Jump = true;
 	m_dead = false;
+	canJump = false;
 
 	if(overlayManager != NULL){
 		overlayManager->SetTime(BLOOD, 0);
@@ -334,35 +336,29 @@ void Player::Update(float deltaTime){
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
 		vector3df velocity = bt_body->GetLinearVelocity();
-		if(!canJump){
-			float verticalSpeed = velocity.Y;
-			float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
-			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1 && m_Able2Jump) canJump = true;
-			lastVerticalSpeed = verticalSpeed;
-		}
+		CheckIfCanJump(deltaTime);		// Comprobamos si podemos saltar
+		UpdateSP(deltaTime);			// Updateamos SP (sumamos o restamos segun isRunning)
 
-		UpdateSP(deltaTime);	// Updateamos SP (sumamos o restamos segun isRunning)
-
-		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
-		// que si no se estaba moviendo lo frenamos
+		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable
 		if(moving){
 			if(!stepsStarted && canJump) playFootsteps();
 			moving = false;
 		}
+
+		// Si no se estaba moviendo lo frenamos
 		else{
 			if(stepsStarted) stopFootsteps();
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
-		// Comprobamos los Input del personaje
-		CheckInput();
+		CheckInput(); // Comprobamos los Input del personaje
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
-		if(isPlayerOne && m_camera !=NULL){
+		if(isPlayerOne && m_camera != NULL){
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
@@ -449,7 +445,9 @@ void Player::Jump(){
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
+		
 		canJump = false;
+		currentJumpCheckTime = maxJumpCheckTime;
 	}
 }
 
@@ -735,7 +733,7 @@ void Player::UpdatePosShape(){
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::HitMade(Player* player){
-	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.25f);
+	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.205);
 }
 
 void Player::ApplyFuzyEffect(){
@@ -797,7 +795,6 @@ void Player::stopPulse() {
 //Update the event positions for continuous events or usable while moving events (like spells)
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
-		//Update footsteps
 		if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setPosition(GetHeadPos());
 	}
 }
@@ -805,6 +802,7 @@ void Player::UpdateSoundsPosition(){
 void Player::changeSurface(float n) {
 	if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setParamValue("Surface", n);
 }
+
 /********************************************************************************************************
  ********************************************** GETERS **************************************************
  ********************************************************************************************************/
@@ -1056,4 +1054,28 @@ void Player::DrawInventory(){
 
 void Player::DrawTraps(){
 	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->DrawHUD(this);
+}
+
+bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
+	if(!forceSkip) currentJumpCheckTime -= deltaTime;
+	
+	if(forceSkip || currentJumpCheckTime <= 0){
+		canJump = JumpRaycast();
+		currentJumpCheckTime = maxJumpCheckTime;
+	}
+
+	return canJump;
+}
+
+bool Player::JumpRaycast(){
+	bool auxCanJump = false;
+
+	vector3df start = GetHeadPos();
+	float bodyLength = 1.5f;
+	vector3df End(start.X, start.Y - bodyLength, start.Z);
+
+	void* Object = BulletEngine::GetInstance()->Raycast(start, End);
+	if(Object != NULL) auxCanJump = true;
+
+	return auxCanJump;
 }

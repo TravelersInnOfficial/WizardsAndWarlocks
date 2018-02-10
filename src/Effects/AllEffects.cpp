@@ -49,13 +49,11 @@ void Frozen::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
 }
 
 void Frozen::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
-	p->m_Able2Jump = true;
 }
 
 void Frozen::createSoundEvent() {
@@ -121,7 +119,6 @@ void Paralyzed::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
 }
 
 void Paralyzed::UpdateEffect(Player* p) {
@@ -130,8 +127,7 @@ void Paralyzed::UpdateEffect(Player* p) {
 
 void Paralyzed::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
-	p->canJump = true;
-	p->m_Able2Jump = true;	
+	p->canJump = true;	
 }
 
 void Paralyzed::createSoundEvent() {
@@ -215,13 +211,11 @@ void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
 }
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
-	p->m_Able2Jump = true;
 }
 
 void DeathSnare::createSoundEvent() {

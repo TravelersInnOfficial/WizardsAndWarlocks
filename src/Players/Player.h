@@ -155,7 +155,6 @@ class Player: public Entidad{
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
 		bool 			m_visible;			// Is player visible?
 		bool 			canJump;			// Puede saltar?
-		bool			m_Able2Jump;		// Is able to recover jump?
 
 	protected:
 
@@ -164,6 +163,12 @@ class Player: public Entidad{
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
 		void createSoundEvents();			//Create the sound events needed for the player
 		void SetBillboard();				// Ponemos el billboard en el player
+		
+		// We check if the player can jump
+		float currentJumpCheckTime;
+		float maxJumpCheckTime;
+		bool CheckIfCanJump(float deltaTime = 0, bool forceSkip = false);
+		bool JumpRaycast();
 
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
@@ -202,7 +207,6 @@ class Player: public Entidad{
 		bool			stepsStarted;		// Han empezado a sonar los steps?
 		bool 			pulseStarted;		// Pulse sound event started?
 		bool 			moving;				// Se esta moviendo?
-		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
 		Player* 		targetDeadCam;
 
