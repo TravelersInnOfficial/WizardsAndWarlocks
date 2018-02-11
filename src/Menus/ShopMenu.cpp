@@ -1,6 +1,7 @@
 #include "ShopMenu.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/ObjectManager.h"
+#include "./../Npcs/NpcSeller.h"
 
 ShopMenu::ShopMenu(){
     m_id = "ShopMenu";
@@ -13,10 +14,10 @@ ShopMenu::ShopMenu(){
     //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 
-    load_imagesid(N_OSPELLS, o_spellLayouts, o_spelltexture, o_spellimageid);
-    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spellimageid);
-    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spellimageid);
-    load_imagesid(N_TRAPS, trapLayouts, trap_texture, trap_imageid);
+    load_imagesid(N_OSPELLS, o_spellLayouts, o_spelltexture, o_spellimageid, o_spells_codes, o_spells_map);
+    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spellimageid, t_spells_codes, d_spells_map);
+    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spellimageid, d_spells_codes, t_spells_map);
+    load_imagesid(N_TRAPS, trapLayouts, trap_texture, trap_imageid, traps_codes, traps_map);
 
     empty_texture = pDevice->getVideoDriver()->getTexture(emptyLayout);
     for(int i = 0; i<N_SOCKETS; i++){
@@ -40,7 +41,14 @@ ShopMenu::ShopMenu(){
 
 ShopMenu::~ShopMenu(){}
 
-void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[]){
+void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE> codes, std::map<IrrIMGUI::IGUITexture*,SPELLCODE> map){
+    for(int i = 0; i<total;i++){
+        texture[i] = pDevice->getVideoDriver()->getTexture(layouts[i]);
+        imageid[i] = GUI->createTexture(texture[i]);
+    }
+}
+
+void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum> codes, std::map<IrrIMGUI::IGUITexture*,TrapEnum> map){
     for(int i = 0; i<total;i++){
         texture[i] = pDevice->getVideoDriver()->getTexture(layouts[i]);
         imageid[i] = GUI->createTexture(texture[i]);

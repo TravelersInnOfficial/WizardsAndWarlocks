@@ -16,6 +16,8 @@
 #include <GraphicEngine/MenuManager.h>
 
 class NpcSeller: public Npc{
+	friend class ShopMenu;
+	
 	public:
 		NpcSeller(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		~NpcSeller();

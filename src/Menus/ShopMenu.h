@@ -4,6 +4,10 @@
 #include <GUIEngine/Menu.h>
 #include <ItemsData.h>
 #include <Assets.h>
+#include <map>
+#include "TrapCodes.h"
+#include "SpellCodes.h"
+
 struct DDFlags{
     bool parentNullID = true;
 
@@ -16,7 +20,8 @@ public:
     void Update(bool* open);
 
 private:
-    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[]);
+    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>);
+    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum>, std::map<IrrIMGUI::IGUITexture*,TrapEnum>);
     void load_sockets(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],std::vector<IrrIMGUI::IGUITexture*> &items_selected);
     void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
    
@@ -49,9 +54,17 @@ private:
 
     IrrIMGUI::IGUITexture * selected;
 
-    bool item_landed;
-
     const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
+
+    std::vector<SPELLCODE> o_spells_codes = {SPELL_BLIZZARD, SPELL_FIRE, SPELL_POISON, SPELL_THUNDER};
+    std::vector<SPELLCODE> d_spells_codes = {SPELL_DEFENSE, SPELL_UNTARGET};
+    std::vector<SPELLCODE> t_spells_codes = {SPELL_CLEANSE, SPELL_DUMMY, SPELL_INVISIBILITY, SPELL_SPEED,SPELL_TELEPORT, SPELL_TELEPORTBASE, SPELL_WALL};
+    std::vector<TrapEnum> traps_codes = {TENUM_DEATH_CLAWS, TENUM_DISTURBANCE, TENUM_EXPLOSIVE, TENUM_SILENCE, TENUM_SPIRITS, TENUM_TAXES};
+
+    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> o_spells_map;
+    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> d_spells_map;
+    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> t_spells_map;
+    std::map<IrrIMGUI::IGUITexture*,TrapEnum> traps_map;
 
 //TEXTURES
     const char * o_spellLayouts[N_OSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_BLIZZARD_HUD].c_str(),

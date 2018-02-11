@@ -13,6 +13,9 @@ private:
     static const int N_BUTTONS = 4;
 
     ImVec2 buttonSize;
+
+    static bool m_options;
+    static bool m_exit;
     
     const char * buttonLayouts[N_BUTTONS]   = { "./../assets/textures/GUI/Menus/MainMenu/single_player_button.png",
                                                 "./../assets/textures/GUI/Menus/MainMenu/multiplayer_button.png",

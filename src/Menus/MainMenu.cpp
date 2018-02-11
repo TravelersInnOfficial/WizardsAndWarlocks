@@ -1,8 +1,11 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
+#include <vector2d.h>
 
-bool m_options = false;
-bool m_exit = false;
+bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true;
+
+bool MainMenu::m_options = false;
+bool MainMenu::m_exit = false;
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
@@ -22,7 +25,6 @@ MainMenu::MainMenu(){
     //WIDGET SIZE
     m_width = texture[0]->getSize().Width + 30;
     m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
-
 }
 MainMenu::~MainMenu(){
     
@@ -110,6 +112,11 @@ void MainMenu::Update(bool* open){
     //ImGui::PopStyleVar();
     ImGui::End();
     //ImGui::EndFrame();
+    if(ImGui::GetTime() > 5 && f1){ gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
+    if(ImGui::GetTime() > 7 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
+    if(ImGui::GetTime() > 10 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
+    if(ImGui::GetTime() > 15 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
+    if(ImGui::GetTime() > 18 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}
 }
 
 

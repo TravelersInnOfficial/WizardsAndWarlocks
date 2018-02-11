@@ -5,8 +5,10 @@
 #include <IMGUI/imgui.h>
 #include <irrlicht/irrlicht.h>
 #include <vector3d.h>
+#include <vector2d.h>
 #include <iostream>
 #include <GraphicEngine/GraphicEngine.h>
+#include <map>
 
 class GUIEngine{
     friend class Menu;
@@ -16,6 +18,7 @@ public:
     ~GUIEngine();
     void Update();
     void Draw();
+    void MakeTemporalNotification(std::string);
 
 private:
     static GUIEngine* instance; 
@@ -31,5 +34,14 @@ private:
 
     IrrIMGUI::IIMGUIHandle * GetGuiHandler();
     irr::IrrlichtDevice* GetPDevice();
+    void printNotifications();
+
+    //notifications data
+    float m_notifications_Ypos;
+    float m_notifications_distance;
+    float m_notifications_time;
+    float m_deltaTime;
+    std::map<std::string,float> m_notifications_data;
+
 };
 #endif
