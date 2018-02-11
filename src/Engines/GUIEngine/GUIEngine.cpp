@@ -40,7 +40,6 @@ void GUIEngine::printNotifications(){
     ImVec2 window_size;
     ImVec2 window_pos_pivot = ImVec2(1.0f, 0.0f);
     std::map<std::string,float>::reverse_iterator it = m_notifications_data.rbegin();
-    std::cout<<m_deltaTime<<std::endl;
     int i = 0;
     for(; it != m_notifications_data.rend(); ++it){
         ImGui::PushID(i);

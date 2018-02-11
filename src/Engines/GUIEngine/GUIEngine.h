@@ -40,7 +40,6 @@ private:
     float m_notifications_Ypos;
     float m_notifications_distance;
     float m_notifications_time;
-    float m_deltaTime;
     std::map<std::string,float> m_notifications_data;
 
 };

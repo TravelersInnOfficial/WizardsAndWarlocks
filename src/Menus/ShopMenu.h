@@ -20,8 +20,8 @@ public:
     void Update(bool* open);
 
 private:
-    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>);
-    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum>, std::map<IrrIMGUI::IGUITexture*,TrapEnum>);
+    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>*);
+    void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum>, std::map<IrrIMGUI::IGUITexture*,TrapEnum>*);
     void load_sockets(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],std::vector<IrrIMGUI::IGUITexture*> &items_selected);
     void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
    
@@ -52,7 +52,7 @@ private:
     std::vector<IrrIMGUI::IGUITexture*> selected_spells;
     std::vector<IrrIMGUI::IGUITexture*> selected_trap;
 
-    IrrIMGUI::IGUITexture * selected;
+    IrrIMGUI::IGUITexture* selected;
 
     const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
 
@@ -61,9 +61,7 @@ private:
     std::vector<SPELLCODE> t_spells_codes = {SPELL_CLEANSE, SPELL_DUMMY, SPELL_INVISIBILITY, SPELL_SPEED,SPELL_TELEPORT, SPELL_TELEPORTBASE, SPELL_WALL};
     std::vector<TrapEnum> traps_codes = {TENUM_DEATH_CLAWS, TENUM_DISTURBANCE, TENUM_EXPLOSIVE, TENUM_SILENCE, TENUM_SPIRITS, TENUM_TAXES};
 
-    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> o_spells_map;
-    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> d_spells_map;
-    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> t_spells_map;
+    std::map<IrrIMGUI::IGUITexture*,SPELLCODE> spells_map;
     std::map<IrrIMGUI::IGUITexture*,TrapEnum> traps_map;
 
 //TEXTURES
