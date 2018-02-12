@@ -113,63 +113,76 @@ bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){
 Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
 	switch(EFFECT){
-		case WEAK_BASIC:
-			e = new Effect(5.0f, WEAK_BASIC);
-			break;
 		case WEAK_BURNED:
-			e = new Burned(6.0f, 3);
+			e = new Burned(6.0f, 3.0f);
 			break;
+
 		case WEAK_SOFTBURNED:
-			e = new Burned(3.0f, 3);
+			e = new Burned(3.0f, 3.0f);
 			break;
+
 		case WEAK_FROZEN:
-			e = new Frozen(6.0f, 0.0f);
+			e = new Frozen(3.0f, 0.0f);
 			break;
+
 		case WEAK_PARALYZED:
-			e = new Paralyzed(2.0f);
+			e = new Paralyzed(3.0f);
 			break;
+
 		case WEAK_SLOWEDDOWN:
 			e = new SlowedDown(4.0f, 10.0f);
 			break;
+
 		case WEAK_POISONED:
-			e = new Poisoned(5.0f, 3);
+			e = new Poisoned(6.0f, 3.0f);
 			break;
+
 		case WEAK_SOFTPOISONED:
-			e = new Poisoned(3.0f, 3);
+			e = new Poisoned(3.0f, 3.0f);
 			break;
+
 		case WEAK_SILENCED:
-			e = new Silenced(5.0f);
+			e = new Silenced(4.0f);
 			break;
+
 		case WEAK_MADNESS:
 			e = new Madness(4.0f);
 			break;
+
 		case WEAK_DEATHSNARE:
-			e = new DeathSnare(3.0f, 1);
+			e = new DeathSnare(2.0f, 4);
 			break;
 
 		case POWERUP_DAMAGE:
 			e = new DamageUp(7.0f);
 			break;
+
 		case POWERUP_DEFENSE:
 			e = new DefenseUp(7.0f);
 			break;
+
 		/*
 		case POWERUP_ELEMDEFENSE:
 			e = new ElementUp(7.0f);
 			break;
+
 		*/
 		case POWERUP_SPEED:
 			e = new SpeedUp(4.0f);
 			break;
+
 		case POWERUP_UNTARGET:
 			e = new Untargetable(4.0f);
 			break;
+
 		case POWERUP_FIRE:
 			e = new FireShots(7.0f);
 			break;
+
 		case POWERUP_POISON:
 			e = new PoisonShots(7.0f);
 			break;
+
 		case POWERUP_INVISIBLE:
 			e = new Invisible(5.0f);
 			break;

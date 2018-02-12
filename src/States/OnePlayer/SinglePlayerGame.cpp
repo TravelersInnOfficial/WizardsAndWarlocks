@@ -99,7 +99,7 @@ bool SinglePlayerGame::Input(){
 	}
 
 	// DEBUG
-	if(g_engine->IsKeyPressed(KEY_F1)) StateManager::GetInstance()->CloseGame();
+	if(g_engine->IsKeyPressed(KEY_F1)) debug =! debug;
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
 		float vol = 1;

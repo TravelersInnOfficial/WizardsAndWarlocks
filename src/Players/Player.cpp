@@ -937,6 +937,9 @@ void Player::SetAlliance(Alliance newAlliance){
 		}
 	}
 
+	m_HP = 100;
+	m_MP = 100;
+	m_SP = 100;
 	SetBillboard();
 }
 

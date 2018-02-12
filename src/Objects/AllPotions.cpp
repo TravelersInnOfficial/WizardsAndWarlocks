@@ -4,12 +4,12 @@
 // ===============================================================================================//
 //
 //	LIFE POTION
-//	Recovers 20 hp
+//	Recovers 50 hp
 //
 // ===============================================================================================//
 
 LifePotion::LifePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "./../assets/textures/potions/POT_HP.png"){
+:Potion(TScale, 50, "./../assets/textures/potions/POT_HP.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_HP.png";
 	CreatePotion(TPosition, TRotation);
 }
@@ -25,12 +25,12 @@ bool LifePotion::CheckUse(Player* p){
 // ===============================================================================================//
 //
 //	MANA POTION
-//	Recovers 20 MP
+//	Recovers 50 MP
 //
 // ===============================================================================================//
 
 ManaPotion::ManaPotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
-:Potion(TScale, 20, "./../assets/textures/potions/POT_MP.png"){
+:Potion(TScale, 50, "./../assets/textures/potions/POT_MP.png"){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_MP.png";
 	CreatePotion(TPosition, TRotation);
 }
@@ -46,7 +46,7 @@ bool ManaPotion::CheckUse(Player* p){
 // ===============================================================================================//
 //
 //	ICE POTION
-//	Recovers 60 hp and freeze player
+//	Recovers 60 hp, 60/2 mp and freezes player
 //
 // ===============================================================================================//
 
@@ -58,6 +58,7 @@ IcePotion::IcePotion(vector3df TPosition, vector3df TScale, vector3df TRotation)
 
 void IcePotion::Use(Player* p){
 	p->ChangeHP(value);
+	p->ChangeMP(value/2.0f);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_FROZEN);
 }
 
@@ -68,7 +69,7 @@ bool IcePotion::CheckUse(Player* p){
 // ===============================================================================================//
 //
 //	ELECTRIC POTION
-//	Recovers 60 hp and paralyze player
+//	Recovers 60 hp, 60/2 mp and paralyzes player
 //
 // ===============================================================================================//
 
@@ -79,7 +80,8 @@ ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df 
 }
 
 void ElectricPotion::Use(Player* p){
-	p->ChangeHP(value);
+	p->ChangeHP(value/2.0f);
+	p->ChangeMP(value);
 	EffectManager::GetInstance()->AddEffect(p, WEAK_PARALYZED);
 }
 
@@ -112,7 +114,7 @@ bool FirePotion::CheckUse(Player* p){
 // ===============================================================================================//
 //
 //  POISON POTION
-//	Recovers 20 HP and applies poison hits
+//	Recovers 20 MP and applies poison hits
 //
 // ===============================================================================================//
 
@@ -123,7 +125,7 @@ PoisonPotion::PoisonPotion(vector3df TPosition, vector3df TScale, vector3df TRot
 }
 
 void PoisonPotion::Use(Player* p){
-	p->ChangeHP(value);
+	p->ChangeMP(value);
 	EffectManager::GetInstance()->AddEffect(p, POWERUP_POISON);
 }
 

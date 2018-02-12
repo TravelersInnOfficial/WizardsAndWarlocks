@@ -209,21 +209,20 @@ float SpellManager::GetUtility(int num, Player* p){
 }
 
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
-	// COSTMP TIMECAST TIMECOOLDOWN OPTHP OPTMP
 	Hechizo* h;
 	
 	switch(type){
-		default:				// Para los que aun no existan
+		default:				// Para los que no existan
 		case SPELL_PROJECTILE:	// Hechizo de ataque basico
 			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
 		break;
 		
 		case SPELL_FIRE:		// Hechizo bola fuego
-			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
+			h = new DragonBreath(-20, 1.0f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_THUNDER:		// Hechizo paralizador
-			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
+			h = new OdinFury(-20, 1.0f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_POISON:		// Bomba de veneno
