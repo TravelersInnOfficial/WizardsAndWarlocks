@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "./Player.h"
 #include <PhysicsEngine/BulletEngine.h>
 #include "./../Managers/ObjectManager.h"
@@ -9,6 +11,7 @@
 
 #include <SpellCodes.h>
 #include <TrapCodes.h>
+#include <Constants.h>
 #include "./../Objects/Potion.h"
 
 #include "./../Cameras/WatcherCamera.h"
@@ -1084,13 +1087,39 @@ bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
 
 bool Player::JumpRaycast(){
 	bool auxCanJump = false;
-
-	vector3df start = GetHeadPos();
 	float bodyLength = 1.5f;
-	vector3df End(start.X, start.Y - bodyLength, start.Z);
+	float halfSize = 1.8f * 0.15f;
+	float hipotenuse = sqrtf(powf(halfSize, 2) + powf(halfSize, 2));
 
-	void* Object = BulletEngine::GetInstance()->Raycast(start, End);
+	// Centro
+	vector3df startCenter = GetHeadPos();
+	vector3df endCenter(startCenter.X, startCenter.Y - bodyLength, startCenter.Z);
+	void* Object = BulletEngine::GetInstance()->Raycast(startCenter, endCenter);
 	if(Object != NULL) auxCanJump = true;
+	
+	// Esquinas
+	float headRotation = GetRotY();
+	for(int i = 0; i < 8 && !auxCanJump; i++){
+		float offsetX = 0;
+		float offsetZ = 0;
+
+		if(i % 2 == 0){
+			offsetX = startCenter.X + sin(headRotation) * halfSize;
+			offsetZ = startCenter.Z + cos(headRotation) * halfSize;
+		}
+
+		else{
+			offsetX = startCenter.X + sin(headRotation) * hipotenuse;
+			offsetZ = startCenter.Z + cos(headRotation) * hipotenuse;
+		}
+
+		vector3df cornerStart = vector3df(offsetX, startCenter.Y, offsetZ);
+		vector3df cornerEnd = vector3df(offsetX, startCenter.Y - bodyLength, offsetZ);
+
+		void* Object = BulletEngine::GetInstance()->Raycast(cornerStart, cornerEnd);
+		if(Object != NULL) auxCanJump = true;
+		headRotation += M_PI/4.0f;
+	}
 
 	return auxCanJump;
 }
