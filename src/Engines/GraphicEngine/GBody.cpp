@@ -26,6 +26,7 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 }
 
 void GBody::setTriangleSelector(){
+	// POSIBLE LEAK
     privateNode->setTriangleSelector(GraphicEngine::getInstance()->AddTriangleSelector(privateNode));
 }
 

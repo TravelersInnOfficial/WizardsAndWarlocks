@@ -18,10 +18,21 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 	type = code;
 	HUDTexturePath = HUDMiniature;
 	shotEvent = NULL;
+	voiceEvent = NULL;
 }
 
 Hechizo::~Hechizo(){
-	if(shotEvent!=NULL)shotEvent->release();
+	if (voiceEvent != NULL) {
+		if (voiceEvent->isPlaying()) voiceEvent->stop();	//Stop the sound if its playing
+		voiceEvent->release();		//Release the sound
+		delete voiceEvent;
+	}
+
+	if(shotEvent!=NULL) {
+		if (shotEvent->isPlaying()) shotEvent->stop();		//Stop the sound if its playing
+		shotEvent->release();			//Release the sound
+		delete shotEvent;
+	}
 }
 
 void Hechizo::DieReset(){
@@ -40,7 +51,7 @@ void Hechizo::ResetCooldown(){
 	ResetSpell();
 }
 
-void Hechizo::WasteMana(Player* p){
+void Hechizo::WasteMana(Player* p, float deltaTime){
 	p->ChangeMP(costePM);
 }
 
@@ -158,6 +169,10 @@ void Hechizo::playSoundEvent(SoundEvent* event, vector3df pos) {
 
 SoundEvent* Hechizo::getShotEvent() {
 	return shotEvent;
+}
+
+SoundEvent* Hechizo::getVoiceEvent() {
+	return voiceEvent;
 }
 
 std::string Hechizo::GetHUDTexturePath(){

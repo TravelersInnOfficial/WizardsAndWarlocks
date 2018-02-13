@@ -18,13 +18,14 @@
 
 class StateManager{
 public:
-	static StateManager* GetInstance();
+	static StateManager* GetInstance(bool isServer = false, bool ingameServer = false);
 
 	~StateManager();
 
 	void PrepareStatus(State_Code status);
 	bool Update();
-	void LoadState(State_Code code);
+	void LoadState(State_Code code, bool* end = NULL);
+	void CloseGame();
 private:
 	void UpdateDelta();
 
@@ -38,9 +39,11 @@ private:
 
 	float deltaTime;
 	float timeStart;
+	float minFrameTime;
+
 	bool resourcesLoaded;
 
-	StateManager();
+	StateManager(bool isServer = false, bool ingameServer = false);
 	static StateManager* instance;
 };
 

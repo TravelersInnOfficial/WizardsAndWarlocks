@@ -13,21 +13,22 @@ class NetworkEngine{
 public:
 
 	// Returns Instance of the engine. If it not created, this method initializes it.
-	static NetworkEngine* GetInstance();
+	static NetworkEngine* GetInstance(bool serverCreatedFromGame = false);
 
 	~NetworkEngine();
+	
 	// Start a Server, must declare port before
 	// Or
 	// Start a Client, must declare IP && port before
-	void StartServer();
-	void StartClient();
+	void StartServer(bool serverCreatedFromGame = false);
+	void StartClient(bool proprietary = false);
 
 	// We retrieve our SERVER or the CLIENT to operate
 	Server* GetServer();
 	Client* GetClient();
 
 	// We recieve the packages of our peer
-	void Update();
+	void Update(float deltaTime = 0, bool isLobby = false);
 
 	// Manage the IP we're going to send the packages to
 	// "127.0.0.1" format
@@ -57,7 +58,7 @@ private:
 	Server* server;						// Server variable (uninitialized)
 	Client* client;						// Client variable (uninitialized)
 
-	NetworkEngine();
+	NetworkEngine(bool serverCreatedFromGame = false);
 
 };
 

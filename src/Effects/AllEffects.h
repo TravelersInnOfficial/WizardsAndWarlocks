@@ -16,33 +16,33 @@
 // WEAK_BURNED
 class Burned: public Effect{
 public:
-	Burned(float time, int dmg);
+	Burned(float time, float dmg);
 	void UpdateEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // WEAK_FROZEN
 class Frozen: public Effect{
 public:
-	Frozen(float time, int dmg);
+	Frozen(float time, float dmg);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // WEAK_POISONED
 class Poisoned: public Effect{
 public:
-	Poisoned(float time, int dmg);
+	Poisoned(float time, float dmg);
 	void UpdateEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // ===============================================================================================//
@@ -56,6 +56,7 @@ class SlowedDown: public Effect{
 public:
 	SlowedDown(float time, float value);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -67,6 +68,7 @@ class Paralyzed: public Effect{
 public:
 	Paralyzed(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -77,6 +79,7 @@ class Silenced: public Effect{
 public:
 	Silenced(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -87,6 +90,7 @@ class GhostDistorsion: public Effect{
 public:
 	GhostDistorsion(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -114,13 +118,13 @@ private:
 // WEAK_DEATHSNARE
 class DeathSnare: public Effect{
 public:
-	DeathSnare(float time, int d);
+	DeathSnare(float time, float d);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 ////////////////////////////////////////////
@@ -132,6 +136,7 @@ class DamageUp: public Effect{
 public:
 	DamageUp(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -142,6 +147,7 @@ class DefenseUp: public Effect{
 public:
 	DefenseUp(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -162,6 +168,7 @@ class SpeedUp: public Effect{
 public:
 	SpeedUp(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -172,6 +179,7 @@ class Untargetable: public Effect{
 public:
 	Untargetable(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -182,6 +190,7 @@ class FireShots: public Effect{
 public:
 	FireShots(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -192,6 +201,7 @@ class PoisonShots: public Effect{
 public:
 	PoisonShots(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
@@ -202,6 +212,7 @@ class Invisible: public Effect{
 public:
 	Invisible(float time);
 	void ApplyEffect(Player* p);
+	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();

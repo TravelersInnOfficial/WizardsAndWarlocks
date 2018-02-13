@@ -1,53 +1,62 @@
 #include "RoomInfo.h"
+#include <Constants.h>
+#include <limits>
 
-RoomInfo::RoomInfo(int id, vector3df pos){
+RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondSide){
 	m_id = id;
 	m_position = pos;
+	m_firstSide = firstSide;
+	m_secondSide = secondSide;
 	m_securityLevel = 0;
-
-	for(int i=0; i<DIR_SIZE; i++){
-		m_explored[i] = false;
-	}
 }
 
 RoomInfo::~RoomInfo(){}
 
-float RoomInfo::WhereExplore(){
-	float output = 0;
-	float pi_4 = 2*M_PI/8;
+void RoomInfo::AddPositionExplore(vector3df position){
+	m_explored.push_back(position);
+	m_statusExplored.push_back(false);
+}
 
-	float firstValue;
-	for(int i=0; i<DIR_SIZE; i++){
-		firstValue = pi_4 * i;
-		if(!m_explored[i]){
-			output = firstValue;
-			break;
+vector3df RoomInfo::WhereExplore(vector3df pos){
+	vector3df output;
+
+	int value = -1;
+	float distance = std::numeric_limits<float>::max();
+
+	int size = m_explored.size();
+	for(int i=0; i<size; i++){
+		bool explored = m_statusExplored[i];
+		if(!explored){
+			float currentDistance = (pos - m_explored[i]).length();
+			if(currentDistance<distance){
+				distance = currentDistance;
+				value = i;
+			}
 		}
 	}
+
+	if(value!=-1){
+		output = m_explored[value];
+	}
+
 	return output;
 }
 
-void RoomInfo::UpdateExplore(float rotY){
-	float pi_4 = 2*M_PI/8;
-	float pi_8 = 2*M_PI/16;
-
-	rotY += pi_8;	// Movemos la rotacion Y para que se ha más facil hacer las comprobaciones
-
-	if(rotY >= 2*M_PI) rotY -= 2*M_PI;	// Haceos que el valor este entre [0, 2PI] para las comprobaciones
-	else if(rotY<0) rotY += 2*M_PI;
-
-	// Rotacion Y del personaje en Radianes
-	float firstValue, secondValue;
-	for(int i=0; i<DIR_SIZE; i++){		// El primer valor que se comprueba es el UP_LEFT
-		firstValue = pi_4*i;
-		secondValue = firstValue + pi_4;
-		if(rotY > firstValue && rotY < secondValue){	// Si el vlor se encuentra entre los rangos poner el valor a true
-			m_explored[i] = true;	// Lado explorado
-			break;
+void RoomInfo::UpdateExplore(vector3df pos){
+	int size = m_explored.size();
+	for(int i=0; i<size; i++){
+		bool explored = m_statusExplored[i];
+		if(!explored){
+			vector3df comparePos = m_explored[i];
+			pos.Y = comparePos.Y;
+			float distance = (comparePos-pos).length();
+			if(distance<1){
+				m_statusExplored[i] = true;
+			}
 		}
 	}
-
 }
+
 
 bool RoomInfo::AddNextRoom(RoomInfo* next){
 	int size = 0;
@@ -71,10 +80,17 @@ std::vector<int> RoomInfo::GetConnections(){
 	return output;
 }
 
+
+std::vector<vector3df> RoomInfo::GetExplorePoints(){
+	return m_explored;
+}
+
 bool RoomInfo::GetExplored(){
 	bool output = true;
-	for(int i=0; i<DIR_SIZE; i++){
-		if(!m_explored[i]){
+	int size = m_explored.size();
+	for(int i=0; i<size; i++){
+		bool explored = m_statusExplored[i];
+		if(!explored){
 			output = false;
 			break;
 		}
@@ -82,10 +98,44 @@ bool RoomInfo::GetExplored(){
 	return output;
 }
 
+
 int RoomInfo::GetId(){
 	return m_id;
 }
 
 vector3df RoomInfo::GetPosition(){
 	return m_position;
+}
+
+
+vector3df RoomInfo::GetFirstSide(){
+	return m_firstSide;
+}
+
+vector3df RoomInfo::GetSecondSide(){
+	return m_secondSide;
+}
+
+
+RoomInfo* RoomInfo::GetNextRoom(){
+	ShuffleVector();
+	int size = m_nextRooms.size();
+	for(int i=0; i<size; i++){
+		bool explored = m_nextRooms[i]->GetExplored();
+		if(!explored){
+			return m_nextRooms[i];
+		}
+	}
+	return NULL;
+}
+
+void RoomInfo::ShuffleVector(){
+	int n = m_nextRooms.size();
+	while(n>1){
+		int k = rand() % n;
+		n--;
+		RoomInfo* temp = m_nextRooms[k];
+		m_nextRooms[k] = m_nextRooms[n];
+		m_nextRooms[n] = temp;
+	}
 }

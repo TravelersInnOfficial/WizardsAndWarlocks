@@ -30,6 +30,7 @@ Pathfinding::~Pathfinding(){
  }
 
 int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
+    //std::cout<<"Start: "<<start<<std::endl;
     int output = 0;
     if(start < m_path.size()){  
         vector3df nodePos = m_path[start]->getPosition();
@@ -48,6 +49,7 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
             }
         }
     }
+   // std::cout<<"Salida: "<<output<<std::endl;
     return output;
 }
 
@@ -62,8 +64,15 @@ void Pathfinding::ResetValues(){
     m_connections.clear();              // Limpiamos las conexiones, puesto que han sido eliminadas
 }
 
-void Pathfinding::AStar( vector3df from,vector3df to){
-    m_path.clear();                     // Limpiamos el vector de nodos, no se han creado variables en este vector
+bool Pathfinding::AStar( vector3df from,vector3df to){
+    if(m_path.size()>0){ 
+        float dirFinal = (to - m_path[m_path.size() - 1]->getPosition()).length();
+        if(dirFinal > 1){
+            m_path.clear();         // Limpiamos el vector de nodos, no se han creado variables en este vector
+        }else{
+            return false;
+        }
+    }
 
     // Put values
     StartNode->setData(-1,from);
@@ -99,7 +108,7 @@ void Pathfinding::AStar( vector3df from,vector3df to){
             }
         }
         if(finals.size() == 0){
-            return;
+            return false;
         }
 
         //TODO::check if the current node is inside the end triangle
@@ -234,6 +243,7 @@ void Pathfinding::AStar( vector3df from,vector3df to){
     }
 
     ResetValues();  // Una vez ya se ha creado el camino ya podemos limpiar los datos extras que se han creado
+    return true;
 }
 
 

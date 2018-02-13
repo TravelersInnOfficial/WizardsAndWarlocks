@@ -22,7 +22,7 @@ public:
 private:
 	Effect* CreateEffect(EFFECTCODE e);
 
-	std::map<Player*, vector<Effect*>* > effects;
+	std::map<Player*, std::vector<Effect*>* > effects;
 
 	float currentTime;
 	float maxTime;

@@ -47,9 +47,11 @@ public:
 
     //Sound Functions
     void playPlaceEvent(vector3df pos);
+    void playExplodeEvent(vector3df pos);
 
 protected:
     SoundEvent* placeEvent;
+    SoundEvent* explodeEvent;
     void createSoundEvent();
 
 private:

@@ -13,7 +13,7 @@ public:
 
 	void EmpezarCast();
 	void ResetCooldown();
-	virtual void WasteMana(Player* p);
+	virtual void WasteMana(Player* p, float deltaTime);
 	virtual void ResetSpell();
 	virtual void DieReset();
 	bool ComprobarCast(float deltaTime);
@@ -30,6 +30,7 @@ public:
 	float	GetMP();
 	SPELLCODE GetType();
 	SoundEvent* getShotEvent();
+	SoundEvent* getVoiceEvent();
 
 	// Draw
 	void DrawHUD(float initX, float initY, float size, float outline, bool current);

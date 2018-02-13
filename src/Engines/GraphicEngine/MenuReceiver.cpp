@@ -4,6 +4,7 @@
 
 MenuReceiver::MenuReceiver() {
 	escape = false;
+	
 }
 
 bool MenuReceiver::OnEvent(const irr::SEvent& event) {
@@ -21,8 +22,9 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 		
 		switch(event.GUIEvent.EventType){
 			case irr::gui::EGET_BUTTON_CLICKED:{
-				SoundEvent* click = SoundSystem::getInstance()->createEvent("event:/HUD/Click");
-				SoundSystem::getInstance()->playEvent(click);
+				createSoundEvent();									//Create the click event
+				SoundSystem::getInstance()->playEvent(soundEvent);	//Play the event
+				soundEvent->release();								//Release the event
 				selectedOption = (MenuOption)id;
 				std::cout<<"selectedd option "<<selectedOption<<std::endl;
 				break;
@@ -53,4 +55,8 @@ MenuOption MenuReceiver::ReadButtonPressed(){
 	MenuOption toRet = selectedOption;
 	selectedOption = NO_OPT;
 	return (toRet);
+}
+
+void MenuReceiver::createSoundEvent() {
+	soundEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Click");
 }

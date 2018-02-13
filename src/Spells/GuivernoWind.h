@@ -17,6 +17,7 @@ public:
 protected:	
 	//Sound Functions
 	void createSoundEvent();
+	void WasteMana(Player* p, float deltaTime);
 
 private:
 	void CreateArea(Player* p);
@@ -24,6 +25,9 @@ private:
 	
 	IceArea* area;
 	float  		dist; 		// distancia a la que aparecera el area
+
+	float 		timeWaste;		// Tiempo que lleba desde la ultima vez que consumio mana
+	float		maxTimeWaste;	// Tiempo maximo de consumicion de danyo
 };
 
 

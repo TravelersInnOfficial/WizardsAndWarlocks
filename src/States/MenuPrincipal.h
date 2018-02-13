@@ -3,10 +3,13 @@
 
 #include <iostream>
 #include <Menus.h>
+#include <NetworkStructs.h>
 
 #include "./../Managers/StateManager.h"
 #include "./State.h"
 #include "./../Menus/MainMenu.h"
+
+#include <NetworkEngine/NetSeeker.h>
 
 class MenuPrincipal: public State{
 public:
@@ -16,16 +19,28 @@ public:
 	bool Input();
 	void Update(float deltaTime);
 	void Draw();
+
+	void playMenuMusic();
+
 private:
     std::string background = "./../assets/textures/GUI/Menus/MainMenu/background.png";
 	
 	void PrepareServer();
-	void PrepareClient();
+	void PrepareClient(bool proprietary = false);
 	void PrepareGame();
+
+	void createSoundEvent();
+	SoundEvent*		menuMusic;
+
+	void UpdateSeeker(float deltaTime);
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
 	GUIEngine* 		GUI_engine;
 	MenuOption 		selectedOption;		// Opcion dada en el menu
+	
+	NetSeeker*		netSeeker;
+	std::vector<ServerData> serverList;
+	
 };
 
 

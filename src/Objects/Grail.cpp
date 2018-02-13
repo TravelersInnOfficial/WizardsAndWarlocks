@@ -36,6 +36,8 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 
 Grail::~Grail(){
 	soundEvent->release();
+	delete soundEvent;
+
     delete bt_body;
     delete m_grailNode;
 }

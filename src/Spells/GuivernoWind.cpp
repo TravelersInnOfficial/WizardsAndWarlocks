@@ -5,6 +5,8 @@ GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float opt
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD,"./../assets/textures/HUD/Spells/SPELL_BLIZZARD.png", optHP, optMP){
 	area = NULL;
 	dist = 1.0f;
+	timeWaste = 0.0f;
+	maxTimeWaste = 0.1f;
 	createSoundEvent();
 }
 
@@ -22,17 +24,28 @@ void GuivernoWind::Lanzar(Player* p){
 	}
 }
 
+void GuivernoWind::WasteMana(Player* p, float deltaTime){
+	timeWaste += deltaTime;
+	if(timeWaste>=maxTimeWaste){
+		timeWaste = 0;
+		p->ChangeMP(costePM);
+	}
+}
+
 void GuivernoWind::DieReset(){
 	ResetSpell();
+	timeWaste = 0.0f;
 }
 
 void GuivernoWind::ResetSpell(){
-	Hechizo::ResetSpell();
 	shotEvent->setParamValue("Maintain click", 0.90f);
+	Hechizo::ResetSpell();
+	
 	if(area!=NULL){
 		area->Deactivate();
 		area = NULL;
 	}
+	timeWaste = 0.0f;
 }
 
 void GuivernoWind::CreateArea(Player* p){
@@ -40,6 +53,7 @@ void GuivernoWind::CreateArea(Player* p){
 	vector3df rot = p->GetRot();
 
 	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
+	shotEvent->setParamValue("Maintain click", 0.00f);
 	playSoundEvent(shotEvent, p->GetPos()); //Play voice event
 
 	rot.Z = 0.0f; rot.X = 0.0f;

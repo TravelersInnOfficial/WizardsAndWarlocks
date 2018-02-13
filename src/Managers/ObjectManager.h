@@ -98,17 +98,17 @@ private:
 	void UpdateDamageAreas(float deltaTime);
 
 
-	vector<Invocation*>			invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
-	vector<DamageArea*>			damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
-	vector<Block*>				blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
-	vector<Prop*>				props;			// Vector donde se almacenan todos los props (decoracion)
-	vector<Door*>				doors;			// Vector donde se almacenan todas las puertas
-	vector<Switch*>				switchs;		// Vector donde se almacenan todos los interruptores
-	vector<Potion*>				potions;		// Vector donde se almacenan todas las pociones
-	vector<Fountain*>			fountains;		// Vector donde se almacenan todas las fuentes
-	vector<Npc*>				npcs;			// Vector donde se almacenan todos los npcs
-	vector<vector3df>			wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
-	vector<vector3df>			warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
+	std::vector<Invocation*>	invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
+	std::vector<DamageArea*>	damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
+	std::vector<Block*>			blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
+	std::vector<Prop*>			props;			// Vector donde se almacenan todos los props (decoracion)
+	std::vector<Door*>			doors;			// Vector donde se almacenan todas las puertas
+	std::vector<Switch*>		switchs;		// Vector donde se almacenan todos los interruptores
+	std::vector<Potion*>		potions;		// Vector donde se almacenan todas las pociones
+	std::vector<Fountain*>		fountains;		// Vector donde se almacenan todas las fuentes
+	std::vector<Npc*>			npcs;			// Vector donde se almacenan todos los npcs
+	std::vector<vector3df>		wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
+	std::vector<vector3df>		warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	Grail*						grail;			// El grail de la partida, unico
 	vector4df					readyZone;		// Zona de READY
 	NavMesh*					navmesh;		// Malla de movimiento para la IA del nivel, única

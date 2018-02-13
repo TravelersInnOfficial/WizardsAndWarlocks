@@ -18,8 +18,10 @@ public:
 
 	// We pass the port we're listening to
 	// And the max connections we allow simultaneously
-	Server(int serverPort, int maxClients);
+	Server(int serverPort, int maxClients, bool createdFromGame = false);
 	~Server();
+
+	void Update(float deltaTime);
 
 	void SendShutdown();
 
@@ -27,7 +29,7 @@ public:
 	void SendPackage(RakNet::BitStream*, PacketPriority, PacketReliability, RakNet::AddressOrGUID, bool broadcast);
 
 	// Reads game-level packages
-	void RecievePackages();
+	void RecievePackages(bool isLobby = false);
 
 	// We manage the Object-Level packages
 	void ModifyObject(RakNet::BitStream* bitstream);
@@ -50,6 +52,7 @@ public:
 	std::map<int, NetworkObject*> GetNetworkObjects();
 	std::map<int, NetworkObject*> GetNewNetworkObjects();
 	std::map<int, NetworkObject*> GetToEraseNetworkObjects();
+	bool GetCreatedFromGame();
 
 	// Send object state change
 	void SetObjectBool(		int objectId, ObjectVariable k, bool v,			bool expandClientChange);
@@ -67,10 +70,18 @@ public:
 	void NotifyDoorInteracted(int doorPos);
 	void NotifyPotionInteracted(int potionPos, Player* p);
 
+	// Setters
+	void SetName(std::string serverName);
+
 private:
 	
 	int multiGameId;
 	NetworkObject* multiGameObject;
+	std::string serverName;
+
+	bool createdFromGame;
+	float maxTimeToConnectPlayerOne;	
+	RakNet::RakNetGUID playerOneID;
 
 	int lastObjectId = -1;									// ID of the last object created on the server
 	std::map<int, NetworkObject*> networkObjects;			// Map of Network Objects on the server
@@ -84,6 +95,9 @@ private:
 	RakNet::RakPeerInterface *peer;						// Peer Interface
 	RakNet::Packet *packet;								// Packet to send and recieve
 	RakNet::SocketDescriptor descriptor;				// Socket Descriptor
+
+	void CheckIfPlayerOneConnected(float deltaTime);
+	void SetServerData(bool isLobby);
 
 };
 

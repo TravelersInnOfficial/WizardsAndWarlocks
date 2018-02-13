@@ -13,7 +13,7 @@ public:
 	~RoomGraph();
 
 	void InitRoom(vector3df pos);
-	RoomInfo* AddRoom(int id, vector3df position);
+	RoomInfo* AddRoom(int id, vector3df position, vector3df firstSide, vector3df secondSide);
 	bool AddConnection(int first, int second);
 	
 	void CopyGraph(RoomGraph* copyGraph);
@@ -21,11 +21,20 @@ public:
 	// ACTUAL ROOMINFO
 	vector3df RoomPos();
 	bool RoomExplored();
-	float WhereExplore();
-	void UpdateExplore(float rotY);
+	vector3df WhereExplore(vector3df pos);
+	void UpdateExplore(vector3df pos);
+
+	// NEXT ROOM
+	RoomInfo* GetUnexploredRoom();
+	bool NextRoom();
+	vector3df NextRoomPos();
 private:
+	void ShuffleVector();
+	bool CheckInside(float A, float B, float C);
+
 	std::vector<RoomInfo*>	m_rooms;
 	RoomInfo*				m_actualRoom;
+	RoomInfo*				m_nextRoom;
 };
 
 #endif

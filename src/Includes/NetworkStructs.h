@@ -1,7 +1,15 @@
 #ifndef NETWORKSTRUCTS_H
 #define NETWORKSTRUCTS_H
 
+#include <iostream>
 #include <NetworkEngine/RakNetIncludes.h>
+
+struct ServerData{
+	int playerCount;
+	bool lobbyState;
+	std::string name;
+	std::string ip;
+};
 
 enum GameMessages{
 	ID_PLAYER_JOIN			= ID_USER_PACKET_ENUM +  1,
@@ -17,7 +25,8 @@ enum GameMessages{
 	ID_POTION_INTERACTED	= ID_USER_PACKET_ENUM + 11,
 	ID_DOOR_FORCE_OPEN		= ID_USER_PACKET_ENUM + 12,
 	ID_REFRESH_POTION		= ID_USER_PACKET_ENUM + 13,
-	ID_INIT_TRAPS			= ID_USER_PACKET_ENUM + 14
+	ID_INIT_TRAPS			= ID_USER_PACKET_ENUM + 14,
+	ID_IDENTIFY_PROPRIETARY	= ID_USER_PACKET_ENUM + 15
 };
 
 enum VariableMapID{

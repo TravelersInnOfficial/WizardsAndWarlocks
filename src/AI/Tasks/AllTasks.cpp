@@ -150,6 +150,125 @@ bool CatchPotion::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	ROOM TRAVEL
+//
+// ================================================================================================= //
+
+TravelRoom::TravelRoom(){}
+
+bool TravelRoom::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"TravelRoom\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	RoomGraph* room = bb->GetRoomGraph();
+	if(character!=NULL && room!=NULL){
+		vector3df pos = room->NextRoomPos();
+		character->ShortestPath(pos);
+
+		Kinematic cKin = character->GetKinematic();
+
+		SteeringOutput steering = character->GetFollowPath(cKin);
+
+		character->Steering2Controller(steering);
+
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK GRAIL SEEN
+//
+// ================================================================================================= //
+
+CheckGrailSeen::CheckGrailSeen(){}
+
+bool CheckGrailSeen::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckGrailSeen\n";
+
+	int number = bb->GetNumberSight(AI_GRAIL);
+	if(number>0){
+		bb->SetTargetSight(AI_GRAIL, AI_TARGET);
+		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
+		bb->SetMasterMovement(AI_MOVE_TARGETPATH);
+		return true;
+	
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK DOOR IN FRONT
+//
+// ================================================================================================= //
+
+CheckDoorInFront::CheckDoorInFront(float dist){
+	raycastDistance = dist;
+}
+
+bool CheckDoorInFront::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckDoorInFront\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character!=NULL){
+		// Obtenemos la posicion inicial y final de raycast
+		vector3df charPos = character->GetPos();
+		vector3df endPos;
+		// Calculamos la posicion final del raycast
+		vector3df rot = character->GetRot();
+		rot.X = -rot.X;
+		endPos.X = charPos.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
+		endPos.Y = charPos.Y + sin(rot.X)*raycastDistance;
+		endPos.Z = charPos.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
+
+		void* Object = BulletEngine::GetInstance()->Raycast(
+		charPos, 
+		endPos);
+
+		// Miramos si encontramos una puerta en el camino
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_DOOR){
+				Door* door = (Door*)Object;
+				if(!door->GetOpenState()){
+					door->Interact(character);
+				}
+				else{
+
+				}
+			}
+		}
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK TRAVEL
+//
+// ================================================================================================= //
+
+CheckTravel::CheckTravel(){}
+
+bool CheckTravel::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckTravel\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	RoomGraph* room = bb->GetRoomGraph();
+	if(character!=NULL && room!=NULL){
+		if(room->NextRoom()){
+			bb->SetMasterAction(AI_TASK_TRAVEL);
+			bb->SetMasterMovement(AI_MOVE_TRAVEL);
+			return true;
+		}
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	WHERE EXPLORE
 //
 // ================================================================================================= //
@@ -162,24 +281,16 @@ bool WhereExplore::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	RoomGraph* room = bb->GetRoomGraph();
 	if(room!=NULL && character!=NULL){
-		float dir = room->WhereExplore();
-		vector3df center = room->RoomPos();
-
-		float max = 2.0f;
-		center.X = center.X + sin(dir)*max;
-		center.Z = center.Z + cos(dir)*max;
+		vector3df pos = room->WhereExplore(character->GetPos());
+		character->ShortestPath(pos);
 
 		Kinematic cKin;
 		Kinematic tKin;
 
 		cKin = character->GetKinematic();
-		tKin.orientation = vector2df(cKin.orientation.X, dir);
-		tKin.position = center;
 
-		SteeringOutput steering 	= character->GetSeek(cKin, tKin);
-		SteeringOutput steering2 	= character->GetLookWhereYoureGoing(cKin);
-		//SteeringOutput steering2 	= character->GetAlign(cKin, tKin);
-		steering.angular = steering2.angular;
+    	SteeringOutput steering = character->GetFollowPath(cKin);
+
 
 		character->Steering2Controller(steering);
 		
@@ -235,6 +346,7 @@ bool UsePotion::run(Blackboard* bb){
 // ================================================================================================= //
 
 UseFountain::UseFountain(){}
+
 bool UseFountain::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"UseFountain\n";
 
@@ -360,6 +472,35 @@ bool UseSpell::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	CATCH GRAIL
+//
+// ================================================================================================= //
+
+CatchGrail::CatchGrail(){}
+
+bool CatchGrail::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CatchGrail\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(character!=NULL){
+		void* Object = BulletEngine::GetInstance()->Raycast(
+			character->GetPos(),
+			target->kinematic.position);
+
+		if(Object!=NULL){
+			Entidad* h = (Entidad*)Object;
+			if(h->GetClase()==EENUM_GRAIL){
+				h->Interact(character);
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	DEFUSE TRAP
 //
 // ================================================================================================= //
@@ -406,7 +547,7 @@ bool CheckSawTrap::run(Blackboard* bb){
 	if(number>0){
 		bb->SetTargetSight(AI_TRAP, AI_TARGET);
 		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
-		bb->SetMasterMovement(AI_MOVE_GOTARGET);
+		bb->SetMasterMovement(AI_MOVE_TARGETPATH);
 		return true;
 	}
 	return false;
@@ -425,18 +566,17 @@ bool CheckSawFountain::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckSawFountain\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	if(character->GetHP()<90){
+	if(character->GetHP()<90){	// En el caso de que la vida del personaje sea inferior al 90%
 		int number = bb->GetNumberSight(AI_FOUNTAIN);
-		if(number>0){
+		if(number>0){			// Recuerde más de una fuente
 			bb->SetTargetSight(AI_FOUNTAIN, AI_TARGET);
-
 			Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 			if(target!=NULL){
 				Fountain* fo = (Fountain*)target->pointer;
 				if(fo!=NULL){
-					if(fo->GetPercentualValue()>0.2){
+					if(fo->GetPercentualValue()>0.2){	// Le quede a la fuente mas del 20% de uso
 						bb->SetMasterAction(AI_TASK_USE_FOUNT);
-						bb->SetMasterMovement(AI_MOVE_GOTARGET);
+						bb->SetMasterMovement(AI_MOVE_FOUNTAIN);
 						return true;
 					}
 				}
@@ -466,7 +606,7 @@ bool CheckSawPotion::run(Blackboard* bb){
 		if(number>0){				// Miramos si la IA tiene alguna pocion en memoria para ir a por ella
 			bb->SetTargetSight(AI_POTION, AI_TARGET);	// Ponemos el target
 			bb->SetMasterAction(AI_TASK_CATCH_POT);		// Cambiamos la tarea
-			bb->SetMasterMovement(AI_MOVE_GOTARGET);	// Cambiamos el movimiento
+			bb->SetMasterMovement(AI_MOVE_TARGETPATH);	// Cambiamos el movimiento
 			return true;
 		}
 	}
@@ -562,7 +702,6 @@ bool CheckPlayerHearing::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
 	int number = bb->GetNumberSound(enemy);
-
 	if(number>0){
 		bb->SetTargetSound(enemy, AI_TARGET);
 		return true;
@@ -671,6 +810,33 @@ bool FaceTarget::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	TARGET PATH
+//
+// ================================================================================================= //
+
+TargetPath::TargetPath(){}
+
+bool TargetPath::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"TargetPath\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(character!=NULL && target!=NULL){
+		Kinematic cKin = character->GetKinematic();
+
+		character->ShortestPath(target->kinematic.position);
+
+		SteeringOutput steering = character->GetFollowPath(cKin);
+
+		character->Steering2Controller(steering);
+		return true;
+	}
+
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	GO TO TARGET
 //
 // ================================================================================================= //
@@ -687,13 +853,12 @@ bool GoToTarget::run(Blackboard* bb){
 	if(target!=NULL){
 
 		Kinematic cKin;
-    	Kinematic tKin;
+		Kinematic tKin;
 
     	cKin = character->GetKinematic();
     	tKin = target->kinematic;
 
 		SteeringOutput steering = character->GetSeek(cKin, tKin);
-
 		SteeringOutput steering2 = character->GetFace(cKin, tKin);
 		steering.angular = steering2.angular;
 

@@ -25,6 +25,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
+	
 }
 
 Lobby::~Lobby(){
@@ -46,7 +47,7 @@ bool Lobby::Input(){
 }
 
 void Lobby::Update(float deltaTime){
-	f_engine->UpdateWorld();
+	f_engine->UpdateWorld(deltaTime);
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
@@ -60,7 +61,7 @@ void Lobby::Update(float deltaTime){
 	playerManager->RespawnDeadPlayers();
 	trapManager->Update(deltaTime);
 	g_engine->UpdateReceiver();
-
+	
 	CheckIfReady();
 }
 
@@ -82,19 +83,6 @@ void Lobby::CheckIfReady(){
 	playerOne->CheckIfReady();
 
 	// Si esta dentro de la zona, cargamos el siguiente nivel
-	if(playerOne->GetReadyStatus()) {
-
-		father->StartGame();
-
-		//LevelLoader::LoadLevel("../assets/json/Map1.json");
-
-		//objectManager->AddNavmesh("./../assets/json/NavMesh.json");
-		//objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
-
-		//playerManager->ManageMatchStatus(true);
-		//g_engine->ToggleMenu(false);
-		//MenuManager::GetInstance()->ClearMenu();
-	}
-
+	if(playerOne->GetReadyStatus()) father->StartGame();
 }
 

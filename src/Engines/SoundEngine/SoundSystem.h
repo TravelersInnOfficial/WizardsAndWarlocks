@@ -11,8 +11,6 @@
 #include <fmod/fmod_studio.hpp>
 #include <fmod/fmod_errors.h>
 
-using namespace std;
-
 class SoundEvent;
 /********************************************************************************************************
 ********************************************** Sound System *********************************************
@@ -126,6 +124,12 @@ public:
      ******************************************************/
     void checkAndStopEvent(SoundEvent* event);
 
+    /******************************************************
+     * @brief Erase an soundEvent from the map
+     * @param event to erase
+     ******************************************************/
+    void eraseSoundEvent(SoundEvent* event);
+
 private:
     const char * banksPath;
 	FMOD_STUDIO_SYSTEM* system;
@@ -168,7 +172,7 @@ public:
      *  Stops the event reproduction inmediately
      ******************************************************/
     void stop();
-    
+
     /******************************************************
      *  Pauses the event reproduction
      ******************************************************/
@@ -217,14 +221,14 @@ public:
     FMOD_STUDIO_EVENTINSTANCE* getInstance();
 
 protected:
+    FMOD_STUDIO_EVENTDESCRIPTION* soundDescription;
     FMOD_STUDIO_EVENTINSTANCE* soundInstance;
-
     /*******************************************************
      * @brief Sets the event instance
      * @return FMOD_STUDIO_EVENTINSTANCE* 
      *******************************************************/
     void setInstance(FMOD_STUDIO_EVENTINSTANCE * instance);
-    
+    void setDescription(FMOD_STUDIO_EVENTDESCRIPTION* description);
 };
 
 #endif /* SoundSystem_h */

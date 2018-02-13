@@ -43,11 +43,12 @@ private:
 	std::map<Player*, Hechizo*> hechizos[4];
 	int numHechizos = 4;
 	
-	float deltaTime;
+	float m_deltaTime;
 
 	SpellManager();
 	void updateSoundEvents(Hechizo* h, Player* p); 	//Update sound event spell position, otherwise will sound far as we move
 	static SpellManager* instance;
+
 };
 
 #endif

@@ -2,10 +2,9 @@
 
 InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
-	currentTime = time;
+	currentTime = 3;
 	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
-	
 }
 
 bool InvocationWall::Update(float deltaTime){

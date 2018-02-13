@@ -37,11 +37,11 @@ SoundSystem::~SoundSystem() {
 	}
 	soundEvents.clear();	//Clear the sound events map
 
-	//Deete the event descriptions
+	//Delete the event descriptions
 	std::map<std::string, FMOD_STUDIO_EVENTDESCRIPTION*>::iterator iteven = eventDescriptions.begin();
 	for(; iteven!=eventDescriptions.end(); iteven++){
 		FMOD_STUDIO_EVENTDESCRIPTION* even = iteven->second;
-		ERRCHECK(FMOD_Studio_EventDescription_ReleaseAllInstances(even));		//Delette all the  event instances of the event description
+		ERRCHECK(FMOD_Studio_EventDescription_ReleaseAllInstances(even));		//Delete all the  event instances of the event description
 	}
 	eventDescriptions.clear();		//Clear the event descriptions map
 
@@ -56,6 +56,8 @@ SoundSystem::~SoundSystem() {
 	delete listener;	//Delete the sound listener
 
 	ERRCHECK(FMOD_Studio_System_Release(system));	//Delete the sound system
+
+	instance = NULL;
 }
 
 /******************************************************
@@ -79,7 +81,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	ERRCHECK(FMOD_Studio_System_Create(&system, FMOD_VERSION));
 	
 	//Initializing the fmod low level api
-	FMOD_SYSTEM * lowLevelSystem = NULL;
+	lowLevelSystem = NULL;
 	ERRCHECK(FMOD_Studio_System_GetLowLevelSystem(system, &lowLevelSystem));
 	ERRCHECK(FMOD_System_SetSoftwareFormat(lowLevelSystem, 0, FMOD_SPEAKERMODE_5POINT1, 0));
 	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
@@ -209,6 +211,15 @@ vector3df SoundSystem::getListenerPosition() {
 void SoundSystem::Update(vector3df headPos, vector3df headRot) {
 	setListenerPosRot(headPos, headRot);	//Position and rotation of the listener
 	ERRCHECK(FMOD_Studio_System_Update(system));
+/* DEBUG TRY
+	int number, hello;
+	ERRCHECK(FMOD_System_GetChannelsPlaying(
+	  lowLevelSystem,
+	  &number,
+	  &hello
+	));
+
+	std::cout<<number<<" "<<hello<<std::endl;*/
 }
 
 void SoundSystem::Update(){
@@ -231,19 +242,22 @@ FMOD_STUDIO_EVENTDESCRIPTION* SoundSystem::createDescription(const char* path, F
  * @param std::string path of the event
  ******************************************************/
 SoundEvent* SoundSystem::createEvent(std::string eventPath) {
+	
 	FMOD_STUDIO_EVENTDESCRIPTION* eventDesc  = NULL;					//Initialize the event description
 	FMOD_STUDIO_EVENTINSTANCE* eventInst     = NULL;					//Initialize the event instance
-	SoundEvent* newEvent					   = NULL; 					//Initialize the event
-	
+	SoundEvent* newEvent					 = NULL; 					//Initialize the event
 	//Search the description to know if it's already created
-	if (eventDescriptions[eventPath] != NULL) 
-		eventDesc = eventDescriptions[eventPath];					 //Set it to the eventDesc var
-	else {
+	if (eventDescriptions.find(eventPath) != eventDescriptions.end()){
+		eventDesc = eventDescriptions[eventPath];				 //Set it to the eventDesc var
+	} else {
 		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
-		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
 	}
-
+	
 	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));		//Set the event instance
+	// GEt channel group
+	// GET NUM CHANNELS
+	//
+
 
 	//Dertermine wich type of sound event will create
 	if (eventPath.find("Character") != -1)  		newEvent = new CharacterSound();	//Set the event
@@ -254,7 +268,9 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	else if (eventPath.find("CommonSound") != -1)	newEvent = new CommonSoundEvent();	//Set the event
 	
 	newEvent->setInstance(eventInst);	//Set the event instance
-	soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
+	newEvent->setDescription(eventDesc);
+	//soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
+
 	return newEvent;
 }
 
@@ -321,8 +337,7 @@ void SoundSystem::playEvent(SoundEvent* event) {
  * @brief Stops an event that is being played
  * @param eventPath path of the event to stop
  ******************************************************/
-void SoundSystem::stopEvent(SoundEvent* event) {
-    
+void SoundSystem::stopEvent(SoundEvent* event) {   
     event->stop();
 }
 
@@ -334,6 +349,20 @@ void SoundSystem::checkAndStopEvent(SoundEvent* event) {
     if (event->isPlaying()) event->stop();
 }
 
+/******************************************************
+ * @brief Erase an soundEvent from the map
+ * @param event to erase
+ ******************************************************/
+void SoundSystem::eraseSoundEvent(SoundEvent* event){
+	//Delete the sound event instances
+	std::map<std::string, SoundEvent*>::iterator itSe = soundEvents.begin();
+	for(; itSe!=soundEvents.end(); itSe++){
+		SoundEvent* even = itSe->second;
+		if(even == event){
+			soundEvents.erase(itSe);
+		}
+	}
+}
 
 /********************************************************************************************************
 ********************************************** Sound Event *********************************************
@@ -344,6 +373,7 @@ void SoundSystem::checkAndStopEvent(SoundEvent* event) {
 ******************************************************/
 SoundEvent::SoundEvent() {
 	soundInstance = NULL;
+	soundDescription = NULL;
 }
 
 /******************************************************
@@ -357,14 +387,14 @@ SoundEvent::~SoundEvent() {
 *  Starts to reproduce the event
 ******************************************************/
 void SoundEvent::start() {
-	ERRCHECK(FMOD_Studio_EventInstance_Start(soundInstance));   
+	if(soundInstance!=NULL)ERRCHECK(FMOD_Studio_EventInstance_Start(soundInstance));   
 }
 
 /******************************************************
 *  Stops the event reproduction inmediately
 ******************************************************/
 void SoundEvent::stop() {
-		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+	if(soundInstance!=NULL)ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 }
 
 /******************************************************
@@ -372,8 +402,10 @@ void SoundEvent::stop() {
 ******************************************************/
 void SoundEvent::pause() {
 	FMOD_BOOL paused = false;
-	FMOD_Studio_EventInstance_GetPaused(soundInstance, &paused);
-	ERRCHECK(FMOD_Studio_EventInstance_SetPaused(soundInstance, !paused));
+	if(soundInstance!=NULL){
+		ERRCHECK(FMOD_Studio_EventInstance_GetPaused(soundInstance, &paused));
+		ERRCHECK(FMOD_Studio_EventInstance_SetPaused(soundInstance, !paused));
+	}
 }
 
 
@@ -382,7 +414,7 @@ void SoundEvent::pause() {
 *  \param vol event volume, 0 = silence, 1 = maximun volume
 ******************************************************/
 void SoundEvent::setVolume(float vol) {
-	ERRCHECK(FMOD_Studio_EventInstance_SetVolume(soundInstance, vol));
+	if(soundInstance!=NULL) ERRCHECK(FMOD_Studio_EventInstance_SetVolume(soundInstance, vol));
 }
 
 /******************************************************
@@ -390,7 +422,7 @@ void SoundEvent::setVolume(float vol) {
 *  \param gain factor, 0 = silence, 1 = keep volume
 ******************************************************/
 void SoundEvent::setGain(float gain) {
-	ERRCHECK(FMOD_Studio_EventInstance_SetPitch(soundInstance, gain));
+	if(soundInstance!=NULL) ERRCHECK(FMOD_Studio_EventInstance_SetPitch(soundInstance, gain));
 
 }
 
@@ -400,14 +432,15 @@ void SoundEvent::setGain(float gain) {
 ******************************************************/
 void SoundEvent::setPosition(vector3df pos) {
 	
-	
+	if(soundInstance==NULL) return;
+
 	if(isnan(pos.X)){
 		pos.X = 0; pos.Y = 0; pos.Z = 0;
-		std::cout<<"POS = NAN"<<std::endl;
 	}
 
 	FMOD_3D_ATTRIBUTES* attributes = new FMOD_3D_ATTRIBUTES();
 	
+
 	// Raised by 0.5 to not get the same position as the listener
 	vector3df newPos(pos.X, pos.Y + 0.5, pos.Z);
 	SoundSystem::getInstance()->setPos(attributes, newPos);	//Set the position
@@ -427,6 +460,8 @@ void SoundEvent::setPosition(vector3df pos) {
 
 	//Finally, set the attributes
 	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
+
+	delete attributes;
 }
 
 /*******************************************************
@@ -436,8 +471,10 @@ void SoundEvent::setPosition(vector3df pos) {
 bool SoundEvent::isPlaying() {
 	bool res = false;
 	FMOD_STUDIO_PLAYBACK_STATE state;
-	ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(soundInstance, &state)); //Checks the state (0 = true, 3 = false)
-	if (state == 0) res = true;
+	if(soundInstance!=NULL){
+		ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(soundInstance, &state)); //Checks the state (0 = true, 3 = false)
+		if (state == 0) res = true;
+	}
 	return res;
 }
 
@@ -446,8 +483,8 @@ bool SoundEvent::isPlaying() {
  *******************************************************/
 void SoundEvent::release() {
 	if (soundInstance != NULL) {
-		ERRCHECK(FMOD_Studio_EventInstance_Stop(soundInstance, FMOD_STUDIO_STOP_IMMEDIATE));
 		ERRCHECK(FMOD_Studio_EventInstance_Release(soundInstance));
+		SoundSystem::getInstance()->eraseSoundEvent(this);
 	}
 }
 
@@ -457,7 +494,7 @@ void SoundEvent::release() {
 * @param float value of the parameter to modify
 *******************************************************/
 void SoundEvent::setParamValue(std::string name, float value) {
-	ERRCHECK(FMOD_Studio_EventInstance_SetParameterValue(soundInstance, name.c_str(), value));
+	if(soundInstance!=NULL) ERRCHECK(FMOD_Studio_EventInstance_SetParameterValue(soundInstance, name.c_str(), value));
 }   
 
 /*******************************************************
@@ -474,4 +511,8 @@ FMOD_STUDIO_EVENTINSTANCE* SoundEvent::getInstance() {
  *******************************************************/
 void SoundEvent::setInstance(FMOD_STUDIO_EVENTINSTANCE * instance) {
 	soundInstance = instance;
+}
+
+void SoundEvent::setDescription(FMOD_STUDIO_EVENTDESCRIPTION* description){
+	soundDescription = description;
 }

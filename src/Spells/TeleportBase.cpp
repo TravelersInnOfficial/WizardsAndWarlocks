@@ -17,7 +17,7 @@ void TeleportBase::DieReset(){
 	}
 }
 
-void TeleportBase::WasteMana(Player* p){
+void TeleportBase::WasteMana(Player* p, float deltaTime){
 	if(base == NULL){
 		p->ChangeMP(costePM);
 	}

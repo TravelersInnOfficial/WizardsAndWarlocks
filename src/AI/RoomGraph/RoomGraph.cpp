@@ -4,11 +4,13 @@
 
 RoomGraph::RoomGraph(){
 	m_actualRoom = NULL;
+	m_nextRoom = NULL;
 }
 
 RoomGraph::RoomGraph(RoomGraph* graph){
 	graph->CopyGraph(this);
 	m_actualRoom = NULL;
+	m_nextRoom = NULL;
 }
 
 RoomGraph::~RoomGraph(){
@@ -20,8 +22,8 @@ RoomGraph::~RoomGraph(){
 	m_rooms.clear();
 }
 
-RoomInfo* RoomGraph::AddRoom(int id, vector3df position){
-	RoomInfo* room = new RoomInfo(id, position);
+RoomInfo* RoomGraph::AddRoom(int id, vector3df position, vector3df firstSide, vector3df secondSide){
+	RoomInfo* room = new RoomInfo(id, position, firstSide, secondSide);
 	m_rooms.push_back(room);
 	return room;
 }
@@ -74,8 +76,17 @@ void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 	int size = m_rooms.size();
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_rooms[i];
-		copyGraph->AddRoom(info->GetId(), info->GetPosition());
+		RoomInfo* copyRoom = copyGraph->AddRoom(info->GetId(), info->GetPosition(), info->GetFirstSide(), info->GetSecondSide());
+		
+		//Copiar el vector de posiciones del vector
+		std::vector<vector3df> positions = info->GetExplorePoints();
+		int sizeExplore = positions.size();
+		for(int j=0; j<sizeExplore; j++){
+			// Anyadimos el punto de exploracion de la habitacion
+			copyRoom->AddPositionExplore(positions[j]);
+		}
 	}
+
 	// Copiar todos los enlaces
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_rooms[i];
@@ -88,33 +99,95 @@ void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 	}
 }
 
+bool RoomGraph::CheckInside(float A, float B, float C){
+	float output = false;
+	if((C<A && C>B) || (C>A && C<B)){
+		output = true;
+	}
+	return output;
+}
+
 void RoomGraph::InitRoom(vector3df pos){
-
-    float compare = std::numeric_limits<float>::max();
-    RoomInfo* nearest = NULL;
-
 	int size = m_rooms.size();
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_rooms[i];
-		vector3df difPos = pos - info->GetPosition();
-		float value = difPos.length();	// Sacamos la distancia entre la posicion y la habitacion
-		if(value<compare){
-			compare = value;
-			nearest = info;
+		vector3df firstSide = info->GetFirstSide();
+		vector3df secondSide = info->GetSecondSide();
+		if(CheckInside(firstSide.X, secondSide.X, pos.X) && CheckInside(firstSide.Z, secondSide.Z, pos.Z)){
+			m_actualRoom = m_rooms[i];
+			break;	
 		}
-	}
-
-	if(m_actualRoom != nearest){
-		if(m_actualRoom != NULL){
-			// Cambios a hacer al cambiar de habitacion
-			// Tipo el security level
-		}
-		m_actualRoom = nearest;
 	}
 }
 
-void RoomGraph::UpdateExplore(float rotY){
-	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(rotY);
+void RoomGraph::UpdateExplore(vector3df pos){
+	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(pos);
+}
+
+vector3df RoomGraph::WhereExplore(vector3df pos){
+	vector3df output = 0;
+	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore(pos);
+	return output;
+}
+
+RoomInfo* RoomGraph::GetUnexploredRoom(){
+	RoomInfo* output = NULL;
+
+	ShuffleVector();
+	int size = m_rooms.size();
+	for(int i=0; i<size; i++){
+		RoomInfo* info = m_rooms[i];
+		if(!info->GetExplored()){
+			output = info;
+			break;
+		}
+	}
+	return output;
+}
+
+bool RoomGraph::NextRoom(){
+	// En el caso de haber llegado a la habitacion que teniamos planeado
+	// reseteamos la variable a NULL
+	if(m_nextRoom!=NULL){
+		if(m_nextRoom == m_actualRoom){
+			m_nextRoom = NULL;
+		}
+	}
+	// Primer intento para saber cual sera la siguiente habitacion
+	// Miramos entre las habitaciones contiguas
+	if(m_nextRoom == NULL){
+		m_nextRoom = m_actualRoom->GetNextRoom();
+	}
+	// Segundo intento para saber cual será la siguiente habitacion
+	// Miramos si queda alguna habitacion sin explorar
+	if(m_nextRoom == NULL){
+		m_nextRoom = GetUnexploredRoom();
+	}
+	// Se acabaron los intentos, en el caso de que no exista ninguna habitacion
+	// Nos rendimos y devolvemos un buen false
+	if(m_nextRoom == NULL){
+		return false;
+	}
+	return true;
+}
+
+vector3df RoomGraph::NextRoomPos(){
+	vector3df output;
+	if(m_nextRoom!=NULL){
+		output = m_nextRoom->GetPosition();
+	}
+	return output;
+}
+
+void RoomGraph::ShuffleVector(){
+	int n = m_rooms.size();
+	while(n>1){
+		int k = rand() % n;
+		n--;
+		RoomInfo* temp = m_rooms[k];
+		m_rooms[k] = m_rooms[n];
+		m_rooms[n] = temp;
+	}
 }
 
 float RoomGraph::WhereExplore(){

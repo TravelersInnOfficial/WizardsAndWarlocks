@@ -75,7 +75,7 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
  * @details [long description]
  */
 void SpellManager::UpdateCooldown(float deltaTime){
-	this->deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
+	m_deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
 	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = hechizos[i].begin();
 		for(; it!=hechizos[i].end(); ++it){		// Recorremos entre todos los hechizos
@@ -83,7 +83,7 @@ void SpellManager::UpdateCooldown(float deltaTime){
 			Player*  p = it->first;				//Load the player
 			updateSoundEvents(h, p);			//Update the sound events
 			if(h->GetCurrentCooldown()>0){	 	// Comprobamos si esta en cooldown
-				h->DecCooldown(this->deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
+				h->DecCooldown(m_deltaTime);		// Le pasamos el tiempo que tiene que reducirse el cooldown
 			}
 			
 
@@ -105,8 +105,8 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
 			if(h!=NULL){							// Comprobamos si realmente existe
-				if(h->ComprobarCast(deltaTime)){	// Empezamos a Castearlo
-					h->WasteMana(p);
+				if(h->ComprobarCast(m_deltaTime)){	// Empezamos a Castearlo
+					h->WasteMana(p, m_deltaTime);
 					h->Lanzar(p);					// Lanzamos el hechizo
 					return true;
 				}
@@ -209,21 +209,20 @@ float SpellManager::GetUtility(int num, Player* p){
 }
 
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
-	// COSTMP TIMECAST TIMECOOLDOWN OPTHP OPTMP
 	Hechizo* h;
 	
 	switch(type){
-		default:				// Para los que aun no existan
+		default:				// Para los que no existan
 		case SPELL_PROJECTILE:	// Hechizo de ataque basico
-			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
+			h = new SpellProjectile(0, 0.0f, 0.5f, 100, 0);
 		break;
 		
 		case SPELL_FIRE:		// Hechizo bola fuego
-			h = new DragonBreath(-20, 1.0f, 5.0f, 100, 100);
+			h = new DragonBreath(-20, .5f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_THUNDER:		// Hechizo paralizador
-			h = new OdinFury(-20, 1.0f, 5.0f, 100, 100);
+			h = new OdinFury(-20, .5f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_POISON:		// Bomba de veneno
@@ -231,41 +230,43 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-5, 0.0f, 1.0f, 50, 100);
+			h = new DesperationWall(-0, 0.0f, 1.0f, 50, 100);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
-			h = new GuivernoWind(-0.5, 0.0f, 0.0f, 100, 75);
+			h = new GuivernoWind(-2, 0.0f, 0.0f, 100, 75);
 		break;
 
 		case SPELL_TELEPORT:	// Hechizo de teleport
-			h = new Teleport(-10, 0.0f, 1.0f, 100, 100);
-		break;
-		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
-			h = new InvisibilityCape(-20, 2.0f, 10.0f, 100, 100);
-		break;
-		case SPELL_SPEED:
-			h = new Superspeed(-10, 0.0f, 4.0f, 100, 100);
+			h = new Teleport(-15, 0.0f, 2.0f, 100, 100);
 		break;
 
-		case SPELL_UNTARGET:
-			h = new DivinePoncho(-10, 0.0f, 4.0f, 100, 100);
+		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
+			h = new InvisibilityCape(-20, 1.5f, 10.0f, 100, 100);
+		break;
+
+		case SPELL_SPEED:
+			h = new Superspeed(-15, 0.0f, 5.0f, 100, 100);
 		break;
 
 		case SPELL_DEFENSE:
-			h = new OhmnioProtection(-10, 0.0f, 7.0f, 100, 100);
+			h = new OhmnioProtection(-20, 0.0f, 5.0f, 100, 100);
+		break;
+
+		case SPELL_UNTARGET:
+			h = new DivinePoncho(-30, 0.0f, 7.0f, 100, 100);
 		break;
 
 		case SPELL_CLEANSE:
-			h = new GaiaCleanse(-10, 0.0f, 5.0f, 100, 100);
+			h = new GaiaCleanse(-20, 0.0f, 5.0f, 100, 100);
 		break;
 
 		case SPELL_DUMMY:
-			h = new SpellDummy(-10, 0.0f, 3.0f, 100, 100);
+			h = new SpellDummy(-15, 0.0f, 5.0f, 100, 100);
 		break;
 
 		case SPELL_TELEPORTBASE:
-			h = new TeleportBase(-10, 0.0f, 3.0f, 100, 100);
+			h = new TeleportBase(-20, 0.0f, 3.0f, 100, 100);
 		break;
 
 	}
@@ -279,6 +280,9 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 		if (p != NULL) {		
 			if (h->getShotEvent() != NULL) {
 				h->getShotEvent()->setPosition(p->GetHeadPos()); //Update the event position
+			}
+			if (h->getVoiceEvent() != NULL) {
+				h->getVoiceEvent()->setPosition(p->GetHeadPos()); //Update the event position
 			}
 		}
 	}
@@ -401,11 +405,12 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 void SpellManager::ErasePlayer(Player* player){
 	
 	ResetDieHechizo(player);
-
 	for(int i=0; i < numHechizos; i++){
 		if(hechizos[i].find(player) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][player];
-			if(h!=NULL) delete h;
+			if(h!=NULL){
+				delete h;
+			}
 		}
 		hechizos[i].erase(player);
 	}

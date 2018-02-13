@@ -16,7 +16,7 @@
 //================================================================
 // BURNED
 //================================================================
-Burned::Burned(float time, int d):Effect(time, WEAK_BURNED){
+Burned::Burned(float time, float d):Effect(time, WEAK_BURNED){
 	damage = d;
 	createSoundEvent();
 	playEffectEvent();
@@ -24,6 +24,7 @@ Burned::Burned(float time, int d):Effect(time, WEAK_BURNED){
 
 void Burned::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Burned::createSoundEvent() {
@@ -33,7 +34,7 @@ void Burned::createSoundEvent() {
 //================================================================
 // FROZEN
 //================================================================
-Frozen::Frozen(float time, int d):Effect(time, WEAK_FROZEN){
+Frozen::Frozen(float time, float d):Effect(time, WEAK_FROZEN){
 	createSoundEvent();
 	damage = d;
 }
@@ -41,19 +42,18 @@ Frozen::Frozen(float time, int d):Effect(time, WEAK_FROZEN){
 void Frozen::UpdateEffect(Player* p){
 	//slow gradually and then freeze
 	p->ChangeHP(-damage);
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Frozen::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
 }
 
 void Frozen::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
-	p->m_Able2Jump = true;
 }
 
 void Frozen::createSoundEvent() {
@@ -61,9 +61,9 @@ void Frozen::createSoundEvent() {
 }
 
 //================================================================
-// POISONED
+// terED
 //================================================================
-Poisoned::Poisoned(float time, int d):Effect(time, WEAK_POISONED){
+Poisoned::Poisoned(float time, float d):Effect(time, WEAK_POISONED){
 	createSoundEvent();
 	playEffectEvent();
 	damage = d;
@@ -71,6 +71,7 @@ Poisoned::Poisoned(float time, int d):Effect(time, WEAK_POISONED){
 
 void Poisoned::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Poisoned::createSoundEvent() {
@@ -90,6 +91,10 @@ SlowedDown::SlowedDown(float time, float value):Effect(time, WEAK_SLOWEDDOWN){
 	createSoundEvent();
 	playEffectEvent();
 	factor = value;
+}
+
+void SlowedDown::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void SlowedDown::ApplyEffect(Player* p){
@@ -114,13 +119,15 @@ void Paralyzed::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
+}
+
+void Paralyzed::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Paralyzed::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
-	p->canJump = true;
-	p->m_Able2Jump = true;	
+	p->canJump = true;	
 }
 
 void Paralyzed::createSoundEvent() {
@@ -139,6 +146,10 @@ void Silenced::ApplyEffect(Player* p){
 }
 
 void Silenced::RemoveEffect(Player* p){
+}
+
+void Silenced::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Silenced::createSoundEvent() {
@@ -186,26 +197,25 @@ void Madness::createSoundEvent() {
 //================================================================
 // DeathSnare
 //================================================================
-DeathSnare::DeathSnare(float time, int d):Effect(time, WEAK_DEATHSNARE){
+DeathSnare::DeathSnare(float time, float d):Effect(time, WEAK_DEATHSNARE){
 	createSoundEvent();
-	damage=d;
+	damage = d;
 }
 
 void DeathSnare::UpdateEffect(Player* p){
 	p->ChangeHP(-damage);
+	effectEvent->setPosition(p->GetPos());
 }
 
 void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
-	p->m_Able2Jump = false;
 }
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
-	p->m_Able2Jump = true;
 }
 
 void DeathSnare::createSoundEvent() {
@@ -229,6 +239,10 @@ void DamageUp::ApplyEffect(Player* p){
 	p->m_DamageMult *= 1.6;
 }
 
+void DamageUp::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
+}
+
 void DamageUp::RemoveEffect(Player* p){
 	p->m_DamageMult /= 1.6;				// 1.6 * 0.625 = 1
 }
@@ -247,6 +261,10 @@ DefenseUp::DefenseUp(float time):Effect(time, POWERUP_DEFENSE){
 void DefenseUp::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_Defense *= 1.6;
+}
+
+void DefenseUp::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void DefenseUp::RemoveEffect(Player* p){
@@ -286,6 +304,10 @@ void SpeedUp::ApplyEffect(Player* p){
 	playEffectEvent();
 }
 
+void SpeedUp::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
+}
+
 void SpeedUp::RemoveEffect(Player* p){
 	p->max_velocity /= 3.0f;
 }
@@ -304,6 +326,10 @@ Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
 void Untargetable::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_Defense *= 10.0f;
+}
+
+void Untargetable::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Untargetable::RemoveEffect(Player* p){
@@ -326,6 +352,10 @@ void FireShots::ApplyEffect(Player* p){
 	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
+void FireShots::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
+}
+
 void FireShots::RemoveEffect(Player* p){
 	p->m_shotEffect = WEAK_BASIC;
 }
@@ -346,6 +376,10 @@ void PoisonShots::ApplyEffect(Player* p){
 	p->m_shotEffect = WEAK_SOFTBURNED;
 }
 
+void PoisonShots::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
+}
+
 void PoisonShots::RemoveEffect(Player* p){
 	p->m_shotEffect = WEAK_BASIC;
 }
@@ -364,6 +398,10 @@ Invisible::Invisible(float time):Effect(time, POWERUP_INVISIBLE){
 void Invisible::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->SetVisible(false);
+}
+
+void Invisible::UpdateEffect(Player* p) {
+	effectEvent->setPosition(p->GetPos());
 }
 
 void Invisible::RemoveEffect(Player* p){

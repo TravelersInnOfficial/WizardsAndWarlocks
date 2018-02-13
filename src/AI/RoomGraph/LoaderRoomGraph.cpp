@@ -18,7 +18,23 @@ void LoaderRoomGraph::LoadRoomGraph(RoomGraph* graph, std::string path){
         float y = j["Rooms"][i]["POSITION_Y"];
     	float z = j["Rooms"][i]["POSITION_Z"];
     	vector3df position(x, y, z);
-    	graph->AddRoom(ID, position);
+        x = j["Rooms"][i]["F_SIDE_X"];
+        y = j["Rooms"][i]["F_SIDE_Y"];
+        z = j["Rooms"][i]["F_SIDE_Z"];
+        vector3df firstSide(x, y, z);
+        x = j["Rooms"][i]["S_SIDE_X"];
+        y = j["Rooms"][i]["S_SIDE_Y"];
+        z = j["Rooms"][i]["S_SIDE_Z"];
+        vector3df secondSide(x, y, z);
+    	RoomInfo* info = graph->AddRoom(ID, position, firstSide, secondSide);
+        // Load all the points to explore inside the rooms
+        for(int k=0; !j["Rooms"][i]["EXPLORE"][k].is_null(); k++){
+            x = j["Rooms"][i]["EXPLORE"][k]["POSITION_X"];
+            y = j["Rooms"][i]["EXPLORE"][k]["POSITION_Y"];
+            z = j["Rooms"][i]["EXPLORE"][k]["POSITION_Z"];
+            vector3df explorePoint(x, y, z);
+            info->AddPositionExplore(explorePoint);
+        }
     }	
 
     // Create all the connections

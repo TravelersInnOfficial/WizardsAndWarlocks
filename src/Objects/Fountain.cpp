@@ -14,11 +14,16 @@ Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 
 	clase = EENUM_FOUNTAIN;   
 	CreateFountain(TPosition, TScale, TRotation);
+	createSoundEvent();
 }
 
 Fountain::~Fountain(){
     delete bt_body;
     delete m_fountainNode;
+
+	if (!useEvent->isPlaying()) useEvent->stop();
+	useEvent->release();
+	delete useEvent;
 }
 
 void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -51,11 +56,17 @@ void Fountain::Update(float deltaTime){
 
 	if(currentTime >= maxTime){
 		if(inUse){
-			Use();
+				Use();
 		}else{
-			Recover();
-			SetFree();
-		} 
+			if (value < maxValue) { //Reload till reach 100
+				Recover();
+			}
+							
+			if (user != NULL) { //Free the user once
+				SetFree();
+			}		
+		}
+
 		currentTime = 0.0f;
 	}
 	inUse = false;
@@ -66,18 +77,35 @@ void Fountain::Update(){
 }
 
 void Fountain::SetFree(){
+	if (useEvent->isPlaying()) useEvent->stop();
 	user = NULL;
 	inUse = false;
 }
 
 bool Fountain::Use(){
 	if(user!=NULL){
-		if(incrementUse<=value){		
-			value -= incrementUse;
-			user->ChangeHP(incrementUse);
-			user->ChangeMP(incrementUse);
-			return true;
+		if(user->GetHP() < 100 || user->GetMP() < 100) { //Only use when HP or MP below 100
+			if(incrementUse<=value){		
+				value -= incrementUse;
+				user->ChangeHP(incrementUse);
+				user->ChangeMP(incrementUse);
+				
+				if (value == 0) {
+					if (useEvent->isPlaying()) useEvent->stop();
+				} else {
+					playSoundEvent(useEvent);	//Play the sound
+					useEvent->setParamValue("Fountain reserve", value); //Set event parameter for pitch modification
+				}
+				
+				return true;
+			} else {	//If the fountain has no reserve, stop the sound
+				if (useEvent->isPlaying()) useEvent->stop();
+				playSoundEvent(cantUseEvent);
+			}	
+		} else {
+			SetFree(); 	//Free the fountain when the user has everything maxed
 		}
+		
 	}
 	return false;
 }
@@ -93,14 +121,16 @@ float Fountain::GetPercentualValue(){
 
 void Fountain::Recover(){
 	value += incrementValue;
-	if(value > maxValue){
-		value = maxValue;
-	}
 }
 
 void Fountain::Interact(Player* p){
 	if(user==NULL){
-		user = p;
+		if (p->GetHP() < 100 || p->GetMP() < 100) { //Only interact when you something is below 100
+			user = p;
+			
+		} else {
+			playSoundEvent(cantUseEvent);
+		}
 	}
 	inUse = true;
 }
@@ -125,4 +155,14 @@ Kinematic Fountain::GetKinematic(){
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
+}
+
+void Fountain::createSoundEvent() {
+	useEvent = SoundSystem::getInstance()->createEvent("event:/CommonSounds/Fountains/Fountain");
+	cantUseEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Spell Disabled");
+}
+
+void Fountain::playSoundEvent(SoundEvent* event) {
+	if (!event->isPlaying())
+		SoundSystem::getInstance()->playEvent(event, bt_body->GetPosition());
 }

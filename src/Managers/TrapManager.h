@@ -26,7 +26,7 @@ public:
 	int getPlayerUsings(Player*);
 	TrapEnum getPlayerTrap(Player*);
 	std::string GetPathFromEnum(TrapEnum tKind);
-	vector<Trap*> GetAllTraps();
+	std::vector<Trap*> GetAllTraps();
 
 	bool setPlayerUsings(Player*, int);
 	bool setPlayerTrap(Player*, TrapEnum, bool broadcast = true);
@@ -47,7 +47,7 @@ public:
 	void RefreshServerAll();
 
 private:
-	vector<Trap*> traps;
+	std::vector<Trap*> traps;
 	std::map<Player*,TrapEnum> playerTrap;
 	std::map<Player*, int> playerUsings;
 	int lastTrapId;

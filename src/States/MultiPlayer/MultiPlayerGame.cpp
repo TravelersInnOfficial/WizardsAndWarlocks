@@ -4,9 +4,9 @@
 
 MultiPlayerGame::MultiPlayerGame(){
 	// Motores
+	n_engine		= NetworkEngine::GetInstance();
 	g_engine		= GraphicEngine::getInstance();
 	f_engine		= BulletEngine::GetInstance();
-	n_engine		= NetworkEngine::GetInstance();
 	s_engine		= SoundSystem::getInstance();
 	
 	// Managers
@@ -34,18 +34,32 @@ MultiPlayerGame::MultiPlayerGame(){
 
 	// Y creamos los eventos de sonido
 	CreateSoundEvents();
+
+	// Si es un servidor creado INGAME lo muteamos
+	Server* myServer = n_engine->GetServer();
+	if(myServer != NULL && myServer->GetCreatedFromGame()){
+		mute = true;
+		SoundSystem::getInstance()->setVolume(0);
+	}
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
 	delete m_stateGame;
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;		// Tiene que eliminarse despues de el playerManager NECESARIO
 	delete trapManager;
 	delete networkManager;
 	n_engine->EndService();
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		even->release();
+		delete even;
+	}
 }
 
 // Ponemos el modo LOBBY en el siguiente Update
@@ -106,10 +120,13 @@ bool MultiPlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
-		float vol = 1;
-		if(!mute) vol = 0;
-		SoundSystem::getInstance()->setVolume(vol);
-		mute = !mute;
+		Server* myServer = n_engine->GetServer();
+		if(myServer == NULL || (myServer != NULL && !myServer->GetCreatedFromGame())){	
+			float vol = 1;
+			if(!mute) vol = 0;
+			SoundSystem::getInstance()->setVolume(vol);
+			mute = !mute;
+		}
 	}
 
 	if(g_engine->IsKeyPressed(KEY_F3)){
@@ -128,11 +145,22 @@ void MultiPlayerGame::Update(float deltaTime){
 
 
 void MultiPlayerGame::Draw(){
-	g_engine->beginSceneDefault();
-	g_engine->drawAll();
-	m_stateGame->Draw();
-	if(debug) f_engine->DebugDrawWorld();
-	g_engine->endScene();
+	if(n_engine != NULL){
+		bool draw = true;
+		
+		if(n_engine->IsServerInit()){
+			Server* myServer = n_engine->GetServer();
+			if(myServer != NULL && myServer->GetCreatedFromGame()) draw = false;
+		}
+
+		if(draw){
+			g_engine->beginSceneDefault();
+			g_engine->drawAll();
+			m_stateGame->Draw();
+			if(debug) f_engine->DebugDrawWorld();
+			g_engine->endScene();
+		}
+	}
 }
 
 /********************************************************************************************************

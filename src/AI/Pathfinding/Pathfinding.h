@@ -11,7 +11,7 @@ class Pathfinding{
     ~Pathfinding();
 
     void ResetValues();
-    void AStar(vector3df , vector3df);
+    bool AStar(vector3df , vector3df);
 
     int         GetIndexNearestNode(vector3df pos, int start=0);
     vector3df   GetPosNode(int index);

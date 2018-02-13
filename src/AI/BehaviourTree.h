@@ -63,6 +63,7 @@ private:
     void CreateMoveSpell();     // SubArboles de movimiento con hechizos
     void CreateMoveDefault();   // SubArbol de movimiento por defecto
     void CreateMoveToTarget();  // SubArbol de movimiento hacia el target
+    void CreatePathToTarget();  // SubArbol de movimiento hacia el target con path
     void CreateShootSpell();    // SubArbol de lanzar hechizo
     void CreateCathPotion();    // SubArbol de coger una pocion
     void CreateDrinkPotion();   // SubArbol de beber una pocion
@@ -71,6 +72,11 @@ private:
     void CreateEscapeMove();    // SubArbol de huir
     void CreateExploreTask();   // SubArbol de tarea explorar
     void CreateExploreMove();   // SubArbol de exploracion
+    void CreateTravelTask();    // SubArbol de mirar a que habitacion ir
+    void CreateTravelMove();    // SubArbol de moverse hasta la habitacion
+    void CreateOpenDoor();      // SubArbol de movimiento para ponerse delante de la puerta
+    void CreateMoveFountain();  // SubArbol de movimiento para moverse delante de una fuente
+    void CreateCatchGrail();    // SubArbol de coger un grial
 };
 
 #endif

@@ -1,6 +1,8 @@
 #include "NavMesh.h"
 #include <limits>
 
+#include <GraphicEngine/GraphicEngine.h>
+
 NavMesh::NavMesh(){
 
 }
@@ -26,6 +28,16 @@ NavMesh::~NavMesh(){
         m_nodes.erase(m_nodes.begin()+i);
     }
     m_nodes.clear();
+}
+
+void NavMesh::draw(){
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+    int size = m_nodes.size();
+    for(int i=0; i<size; i++){
+        vector3df position = m_nodes[i]->getPosition();
+        g_engine->addCube2Scene(position, vector3df(0,0,0), vector3df(1,1,1), 0.2, i);
+    }
 }
 
 void NavMesh::addNode(int id, vector3df position){

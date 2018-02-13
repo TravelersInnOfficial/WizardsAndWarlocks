@@ -54,6 +54,8 @@ private:
 
 	int 	m_changeMode;
 
+	AIPlayer* AL;
+
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 	void CreateSoundEvents();							//Create the sound events
 

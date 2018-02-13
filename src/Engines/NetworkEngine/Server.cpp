@@ -5,8 +5,13 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/ObjectManager.h"
+#include "./../Managers/StateManager.h"
 
-Server::Server(int serverPort, int maxClients){
+Server::Server(int serverPort, int maxClients, bool createdFromGame){
+
+	this->serverName = "Unknown Castle";
+	this->createdFromGame = createdFromGame;
+
 	peer = RakNet::RakPeerInterface::GetInstance();
 	descriptor = RakNet::SocketDescriptor(serverPort, 0);
 	peer->Startup(maxClients, &descriptor, 1);
@@ -22,6 +27,11 @@ Server::Server(int serverPort, int maxClients){
 	// Inicializo su variable
 	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
 	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
+
+	maxTimeToConnectPlayerOne = 15;
+	playerOneID = RakNet::UNASSIGNED_RAKNET_GUID;
+
+	SetServerData(true);
 }
 
 Server::~Server(){
@@ -32,6 +42,17 @@ Server::~Server(){
 	// Destroy the PEER interface
 	SendShutdown();
 	RakNet::RakPeerInterface::DestroyInstance(peer);
+}
+
+void Server::Update(float deltaTime){
+	if(createdFromGame) CheckIfPlayerOneConnected(deltaTime);
+}
+
+void Server::CheckIfPlayerOneConnected(float deltaTime){
+	if(playerOneID == RakNet::UNASSIGNED_RAKNET_GUID){
+		maxTimeToConnectPlayerOne -= deltaTime;
+		if(maxTimeToConnectPlayerOne <= 0) StateManager::GetInstance()->CloseGame();
+	}
 }
 
 void Server::SendShutdown(){
@@ -132,7 +153,10 @@ std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 	return(toRet);
 }
 
-void Server::RecievePackages(){
+void Server::RecievePackages(bool isLobby){
+
+	// Set PONG data
+	SetServerData(isLobby);
 
 	for (packet = peer->Receive(); packet; peer->DeallocatePacket(packet), packet = peer->Receive()) {
 		switch (packet->data[0]) {
@@ -141,12 +165,12 @@ void Server::RecievePackages(){
 			case ID_NEW_INCOMING_CONNECTION: {
 
 				// Si la partida ha empezado negamos la conexion
-				/*if(!NetGame::GetInstance()->GetLobbyState()){
+				if(!isLobby){
 					RakNet::BitStream bitstream;
 					bitstream.Write((RakNet::MessageID)ID_DISCONNECTION_NOTIFICATION);
 					SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					continue;
-				}*/
+				}
 
 				// Nos guardamos el nuevo cliente
 				int id = AddPlayer(packet->guid);
@@ -292,6 +316,7 @@ void Server::RecievePackages(){
 				disconnectClient.Write(id);
 				SendPackage(&disconnectClient, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 
+				if(createdFromGame && playerOneID == packet->guid) StateManager::GetInstance()->CloseGame();
 				break;
 			}
 
@@ -304,21 +329,9 @@ void Server::RecievePackages(){
 			}
 
 			// CUANDO SE TERMINA UNA PARTIDA
-			case ID_MATCH_ENDED: {
-				/*
-				// Leer quien ha ganado
+			case ID_IDENTIFY_PROPRIETARY: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				Alliance winnerAlliance;
-				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
-				bitstream.Read(winnerAlliance);
-				NetGame::GetInstance()->MatchEnded(winnerAlliance);
-
-				// Propagarlo a todos los clientes
-				RakNet::BitStream propagateEndMatch;
-				propagateEndMatch.Write((RakNet::MessageID)ID_MATCH_ENDED);
-				propagateEndMatch.Write(winnerAlliance);
-				SendPackage(&propagateEndMatch, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
-				*/
+				if(createdFromGame && playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
 				break;
 			}
 
@@ -565,4 +578,24 @@ void Server::NotifyPotionInteracted(int potionPos, Player* p){
 			SendPackage(&potionInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 		}
 	}
+}
+
+bool Server::GetCreatedFromGame(){
+	return createdFromGame;
+}
+
+void Server::SetServerData(bool isLobby){
+	std::string stringToSend = "";
+	stringToSend =  std::to_string(networkPlayers.size());		// 0 to 8, 1 Char
+	stringToSend += std::to_string(isLobby);					// 0 or 1, 1 Char
+	stringToSend += serverName;									// Max 20 Chars?
+	
+	char const* pchar = stringToSend.c_str();
+	int pcharSize = (int) strlen(pchar) + 1;					// + 1 Empty Char to Finish
+	
+	peer->SetOfflinePingResponse(pchar, pcharSize);
+}
+
+void Server::SetName(std::string serverName){
+	this->serverName = serverName.substr(0, 20);
 }

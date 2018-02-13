@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "./Player.h"
 #include <PhysicsEngine/BulletEngine.h>
 #include "./../Managers/ObjectManager.h"
@@ -9,6 +11,7 @@
 
 #include <SpellCodes.h>
 #include <TrapCodes.h>
+#include <Constants.h>
 #include "./../Objects/Potion.h"
 
 #include "./../Cameras/WatcherCamera.h"
@@ -33,6 +36,7 @@ Player::Player(bool isPlayer1){
 
 	raycastDistance = 2.0f;
 	max_velocity = 3.0f;
+	max_velocityY = 6.0f;
 
 	playerAlliance = NO_ALLIANCE;
 	isPlayerOne = isPlayer1;
@@ -42,9 +46,9 @@ Player::Player(bool isPlayer1){
 	m_playerNode = NULL;
 	m_camera = NULL;
 	networkObject = NULL;
-
 	targetDeadCam = NULL;
 
+	canJump = false;
 	matchStarted = false;
 	hasCharacter = false;
 	readyToStart = false;
@@ -52,6 +56,10 @@ Player::Player(bool isPlayer1){
 	stepsStarted = false;
 	pulseStarted = false;
 	isRunning = false;
+
+	currentJumpCheckTime = .05f;
+	maxJumpCheckTime = .05f;
+	CheckIfCanJump(0, true);
 
 	name = "";
 
@@ -82,8 +90,8 @@ void Player::PlayerInit(){
 	m_Defense = 1;
 	m_shotEffect = WEAK_BASIC;
 	m_visible = true;
-	m_Able2Jump = true;
 	m_dead = false;
+	canJump = false;
 
 	if(overlayManager != NULL){
 		overlayManager->SetTime(BLOOD, 0);
@@ -99,7 +107,6 @@ void Player::PlayerInit(){
 Player::~Player(){
 
 	delete controller;
-
 	delete overlayManager;
 
 	if(bt_body != NULL){
@@ -120,10 +127,12 @@ Player::~Player(){
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
+		if (even->isPlaying()) even->stop();	//Stop the sound if its playing
 		even->release();
+		delete even;						//Release the sound
 	}
 
-	TrapManager::GetInstance()->ErasePlayer(this);
+	TrapManager::GetInstance()->ErasePlayer(this);	
 	SpellManager::GetInstance()->ErasePlayer(this);
 }
 
@@ -268,7 +277,7 @@ void Player::GetNetInput(){
 			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
 		}
 
-		string auxName = networkObject->GetStringVar(PLAYER_NAME);
+		std::string auxName = networkObject->GetStringVar(PLAYER_NAME);
 		if(auxName.length() > 0){
 			SetName(auxName);
 			auxName = "";
@@ -295,14 +304,17 @@ void Player::DeadUpdate(){
 		UpdateInput();
 
 		Player* newP = targetDeadCam;
+		bool setPos = false;
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ 
 			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
+			setPos = true;
 		}
 		else if(!playerManager->PlayerAlive(targetDeadCam)){
 			newP = playerManager->ChangePlayerTargetCam(targetDeadCam, playerAlliance);
+			setPos = true;
 		}
 
-		if(newP != targetDeadCam){
+		if(setPos && newP!=NULL){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}
@@ -327,36 +339,30 @@ void Player::Update(float deltaTime){
 
 	// Si tenemos cuerpo fisico
 	if(hasCharacter){
-		vector3df velocity = bt_body->GetLinearVelocity();
-		if(!canJump){
-			float verticalSpeed = velocity.Y;
-			float offsetSpeed = fabs(lastVerticalSpeed - verticalSpeed);
-			if(fabs(verticalSpeed < 0.1) && offsetSpeed < 0.1 && m_Able2Jump) canJump = true;
-			lastVerticalSpeed = verticalSpeed;
-		}
+		CheckIfCanJump(deltaTime);		// Comprobamos si podemos saltar
+		UpdateSP(deltaTime);			// Updateamos SP (sumamos o restamos segun isRunning)
 
-		UpdateSP();	// Updateamos SP (sumamos o restamos segun isRunning)
-
-		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable, mientras
-		// que si no se estaba moviendo lo frenamos
+		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable
 		if(moving){
 			if(!stepsStarted && canJump) playFootsteps();
 			moving = false;
 		}
+
+		// Si no se estaba moviendo lo frenamos
 		else{
 			if(stepsStarted) stopFootsteps();
+			vector3df velocity = bt_body->GetLinearVelocity();
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
-		// Comprobamos los Input del personaje
-		CheckInput();
+		CheckInput(); // Comprobamos los Input del personaje
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape();
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
-		if(isPlayerOne && m_camera !=NULL){
+		if(isPlayerOne && m_camera != NULL){
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
@@ -397,16 +403,27 @@ void Player::positionCamera(){
 void Player::checkMaxVelocity(){
 	if(hasCharacter){
 		vector3df velocity = bt_body->GetLinearVelocity();
-		vector3df auxVelocity(velocity.X,0,velocity.Z);
-		float speed = auxVelocity.length();
 		
-		float velY = velocity.Y;
-		if(speed > max_velocity) {
-			auxVelocity.X *= max_velocity/speed;
-			auxVelocity.Z *= max_velocity/speed;
-			auxVelocity.setY(velY);
-			bt_body->SetLinearVelocity(auxVelocity);
+		// Fix velocity HORIZONTAL
+		vector3df auxVelocityH(velocity.X,0,velocity.Z);
+		float speedH = auxVelocityH.length();
+		if(speedH > max_velocity) {
+			auxVelocityH.X *= max_velocity/speedH;
+			auxVelocityH.setY(velocity.Y);
+			auxVelocityH.Z *= max_velocity/speedH;
+			bt_body->SetLinearVelocity(auxVelocityH);
 		}
+
+		// Fix velocity VERTICAL
+		vector3df auxVelocityV(0, velocity.Y, 0);
+		float speedV = auxVelocityV.length();
+		if(speedV > max_velocityY) {
+			auxVelocityV.setX(auxVelocityH.X);
+			auxVelocityV.Y *= max_velocityY/speedV;
+			auxVelocityV.setZ(auxVelocityH.Z);
+			bt_body->SetLinearVelocity(auxVelocityV);
+		}
+
 	}
 }
 
@@ -443,7 +460,9 @@ void Player::Jump(){
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
+		
 		canJump = false;
+		currentJumpCheckTime = maxJumpCheckTime;
 	}
 }
 
@@ -462,7 +481,7 @@ void Player::ChangeHP(float HP){
 	// UN JUGADOR
 	else{
 		if (HP < 0) {
-			if (m_HP + HP > 0) playHit(); //We want to play while its alive but not when it dies
+			if (m_HP + HP > 0) playSoundEvent(soundEvents["hit"]); //We want to play while its alive but not when it dies
 			if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 1);
 			SetController(ACTION_RAYCAST, RELEASED);
 		}
@@ -497,8 +516,8 @@ bool Player::ChangeMP(float MP){
 	return (toRet);
 }
 
-void Player::UpdateSP(){
-	float useCost = 0.5;
+void Player::UpdateSP(float deltaTime){
+	float useCost = 30*deltaTime;	// 30 = Consumo en 1 segundo
 
 	if(isRunning && moving) m_SP -= useCost;
 	else m_SP += (useCost/2);
@@ -547,9 +566,14 @@ bool Player::StartSpell(){
 	// Get the code of the currentSpell
 	SPELLCODE code = SpellManager::GetInstance()->GetSpellCode(currentSpell, this);
 	EffectManager* effectman = EffectManager::GetInstance();
-	if(effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE){		// if is not a basic spell or if silenced then not shoot
+	if((effectman->CheckEffect(this, WEAK_SILENCED) && code!=SPELL_PROJECTILE && code!=SPELL_CLEANSE)
+	 || !SpellManager::GetInstance()->StartHechizo(currentSpell, this)){		// if is not a basic spell or if silenced then not shoot
+		playSoundEvent(soundEvents["nomana"]);
 		return false;
 	}
+
+	
+
 	return SpellManager::GetInstance()->StartHechizo(currentSpell,this);
 }
 
@@ -593,7 +617,7 @@ void Player::Die(){
 	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
 
 	stopPulse();											// Stop the pulse event
-	playDie(); 												// Play the sound event
+	playSoundEvent(soundEvents["die"]); 												// Play the sound event
 	DropObject();											// Soltamos los objetos que teniamos
 
 	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
@@ -662,12 +686,12 @@ void Player::DropObject(){
 
 void Player::LosePotion(){
 	if(potion!=NULL) potion = NULL;
-	playLosePotion();
+	playSoundEvent(soundEvents["losepotion"]);
 }
 
 void Player::UseObject(){
 	if(potion!=NULL){
-		playDrink();
+		playSoundEvent(soundEvents["drink"]);
 		potion->Use(this);
 		potion = NULL;
 	}
@@ -724,7 +748,7 @@ void Player::UpdatePosShape(){
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::HitMade(Player* player){
-	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.25f);
+	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.205);
 }
 
 void Player::ApplyFuzyEffect(){
@@ -743,6 +767,7 @@ void Player::createSoundEvents() {
 	SoundEvent * hit        = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Hit");
 	SoundEvent * pulse      = SoundSystem::getInstance()->createEvent("event:/Character/Hard/Pulse");
 	SoundEvent * losepotion = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Caronte Taxes");
+	SoundEvent * nomana		= SoundSystem::getInstance()->createEvent("event:/HUD/Spell Disabled");
 
 	//Store them at the player's sounds map
 	soundEvents["footsteps"]  = footsteps;
@@ -751,23 +776,12 @@ void Player::createSoundEvents() {
 	soundEvents["hit"] 		  = hit;
 	soundEvents["pulse"]      = pulse;
 	soundEvents["losepotion"] = losepotion;
+	soundEvents["nomana"] 	  = nomana;
 }
 
 void Player::playFootsteps() {
 	stepsStarted = true;
 	SoundSystem::getInstance()->checkAndPlayEvent(soundEvents["footsteps"], GetPos());
-}
-
-void Player::playDrink() {
-	SoundSystem::getInstance()->playEvent(soundEvents["drink"], GetPos());
-}
-
-void Player::playDie() {
-	SoundSystem::getInstance()->playEvent(soundEvents["die"], GetPos());
-}
-
-void Player::playHit() {
-	SoundSystem::getInstance()->playEvent(soundEvents["hit"], GetPos());
 }
 
 void Player::playPulse() {
@@ -777,8 +791,8 @@ void Player::playPulse() {
 	}
 }
 
-void Player::playLosePotion() {
-	SoundSystem::getInstance()->playEvent(soundEvents["losepotion"], GetPos());
+void Player::playSoundEvent(SoundEvent* event) {
+	SoundSystem::getInstance()->playEvent(event, GetPos());
 }
 
 void Player::stopFootsteps() {
@@ -796,7 +810,6 @@ void Player::stopPulse() {
 //Update the event positions for continuous events or usable while moving events (like spells)
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
-		//Update footsteps
 		if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setPosition(GetHeadPos());
 	}
 }
@@ -804,6 +817,7 @@ void Player::UpdateSoundsPosition(){
 void Player::changeSurface(float n) {
 	if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setParamValue("Surface", n);
 }
+
 /********************************************************************************************************
  ********************************************** GETERS **************************************************
  ********************************************************************************************************/
@@ -926,6 +940,9 @@ void Player::SetAlliance(Alliance newAlliance){
 		}
 	}
 
+	m_HP = 100;
+	m_MP = 100;
+	m_SP = 100;
 	SetBillboard();
 }
 
@@ -1055,4 +1072,54 @@ void Player::DrawInventory(){
 
 void Player::DrawTraps(){
 	if(playerAlliance == ALLIANCE_WARLOCK) TrapManager::GetInstance()->DrawHUD(this);
+}
+
+bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
+	if(!forceSkip) currentJumpCheckTime -= deltaTime;
+	
+	if(forceSkip || currentJumpCheckTime <= 0){
+		canJump = JumpRaycast();
+		currentJumpCheckTime = maxJumpCheckTime;
+	}
+
+	return canJump;
+}
+
+bool Player::JumpRaycast(){
+	bool auxCanJump = false;
+	float bodyLength = 1.5f;
+	float halfSize = 1.8f * 0.15f;
+	float hipotenuse = sqrtf(powf(halfSize, 2) + powf(halfSize, 2));
+
+	// Centro
+	vector3df startCenter = GetHeadPos();
+	vector3df endCenter(startCenter.X, startCenter.Y - bodyLength, startCenter.Z);
+	void* Object = BulletEngine::GetInstance()->Raycast(startCenter, endCenter);
+	if(Object != NULL) auxCanJump = true;
+	
+	// Esquinas
+	float headRotation = GetRotY();
+	for(int i = 0; i < 8 && !auxCanJump; i++){
+		float offsetX = 0;
+		float offsetZ = 0;
+
+		if(i % 2 == 0){
+			offsetX = startCenter.X + sin(headRotation) * halfSize;
+			offsetZ = startCenter.Z + cos(headRotation) * halfSize;
+		}
+
+		else{
+			offsetX = startCenter.X + sin(headRotation) * hipotenuse;
+			offsetZ = startCenter.Z + cos(headRotation) * hipotenuse;
+		}
+
+		vector3df cornerStart = vector3df(offsetX, startCenter.Y, offsetZ);
+		vector3df cornerEnd = vector3df(offsetX, startCenter.Y - bodyLength, offsetZ);
+
+		void* Object = BulletEngine::GetInstance()->Raycast(cornerStart, cornerEnd);
+		if(Object != NULL) auxCanJump = true;
+		headRotation += M_PI/4.0f;
+	}
+
+	return auxCanJump;
 }

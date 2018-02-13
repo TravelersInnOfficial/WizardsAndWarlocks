@@ -58,8 +58,8 @@ bool MultiLobby::Input(){
 
 void MultiLobby::UpdateLobby(float deltaTime){
 
-	n_engine->Update();
-	f_engine->UpdateWorld();
+	n_engine->Update(deltaTime, true);
+	f_engine->UpdateWorld(deltaTime);
 
 	if(g_engine->getActiveCamera() != NULL){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());

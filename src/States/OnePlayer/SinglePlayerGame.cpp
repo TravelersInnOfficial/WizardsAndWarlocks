@@ -1,8 +1,6 @@
 #include "SinglePlayerGame.h"
 #include "Lobby.h"
 #include "Match.h"
-#include <GUIEngine/GUIEngine.h>
-#include <GraphicEngine/MenuManager.h>
 
 SinglePlayerGame::SinglePlayerGame(){
 	spellManager 	= SpellManager::GetInstance();
@@ -24,17 +22,18 @@ SinglePlayerGame::SinglePlayerGame(){
 	captured 	= false;
 
 	m_changeMode	= 0;
+	AL = NULL;
 
 	CreateSoundEvents();
 }
 
 SinglePlayerGame::~SinglePlayerGame(){
 	delete m_stateGame;
-	delete spellManager;
 	delete bulletManager;
 	delete effectManager;
 	delete objectManager;
 	delete playerManager;
+	delete spellManager;	// Tiene que eliminarse despues de el playerManager NECESARIO
 	delete trapManager;
 	delete senseManager;
 
@@ -43,6 +42,7 @@ SinglePlayerGame::~SinglePlayerGame(){
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;
 		even->release();
+		delete even;
 	}
 }
 
@@ -100,7 +100,8 @@ bool SinglePlayerGame::Input(){
 	}
 
 	// DEBUG
-	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
+	if(g_engine->IsKeyPressed(KEY_F1)) debug =! debug;
+
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
 		float vol = 1;
@@ -115,6 +116,10 @@ bool SinglePlayerGame::Input(){
 		captured = !captured;
 	}
 
+	if(g_engine->IsKeyPressed(KEY_KEY_M)){
+		AL = playerManager->AddAIPlayer();
+	}
+
 	return m_stateGame->Input();
 }
 
@@ -123,8 +128,6 @@ void SinglePlayerGame::Update(float deltaTime){
 		ChangeMode();
 	}
 	m_stateGame->Update(deltaTime);
-	//GUIEngine::GetInstance()->Update();
-	MenuManager::GetInstance()->Update();
 }
 
 void SinglePlayerGame::Draw(){
@@ -135,10 +138,9 @@ void SinglePlayerGame::Draw(){
 
 	if(debug){
 		f_engine->DebugDrawWorld();
-		//if(AL != NULL) AL->Debug();
+		if(AL != NULL) AL->Debug();
 	}
-	//GUIEngine::GetInstance()->Draw();
-	MenuManager::GetInstance()->Draw();
+
 	g_engine->endScene();
 }
 
@@ -152,12 +154,13 @@ void SinglePlayerGame::CreateSoundEvents() {
 	SoundEvent* victory = s_engine->createEvent("event:/Music/Victory");
 	SoundEvent* ghosts  = s_engine->createEvent("event:/Ambience/Ghosts");
 	SoundEvent* waterDrops  = s_engine->createEvent("event:/Ambience/Water Drops");
-
+	
 	//Store them at the map
 	soundEvents["defeat"]  = defeat;
 	soundEvents["victory"] = victory;
 	soundEvents["ghosts"]  = ghosts;
 	soundEvents["waterdrops"]  = waterDrops;
+	
 }
 void SinglePlayerGame::PlayEvent(std::string event, vector3df pos) {
 	s_engine->playEvent(soundEvents[event], pos);

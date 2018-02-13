@@ -52,7 +52,7 @@ class Player: public Entidad{
 		void Jump();
 		void ChangeHP(float);
 		bool ChangeMP(float);
-		void UpdateSP();
+		void UpdateSP(float deltaTime);
 		void Respawn();
 		void Raycast();
 		virtual void Die();
@@ -95,13 +95,13 @@ class Player: public Entidad{
 
 		//Sound Functions
 		void playFootsteps();				//Plays the footsteps sound
-		void playDrink();					//PLays the drink potion sound
-		void playDie();						//Plays the die sound
-		void playHit();						//Plays the damage hit sound
 		void playPulse();					//Plays the heart pulse sound
-		void playLosePotion();				//Plays the lose potion sound
+
+		void playSoundEvent(SoundEvent* event);		//Plays the parameter event
+
 		void stopFootsteps();				//Stops the footsteps sound
-		void stopPulse();
+		void stopPulse();					//Stops the pulse sound
+		
 		void UpdateSoundsPosition();		//Updates the continuous sounds
 		void changeSurface(float n);		//Changes the surface parameter of the event
 
@@ -150,12 +150,12 @@ class Player: public Entidad{
 
 		// Public variables
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
+		float 			max_velocityY;
 		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 		float 			m_Defense;			// Divisor del danyo recibido
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
 		bool 			m_visible;			// Is player visible?
 		bool 			canJump;			// Puede saltar?
-		bool			m_Able2Jump;			// Is able to recover jump?
 
 	protected:
 
@@ -164,6 +164,12 @@ class Player: public Entidad{
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
 		void createSoundEvents();			//Create the sound events needed for the player
 		void SetBillboard();				// Ponemos el billboard en el player
+		
+		// We check if the player can jump
+		float currentJumpCheckTime;
+		float maxJumpCheckTime;
+		bool CheckIfCanJump(float deltaTime = 0, bool forceSkip = false);
+		bool JumpRaycast();
 
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
@@ -202,7 +208,6 @@ class Player: public Entidad{
 		bool			stepsStarted;		// Han empezado a sonar los steps?
 		bool 			pulseStarted;		// Pulse sound event started?
 		bool 			moving;				// Se esta moviendo?
-		float 			lastVerticalSpeed;	// Velocidad vertical en el frame anterior
 
 		Player* 		targetDeadCam;
 
