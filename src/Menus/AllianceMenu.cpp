@@ -1,6 +1,7 @@
 #include "AllianceMenu.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/ObjectManager.h"
+#include "./../Managers/PlayerManager.h"
 
 AllianceMenu::AllianceMenu(){
     m_id = "AllianceMenu";
@@ -17,15 +18,17 @@ AllianceMenu::AllianceMenu(){
 AllianceMenu::~AllianceMenu(){}
 
 void AllianceMenu::setPlayerWarlock(bool* open){
-    *open = false;
-    GraphicEngine::getInstance()->ToggleMenu(false);
-    ObjectManager::GetInstance()->StopInteractionsNPC();
+    Player* hp = PlayerManager::GetInstance()->GetPlayerOne();
+    hp->SetAlliance(ALLIANCE_WARLOCK);
+
+    closeMenu(open);
 }
 
 void AllianceMenu::setPlayerWizard(bool* open){
-    *open = false;
-    GraphicEngine::getInstance()->ToggleMenu(false);
-    ObjectManager::GetInstance()->StopInteractionsNPC();
+    Player* hp = PlayerManager::GetInstance()->GetPlayerOne();
+    hp->SetAlliance(ALLIANCE_WIZARD);
+
+    closeMenu(open);
 }
 
 void AllianceMenu::Update(bool* open){
@@ -51,4 +54,11 @@ void AllianceMenu::Update(bool* open){
     //ImGui::PopStyleVar();
     ImGui::End();
     //ImGui::EndFrame();
+}
+
+void AllianceMenu::closeMenu(bool* open){
+
+    //*open = false; //TODO:: FIX por alguna razon esto peta al salir y volver a entrar en el menu
+    GraphicEngine::getInstance()->ToggleMenu(false);
+    ObjectManager::GetInstance()->StopInteractionsNPC();
 }

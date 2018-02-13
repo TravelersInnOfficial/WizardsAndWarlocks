@@ -1,40 +1,53 @@
 #include "ShopMenu.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/ObjectManager.h"
-#include "./../Npcs/NpcSeller.h"
+#include "./../Managers/TrapManager.h"
+#include <string.h>
 
 ShopMenu::ShopMenu(){
+    N_SPELL_SOCKETS = SpellManager::GetInstance()->GetNumSpells();
+    N_TRAP_SOCKETS = 1;
+
     m_id = "ShopMenu";
-
+    
     m_width = screenWidth/1.3;
-    m_height = screenHeight/1.3;
+    m_height = screenHeight/1.05;
 
-    buttonSize = ImVec2(120,60);
     m_style.WindowBorderSize = 1.0f;
     //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 
+    hp = PlayerManager::GetInstance()->GetPlayerOne();
+
     load_imagesid(N_OSPELLS, o_spellLayouts, o_spelltexture, o_spellimageid, o_spells_codes, &spells_map);
-    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spellimageid, t_spells_codes, &spells_map);
-    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spellimageid, d_spells_codes, &spells_map);
+    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spellimageid, d_spells_codes, &spells_map);
+    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spellimageid, t_spells_codes, &spells_map);
     load_imagesid(N_TRAPS, trapLayouts, trap_texture, trap_imageid, traps_codes, &traps_map);
 
-    empty_texture = pDevice->getVideoDriver()->getTexture(emptyLayout);
-    for(int i = 0; i<N_SOCKETS; i++){
-        empty_spell_imageid[i] = GUI->createTexture(empty_texture);
-    }
-    empty_trap_imageid[0] = GUI->createTexture(empty_texture); 
-
-    const_empty_image = GUI->createTexture(empty_texture);
     buttonSize = ImVec2(trap_texture[0]->getSize().Width/10,trap_texture[0]->getSize().Height/10);
 
     imgui_ddflags = 0;
     if (ddflags.parentNullID)  imgui_ddflags |= ImGuiDragDropFlags_SourceAllowNullID;
-    
-    for(int i = 0; i<N_SOCKETS;i++){
-        selected_spells.push_back(const_empty_image);
+
+    std::map<IrrIMGUI::IGUITexture*,SPELLCODE>::iterator it;
+    for(int i = 1; i<N_SPELL_SOCKETS; i++){
+        SPELLCODE spell = SpellManager::GetInstance()->GetSpellCode(i,hp);
+        for(it = spells_map.begin(); it!=spells_map.end(); ++it){
+            if(it->second ==  spell ){
+                selected_spells.push_back(it->first);
+                break;
+            }
+        }
     }
-    selected_trap.push_back(const_empty_image);
+
+    std::map<IrrIMGUI::IGUITexture*,TrapEnum>::iterator itt;
+    TrapEnum trap = TrapManager::GetInstance()->getPlayerTrap(hp);
+    for(itt = traps_map.begin(); itt!=traps_map.end(); ++itt){
+        if(itt->second ==  trap ){
+            selected_trap.push_back(itt->first);
+            break;
+        }
+    }
 
     selected = NULL;
 }
@@ -57,11 +70,11 @@ void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::IText
     }
 }
 
-void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],std::vector<IrrIMGUI::IGUITexture*> &items_selected){
+void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols,std::vector<IrrIMGUI::IGUITexture*> &items_selected){
     ImGui::Columns(cols, id, false);
     for(int i = 0; i<total ;i++){
         ImGui::PushID(i);
-        if(ImGui::ImageButton(imageids[i],buttonSize)){
+        if(ImGui::ImageButton(items_selected[i],buttonSize)){
             //focus button?
         }
         ImGui::PopID();
@@ -70,15 +83,22 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(type,imgui_ddflags)){
                 bool already_in = false;
                 for(int j = 0; j<items_selected.size();j++){
-                    if(items_selected[j] == selected) already_in = true;
+                    if(items_selected[j] == selected){ 
+                        already_in = true;
+                        break;
+                    }
                 }
                 if(!already_in){
-                    memcpy((float*)&imageids[i], payload->Data, sizeof(IrrIMGUI::IGUITexture));
-                    items_selected[i] = selected;
+                    memcpy((float*)&items_selected[i], payload->Data, sizeof(IrrIMGUI::IGUITexture));
                     
                     //GET THE ELEMENT ENUM CODE
-                    if(type == "image_spell") std::cout<<"spell code selected: "<<spells_map[selected]<<std::endl;
-                    else std::cout<<"trap code selected: "<< traps_map[selected]<<std::endl;
+                    const char* t = "image_spell";
+                    if(type == t){
+                        ChangeSpell(i+1, spells_map[selected]);
+                    }
+                    else{
+                        ChangeTrap(traps_map[selected]);
+                    }
                 }
             }
             ImGui::EndDragDropTarget();
@@ -126,8 +146,8 @@ void ShopMenu::Update(bool* open){
     //ImGui::NewFrame();
     ImGui::Begin(m_id,open,w_flags);
 
-    load_sockets("selected_items_columns","image_spell",N_SOCKETS,3,empty_spell_imageid, selected_spells);
-    load_sockets("selected_items_columns","image_trap",1,1,empty_trap_imageid, selected_trap);
+    load_sockets("selected_items_columns","image_spell",(N_SPELL_SOCKETS-1),3, selected_spells);
+    load_sockets("selected_items_columns","image_trap",N_TRAP_SOCKETS,1, selected_trap);
 
     load_items("ofensive_spells_columns","image_spell", N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
     load_items("defensive_spells_columns", "image_spell", N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
@@ -135,9 +155,7 @@ void ShopMenu::Update(bool* open){
     load_items("traps_columns", "image_trap", N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
     
     if(ImGui::Button("Close",ImVec2(100,50))){
-        //*open = false;
-        //GraphicEngine::getInstance()->ToggleMenu(false);
-        //ObjectManager::GetInstance()->StopInteractionsNPC();
+        closeMenu(open);
     }
     //HELP WINDOWS
     //ImGui::ShowTestWindow();
@@ -145,4 +163,24 @@ void ShopMenu::Update(bool* open){
     //ImGui::PopStyleVar();
     ImGui::End();
     //ImGui::Render();
+}
+
+void ShopMenu::ChangeSpell(int pos, SPELLCODE sEnum){
+    if(hp != NULL){
+		SpellManager::GetInstance()->AddHechizo(pos, hp, sEnum);
+	}
+}
+
+void ShopMenu::ChangeTrap(TrapEnum tEnum){
+	if(hp != NULL){
+		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
+		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
+	}
+}
+
+void ShopMenu::closeMenu(bool* open){
+    
+    //*open = false; //TODO:: FIX por alguna razon esto peta al salir y volver a entrar en el menu
+    GraphicEngine::getInstance()->ToggleMenu(false);
+    ObjectManager::GetInstance()->StopInteractionsNPC();
 }

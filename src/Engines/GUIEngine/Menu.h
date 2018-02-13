@@ -44,6 +44,7 @@ protected:
     float screenHeight;
 
     void CalculateFlags();
+    static void closeMenu(bool*);
 
 };
 

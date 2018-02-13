@@ -7,6 +7,8 @@
 #include <map>
 #include "TrapCodes.h"
 #include "SpellCodes.h"
+#include "./../Managers/PlayerManager.h"
+#include "./../Managers/SpellManager.h"
 
 struct DDFlags{
     bool parentNullID = true;
@@ -22,37 +24,41 @@ public:
 private:
     void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>*);
     void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum>, std::map<IrrIMGUI::IGUITexture*,TrapEnum>*);
-    void load_sockets(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],std::vector<IrrIMGUI::IGUITexture*> &items_selected);
+    void load_sockets(const char* id,const char* type, int total, int cols, std::vector<IrrIMGUI::IGUITexture*> &items_selected);
     void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
    
-    static const int N_OSPELLS = 4;
-    static const int N_DSPELLS = 2;
-    static const int N_TSPELLS = 7;
-    static const int N_TRAPS = 6;
-    static const int N_SOCKETS = 3;
+    void ChangeSpell(int pos, SPELLCODE sEnum);
+    void ChangeTrap(TrapEnum tEnum);
 
-    ImVec2 buttonSize;
-    ImGuiDragDropFlags imgui_ddflags;
-    DDFlags ddflags;
+    static void closeMenu(bool*);
+
+    static const int N_OSPELLS = 4;     //NUMBER OF OFENSIVE SPELLS
+    static const int N_DSPELLS = 2;     //NUMBER OF DEFENSIVE SPELLS
+    static const int N_TSPELLS = 7;     //NUMBER OF TACTIC SPELLS
+    static const int N_TRAPS = 6;       //NUMBER OF TRAPS
+    int N_SPELL_SOCKETS;    //NUMBER OF SPELL SOCKETS
+    int N_TRAP_SOCKETS;
+
+    ImVec2 buttonSize;                  //MENU BUTTONS SIZE
+    ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
+    DDFlags ddflags;                    //DRAG N DROP PRIVATE FLAGS
 
     irr::video::ITexture* o_spelltexture[N_OSPELLS];
     irr::video::ITexture* d_spelltexture[N_DSPELLS];
     irr::video::ITexture* t_spelltexture[N_TSPELLS];
     irr::video::ITexture* trap_texture[N_TRAPS];
-    irr::video::ITexture* empty_texture;
 
     IrrIMGUI::IGUITexture * o_spellimageid[N_OSPELLS];
     IrrIMGUI::IGUITexture * d_spellimageid[N_DSPELLS];
     IrrIMGUI::IGUITexture * t_spellimageid[N_TSPELLS];
     IrrIMGUI::IGUITexture * trap_imageid[N_TRAPS];
-    IrrIMGUI::IGUITexture * empty_spell_imageid[N_SOCKETS];
-    IrrIMGUI::IGUITexture * empty_trap_imageid[1];
-    IrrIMGUI::IGUITexture * const_empty_image;
 
-    std::vector<IrrIMGUI::IGUITexture*> selected_spells;
-    std::vector<IrrIMGUI::IGUITexture*> selected_trap;
+    std::vector<IrrIMGUI::IGUITexture*> selected_spells;    //ACTUAL SELECTED SPELLS
+    std::vector<IrrIMGUI::IGUITexture*> selected_trap;      //ACTUAL SELECTED TRAPS
 
-    IrrIMGUI::IGUITexture* selected;
+    IrrIMGUI::IGUITexture* selected;                        //ITEM SELECTED FOR DRAG N DROP
+
+    Player* hp;
 
     const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
 

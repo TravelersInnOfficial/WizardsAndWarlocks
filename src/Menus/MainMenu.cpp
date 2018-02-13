@@ -112,11 +112,11 @@ void MainMenu::Update(bool* open){
     //ImGui::PopStyleVar();
     ImGui::End();
     //ImGui::EndFrame();
-    if(ImGui::GetTime() > 5 && f1){ gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
-    if(ImGui::GetTime() > 7 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
-    if(ImGui::GetTime() > 10 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
-    if(ImGui::GetTime() > 15 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
-    if(ImGui::GetTime() > 18 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}
+    if(ImGui::GetTime() > 5 && f1) {gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
+    if(ImGui::GetTime() > 6 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
+    if(ImGui::GetTime() > 7 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
+    if(ImGui::GetTime() > 8 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
+    if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}
 }
 
 

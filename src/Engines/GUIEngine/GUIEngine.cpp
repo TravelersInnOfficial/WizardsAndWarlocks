@@ -46,7 +46,7 @@ void GUIEngine::printNotifications(){
         ImVec2 window_pos = ImVec2(ImGui::GetIO().DisplaySize.x - initial_Y, m_notifications_Ypos);
         ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
         ImGui::SetNextWindowBgAlpha(0.3f);
-        std::string w_id = "Notification##" + std::to_string(i); 
+        std::string w_id = it->first; 
         if (ImGui::Begin(w_id.c_str(), p_open, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_AlwaysAutoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings)){
             ImGui::Text("%s",it->first.c_str());
             window_size = ImGui::GetWindowSize();
@@ -56,6 +56,7 @@ void GUIEngine::printNotifications(){
         m_notifications_Ypos = m_notifications_Ypos + m_notifications_distance + window_size.y;
         i++;
         if(it->second <= ImGui::GetTime()) m_notifications_data.erase((++it).base());
+        //--it;
     }
 
     m_notifications_Ypos = initial_Y;
