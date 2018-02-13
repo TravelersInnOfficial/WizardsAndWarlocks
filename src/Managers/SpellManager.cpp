@@ -214,15 +214,15 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	switch(type){
 		default:				// Para los que no existan
 		case SPELL_PROJECTILE:	// Hechizo de ataque basico
-			h = new SpellProjectile(-0, 0.0f, 0.5f, 100, 0);
+			h = new SpellProjectile(0, 0.0f, 0.5f, 100, 0);
 		break;
 		
 		case SPELL_FIRE:		// Hechizo bola fuego
-			h = new DragonBreath(-20, 1.0f, 2.5f, 100, 100);
+			h = new DragonBreath(-20, .5f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_THUNDER:		// Hechizo paralizador
-			h = new OdinFury(-20, 1.0f, 2.5f, 100, 100);
+			h = new OdinFury(-20, .5f, 2.5f, 100, 100);
 		break;
 		
 		case SPELL_POISON:		// Bomba de veneno
@@ -230,7 +230,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-0, 0.0f, 0.1f, 50, 100);
+			h = new DesperationWall(0, 0.0f, 0.1f, 50, 100);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
@@ -238,33 +238,35 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 
 		case SPELL_TELEPORT:	// Hechizo de teleport
-			h = new Teleport(-10, 0.0f, 1.0f, 100, 100);
-		break;
-		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
-			h = new InvisibilityCape(-20, 2.0f, 10.0f, 100, 100);
-		break;
-		case SPELL_SPEED:
-			h = new Superspeed(-10, 0.0f, 4.0f, 100, 100);
+			h = new Teleport(-15, 0.0f, 2.0f, 100, 100);
 		break;
 
-		case SPELL_UNTARGET:
-			h = new DivinePoncho(-10, 0.0f, 4.0f, 100, 100);
+		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
+			h = new InvisibilityCape(-20, 1.5f, 10.0f, 100, 100);
+		break;
+
+		case SPELL_SPEED:
+			h = new Superspeed(-15, 0.0f, 5.0f, 100, 100);
 		break;
 
 		case SPELL_DEFENSE:
-			h = new OhmnioProtection(-10, 0.0f, 7.0f, 100, 100);
+			h = new OhmnioProtection(-20, 0.0f, 5.0f, 100, 100);
+		break;
+
+		case SPELL_UNTARGET:
+			h = new DivinePoncho(-30, 0.0f, 7.0f, 100, 100);
 		break;
 
 		case SPELL_CLEANSE:
-			h = new GaiaCleanse(-10, 0.0f, 5.0f, 100, 100);
+			h = new GaiaCleanse(-20, 0.0f, 5.0f, 100, 100);
 		break;
 
 		case SPELL_DUMMY:
-			h = new SpellDummy(-0, 0.0f, 0.1f, 100, 100);
+			h = new SpellDummy(-15, 0.0f, 10.0f, 100, 100);
 		break;
 
 		case SPELL_TELEPORTBASE:
-			h = new TeleportBase(-10, 0.0f, 3.0f, 100, 100);
+			h = new TeleportBase(-20, 0.0f, 3.0f, 100, 100);
 		break;
 
 	}
