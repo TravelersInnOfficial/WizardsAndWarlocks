@@ -41,7 +41,6 @@ void AllianceMenu::Update(bool* open){
     for(int i = 0; i<N_BUTTONS; i++){
         ImGui::PushID(i);
         if(ImGui::Button(buttonKeys[i], buttonSize)){
-            std::cout<<"button "<<i<<" clicked"<<std::endl;
             actions[i](open);
         }
         ImGui::PopID();

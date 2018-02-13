@@ -189,10 +189,3 @@ void RoomGraph::ShuffleVector(){
 		m_rooms[n] = temp;
 	}
 }
-
-float RoomGraph::WhereExplore(){
-	float output = 0;
-	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore();
-	return output;
-}
-

@@ -90,7 +90,7 @@ bool GraphicEngine::drop(){
 }
 
 void GraphicEngine::setCursorVisible(bool visible){
-	if(privateDevice != NULL) privateDevice->getCursorControl()->setVisible(visible);
+	if(privateDevice != NULL) privateDevice->getCursorControl()->setVisible(false);
 }
 
 int GraphicEngine::getTime(){

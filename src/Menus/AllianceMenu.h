@@ -21,7 +21,7 @@ private:
     static void setPlayerWizard(bool*);
 
     typedef void (*METHOD_PTR)(bool*);
-    METHOD_PTR actions[N_BUTTONS] = {&AllianceMenu::setPlayerWarlock,&AllianceMenu::setPlayerWizard};
+    METHOD_PTR actions[N_BUTTONS] = {&AllianceMenu::setPlayerWizard,&AllianceMenu::setPlayerWarlock};
 
     static void closeMenu(bool*);
 };
