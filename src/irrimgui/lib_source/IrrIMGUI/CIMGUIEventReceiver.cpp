@@ -28,6 +28,8 @@
  * @addtogroup IrrIMGUI
  */
 
+#pragma GCC diagnostic ignored "-Wswitch"
+
 // module includes
 #include <IrrIMGUI/CIMGUIEventReceiver.h>
 

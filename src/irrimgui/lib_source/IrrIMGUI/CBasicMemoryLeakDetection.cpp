@@ -29,6 +29,8 @@
  */
 
 // module includes
+#pragma GCC diagnostic ignored "-Wreorder"
+
 #include <IrrIMGUI/Tools/CBasicMemoryLeakDetection.h>
 #include "private/IrrIMGUIDebug_priv.h"
 
