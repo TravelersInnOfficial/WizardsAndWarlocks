@@ -3,7 +3,7 @@
 Align::Align(){
 	maxAngularAcceleration = 3.0f;
 	maxRotation = 10.0f;
-	targetRadius = 0.01f;
+	targetRadius = 0.025f;
 	slowRadius = 0.2f;
 	timeToTarget = 0.1f;
 }

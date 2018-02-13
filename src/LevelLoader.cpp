@@ -1,11 +1,4 @@
 #include "LevelLoader.h"
-#include "Objects/Block.h"
-#include "Managers/SpellManager.h"
-#include "Managers/BulletManager.h"
-#include "Managers/ObjectManager.h"
-#include "Managers/PlayerManager.h"
-#include "Managers/TrapManager.h"
-#include <NetworkEngine/NetworkEngine.h>
 #include <map>
 #include <json.hpp>
 #include <fstream>
@@ -13,8 +6,12 @@
 #include <vector3d.h>
 #include <NPCTypes.h>
 #include <PotionTypes.h>
-
-#include <GraphicEngine/GraphicEngine.h>
+// Managers
+#include "Managers/TrapManager.h"
+#include "Managers/SpellManager.h"
+#include "Managers/BulletManager.h"
+#include "Managers/ObjectManager.h"
+#include "Managers/PlayerManager.h"
 
 LevelLoader::LevelLoader(){
 	
@@ -38,17 +35,8 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
 
-	// Primero de todo reseteamos los hechizos para que limpien los objetos que toqen
-	//zSpellManager::GetInstance()->ResetAllDieHechizo();
-
 	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
-	//objManager->ClearMap();
-	//BulletManager::GetInstance()->DeleteAllProyectiles();
-	//TrapManager::GetInstance()->ClearTraps();
-
-	// Reseteamos los hechizos
-	//PlayerManager::GetInstance()->ResetAllSpells();
 
 	std::map<int, Door*> doors;
 	
@@ -157,9 +145,6 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			objManager->AddSwitch(doors[assignedDoorID], position, vector3df(1,1,1), rotation, vector3df(0,0,0));
 		}
 	}
-
-	//PlayerManager* plyManager = PlayerManager::GetInstance();
-	//plyManager->RestartMatchStatus();
 
 	return true;
 }

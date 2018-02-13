@@ -274,7 +274,7 @@ void Player::GetNetInput(){
 			networkObject->SetBoolVar(PLAYER_CREATE_CHAR, doCreateChar, false, false);
 		}
 
-		string auxName = networkObject->GetStringVar(PLAYER_NAME);
+		std::string auxName = networkObject->GetStringVar(PLAYER_NAME);
 		if(auxName.length() > 0){
 			SetName(auxName);
 			auxName = "";

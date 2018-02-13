@@ -33,7 +33,7 @@ void Blackboard::UpdateRoomGraph(){
     if(roomGraph!=NULL){
         vector3df pos = currentPlayer->GetPos();
         roomGraph->InitRoom(pos);
-        roomGraph->UpdateExplore(currentPlayer->GetRotY());
+        roomGraph->UpdateExplore(currentPlayer->GetPos());
     }
 }
 
@@ -105,7 +105,7 @@ void Blackboard::SetInt(AI_code name, int value){
     dataInt[name] = value;
 }
 
-void Blackboard::SetSound(int id, void* punt, AI_code name, Kinematic kin, float len, float dur){
+void Blackboard::SetSound(int id, void* punt, AI_code name, Kinematic kin, float dur){
     int size = soundSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = soundSense[i];
@@ -122,7 +122,6 @@ void Blackboard::SetSound(int id, void* punt, AI_code name, Kinematic kin, float
     s->pointer = punt;
     s->code = name;
     s->kinematic = kin;
-    s->length = len;
     s->duration = dur;
     soundSense.push_back(s);
 }
@@ -168,7 +167,7 @@ void Blackboard::CleanSense(int id){
     }
 }
 
-void Blackboard::SetSight(int id, void* punt, AI_code name, Kinematic kin, float len, float dur){
+void Blackboard::SetSight(int id, void* punt, AI_code name, Kinematic kin, float dur){
     int size = sightSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
@@ -184,7 +183,6 @@ void Blackboard::SetSight(int id, void* punt, AI_code name, Kinematic kin, float
     s->pointer = punt;
     s->code = name;
     s->kinematic = kin;
-    s->length = len;
     s->duration = dur;
     sightSense.push_back(s);
 }
@@ -248,20 +246,20 @@ int Blackboard::GetNumberSight(AI_code name){
  * @where donde poner la variable
  */
 void Blackboard::SetTargetSight(AI_code name, AI_code where){
+    vector3df playerPos;
+    if(currentPlayer!=NULL) playerPos = currentPlayer->GetPos();
+
     void* em = NULL;
-    float d = -1;
+    float d = std::numeric_limits<float>::max();
+
     int size = sightSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = sightSense[i];
         if(s->code == name){
-            if(d == -1){
-                d = s->length;
+            float length = (playerPos - sightSense[i]->kinematic.position).length();
+            if(length < d){
+                d = length;
                 em = s;
-            }else{
-                if(s->length < d){
-                    d = s->length;
-                    em = s;
-                }
             }
         }
     }
@@ -271,20 +269,20 @@ void Blackboard::SetTargetSight(AI_code name, AI_code where){
 }
 
 void Blackboard::SetTargetSound(AI_code name, AI_code where){
+    vector3df playerPos;
+    if(currentPlayer!=NULL) playerPos = currentPlayer->GetPos();
+
     void* em = NULL;
-    float d = -1;
+    float d = std::numeric_limits<float>::max();
+
     int size = soundSense.size();
     for(int i=0; i<size; i++){
         Sense_struct* s = soundSense[i];
         if(s->code == name){
-            if(d == -1){
-                d = s->length;
+            float length = (playerPos - soundSense[i]->kinematic.position).length();
+            if(length < d){
+                d = length;
                 em = s;
-            }else{
-                if(s->length < d){
-                    d = s->length;
-                    em = s;
-                }
             }
         }
     }

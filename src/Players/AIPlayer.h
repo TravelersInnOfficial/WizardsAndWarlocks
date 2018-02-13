@@ -15,6 +15,7 @@ public:
 	AIPlayer();
 	~AIPlayer();
 
+	void ResetValues();
 	void Update(float deltaTime);
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
@@ -24,6 +25,9 @@ public:
 	// Draw
 	void Debug();
 
+	// Steerings
+	void SetForceToMove(vector3df force);
+	void SetForceToRotate(vector3df force);
 	void Steering2Controller(SteeringOutput steering);
 	void ShortestPath(vector3df); //Calculates the shortest path between to a positio
 
@@ -66,6 +70,11 @@ private:
 	Seek*					seek;
 	Flee*					flee;
 
+	// Movement
+	vector3df			forceToMove;
+	vector3df			forceToRotate;
+
+	// ShootSpells
 	bool				shootSpell; 	// Ha conseguido lanzar el hechizo en este frame? Si/No
 	bool 				castingSpell;	// Esta lanzando un hechizo? Si/No
 };

@@ -41,7 +41,7 @@ public:
 	Player* GetPlayerOne();
 	Player* GetPlayerFromID(int id);
 	Player* GetPlayerFromNetID(int id);
-	vector<Player*> GetAllPlayers();
+	std::vector<Player*> GetAllPlayers();
 	
 	// DeadCam Functions
 	bool PlayerAlive(Player* player);				// Da la posicion del jugador target, en el caso de que no este cambia el puntero
@@ -50,13 +50,13 @@ public:
 private:
 	Player*		playerOne;
 
-	vector<Player*>	players;
-	vector<Player*>	deadPlayers;
+	std::vector<Player*>	players;
+	std::vector<Player*>	deadPlayers;
 
 	bool wizardsWin;
 	bool warlocksWin;
 
-	vector<Player*> playersToDelete;
+	std::vector<Player*> playersToDelete;
 
 	PlayerManager();
 	static PlayerManager* instance;

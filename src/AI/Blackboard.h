@@ -9,6 +9,7 @@
 #include <vector3d.h>
 #include <kinematicTypes.h>
 #include <vector>
+#include <limits>
 
 class AIPlayer;    
 
@@ -17,7 +18,6 @@ struct Sense_struct{
     void* pointer;
 	AI_code code;
 	Kinematic kinematic;
-    float length;
 	float duration;
 
     ~Sense_struct();
@@ -50,8 +50,8 @@ public:
     int     GetNumberSight(AI_code name);
     void    SetTargetSight(AI_code name, AI_code where);
     void    SetTargetSound(AI_code name, AI_code where);
- 	void 	SetSound(int id, void* punt, AI_code name, Kinematic kin, float len, float dur);
- 	void	SetSight(int id, void* punt, AI_code name, Kinematic kin, float len, float dur);
+ 	void 	SetSound(int id, void* punt, AI_code name, Kinematic kin, float dur);
+ 	void	SetSight(int id, void* punt, AI_code name, Kinematic kin, float dur);
 
     void    SaveParent(Blackboard* parent);
 

@@ -90,11 +90,12 @@ void BehaviourTree::CreateReceive(){
     Selector* sc_checkActions = new Selector();
     sc_checkActions->addChild(new CheckUsePotion());    // Comprobamos si usar una pocion
     sc_checkActions->addChild(sc_seePlayers);           // Comprobamos si estamos viendo algun jugador
-    sc_checkActions->addChild(new CheckExplore());      // Comprobamos si hemos explorado la habitacion
-    sc_checkActions->addChild(new CheckTravel());
     sc_checkActions->addChild(new CheckSawTrap());      // Comprobamos si hemos visto alguna trampa
-    sc_checkActions->addChild(new CheckSawFountain());  // Comprobamos si hemos visto alguna fuente
     sc_checkActions->addChild(new CheckSawPotion());    // Comprobamos si hemos visto alguan fuente
+    sc_checkActions->addChild(new CheckSawFountain());  // Comprobamos si hemos visto alguna fuente
+    sc_checkActions->addChild(new CheckGrailSeen());    // Comprobamos si hemos visto el grial
+    sc_checkActions->addChild(new CheckExplore());      // Comprobamos si hemos explorado la habitacion
+    sc_checkActions->addChild(new CheckTravel());       // Viajamos a la siguiente sala
     sc_checkActions->addChild(new PutDefaultAction());  // Accion por defecto
 
     SetRootReceive(sc_checkActions);
@@ -117,6 +118,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateMoveDefault();
     // Movimiento a un target
     CreateMoveToTarget();
+    // Movimiento a un target con path
+    CreatePathToTarget();
     // Movimiento de los Hechizos
     CreateMoveSpell();
     // Lanzamiento de los hechizos
@@ -141,6 +144,10 @@ void BehaviourTree::PrepareSubTrees(){
     CreateTravelMove();
     // Move Open Door
     CreateOpenDoor();
+    // Move use fountain
+    CreateMoveFountain();
+    // Catch grail
+    CreateCatchGrail();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -225,6 +232,12 @@ void BehaviourTree::CreateMoveToTarget(){
     tasks.push_back(t);
 }
 
+void BehaviourTree::CreatePathToTarget(){
+    Task* t = new TargetPath();
+    informacion->SetPuntero(AI_MOVE_TARGETPATH, t);
+    tasks.push_back(t);
+}
+
 void BehaviourTree::CreateDrinkPotion(){
     Task* t = new UsePotion();
     informacion->SetPuntero(AI_TASK_DRINK_POT, t);
@@ -275,7 +288,7 @@ void BehaviourTree::CreateExploreMove(){
 
 void BehaviourTree::CreateTravelTask(){
     Secuencia* sc_travelTask = new Secuencia();
-    sc_travelTask->addChild(new SetRoomTravel());
+    //sc_travelTask->addChild(new EmptyTask());
     sc_travelTask->addChild(new CheckDoorInFront(2.0f));
 
     informacion->SetPuntero(AI_TASK_TRAVEL, sc_travelTask);
@@ -292,4 +305,26 @@ void BehaviourTree::CreateOpenDoor(){
     Task* t = new NoMove();
     informacion->SetPuntero(AI_MOVE_OPEN_DOOR, t);
     tasks.push_back(t);
+}
+
+void BehaviourTree::CreateMoveFountain(){
+    Secuencia* sc_moveFountain = new Secuencia();
+    sc_moveFountain->addChild(new CheckDistance(1.5f));
+    sc_moveFountain->addChild(new NoMove());
+
+    Selector* sc_selectOption = new Selector();
+    sc_selectOption->addChild(sc_moveFountain);
+    sc_selectOption->addChild(new TargetPath());
+
+    informacion->SetPuntero(AI_MOVE_FOUNTAIN, sc_selectOption);
+    tasks.push_back(sc_selectOption);
+}
+
+void BehaviourTree::CreateCatchGrail(){
+    Secuencia* sc_catchGrail = new Secuencia();
+    sc_catchGrail->addChild(new CheckDistance(2.0f));   // Distancia del raycast
+    sc_catchGrail->addChild(new CatchGrail());
+
+    informacion->SetPuntero(AI_TASK_CATCH_GRAIL, sc_catchGrail);
+    tasks.push_back(sc_catchGrail);
 }

@@ -233,7 +233,7 @@ Trap* TrapManager::GetTrapWithId(int id){
 	return toRet;
 }
 
-vector<Trap*> TrapManager::GetAllTraps(){
+std::vector<Trap*> TrapManager::GetAllTraps(){
 	return(traps);
 }
 

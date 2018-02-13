@@ -231,7 +231,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-0, 0.0f, 0.1f, 50, 100);
+			h = new DesperationWall(-0, 0.0f, 1.0f, 50, 100);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
@@ -261,7 +261,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 
 		case SPELL_DUMMY:
-			h = new SpellDummy(-0, 0.0f, 0.1f, 100, 100);
+			h = new SpellDummy(-0, 0.0f, 1.0f, 100, 100);
 		break;
 
 		case SPELL_TELEPORTBASE:

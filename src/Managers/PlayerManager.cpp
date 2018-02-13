@@ -293,8 +293,8 @@ Player* PlayerManager::GetPlayerOne(){
 	return playerOne;
 }
 
-vector<Player*> PlayerManager::GetAllPlayers(){
-	vector<Player*> toRet;
+std::vector<Player*> PlayerManager::GetAllPlayers(){
+	std::vector<Player*> toRet;
 	toRet.insert(toRet.end(), players.begin(), players.end() );
 	toRet.insert(toRet.end(), deadPlayers.begin(), deadPlayers.end() );
 	return(toRet);

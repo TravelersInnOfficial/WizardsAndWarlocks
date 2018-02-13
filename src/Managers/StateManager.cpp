@@ -62,6 +62,11 @@ bool StateManager::Update(){
 
 	UpdateDelta();
 
+	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
+		std::string myFps = std::to_string(int(1/deltaTime));
+		std::wstring wsTmp(myFps.begin(), myFps.end());
+		g_engine->ChangeWindowName(wsTmp);
+
 	return !end;
 }
 

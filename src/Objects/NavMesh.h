@@ -13,6 +13,7 @@ class NavMesh{
     NavMesh();
     NavMesh(std::vector<Node*>, std::vector<Connection*>, std::vector<Triangle*>);
     ~NavMesh();
+    void draw();
     void addNode(int id, vector3df position);
     void addConnection(float cost, int from_index, int to_index);
     void addTriangle(int vertex1, int vertex2, int vertex3);

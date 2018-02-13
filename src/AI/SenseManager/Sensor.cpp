@@ -27,17 +27,14 @@ bool Sensor::DetectsModality(Modality* mod){
 void Sensor::Notify(Signal* sig, float currentTime){
 	AI_modalities type = sig->GetModality()->GetType();
 
-	vector3df dir = sig->GetPosition() - GetPosition();
-	float len = dir.length();
-
 	bool temporal = !sig->GetTemporal(); // 0 - Se queda para siempre en memoria // 1 - Tiene un tiempo de memoria
 
 	switch(type){
 		case AI_SIGHT:
-			information->SetSight(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 5000)*temporal); // Tiempo en milisegundos
+			information->SetSight(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 2000)*temporal); // Tiempo en milisegundos
 			break;
 		case AI_HEARING:
-			information->SetSound(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), len, (currentTime + 2000)*temporal); // Tiempo en milisengundos
+			information->SetSound(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 5000)*temporal); // Tiempo en milisengundos
 			break;
 	}
 }

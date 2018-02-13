@@ -22,6 +22,7 @@ SinglePlayerGame::SinglePlayerGame(){
 	captured 	= false;
 
 	m_changeMode	= 0;
+	AL = NULL;
 
 	CreateSoundEvents();
 }
@@ -99,7 +100,7 @@ bool SinglePlayerGame::Input(){
 	}
 
 	// DEBUG
-	if(g_engine->IsKeyPressed(KEY_F1)) StateManager::GetInstance()->CloseGame();
+	if(g_engine->IsKeyPressed(KEY_F1)) debug = !debug;
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
 		float vol = 1;
@@ -112,6 +113,10 @@ bool SinglePlayerGame::Input(){
 		g_engine->ToggleCameraMovement(captured);
 		g_engine->setCursorVisible(!captured);
 		captured = !captured;
+	}
+
+	if(g_engine->IsKeyPressed(KEY_KEY_M)){
+		AL = playerManager->AddAIPlayer();
 	}
 
 	return m_stateGame->Input();
@@ -132,7 +137,7 @@ void SinglePlayerGame::Draw(){
 
 	if(debug){
 		f_engine->DebugDrawWorld();
-		//if(AL != NULL) AL->Debug();
+		if(AL != NULL) AL->Debug();
 	}
 
 	g_engine->endScene();

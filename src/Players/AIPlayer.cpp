@@ -89,13 +89,18 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 	if(DEBUG_STR) std::cout<<"FollowPath\n";
 	SteeringOutput output = followPath->GetSteering(cKin);
 	output.angular = lookWhereYoureGoing->GetSteering(cKin).angular;
-	Steering2Controller(output);
 	return output;
+}
+
+void AIPlayer::ResetValues(){
+	SetAllInput(UP);
+	forceToMove = vector3df(0,0,0);
+	forceToRotate = vector3df(0,0,0);
 }
 
 void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
-		SetAllInput(UP);
+		ResetValues();
 		behaviour->Update();
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update(deltaTime);		// Check Input
@@ -116,6 +121,141 @@ void AIPlayer::Die(){
 	behaviour->ResetInformacion();
 	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
 	Player::Die();
+}
+
+// ========================================================================================= //
+//
+//	CONTROLLER FUNCTINS
+//
+// ========================================================================================= //
+
+
+void AIPlayer::CheckInput(){
+	// Movimiento
+	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
+	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+	// Acciones
+	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
+	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+	// Hechizos
+	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
+		if(StartSpell()){
+			castingSpell = true;
+		} 
+	}
+	if(controller->IsKeyReleased(ACTION_SHOOT)){ 
+		ResetSpell();
+		castingSpell = false;
+	}
+	if(controller->IsKeyDown(ACTION_SHOOT)){ 
+		if(ShootSpell()){
+			shootSpell = true;
+		} 
+	}
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+	// Trampas
+	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+}
+
+void AIPlayer::SetForceToMove(vector3df force){
+	forceToMove = force;
+}
+
+void AIPlayer::SetForceToRotate(vector3df force){
+	forceToRotate = force;
+}
+
+void AIPlayer::Steering2Controller(SteeringOutput steering){
+	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
+	vector3df linear = steering.linear;
+	if(linear.length()>5){
+		float dir = atan2(linear.X, linear.Z);
+		// Luego le restamos la rotacion propia del personaje 
+		dir = rotation.Y - dir;
+		dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
+
+		if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
+		if(dir> 180) dir -=360;
+
+		float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
+		if(tempdir<=60){
+			SetController(ACTION_MOVE_UP, DOWN);
+		}
+		else if(tempdir>=120){
+			SetController(ACTION_MOVE_DOWN, DOWN);
+		}
+
+		if(dir>=30 && dir<=150){					// En el caso de derecha, izquierda lo hacemos directamente con el valor
+			SetController(ACTION_MOVE_LEFT, DOWN);
+		}
+		else if(dir>=-120 && dir<=-30){
+			SetController(ACTION_MOVE_RIGHT, DOWN);
+		}
+	}
+	std::cout<<steering.angular<<std::endl;
+	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
+	SetAngularForce(vector3df( 0 ,angular.Y, 0));
+}
+
+void AIPlayer::SetRandomName(){
+	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+	int index = rand() % arraySize;
+	std::string auxName = defaultNames[index];
+	SetName(auxName);
+}
+
+// ========================================================================================= //
+//
+//	PATHFINDING
+//
+// ========================================================================================= //
+
+void AIPlayer::ShortestPath(vector3df to){
+	// Reset del comportamiento de movimiento al realizar un nuevo path
+	vector3df from = this->GetPos();
+	if(path->AStar(from,to)){
+		followPath->ResetValues();
+	}
+}
+
+// ========================================================================================= //
+//
+//	GETTERS
+//
+// ========================================================================================= //
+
+vector2di AIPlayer::GetActionMoveIA(){
+	vector2di output(0,0);
+	output.X = behaviour->GetBlackboard()->masterAction;
+	output.Y = behaviour->GetBlackboard()->masterMovement;
+	return output;
+}
+
+int AIPlayer::GetCurrentSpell(){
+	return currentSpell;
+}
+
+bool AIPlayer::GetShootSpell(){
+	return shootSpell;
+}
+
+bool AIPlayer::GetCastingSpell(){
+	return castingSpell;
+}
+
+// ========================================================================================= //
+//
+//	SETTERS
+//
+// ========================================================================================= //
+
+void AIPlayer::SetCurrentSpell(int num){
+	currentSpell = num;
 }
 
 void AIPlayer::Debug(){
@@ -174,155 +314,4 @@ void AIPlayer::Debug(){
 			m_playerNode->AddText(text, vector3df(0,1.5,0));
 		}
 	}
-}
-
-// ========================================================================================= //
-//
-//	CONTROLLER FUNCTINS
-//
-// ========================================================================================= //
-
-
-void AIPlayer::CheckInput(){
-	// Movimiento
-	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
-	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
-	// Acciones
-	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
-	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
-	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
-	// Hechizos
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
-		if(StartSpell()){
-			castingSpell = true;
-		} 
-	}
-	if(controller->IsKeyReleased(ACTION_SHOOT)){ 
-		ResetSpell();
-		castingSpell = false;
-	}
-	if(controller->IsKeyDown(ACTION_SHOOT)){ 
-		if(ShootSpell()){
-			shootSpell = true;
-		} 
-	}
-	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
-	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
-	// Trampas
-	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
-}
-
-void AIPlayer::Steering2Controller(SteeringOutput steering){
-	// Ahora mismo por muy pequenya que sea la fuerza la IA se mueve
-	// Puede que en un futuro lo mejor sea comprobar el length del 
-	// vector fuerza, para ver si es tan pequenyo que no deberia
-	// moverse
-
-	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
-	vector3df linear = steering.linear;
-	if(linear.length()>5){
-		float dir = atan2(linear.X, linear.Z);
-		// Luego le restamos la rotacion propia del personaje 
-		dir = rotation.Y - dir;
-		dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
-
-		if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
-		if(dir> 180) dir -=360;
-
-		float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
-		if(tempdir<=60){
-			SetController(ACTION_MOVE_UP, DOWN);
-		}
-		else if(tempdir>=120){
-			SetController(ACTION_MOVE_DOWN, DOWN);
-		}
-
-		if(dir>=30 && dir<=150){					// En el caso de derecha, izquierda lo hacemos directamente con el valor
-			SetController(ACTION_MOVE_LEFT, DOWN);
-		}
-		else if(dir>=-120 && dir<=-30){
-			SetController(ACTION_MOVE_RIGHT, DOWN);
-		}
-	}
-	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
-	SetAngularForce(vector3df( 0 ,angular.Y, 0));
-}
-
-void AIPlayer::SetRandomName(){
-	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
-	int index = rand() % arraySize;
-	std::string auxName = defaultNames[index];
-	SetName(auxName);
-}
-
-// ========================================================================================= //
-//
-//	PATHFINDING
-//
-// ========================================================================================= //
-
-void AIPlayer::ShortestPath(vector3df to){
-	// Reset del comportamiento de movimiento al realizar un nuevo path
-	followPath->ResetValues();
-
-	
-	vector3df from = this->GetPos();
-	//path = new Pathfinding(); -Ya creado en el constructor
-	//std::list<Connection*> c = path->AStar(vector3df(17.9,-2,4.73),vector3df(18.36,0.19,29.26));
-	path->AStar(from,to);
-
-/*
-	if(c.size()>0){
-		//TODO::MOVE
-		std::cout<<"The path is:"<<std::endl;
-		std::list<Connection*>::iterator it = c.begin();
-		for(;it!=c.end(); ++it){
-			Connection *con =  *it;
-			int from = con->getFromNode()->getNodeID();
-			int to = con->getToNode()->getNodeID();
-			std::cout<<"from node "<<from<<" >> to node "<<to<<std::endl;
-			//vector3df from = con->getFromNode()->getPosition();
-			//vector3df to = con->getToNode()->getPosition();
-		}
-	}else{
-		//std::cout<<"I found nothing :("<<std::endl;
-	}*/	
-}
-
-// ========================================================================================= //
-//
-//	GETTERS
-//
-// ========================================================================================= //
-
-vector2di AIPlayer::GetActionMoveIA(){
-	vector2di output(0,0);
-	output.X = behaviour->GetBlackboard()->masterAction;
-	output.Y = behaviour->GetBlackboard()->masterMovement;
-	return output;
-}
-
-int AIPlayer::GetCurrentSpell(){
-	return currentSpell;
-}
-
-bool AIPlayer::GetShootSpell(){
-	return shootSpell;
-}
-
-bool AIPlayer::GetCastingSpell(){
-	return castingSpell;
-}
-
-// ========================================================================================= //
-//
-//	SETTERS
-//
-// ========================================================================================= //
-
-void AIPlayer::SetCurrentSpell(int num){
-	currentSpell = num;
 }

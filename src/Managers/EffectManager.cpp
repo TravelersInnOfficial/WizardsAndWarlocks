@@ -8,7 +8,7 @@ EffectManager::EffectManager(){
 }
 
 EffectManager::~EffectManager(){
-	std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
+	std::map<Player*, std::vector<Effect*>* >::iterator it = effects.begin();
 	for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 		std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
 
@@ -31,12 +31,12 @@ EffectManager* EffectManager::GetInstance(){
 
 void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT_CODE){
 
-	std::map<Player*, vector<Effect*>* >::iterator it;
+	std::map<Player*, std::vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it == effects.end()){
-		effects[p] = new vector<Effect*>();
+		effects[p] = new std::vector<Effect*>();
 	}
-	vector<Effect*>* currentV = effects.at(p);
+	std::vector<Effect*>* currentV = effects.at(p);
 	int size = currentV->size();
 	for(int i=0; i<size; i++){
 		Effect* ef = currentV->at(i);
@@ -53,10 +53,10 @@ void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT_CODE){
 
 void EffectManager::CleanEffects(Player* p){
 
-	std::map<Player*, vector<Effect*>* >::iterator it;
+	std::map<Player*, std::vector<Effect*>* >::iterator it;
 	it = effects.find(p);
 	if(it != effects.end()){
-		vector<Effect*>* currentV = effects.at(p);
+		std::vector<Effect*>* currentV = effects.at(p);
 		int size = currentV->size();
 		for(int i=0; i<size; i++){
 			Effect* effect = currentV->at(i);
@@ -72,7 +72,7 @@ void EffectManager::UpdateEffects(float deltaTime){
 	currentTime += deltaTime;
 
 	if(currentTime>=maxTime){
-		std::map<Player*,vector<Effect*>* >::iterator it = effects.begin();
+		std::map<Player*, std::vector<Effect*>* >::iterator it = effects.begin();
 		for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 			Player* p = it->first;						// Pillamos el jugador actual
 			std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
@@ -94,10 +94,10 @@ void EffectManager::UpdateEffects(float deltaTime){
 
 bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){
 	if(effects.size()!=0){
-		std::map<Player*, vector<Effect*>* >::iterator it;
+		std::map<Player*, std::vector<Effect*>* >::iterator it;
 		it = effects.find(p);
 		if(it != effects.end()){
-			vector<Effect*>* currentV = effects.at(p);
+			std::vector<Effect*>* currentV = effects.at(p);
 			
 			int size = currentV->size();
 			for(int i=0; i<size; i++){							// Recorremos todos los efectos del jugador
