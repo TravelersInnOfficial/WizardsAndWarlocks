@@ -9,6 +9,7 @@ ShopMenu::ShopMenu(){
     N_TRAP_SOCKETS = 1;
 
     m_id = "ShopMenu";
+    focused_button = 0;
     
     m_width = screenWidth/1.3;
     m_height = screenHeight/1.05;
@@ -72,34 +73,36 @@ void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::IText
 
 void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols,std::vector<IrrIMGUI::IGUITexture*> &items_selected){
     ImGui::Columns(cols, id, false);
+    int next_focused = -1; 
     for(int i = 0; i<total ;i++){
         ImGui::PushID(i);
+        if(i == focused_button && type != TYPE_TRAP) ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(7.0f, 0.6f, 0.6f));
         if(ImGui::ImageButton(items_selected[i],buttonSize)){
-            //focus button?
+            next_focused = i;
         }
+        if(i == focused_button && type != TYPE_TRAP) ImGui::PopStyleColor();
         ImGui::PopID();
+        
+        if(next_focused!=-1) set_focused_button(next_focused);
 
         if (ImGui::BeginDragDropTarget()){ 
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(type,imgui_ddflags)){
-                bool already_in = false;
-                for(int j = 0; j<items_selected.size();j++){
-                    if(items_selected[j] == selected){ 
-                        already_in = true;
-                        break;
-                    }
-                }
-                if(!already_in){
+                if(!already_selected(items_selected)){
                     memcpy((float*)&items_selected[i], payload->Data, sizeof(IrrIMGUI::IGUITexture));
                     
                     //GET THE ELEMENT ENUM CODE
-                    const char* t = "image_spell";
-                    if(type == t){
+                    if(type == TYPE_SPELL){
                         ChangeSpell(i+1, spells_map[selected]);
                     }
                     else{
                         ChangeTrap(traps_map[selected]);
                     }
+                    if(type == TYPE_SPELL){
+                        set_focused_button(i);
+                        next_focused_button();
+                    }
                 }
+                else if(type == TYPE_SPELL && items_selected[focused_button] == selected) next_focused_button();
             }
             ImGui::EndDragDropTarget();
         }
@@ -114,7 +117,19 @@ void ShopMenu::load_items(const char* id, const char* type, int total, int cols,
     for(int i = 0; i<total; i++){
         ImGui::PushID(i);
         if(ImGui::ImageButton(imageids[i],buttonSize)){
-            //std::cout<<"button "<<i<<" clicked"<<std::endl;
+            selected = imageids[i];
+            if(!already_selected(selected_spells)){
+                if(type == TYPE_SPELL){
+                    memcpy((float*)&selected_spells[focused_button], &selected, sizeof(IrrIMGUI::IGUITexture));
+                    ChangeSpell(focused_button+1, spells_map[selected]);
+                    next_focused_button();
+                }
+                else{
+                    memcpy((float*)&selected_trap[0], &selected, sizeof(IrrIMGUI::IGUITexture));
+                    ChangeTrap(traps_map[selected]);
+                }
+            }
+            else if(type == TYPE_SPELL && selected_spells[focused_button] == selected) next_focused_button();
         }
         ImGui::PopID();
         
@@ -146,17 +161,20 @@ void ShopMenu::Update(bool* open){
     //ImGui::NewFrame();
     ImGui::Begin(m_id,open,w_flags);
 
-    load_sockets("selected_items_columns","image_spell",(N_SPELL_SOCKETS-1),3, selected_spells);
-    load_sockets("selected_items_columns","image_trap",N_TRAP_SOCKETS,1, selected_trap);
+    load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
+    load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
 
-    load_items("ofensive_spells_columns","image_spell", N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
-    load_items("defensive_spells_columns", "image_spell", N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
-    load_items("tactic_spells_columns", "image_spell", N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
-    load_items("traps_columns", "image_trap", N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
+    load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
+    load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
+    load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
+    load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
     
     if(ImGui::Button("Close",ImVec2(100,50))){
         closeMenu(open);
     }
+    if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
+    if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
+    if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
     //HELP WINDOWS
     //ImGui::ShowTestWindow();
     //ImGui::ShowMetricsWindow();
@@ -176,6 +194,31 @@ void ShopMenu::ChangeTrap(TrapEnum tEnum){
 		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
 		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
 	}
+}
+
+bool ShopMenu::already_selected(std::vector<IrrIMGUI::IGUITexture*> &items_selected){
+    bool already_in = false;
+    for(int j = 0; j<items_selected.size();j++){
+        if(items_selected[j] == selected){ 
+            already_in = true;
+            break;
+        }
+    }
+    return already_in;
+}
+
+void ShopMenu::set_focused_button(int val){
+    int aux = 0;
+    aux = (val>2) ? 2 : val;
+    aux = (val<0) ? 0 : aux;
+
+    focused_button = aux;
+}
+
+void ShopMenu::next_focused_button(){
+    //focused_button = focused_button < 2 ? focused_button++ : 0;
+    if(focused_button < 2) focused_button++;
+    else focused_button = 0;
 }
 
 void ShopMenu::closeMenu(bool* open){

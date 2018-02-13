@@ -30,6 +30,9 @@ private:
     void ChangeSpell(int pos, SPELLCODE sEnum);
     void ChangeTrap(TrapEnum tEnum);
 
+    bool already_selected(std::vector<IrrIMGUI::IGUITexture*> &items_selected);
+    void set_focused_button(int);
+    void next_focused_button();
     static void closeMenu(bool*);
 
     static const int N_OSPELLS = 4;     //NUMBER OF OFENSIVE SPELLS
@@ -37,7 +40,15 @@ private:
     static const int N_TSPELLS = 7;     //NUMBER OF TACTIC SPELLS
     static const int N_TRAPS = 6;       //NUMBER OF TRAPS
     int N_SPELL_SOCKETS;    //NUMBER OF SPELL SOCKETS
-    int N_TRAP_SOCKETS;
+    int N_TRAP_SOCKETS;     //NUMBER OF TRAP SOCKETS
+    int focused_button;     //ACTUAL FOCUSED BUTTON
+
+    const char* TYPE_SPELL = "image_spell";
+    const char* TYPE_TRAP = "image_trap";
+    
+    int KEY_1 = 35;
+    int KEY_2 = 40;
+    int KEY_3 = 34;
 
     ImVec2 buttonSize;                  //MENU BUTTONS SIZE
     ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
