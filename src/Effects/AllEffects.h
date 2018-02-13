@@ -16,33 +16,33 @@
 // WEAK_BURNED
 class Burned: public Effect{
 public:
-	Burned(float time, int dmg);
+	Burned(float time, float dmg);
 	void UpdateEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // WEAK_FROZEN
 class Frozen: public Effect{
 public:
-	Frozen(float time, int dmg);
+	Frozen(float time, float dmg);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // WEAK_POISONED
 class Poisoned: public Effect{
 public:
-	Poisoned(float time, int dmg);
+	Poisoned(float time, float dmg);
 	void UpdateEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 // ===============================================================================================//
@@ -118,13 +118,13 @@ private:
 // WEAK_DEATHSNARE
 class DeathSnare: public Effect{
 public:
-	DeathSnare(float time, int d);
+	DeathSnare(float time, float d);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
-	int damage;
+	float damage;
 };
 
 ////////////////////////////////////////////

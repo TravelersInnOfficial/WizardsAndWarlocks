@@ -28,6 +28,8 @@
  * @addtogroup IrrIMGUI
  */
 
+#pragma GCC diagnostic ignored "-Wtautological-constant-out-of-range-compare"
+
 // module includes
 #include <IrrIMGUI/IrrIMGUI.h>
 #include "private/IrrIMGUIDebug_priv.h"

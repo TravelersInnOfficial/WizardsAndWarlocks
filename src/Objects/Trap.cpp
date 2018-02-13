@@ -147,7 +147,7 @@ void Trap::Activate(Player* player){
     switch(m_trapType){
         case TENUM_DEATH_CLAWS:
             EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
-            player->ChangeHP(-25);
+            player->ChangeHP(-10);
         break;
 
         case TENUM_SPIRITS:
@@ -171,7 +171,7 @@ void Trap::Activate(Player* player){
         break;
 
         case TENUM_EXPLOSIVE:
-            player->ChangeHP(-50);
+            player->ChangeHP(-35);
             playExplodeEvent(m_rigidBody->GetPosition());
         break;
 

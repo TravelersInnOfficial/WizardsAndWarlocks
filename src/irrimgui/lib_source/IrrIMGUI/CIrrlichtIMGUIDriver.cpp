@@ -32,6 +32,8 @@
  * @addtogroup IrrIMGUIPrivate
  */
 
+#pragma GCC diagnostic ignored "-Wstring-plus-int"
+
 // library includes
 #include <IrrIMGUI/IrrIMGUIConfig.h>
 #ifdef _IRRIMGUI_WINDOWS_

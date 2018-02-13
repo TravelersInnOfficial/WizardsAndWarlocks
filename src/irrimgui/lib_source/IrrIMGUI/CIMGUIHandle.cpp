@@ -28,6 +28,8 @@
  * @addtogroup IrrIMGUIPrivate
  */
 
+#pragma GCC diagnostic ignored "-Wunused-variable"
+
 // library includes
 #include <IrrIMGUI/IrrIMGUI.h>
 #include "CIMGUIHandle.h"

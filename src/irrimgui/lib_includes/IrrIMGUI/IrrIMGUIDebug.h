@@ -28,6 +28,8 @@
  * @addtogroup IrrIMGUIDebug
  */
 
+#pragma GCC diagnostic ignored "-Wreorder"
+
 #ifndef IRRIMGUI_SOURCE_IRRIMGUIDEBUG_H_
 #define IRRIMGUI_SOURCE_IRRIMGUIDEBUG_H_
 

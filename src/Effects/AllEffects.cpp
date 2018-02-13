@@ -16,7 +16,7 @@
 //================================================================
 // BURNED
 //================================================================
-Burned::Burned(float time, int d):Effect(time, WEAK_BURNED){
+Burned::Burned(float time, float d):Effect(time, WEAK_BURNED){
 	damage = d;
 	createSoundEvent();
 	playEffectEvent();
@@ -34,7 +34,7 @@ void Burned::createSoundEvent() {
 //================================================================
 // FROZEN
 //================================================================
-Frozen::Frozen(float time, int d):Effect(time, WEAK_FROZEN){
+Frozen::Frozen(float time, float d):Effect(time, WEAK_FROZEN){
 	createSoundEvent();
 	damage = d;
 }
@@ -63,7 +63,7 @@ void Frozen::createSoundEvent() {
 //================================================================
 // terED
 //================================================================
-Poisoned::Poisoned(float time, int d):Effect(time, WEAK_POISONED){
+Poisoned::Poisoned(float time, float d):Effect(time, WEAK_POISONED){
 	createSoundEvent();
 	playEffectEvent();
 	damage = d;
@@ -197,9 +197,9 @@ void Madness::createSoundEvent() {
 //================================================================
 // DeathSnare
 //================================================================
-DeathSnare::DeathSnare(float time, int d):Effect(time, WEAK_DEATHSNARE){
+DeathSnare::DeathSnare(float time, float d):Effect(time, WEAK_DEATHSNARE){
 	createSoundEvent();
-	damage=d;
+	damage = d;
 }
 
 void DeathSnare::UpdateEffect(Player* p){
