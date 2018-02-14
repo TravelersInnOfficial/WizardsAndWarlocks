@@ -56,6 +56,26 @@ public:
     }
 
     /**
+     * convert the vector to radian
+     */
+    void toRadians(){
+        float factor = M_PI/180;
+        X = X * factor;
+        Y = Y * factor;
+        Z = Z * factor;
+    }
+
+    /**
+     * convert the vector de degrees
+     */
+    void toDegrees(){
+        float factor = 180/M_PI;
+        X = X * factor;
+        Y = Y * factor;
+        Z = Z * factor;
+    }
+
+    /**
      * Sets X Value
     */
 

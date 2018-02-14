@@ -148,6 +148,8 @@ void BehaviourTree::PrepareSubTrees(){
     CreateMoveFountain();
     // Catch grail
     CreateCatchGrail();
+    // Move to Interact
+    CreateMoveInteract();
 
     // DECLARANDO FUNCIONES DE ATAQUE
     Task* t_shootBasic = new UseSpell();
@@ -327,4 +329,18 @@ void BehaviourTree::CreateCatchGrail(){
 
     informacion->SetPuntero(AI_TASK_CATCH_GRAIL, sc_catchGrail);
     tasks.push_back(sc_catchGrail);
+}
+
+void BehaviourTree::CreateMoveInteract(){
+    Secuencia* sc_moveInteract = new Secuencia();
+    sc_moveInteract->addChild(new CheckDistance(2.0f)); // Distancia del raycast
+    sc_moveInteract->addChild(new FaceObject());
+
+    Selector* sc_moveTarget = new Selector();
+    sc_moveTarget->addChild(sc_moveInteract);
+    sc_moveTarget->addChild(new CheckDoorInFront(2.0f));
+    sc_moveTarget->addChild(new TargetPath());
+
+    informacion->SetPuntero(AI_MOVE_INTERACT, sc_moveTarget);
+    tasks.push_back(sc_moveTarget);
 }

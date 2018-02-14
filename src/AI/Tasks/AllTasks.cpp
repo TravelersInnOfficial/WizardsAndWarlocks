@@ -58,7 +58,6 @@ bool MasterMovement::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterMovement\n";
 
 	int number = (int)(bb->masterMovement);
-
 	if(number != lastTask){
 		lastTask = number;
 		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
@@ -114,7 +113,8 @@ bool NoMove::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 
 	SteeringOutput steering;
-	character->Steering2Controller(steering);
+	character->SetForceToMove(steering.linear);
+	character->SetForceToRotate(steering.angular);
 	
 	return true;
 }
@@ -132,18 +132,10 @@ bool CatchPotion::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target != NULL){
-		void* Object = BulletEngine::GetInstance()->Raycast(
-		character->GetPos(), 
-		target->kinematic.position);
-
-		if(Object!=NULL){
-			Entidad* h = (Entidad*)Object;
-			if(h->GetClase()==EENUM_POTION){
-				h->Interact(character);
-			}
-		}
+	if(character != NULL && target!=NULL){
+		character->SetController(ACTION_RAYCAST, PRESSED);
 		bb->CleanSense(target->id);
+		return true;
 	}
 	return false;
 }
@@ -169,7 +161,8 @@ bool TravelRoom::run(Blackboard* bb){
 
 		SteeringOutput steering = character->GetFollowPath(cKin);
 
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
 
 		return true;
 	}
@@ -191,7 +184,7 @@ bool CheckGrailSeen::run(Blackboard* bb){
 	if(number>0){
 		bb->SetTargetSight(AI_GRAIL, AI_TARGET);
 		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
-		bb->SetMasterMovement(AI_MOVE_TARGETPATH);
+		bb->SetMasterMovement(AI_MOVE_INTERACT);
 		return true;
 	
 	}
@@ -234,9 +227,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 				Door* door = (Door*)Object;
 				if(!door->GetOpenState()){
 					door->Interact(character);
-				}
-				else{
-
+					return true;
 				}
 			}
 		}
@@ -291,8 +282,8 @@ bool WhereExplore::run(Blackboard* bb){
 
     	SteeringOutput steering = character->GetFollowPath(cKin);
 
-
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
 		
 	}
 	return false;
@@ -353,16 +344,7 @@ bool UseFountain::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(target != NULL){
-		void* Object = BulletEngine::GetInstance()->Raycast(
-		character->GetPos(), 
-		target->kinematic.position);
-
-		if(Object!=NULL){
-			Entidad* h = (Entidad*)Object;
-			if(h->GetClase()==EENUM_FOUNTAIN){
-				h->Interact(character);
-			}
-		}
+		character->SetController(ACTION_RAYCAST, PRESSED);
 	}
 	return false;
 }
@@ -484,17 +466,7 @@ bool CatchGrail::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(character!=NULL){
-		void* Object = BulletEngine::GetInstance()->Raycast(
-			character->GetPos(),
-			target->kinematic.position);
-
-		if(Object!=NULL){
-			Entidad* h = (Entidad*)Object;
-			if(h->GetClase()==EENUM_GRAIL){
-				h->Interact(character);
-				return true;
-			}
-		}
+		character->SetController(ACTION_RAYCAST, PRESSED);
 	}
 	return false;
 }
@@ -512,21 +484,10 @@ bool DefuseTrap::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target != NULL){
-		void* Object = BulletEngine::GetInstance()->Raycast(
-		character->GetPos(), 
-		target->kinematic.position);
-
-		if(Object!=NULL){
-			Entidad* h = (Entidad*)Object;
-			if(h->GetClase()==EENUM_TRAP){
-				bb->SetMasterMovement(AI_MOVE_NO);
-				h->Interact(character);
-				return true;
-			}
-		}else{
-			bb->CleanSense(target->id);
-		}
+	if(character != NULL && target!=NULL){
+		character->SetController(ACTION_RAYCAST, PRESSED);
+		bb->CleanSense(target->id);
+		return true;
 	}
 	return false;
 }
@@ -547,7 +508,7 @@ bool CheckSawTrap::run(Blackboard* bb){
 	if(number>0){
 		bb->SetTargetSight(AI_TRAP, AI_TARGET);
 		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
-		bb->SetMasterMovement(AI_MOVE_TARGETPATH);
+		bb->SetMasterMovement(AI_MOVE_INTERACT);
 		return true;
 	}
 	return false;
@@ -566,21 +527,13 @@ bool CheckSawFountain::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckSawFountain\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	if(character->GetHP()<90){	// En el caso de que la vida del personaje sea inferior al 90%
+	if(character->GetHP()<80){	// En el caso de que la vida del personaje sea inferior al 90%
 		int number = bb->GetNumberSight(AI_FOUNTAIN);
 		if(number>0){			// Recuerde más de una fuente
 			bb->SetTargetSight(AI_FOUNTAIN, AI_TARGET);
-			Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-			if(target!=NULL){
-				Fountain* fo = (Fountain*)target->pointer;
-				if(fo!=NULL){
-					if(fo->GetPercentualValue()>0.2){	// Le quede a la fuente mas del 20% de uso
-						bb->SetMasterAction(AI_TASK_USE_FOUNT);
-						bb->SetMasterMovement(AI_MOVE_FOUNTAIN);
-						return true;
-					}
-				}
-			}
+			bb->SetMasterAction(AI_TASK_USE_FOUNT);
+			bb->SetMasterMovement(AI_MOVE_INTERACT);
+			return true;
 		}
 	}
 	return false;
@@ -606,7 +559,7 @@ bool CheckSawPotion::run(Blackboard* bb){
 		if(number>0){				// Miramos si la IA tiene alguna pocion en memoria para ir a por ella
 			bb->SetTargetSight(AI_POTION, AI_TARGET);	// Ponemos el target
 			bb->SetMasterAction(AI_TASK_CATCH_POT);		// Cambiamos la tarea
-			bb->SetMasterMovement(AI_MOVE_TARGETPATH);	// Cambiamos el movimiento
+			bb->SetMasterMovement(AI_MOVE_INTERACT);	// Cambiamos el movimiento
 			return true;
 		}
 	}
@@ -649,23 +602,49 @@ bool CheckDistance::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	FACE TARGET
+//
+// ================================================================================================= //
+
+FaceObject::FaceObject(){}
+
+bool FaceObject::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"FaceObject\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(character!=NULL && target!=NULL){
+		Kinematic cKin = character->GetKinematic();
+		Kinematic tKin = target->kinematic;
+
+		SteeringOutput steering = character->GetFace(cKin, tKin);
+		
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	CHECK PLAYER ATTACK
 //
 // ================================================================================================= //
 
-	CheckPlayerAttack::CheckPlayerAttack(){}
+CheckPlayerAttack::CheckPlayerAttack(){}
 
-	bool CheckPlayerAttack::run(Blackboard* bb){
-		if(DEBUG) std::cout<<"CheckPlayerAttack\n";
+bool CheckPlayerAttack::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckPlayerAttack\n";
 
-		AIPlayer* character = bb->GetPlayer();
-		// if(Meter condicion para atacar)
-		AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+	AIPlayer* character = bb->GetPlayer();
+	// if(Meter condicion para atacar)
+	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
 
-		bb->SetTargetSight(enemy, AI_TARGET);
-		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
-		return true;
-	}
+	bb->SetTargetSight(enemy, AI_TARGET);
+	bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+	return true;
+}
 
 // ================================================================================================= //
 //
@@ -791,17 +770,18 @@ bool FaceTarget::run(Blackboard* bb){
     	tKin = target->kinematic;
 
 		SteeringOutput steering = character->GetObstacleAvoid(cKin);
+		SteeringOutput steering2;
+
     	if(steering.linear.length() == 0){
     		steering = character->GetWander(cKin);
 
-    		SteeringOutput steering2 = character->GetFace(cKin, tKin);
-    		steering.angular = steering2.angular;
+    		steering2 = character->GetFace(cKin, tKin);
     	}else{
-    		SteeringOutput steering2 = character->GetFace(cKin, tKin);
-    		steering.angular = steering2.angular;
+    		steering2 = character->GetFace(cKin, tKin);
     	}
 
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering2.angular);
 
 		return true;
 	}
@@ -828,7 +808,8 @@ bool TargetPath::run(Blackboard* bb){
 
 		SteeringOutput steering = character->GetFollowPath(cKin);
 
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
 		return true;
 	}
 
@@ -860,9 +841,9 @@ bool GoToTarget::run(Blackboard* bb){
 
 		SteeringOutput steering = character->GetSeek(cKin, tKin);
 		SteeringOutput steering2 = character->GetFace(cKin, tKin);
-		steering.angular = steering2.angular;
 
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering2.angular);
 
 		return true;
 	}
@@ -893,11 +874,10 @@ bool FleeFromTarget::run(Blackboard* bb){
     	tKin = target->kinematic;
 
 		SteeringOutput steering = character->GetFlee(cKin, tKin);
-
 		SteeringOutput steering2 = character->GetFace(cKin, tKin);
-		steering.angular = steering2.angular;
 
-		character->Steering2Controller(steering);
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering2.angular);
 
 		return true;
 	}
@@ -931,7 +911,8 @@ bool T_Wander::run(Blackboard* bb){
 		steering.angular = steering2.angular;
 	}
 	
-	character->Steering2Controller(steering);
+	character->SetForceToMove(steering.linear);
+	character->SetForceToRotate(steering.angular);
 	return true;
 }
 

@@ -37,6 +37,8 @@ private:
 	void CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void createSoundEvent();
 
+	vector3df	rotation;			// Rotacion de la fuente
+
 	bool 		inUse;				// Esta en uso? Si/No
 	Player* 	user;				// Jugador que la esta utilizando
 
@@ -50,8 +52,8 @@ private:
 
 	BT_Body*        bt_body;		// Cuerpo fisico de la fuente
     GBody*          m_fountainNode;	// Cuerpo visual de la fuente
-	SoundEvent*		useEvent;
-	SoundEvent*		cantUseEvent;		
+	SoundEvent*		useEvent;		// Sonido de fuente en uso
+	SoundEvent*		cantUseEvent;	// Sonido de no poder utilizar la fuente
 };
 
 #endif

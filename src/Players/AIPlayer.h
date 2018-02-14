@@ -27,8 +27,8 @@ public:
 
 	// Steerings
 	void SetForceToMove(vector3df force);
-	void SetForceToRotate(vector3df force);
-	void Steering2Controller(SteeringOutput steering);
+	void SetForceToRotate(vector2df force);
+	void Steering2Controller(float deltaTime);
 	void ShortestPath(vector3df); //Calculates the shortest path between to a positio
 
 	void CheckInput();
@@ -56,6 +56,8 @@ private:
 	void SetRandomName();
 	void SetSteerings();
 
+	float elevation;	// Rotacion en X de la Cabeza, en el player se pilla directamente de la camara
+
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
 	Sensor*				sensor;			// Sensor de sentidos de la IA
 	Pathfinding* 		path;			// Pathfinding assistant
@@ -72,7 +74,7 @@ private:
 
 	// Movement
 	vector3df			forceToMove;
-	vector3df			forceToRotate;
+	vector2df			forceToRotate;
 
 	// ShootSpells
 	bool				shootSpell; 	// Ha conseguido lanzar el hechizo en este frame? Si/No

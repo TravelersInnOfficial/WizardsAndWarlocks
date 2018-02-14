@@ -323,7 +323,6 @@ void Player::DeadUpdate(){
 }
 
 void Player::Update(float deltaTime){
-
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -436,7 +435,7 @@ void Player::MoveX(int dir){
 	if(hasCharacter){
 		float impulse = 30;
 		impulse *= dir;
-		vector3df rot = this->rotation;
+		vector3df rot = rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 		moving = true;
 	}
@@ -446,7 +445,7 @@ void Player::MoveZ(int dir){
 	if(hasCharacter){
 		float impulse = 30;
 		impulse *= dir;
-		vector3df rot = this->rotation;
+		vector3df rot = rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 		moving = true;
 	}
@@ -739,7 +738,6 @@ void Player::UpdatePosShape(){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
 		m_playerNode->setPosition(m_position);
-
 		rotation = bt_body->GetRotation();
 		m_playerNode->setRotation(rotation * 180 / M_PI);
 	}
@@ -863,7 +861,7 @@ vector3df Player::GetVelocity(){
 
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
-	cKin.position = GetPos();
+	cKin.position = GetHeadPos();
 	cKin.orientation =  vector2df(GetRot());
    	cKin.velocity = GetVelocity();
     cKin.rotation = vector2df(GetAngularVelocity());
@@ -969,10 +967,10 @@ void Player::SetPosY(float posY){
 	}
 }
 
-void Player::SetRotation(vector3df rotation){
+void Player::SetRotation(vector3df rot){
 	if(hasCharacter){
-		this->rotation = rotation;
-		vector3df newRot = this->rotation;
+		rotation = rot;
+		vector3df newRot = rotation;
 		newRot.X = 0; newRot.Z = 0;
 		newRot = newRot * 180 / M_PI;
 		m_playerNode->setRotation(newRot);
