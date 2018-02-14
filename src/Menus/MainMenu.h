@@ -31,6 +31,8 @@ private:
     static void GameOptions(bool*);
     static void ExitGame(bool*);
 
+    static void closeMenu(bool*);
+
     typedef void (*METHOD_PTR)(bool*);
     METHOD_PTR actions[N_BUTTONS] = {&MainMenu::SinglePlayer,&MainMenu::MultiPlayer,&MainMenu::GameOptions,&MainMenu::ExitGame};
 };

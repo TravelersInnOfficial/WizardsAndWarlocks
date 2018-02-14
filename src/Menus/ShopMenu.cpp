@@ -15,7 +15,6 @@ ShopMenu::ShopMenu(){
     m_height = screenHeight/1.05;
 
     m_style.WindowBorderSize = 1.0f;
-    //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 
     hp = PlayerManager::GetInstance()->GetPlayerOne();
@@ -154,33 +153,32 @@ void ShopMenu::load_items(const char* id, const char* type, int total, int cols,
 }
 
 void ShopMenu::Update(bool* open){
-    //ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
 
-    //ImGui::NewFrame();
-    ImGui::Begin(m_id,open,w_flags);
+    if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
+    else{
+        load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
+        load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
 
-    load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
-    load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
+        load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
+        load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
+        load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
+        load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
+        
+        if(ImGui::Button("Close",ImVec2(100,50))){
+            closeMenu(open);
+        }
+        if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
+        if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
+        if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
+        
+        //HELP WINDOWS
+        //ImGui::ShowTestWindow();
+        //ImGui::ShowMetricsWindow();
 
-    load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
-    load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
-    load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
-    load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
-    
-    if(ImGui::Button("Close",ImVec2(100,50))){
-        closeMenu(open);
+        ImGui::End();
     }
-    if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
-    if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
-    if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
-    //HELP WINDOWS
-    //ImGui::ShowTestWindow();
-    //ImGui::ShowMetricsWindow();
-    //ImGui::PopStyleVar();
-    ImGui::End();
-    //ImGui::Render();
 }
 
 void ShopMenu::ChangeSpell(int pos, SPELLCODE sEnum){
@@ -216,14 +214,14 @@ void ShopMenu::set_focused_button(int val){
 }
 
 void ShopMenu::next_focused_button(){
-    //focused_button = focused_button < 2 ? focused_button++ : 0;
     if(focused_button < 2) focused_button++;
     else focused_button = 0;
 }
 
 void ShopMenu::closeMenu(bool* open){
-    
-    //*open = false; //TODO:: FIX por alguna razon esto peta al salir y volver a entrar en el menu
+    *open = false; 
     GraphicEngine::getInstance()->ToggleMenu(false);
-    ObjectManager::GetInstance()->StopInteractionsNPC();
+    HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
+    hp->ToggleMenu(false);
+    ImGui::GetIO().MouseDrawCursor = false;
 }

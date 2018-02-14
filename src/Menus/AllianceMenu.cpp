@@ -11,53 +11,57 @@ AllianceMenu::AllianceMenu(){
 
     buttonSize = ImVec2(120,60);
     m_style.WindowBorderSize = 1.0f;
-    //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
     ImGui::GetIO().MouseDrawCursor = true;
 }
 
 AllianceMenu::~AllianceMenu(){}
 
 void AllianceMenu::setPlayerWarlock(bool* open){
-    Player* hp = PlayerManager::GetInstance()->GetPlayerOne();
+    HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
     hp->SetAlliance(ALLIANCE_WARLOCK);
 
     closeMenu(open);
 }
 
 void AllianceMenu::setPlayerWizard(bool* open){
-    Player* hp = PlayerManager::GetInstance()->GetPlayerOne();
+    HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
     hp->SetAlliance(ALLIANCE_WIZARD);
 
     closeMenu(open);
 }
 
 void AllianceMenu::Update(bool* open){
-    //ImGui::ShowTestWindow();
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
 
-    //ImGui::NewFrame();
-    ImGui::Begin(m_id,open,w_flags);
-    for(int i = 0; i<N_BUTTONS; i++){
-        ImGui::PushID(i);
-        if(ImGui::Button(buttonKeys[i], buttonSize)){
-            actions[i](open);
+    if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
+    else{
+        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
+        for(int i = 0; i<N_BUTTONS; i++){
+            ImGui::PushID(i);
+            if(ImGui::Button(buttonKeys[i], buttonSize)){
+                actions[i](open);
+            }
+            ImGui::PopID();
+            
+            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
         }
-        ImGui::PopID();
+
+        //HELP WINDOWS
+        //ImGui::ShowTestWindow();
+        //ImGui::ShowMetricsWindow();
         
-        if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
+        ImGui::PopStyleVar();
+        ImGui::End();
     }
-    //HELP WINDOWS
-    //ImGui::ShowTestWindow();
-    //ImGui::ShowMetricsWindow();
-    //ImGui::PopStyleVar();
-    ImGui::End();
-    //ImGui::EndFrame();
 }
 
 void AllianceMenu::closeMenu(bool* open){
-
-    //*open = false; //TODO:: FIX por alguna razon esto peta al salir y volver a entrar en el menu
+    *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
-    ObjectManager::GetInstance()->StopInteractionsNPC();
+
+    HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
+    hp->ToggleMenu(false);
+
+    ImGui::GetIO().MouseDrawCursor = false;
 }

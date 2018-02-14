@@ -25,12 +25,12 @@ GUIEngine::~GUIEngine(){
 
 void GUIEngine::Update(){
     // create the GUI elements
-    m_GUIHandler->startGUI();
+    m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
     printNotifications();
 }
 
 void GUIEngine::Draw(){
-   m_GUIHandler->drawAll();
+   m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
 }
 
 void GUIEngine::printNotifications(){
@@ -46,8 +46,10 @@ void GUIEngine::printNotifications(){
         ImVec2 window_pos = ImVec2(ImGui::GetIO().DisplaySize.x - initial_Y, m_notifications_Ypos);
         ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always, window_pos_pivot);
         ImGui::SetNextWindowBgAlpha(0.3f);
-        std::string w_id = it->first; 
-        if (ImGui::Begin(w_id.c_str(), p_open, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_AlwaysAutoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings)){
+        std::string w_id = it->first;
+        if(!ImGui::Begin(w_id.c_str(), p_open, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_AlwaysAutoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings))
+             ImGui::End();
+        else{
             ImGui::Text("%s",it->first.c_str());
             window_size = ImGui::GetWindowSize();
             ImGui::End();
