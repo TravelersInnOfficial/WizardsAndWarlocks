@@ -9,30 +9,28 @@ struct Triangle{
 };
 
 class NavMesh{
-    public:
+public:
     NavMesh();
     NavMesh(std::vector<Node*>, std::vector<Connection*>, std::vector<Triangle*>);
     ~NavMesh();
-    void draw();
-    void addNode(int id, vector3df position);
-    void addConnection(float cost, int from_index, int to_index);
-    void addTriangle(int vertex1, int vertex2, int vertex3);
-    std::vector<Node*> searchNearestNodes(vector3df);
-    std::vector<Triangle*> getTriangles();
-    void printData();
-    std::vector<Node*> getNodes(){return m_nodes;}
-    std::vector<Connection*> getConnections(){return m_connections;}
+    void Draw();
+    void AddNode(int id, vector3df position);
+    void AddConnection(float cost, int from_index, int to_index);
+    void AddTriangle(int vertex1, int vertex2, int vertex3);
+    std::vector<Node*> SearchNearestNodes(vector3df);
+    std::vector<Node*> SearchNearestNodes(vector3df pos, vector3df firstC, vector3df secondC);
 
+    std::vector<Triangle*> GetTriangles();
+    std::vector<Node*> GetNodes();
+    std::vector<Connection*> GetConnections();
+    void PrintData();
 
-    private:
+private:
+    bool CheckInside(float A, float B, float C);
+
     std::vector<Triangle*> m_triangles;
     std::vector<Node*> m_nodes;
     std::vector<Connection*> m_connections;
-
-    bool pointInTriangle(vector3df, std::vector<vector3df>);
-    float dotProduct(vector3df, vector3df);
-    vector3df crossProduct(vector3df, vector3df);
-    bool sameSide(vector3df, vector3df, vector3df, vector3df);
 
 };
 

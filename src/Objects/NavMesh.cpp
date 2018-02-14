@@ -30,9 +30,9 @@ NavMesh::~NavMesh(){
     m_nodes.clear();
 }
 
-void NavMesh::draw(){
+void NavMesh::Draw(){
     GraphicEngine* g_engine = GraphicEngine::getInstance();
-
+    
     int size = m_nodes.size();
     for(int i=0; i<size; i++){
         vector3df position = m_nodes[i]->getPosition();
@@ -40,19 +40,19 @@ void NavMesh::draw(){
     }
 }
 
-void NavMesh::addNode(int id, vector3df position){
+void NavMesh::AddNode(int id, vector3df position){
     Node* n =  new Node(id,position);
     m_nodes.push_back(n);
 }
 
-void NavMesh::addConnection(float cost, int from_index, int to_index){
+void NavMesh::AddConnection(float cost, int from_index, int to_index){
     Node *from = m_nodes[from_index];
     Node *to = m_nodes[to_index];
     Connection* c = new Connection(cost, from, to);
     m_connections.push_back(c);
 }
 
-void NavMesh::addTriangle(int vertex1, int vertex2, int vertex3){
+void NavMesh::AddTriangle(int vertex1, int vertex2, int vertex3){
     Node *v1 = m_nodes[vertex1];
     Node *v2 = m_nodes[vertex2];
     Node *v3 = m_nodes[vertex3];
@@ -64,33 +64,9 @@ void NavMesh::addTriangle(int vertex1, int vertex2, int vertex3){
 }
 
 // Si devuelve un puntero al una variable que se crea aqui, al salir del metodo se podria perder el valor
-std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
-    //bool flag = false;
-    std::vector<vector3df> tri;
+std::vector<Node*> NavMesh::SearchNearestNodes(vector3df point){
     std::vector<Node*> arr;
 
-   /* int i = 0;
-    for(;i<m_triangles.size();i++){
-        vector3df v1 = m_triangles[i]->vertices[0]->getPosition();
-        vector3df v2 = m_triangles[i]->vertices[1]->getPosition();
-        vector3df v3 = m_triangles[i]->vertices[2]->getPosition();
-
-        tri.push_back(v1);
-        tri.push_back(v2);
-        tri.push_back(v3);
-
-        flag = pointInTriangle(point,tri);
-        if(flag){ 
-            Node *n1 = m_triangles[i]->vertices[0];                
-            Node *n2 = m_triangles[i]->vertices[1];
-            Node *n3 = m_triangles[i]->vertices[2];
-            arr.push_back(n1);
-            arr.push_back(n2);
-            arr.push_back(n3);
-            break;
-        }
-        tri.clear();
-    }*/
     float compare = std::numeric_limits<float>::max();
 
     float value = 0;
@@ -107,54 +83,53 @@ std::vector<Node*> NavMesh::searchNearestNodes(vector3df point){
     if(nodeValue != -1){
         arr.push_back(m_nodes[nodeValue]);
     }
+    return arr;
+}
+
+std::vector<Node*> NavMesh::SearchNearestNodes(vector3df point, vector3df firstC, vector3df secondC){
+    std::vector<Node*> arr;
+    float compare = std::numeric_limits<float>::max();
+
+    float value = 0;
+    int nodeValue = -1;
+
+    int size = m_nodes.size();
+     for(int i=0; i<size; i++){
+        value = (m_nodes[i]->getPosition() - point).length();
+        if(value<compare && CheckInside(firstC.X, secondC.X, point.X) && CheckInside(firstC.Z, secondC.Z, point.Z)){
+            compare = value;
+            nodeValue = i;
+        }
+    }
+
+    if(nodeValue != -1){
+        arr.push_back(m_nodes[nodeValue]);
+    }
 
     return arr;
 }
 
-bool NavMesh::pointInTriangle(vector3df point, std::vector<vector3df> triangle){
-    /*
-    A = triangle[0]
-    B = triangle[1]
-    C = triangle[2]
-    p = point
-    Any point p where [B-A] cross [p-A] does not point in the same direction
-    as [B-A] cross [C-A] isn't inside the triangle. 
-    If the cross products do point in the same direction, then we need to test p with the other lines
-    as well. If the point was on the same side of AB as C and is also on the same side
-    of BC as A and on the same side of CA as B, then it is in the triangle.
-    */
-
-    bool ss_ABC = sameSide(point, triangle[0], triangle[1], triangle[2]);
-    bool ss_BAC = sameSide(point, triangle[1], triangle[0], triangle[2]);
-    bool ss_CAB = sameSide(point, triangle[2], triangle[0], triangle[1]);
-    if(ss_ABC && ss_BAC && ss_CAB) return true;
-    return false;
+bool NavMesh::CheckInside(float A, float B, float C){
+    float output = false;
+    if((C<A && C>B) || (C>A && C<B)){
+        output = true;
+    }
+    return output;
 }
 
-float NavMesh::dotProduct(vector3df A, vector3df B){
-    //A*B = A.X*B.X + A.Y*B.Y + A.Z*B.Z
-    return (A.X*B.X + A.Y*B.Y + A.Z*B.Z);   
+std::vector<Node*> NavMesh::GetNodes(){
+    return m_nodes;
 }
 
-vector3df NavMesh::crossProduct(vector3df A, vector3df B){
-    //A = [A.X A.Y A.Z]
-    //B = [B.X B.Y B.Z]
-    //AxB = [A.X*B.Y - A.Y*B.X, A.Y*B.Z - A.Z*B.Y, A.Z*B.X - A.X*B.Z]
-    return vector3df(A.X*B.Y - A.Y*B.X, A.Y*B.Z - A.Z*B.Y, A.Z*B.X - A.X*B.Z);
+std::vector<Connection*> NavMesh::GetConnections(){
+    return m_connections;
 }
 
-bool NavMesh::sameSide(vector3df p1, vector3df p2, vector3df A, vector3df B){
-    vector3df cp1 = crossProduct(vector3df(B.X-A.X,B.Y-A.Y,B.Z-A.Z),vector3df(p1.X-A.X,p1.Y-A.Y,p1.Z-A.Z));
-    vector3df cp2 = crossProduct(vector3df(B.X-A.X,B.Y-A.Y,B.Z-A.Z),vector3df(p2.X-A.X,p2.Y-A.Y,p2.Z-A.Z));
-    if(dotProduct(cp1,cp2) >= 0) return true;
-    else return false;
-}
-
-std::vector<Triangle*> NavMesh::getTriangles(){
+std::vector<Triangle*> NavMesh::GetTriangles(){
     return m_triangles;
 }
 
-void NavMesh::printData(){
+void NavMesh::PrintData(){
     std::cout<<"---------------------------------------------"<<std::endl;
     std::cout<<"-------------------NODES---------------------"<<std::endl;
     std::cout<<"---------------------------------------------"<<std::endl;

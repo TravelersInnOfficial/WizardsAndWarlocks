@@ -67,6 +67,10 @@ Blackboard* BehaviourTree::GetBlackboard(){
 	return informacion;
 }
 
+RoomGraph* BehaviourTree::GetRoomGraph(){
+    return informacion->GetRoomGraph();
+}
+
 void BehaviourTree::SetPlayer(AIPlayer* p){
     informacion->SetPlayer(p);
 }

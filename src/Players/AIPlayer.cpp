@@ -223,8 +223,11 @@ void AIPlayer::SetRandomName(){
 
 void AIPlayer::ShortestPath(vector3df to){
 	// Reset del comportamiento de movimiento al realizar un nuevo path
+	RoomGraph* room = behaviour->GetRoomGraph();
+	vector3df firstC = room->GetFirstCorner();
+	vector3df secondC = room->GetSecondCorner();
 	vector3df from = this->GetPos();
-	if(path->AStar(from,to)){
+	if(path->AStar(from,to, firstC, secondC)){
 		followPath->ResetValues();
 	}
 }

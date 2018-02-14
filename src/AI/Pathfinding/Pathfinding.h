@@ -5,13 +5,15 @@
 #include "Heuristic.h"
 #include "./../../Objects/NavMesh.h"
 
+#include <limits>
+
 class Pathfinding{
     public:
     Pathfinding();
     ~Pathfinding();
 
     void ResetValues();
-    bool AStar(vector3df , vector3df);
+    bool AStar(vector3df from, vector3df to, vector3df firstC, vector3df secondC);
 
     int         GetIndexNearestNode(vector3df pos, int start=0);
     vector3df   GetPosNode(int index);

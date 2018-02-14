@@ -464,7 +464,6 @@ bool CatchGrail::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CatchGrail\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(character!=NULL){
 		character->SetController(ACTION_RAYCAST, PRESSED);
 	}

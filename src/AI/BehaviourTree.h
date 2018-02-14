@@ -45,6 +45,7 @@ public:
 
     // Getters
     Blackboard* GetBlackboard();
+    RoomGraph* GetRoomGraph();
 
     // Adders
     void AnyadirInformacion(AI_code name, void* value);

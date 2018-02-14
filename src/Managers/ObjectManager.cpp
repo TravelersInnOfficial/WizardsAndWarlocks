@@ -204,7 +204,7 @@ void ObjectManager::AddNavmesh(std::string path){
 	}
 	navmesh = new NavMesh();
 	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
-	navmesh->draw();
+	navmesh->Draw();
 }
 
 void ObjectManager::AddRoomGraph(std::string path){

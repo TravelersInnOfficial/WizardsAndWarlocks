@@ -23,6 +23,8 @@ public:
 	bool RoomExplored();
 	vector3df WhereExplore(vector3df pos);
 	void UpdateExplore(vector3df pos);
+	vector3df GetFirstCorner();
+	vector3df GetSecondCorner();
 
 	// NEXT ROOM
 	RoomInfo* GetUnexploredRoom();
