@@ -381,10 +381,6 @@ void GraphicEngine::addToDeletionQueue(irr::scene::ISceneNode* g){
 }
 
 // GUIENV FUNCTIONS
-void GraphicEngine::drawAllGUI(){
-	privateGUIEnv->drawAll();
-}
-
 MenuOption GraphicEngine::ReadButtonPressed(){
 	
 	return(privateMenuReceiver->ReadButtonPressed());

@@ -24,18 +24,10 @@ class NpcSeller: public Npc{
 
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		void Interact(Player* p);
-		void StopInteraction();
-		void Update();
-		void Draw();
+		//void StopInteraction();
 
 	private:
 		HumanPlayer* hp;
-		int changingSpell = 1;
-
-		void ChangeChangingSpell(int changingSpell);
-		void ChangeTrap(TrapEnum tEnum);
-		void ChangeSpell(SPELLCODE sEnum);
-		void UpdateMenu();
 };
 
 #endif

@@ -5,7 +5,6 @@
 
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
-	GUI_engine		= GUIEngine::GetInstance();
 	g_engine->setCursorVisible(false);
 	g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
@@ -65,7 +64,7 @@ void MenuPrincipal::Update(float deltaTime){
 		MenuManager::GetInstance()->ClearMenu();
 		g_engine->ToggleMenu(false);
 	}
-	//GUI_engine->Update();
+
 	MenuManager::GetInstance()->Update();
 }
 
@@ -95,10 +94,8 @@ void MenuPrincipal::Draw(){
 	
 	//BACKGROUND IMAGE
     g_engine->draw2DImage(background, vector4df(0,0,g_engine->GetScreenWidth(),g_engine->GetScreenHeight()));
-	
-	//g_engine->drawAllGUI();
-	GUI_engine->Draw();
-	//MenuManager::GetInstance()->Draw();
+
+	MenuManager::GetInstance()->Draw();
 	g_engine->endScene();
 }
 

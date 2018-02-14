@@ -58,7 +58,6 @@ void GUIEngine::printNotifications(){
         m_notifications_Ypos = m_notifications_Ypos + m_notifications_distance + window_size.y;
         i++;
         if(it->second <= ImGui::GetTime()) m_notifications_data.erase((++it).base());
-        //--it;
     }
 
     m_notifications_Ypos = initial_Y;

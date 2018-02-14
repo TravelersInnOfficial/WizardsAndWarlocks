@@ -17,11 +17,3 @@ void Npc::Interact(Player* p){
 
 void Npc::StopInteraction(){
 }
-
-void Npc::Update(){
-	
-}
-
-void Npc::Draw(){
-	if(active) GraphicEngine::getInstance()->drawAllGUI();
-}

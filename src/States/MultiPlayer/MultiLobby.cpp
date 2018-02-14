@@ -100,8 +100,6 @@ void MultiLobby::Draw(){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}
-	
-	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
 }
 
 void MultiLobby::CheckIfReady(){

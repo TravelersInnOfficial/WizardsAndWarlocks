@@ -219,11 +219,6 @@ public:
         /// GUIENV FUNCTIONS
 
     /**
-     * Draws all gui elements by traversing the GUI environment starting at the root node.
-    */
-    void drawAllGUI();
-
-    /**
      * Reads a GUI Menu from the reciever
     */
     MenuOption ReadButtonPressed();

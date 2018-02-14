@@ -2,12 +2,14 @@
 #define MAINMENU_H
 
 #include <GUIEngine/Menu.h>
+#include <NetworkEngine/NetSeeker.h>
 
 class MainMenu : public Menu{
 public:
     MainMenu();
     ~MainMenu();
     void Update(bool* open);
+
 private:
 
     static const int N_BUTTONS = 4;
@@ -16,6 +18,13 @@ private:
 
     static bool m_options;
     static bool m_exit;
+    static bool m_multiplayer;
+    bool m_none_selected;
+    bool m_direct_connection;
+    bool m_start_host;
+
+    NetSeeker*		netSeeker;
+    std::vector<ServerData> serverList;
     
     const char * buttonLayouts[N_BUTTONS]   = { "./../assets/textures/GUI/Menus/MainMenu/single_player_button.png",
                                                 "./../assets/textures/GUI/Menus/MainMenu/multiplayer_button.png",

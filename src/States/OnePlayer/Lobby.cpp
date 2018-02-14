@@ -72,9 +72,6 @@ void Lobby::Draw(){
 		playerOne->Draw();
 	}
 
-	
-	g_engine->drawAllGUI();	// Draws the MENU (if one is activated)
-
 }
 
 void Lobby::CheckIfReady(){

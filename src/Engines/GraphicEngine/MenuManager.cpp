@@ -70,15 +70,14 @@ void MenuManager::CreateMenu(MenuType type, int option){
 }
 
 void MenuManager::Update(){
-	std::cout<<"OPEN VALUE? "<<open_menu<<std::endl;
-	if(currentMenu != NULL /*&& open_menu*/){ 
+	if(currentMenu != NULL){ 
 		GUIEngine::GetInstance()->Update();
 		currentMenu->Update(&open_menu);
 	}
 }
 
 void MenuManager::Draw(){
-	if(currentMenu != NULL /*&& open_menu*/){ 
+	if(currentMenu != NULL){ 
 		GUIEngine::GetInstance()->Draw();
 	}
 	if(!open_menu) currentMenu = NULL;

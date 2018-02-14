@@ -319,25 +319,6 @@ void ObjectManager::CopyRoomGraph(RoomGraph* copy){
 
 // ===================================================================================================== //
 //
-// DRAWERS
-//
-// ===================================================================================================== //
-
-
-void ObjectManager::DrawNpcMenu(){
-	int size = npcs.size();
-	for(int i=0; i<size; i++){
-		Npc* n = npcs[i];
-		n->Draw();
-	}
-}
-
-void ObjectManager::DrawGrailGUI(){
-	if(grail != NULL) grail->drawGUI();
-}
-
-// ===================================================================================================== //
-//
 // DELETERS
 //
 // ===================================================================================================== //
@@ -475,7 +456,6 @@ void ObjectManager::Update(float deltaTime){
 	UpdatePotions();
 	UpdateFountains(deltaTime);
 	UpdateBlocks();
-	UpdateNpcs();
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
 }
@@ -521,14 +501,6 @@ void ObjectManager::UpdateBlocks(){
 	for(int i=0; i<size; i++){
 		Block* b = blocks[i];
 		b->Update();
-	}
-}
-
-void ObjectManager::UpdateNpcs(){
-	int size = npcs.size();
-	for(int i=0; i<size; i++){
-		Npc* n = npcs[i];
-		n->Update();
 	}
 }
 

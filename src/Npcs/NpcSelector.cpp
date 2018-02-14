@@ -40,28 +40,7 @@ void NpcSelector::Interact(Player* p){
 	}
 }
 
-void NpcSelector::Update(){
-	MenuOption selected = NO_OPT;
-	if (active){
-		selected = GraphicEngine::getInstance()->ReadButtonPressed();
-		switch(selected){
-			case (ALLIANCE_M_WIZARD):{
-				hp->SetAlliance(ALLIANCE_WIZARD);
-				StopInteraction();
-				break;
-			}
-			case (ALLIANCE_M_WARLOCK):{
-				hp->SetAlliance(ALLIANCE_WARLOCK);
-				StopInteraction();
-				break;
-			}
-			default:{
-				break;
-			}
-		}
-	}
-}
-
+/*
 void NpcSelector::StopInteraction(){
 	if(active){
 		MenuManager::GetInstance()->ClearMenu();
@@ -73,6 +52,4 @@ void NpcSelector::StopInteraction(){
 		}
 	}
 }
-
-void NpcSelector::Draw(){
-}
+*/

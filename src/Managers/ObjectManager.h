@@ -64,10 +64,6 @@ public:
 	std::vector<Potion*> GetAllPotions();
 	void CopyRoomGraph(RoomGraph* copy);
 
-	// Drawers
-	void DrawNpcMenu();
-	void DrawGrailGUI();
-
 	// Deleters
 	void DeletePotion(Potion* p);
 	void DeleteBlock(Block* b);
@@ -93,7 +89,6 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
-	void UpdateNpcs();
 	void UpdateInvocations(float deltaTime);
 	void UpdateDamageAreas(float deltaTime);
 

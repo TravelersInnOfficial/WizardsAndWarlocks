@@ -35,7 +35,6 @@ private:
 	void UpdateSeeker(float deltaTime);
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
-	GUIEngine* 		GUI_engine;
 	MenuOption 		selectedOption;		// Opcion dada en el menu
 	
 	NetSeeker*		netSeeker;
