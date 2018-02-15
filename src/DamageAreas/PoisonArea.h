@@ -8,7 +8,7 @@
 
 class PoisonArea: public DamageArea{
 public:
-	PoisonArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~PoisonArea();
 
 	bool Update(float deltaTime);

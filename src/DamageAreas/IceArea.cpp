@@ -3,7 +3,7 @@
 #include <ColliderMasks.h>
 
 
-IceArea::IceArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
+IceArea::IceArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :DamageArea(dam, 0.2f, TPosition, TScale, TRotation){
 	activated = true;
 	CreateIceArea(TPosition, TScale, TRotation);

@@ -7,7 +7,7 @@
 
 class IceArea: public DamageArea{
 public:
-	IceArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	IceArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~IceArea();
 
 	bool Update(float deltaTime);

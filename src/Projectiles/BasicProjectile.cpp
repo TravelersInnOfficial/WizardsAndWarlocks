@@ -8,9 +8,9 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCO
     dir,                        // direction of the projectile
     emi,                        // player id 
     0.05f,                      // radius of the projectile
-    30.0f,                      // speed of the projectile
+    55.0f,                      // speed of the projectile
     10 * damageMult,            // damage of the projectile
-    10.0f,                      // max distance the projectile can travel
+    20.0f,                      // max distance the projectile can travel
     "./../assets/textures/projectils/SPELL_PROJECTILE.png",        // texture of the projectile
     "")
 {

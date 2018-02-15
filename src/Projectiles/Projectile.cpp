@@ -4,7 +4,7 @@
 #include "./../Invocations/Invocation.h"
 #include "./../Managers/PlayerManager.h"
 
-Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, int dmg, float maxDist, std::string texture, std::string soundPath){
+Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, float dmg, float maxDist, std::string texture, std::string soundPath){
 	impact = false;
 	initPos = pos;
 	direction = new vector3df(dir.X, dir.Y, dir.Z);

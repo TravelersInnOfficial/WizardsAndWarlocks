@@ -187,7 +187,7 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 
 	switch(type){
 		case AREA_ICE:
-			ar = new IceArea(3, TPosition, TScale, TRotation);
+			ar = new IceArea(1.5f, TPosition, TScale, TRotation);
 		break;
 
 		case AREA_POISON:

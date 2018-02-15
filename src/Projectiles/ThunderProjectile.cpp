@@ -8,9 +8,9 @@ ThunderProjectile::ThunderProjectile(vector3df pos, vector3df dir, int emi, floa
     dir,                        // direction of the projectile
     emi,                        // player id 
     0.15f,                      // radius of the projectile
-    30.0f,                      // speed of the projectile
+    40.0f,                      // speed of the projectile
     20 * damageMult,            // damage of the projectile
-    10.0f,                      // max distance the projectile can travel
+    20.0f,                      // max distance the projectile can travel
     "./../assets/textures/projectils/SPELL_THUNDER.png",        // texture of the projectile
     "event:/Spells/Projectiles/Furore Othinus")             //Sound event
 {

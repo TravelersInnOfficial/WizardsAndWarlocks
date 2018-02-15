@@ -1,7 +1,7 @@
 #include "DamageArea.h"
 #include "./../Players/Player.h"
 
-DamageArea::DamageArea(int dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation){
+DamageArea::DamageArea(float dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation){
 	damage = dam;
 	casting = cast;
 	currentCast = 0.0f;
