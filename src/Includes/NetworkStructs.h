@@ -4,6 +4,12 @@
 #include <iostream>
 #include <NetworkEngine/RakNetIncludes.h>
 
+struct ServerInfo{
+    bool isServer = false;
+	bool inGameServer = false;
+	std::string serverName = "";
+};
+
 struct ServerData{
 	int playerCount;
 	bool lobbyState;

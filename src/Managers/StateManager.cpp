@@ -3,25 +3,33 @@
 
 StateManager* StateManager::instance = 0;
 
-StateManager::StateManager(bool isServer, bool ingameServer){
+StateManager::StateManager(ServerInfo* serverInfo){
+	if(serverInfo == NULL){
+		ServerInfo dummyInfo;
+		serverInfo = &dummyInfo;
+		serverInfo->isServer = false;
+		serverInfo->inGameServer = false;
+		serverInfo->serverName = "";
+	}
+
 	// DeltaTime
 	timeStart = 0.0f;
 	deltaTime = 0.0f;
 	minFrameTime = (1.0f / 240.0f) * 1000;
 
 	// Engines
-	g_engine = GraphicEngine::getInstance(ingameServer);
+	g_engine = GraphicEngine::getInstance(serverInfo->inGameServer);
 	f_engine = BulletEngine::GetInstance();
 	f_engine->CreateWorld();
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
-	n_engine = NetworkEngine::GetInstance(ingameServer);
+	n_engine = NetworkEngine::GetInstance(serverInfo);
 
 	srand(time(0));
 	currentState = NULL;
 	
 	State_Code firstState = STATE_MENU;
-	if(isServer) firstState = STATE_NETGAME_SERVER;
+	if(serverInfo->isServer) firstState = STATE_NETGAME_SERVER;
 	
 	LoadState(firstState);
 	preparedStatus = WITHOUT_STATE;
@@ -37,8 +45,8 @@ StateManager::~StateManager(){
 	instance = 0;
 }
 
-StateManager* StateManager::GetInstance(bool isServer, bool ingameServer){
-	if(instance==0) instance = new StateManager(isServer, ingameServer);
+StateManager* StateManager::GetInstance(ServerInfo* serverInfo){
+	if(instance==0) instance = new StateManager(serverInfo);
 	return instance;
 }
 
