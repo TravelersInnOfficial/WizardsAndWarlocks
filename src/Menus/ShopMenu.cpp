@@ -152,7 +152,7 @@ void ShopMenu::load_items(const char* id, const char* type, int total, int cols,
     ImGui::Separator();
 }
 
-void ShopMenu::Update(bool* open){
+void ShopMenu::Update(bool* open, float deltaTime){
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
 

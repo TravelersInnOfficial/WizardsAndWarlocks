@@ -7,7 +7,7 @@ class AllianceMenu : public Menu{
 public:
     AllianceMenu();
     ~AllianceMenu();
-    void Update(bool*);
+    void Update(bool*, float deltaTime);
 
 private:
     static const int N_BUTTONS = 2;

@@ -7,6 +7,10 @@ bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true;
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;
 bool MainMenu::m_multiplayer = false;
+int MainMenu::m_selected_server = -1;
+
+char MainMenu::player_name[21] = "Player Name";
+char MainMenu::ip_address[21] = "127.0.0.1";
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
@@ -14,6 +18,7 @@ MainMenu::MainMenu(){
     m_start_host = false;
     m_direct_connection = false;
     m_none_selected = false;
+    m_some_selected = false;
 
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
@@ -31,10 +36,9 @@ MainMenu::MainMenu(){
     m_width = texture[0]->getSize().Width + 30;
     m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
 
-    //netSeeker = new NetSeeker();
+    netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
-    
     delete netSeeker;
 }
 
@@ -44,7 +48,6 @@ void MainMenu::SinglePlayer(bool* open){
 }
 
 void MainMenu::MultiPlayer(bool* open){
-    //std::cout<<"Start a new MULTIPLAYER game"<<std::endl;
     m_multiplayer = true;
 }
 void MainMenu::GameOptions(bool * open){
@@ -54,16 +57,14 @@ void MainMenu::ExitGame(bool * open){
     m_exit = true;
 }
 
-void MainMenu::Update(bool* open){
-    //netSeeker->Update(GraphicEngine::getInstance()->getTime());
-    //std::vector<ServerData> newServerList = netSeeker->GetList();
+void MainMenu::Update(bool* open, float deltaTime){
+    netSeeker->Update(deltaTime);
 
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
-    //ImGui::NewFrame();
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5)); //widget items spacing
@@ -86,26 +87,6 @@ void MainMenu::Update(bool* open){
 
         //SERVER LIST MODAL
        if(m_multiplayer){
-        /////////
-       // std::cout<<"serverlist size: "<<serverList.size()<<std::endl;
-        //std::cout<<"NEW serverlist size: "<<newServerList.size()<<"\n";
-           /* if(serverList.size() != newServerList.size()){
-                std::cout<<"----------------------"<<std::endl;
-                std::cout<<"NEW LIST OF SERVERS: "<<std::endl;
-                
-                if(newServerList.size() == 0) std::cout<<"No server available"<<std::endl;
-                else{
-                    for(int i = 0; i < newServerList.size(); i++){
-                        std::cout<<newServerList.at(i).name<<" - IP: "<<newServerList.at(i).ip;
-                        std::cout<<":60000. Players: "<<newServerList.at(i).playerCount<<"/8";
-                        std::cout<<". Game Started: "<<!newServerList.at(i).lobbyState<<"."<<std::endl;
-                    }
-                }
-                
-                std::cout<<"----------------------"<<std::endl;
-                serverList = newServerList;
-            }*/
-           ////////////
             ImGui::OpenPopup("Server list");
             ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
             if(!ImGui::BeginPopupModal("Server list")) ImGui::EndPopup();
@@ -122,40 +103,48 @@ void MainMenu::Update(bool* open){
                 ImGui::SetNextWindowContentSize(ImVec2(screenWidth/1.21, screenHeight/1.2));
                 ImGui::BeginChild("##list-of-servers",ImVec2(0,screenHeight/1.5));
                 ImGui::Columns(4, "server-columns"); // 4-ways, with border
-                std::string server_name[3] = { "HEY HEY HEEEEEEEY", "WAZZU WAZZU WAZZU WAZZUUUUUUUUUUUUUUUP", "BITCONNEEEEEEEEEEECT" };
-                const char* server_ip[3] = { "192.168.1.242", "192.168.23.114", "192.168.1.117" };
-                const char* server_players[3] = { "4/8", "2/8", "8/8" };
-                const char* server_status[3] = { "LOBBY", "LOBBY", "IN GAME" };
-                static int selected = -1;
-                int j = 0;
-                for (int i = 0; i < 30; i++){
-                    std::string label = server_name[j] + " ## " + std::to_string(i);
-                    if (ImGui::Selectable(label.c_str(), selected == i, ImGuiSelectableFlags_SpanAllColumns)){
-                        std::cout<<"I selected: "<<label<<std::endl;
-                        selected = i;
-                    }
-                    
-                    ImGui::NextColumn();
-                    ImGui::Text(server_ip[j]); ImGui::NextColumn();
-                    ImGui::Text(server_players[j]); ImGui::NextColumn();
-                    ImGui::Text(server_status[j]); ImGui::NextColumn();
 
-                    if(j==2) j = 0;
-                    else j++;
+                std::vector<ServerData> newServerList = netSeeker->GetList();
+
+                serverList = newServerList;
+
+                for(int i = 0; i < newServerList.size(); i++){
+                    //PRINT SERVERS DATA
+                    std::string label = newServerList.at(i).name + "##" + std::to_string(i);
+                    if (ImGui::Selectable(label.c_str(), m_selected_server == i, ImGuiSelectableFlags_SpanAllColumns)){
+                        m_selected_server = i;
+                        m_some_selected = true;
+                        ImGui::CloseCurrentPopup();
+                        m_multiplayer = false;
+                    }
+                    ImGui::NextColumn();
+                    //server ip
+                    std::string server_ip = newServerList.at(i).ip;
+                    ImGui::Text("%s", server_ip.c_str()); ImGui::NextColumn();
+                    //server player count
+                    std::string server_player_count = std::to_string(newServerList.at(i).playerCount);
+                    ImGui::Text("%s", server_player_count.c_str()); ImGui::NextColumn();
+                    //server lobby StateManager
+                    std::string server_lobby_state =std::to_string(!newServerList.at(i).lobbyState);
+                    ImGui::Text("%s", server_lobby_state.c_str()); ImGui::NextColumn();
                 }
+           
                 ImGui::Columns(1);
                 ImGui::EndChild();
 
                 ImGui::Separator();
 
                 if(ImGui::Button("CONNECT")){
-                    if(selected == -1 ){
+                    if(m_selected_server == -1 ){
+                        strcpy(ip_address, (serverList[m_selected_server].ip).c_str());
                         m_none_selected = true;
                         ImGui::CloseCurrentPopup(); 
                         m_multiplayer = false;
-                    } 
+                    }
                     else{
-                        //CONNECT TO SELECTED
+                        m_some_selected = true;
+                        ImGui::CloseCurrentPopup(); 
+                        m_multiplayer = false;
                     }
                 }
 
@@ -186,6 +175,31 @@ void MainMenu::Update(bool* open){
             }
         }
 
+////CHECK MULTIPLAYER STATES////
+        //SERVER SELECTED
+        if(m_some_selected){
+            ImGui::OpenPopup("Introduce your name");
+            if(ImGui::BeginPopupModal("Introduce your name")){
+                ImGui::Text("Your Name: ");
+                ImGui::SameLine();
+                ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
+                ImGui::Separator();
+                if(ImGui::Button("CONNECT")){
+                    m_some_selected = false;
+                    ImGui::CloseCurrentPopup();
+                    PrepareClient(true);
+                    closeMenu(open);
+                }
+                if(ImGui::Button("BACK")){
+                    m_some_selected = false;
+                    ImGui::CloseCurrentPopup();
+                    m_multiplayer = true;
+                }
+                ImGui::EndPopup();
+            }
+        }
+
+        //NO SERVER SELECTED
         if(m_none_selected){
             ImGui::OpenPopup("Select a server");
             if(ImGui::BeginPopupModal("Select a server")){
@@ -200,42 +214,71 @@ void MainMenu::Update(bool* open){
             }
         }
 
+        //DIRECT CONNECTION
         if(m_direct_connection){
             ImGui::OpenPopup("Direct connection");
+            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
             if(ImGui::BeginPopupModal("Direct connection")){
+                ImGui::Text("Your Name: ");
+                ImGui::SameLine();
+                ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
+               
                 ImGui::Text("IP: ");
                 ImGui::SameLine();
-                static char str0[128] = "Introduce address...";
-                ImGui::InputText("", str0, IM_ARRAYSIZE(str0));
+                ImGui::InputText("##ip_address", ip_address, IM_ARRAYSIZE(ip_address));
                 ImGui::Separator();
+
+                if(ImGui::Button("CONNECT TO SERVER")){
+                    //CONNECT TO THE SERVER DATA ABOVE
+                    m_direct_connection = false;
+                    ImGui::CloseCurrentPopup();
+                    PrepareClient(true);
+                    closeMenu(open);
+                }
                 if(ImGui::Button("BACK")){
                     m_direct_connection = false;
                     ImGui::CloseCurrentPopup();
                     m_multiplayer = true;
                 }
-                if(ImGui::Button("CONNECT TO SERVER")){
-                    //CONNECT TO THE SERVER DATA ABOVE
-                }
+
                 ImGui::EndPopup();
             }
         }
 
+        //START A HOST
         if(m_start_host){
             ImGui::OpenPopup("Start a host");
             if(ImGui::BeginPopupModal("Start a host")){
+                ImGui::Text("Your Name: ");
+                ImGui::SameLine();
+
+                ImGui::InputText("", player_name, IM_ARRAYSIZE(player_name));
                 ImGui::Text("Your IP: 192.168.2.224");
                 ImGui::Separator();
+
+                if(ImGui::Button("START HOSTING")){
+                    //START A SERVER
+                    strcpy(ip_address,"127.0.0.1");
+                    //std::string path = "./WizardsAndWarlocks -i "+server_name +" &";
+                    std::string path = "./WizardsAndWarlocks -i &";
+                    #ifdef _WIN64
+                    //path = "START /B WizardsAndWarlocks.exe -i"+server_name;
+                        path = "START /B WizardsAndWarlocks.exe -i";
+                    #endif
+                    std::system(path.c_str());
+                    PrepareClient(true);
+                    closeMenu(open);
+                }
                 if(ImGui::Button("BACK")){ 
                     m_start_host = false;
                     ImGui::CloseCurrentPopup();
                     m_multiplayer = true;
                 }
-                if(ImGui::Button("START HOSTING")){
-                    //START A SERVER
-                }
+
                 ImGui::EndPopup();
             }
         }
+/////////////////////////////////////
 
         //OPTIONS MODAL
         if(m_options){
@@ -260,6 +303,7 @@ void MainMenu::Update(bool* open){
                 ImGui::Text("Are you sure?\n\n");
                 ImGui::Separator();
                 if(ImGui::Button("YES", ImVec2(120,0))){
+                    //TODO::HERE 
                     GraphicEngine::getInstance()->drop();
                 }
                 ImGui::SameLine();
@@ -278,12 +322,13 @@ void MainMenu::Update(bool* open){
         ImGui::End();
         
         //NOTIFICATIONS TEST
+        /*
         if(ImGui::GetTime() > 5 && f1) {gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
         if(ImGui::GetTime() > 6 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
         if(ImGui::GetTime() > 7 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
         if(ImGui::GetTime() > 8 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
-        if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}
-        
+        if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}       
+        */
     }
 }
 
@@ -291,4 +336,14 @@ void MainMenu::closeMenu(bool* open){
     *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
     ImGui::GetIO().MouseDrawCursor = false;
+}
+
+void MainMenu::PrepareClient(bool proprietary){
+    std::cout<<"IP_ADDRESS: "<<ip_address<<std::endl;
+	NetworkEngine* n_engine;
+	n_engine = NetworkEngine::GetInstance();
+	n_engine->SetIp(ip_address);
+	n_engine->StartClient(proprietary);
+	n_engine->GetClient()->SetClientName(player_name);
+	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_CLIENT);
 }

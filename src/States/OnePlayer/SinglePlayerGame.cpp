@@ -128,7 +128,7 @@ void SinglePlayerGame::Update(float deltaTime){
 		ChangeMode();
 	}
 	m_stateGame->Update(deltaTime);
-	MenuManager::GetInstance()->Update();
+	MenuManager::GetInstance()->Update(deltaTime);
 }
 
 void SinglePlayerGame::Draw(){

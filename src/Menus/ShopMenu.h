@@ -19,7 +19,7 @@ class ShopMenu : public Menu{
 public:
     ShopMenu();
     ~ShopMenu();
-    void Update(bool* open);
+    void Update(bool* open, float deltaTime);
 
 private:
     void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>*);

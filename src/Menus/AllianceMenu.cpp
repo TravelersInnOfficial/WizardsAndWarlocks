@@ -30,7 +30,7 @@ void AllianceMenu::setPlayerWizard(bool* open){
     closeMenu(open);
 }
 
-void AllianceMenu::Update(bool* open){
+void AllianceMenu::Update(bool* open, float deltaTime){
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(0,0));
 

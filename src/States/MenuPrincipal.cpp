@@ -48,8 +48,10 @@ void MenuPrincipal::Update(float deltaTime){
 				break;
 			}
 			case MAIN_M_SERVER:{
+				//std::string path = "./WizardsAndWarlocks -i "+server_name +" &";
 				std::string path = "./WizardsAndWarlocks -i &";
 				#ifdef _WIN64
+				//path = "START /B WizardsAndWarlocks.exe -i"+server_name;
 					path = "START /B WizardsAndWarlocks.exe -i";
 				#endif
 				std::system(path.c_str());
@@ -65,11 +67,12 @@ void MenuPrincipal::Update(float deltaTime){
 		g_engine->ToggleMenu(false);
 	}
 
-	MenuManager::GetInstance()->Update();
+	MenuManager::GetInstance()->Update(deltaTime);
 }
 
 void MenuPrincipal::UpdateSeeker(float deltaTime){
 	netSeeker->Update(deltaTime);
+	/*
 	std::vector<ServerData> newServerList = netSeeker->GetList();
 	if(serverList.size() != newServerList.size()){
 		std::cout<<"----------------------"<<std::endl;
@@ -86,7 +89,7 @@ void MenuPrincipal::UpdateSeeker(float deltaTime){
 		
 		std::cout<<"----------------------"<<std::endl;
 		serverList = newServerList;
-	}
+	}*/
 }
 
 void MenuPrincipal::Draw(){

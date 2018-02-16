@@ -8,11 +8,12 @@ class MainMenu : public Menu{
 public:
     MainMenu();
     ~MainMenu();
-    void Update(bool* open);
+    void Update(bool* open, float deltaTime);
 
 private:
 
     static const int N_BUTTONS = 4;
+    static const int MAX_STRING = 21;
 
     ImVec2 buttonSize;
 
@@ -20,11 +21,17 @@ private:
     static bool m_exit;
     static bool m_multiplayer;
     bool m_none_selected;
+    bool m_some_selected;
     bool m_direct_connection;
     bool m_start_host;
 
+    static char player_name[MAX_STRING];
+    static char ip_address[MAX_STRING];
+
+    //MULTIPLAYER OPTIONS
     NetSeeker*		netSeeker;
     std::vector<ServerData> serverList;
+    static int m_selected_server;
     
     const char * buttonLayouts[N_BUTTONS]   = { "./../assets/textures/GUI/Menus/MainMenu/single_player_button.png",
                                                 "./../assets/textures/GUI/Menus/MainMenu/multiplayer_button.png",
@@ -34,6 +41,8 @@ private:
     irr::video::ITexture* texture[N_BUTTONS];
     IrrIMGUI::IGUITexture * imageid[N_BUTTONS];
     const char * descriptions[N_BUTTONS] ={"Play as a warlock against our AI","Play with your friends in LAN","Customize the game options","Exit the game"};
+
+    void PrepareClient(bool proprietary = false);
 
     static void SinglePlayer(bool*);
     static void MultiPlayer(bool*);

@@ -69,10 +69,10 @@ void MenuManager::CreateMenu(MenuType type, int option){
 	}
 }
 
-void MenuManager::Update(){
+void MenuManager::Update(float deltaTime){
 	if(currentMenu != NULL){ 
 		GUIEngine::GetInstance()->Update();
-		currentMenu->Update(&open_menu);
+		currentMenu->Update(&open_menu, deltaTime);
 	}
 }
 

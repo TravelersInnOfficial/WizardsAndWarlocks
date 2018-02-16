@@ -141,6 +141,7 @@ bool MultiPlayerGame::Input(){
 void MultiPlayerGame::Update(float deltaTime){
 	if(m_changeMode != 0) ChangeMode();
 	m_stateGame->Update(deltaTime);
+	MenuManager::GetInstance()->Update(deltaTime);
 }
 
 
@@ -158,6 +159,7 @@ void MultiPlayerGame::Draw(){
 			g_engine->drawAll();
 			m_stateGame->Draw();
 			if(debug) f_engine->DebugDrawWorld();
+			MenuManager::GetInstance()->Draw();
 			g_engine->endScene();
 		}
 	}

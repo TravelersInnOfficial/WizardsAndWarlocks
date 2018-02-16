@@ -16,7 +16,7 @@ class MenuManager{
 public:
 	static MenuManager* GetInstance();
 	~MenuManager();
-	void Update();
+	void Update(float deltaTime);
 	void Draw();
 
 	void CreateMenu(MenuType type, int option = -1);
