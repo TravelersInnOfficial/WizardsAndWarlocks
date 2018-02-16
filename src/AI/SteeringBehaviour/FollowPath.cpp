@@ -2,7 +2,7 @@
 
 FollowPath::FollowPath(Pathfinding* p){
 	path = p;
-	pathOffSet = 2;
+	pathOffSet = 0;
 	currentParam = 0;
 }
 

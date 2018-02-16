@@ -2,6 +2,8 @@
 #include "Heuristic.h"
 #include "./../../Managers/ObjectManager.h"
 
+#include <PhysicsEngine/BulletEngine.h>
+
 #include <algorithm>
 
 Pathfinding::Pathfinding(){
@@ -30,26 +32,42 @@ Pathfinding::~Pathfinding(){
  }
 
 int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
-    //std::cout<<"Start: "<<start<<std::endl;
-    int output = 0;
-    if(start < m_path.size()){  
-        vector3df nodePos = m_path[start]->getPosition();
-        nodePos = nodePos - pos;
-  
-        float value = nodePos.length();
-        output = start;
-  
+    int output = start;
+    if(start < m_path.size()){     // Comprobamos si se sale del array 
+        //float value =  std::numeric_limits<float>::max();
+
+        /*vector3df nodePos;
         int size = m_path.size();
         for(int i=start; i<size; i++){
             nodePos = m_path[i]->getPosition();
             nodePos = nodePos - pos;
             if(nodePos.length() < value){
-                value = nodePos.length();
+                    value = nodePos.length();
+                    output = i;
+            }
+            
+        }*/
+        BulletEngine* f_engine = BulletEngine::GetInstance();
+        int size = m_path.size();
+        for(int i=start; i<size && i<=start+2; i++){
+            vector3df nodePos = m_path[i]->getPosition();
+            nodePos.Y += 0.1;
+            void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN);
+            if(object == NULL){
                 output = i;
             }
+
+            // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
+            if(object!=NULL && i == start){
+                output = start-1;
+                if(output<0) output = 0;
+                break;
+            }
         }
+    }else{
+        // En el caso de que se salga del size de nodos lo igualamos el ultimo
+        output = m_path.size()-1;
     }
-   // std::cout<<"Salida: "<<output<<std::endl;
     return output;
 }
 
@@ -64,7 +82,7 @@ void Pathfinding::ResetValues(){
     m_connections.clear();              // Limpiamos las conexiones, puesto que han sido eliminadas
 }
 
-bool Pathfinding::AStar( vector3df from,vector3df to){
+bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3df secondC){
     if(m_path.size()>0){ 
         float dirFinal = (to - m_path[m_path.size() - 1]->getPosition()).length();
         if(dirFinal > 1){
@@ -73,18 +91,21 @@ bool Pathfinding::AStar( vector3df from,vector3df to){
             return false;
         }
     }
-
     // Put values
     StartNode->setData(-1,from);
     EndNode->setData(-2,to);
+    Connection* randomConn = new Connection((from-to).length(),StartNode,EndNode);
+    m_connections.push_back(randomConn);
+
     heur->setNode(EndNode);
 
     float endNodeHeuristic = 0;
     //Add the nearest nodes to the open list  
     NavMesh* navmesh = ObjectManager::GetInstance()->GetNavMesh();
     if(navmesh!=NULL){
-        std::vector<Node*> nearests = navmesh->searchNearestNodes(from);
-        std::vector<Node*> finals = navmesh->searchNearestNodes(to);
+        std::vector<Node*> nearests = navmesh->SearchNearestNodes(from, firstC, secondC);
+        std::vector<Node*> finals = navmesh->SearchNearestNodes(to);
+
         if(nearests.size() != 0){
             int size = nearests.size();
             for(int i = 0; i<size; i++){
@@ -108,6 +129,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to){
             }
         }
         if(finals.size() == 0){
+            ResetValues();  // Una vez ya se ha creado el camino ya podemos limpiar los datos extras que se han creado
             return false;
         }
 
@@ -133,6 +155,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to){
         float endNodeCost = 0;
         NodeRecord* endNodeRecord = new NodeRecord();
         std::vector<Connection*> nodeConnections;
+
         while(m_openList->size()>0){
             
             //Find the smallest element in the open list (USING THE m_estimatedTotalCost)
@@ -232,11 +255,12 @@ bool Pathfinding::AStar( vector3df from,vector3df to){
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
-        if(current!=NULL && current->m_node == EndNode){
-            while( current!=NULL && current->m_node != StartNode){
+        if(current!=NULL){
+            if(current->m_node != EndNode) m_path.push_back(EndNode);
+            do{
                 m_path.push_back(current->m_node);
                 current = m_closedList->find(current->m_connection->getFromNode());
-            }
+            }while(current!=NULL && current->m_node != StartNode);
             m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode
             std::reverse(m_path.begin(), m_path.end());
         }

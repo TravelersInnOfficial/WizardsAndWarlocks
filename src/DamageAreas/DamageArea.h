@@ -11,7 +11,7 @@
 
 class DamageArea: public Entidad{
 public:
-	DamageArea(int dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	DamageArea(float dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~DamageArea();
 
 	virtual bool Update(float deltaTime);

@@ -3,7 +3,7 @@
 #include "./../Players/Player.h"
 #include <ColliderMasks.h>
 
-PoisonArea::PoisonArea(int dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
+PoisonArea::PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :DamageArea(dam, 0.2f, TPosition, TScale, TRotation){
 	ghostScale = 1;
 	emisor = NO_ALLIANCE;

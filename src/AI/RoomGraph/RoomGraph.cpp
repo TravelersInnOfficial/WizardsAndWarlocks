@@ -189,3 +189,16 @@ void RoomGraph::ShuffleVector(){
 		m_rooms[n] = temp;
 	}
 }
+
+vector3df RoomGraph::GetFirstCorner(){
+	vector3df output;
+	if(m_actualRoom!=NULL) output = m_actualRoom->GetFirstSide();
+	return output;
+}
+
+vector3df RoomGraph::GetSecondCorner(){
+	vector3df output;
+	if(m_actualRoom!=NULL) output = m_actualRoom->GetSecondSide();
+	return output;
+}
+

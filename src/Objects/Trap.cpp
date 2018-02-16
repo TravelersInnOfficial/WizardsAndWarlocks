@@ -278,6 +278,7 @@ void Trap::SendSignal(){
 Kinematic Trap::GetKinematic(){
     Kinematic cKin;
     cKin.position = m_rigidBody->GetPosition();
+    cKin.position.Y += 0.25f;
     cKin.orientation =  vector2df(0,0);
     cKin.velocity = m_rigidBody->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);

@@ -18,7 +18,7 @@ public:
 
 	// We pass the port we're listening to
 	// And the max connections we allow simultaneously
-	Server(int serverPort, int maxClients, bool createdFromGame = false);
+	Server(int serverPort, int maxClients, bool createdFromGame = false, std::string serverName = "Unknown Castle");
 	~Server();
 
 	void Update(float deltaTime);

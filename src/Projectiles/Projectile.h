@@ -12,7 +12,7 @@
 
 class Projectile: public Entidad{
 public:
-    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, int damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp", std::string soundPath = "");
+    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, float damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp", std::string soundPath = "");
     ~Projectile();
     void Update();
     void Contact(void* punt, EntityEnum tipo);

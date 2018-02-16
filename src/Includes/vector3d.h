@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <Constants.h>
 
 template<typename T>
 class vector3d{
@@ -53,6 +54,26 @@ public:
             Y = Y/l;
             Z = Z/l;
         }
+    }
+
+    /**
+     * convert the vector to radian
+     */
+    void toRadians(){
+        float factor = M_PI/180;
+        X = X * factor;
+        Y = Y * factor;
+        Z = Z * factor;
+    }
+
+    /**
+     * convert the vector de degrees
+     */
+    void toDegrees(){
+        float factor = 180/M_PI;
+        X = X * factor;
+        Y = Y * factor;
+        Z = Z * factor;
     }
 
     /**

@@ -98,6 +98,6 @@ static int noPlayerRaycastCW		= C_DOOR
 									| C_TRAP
 									| C_NPC;
 
-static int damageareaCW		= C_PLAYER;
+static float damageareaCW		= C_PLAYER;
 
 #endif

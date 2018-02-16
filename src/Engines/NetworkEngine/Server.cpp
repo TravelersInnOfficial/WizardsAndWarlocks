@@ -7,9 +7,10 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/StateManager.h"
 
-Server::Server(int serverPort, int maxClients, bool createdFromGame){
+Server::Server(int serverPort, int maxClients, bool createdFromGame, std::string serverName){
 
-	this->serverName = "Unknown Castle";
+	if(serverName == "") serverName = "Unknown Castle";
+	this->serverName = serverName;
 	this->createdFromGame = createdFromGame;
 
 	peer = RakNet::RakPeerInterface::GetInstance();

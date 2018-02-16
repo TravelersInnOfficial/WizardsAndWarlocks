@@ -45,6 +45,7 @@ public:
 
     // Getters
     Blackboard* GetBlackboard();
+    RoomGraph* GetRoomGraph();
 
     // Adders
     void AnyadirInformacion(AI_code name, void* value);
@@ -77,6 +78,7 @@ private:
     void CreateOpenDoor();      // SubArbol de movimiento para ponerse delante de la puerta
     void CreateMoveFountain();  // SubArbol de movimiento para moverse delante de una fuente
     void CreateCatchGrail();    // SubArbol de coger un grial
+    void CreateMoveInteract();  // SubArbol de movimiento para interactuar
 };
 
 #endif

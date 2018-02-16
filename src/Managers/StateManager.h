@@ -15,10 +15,11 @@
 #include "./../ResourceManager.h"
 #include <iostream>
 #include <StateCodes.h>
+#include <NetworkStructs.h>
 
 class StateManager{
 public:
-	static StateManager* GetInstance(bool isServer = false, bool ingameServer = false);
+	static StateManager* GetInstance(ServerInfo* serverInfo = NULL);
 
 	~StateManager();
 
@@ -43,7 +44,7 @@ private:
 
 	bool resourcesLoaded;
 
-	StateManager(bool isServer = false, bool ingameServer = false);
+	StateManager(ServerInfo* serverInfo = NULL);
 	static StateManager* instance;
 };
 

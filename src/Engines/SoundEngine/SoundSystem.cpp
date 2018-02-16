@@ -460,7 +460,7 @@ void SoundEvent::setPosition(vector3df pos) {
 
 	//Finally, set the attributes
 	if (soundInstance != NULL) ERRCHECK(FMOD_Studio_EventInstance_Set3DAttributes(soundInstance, attributes));
-
+	
 	delete attributes;
 }
 

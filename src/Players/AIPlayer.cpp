@@ -15,6 +15,7 @@ AIPlayer::AIPlayer():Player(false){
 
 	shootSpell = false;
 	castingSpell = false;
+	elevation = 0;
 
 	SetSteerings();
 	SetRandomName();
@@ -95,15 +96,17 @@ SteeringOutput AIPlayer::GetFollowPath(Kinematic cKin){
 void AIPlayer::ResetValues(){
 	SetAllInput(UP);
 	forceToMove = vector3df(0,0,0);
-	forceToRotate = vector3df(0,0,0);
+	forceToRotate = vector2df(0,0);
+	rotation.X = elevation;
 }
 
 void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
 		ResetValues();
 		behaviour->Update();
+		Steering2Controller(deltaTime);
 		shootSpell = false; 	// Reseteamos la variable
-		Player::Update(deltaTime);		// Check Input
+		Player::Update(deltaTime);		// Check Inputs
 	}
 }
 
@@ -121,6 +124,7 @@ void AIPlayer::Die(){
 	behaviour->ResetInformacion();
 	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
 	Player::Die();
+	elevation = 0;
 }
 
 // ========================================================================================= //
@@ -166,15 +170,15 @@ void AIPlayer::SetForceToMove(vector3df force){
 	forceToMove = force;
 }
 
-void AIPlayer::SetForceToRotate(vector3df force){
+void AIPlayer::SetForceToRotate(vector2df force){
 	forceToRotate = force;
 }
 
-void AIPlayer::Steering2Controller(SteeringOutput steering){
+void AIPlayer::Steering2Controller(float deltaTime){
+	// CAMBIAMOS LA POSICION DEL PLAYER, EL MOVIMIENTO
 	// Primero de todo sacamos el angulo que forman las fuerzas X e Z
-	vector3df linear = steering.linear;
-	if(linear.length()>5){
-		float dir = atan2(linear.X, linear.Z);
+	if(forceToMove.length()>5){
+		float dir = atan2(forceToMove.X, forceToMove.Z);
 		// Luego le restamos la rotacion propia del personaje 
 		dir = rotation.Y - dir;
 		dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
@@ -197,9 +201,11 @@ void AIPlayer::Steering2Controller(SteeringOutput steering){
 			SetController(ACTION_MOVE_RIGHT, DOWN);
 		}
 	}
-	std::cout<<steering.angular<<std::endl;
-	vector2df angular = steering.angular;		// Como en el controlador aun no hay para la camara la fuerza angular se la ponemos a pelo
-	SetAngularForce(vector3df( 0 ,angular.Y, 0));
+	// CAMBIAMOS LA ROTACION EN Y DE LA IA, EL GIRO BASICO
+	SetAngularForce(vector3df( 0 ,forceToRotate.Y, 0));
+
+	// CAMBIAMOS LA ROTACION EN X DE LA IA, MIRAR ARRIBA/ABAJO
+	elevation += forceToRotate.X * deltaTime;
 }
 
 void AIPlayer::SetRandomName(){
@@ -217,8 +223,11 @@ void AIPlayer::SetRandomName(){
 
 void AIPlayer::ShortestPath(vector3df to){
 	// Reset del comportamiento de movimiento al realizar un nuevo path
+	RoomGraph* room = behaviour->GetRoomGraph();
+	vector3df firstC = room->GetFirstCorner();
+	vector3df secondC = room->GetSecondCorner();
 	vector3df from = this->GetPos();
-	if(path->AStar(from,to)){
+	if(path->AStar(from,to, firstC, secondC)){
 		followPath->ResetValues();
 	}
 }

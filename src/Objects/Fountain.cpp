@@ -7,7 +7,10 @@ Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	maxValue = 100;
 	incrementUse = 5;
 	incrementValue = 2;
-	
+
+	// La guardamos en radianoes
+	rotation = TRotation;
+	rotation.toRadians();
 
 	maxTime = 0.5f;
 	currentTime = 0.0f;
@@ -124,6 +127,7 @@ void Fountain::Recover(){
 }
 
 void Fountain::Interact(Player* p){
+	std::cout<<"inUse"<<std::endl;
 	if(user==NULL){
 		if (p->GetHP() < 100 || p->GetMP() < 100) { //Only interact when you something is below 100
 			user = p;
@@ -150,7 +154,13 @@ void Fountain::SendSignal(){
 
 Kinematic Fountain::GetKinematic(){
 	Kinematic cKin;
-	cKin.position = bt_body->GetPosition();
+	// Calculamos el punto delante de la fuente en vez del central
+	vector3df posInit = bt_body->GetPosition();
+	float dist = +0.6f;
+	posInit.X += cos(rotation.Y)*dist;
+	posInit.Z += sin(rotation.Y)*dist;
+
+	cKin.position = posInit;
 	cKin.orientation =  vector2df(0,0);
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);

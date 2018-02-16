@@ -8,9 +8,9 @@ FireProjectile::FireProjectile(vector3df pos, vector3df dir, int emi, float dama
     dir,                    // direction of the projectile
     emi,                    // player id 
     0.2f,                   // radius of the projectile
-    25.0f,                  // speed of the projectile
+    40.0f,                  // speed of the projectile
     20 * damageMult,        // damage of the projectile
-    10.0f,                  // max distance the projectile can travel
+    20.0f,                  // max distance the projectile can travel
     "./../assets/textures/projectils/SPELL_FIRE.png",        // texture of the projectile
     "event:/Spells/Projectiles/Dragon Breath")          //Sound event
 {
