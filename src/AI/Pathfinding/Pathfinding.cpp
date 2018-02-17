@@ -51,12 +51,26 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
-            nodePos.Y += 0.1;
-            void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN);
+            nodePos.Y += 0.2;
+            void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
+            
+            // Hacemos un procesado inicial del puntero
+            if(object!=NULL){
+                Entidad* entity = (Entidad*)object;
+                if(entity->GetClase()==EENUM_DOOR){
+                    Door* door = (Door*)entity;
+                    if(!door->GetOpenState()){
+                        // En el caso de que la puerte este cerrada puede ver a traves
+                        object = NULL;
+                    }
+                }
+            }
+           
+
+
             if(object == NULL){
                 output = i;
             }
-
             // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
             if(object!=NULL && i == start){
                 output = start-1;
