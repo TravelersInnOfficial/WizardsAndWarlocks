@@ -4,6 +4,7 @@
 #include <GUIEngine/Menu.h>
 #include <NetworkEngine/NetSeeker.h>
 #include <Assets.h>
+#include <SoundEngine/SoundSystem.h>
 
 class MainMenu : public Menu{
 public:
@@ -13,6 +14,7 @@ public:
     void Drop();
 
 private:
+    SoundEvent* soundEvent;
 
     static const int N_BUTTONS = 4;
     static const int MAX_STRING_SIZE = 21;
@@ -51,6 +53,7 @@ private:
                                             "Exit the game"};
 
     void PrepareClient(bool proprietary = false);
+    void PlaySound();
 
     static void SinglePlayer(bool*);
     static void MultiPlayer(bool*);

@@ -1,6 +1,4 @@
 #include "MenuReceiver.h"
-#include <IrrIMGUI/IrrIMGUI.h>
-#include <irrlicht/irrlicht.h>
 
 MenuReceiver::MenuReceiver() {
 	escape = false;
