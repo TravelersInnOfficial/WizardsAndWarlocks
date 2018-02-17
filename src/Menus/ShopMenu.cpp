@@ -52,7 +52,24 @@ ShopMenu::ShopMenu(){
     selected = NULL;
 }
 
-ShopMenu::~ShopMenu(){}
+ShopMenu::~ShopMenu(){
+    for(int i = 0; i<N_OSPELLS; i++){
+        GUI->deleteTexture(o_spellimageid[i]);
+    }
+    for(int i = 0; i<N_DSPELLS; i++){
+        GUI->deleteTexture(d_spellimageid[i]);
+    }
+    for(int i = 0; i<N_TSPELLS; i++){
+        GUI->deleteTexture(t_spellimageid[i]);
+    }
+    for(int i = 0; i<N_TRAPS; i++){
+        GUI->deleteTexture(trap_imageid[i]);
+    }
+}
+
+void ShopMenu::Drop(){
+    ShopMenu::~ShopMenu();
+}
 
 void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE> codes, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>* map){
     for(int i = 0; i<total;i++){

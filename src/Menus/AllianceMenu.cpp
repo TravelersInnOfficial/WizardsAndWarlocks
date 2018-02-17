@@ -14,7 +14,9 @@ AllianceMenu::AllianceMenu(){
     ImGui::GetIO().MouseDrawCursor = true;
 }
 
-AllianceMenu::~AllianceMenu(){}
+AllianceMenu::~AllianceMenu(){
+    
+}
 
 void AllianceMenu::setPlayerWarlock(bool* open){
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();

@@ -39,17 +39,3 @@ void NpcSelector::Interact(Player* p){
 		hp->SetAllInput(UP);
 	}
 }
-
-/*
-void NpcSelector::StopInteraction(){
-	if(active){
-		MenuManager::GetInstance()->ClearMenu();
-
-		if(hp != NULL){
-			hp->ToggleMenu(false);
-			hp = NULL;
-			active = false;
-		}
-	}
-}
-*/

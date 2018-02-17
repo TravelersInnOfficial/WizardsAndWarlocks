@@ -42,16 +42,3 @@ void NpcSeller::Interact(Player* p){
 		hp->SetAllInput(UP);
 	}
 }
-
-/*
-void NpcSeller::StopInteraction(){
-	if(active){
-		ChangeChangingSpell(1);
-		MenuManager::GetInstance()->ClearMenu();
-		if(hp != NULL){
-			hp->ToggleMenu(false);
-			hp = NULL;
-			active = false;
-		}
-	}
-}*/

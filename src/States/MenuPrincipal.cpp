@@ -23,6 +23,8 @@ MenuPrincipal::~MenuPrincipal(){
 	
 	g_engine->setCursorVisible(false);
 	delete netSeeker;
+
+	MenuManager::GetInstance()->~MenuManager();
 }
 
 bool MenuPrincipal::Input(){
@@ -63,7 +65,6 @@ void MenuPrincipal::Update(float deltaTime){
 				break;
 			}
 		}
-		MenuManager::GetInstance()->ClearMenu();
 		g_engine->ToggleMenu(false);
 	}
 

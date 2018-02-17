@@ -24,6 +24,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
 	n_engine = NetworkEngine::GetInstance(serverInfo);
+	gui_engine = GUIEngine::GetInstance();
 
 	srand(time(0));
 	currentState = NULL;
@@ -42,6 +43,7 @@ StateManager::~StateManager(){
 	delete g_engine;
 	delete s_engine;
 	delete n_engine;
+	delete gui_engine;
 	instance = 0;
 }
 

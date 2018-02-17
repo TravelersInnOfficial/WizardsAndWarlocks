@@ -24,7 +24,6 @@ class NpcSeller: public Npc{
 
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		void Interact(Player* p);
-		//void StopInteraction();
 
 	private:
 		HumanPlayer* hp;

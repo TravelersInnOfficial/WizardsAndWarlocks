@@ -11,6 +11,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <SoundEngine/SoundSystem.h>
+#include <GUIEngine/GUIEngine.h>
 
 #include "./../ResourceManager.h"
 #include <iostream>
@@ -37,6 +38,7 @@ private:
 	GraphicEngine*	g_engine;
 	SoundSystem*	s_engine;
 	NetworkEngine*	n_engine;
+	GUIEngine* 		gui_engine;
 
 	float deltaTime;
 	float timeStart;

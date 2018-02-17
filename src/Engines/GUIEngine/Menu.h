@@ -20,6 +20,7 @@ public:
     virtual ~Menu();
     std::string GetID();
     virtual void Update(bool*, float);
+    virtual void Drop();
 
     float GetWidth();
     float GetHeight();

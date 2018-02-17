@@ -36,7 +36,6 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	// Si estaba algun menu activado lo desactivamos
 	g_engine->ToggleCameraMovement(true);
 	g_engine->ToggleMenu(false);
-	MenuManager::GetInstance()->ClearMenu();
 }
 
 MultiMatch::~MultiMatch(){

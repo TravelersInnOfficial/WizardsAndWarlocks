@@ -24,7 +24,6 @@ MultiPlayerGame::MultiPlayerGame(){
 	// Si estaba algun menu activado lo desactivamos
 	g_engine->ToggleCameraMovement(true);
 	g_engine->ToggleMenu(false);
-	MenuManager::GetInstance()->ClearMenu();
 
 	// Inicializamos nuestras variables
 	debug 		= false;

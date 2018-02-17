@@ -50,7 +50,6 @@ bool MultiLobby::Input(){
 		if(option == ENDMATCH_M_CONFIRM){
 			g_engine->ToggleCameraMovement(true);
 			g_engine->ToggleMenu(false);
-			MenuManager::GetInstance()->ClearMenu();
 		}
 	}
 	return false;

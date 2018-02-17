@@ -9,8 +9,9 @@ bool MainMenu::m_exit = false;
 bool MainMenu::m_multiplayer = false;
 int MainMenu::m_selected_server = -1;
 
-char MainMenu::player_name[21] = "Player Name";
-char MainMenu::ip_address[21] = "127.0.0.1";
+char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
+char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown castle";
+char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
 MainMenu::MainMenu(){
     m_id = "MainMenu";
@@ -39,7 +40,14 @@ MainMenu::MainMenu(){
     netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
+    for(int i = 0; i<N_BUTTONS; i++){
+        GUI->deleteTexture(imageid[i]);
+    }
     delete netSeeker;
+}
+
+void MainMenu::Drop(){
+    MainMenu::~MainMenu();
 }
 
 void MainMenu::SinglePlayer(bool* open){
@@ -249,21 +257,27 @@ void MainMenu::Update(bool* open, float deltaTime){
         if(m_start_host){
             ImGui::OpenPopup("Start a host");
             if(ImGui::BeginPopupModal("Start a host")){
+                ImGui::Text("Server Name: ");
+                ImGui::SameLine();
+                ImGui::InputText("##server_name", server_name, IM_ARRAYSIZE(player_name));
+                ImGui::Text("Your IP: 192.168.2.224");
+
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
-
-                ImGui::InputText("", player_name, IM_ARRAYSIZE(player_name));
+                ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
                 ImGui::Text("Your IP: 192.168.2.224");
                 ImGui::Separator();
 
                 if(ImGui::Button("START HOSTING")){
                     //START A SERVER
                     strcpy(ip_address,"127.0.0.1");
-                    //std::string path = "./WizardsAndWarlocks -i "+server_name +" &";
-                    std::string path = "./WizardsAndWarlocks -i &";
+                    std::string path = "./WizardsAndWarlocks -i ";
+                    path += server_name;
+                    path += " &";
+
                     #ifdef _WIN64
-                    //path = "START /B WizardsAndWarlocks.exe -i"+server_name;
-                        path = "START /B WizardsAndWarlocks.exe -i";
+                        path = "START /B WizardsAndWarlocks.exe -i ";
+                        path+= server_name;
                     #endif
                     std::system(path.c_str());
                     PrepareClient(true);
@@ -304,7 +318,8 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::Separator();
                 if(ImGui::Button("YES", ImVec2(120,0))){
                     //TODO::HERE 
-                    GraphicEngine::getInstance()->drop();
+                    //GraphicEngine::getInstance()->drop();
+                    StateManager::GetInstance()->CloseGame();
                 }
                 ImGui::SameLine();
                 if(ImGui::Button("NO", ImVec2(120,0))){ 
