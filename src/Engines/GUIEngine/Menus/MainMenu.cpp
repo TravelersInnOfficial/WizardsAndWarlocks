@@ -47,6 +47,7 @@ MainMenu::~MainMenu(){
 }
 
 void MainMenu::Drop(){
+    std::cout<<"MAINMENU DROP"<<std::endl;
     MainMenu::~MainMenu();
 }
 

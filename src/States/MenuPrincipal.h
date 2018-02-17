@@ -7,8 +7,6 @@
 
 #include "./../Managers/StateManager.h"
 #include "./State.h"
-#include "./../Menus/MainMenu.h"
-
 #include <NetworkEngine/NetSeeker.h>
 
 class MenuPrincipal: public State{
