@@ -180,8 +180,9 @@ CheckGrailSeen::CheckGrailSeen(){}
 bool CheckGrailSeen::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckGrailSeen\n";
 
+	AIPlayer* character = bb->GetPlayer();
 	int number = bb->GetNumberSight(AI_GRAIL);
-	if(number>0){
+	if(number>0 && character->GetAlliance()==ALLIANCE_WIZARD){
 		bb->SetTargetSight(AI_GRAIL, AI_TARGET);
 		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
 		bb->SetMasterMovement(AI_MOVE_INTERACT);
