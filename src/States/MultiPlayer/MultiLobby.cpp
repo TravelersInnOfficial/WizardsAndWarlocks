@@ -36,6 +36,8 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 		networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
 		networkObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, false, false);
 	}
+
+	g_engine->ToggleCameraMovement(false);
 }
 
 MultiLobby::~MultiLobby(){
@@ -44,14 +46,6 @@ MultiLobby::~MultiLobby(){
 }
 
 bool MultiLobby::Input(){
-	// Leemos si el boton del menu de fin de juego se ha leido
-	if(MenuManager::GetInstance()->CheckIfExists(ENDMATCH_M_WINDOW)){
-		int option = g_engine->ReadButtonPressed();
-		if(option == ENDMATCH_M_CONFIRM){
-			g_engine->ToggleCameraMovement(true);
-			g_engine->ToggleMenu(false);
-		}
-	}
 	return false;
 }
 

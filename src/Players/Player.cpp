@@ -529,6 +529,11 @@ void Player::UpdateSP(float deltaTime){
 }
 
 void Player::Respawn(){
+	if(isPlayerOne){ 
+		MenuType * current_menu = MenuManager::GetInstance()->GetCurrentMenu();
+		//std::cout<<int (*current_menu)<<std::endl;
+		if(current_menu != NULL && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();
+	}
 
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isServer = n_engine->IsServerInit();
@@ -612,8 +617,6 @@ void Player::SendSignal(){
 
 void Player::Die(){
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
-
-	if(isPlayerOne) MenuManager::GetInstance()->ClearMenu();
 
 	stopPulse();											// Stop the pulse event
 	playSoundEvent(soundEvents["die"]); 												// Play the sound event

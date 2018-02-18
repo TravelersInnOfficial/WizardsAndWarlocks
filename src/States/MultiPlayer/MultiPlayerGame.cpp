@@ -40,6 +40,8 @@ MultiPlayerGame::MultiPlayerGame(){
 		mute = true;
 		SoundSystem::getInstance()->setVolume(0);
 	}
+
+	g_engine->ToggleCameraMovement(true);
 }
 
 MultiPlayerGame::~MultiPlayerGame(){

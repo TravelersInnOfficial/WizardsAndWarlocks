@@ -126,6 +126,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     std::string label = newServerList.at(i).name + "##" + std::to_string(i);
                     if (ImGui::Selectable(label.c_str(), m_selected_server == i, ImGuiSelectableFlags_SpanAllColumns)){
                         m_selected_server = i;
+                        strcpy(ip_address, (serverList[m_selected_server].ip).c_str());
                         m_some_selected = true;
                         ImGui::CloseCurrentPopup();
                         m_multiplayer = false;

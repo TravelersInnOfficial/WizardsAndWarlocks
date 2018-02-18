@@ -15,6 +15,7 @@ MenuManager::MenuManager(){
 	screenSize.Y = res.Height;
 	netDebugWindow = NULL;
 	open_menu = false;
+	currentMenu = NULL;
 }
 
 MenuManager::~MenuManager(){
@@ -70,6 +71,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 
 void MenuManager::Update(float deltaTime){
 	if(currentMenu != NULL){ 
+		g_engine->ToggleCameraMovement(false);
 		GUIEngine::GetInstance()->Update();
 		currentMenu->Update(&open_menu, deltaTime);
 	}
@@ -86,7 +88,6 @@ void MenuManager::ClearMenu(){
 	//std::cout<<"IM DROPPING CURRENT MENU\n";
 	if(currentMenu != NULL ){
 		if(open_menu) currentMenu->Close(&open_menu);
-		std::cout<<"Closed currentMenu\n";
 		currentMenu->Drop();
 		currentMenu = NULL;
 	}

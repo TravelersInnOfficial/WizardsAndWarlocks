@@ -24,7 +24,6 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 				SoundSystem::getInstance()->playEvent(soundEvent);	//Play the event
 				soundEvent->release();								//Release the event
 				selectedOption = (MenuOption)id;
-				std::cout<<"selectedd option "<<selectedOption<<std::endl;
 				break;
 			}
 			//case ImGui::GetIO()->

@@ -46,6 +46,7 @@ void EndMatchMenu::Update(bool* open, float deltaTime){
 
 
 void EndMatchMenu::closeMenu(bool* open){
+    std::cout<<"EEEEEEEEEEH\n";
     *open = false; 
     GraphicEngine::getInstance()->ToggleMenu(false);
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
