@@ -72,7 +72,7 @@ void MenuPrincipal::Update(float deltaTime){
 }
 
 void MenuPrincipal::UpdateSeeker(float deltaTime){
-	netSeeker->Update(deltaTime);
+	//netSeeker->Update(deltaTime);
 	/*
 	std::vector<ServerData> newServerList = netSeeker->GetList();
 	if(serverList.size() != newServerList.size()){

@@ -13,7 +13,7 @@ char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
 char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
-MainMenu::MainMenu(){
+MainMenu::MainMenu(MenuType type) : Menu(type){
     m_id = "MainMenu";
 
     m_start_host = false;
@@ -44,6 +44,10 @@ MainMenu::~MainMenu(){
         GUI->deleteTexture(imageid[i]);
     }
     delete netSeeker;
+}
+
+void MainMenu::Close(bool* open){
+    closeMenu(open);
 }
 
 void MainMenu::Drop(){

@@ -101,7 +101,7 @@ void MultiMatch::Update(float deltaTime){
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, winnerAlliance);
 		}
-
+		//if(MenuManager::GetInstance()->GetCurrentMenu() == NULL)
 		father->ReturnLobby();
 	}
 }

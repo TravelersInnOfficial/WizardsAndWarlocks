@@ -613,7 +613,7 @@ void Player::SendSignal(){
 void Player::Die(){
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
 
-	if(isPlayerOne) ObjectManager::GetInstance()->StopInteractionsNPC();
+	if(isPlayerOne) MenuManager::GetInstance()->ClearMenu();
 
 	stopPulse();											// Stop the pulse event
 	playSoundEvent(soundEvents["die"]); 												// Play the sound event
@@ -1120,4 +1120,8 @@ bool Player::JumpRaycast(){
 	}
 
 	return auxCanJump;
+}
+
+bool Player::IsDead(){
+	return m_dead;
 }

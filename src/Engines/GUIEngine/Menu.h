@@ -3,6 +3,7 @@
 
 #include "GUIEngine.h"
 #include <iostream>
+#include <Menus.h>
 
 struct WindowOptions{
     bool no_titlebar = true;
@@ -16,14 +17,16 @@ struct WindowOptions{
 
 class Menu{
 public:
-    Menu(); 
+    Menu(MenuType); 
     virtual ~Menu();
     std::string GetID();
     virtual void Update(bool*, float);
+    virtual void Close(bool*);
     virtual void Drop();
 
     float GetWidth();
     float GetHeight();
+    MenuType* GetType();
 
     void SetWidth(float);
     void SetHeight(float);
@@ -39,6 +42,7 @@ protected:
     ImGuiStyle& m_style = ImGui::GetStyle();
     
     const char * m_id;
+    MenuType m_type;
     float m_width;
     float m_height;
     float screenWidth;

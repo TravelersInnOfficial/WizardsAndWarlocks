@@ -5,9 +5,11 @@
 
 class AllianceMenu : public Menu{
 public:
-    AllianceMenu();
+    AllianceMenu(MenuType);
     ~AllianceMenu();
     void Update(bool*, float deltaTime);
+    void Close(bool*);
+    void Drop();
 
 private:
     static const int N_BUTTONS = 2;

@@ -17,9 +17,10 @@ struct DDFlags{
 
 class ShopMenu : public Menu{
 public:
-    ShopMenu();
+    ShopMenu(MenuType);
     ~ShopMenu();
     void Update(bool* open, float deltaTime);
+    void Close(bool*);
     void Drop();
 
 private:

@@ -1,4 +1,4 @@
 #include "OptionsMenu.h"
 
-OptionsMenu::OptionsMenu(){}
+OptionsMenu::OptionsMenu(MenuType type) : Menu(type){}
 OptionsMenu::~OptionsMenu(){}

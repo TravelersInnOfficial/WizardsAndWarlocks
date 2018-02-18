@@ -30,24 +30,23 @@ void MenuManager::CreateMenu(MenuType type, int option){
 	switch(type){
 		case(MAIN_M):{
 			open_menu = true;
-			currentMenu = new MainMenu();
+			currentMenu = new MainMenu(type);
 			break;
 		}
 		case(OPTIONS_M):{
 			open_menu = true;
-			currentMenu = new OptionsMenu();
+			currentMenu = new OptionsMenu(type);
 			break;
 		}
 		case(ALLIANCE_M):{
 			open_menu = true;
-			currentMenu = new AllianceMenu();
+			currentMenu = new AllianceMenu(type);
 			break;
 		}
 
 		case(ENDMATCH_M):{
 			open_menu = true;
-			currentMenu = new EndMatchMenu();
-			//CreateMatchEnded(option);
+			currentMenu = new EndMatchMenu(type, option);
 			break;
 		}
 		case(NETDEBUG_M):{
@@ -57,7 +56,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 		}
 		case(SELLER_M):{
 			open_menu = true;
-			currentMenu = new ShopMenu();
+			currentMenu = new ShopMenu(type);
 			//CreateSeller(option);
 			break;
 		}
@@ -86,6 +85,8 @@ void MenuManager::Draw(){
 void MenuManager::ClearMenu(){
 	//std::cout<<"IM DROPPING CURRENT MENU\n";
 	if(currentMenu != NULL ){
+		if(open_menu) currentMenu->Close(&open_menu);
+		std::cout<<"Closed currentMenu\n";
 		currentMenu->Drop();
 		currentMenu = NULL;
 	}
@@ -100,6 +101,12 @@ void MenuManager::ClearMenu(){
 	*/
 	netDebugWindow = NULL;
 
+}
+
+MenuType* MenuManager::GetCurrentMenu(){
+	MenuType *toRet = NULL;
+	if(currentMenu!=NULL) toRet  = currentMenu->GetType();
+	return toRet;
 }
 
 /******** OLD FUNCTIONS ********/

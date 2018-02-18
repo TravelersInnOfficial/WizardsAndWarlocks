@@ -24,6 +24,7 @@ public:
 	void ClearElement(MenuOption elementID);
 	void UpdateNetDebug();
 	bool CheckIfExists(MenuOption elementID);
+	MenuType* GetCurrentMenu();
 
 private:
 	Menu* currentMenu;

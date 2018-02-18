@@ -3,7 +3,7 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/PlayerManager.h"
 
-AllianceMenu::AllianceMenu(){
+AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
 
     m_width = screenWidth/5;
@@ -16,6 +16,14 @@ AllianceMenu::AllianceMenu(){
 
 AllianceMenu::~AllianceMenu(){
     
+}
+
+void AllianceMenu::Drop(){
+    AllianceMenu::~AllianceMenu();
+}
+
+void AllianceMenu::Close(bool* open){
+    closeMenu(open);
 }
 
 void AllianceMenu::setPlayerWarlock(bool* open){

@@ -129,6 +129,7 @@ class Player: public Entidad{
 		bool GetMoving();
 		Potion* GetPotion();
 		bool GetHasCharacter();
+		bool IsDead();
 
 		// Seters
 		void SetPosition(vector3df);

@@ -8,9 +8,10 @@
 
 class MainMenu : public Menu{
 public:
-    MainMenu();
+    MainMenu(MenuType);
     ~MainMenu();
     void Update(bool* open, float deltaTime);
+    void Close(bool*);
     void Drop();
 
 private:

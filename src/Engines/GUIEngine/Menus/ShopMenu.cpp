@@ -4,7 +4,7 @@
 #include "./../Managers/TrapManager.h"
 #include <string.h>
 
-ShopMenu::ShopMenu(){
+ShopMenu::ShopMenu(MenuType type) : Menu(type){
     N_SPELL_SOCKETS = SpellManager::GetInstance()->GetNumSpells();
     N_TRAP_SOCKETS = 1;
 
@@ -69,6 +69,10 @@ ShopMenu::~ShopMenu(){
 
 void ShopMenu::Drop(){
     ShopMenu::~ShopMenu();
+}
+
+void ShopMenu::Close(bool* open){
+    closeMenu(open);
 }
 
 void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE> codes, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>* map){
@@ -236,6 +240,7 @@ void ShopMenu::next_focused_button(){
 }
 
 void ShopMenu::closeMenu(bool* open){
+    std::cout<<"closing shop menu"<<std::endl;
     *open = false; 
     GraphicEngine::getInstance()->ToggleMenu(false);
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();

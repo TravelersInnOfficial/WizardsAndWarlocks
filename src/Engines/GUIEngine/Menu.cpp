@@ -1,12 +1,13 @@
 #include "Menu.h"
 
-Menu::Menu(){
+Menu::Menu(MenuType type){
     g_engine = GraphicEngine::getInstance();
     gui_engine = GUIEngine::GetInstance();
     pDevice = gui_engine->GetPDevice();
     GUI = gui_engine->GetGuiHandler();
 
     m_id = "";
+    m_type = type;
     m_width = 0;
     m_height = 0;
     screenWidth = g_engine->GetScreenWidth();
@@ -21,6 +22,7 @@ Menu::~Menu(){}
 std::string Menu::GetID(){return m_id;}
 
 void Menu::Update(bool* open, float deltaTime){std::cout<<"REACHED MENU INTERFACE UPDATE"<<std::endl;}
+void Menu::Close(bool* open){std::cout<<"REACHED MENU INTERFACE CLOSE"<<std::endl;}
 void Menu::Drop(){std::cout<<"REACHED MENU INTERFACE DROP"<<std::endl;}
 
 void Menu::CalculateFlags(){
@@ -37,6 +39,7 @@ void Menu::CalculateFlags(){
 
 float Menu::GetWidth(){return m_width;}
 float Menu::GetHeight(){return m_height;}
+MenuType* Menu::GetType(){return &m_type;}
 
 void Menu::SetWidth(float w){m_width = w;}
 void Menu::SetHeight(float h){m_height = h;}

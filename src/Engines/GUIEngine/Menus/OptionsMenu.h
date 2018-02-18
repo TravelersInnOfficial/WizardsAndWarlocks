@@ -5,7 +5,7 @@
 
 class OptionsMenu : public Menu{
     public:
-    OptionsMenu();
+    OptionsMenu(MenuType);
     ~OptionsMenu();
 
 };

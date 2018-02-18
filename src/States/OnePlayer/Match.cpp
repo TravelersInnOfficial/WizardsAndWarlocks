@@ -38,9 +38,10 @@ Match::~Match(){
 
 bool Match::Input(){
 
-	if(gameEnded){
+	if(gameEnded){/*
 		int option = g_engine->ReadButtonPressed();
-		if(option == ENDMATCH_M_CONFIRM) father->ReturnLobby();
+		if(option == ENDMATCH_M_CONFIRM) */
+		if(MenuManager::GetInstance()->GetCurrentMenu() == NULL) father->ReturnLobby();
 	}
 
 	return false;
