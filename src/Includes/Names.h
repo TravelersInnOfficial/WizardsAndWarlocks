@@ -1,5 +1,5 @@
-#ifndef Names_H
-#define Names_H
+#ifndef NAMES_H
+#define NAMES_H
 
 static std::string defaultNames[] = {
     "Billy",
