@@ -67,5 +67,9 @@ void GUIEngine::MakeTemporalNotification(std::string data){
     m_notifications_data.insert(std::pair<std::string,float>(data,m_notifications_time+ImGui::GetTime()));
 }
 
+void GUIEngine::MakeCustomNotification(std::string data, float time){
+    m_notifications_data.insert(std::pair<std::string,float>(data, time+ImGui::GetTime()));
+}
+
 IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}
 irr::IrrlichtDevice* GUIEngine::GetPDevice(){return pDevice;}

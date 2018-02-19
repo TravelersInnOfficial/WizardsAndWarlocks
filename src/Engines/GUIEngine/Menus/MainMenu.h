@@ -22,6 +22,7 @@ private:
     static const int MAX_NAME_SIZE = 16;
 
     ImVec2 buttonSize;
+    ImVec2 pu_buttonSize;
 
     static bool m_options;
     static bool m_exit;

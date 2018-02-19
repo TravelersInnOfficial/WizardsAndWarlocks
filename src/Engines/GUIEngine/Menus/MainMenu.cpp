@@ -2,8 +2,6 @@
 #include "./../Managers/StateManager.h"
 #include <vector2d.h>
 
-bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true;
-
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;
 bool MainMenu::m_multiplayer = false;
@@ -12,6 +10,9 @@ int MainMenu::m_selected_server = -1;
 char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
 char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
+
+//FOR TESTING NOTIFICATIONS 
+//bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true, f6 = true;
 
 MainMenu::MainMenu(MenuType type) : Menu(type){
     m_id = "MainMenu";
@@ -32,6 +33,7 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
         imageid[i] = GUI->createTexture(texture[i]);
     }
     buttonSize = ImVec2(texture[0]->getSize().Width,texture[0]->getSize().Height);
+    pu_buttonSize = ImVec2(140,0);
 
     //WIDGET SIZE
     m_width = texture[0]->getSize().Width + 30;
@@ -148,7 +150,7 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::Separator();
 
-                if(ImGui::Button("CONNECT")){
+                if(ImGui::Button("CONNECT", pu_buttonSize)){
                     PlaySound();
                     if(m_selected_server == -1 ){
                         m_none_selected = true;
@@ -165,7 +167,7 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::SameLine();
 
-                if(ImGui::Button("DIRECT CONNECTION")){
+                if(ImGui::Button("DIRECT CONNECTION", pu_buttonSize)){
                     PlaySound();
                     m_direct_connection = true;
                     ImGui::CloseCurrentPopup(); 
@@ -174,7 +176,7 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::SameLine();
 
-                if(ImGui::Button("HOST A GAME")){
+                if(ImGui::Button("HOST A GAME", pu_buttonSize)){
                     PlaySound();
                     m_start_host = true;
                     ImGui::CloseCurrentPopup(); 
@@ -183,7 +185,7 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::SameLine();
 
-                if(ImGui::Button("CLOSE", ImVec2(120,0))){
+                if(ImGui::Button("CLOSE", pu_buttonSize)){
                     PlaySound();
                     ImGui::CloseCurrentPopup(); 
                     m_multiplayer = false;
@@ -202,14 +204,14 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::SameLine();
                 ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
                 ImGui::Separator();
-                if(ImGui::Button("CONNECT")){
+                if(ImGui::Button("CONNECT", pu_buttonSize)){
                     PlaySound();
                     m_some_selected = false;
                     ImGui::CloseCurrentPopup();
                     PrepareClient(true);
                     closeMenu(open);
                 }
-                if(ImGui::Button("BACK")){
+                if(ImGui::Button("BACK", pu_buttonSize)){
                     PlaySound();
                     m_some_selected = false;
                     ImGui::CloseCurrentPopup();
@@ -225,7 +227,7 @@ void MainMenu::Update(bool* open, float deltaTime){
             if(ImGui::BeginPopupModal("Select a server")){
                 ImGui::Text("Select a server from the list");
                 ImGui::Separator();
-                if(ImGui::Button("OK")){
+                if(ImGui::Button("OK",pu_buttonSize)){
                     PlaySound();
                     m_none_selected = false;
                     ImGui::CloseCurrentPopup(); 
@@ -249,7 +251,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::InputText("##ip_address", ip_address, IM_ARRAYSIZE(ip_address));
                 ImGui::Separator();
 
-                if(ImGui::Button("CONNECT TO SERVER")){
+                if(ImGui::Button("CONNECT TO SERVER",pu_buttonSize)){
                     PlaySound();
                     //CONNECT TO THE SERVER DATA ABOVE
                     m_direct_connection = false;
@@ -257,7 +259,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     PrepareClient(true);
                     closeMenu(open);
                 }
-                if(ImGui::Button("BACK")){
+                if(ImGui::Button("BACK",pu_buttonSize)){
                     PlaySound();
                     m_direct_connection = false;
                     ImGui::CloseCurrentPopup();
@@ -283,7 +285,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::Text("Your IP: 192.168.2.224");
                 ImGui::Separator();
 
-                if(ImGui::Button("START HOSTING")){
+                if(ImGui::Button("START HOSTING", pu_buttonSize)){
                     PlaySound();
                     //START A SERVER
                     strcpy(ip_address,"127.0.0.1");
@@ -299,7 +301,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     PrepareClient(true);
                     closeMenu(open);
                 }
-                if(ImGui::Button("BACK")){ 
+                if(ImGui::Button("BACK", pu_buttonSize)){ 
                     PlaySound();
                     m_start_host = false;
                     ImGui::CloseCurrentPopup();
@@ -318,7 +320,7 @@ void MainMenu::Update(bool* open, float deltaTime){
             else{
                 ImGui::Text("SOON\n\n");
                 ImGui::Separator();
-                if(ImGui::Button("OK", ImVec2(120,0))){
+                if(ImGui::Button("OK", pu_buttonSize)){
                     PlaySound();
                     ImGui::CloseCurrentPopup(); 
                     m_options = false;
@@ -334,12 +336,12 @@ void MainMenu::Update(bool* open, float deltaTime){
             else{
                 ImGui::Text("Are you sure?\n\n");
                 ImGui::Separator();
-                if(ImGui::Button("YES", ImVec2(120,0))){
+                if(ImGui::Button("YES", pu_buttonSize)){
                     //PlaySound();
                     StateManager::GetInstance()->CloseGame();
                 }
                 ImGui::SameLine();
-                if(ImGui::Button("NO", ImVec2(120,0))){
+                if(ImGui::Button("NO", pu_buttonSize)){
                     PlaySound();
                     ImGui::CloseCurrentPopup(); 
                     m_exit = false;
@@ -353,15 +355,16 @@ void MainMenu::Update(bool* open, float deltaTime){
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();
-        
+
         //NOTIFICATIONS TEST
-        
+        /*
         if(ImGui::GetTime() > 5 && f1) {gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
         if(ImGui::GetTime() > 6 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
+        if(ImGui::GetTime() > 6 && f6) {gui_engine->MakeCustomNotification("custom popup (10s)", 10);f6 = false;}
         if(ImGui::GetTime() > 7 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
         if(ImGui::GetTime() > 8 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
-        if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}       
-        
+        if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}      
+        */
     }
 }
 

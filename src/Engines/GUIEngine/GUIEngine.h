@@ -19,6 +19,7 @@ public:
     void Update();
     void Draw();
     void MakeTemporalNotification(std::string);
+    void MakeCustomNotification(std::string, float);
 
 private:
     static GUIEngine* instance; 
