@@ -85,21 +85,11 @@ void MenuManager::Draw(){
 }
 
 void MenuManager::ClearMenu(){
-	//std::cout<<"IM DROPPING CURRENT MENU\n";
 	if(currentMenu != NULL ){
 		if(open_menu) currentMenu->Close(&open_menu);
 		currentMenu->Drop();
 		currentMenu = NULL;
 	}
-	/*
-	int size = loadedOptions.size();
-	for(int i=0; i<size; i++){
-		irr::gui::IGUIElement* elem;
-		elem = g_engine->privateGUIEnv->getRootGUIElement()->getElementFromId(loadedOptions[i], true);
-		elem->remove();
-	}
-	loadedOptions.clear();
-	*/
 	netDebugWindow = NULL;
 
 }

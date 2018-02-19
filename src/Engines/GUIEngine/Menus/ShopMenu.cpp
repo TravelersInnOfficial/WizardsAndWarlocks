@@ -240,7 +240,6 @@ void ShopMenu::next_focused_button(){
 }
 
 void ShopMenu::closeMenu(bool* open){
-    std::cout<<"closing shop menu"<<std::endl;
     *open = false; 
     GraphicEngine::getInstance()->ToggleMenu(false);
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();

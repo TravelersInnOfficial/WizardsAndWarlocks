@@ -531,7 +531,6 @@ void Player::UpdateSP(float deltaTime){
 void Player::Respawn(){
 	if(isPlayerOne){ 
 		MenuType * current_menu = MenuManager::GetInstance()->GetCurrentMenu();
-		//std::cout<<int (*current_menu)<<std::endl;
 		if(current_menu != NULL && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();
 	}
 

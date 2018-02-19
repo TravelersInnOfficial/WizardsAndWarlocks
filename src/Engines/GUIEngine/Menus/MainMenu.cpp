@@ -372,7 +372,6 @@ void MainMenu::closeMenu(bool* open){
 }
 
 void MainMenu::PrepareClient(bool proprietary){
-    std::cout<<"IP_ADDRESS: "<<ip_address<<std::endl;
 	NetworkEngine* n_engine;
 	n_engine = NetworkEngine::GetInstance();
 	n_engine->SetIp(ip_address);

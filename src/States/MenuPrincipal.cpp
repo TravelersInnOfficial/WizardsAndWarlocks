@@ -12,8 +12,6 @@ MenuPrincipal::MenuPrincipal(){
 	createSoundEvent();
 	playMenuMusic();
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
-
-	netSeeker = new NetSeeker();
 }
 
 MenuPrincipal::~MenuPrincipal(){
@@ -22,7 +20,6 @@ MenuPrincipal::~MenuPrincipal(){
 	delete menuMusic;
 	
 	g_engine->setCursorVisible(false);
-	delete netSeeker;
 
 	MenuManager::GetInstance()->~MenuManager();
 }
@@ -36,12 +33,10 @@ bool MenuPrincipal::Input(){
 }
 
 void MenuPrincipal::Update(float deltaTime){
-	UpdateSeeker(deltaTime);
 	SoundSystem::getInstance()->Update();
 
 	// En el caso de que se haya cambiado de opcion
 	if(selectedOption != NO_OPT){
-		std::cout<<"SELECTED OPTION: "<<selectedOption<<std::endl;
 		// Dependiendo de la seleccion hacemos una cosa u otra
 		if (menuMusic->isPlaying()) menuMusic->stop();
 		switch(selectedOption){
@@ -69,28 +64,6 @@ void MenuPrincipal::Update(float deltaTime){
 	}
 
 	MenuManager::GetInstance()->Update(deltaTime);
-}
-
-void MenuPrincipal::UpdateSeeker(float deltaTime){
-	//netSeeker->Update(deltaTime);
-	/*
-	std::vector<ServerData> newServerList = netSeeker->GetList();
-	if(serverList.size() != newServerList.size()){
-		std::cout<<"----------------------"<<std::endl;
-		std::cout<<"NEW LIST OF SERVERS: "<<std::endl;
-		
-		if(newServerList.size() == 0) std::cout<<"No server available"<<std::endl;
-		else{
-			for(int i = 0; i < newServerList.size(); i++){
-				std::cout<<newServerList.at(i).name<<" - IP: "<<newServerList.at(i).ip;
-				std::cout<<":60000. Players: "<<newServerList.at(i).playerCount<<"/8";
-				std::cout<<". Game Started: "<<!newServerList.at(i).lobbyState<<"."<<std::endl;
-			}
-		}
-		
-		std::cout<<"----------------------"<<std::endl;
-		serverList = newServerList;
-	}*/
 }
 
 void MenuPrincipal::Draw(){

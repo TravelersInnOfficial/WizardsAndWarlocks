@@ -30,13 +30,8 @@ private:
 	void createSoundEvent();
 	SoundEvent*		menuMusic;
 
-	void UpdateSeeker(float deltaTime);
-
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
 	MenuOption 		selectedOption;		// Opcion dada en el menu
-	
-	NetSeeker*		netSeeker;
-	std::vector<ServerData> serverList;
 	
 };
 

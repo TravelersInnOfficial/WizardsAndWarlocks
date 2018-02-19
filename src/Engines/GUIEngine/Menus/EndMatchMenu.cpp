@@ -33,7 +33,6 @@ void EndMatchMenu::Update(bool* open, float deltaTime){
     else{
         ImGui::Text("%s",m_winners.c_str());
         if(ImGui::Button("OK",ImVec2(120,0))){
-            std::cout<<"TURN BACK TO MAIN MENU"<<std::endl;
             closeMenu(open);
             m_returnLobby = true;
         }
@@ -46,7 +45,6 @@ void EndMatchMenu::Update(bool* open, float deltaTime){
 
 
 void EndMatchMenu::closeMenu(bool* open){
-    std::cout<<"EEEEEEEEEEH\n";
     *open = false; 
     GraphicEngine::getInstance()->ToggleMenu(false);
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
