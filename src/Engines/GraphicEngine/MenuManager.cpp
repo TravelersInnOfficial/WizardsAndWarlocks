@@ -70,17 +70,15 @@ void MenuManager::CreateMenu(MenuType type, int option){
 }
 
 void MenuManager::Update(float deltaTime){
+	GUIEngine::GetInstance()->Update();
 	if(currentMenu != NULL){ 
 		g_engine->ToggleCameraMovement(false);
-		GUIEngine::GetInstance()->Update();
 		currentMenu->Update(&open_menu, deltaTime);
 	}
 }
 
 void MenuManager::Draw(){
-	if(currentMenu != NULL){ 
-		GUIEngine::GetInstance()->Draw();
-	}
+	GUIEngine::GetInstance()->Draw();
 	if(!open_menu) ClearMenu();
 }
 

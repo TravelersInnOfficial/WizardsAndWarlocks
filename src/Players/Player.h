@@ -9,14 +9,15 @@
 #include <Alliance.h>
 #include <ColliderMasks.h>
 #include <EffectCodes.h>
-#include <NetworkStructs.h>
-#include <kinematicTypes.h>
-#include "./PlayerController.h"
-#include "./../Entidad.h"
 #include <PhysicsEngine/BT_Body.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <SoundEngine/SoundSystem.h>
+#include <GUIEngine/GUIEngine.h>
+#include <NetworkStructs.h>
+#include <kinematicTypes.h>
+#include "./PlayerController.h"
+#include "./../Entidad.h"
 #include "./../Cameras/Camera.h"
 #include "./../Managers/OverlayManager.h"
 

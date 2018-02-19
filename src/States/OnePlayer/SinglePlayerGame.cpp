@@ -123,9 +123,7 @@ bool SinglePlayerGame::Input(){
 }
 
 void SinglePlayerGame::Update(float deltaTime){
-	if(m_changeMode != 0){
-		ChangeMode();
-	}
+	if(m_changeMode != 0) ChangeMode();
 	m_stateGame->Update(deltaTime);
 	MenuManager::GetInstance()->Update(deltaTime);
 }

@@ -615,6 +615,8 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	GUIEngine::GetInstance()->ShowDeathMessage(name, 3.5f);
+
 	ResetDieSpells();										// Reseteamos los hechizos del jugador
 
 	stopPulse();											// Stop the pulse event
