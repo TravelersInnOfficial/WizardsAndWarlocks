@@ -5,6 +5,7 @@
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/NetworkManager.h"
 #include "./../Managers/StateManager.h"
+#include <GUIEngine/GUIEngine.h>
 
 Client::Client(std::string serverIp, int serverPort, bool proprietary){
 	peer = RakNet::RakPeerInterface::GetInstance();
@@ -63,6 +64,7 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 
 void Client::RemoveNetworkObject(int id){
 	if(networkObjects[id] != NULL){
+		std::cout<<"SE ELIMINA EL JUGADOR NETWORK OBJ DE ID: "<<id<<std::endl;
 		toEraseNetworkObjects[id] = networkObjects[id];
 		networkObjects.erase(id);
 	}
@@ -110,7 +112,7 @@ void Client::RecievePackages(){
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(id);
 				bitstream.Read(guid);
-				AddPlayer(id,guid);
+				AddPlayer(id, guid);
 				break;
 			}
 
@@ -131,9 +133,17 @@ void Client::RecievePackages(){
 			// CUANDO UN JUGADOR SE DESCONECTA
 			case ID_PLAYER_DISCONNECT: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				
 				int id;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(id);
+				std::cout<<"SE DESCONECTA EL JUGADOR DE ID: "<<id<<std::endl;
+				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(id);
+				
+				std::string name = "Unknown Player";
+				if(player != NULL) name = player->GetName();
+				GUIEngine::GetInstance()->MakeCustomNotification(name + " has disconnected.");
+
 				break;
 			}
 
@@ -150,6 +160,7 @@ void Client::RecievePackages(){
 			case ID_INCOMPATIBLE_PROTOCOL_VERSION:
 			case ID_CONNECTION_LOST:
 			case ID_DISCONNECTION_NOTIFICATION: {
+				GUIEngine::GetInstance()->MakeCustomNotification("There has been a problem connecting to the server.");
 				StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 				break;
 			}

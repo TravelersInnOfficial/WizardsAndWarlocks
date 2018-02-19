@@ -18,9 +18,8 @@ public:
     ~GUIEngine();
     void Update();
     void Draw();
-    void MakeTemporalNotification(std::string);
-    void MakeCustomNotification(std::string, float);
-    void ShowDeathMessage(std::string, float);
+    void MakeCustomNotification(std::string, float time = 3.5f);
+    void ShowDeathMessage(std::string, float time = 3.5f);
 
 private:
     static GUIEngine* instance; 
@@ -41,7 +40,6 @@ private:
     //notifications data
     float m_notifications_Ypos;
     float m_notifications_distance;
-    float m_notifications_time;
     std::map<std::string,float> m_notifications_data;
 
 };

@@ -105,8 +105,8 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 	int id = -1;
 	for (auto &row : networkPlayers) {
 		if(row.second == guid) {
-			networkPlayers.erase(row.first);
 			id = row.first;
+			networkPlayers.erase(row.first);
 			break;
 		}
 	}
@@ -303,21 +303,17 @@ void Server::RecievePackages(bool isLobby){
 				// Delete the player obj from the world
 				std::map<int,int>::iterator i = clientToPlayer.find(id);
 				if(i != clientToPlayer.end()){
-					RakNet::BitStream deleteWorldPlayer;
-					deleteWorldPlayer.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
-					deleteWorldPlayer.Write(ID_REMOVE);
-					deleteWorldPlayer.Write(i->second);
 					RemoveNetworkObject(i->second);
-					SendPackage(&deleteWorldPlayer, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+
+					// Send the disconnect message to all users
+					RakNet::BitStream disconnectClient;
+					disconnectClient.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
+					disconnectClient.Write(i->second);
+					SendPackage(&disconnectClient, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+
+					if(createdFromGame && playerOneID == packet->guid) StateManager::GetInstance()->CloseGame();
 				}
 
-				// Send the disconnect message to all users
-				RakNet::BitStream disconnectClient;
-				disconnectClient.Write((RakNet::MessageID)ID_PLAYER_DISCONNECT);
-				disconnectClient.Write(id);
-				SendPackage(&disconnectClient, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
-
-				if(createdFromGame && playerOneID == packet->guid) StateManager::GetInstance()->CloseGame();
 				break;
 			}
 
@@ -347,7 +343,6 @@ void Server::RecievePackages(bool isLobby){
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
 				if(player != NULL){
 					TrapManager::GetInstance()->setPlayerTrap(player, trap);
-					
 					RakNet::BitStream newTrapsMessage;
 					newTrapsMessage.Write((RakNet::MessageID)ID_CHANGE_TRAP);
 					newTrapsMessage.Write(playerId);
@@ -371,7 +366,6 @@ void Server::RecievePackages(bool isLobby){
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
 				if(player != NULL){
 					SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell);
-
 					RakNet::BitStream newSpellMessage;
 					newSpellMessage.Write((RakNet::MessageID)ID_CHANGE_SPELL);
 					newSpellMessage.Write(playerId);

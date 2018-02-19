@@ -12,7 +12,6 @@ GUIEngine::GUIEngine(){
     m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
     m_notifications_Ypos = 10;
     m_notifications_distance = 10;
-    m_notifications_time = 5;
 }
 
 GUIEngine* GUIEngine::GetInstance(){
@@ -62,10 +61,6 @@ void GUIEngine::printNotifications(){
     }
 
     m_notifications_Ypos = initial_Y;
-}
-
-void GUIEngine::MakeTemporalNotification(std::string data){
-    m_notifications_data.insert(std::pair<std::string,float>(data,m_notifications_time+ImGui::GetTime()));
 }
 
 void GUIEngine::MakeCustomNotification(std::string data, float time){
