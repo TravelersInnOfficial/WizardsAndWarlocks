@@ -16,16 +16,19 @@ enum CollisionTypes {
 	C_TRAP			= BIT(8),
 	C_NPC			= BIT(9),
 	C_CAMERA		= BIT(10),
-	C_DAMAGEAREA	= BIT(12)
+	C_DAMAGEAREA	= BIT(12),
+	C_BODYPART		= BIT(13)
 };
 
 static int doorCW			= C_PLAYER
 							| C_PROJECTILE
-							| C_POTION;
+							| C_POTION
+							| C_BODYPART;
 
 static int grailCW 			= C_PLAYER
 							| C_PROJECTILE
-							| C_POTION;
+							| C_POTION
+							| C_BODYPART;
 
 static int potionCW 		= C_DOOR
 							| C_WALL
@@ -41,14 +44,16 @@ static int playerCW			= C_WALL
 							| C_PROJECTILE
 							| C_PLAYER
 							| C_NPC
-							| C_DAMAGEAREA;
+							| C_DAMAGEAREA
+							| C_BODYPART;
 
 static int fountainCW		= C_WALL
 							| C_DOOR
 							| C_GRAIL
 							| C_FOUNTAIN
 							| C_PROJECTILE
-							| C_PLAYER;
+							| C_PLAYER
+							| C_BODYPART;
 
 static int switchCW			= C_PROJECTILE
 							| C_PLAYER
@@ -57,7 +62,8 @@ static int switchCW			= C_PROJECTILE
 static int wallCW			= C_PROJECTILE
 							| C_PLAYER
 							| C_POTION
-							| C_CAMERA;
+							| C_CAMERA
+							| C_BODYPART;
 
 static int cameraCW			= C_WALL;
 
@@ -75,7 +81,8 @@ static int trapCW			= C_PROJECTILE
 
 static int npcCW			= C_PROJECTILE
 							| C_PLAYER
-							| C_POTION;
+							| C_POTION
+							| C_BODYPART;
 
 static int raycastCW		= C_DOOR
 							| C_GRAIL
@@ -98,6 +105,13 @@ static int noPlayerRaycastCW		= C_DOOR
 									| C_TRAP
 									| C_NPC;
 
-static float damageareaCW		= C_PLAYER;
+static float damageareaCW		=	C_PLAYER;
+
+static float bodypartCW		= C_DOOR
+							| C_GRAIL
+							| C_FOUNTAIN
+							| C_WALL
+							| C_NPC
+							| C_PLAYER;
 
 #endif
