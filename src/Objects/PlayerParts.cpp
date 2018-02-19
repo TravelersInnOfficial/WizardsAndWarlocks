@@ -3,6 +3,7 @@
 PlayerParts::PlayerParts(Alliance alliance, vector3df position, vector3df scale, vector3df rotation){
 	m_rotation = rotation;
 	m_ragdollTime = 5.0f;
+	m_force = 5.0f;
 
 	if(alliance == ALLIANCE_WARLOCK) GenerateWarlockBodyParts(position);
 	else GenerateWizardBodyParts(position);
@@ -34,15 +35,18 @@ void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisic
 	newGraphicBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	newPhysicBody = new BT_Body();
-	newPhysicBody->CreateBox(bodyPartPosition, phyisicalScale, 0, 0, vector3df(0,0,0), C_BODYPART, bodypartCW);
+	newPhysicBody->CreateBox(bodyPartPosition, phyisicalScale, 1.0f, 0, vector3df(0,0,0), C_BODYPART, bodypartCW);
 	newPhysicBody->Rotate(m_rotation);
+
+	m_physicParts.push_back(newPhysicBody);
+	m_graphicParts.push_back(newGraphicBody);
 }
 
 void PlayerParts::GenerateForce(BT_Body* bodyPart){
 	vector3df forceVec;
 	forceVec.X = rand(); forceVec.Y = rand(); forceVec.Z = rand();
 	forceVec.normalize();
-	forceVec * m_force;
+	forceVec = forceVec * m_force;
 	bodyPart->ApplyCentralImpulse(forceVec);
 }
 
@@ -55,21 +59,21 @@ bool PlayerParts::Update(float deltaTime){
 }
 
 void PlayerParts::GenerateWarlockBodyParts(vector3df bodyPos){
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
 }
 
 void PlayerParts::GenerateWizardBodyParts(vector3df bodyPos){
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(1, 1, 1), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.3, 0.3, 0.3), "./../assets/modelos/potion.obj");
 }
 
 void PlayerParts::SyncParts(){

@@ -199,20 +199,22 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 }
 
 void ObjectManager::AddNavmesh(std::string path){
-	if(navmesh!=NULL){
-		delete navmesh;
-	}
+	if(navmesh!=NULL) delete navmesh;
 	navmesh = new NavMesh();
 	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
 	navmesh->Draw();
 }
 
 void ObjectManager::AddRoomGraph(std::string path){
-	if(roomGraph!=NULL){
-		delete roomGraph;
-	}
+	if(roomGraph!=NULL) delete roomGraph;
 	roomGraph = new RoomGraph();
 	LoaderRoomGraph::LoadRoomGraph(roomGraph, path);
+}
+
+PlayerParts* ObjectManager::AddPlayerParts(Alliance alliance, vector3df TPosition, vector3df TScale, vector3df TRotation){
+	PlayerParts* newBP = new PlayerParts(alliance, TPosition, TScale, TRotation);
+	if(newBP != NULL) playerParts.push_back(newBP);
+	return newBP;
 }
 
 // ===================================================================================================== //
@@ -312,9 +314,7 @@ int ObjectManager::GetPotionVecPos(Potion* potion){
 NavMesh* ObjectManager::GetNavMesh(){return navmesh;}
 
 void ObjectManager::CopyRoomGraph(RoomGraph* copy){
-	if(roomGraph!=NULL){
-		roomGraph->CopyGraph(copy);
-	}
+	if(roomGraph!=NULL) roomGraph->CopyGraph(copy);
 }
 
 // ===================================================================================================== //
@@ -417,6 +417,13 @@ void ObjectManager::ClearMap(){
 	}
 	damageAreas.clear();
 
+	size = playerParts.size();
+	for(int i = 0; i < size; i++){
+		PlayerParts* pp = playerParts[i];
+		delete pp;
+	}
+	playerParts.clear();
+
 	if(grail != NULL){
 		delete grail;
 		grail = NULL;
@@ -458,6 +465,7 @@ void ObjectManager::Update(float deltaTime){
 	UpdateBlocks();
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
+	UpdatePlayerParts(deltaTime);
 }
 
 void ObjectManager::UpdateGrail(float deltaTime){
@@ -532,6 +540,17 @@ void ObjectManager::UpdateDamageAreas(float deltaTime){
 		if(!(ar->Update(deltaTime))){
 			damageAreas.erase(damageAreas.begin() + i);
 			delete ar;
+		}
+	}
+}
+
+void ObjectManager::UpdatePlayerParts(float deltaTime){
+	int size = playerParts.size();
+	for(int i = size - 1; i >= 0; i--){
+		PlayerParts* pp = playerParts[i];
+		if(!(pp->Update(deltaTime))){
+			playerParts.erase(playerParts.begin() + i);
+			delete pp;
 		}
 	}
 }

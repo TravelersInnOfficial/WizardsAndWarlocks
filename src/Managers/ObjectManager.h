@@ -17,6 +17,7 @@
 #include "./../Objects/Prop.h"
 #include "./../Objects/Grail.h"
 #include "./../Objects/Door.h"
+#include "./../Objects/PlayerParts.h"
 #include "./../Npcs/Npc.h"
 
 
@@ -32,21 +33,22 @@ public:
 	~ObjectManager();
 
 	// Adders
-	Block* 		AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
-	Prop* 		AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
-	Door* 		AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Grail* 		AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	Switch* 	AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Switch* 	AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
-	Potion* 	AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
-	Fountain* 	AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	Npc* 		AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
-	Invocation* AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
-	DamageArea* AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
-	void 		AddSpawner(Alliance playerAlliance, vector3df TPosition);
-	void 		AddReadyPoint(vector3df TPosition);
-	void 		AddNavmesh(std::string path);
-	void 		AddRoomGraph(std::string path);
+	Block* 			AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
+	Prop* 			AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
+	Door* 			AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Grail* 			AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Switch* 		AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Switch* 		AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Potion* 		AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type);
+	Fountain* 		AddFountain(vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Npc* 			AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
+	Invocation* 	AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
+	DamageArea* 	AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
+	void 			AddSpawner(Alliance playerAlliance, vector3df TPosition);
+	void 			AddReadyPoint(vector3df TPosition);
+	void 			AddNavmesh(std::string path);
+	void 			AddRoomGraph(std::string path);
+	PlayerParts*	AddPlayerParts(Alliance alliance, vector3df TPosition, vector3df TScale, vector3df TRotation);
 
 	// SenseFunctions
 	void SendAllSignal();
@@ -91,7 +93,7 @@ private:
 	void UpdateBlocks();
 	void UpdateInvocations(float deltaTime);
 	void UpdateDamageAreas(float deltaTime);
-
+	void UpdatePlayerParts(float deltaTime);
 
 	std::vector<Invocation*>	invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
 	std::vector<DamageArea*>	damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
@@ -102,6 +104,7 @@ private:
 	std::vector<Potion*>		potions;		// Vector donde se almacenan todas las pociones
 	std::vector<Fountain*>		fountains;		// Vector donde se almacenan todas las fuentes
 	std::vector<Npc*>			npcs;			// Vector donde se almacenan todos los npcs
+	std::vector<PlayerParts*>	playerParts;	// Vector donde se almacenan los body parts al morir
 	std::vector<vector3df>		wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
 	std::vector<vector3df>		warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	Grail*						grail;			// El grail de la partida, unico
