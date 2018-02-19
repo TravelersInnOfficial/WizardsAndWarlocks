@@ -12,7 +12,7 @@ char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
 //FOR TESTING NOTIFICATIONS 
-//bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true, f6 = true;
+//bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true, f6 = true, f7 = true;
 
 MainMenu::MainMenu(MenuType type) : Menu(type){
     m_id = "MainMenu";
@@ -361,6 +361,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         if(ImGui::GetTime() > 5 && f1) {gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
         if(ImGui::GetTime() > 6 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
         if(ImGui::GetTime() > 6 && f6) {gui_engine->MakeCustomNotification("custom popup (10s)", 10);f6 = false;}
+        if(ImGui::GetTime() > 6 && f7) {gui_engine->ShowDeathMessage("Florbo", 10); f7 = false;}
         if(ImGui::GetTime() > 7 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
         if(ImGui::GetTime() > 8 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
         if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}      

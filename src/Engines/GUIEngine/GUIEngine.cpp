@@ -1,4 +1,5 @@
 #include "GUIEngine.h"
+#include <DeathMessages.h>
 
 GUIEngine* GUIEngine::instance = 0;
 
@@ -69,6 +70,18 @@ void GUIEngine::MakeTemporalNotification(std::string data){
 
 void GUIEngine::MakeCustomNotification(std::string data, float time){
     m_notifications_data.insert(std::pair<std::string,float>(data, time+ImGui::GetTime()));
+}
+
+void GUIEngine::ShowDeathMessage(std::string victim, float time){
+    std::string death_phrase = "";
+    int arraySize = sizeof(deathMessages)/sizeof(deathMessages[0]);
+    int index = rand() % arraySize;
+    death_phrase = deathMessages[index];
+
+    int name_pos = death_phrase.find("_");
+    if(name_pos != -1) death_phrase.replace(name_pos,1, victim);
+
+    m_notifications_data.insert(std::pair<std::string,float>(death_phrase, time+ImGui::GetTime()));
 }
 
 IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}

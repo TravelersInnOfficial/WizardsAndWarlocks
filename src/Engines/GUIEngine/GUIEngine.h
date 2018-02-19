@@ -20,6 +20,7 @@ public:
     void Draw();
     void MakeTemporalNotification(std::string);
     void MakeCustomNotification(std::string, float);
+    void ShowDeathMessage(std::string, float);
 
 private:
     static GUIEngine* instance; 
