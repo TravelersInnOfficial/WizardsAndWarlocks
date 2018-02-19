@@ -12,7 +12,6 @@ public:
 	bool Update(float deltaTime);
 private:
 	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	void createSoundEvent();
 
 	float 		currentTime;				// Tiempo 
 };

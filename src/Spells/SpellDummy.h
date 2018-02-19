@@ -10,11 +10,13 @@
 class SpellDummy: public Hechizo{
 public:
 	SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP);
+	~SpellDummy();
 	void Lanzar(Player* p);
 
 protected:	
-	 void createSoundEvent();
+	void createSoundEvent();
 private:
+	SoundEvent* spawnEvent;
 };
 
 

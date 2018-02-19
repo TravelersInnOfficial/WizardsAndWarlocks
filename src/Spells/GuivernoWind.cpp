@@ -10,6 +10,13 @@ GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float opt
 	createSoundEvent();
 }
 
+GuivernoWind::~GuivernoWind(){
+	if(area!=NULL){
+		area->Deactivate();
+		area = NULL;
+	}
+}
+
 void GuivernoWind::Lanzar(Player* p){
 	if(area==NULL){
 		CreateArea(p);

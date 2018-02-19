@@ -15,7 +15,6 @@ public:
 private:
 	void UpdatePosShape();
 	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
-	void createSoundEvent();
 
 	float 		currentTime; 		// Tiempo de duracion maxima del Dummy
 	bool 		alliance; 			// De que alianza es? Mago/Brujo

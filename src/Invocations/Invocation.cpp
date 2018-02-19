@@ -7,15 +7,8 @@ Invocation::Invocation(int HP){
 }
 
 Invocation::~Invocation(){
-	if (spawnEvent != NULL) {
-		if (spawnEvent->isPlaying()) spawnEvent->stop();
-		spawnEvent->release();
-		delete spawnEvent;
-	}
-	
 	delete m_invocationNode;
 	delete bt_body;
-
 }
 
 void Invocation::Update(){}
@@ -46,13 +39,4 @@ Kinematic Invocation::GetKinematic(){
    	cKin.velocity = bt_body->GetLinearVelocity();
     cKin.rotation = vector2df(0,0);
     return cKin;
-}
-/********************************************************************************************************
- ****************************************** SOUND FUNCTIONS *********************************************
- ********************************************************************************************************/
-void Invocation::createSoundEvent(){}
-
-
-void Invocation::playSpawnEvent(vector3df pos){
-	SoundSystem::getInstance()->playEvent(spawnEvent, pos);
 }

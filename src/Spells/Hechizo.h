@@ -61,7 +61,7 @@ protected:
 
 	//Sound Functions
 	virtual void createSoundEvent();
-	void playSoundEvent(SoundEvent* event,vector3df pos);
+	virtual void playSoundEvent(SoundEvent* event,vector3df pos);
 	
 };
 

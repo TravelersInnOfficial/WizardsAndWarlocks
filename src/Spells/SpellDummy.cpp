@@ -7,6 +7,14 @@ SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, 
 	createSoundEvent();
 }
 	
+SpellDummy::~SpellDummy(){
+	if (spawnEvent != NULL) {
+		if (spawnEvent->isPlaying()) spawnEvent->stop();
+		spawnEvent->release();
+		delete spawnEvent;
+	}
+}
+
 void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
 	ObjectManager* objectMaster = ObjectManager::GetInstance();
 	vector3df pos = p->GetPos();
@@ -30,7 +38,10 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
 	}
 
 	target->SetName(p->GetName());
-	playSoundEvent(voiceEvent, pos); //Play voice event
+
+	playSoundEvent(voiceEvent, pos); // Play voice event
+	playSoundEvent(spawnEvent, pos); // Play spawn event
+
 	Hechizo::Lanzar(p);
 }
 
@@ -39,4 +50,5 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
  ********************************************************************************************************/
 void SpellDummy::createSoundEvent() {
 	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Dummy");
+	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Dummy");
 }

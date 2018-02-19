@@ -13,9 +13,6 @@ public:
 	void Deactivate();
 	vector3df GetPosition();
 
-	
-protected:
-	void createSoundEvent();
 private:
 	void CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	bool active;

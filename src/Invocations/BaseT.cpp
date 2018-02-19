@@ -3,7 +3,6 @@
 BaseT::BaseT(vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(-1){
 	active = true;
-	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
 	
 }
@@ -29,7 +28,6 @@ void BaseT::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TR
 	bt_body->CreateBox(TPosition, HalfExtents, 0, 2.3, vector3df(0,0,0),C_POTION, potionCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
-	playSpawnEvent(TPosition);
 }
 
 bool BaseT::Update(float deltaTime){
@@ -42,9 +40,5 @@ void BaseT::Deactivate(){
 
 vector3df BaseT::GetPosition(){
 	return bt_body->GetPosition();
-}
-
-void BaseT::createSoundEvent() {
-	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Teleport Base");
 }
 

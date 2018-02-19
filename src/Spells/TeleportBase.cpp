@@ -9,6 +9,18 @@ TeleportBase::TeleportBase(float costPM, float tCast, float tCoolDown, float opt
 	
 }
 
+TeleportBase::~TeleportBase(){
+	if(base!=NULL){
+		base->Deactivate();
+		base = NULL;
+	}
+	if (spawnEvent != NULL) {
+		if (spawnEvent->isPlaying()) spawnEvent->stop();
+		spawnEvent->release();
+		delete spawnEvent;
+	}
+}
+
 void TeleportBase::DieReset(){
 	if(base!=NULL){
 		base->Deactivate();
@@ -36,6 +48,7 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
 		rot.X = 0; rot.Y = 0;
 		vector3df pos = p->GetPos();
 
+		playSoundEvent(spawnEvent, pos);	
 		playSoundEvent(voiceEvent, pos); //Play the voice event
 
 		base = (BaseT*)ObjectManager::GetInstance()->AddInvocation(pos, vector3df(1,1,1), rot, INVO_TELEPORT);
@@ -61,5 +74,6 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
 void TeleportBase::createSoundEvent() {
 	shotEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Teleport");
 	voiceEvent = SoundSystem::getInstance()->createEvent("event:/Character/Spells/Teleport Base");
+	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Teleport Base");
 }
 

@@ -25,18 +25,13 @@ public:
 	void SendSignal();
 	Kinematic GetKinematic();
 
-	//Sound Functions
-	void playSpawnEvent(vector3df pos);
-
 protected:
-	virtual void createSoundEvent();
+
 
 	int 		m_HP;						// Vida de la invocacion
 
 	BT_Body* 	bt_body;					// Cuerpo fisico de la invocacion
     GBody*    	m_invocationNode;			// Cuerpo visual de la invocacion
-	SoundEvent* spawnEvent;					//Invocation sound event
-	
 };
 
 

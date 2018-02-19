@@ -3,7 +3,6 @@
 InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
 	currentTime = 3;
-	createSoundEvent();
 	CreateInvocation(TPosition, TScale, TRotation);
 }
 
@@ -21,7 +20,6 @@ bool InvocationWall::Update(float deltaTime){
 void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
-	playSpawnEvent(TPosition);
 	// Create an Irrlicht cube
 	m_invocationNode = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	m_invocationNode->setPosition(TPosition);
@@ -39,12 +37,4 @@ void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vec
 	bt_body->CreateBox(TPosition, HalfExtents,0,0, vector3df(0,0,0), C_WALL, wallCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
-}
-
-/********************************************************************************************************
- ****************************************** SOUND FUNCTIONS *********************************************
- ********************************************************************************************************/
-
-void InvocationWall::createSoundEvent(){
-	spawnEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Shots_Spawns/Desperation Wall");
 }
