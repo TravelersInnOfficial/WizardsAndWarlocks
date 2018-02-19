@@ -98,7 +98,7 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
         ImGui::PushID(i);
         if(i == focused_button && type != TYPE_TRAP) ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(7.0f, 0.6f, 0.6f));
         if(ImGui::ImageButton(items_selected[i],buttonSize)){
-            next_focused = i;
+            if(type == TYPE_SPELL) next_focused = i;
         }
         if(i == focused_button && type != TYPE_TRAP) ImGui::PopStyleColor();
         ImGui::PopID();
@@ -116,13 +116,8 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
                     }
                     else{
                         ChangeTrap(traps_map[selected]);
-                    }
-                    if(type == TYPE_SPELL){
-                        set_focused_button(i);
-                        next_focused_button();
-                    }
+                    }/
                 }
-                else if(type == TYPE_SPELL && items_selected[focused_button] == selected) next_focused_button();
             }
             ImGui::EndDragDropTarget();
         }
