@@ -64,7 +64,6 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 
 void Client::RemoveNetworkObject(int id){
 	if(networkObjects[id] != NULL){
-		std::cout<<"SE ELIMINA EL JUGADOR NETWORK OBJ DE ID: "<<id<<std::endl;
 		toEraseNetworkObjects[id] = networkObjects[id];
 		networkObjects.erase(id);
 	}
@@ -137,7 +136,6 @@ void Client::RecievePackages(){
 				int id;
 				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
 				bitstream.Read(id);
-				std::cout<<"SE DESCONECTA EL JUGADOR DE ID: "<<id<<std::endl;
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(id);
 				
 				std::string name = "Unknown Player";

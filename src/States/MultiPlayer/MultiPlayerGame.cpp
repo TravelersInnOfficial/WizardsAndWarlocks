@@ -34,11 +34,16 @@ MultiPlayerGame::MultiPlayerGame(){
 	// Y creamos los eventos de sonido
 	CreateSoundEvents();
 
+	m_isServer = false;
+
 	// Si es un servidor creado INGAME lo muteamos
 	Server* myServer = n_engine->GetServer();
-	if(myServer != NULL && myServer->GetCreatedFromGame()){
-		mute = true;
-		SoundSystem::getInstance()->setVolume(0);
+	if(myServer != NULL){
+		m_isServer = true;
+		if(myServer->GetCreatedFromGame()){
+			mute = true;
+			SoundSystem::getInstance()->setVolume(0);
+		}
 	}
 
 	g_engine->ToggleCameraMovement(true);
@@ -142,7 +147,7 @@ bool MultiPlayerGame::Input(){
 void MultiPlayerGame::Update(float deltaTime){
 	if(m_changeMode != 0) ChangeMode();
 	m_stateGame->Update(deltaTime);
-	MenuManager::GetInstance()->Update(deltaTime);
+	if(!m_isServer) MenuManager::GetInstance()->Update(deltaTime);
 }
 
 
@@ -150,7 +155,7 @@ void MultiPlayerGame::Draw(){
 	if(n_engine != NULL){
 		bool draw = true;
 		
-		if(n_engine->IsServerInit()){
+		if(m_isServer){
 			Server* myServer = n_engine->GetServer();
 			if(myServer != NULL && myServer->GetCreatedFromGame()) draw = false;
 		}
@@ -160,7 +165,7 @@ void MultiPlayerGame::Draw(){
 			g_engine->drawAll();
 			m_stateGame->Draw();
 			if(debug) f_engine->DebugDrawWorld();
-			MenuManager::GetInstance()->Draw();
+			if(!m_isServer) MenuManager::GetInstance()->Draw();
 			g_engine->endScene();
 		}
 	}

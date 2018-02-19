@@ -56,6 +56,8 @@ private:
 
 	int 	m_changeMode;
 
+	bool m_isServer;
+
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 	void CreateSoundEvents();							//Create the sound events
 };

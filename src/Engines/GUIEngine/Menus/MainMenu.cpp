@@ -8,7 +8,7 @@ bool MainMenu::m_multiplayer = false;
 int MainMenu::m_selected_server = -1;
 
 char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
-char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown castle";
+char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown Castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
 //FOR TESTING NOTIFICATIONS 
@@ -290,12 +290,16 @@ void MainMenu::Update(bool* open, float deltaTime){
                     //START A SERVER
                     strcpy(ip_address,"127.0.0.1");
                     std::string path = "./WizardsAndWarlocks -i ";
+                    path += "\'";
                     path += server_name;
+                    path += "\'";
                     path += " &";
-
+                    std::cout<<"input server name: "<<path<<"\n";
                     #ifdef _WIN64
                         path = "START /B WizardsAndWarlocks.exe -i ";
-                        path+= server_name;
+                        path += "\'";
+                        path += server_name;
+                        path += "\'";
                     #endif
                     std::system(path.c_str());
                     PrepareClient(true);
@@ -376,6 +380,7 @@ void MainMenu::closeMenu(bool* open){
 }
 
 void MainMenu::PrepareClient(bool proprietary){
+    std::cout<<"prepareclient server name: "<<server_name<<"\n";
 	NetworkEngine* n_engine;
 	n_engine = NetworkEngine::GetInstance();
 	n_engine->SetIp(ip_address);
