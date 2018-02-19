@@ -116,7 +116,7 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
                     }
                     else{
                         ChangeTrap(traps_map[selected]);
-                    }/
+                    }
                 }
             }
             ImGui::EndDragDropTarget();
