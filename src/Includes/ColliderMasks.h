@@ -44,8 +44,7 @@ static int playerCW			= C_WALL
 							| C_PROJECTILE
 							| C_PLAYER
 							| C_NPC
-							| C_DAMAGEAREA
-							| C_BODYPART;
+							| C_DAMAGEAREA;
 
 static int fountainCW		= C_WALL
 							| C_DOOR
@@ -111,7 +110,6 @@ static float bodypartCW		= C_DOOR
 							| C_GRAIL
 							| C_FOUNTAIN
 							| C_WALL
-							| C_NPC
-							| C_PLAYER;
+							| C_NPC;
 
 #endif

@@ -9,6 +9,7 @@
 #include <Alliance.h>
 #include <ColliderMasks.h>
 #include <EffectCodes.h>
+#include <Names.h>
 #include <PhysicsEngine/BT_Body.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
@@ -147,6 +148,7 @@ class Player: public Entidad{
 		void SetSpell(int value);
 		void SetName(std::string newName);
 		void SetVisible(bool);
+		void SetRandomName();
 
 		virtual ~Player();
 

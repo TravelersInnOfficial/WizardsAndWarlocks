@@ -63,6 +63,11 @@ Player::Player(bool isPlayer1){
 
 	name = "";
 
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isClient = n_engine->IsClientInit();
+	bool isServer = n_engine->IsServerInit();
+	if(!isClient && !isServer) SetRandomName();
+
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
@@ -996,8 +1001,8 @@ void Player::SetMatchStatus(bool started){ matchStarted = started; }
 void Player::SetName(std::string newName){
 	name = newName;
 	if(!name.empty()){
-		if(isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
-		else SetBillboard();
+		if(networkObject != NULL && isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+		else if(!isPlayerOne) SetBillboard();
 	}
 }
 
@@ -1129,4 +1134,11 @@ bool Player::JumpRaycast(){
 
 bool Player::IsDead(){
 	return m_dead;
+}
+
+void Player::SetRandomName(){
+	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+	int index = rand() % arraySize;
+	std::string auxName = defaultNames[index];
+	SetName(auxName);
 }

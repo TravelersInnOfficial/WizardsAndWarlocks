@@ -15,6 +15,7 @@ public:
 
 protected:
 	float m_force;
+	float m_angularForce;
 	float m_ragdollTime;
 	vector3df m_rotation;
 	std::vector<BT_Body*> m_physicParts;
