@@ -3,7 +3,7 @@
 PlayerParts::PlayerParts(Alliance alliance, vector3df position, vector3df scale, vector3df rotation){
 	m_rotation = rotation;
 	m_ragdollTime = 5.0f;
-	m_force = 50.0f;
+	m_force = 400.0f;
 	m_angularForce = 3.0f;
 
 	if(alliance == ALLIANCE_WARLOCK) GenerateWarlockBodyParts(position);
@@ -66,21 +66,27 @@ bool PlayerParts::Update(float deltaTime){
 }
 
 void PlayerParts::GenerateWarlockBodyParts(vector3df bodyPos){
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/head.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.5, 0.2), "./../assets/modelos/PlayerParts/Warlock/body.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/rightArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/leftArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
+	for(int i = 0; i < m_graphicParts.size(); i++){
+		if(m_graphicParts.at(i) != NULL) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
+	}
 }
 
 void PlayerParts::GenerateWizardBodyParts(vector3df bodyPos){
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/potion.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/head.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.5, 0.2), "./../assets/modelos/PlayerParts/Warlock/body.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/rightArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/leftArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
+	for(int i = 0; i < m_graphicParts.size(); i++){
+		if(m_graphicParts.at(i) != NULL) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
+	}
 }
 
 void PlayerParts::SyncParts(){
@@ -92,7 +98,8 @@ void PlayerParts::SyncParts(){
 		if(p_body != NULL && g_body != NULL){
 			p_body->Update();
     		g_body->setPosition(p_body->GetPosition());
-			g_body->setRotation(p_body->GetRotation()*180/M_PI);
+			vector3df finalRotation = p_body->GetRotation();
+			g_body->setRotation(finalRotation*180/M_PI);
 		}
 	}
 }
