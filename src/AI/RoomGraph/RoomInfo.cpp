@@ -98,6 +98,46 @@ bool RoomInfo::GetExplored(){
 	return output;
 }
 
+float RoomInfo::NearestPoint(float pointA, float pointB, float target){
+	float output = 0;
+	// Vamos a asumir en un principio que pointA es menor que B
+	// De esta forma comprobamos si es mentira y si lo es los cambiamos
+	if(pointA>pointB){
+		float aux = pointA;
+		pointA = pointB;
+		pointB = aux;
+	}
+	// Una vez ya tenemos los valores comprobamos si el target se encuenra entre los valores
+	if(target>pointA && target<pointB){
+		output = target;
+	}
+	// En el caso de que no este entre los valores veremos si se pasa por el valor mayor
+	else if(target > pointB){
+		output = pointB;
+	}
+	// Por descarte ya solamente queda el caso de que se pase de pequenyo
+	else{
+		output = pointA;
+	}
+
+	return output;
+}
+
+float RoomInfo::GetDistance(vector3df target){
+	// Calculamos el punto mas cercano al target de la habitacion
+	float xPos = NearestPoint(m_firstSide.X, m_secondSide.X, target.X);
+	float zPos = NearestPoint(m_firstSide.Z, m_secondSide.Z, target.Z);
+
+	// Formamos un vector con los valores, e igualamos la altura de ambos vectores
+	// En este caso no nos interesa tener en cuenta la altura 
+	vector3df nearPoint(xPos, 0, zPos);
+	target.Y = 0;
+
+	// Calculamos la distancia de un punto a otro
+	float output = (target - nearPoint).length();
+	
+	return output;
+}
 
 int RoomInfo::GetId(){
 	return m_id;

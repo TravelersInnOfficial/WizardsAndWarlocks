@@ -202,3 +202,10 @@ vector3df RoomGraph::GetSecondCorner(){
 	return output;
 }
 
+vector3df RoomGraph::GetScapeRoom(vector3df target){
+	uint8_t size = m_rooms.size();
+	for(uint8_t i=0; i<size; i++){
+		
+	}
+}
+

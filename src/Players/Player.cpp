@@ -1021,9 +1021,7 @@ void Player::SetVisible(bool visible){
 }
 
 void Player::SetBillboard(){
-	std::cout<<"billboard"<<std::endl;
 	if(!isPlayerOne){
-		std::cout<<"Ponemos billboard"<<std::endl;
 		m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
 	}
 }
@@ -1146,8 +1144,6 @@ bool Player::IsDead(){
 void Player::SetRandomName(){
 	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
 	int index = rand() % arraySize;
-	std::cout<<index<<" "<<arraySize<<std::endl;
 	std::string auxName = defaultNames[index];
-	std::cout<<auxName<<std::endl;
 	SetName(auxName);
 }

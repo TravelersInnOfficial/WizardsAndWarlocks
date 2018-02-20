@@ -36,7 +36,6 @@ void GBody::Remove(){
 
 void GBody::AddText(std::string text, vector3df position, int id){
 	if(board!=NULL){  
-		std::cout<<"Ya estaba?"<<std::endl;
 		std::wstring textTmp(text.begin(), text.end());
 		board->setText(textTmp.c_str());
 
@@ -46,7 +45,6 @@ void GBody::AddText(std::string text, vector3df position, int id){
 		board->setSize(dim);
 
 	}else{ 
-		std::cout<<"Joe"<<std::endl;
 		board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 	}
 }

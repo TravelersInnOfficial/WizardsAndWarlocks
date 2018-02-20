@@ -68,7 +68,7 @@ private:
 
     Blackboard* 			    blackboardParent;       // El blackboard padre del que pillar la informacion que pueda faltar
 
-    std::map< AI_code, void* > 	dataPuntero;            // Vector de punteros del blackboard
+    std::map< AI_code, void*> 	dataPuntero;            // Vector de punteros del blackboard
     std::map< AI_code, int > 	dataInt;                // Vector de ints del blackboad
 
     std::vector<Sense_struct*>  soundSense;             // Vector con todas las cosas que haya OIDO

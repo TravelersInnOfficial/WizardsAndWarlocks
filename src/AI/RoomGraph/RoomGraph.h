@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstdint>
 
 class RoomGraph{
 public:
@@ -12,12 +13,13 @@ public:
 	RoomGraph(RoomGraph* graph);
 	~RoomGraph();
 
-	void InitRoom(vector3df pos);
+	// Generate RoomGraph
 	RoomInfo* AddRoom(int id, vector3df position, vector3df firstSide, vector3df secondSide);
 	bool AddConnection(int first, int second);
-	
 	void CopyGraph(RoomGraph* copyGraph);
 
+
+	void InitRoom(vector3df pos);
 	// ACTUAL ROOMINFO
 	vector3df RoomPos();
 	bool RoomExplored();
@@ -30,6 +32,7 @@ public:
 	RoomInfo* GetUnexploredRoom();
 	bool NextRoom();
 	vector3df NextRoomPos();
+	vector3df GetScapeRoom(vector3df target);
 private:
 	void ShuffleVector();
 	bool CheckInside(float A, float B, float C);

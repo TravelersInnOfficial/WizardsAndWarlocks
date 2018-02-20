@@ -202,7 +202,7 @@ void ObjectManager::AddNavmesh(std::string path){
 	if(navmesh!=NULL) delete navmesh;
 	navmesh = new NavMesh();
 	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
-	navmesh->Draw();
+	//navmesh->Draw();
 }
 
 void ObjectManager::AddRoomGraph(std::string path){

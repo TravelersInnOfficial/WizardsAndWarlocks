@@ -53,7 +53,6 @@ public:
 	SteeringOutput GetWander(Kinematic cKin);
 
 private:
-	void SetRandomName();
 	void SetSteerings();
 
 	float elevation;	// Rotacion en X de la Cabeza, en el player se pilla directamente de la camara

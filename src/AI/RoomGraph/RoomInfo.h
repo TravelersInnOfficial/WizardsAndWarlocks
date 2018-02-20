@@ -18,6 +18,7 @@ public:
 	// GETTERS
 	int GetId();
 	bool GetExplored();
+	float GetDistance(vector3df target);
 	vector3df GetFirstSide();
 	vector3df GetSecondSide();
 	vector3df GetPosition();
@@ -25,6 +26,7 @@ public:
 	std::vector<vector3df> GetExplorePoints();
 private:
 	void ShuffleVector();
+	float NearestPoint(float pointA, float pointB, float target);
 
 	int						m_id; 				// Id de la habitacion
 	vector3df 				m_position;			// Posicion central de la habitacion

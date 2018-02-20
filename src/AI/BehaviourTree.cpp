@@ -136,8 +136,10 @@ void BehaviourTree::PrepareSubTrees(){
     CreateUseFountain();
     // Desactivar Trampa
     CreateDefuseTrap();
-    // Escapar
+    // Movimiento de Escapar
     CreateEscapeMove();
+    // Tarea de Escapar
+    CreateEscapeTask();
     // Explorar
     CreateExploreMove();
     // Explorar Tarea
@@ -274,9 +276,15 @@ void BehaviourTree::CreateNoMove(){
     tasks.push_back(t);
 }
 
+void BehaviourTree::CreateEscapeTask(){
+    Task* t = new EmptyTask();
+    informacion->SetPuntero(AI_TASK_ESCAPE, t);
+    tasks.push_back(t);
+}
+
 void BehaviourTree::CreateEscapeMove(){
     Task* t = new EmptyTask(); // POR HACER
-    informacion->SetPuntero(AI_TASK_ESCAPE, t);
+    informacion->SetPuntero(AI_MOVE_ESCAPE, t);
     tasks.push_back(t);
 }
 

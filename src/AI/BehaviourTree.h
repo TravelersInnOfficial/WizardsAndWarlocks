@@ -70,7 +70,8 @@ private:
     void CreateDrinkPotion();   // SubArbol de beber una pocion
     void CreateUseFountain();   // SubArbol de usar una fuente
     void CreateDefuseTrap();    // SubArbol de desactivar trampas
-    void CreateEscapeMove();    // SubArbol de huir
+    void CreateEscapeTask();   // SubArbol de tarea de huir
+    void CreateEscapeMove();    // SubArbol de huir movimiento
     void CreateExploreTask();   // SubArbol de tarea explorar
     void CreateExploreMove();   // SubArbol de exploracion
     void CreateTravelTask();    // SubArbol de mirar a que habitacion ir

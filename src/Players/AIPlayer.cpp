@@ -18,7 +18,6 @@ AIPlayer::AIPlayer():Player(false){
 	elevation = 0;
 
 	SetSteerings();
-	SetRandomName();
 }
 
 AIPlayer::~AIPlayer(){
@@ -208,13 +207,6 @@ void AIPlayer::Steering2Controller(float deltaTime){
 	elevation += forceToRotate.X * deltaTime;
 }
 
-void AIPlayer::SetRandomName(){
-	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
-	int index = rand() % arraySize;
-	std::string auxName = defaultNames[index];
-	SetName(auxName);
-}
-
 // ========================================================================================= //
 //
 //	PATHFINDING
@@ -224,11 +216,13 @@ void AIPlayer::SetRandomName(){
 void AIPlayer::ShortestPath(vector3df to){
 	// Reset del comportamiento de movimiento al realizar un nuevo path
 	RoomGraph* room = behaviour->GetRoomGraph();
-	vector3df firstC = room->GetFirstCorner();
-	vector3df secondC = room->GetSecondCorner();
-	vector3df from = this->GetPos();
-	if(path->AStar(from,to, firstC, secondC)){
-		followPath->ResetValues();
+	if(room!=NULL){
+		vector3df firstC = room->GetFirstCorner();
+		vector3df secondC = room->GetSecondCorner();
+		vector3df from = this->GetPos();
+		if(path->AStar(from,to, firstC, secondC)){
+			followPath->ResetValues();
+		}
 	}
 }
 

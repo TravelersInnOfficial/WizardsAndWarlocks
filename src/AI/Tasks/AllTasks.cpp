@@ -661,7 +661,12 @@ bool CheckPlayerEscape::run(Blackboard* bb){
 	float character_HP = character->GetHP();
 
 	if(character_HP<25.0f){	// Si la vida del personaje es inferior al 25% escapa
+		// Conseguimos el codigo de la IA del equipo enemigo
+		AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+		bb->SetTargetSight(enemy, AI_TARGET);
+		// Ponemos la tarea y movimiento de escape
 		bb->SetMasterAction(AI_TASK_ESCAPE);
+		bb->SetMasterMovement(AI_MOVE_ESCAPE);
 		return true;
 	}
 	return false;
