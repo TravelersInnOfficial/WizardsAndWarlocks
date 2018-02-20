@@ -178,6 +178,7 @@ void Blackboard::SetSight(int id, void* punt, AI_code name, Kinematic kin, float
             return;
         }
     }
+
     Sense_struct* s = new Sense_struct();
     s->id = id;
     s->pointer = punt;

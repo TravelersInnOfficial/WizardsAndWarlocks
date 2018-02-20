@@ -283,7 +283,7 @@ void BehaviourTree::CreateEscapeTask(){
 }
 
 void BehaviourTree::CreateEscapeMove(){
-    Task* t = new EmptyTask(); // POR HACER
+    Task* t = new MoveEscape(); // POR HACER
     informacion->SetPuntero(AI_MOVE_ESCAPE, t);
     tasks.push_back(t);
 }

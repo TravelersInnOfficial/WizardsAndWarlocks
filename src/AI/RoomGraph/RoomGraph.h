@@ -32,7 +32,7 @@ public:
 	RoomInfo* GetUnexploredRoom();
 	bool NextRoom();
 	vector3df NextRoomPos();
-	vector3df GetScapeRoom(vector3df target);
+	vector3df GetEscapeRoom(vector3df target);
 private:
 	void ShuffleVector();
 	bool CheckInside(float A, float B, float C);

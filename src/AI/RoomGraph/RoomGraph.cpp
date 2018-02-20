@@ -202,10 +202,32 @@ vector3df RoomGraph::GetSecondCorner(){
 	return output;
 }
 
-vector3df RoomGraph::GetScapeRoom(vector3df target){
+vector3df RoomGraph::GetEscapeRoom(vector3df target){
+	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
+	vector3df output;
+
+	// Creamos los valores iniciales de distancia y valor, inicializados a la maxima distancia posible
+	float distance = std::numeric_limits<float>::max();
+	int value = -1;
+
+	// Miramos habitacion a habitacion si la distancia es menor
 	uint8_t size = m_rooms.size();
 	for(uint8_t i=0; i<size; i++){
-		
+		RoomInfo* info = m_rooms[i];
+		float currentLength = info->GetDistance(target);
+		if(currentLength<distance){
+			distance = currentLength;
+			value = i;
+		}
 	}
+
+	// Miramos si hemos llegado a encontrar algun valor
+	if(value != -1){
+		// Igualamos el valor al centro de la habitacion mas cercana para escapar
+		output = m_rooms[value]->GetPosition();
+	}
+
+	// Devolvemos el valor al que ir
+	return output;
 }
 

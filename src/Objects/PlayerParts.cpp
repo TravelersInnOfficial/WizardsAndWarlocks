@@ -36,7 +36,7 @@ void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisic
 	newGraphicBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	newPhysicBody = new BT_Body();
-	newPhysicBody->CreateBox(bodyPartPosition, phyisicalScale, 40.0f, 0, vector3df(0,0,0), C_BODYPART, bodypartCW);
+	newPhysicBody->CreateBox(bodyPartPosition, phyisicalScale, 40.0f, 0.0f, vector3df(0,0,0), C_BODYPART, bodypartCW);
 	newPhysicBody->Rotate(m_rotation);
 
 	m_physicParts.push_back(newPhysicBody);
@@ -99,7 +99,11 @@ void PlayerParts::SyncParts(){
 			p_body->Update();
     		g_body->setPosition(p_body->GetPosition());
 			vector3df finalRotation = p_body->GetRotation();
-			g_body->setRotation(finalRotation*180/M_PI);
+
+
+			g_body->setRotation(vector3df(finalRotation.X, finalRotation.Y, 0)*180/M_PI);
+			g_body->Rotate(vector3df(0,0, finalRotation.Z)*180/M_PI);
+			//g_body->setRotation(vector3df(0,0,0));
 		}
 	}
 }

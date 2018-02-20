@@ -44,6 +44,8 @@ void AIPlayer::SetSteerings(){
 }
 
 void AIPlayer::InitGame(){
+	behaviour->ResetInformacion();
+	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
 	behaviour->LoadRoomGraph();
 	Player::InitGame();
 }

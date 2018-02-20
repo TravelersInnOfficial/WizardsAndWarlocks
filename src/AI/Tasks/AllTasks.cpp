@@ -194,6 +194,36 @@ bool CheckGrailSeen::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	MOVE ESCAPE
+//
+// ================================================================================================= //
+
+MoveEscape::MoveEscape(){}
+
+bool MoveEscape::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"MoveEscape\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	RoomGraph* room = bb->GetRoomGraph();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(room!=NULL && character!=NULL && target!=NULL){
+		vector3df pos = room->GetEscapeRoom(target->kinematic.position);
+
+		character->ShortestPath(pos);
+
+		Kinematic cKin = character->GetKinematic();
+
+    	SteeringOutput steering = character->GetFollowPath(cKin);
+
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	CHECK DOOR IN FRONT
 //
 // ================================================================================================= //
@@ -286,6 +316,7 @@ bool WhereExplore::run(Blackboard* bb){
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);
 		
+		return true;
 	}
 	return false;
 }
@@ -346,6 +377,8 @@ bool UseFountain::run(Blackboard* bb){
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(target != NULL){
 		character->SetController(ACTION_RAYCAST, PRESSED);
+
+		return true;
 	}
 	return false;
 }
@@ -467,6 +500,8 @@ bool CatchGrail::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	if(character!=NULL){
 		character->SetController(ACTION_RAYCAST, PRESSED);
+
+		return true;
 	}
 	return false;
 }
@@ -661,13 +696,16 @@ bool CheckPlayerEscape::run(Blackboard* bb){
 	float character_HP = character->GetHP();
 
 	if(character_HP<25.0f){	// Si la vida del personaje es inferior al 25% escapa
-		// Conseguimos el codigo de la IA del equipo enemigo
-		AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
-		bb->SetTargetSight(enemy, AI_TARGET);
-		// Ponemos la tarea y movimiento de escape
-		bb->SetMasterAction(AI_TASK_ESCAPE);
-		bb->SetMasterMovement(AI_MOVE_ESCAPE);
-		return true;
+		RoomGraph* room = bb->GetRoomGraph();
+		if(room!=NULL){
+			// Conseguimos el codigo de la IA del equipo enemigo
+			AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+			bb->SetTargetSight(enemy, AI_TARGET);
+			// Ponemos la tarea y movimiento de escape
+			bb->SetMasterAction(AI_TASK_ESCAPE);
+			bb->SetMasterMovement(AI_MOVE_ESCAPE);
+			return true;
+		}
 	}
 	return false;
 }
