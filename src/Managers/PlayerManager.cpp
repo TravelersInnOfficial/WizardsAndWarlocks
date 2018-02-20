@@ -47,6 +47,7 @@ Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
 }
 
 AIPlayer* PlayerManager::AddAIPlayer(){
+	std::cout<<"Intento Crear algo"<<std::endl;
 	AIPlayer* p = new AIPlayer();
 	players.push_back(p);
 	p->SetAlliance(ALLIANCE_WIZARD);

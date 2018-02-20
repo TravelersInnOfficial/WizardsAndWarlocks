@@ -63,11 +63,6 @@ Player::Player(bool isPlayer1){
 
 	name = "";
 
-	NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	bool isClient = n_engine->IsClientInit();
-	bool isServer = n_engine->IsServerInit();
-	if(!isClient && !isServer) SetRandomName();
-
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
@@ -79,6 +74,14 @@ Player::Player(bool isPlayer1){
 
 	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
 	CreatePlayerCharacter(true);
+
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	bool isClient = n_engine->IsClientInit();
+	bool isServer = n_engine->IsServerInit();
+	if(!isClient && !isServer){ 
+		SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
+	}
+
 	Respawn();
 }
 
@@ -1018,7 +1021,11 @@ void Player::SetVisible(bool visible){
 }
 
 void Player::SetBillboard(){
-	if(!isPlayerOne) m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
+	std::cout<<"billboard"<<std::endl;
+	if(!isPlayerOne){
+		std::cout<<"Ponemos billboard"<<std::endl;
+		m_playerNode->AddText(name, vector3df(0,1.25f,0), -1);
+	}
 }
 
 void Player::Draw(){
@@ -1139,6 +1146,8 @@ bool Player::IsDead(){
 void Player::SetRandomName(){
 	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
 	int index = rand() % arraySize;
+	std::cout<<index<<" "<<arraySize<<std::endl;
 	std::string auxName = defaultNames[index];
+	std::cout<<auxName<<std::endl;
 	SetName(auxName);
 }

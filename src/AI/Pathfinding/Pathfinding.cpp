@@ -34,19 +34,6 @@ Pathfinding::~Pathfinding(){
 int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
     int output = start;
     if(start < m_path.size()){     // Comprobamos si se sale del array 
-        //float value =  std::numeric_limits<float>::max();
-
-        /*vector3df nodePos;
-        int size = m_path.size();
-        for(int i=start; i<size; i++){
-            nodePos = m_path[i]->getPosition();
-            nodePos = nodePos - pos;
-            if(nodePos.length() < value){
-                    value = nodePos.length();
-                    output = i;
-            }
-            
-        }*/
         BulletEngine* f_engine = BulletEngine::GetInstance();
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
