@@ -47,6 +47,7 @@ void PlayerParts::GenerateForce(BT_Body* bodyPart){
 	forceVec.X = rand(); forceVec.Y = rand(); forceVec.Z = rand();
 	forceVec.normalize();
 	forceVec = forceVec * m_force;
+	bodyPart->SetAngularFactor(forceVec/5);
 	bodyPart->ApplyCentralImpulse(forceVec);
 }
 
@@ -85,6 +86,7 @@ void PlayerParts::SyncParts(){
 		if(p_body != NULL && g_body != NULL){
 			p_body->Update();
     		g_body->setPosition(p_body->GetPosition());
+			g_body->setRotation(p_body->GetRotation()*180/M_PI);
 		}
 	}
 }
