@@ -20,13 +20,13 @@
 
 class StateManager{
 public:
-	static StateManager* GetInstance(ServerInfo* serverInfo = NULL);
+	static StateManager* GetInstance(ServerInfo* serverInfo = nullptr);
 
 	~StateManager();
 
 	void PrepareStatus(State_Code status);
 	bool Update();
-	void LoadState(State_Code code, bool* end = NULL);
+	void LoadState(State_Code code, bool* end = nullptr);
 	void CloseGame();
 private:
 	void UpdateDelta();
@@ -46,7 +46,7 @@ private:
 
 	bool resourcesLoaded;
 
-	StateManager(ServerInfo* serverInfo = NULL);
+	StateManager(ServerInfo* serverInfo = nullptr);
 	static StateManager* instance;
 };
 

@@ -318,7 +318,7 @@ private:
      * wordWrap: Enable if the text should wrap into multiple lines
      * id: id to easily access the button
     */
-    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = NULL);
+    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
     
     /**
      * Adds a button to hud
@@ -327,14 +327,14 @@ private:
      * infoText: text to help the user
      * id: id to easily access the button
     */
-    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL, std::string texturePath = "");
+    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = nullptr, std::string texturePath = "");
 
     /**
      * Adds an editable text box to given position
      * p: position (x, y) and size (x2,y2) of the button
      * text: text to initally display in the box
     */
-    void addEditBox(vector4di p, std::wstring text = L"", int id = -1, irr::gui::IGUIWindow* parent = NULL);
+    void addEditBox(vector4di p, std::wstring text = L"", int id = -1, irr::gui::IGUIWindow* parent = nullptr);
 
     /**
      * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---

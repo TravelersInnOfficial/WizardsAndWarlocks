@@ -4,17 +4,17 @@
 TeleportBase::TeleportBase(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_TELEPORTBASE,"./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png", optHP, optMP){
 	createSoundEvent();
-	base = NULL;
+	base = nullptr;
 	justPlaced = false;
 	
 }
 
 TeleportBase::~TeleportBase(){
-	if(base!=NULL){
+	if(base!=nullptr){
 		base->Deactivate();
-		base = NULL;
+		base = nullptr;
 	}
-	if (spawnEvent != NULL) {
+	if (spawnEvent != nullptr) {
 		if (spawnEvent->isPlaying()) spawnEvent->stop();
 		spawnEvent->release();
 		delete spawnEvent;
@@ -22,28 +22,28 @@ TeleportBase::~TeleportBase(){
 }
 
 void TeleportBase::DieReset(){
-	if(base!=NULL){
+	if(base!=nullptr){
 		base->Deactivate();
-		base = NULL;
+		base = nullptr;
 		Hechizo::DieReset();
 	}
 }
 
 void TeleportBase::WasteMana(Player* p, float deltaTime){
-	if(base == NULL){
+	if(base == nullptr){
 		p->ChangeMP(costePM);
 	}
 }
 
 bool TeleportBase::CheckMP(float MP){
-	if(base!=NULL){
+	if(base!=nullptr){
 		return true;
 	}
 	return -costePM<=MP;
 }
 
 void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el suelo
-	if(base == NULL){
+	if(base == nullptr){
 		vector3df rot = p->GetRot();
 		rot.X = 0; rot.Y = 0;
 		vector3df pos = p->GetPos();
@@ -62,7 +62,7 @@ void TeleportBase::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el
 		p->SetPosition(pos);
 
 		base->Deactivate();
-		base = NULL;
+		base = nullptr;
 		justPlaced = true;
 	}
 	Hechizo::Lanzar(p);

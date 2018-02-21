@@ -10,12 +10,12 @@ Effect::Effect(float time, EFFECTCODE cod){
 	maxTime = time;
 	currentTime = time;
 	code = cod;
-	myPlayer = NULL;
+	myPlayer = nullptr;
 	createSoundEvent();
 }
 
 Effect::~Effect(){
-	if (effectEvent != NULL) {
+	if (effectEvent != nullptr) {
 	 	if (effectEvent->isPlaying()) effectEvent->stop();
 		 effectEvent->release();
 		 delete effectEvent;
@@ -93,11 +93,11 @@ void Effect::createSoundEvent() {
 void Effect::playEffectEvent() {
 	vector3df pos = vector3df(0,0,0);
 	Player* playerOne = PlayerManager::GetInstance()->GetPlayerOne(); 
-	Player* p = NULL;
+	Player* p = nullptr;
 
-	if(myPlayer != NULL) p = myPlayer;
-	else if (playerOne != NULL) p = playerOne;
-	if(p != NULL) pos = p->GetPos();
+	if(myPlayer != nullptr) p = myPlayer;
+	else if (playerOne != nullptr) p = playerOne;
+	if(p != nullptr) pos = p->GetPos();
 
 	SoundSystem::getInstance()->playEvent(effectEvent, pos);
 }

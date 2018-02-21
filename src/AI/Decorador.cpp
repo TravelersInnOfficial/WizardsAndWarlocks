@@ -10,7 +10,7 @@ Decorador::~Decorador(){
 
 bool Decorador::run(Blackboard* bb){
     //std::cout<<"Run del Decorador básico"<<std::endl;
-    if(child != NULL){
+    if(child != nullptr){
         return child->run(bb);
     }
     return false;

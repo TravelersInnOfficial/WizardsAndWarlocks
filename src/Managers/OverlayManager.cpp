@@ -20,14 +20,14 @@ void OverlayManager::SetTime(OverlayCodes overlay, float overlayTime){
 	}
 
 	// EXISTE --> ACTUALIZAMOS SU TIEMPO
-	else if(it->second != NULL) it->second->time = overlayTime;
+	else if(it->second != nullptr) it->second->time = overlayTime;
 }
 
 void OverlayManager::CleanOverlays(){
 	std::map<OverlayCodes, OverlayInfo*>::iterator it = overlays.begin();
 	
 	for(; it != overlays.end(); it++){
-		if (it->second != NULL) delete it->second;
+		if (it->second != nullptr) delete it->second;
 	}
 
 	overlays.clear();
@@ -37,7 +37,7 @@ void OverlayManager::Update(float deltaTime){
 	std::map<OverlayCodes, OverlayInfo*>::iterator it = overlays.begin();
 	
 	for(; it != overlays.end(); it++){
-		if(it->second != NULL){
+		if(it->second != nullptr){
 			it->second->time -= deltaTime;
 			if(it->second->time <= 0){ 
 				delete it->second;
@@ -50,11 +50,11 @@ void OverlayManager::Update(float deltaTime){
 void OverlayManager::Draw(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
-	if(g_engine != NULL){
+	if(g_engine != nullptr){
 		std::map<OverlayCodes, OverlayInfo*>::iterator it = overlays.begin();
 
 		for(; it != overlays.end(); it++){
-			if(it->second != NULL && it->second->time > 0) g_engine->drawOverlays(it->first);
+			if(it->second != nullptr && it->second->time > 0) g_engine->drawOverlays(it->first);
 		}
 	}
 }

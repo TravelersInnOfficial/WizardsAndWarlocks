@@ -28,10 +28,10 @@ void NetworkObject::SetBoolVar(ObjectVariable k, bool v, bool notify, bool expan
 	boolVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL) server->SetObjectBool(objectId, k, v, expandClientChange);
+		if(server != nullptr) server->SetObjectBool(objectId, k, v, expandClientChange);
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectBool(objectId, k, v);
+			if(client != nullptr) client->SetObjectBool(objectId, k, v);
 		}
 	}
 }
@@ -40,10 +40,10 @@ void NetworkObject::SetIntVar(ObjectVariable k, int v, bool notify, bool expandC
 	intVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL) server->SetObjectInt(objectId, k, v, expandClientChange);
+		if(server != nullptr) server->SetObjectInt(objectId, k, v, expandClientChange);
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectInt(objectId, k, v);
+			if(client != nullptr) client->SetObjectInt(objectId, k, v);
 		}
 	}
 }
@@ -52,10 +52,10 @@ void NetworkObject::SetFloatVar(ObjectVariable k, float v, bool notify, bool exp
 	floatVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL) server->SetObjectFloat(objectId, k, v, expandClientChange);
+		if(server != nullptr) server->SetObjectFloat(objectId, k, v, expandClientChange);
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectFloat(objectId, k, v);
+			if(client != nullptr) client->SetObjectFloat(objectId, k, v);
 		}
 	}
 }
@@ -64,10 +64,10 @@ void NetworkObject::SetVecIVar(ObjectVariable k, vector3di v, bool notify, bool 
 	v3iVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL) server->SetObjectIntVec(objectId, k, v, expandClientChange);
+		if(server != nullptr) server->SetObjectIntVec(objectId, k, v, expandClientChange);
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectIntVec(objectId, k, v);
+			if(client != nullptr) client->SetObjectIntVec(objectId, k, v);
 		}
 	}
 }
@@ -76,12 +76,12 @@ void NetworkObject::SetVecFVar(ObjectVariable k, vector3df v, bool notify, bool 
 	v3fVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL){
+		if(server != nullptr){
 			server->SetObjectFloatVec(objectId, k, v, expandClientChange);
 		}
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectFloatVec(objectId, k, v);
+			if(client != nullptr) client->SetObjectFloatVec(objectId, k, v);
 		}
 	}
 }
@@ -90,12 +90,12 @@ void NetworkObject::SetStringVar(ObjectVariable k, std::string v, bool notify, b
 	stringVariables[k] = v;
 	if(notify){
 		Server* server = NetworkEngine::GetInstance()->GetServer();
-		if(server != NULL){
+		if(server != nullptr){
 			server->SetObjectString(objectId, k, v, expandClientChange);
 		}
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();
-			if(client != NULL) client->SetObjectString(objectId, k, v);
+			if(client != nullptr) client->SetObjectString(objectId, k, v);
 		}
 	}
 }

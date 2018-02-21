@@ -218,7 +218,7 @@ void AIPlayer::Steering2Controller(float deltaTime){
 void AIPlayer::ShortestPath(vector3df to){
 	// Reset del comportamiento de movimiento al realizar un nuevo path
 	RoomGraph* room = behaviour->GetRoomGraph();
-	if(room!=NULL){
+	if(room!=nullptr){
 		vector3df firstC = room->GetFirstCorner();
 		vector3df secondC = room->GetSecondCorner();
 		vector3df from = this->GetPos();

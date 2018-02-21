@@ -49,7 +49,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
         }
     }
 
-    selected = NULL;
+    selected = nullptr;
 }
 
 ShopMenu::~ShopMenu(){
@@ -198,13 +198,13 @@ void ShopMenu::Update(bool* open, float deltaTime){
 }
 
 void ShopMenu::ChangeSpell(int pos, SPELLCODE sEnum){
-    if(hp != NULL){
+    if(hp != nullptr){
 		SpellManager::GetInstance()->AddHechizo(pos, hp, sEnum);
 	}
 }
 
 void ShopMenu::ChangeTrap(TrapEnum tEnum){
-	if(hp != NULL){
+	if(hp != nullptr){
 		TrapManager::GetInstance()->setPlayerTrap(hp, tEnum);
 		TrapManager::GetInstance()->setPlayerUsings(hp, 10);
 	}

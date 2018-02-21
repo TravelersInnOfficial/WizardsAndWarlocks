@@ -3,7 +3,7 @@
 
 GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD,"./../assets/textures/HUD/Spells/SPELL_BLIZZARD.png", optHP, optMP){
-	area = NULL;
+	area = nullptr;
 	dist = 1.0f;
 	timeWaste = 0.0f;
 	maxTimeWaste = 0.1f;
@@ -11,14 +11,14 @@ GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float opt
 }
 
 GuivernoWind::~GuivernoWind(){
-	if(area!=NULL){
+	if(area!=nullptr){
 		area->Deactivate();
-		area = NULL;
+		area = nullptr;
 	}
 }
 
 void GuivernoWind::Lanzar(Player* p){
-	if(area==NULL){
+	if(area==nullptr){
 		CreateArea(p);
 	}
 	else{
@@ -48,9 +48,9 @@ void GuivernoWind::ResetSpell(){
 	shotEvent->setParamValue("Maintain click", 0.90f);
 	Hechizo::ResetSpell();
 	
-	if(area!=NULL){
+	if(area!=nullptr){
 		area->Deactivate();
-		area = NULL;
+		area = nullptr;
 	}
 	timeWaste = 0.0f;
 }

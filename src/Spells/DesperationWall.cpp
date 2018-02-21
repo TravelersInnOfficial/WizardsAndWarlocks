@@ -7,7 +7,7 @@ DesperationWall::DesperationWall(float costPM, float tCast, float tCoolDown, flo
 }
 
 DesperationWall::~DesperationWall(){
-	if (spawnEvent != NULL) {
+	if (spawnEvent != nullptr) {
 		if (spawnEvent->isPlaying()) spawnEvent->stop();
 		spawnEvent->release();
 		delete spawnEvent;

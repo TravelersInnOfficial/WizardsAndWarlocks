@@ -12,13 +12,13 @@ Potion::Potion(vector3df TScale, int val, std::string tex){
 	potionScale = TScale;
 	potionTexture = tex;
 	value = val;
-	player = NULL;
+	player = nullptr;
 	picked = false;
 }
 
 Potion::~Potion(){
-	if(bt_body != NULL) delete bt_body;
-	if(m_potionNode != NULL) delete m_potionNode;
+	if(bt_body != nullptr) delete bt_body;
+	if(m_potionNode != nullptr) delete m_potionNode;
 }
 
 bool Potion::CheckUse(Player* p){
@@ -58,7 +58,7 @@ void Potion::Interact(Player* p){
 		// If a server, send the potion signal
 		if (n_engine->IsServerInit()){
 			Server* server = n_engine->GetServer();
-			if(server != NULL){
+			if(server != nullptr){
 				int pos = ObjectManager::GetInstance()->GetPotionVecPos(this);
 				server->NotifyPotionInteracted(pos, p);
 			}
@@ -77,7 +77,7 @@ void Potion::NetInteract(Player* p){
 
 void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	picked = false;
-	player = NULL;
+	player = nullptr;
 
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
@@ -107,13 +107,13 @@ void Potion::Drop(vector3df force){
 }
 
 void Potion::DeletePotion(){
-	if(bt_body != NULL){
+	if(bt_body != nullptr){
 		delete bt_body;
-		bt_body = NULL;
+		bt_body = nullptr;
 	}
-	if(m_potionNode != NULL){
+	if(m_potionNode != nullptr){
 		delete m_potionNode;
-		m_potionNode = NULL;
+		m_potionNode = nullptr;
 	}
 }
 

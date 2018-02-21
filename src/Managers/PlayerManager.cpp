@@ -11,7 +11,7 @@ PlayerManager* PlayerManager::GetInstance(){
 PlayerManager::PlayerManager(){
 	wizardsWin = false;
 	warlocksWin = false;
-	playerOne = NULL;
+	playerOne = nullptr;
 }
 
 PlayerManager::~PlayerManager(){
@@ -32,7 +32,7 @@ PlayerManager::~PlayerManager(){
 	instance = 0;
 	wizardsWin = false;
 	warlocksWin = false;
-	playerOne = NULL;
+	playerOne = nullptr;
 }
 
 Player* PlayerManager::AddHumanPlayer(bool isPlayer1){
@@ -149,7 +149,7 @@ void PlayerManager::RespawnDeadPlayers(){
 	int size = deadPlayers.size();
 	for(int i=size-1; i>=0; i--){
 		Player* p = deadPlayers[i];
-		if(p != NULL){
+		if(p != nullptr){
 			deadPlayers.erase(deadPlayers.begin() + i);
 			players.push_back(p);
 			p->Respawn();
@@ -301,10 +301,10 @@ std::vector<Player*> PlayerManager::GetAllPlayers(){
 }
 
 Player* PlayerManager::GetPlayerFromID(int id){
-	Player* toRet = NULL;
+	Player* toRet = nullptr;
 	
 	int size = players.size();
-	for(int i=0; i<size && toRet == NULL; i++){
+	for(int i=0; i<size && toRet == nullptr; i++){
 		Player* p = players[i];
 		if(p->GetId() == id) toRet = p;
 	}
@@ -313,15 +313,15 @@ Player* PlayerManager::GetPlayerFromID(int id){
 }
 
 Player* PlayerManager::GetPlayerFromNetID(int id){
-	Player* toRet = NULL;
+	Player* toRet = nullptr;
 	
 	int size = players.size();
-	for(int i=0; i<size && toRet == NULL; i++){
+	for(int i=0; i<size && toRet == nullptr; i++){
 		Player* p = players[i];
-		NetworkObject* nObj = NULL;
+		NetworkObject* nObj = nullptr;
 
-		if(p != NULL) nObj = p->GetNetworkObject();
-		if(nObj != NULL && nObj->GetObjId() == id) toRet = p;
+		if(p != nullptr) nObj = p->GetNetworkObject();
+		if(nObj != nullptr && nObj->GetObjId() == id) toRet = p;
 	}
 
 	return toRet;
@@ -340,7 +340,7 @@ bool PlayerManager::PlayerAlive(Player* player){
 
 Player* PlayerManager::ChangePlayerTargetCam(Player* player, Alliance alli){
 	int size = players.size();
-	if(size==0) return NULL; // No hay jugadores vivos
+	if(size==0) return nullptr; // No hay jugadores vivos
 
 	int value = -1;
 	int secondValue = -1;
@@ -363,6 +363,6 @@ Player* PlayerManager::ChangePlayerTargetCam(Player* player, Alliance alli){
 	if(secondValue!=-1){
 		return players[secondValue];
 	}else{
-		return NULL;
+		return nullptr;
 	}
 }

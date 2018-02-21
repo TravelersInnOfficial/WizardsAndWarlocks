@@ -65,7 +65,7 @@ void Fountain::Update(float deltaTime){
 				Recover();
 			}
 							
-			if (user != NULL) { //Free the user once
+			if (user != nullptr) { //Free the user once
 				SetFree();
 			}		
 		}
@@ -81,12 +81,12 @@ void Fountain::Update(){
 
 void Fountain::SetFree(){
 	if (useEvent->isPlaying()) useEvent->stop();
-	user = NULL;
+	user = nullptr;
 	inUse = false;
 }
 
 bool Fountain::Use(){
-	if(user!=NULL){
+	if(user!=nullptr){
 		if(user->GetHP() < 100 || user->GetMP() < 100) { //Only use when HP or MP below 100
 			if(incrementUse<=value){		
 				value -= incrementUse;
@@ -127,8 +127,7 @@ void Fountain::Recover(){
 }
 
 void Fountain::Interact(Player* p){
-	std::cout<<"inUse"<<std::endl;
-	if(user==NULL){
+	if(user==nullptr){
 		if (p->GetHP() < 100 || p->GetMP() < 100) { //Only interact when you something is below 100
 			user = p;
 			

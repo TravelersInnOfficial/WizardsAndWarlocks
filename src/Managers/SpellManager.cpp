@@ -38,7 +38,7 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
 
 		for(int i = 1; i < numHechizos && !alreadyHas; i++){
 			Hechizo* hAux = hechizos[i][p];
-			if(hAux != NULL){
+			if(hAux != nullptr){
 				SPELLCODE currentSpell = hAux->GetType();
 				if(currentSpell == type) alreadyHas = true;	
 			}
@@ -46,7 +46,7 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
 
 		if(!alreadyHas){
 			Hechizo* h = hechizos[num][p];			// Nos guardamos el hechizo que habia antes guardado
-			if(h!=NULL) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
+			if(h!=nullptr) delete h;					// En el caso de que ya existiese un Hechizo guardado lo eliminamos
 			hechizos[num][p] = CrearHechizo(type);	// Anyadimos el nuevo hechizo
 			toRet = true;
 		}
@@ -57,9 +57,9 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		if(toRet && p->IsPlayerOne() && n_engine->IsClientInit()){
 			Client* client = n_engine->GetClient();
-			if(client != NULL){
+			if(client != nullptr){
 				NetworkObject* nObject = p->GetNetworkObject();
-				if(nObject != NULL){
+				if(nObject != nullptr){
 					int netPlayerId = nObject->GetObjId();
 					client->SetPlayerSpell(netPlayerId, num, type);
 				}
@@ -104,7 +104,7 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
-			if(h!=NULL){							// Comprobamos si realmente existe
+			if(h!=nullptr){							// Comprobamos si realmente existe
 				if(h->ComprobarCast(m_deltaTime)){	// Empezamos a Castearlo
 					h->WasteMana(p, m_deltaTime);
 					h->Lanzar(p);					// Lanzamos el hechizo
@@ -126,7 +126,7 @@ bool SpellManager::StartHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(hechizos[num].find(p) != hechizos[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = hechizos[num][p];			// Cargamos el hechizo en una variables
-			if(h!=NULL){							// Comprobamos si realmente existe
+			if(h!=nullptr){							// Comprobamos si realmente existe
 				float mana = p->GetMP();
 				if(h->CheckMP(mana)){
 					h->EmpezarCast();
@@ -142,7 +142,7 @@ void SpellManager::ResetHechizo(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				h->ResetSpell();
 			}
 		}
@@ -153,7 +153,7 @@ void SpellManager::ResetHechizo(Player* p){
 	for(int i=0; i<numHechizos; i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				h->ResetSpell();
 			}
 		}
@@ -164,7 +164,7 @@ void SpellManager::ResetDieHechizo(Player* p){
 	for(int i=0; i<numHechizos; i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				h->DieReset();
 			}
 		}
@@ -177,7 +177,7 @@ void SpellManager::ResetAllDieHechizo(){
 		it = hechizos[i].begin();
 		for(;it!=hechizos[i].end(); it++){
 			Hechizo* h = it->second;
-			if(h!=NULL){
+			if(h!=nullptr){
 				h->DieReset();
 			}
 		}
@@ -188,7 +188,7 @@ SPELLCODE SpellManager::GetSpellCode(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				return h->GetType();
 			}
 		}
@@ -200,7 +200,7 @@ float SpellManager::GetUtility(int num, Player* p){
 	if(num>=0 && num<numHechizos){
 		if(hechizos[num].find(p) != hechizos[num].end()){
 			Hechizo* h = hechizos[num][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				return h->GetUtility(p);
 			}
 		}
@@ -276,12 +276,12 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 
 //Update sound event spell position, otherwise will sound far as we move
 void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
-	if (h != NULL){
-		if (p != NULL) {		
-			if (h->getShotEvent() != NULL) {
+	if (h != nullptr){
+		if (p != nullptr) {		
+			if (h->getShotEvent() != nullptr) {
 				h->getShotEvent()->setPosition(p->GetHeadPos()); //Update the event position
 			}
-			if (h->getVoiceEvent() != NULL) {
+			if (h->getVoiceEvent() != nullptr) {
 				h->getVoiceEvent()->setPosition(p->GetHeadPos()); //Update the event position
 			}
 		}
@@ -307,7 +307,7 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 	for(int i = 0; i<numHechizos;i++){
 		if(hechizos[i].find(p) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][p];
-			if(h!=NULL){
+			if(h!=nullptr){
 				xInitSpell = xInit + (sizeBox + space)*i;	// Calcula la X inicial de cada hechizo
 				h->DrawHUD(xInitSpell, yInit, sizeBox, outline, i==current);
 			}
@@ -395,7 +395,7 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	for(int i = 0; i < numHechizos;i++){
 		if(hechizos[i].find(player) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][player];
-			if(h != NULL) spells.push_back(h);
+			if(h != nullptr) spells.push_back(h);
 		}
 	}
 
@@ -408,7 +408,7 @@ void SpellManager::ErasePlayer(Player* player){
 	for(int i=0; i < numHechizos; i++){
 		if(hechizos[i].find(player) != hechizos[i].end()){
 			Hechizo* h = hechizos[i][player];
-			if(h!=NULL){
+			if(h!=nullptr){
 				delete h;
 			}
 		}
@@ -422,18 +422,18 @@ void SpellManager::RefreshServerAll(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(n_engine->IsServerInit()){
 		Server* server = n_engine->GetServer();
-		if(server != NULL){
+		if(server != nullptr){
 			std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
 			for(int i = 0; i < players.size() ; i++){
 				Player* currentPlayer = players.at(i);
-				if(currentPlayer != NULL){
+				if(currentPlayer != nullptr){
 					NetworkObject* nObject = currentPlayer->GetNetworkObject();
-					if(nObject != NULL){
+					if(nObject != nullptr){
 						int netPlayerId = nObject->GetObjId();
 						std::vector<Hechizo*> currentSpells = GetSpells(currentPlayer);
 						for(int j = 0; j < currentSpells.size(); j++){
 							Hechizo* currentSpell = currentSpells.at(j);
-							if(currentSpell != NULL){
+							if(currentSpell != nullptr){
 								SPELLCODE type = currentSpell->GetType();
 								int num = j;
 								server->SetPlayerSpell(netPlayerId, num, type);

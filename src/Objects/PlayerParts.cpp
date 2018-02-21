@@ -10,17 +10,17 @@ PlayerParts::PlayerParts(Alliance alliance, vector3df position, vector3df scale,
 	else GenerateWizardBodyParts(position);
 
 	for(int i = 0; i < m_physicParts.size(); i++){
-		if(m_physicParts.at(i) != NULL) GenerateForce(m_physicParts.at(i));
+		if(m_physicParts.at(i) != nullptr) GenerateForce(m_physicParts.at(i));
 	}
 }
 
 PlayerParts::~PlayerParts(){
 	for(int i = 0; i < m_physicParts.size(); i++){
-		if(m_physicParts.at(i) != NULL) delete m_physicParts.at(i);
+		if(m_physicParts.at(i) != nullptr) delete m_physicParts.at(i);
 	}
 
 	for(int i = 0; i < m_graphicParts.size(); i++){
-		if(m_graphicParts.at(i) != NULL) delete m_graphicParts.at(i);
+		if(m_graphicParts.at(i) != nullptr) delete m_graphicParts.at(i);
 	}
 
 	m_physicParts.clear();
@@ -28,8 +28,8 @@ PlayerParts::~PlayerParts(){
 }
 
 void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisicalScale, std::string objPath){
-	GBody* newGraphicBody = NULL;
-	BT_Body* newPhysicBody = NULL;	
+	GBody* newGraphicBody = nullptr;
+	BT_Body* newPhysicBody = nullptr;	
 	GraphicEngine* engine = GraphicEngine::getInstance();
 
 	newGraphicBody = engine->addObjMeshSceneNode(objPath, bodyPartPosition, m_rotation, vector3df(1, 1, 1));
@@ -73,7 +73,7 @@ void PlayerParts::GenerateWarlockBodyParts(vector3df bodyPos){
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
 	for(int i = 0; i < m_graphicParts.size(); i++){
-		if(m_graphicParts.at(i) != NULL) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
+		if(m_graphicParts.at(i) != nullptr) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
 	}
 }
 
@@ -85,7 +85,7 @@ void PlayerParts::GenerateWizardBodyParts(vector3df bodyPos){
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
 	for(int i = 0; i < m_graphicParts.size(); i++){
-		if(m_graphicParts.at(i) != NULL) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
+		if(m_graphicParts.at(i) != nullptr) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
 	}
 }
 
@@ -95,7 +95,7 @@ void PlayerParts::SyncParts(){
 	for(int i = 0; i < pSize && i < gSize; i++){
 		BT_Body* p_body = m_physicParts.at(i);
 		GBody* g_body = m_graphicParts.at(i);
-		if(p_body != NULL && g_body != NULL){
+		if(p_body != nullptr && g_body != nullptr){
 			p_body->Update();
     		g_body->setPosition(p_body->GetPosition());
 			vector3df finalRotation = p_body->GetRotation();

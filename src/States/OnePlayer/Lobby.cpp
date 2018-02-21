@@ -19,7 +19,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 
 	playerOne = playerManager->GetPlayerOne();
-	if(playerOne == NULL){
+	if(playerOne == nullptr){
 		playerOne = playerManager->AddHumanPlayer(true);
 	}
 
@@ -48,7 +48,7 @@ bool Lobby::Input(){
 
 void Lobby::Update(float deltaTime){
 	f_engine->UpdateWorld(deltaTime);
-	if(g_engine->getActiveCamera() != NULL){
+	if(g_engine->getActiveCamera() != nullptr){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
@@ -67,7 +67,7 @@ void Lobby::Update(float deltaTime){
 
 void Lobby::Draw(){
 
-	if(playerOne != NULL){
+	if(playerOne != nullptr){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}
@@ -76,7 +76,7 @@ void Lobby::Draw(){
 
 void Lobby::CheckIfReady(){
 	// Comprobamos que el jugador uno este dentro de la zona
-	if(playerOne == NULL) return;
+	if(playerOne == nullptr) return;
 	playerOne->CheckIfReady();
 
 	// Si esta dentro de la zona, cargamos el siguiente nivel

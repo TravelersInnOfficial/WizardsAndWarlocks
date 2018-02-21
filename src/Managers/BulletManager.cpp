@@ -50,8 +50,8 @@ void BulletManager::Update(){
  * @details [long description]
  */
 void BulletManager::AddToDeleteProyecil(Projectile* pro){
-	// Comprueba que el proyectil no sea NULL
-	if(pro!=NULL){
+	// Comprueba que el proyectil no sea nullptr
+	if(pro!=nullptr){
 		// Nos guardamos el tamanyo el vector
 		int size = proyectiles.size();
 		// Recorremos el vector de proyectil en update

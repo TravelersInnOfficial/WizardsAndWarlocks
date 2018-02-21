@@ -22,7 +22,7 @@ SinglePlayerGame::SinglePlayerGame(){
 	captured 	= false;
 
 	m_changeMode	= 0;
-	AL = NULL;
+	AL = nullptr;
 
 	CreateSoundEvents();
 }
@@ -137,7 +137,7 @@ void SinglePlayerGame::Draw(){
 
 	if(debug){
 		f_engine->DebugDrawWorld();
-		if(AL != NULL) AL->Debug();
+		if(AL != nullptr) AL->Debug();
 	}
 
 	g_engine->endScene();

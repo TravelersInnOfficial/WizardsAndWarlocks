@@ -228,7 +228,7 @@ void Server::RecievePackages(bool isLobby){
 				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
 				for(int i = 0; i < doors.size(); i++){
 					Door* d = doors.at(i);
-					if(d != NULL && d->GetOpenState()){
+					if(d != nullptr && d->GetOpenState()){
 						RakNet::BitStream updateDoors;
 						updateDoors.Write((RakNet::MessageID)ID_DOOR_FORCE_OPEN);
 						updateDoors.Write(i);
@@ -240,7 +240,7 @@ void Server::RecievePackages(bool isLobby){
 				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
 				for(int i = 0; i < potions.size(); i++){
 					Potion* p = potions.at(i);
-					if(p != NULL){
+					if(p != nullptr){
 						RakNet::BitStream updatePotions;
 						updatePotions.Write((RakNet::MessageID)ID_REFRESH_POTION);
 						updatePotions.Write(i);
@@ -250,11 +250,11 @@ void Server::RecievePackages(bool isLobby){
 						updatePotions.Write(isPicked);
 
 						if(isPicked){
-							Player* byWho = NULL;
+							Player* byWho = nullptr;
 							byWho = p->GetUser();
-							if(byWho != NULL){
+							if(byWho != nullptr){
 								NetworkObject* nObj = byWho->GetNetworkObject();
-								if(nObj != NULL){
+								if(nObj != nullptr){
 									int nObjId = nObj->GetObjId();
 									updatePotions.Write(nObjId);
 								}
@@ -274,7 +274,7 @@ void Server::RecievePackages(bool isLobby){
 				std::vector<Trap*> traps = TrapManager::GetInstance()->GetAllTraps();
 				for(int i = 0; i < traps.size(); i++){
 					Trap* t = traps.at(i);
-					if(t != NULL){
+					if(t != nullptr){
 						RakNet::BitStream updateTraps;
 						vector3df pos = t->GetPosition();
 						vector3df normal = t->GetNormal();
@@ -341,7 +341,7 @@ void Server::RecievePackages(bool isLobby){
 				bitstream.Read(playerId);
 				bitstream.Read(trap);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL){
+				if(player != nullptr){
 					TrapManager::GetInstance()->setPlayerTrap(player, trap);
 					RakNet::BitStream newTrapsMessage;
 					newTrapsMessage.Write((RakNet::MessageID)ID_CHANGE_TRAP);
@@ -364,7 +364,7 @@ void Server::RecievePackages(bool isLobby){
 				bitstream.Read(spellPosition);
 				bitstream.Read(spell);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL){
+				if(player != nullptr){
 					SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell);
 					RakNet::BitStream newSpellMessage;
 					newSpellMessage.Write((RakNet::MessageID)ID_CHANGE_SPELL);
@@ -566,9 +566,9 @@ void Server::NotifyPotionInteracted(int potionPos, Player* p){
 	RakNet::BitStream potionInteractMessage;
 	potionInteractMessage.Write((RakNet::MessageID)ID_POTION_INTERACTED);
 	potionInteractMessage.Write(potionPos);
-	if(p != NULL){
+	if(p != nullptr){
 		NetworkObject* nObj = p->GetNetworkObject();
-		if(nObj != NULL){
+		if(nObj != nullptr){
 			potionInteractMessage.Write(p->GetNetworkObject()->GetObjId());
 			SendPackage(&potionInteractMessage, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
 		}

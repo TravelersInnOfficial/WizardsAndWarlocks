@@ -116,11 +116,11 @@ void Trap::Contact(void* punt, EntityEnum tipo){
             if(tipo == EENUM_PLAYER){
                 Player* player = (Player*)(punt);
                 NetworkObject* no = player->GetNetworkObject();
-                if(no != NULL) playerAffectedId = no->GetObjId();
+                if(no != nullptr) playerAffectedId = no->GetObjId();
             }
 
             Server* myServer = n_engine->GetServer();
-            if(myServer != NULL) myServer->EraseTrap(trapId, playerAffectedId);
+            if(myServer != nullptr) myServer->EraseTrap(trapId, playerAffectedId);
         }
 
     }    
@@ -133,9 +133,9 @@ void Trap::Interact(Player* p){
         Deactivate(deltaTime);
         if(n_engine->IsServerInit()){
             Server* myServer = n_engine->GetServer();
-            if(myServer != NULL){
+            if(myServer != nullptr){
                 NetworkObject* no = p->GetNetworkObject();
-                if(no != NULL){
+                if(no != nullptr){
                     myServer->EraseTrap(trapId, no->GetObjId());
                 }
             }
@@ -264,8 +264,8 @@ void Trap::Erase(){
     delete m_rotation;
     delete m_dimensions;
 
-    if (placeEvent != NULL ) placeEvent->release();
-    if (explodeEvent != NULL ) explodeEvent->release();
+    if (placeEvent != nullptr ) placeEvent->release();
+    if (explodeEvent != nullptr ) explodeEvent->release();
 }
 
 void Trap::SendSignal(){

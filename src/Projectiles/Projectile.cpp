@@ -28,7 +28,7 @@ Projectile::~Projectile(){
 	delete bt_body;
 	delete m_ProjectileNode;
 	
-	if (soundEvent != NULL){
+	if (soundEvent != nullptr){
 		if (soundEvent->isPlaying()) soundEvent->stop();
 		soundEvent->release();
 		delete soundEvent;
@@ -69,7 +69,7 @@ void Projectile::Update(){
 	vector3df vectorDistance = pos - initPos;
 
 	//Update the sound event position
-	if (soundEvent != NULL) {
+	if (soundEvent != nullptr) {
 		soundEvent->setPosition(pos);
 	}
 	
@@ -101,7 +101,7 @@ void Projectile::Contact(void* punt, EntityEnum tipo){
 
 			// Cargamos el emisor del disparo y activamos su overflow de hit
 			Player* emisor_p = PlayerManager::GetInstance()->GetPlayerFromID(emisor);
-			if(emisor_p != NULL){emisor_p->HitMade(p);}
+			if(emisor_p != nullptr){emisor_p->HitMade(p);}
 
 			ContactAction(p);	// Projectile hits player
 			impact = true;
@@ -151,12 +151,12 @@ void Projectile::createSoundEvent(std::string soundPath) {
 	if (soundPath != "") {
 		soundEvent = SoundSystem::getInstance()->createEvent(soundPath);
 	} else {
-		soundEvent = NULL;
+		soundEvent = nullptr;
 	}
 }
 
 void Projectile::playSoundEvent(vector3df pos) {
-	if (soundEvent != NULL) {
+	if (soundEvent != nullptr) {
 		SoundSystem::getInstance()->playEvent(soundEvent, pos);
 	}
 	

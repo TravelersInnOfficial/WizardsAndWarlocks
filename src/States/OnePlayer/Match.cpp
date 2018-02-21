@@ -41,7 +41,7 @@ bool Match::Input(){
 	if(gameEnded){/*
 		int option = g_engine->ReadButtonPressed();
 		if(option == ENDMATCH_M_CONFIRM) */
-		if(MenuManager::GetInstance()->GetCurrentMenu() == NULL) father->ReturnLobby();
+		if(MenuManager::GetInstance()->GetCurrentMenu() == nullptr) father->ReturnLobby();
 	}
 
 	return false;
@@ -49,7 +49,7 @@ bool Match::Input(){
 
 void Match::Update(float deltaTime){
 	f_engine->UpdateWorld(deltaTime);
-	if(g_engine->getActiveCamera() != NULL){
+	if(g_engine->getActiveCamera() != nullptr){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
@@ -68,7 +68,7 @@ void Match::Update(float deltaTime){
 
 void Match::Draw(){
 
-	if(playerOne != NULL){
+	if(playerOne != nullptr){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}
@@ -83,7 +83,7 @@ void Match::CheckIfWon(){
 	if(whosWon != NO_ALLIANCE){
 		GraphicEngine::getInstance()->InitReceiver();
 		gameEnded = true;
-		if(playerOne != NULL) {
+		if(playerOne != nullptr) {
 			playerOne->SetAllInput(UP);
 
 			//Play sound event when you lose or win

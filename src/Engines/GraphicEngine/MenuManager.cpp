@@ -13,9 +13,9 @@ MenuManager::MenuManager(){
 	irr::core::dimension2du res = g_engine->privateDriver->getScreenSize();
 	screenSize.X = res.Width;
 	screenSize.Y = res.Height;
-	netDebugWindow = NULL;
+	netDebugWindow = nullptr;
 	open_menu = false;
-	currentMenu = NULL;
+	currentMenu = nullptr;
 }
 
 MenuManager::~MenuManager(){
@@ -51,7 +51,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(NETDEBUG_M):{
-			if(netDebugWindow == NULL) CreateNetDebug();
+			if(netDebugWindow == nullptr) CreateNetDebug();
 			else ClearMenu();
 			break;
 		}
@@ -62,7 +62,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		default:{
-			currentMenu = NULL;
+			currentMenu = nullptr;
 			open_menu = false;
 			break;
 		}
@@ -71,7 +71,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 
 void MenuManager::Update(float deltaTime){
 	GUIEngine::GetInstance()->Update();
-	if(currentMenu != NULL){ 
+	if(currentMenu != nullptr){ 
 		g_engine->ToggleCameraMovement(false);
 		currentMenu->Update(&open_menu, deltaTime);
 	}
@@ -83,18 +83,18 @@ void MenuManager::Draw(){
 }
 
 void MenuManager::ClearMenu(){
-	if(currentMenu != NULL ){
+	if(currentMenu != nullptr ){
 		if(open_menu) currentMenu->Close(&open_menu);
 		currentMenu->Drop();
-		currentMenu = NULL;
+		currentMenu = nullptr;
 	}
-	netDebugWindow = NULL;
+	netDebugWindow = nullptr;
 
 }
 
 MenuType* MenuManager::GetCurrentMenu(){
-	MenuType *toRet = NULL;
-	if(currentMenu!=NULL) toRet  = currentMenu->GetType();
+	MenuType *toRet = nullptr;
+	if(currentMenu!=nullptr) toRet  = currentMenu->GetType();
 	return toRet;
 }
 
@@ -103,7 +103,7 @@ MenuType* MenuManager::GetCurrentMenu(){
 void MenuManager::ClearElement(MenuOption elementID){
 	irr::gui::IGUIElement* elem;
 	elem = g_engine->privateGUIEnv->getRootGUIElement()->getElementFromId(elementID, true);
-	if(elem!= NULL) elem->remove();
+	if(elem!= nullptr) elem->remove();
 }
 
 void MenuManager::CreateNetDebug(){
@@ -127,11 +127,11 @@ void MenuManager::UpdateNetDebug(){
 
 	std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
 
-	if(netDebugWindow != NULL){
+	if(netDebugWindow != nullptr){
 
 		ClearElement(NETDEBUG_M_P1); ClearElement(NETDEBUG_M_P2); ClearElement(NETDEBUG_M_P3); ClearElement(NETDEBUG_M_P4); ClearElement(NETDEBUG_M_P5); ClearElement(NETDEBUG_M_P6); ClearElement(NETDEBUG_M_P7); ClearElement(NETDEBUG_M_P8);	
 		vector2di menuSize = vector2di(netDebugWindow->getClientRect().getWidth(), netDebugWindow->getClientRect().getHeight());
-		Player* player = NULL;
+		Player* player = nullptr;
 
 		std::vector<std::wstring> players_ws;
 		std::wstring player1; std::wstring player2; std::wstring player3; std::wstring player4; std::wstring player5; std::wstring player6; std::wstring player7; std::wstring player8;
@@ -143,7 +143,7 @@ void MenuManager::UpdateNetDebug(){
 		for(int i = 0; i < 8; i++){
 			if(players.size() > i){
 				player = players.at(i);
-				if(player != NULL){
+				if(player != nullptr){
 					std::string ps = GetStringFromPlayer(player);
 					players_ws.at(i) = std::wstring(ps.length(), L' ');
 					std::copy(ps.begin(), ps.end(), players_ws.at(i).begin());
@@ -160,7 +160,7 @@ std::string MenuManager::GetStringFromPlayer(Player* player){
 	std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(player);
 	std::string spells_s = "";
 	for(int i = 1; i < spells.size(); i++){
-		if(spells.at(i) != NULL){
+		if(spells.at(i) != nullptr){
 			int spelltype = spells.at(i)->GetType();
 			spells_s += std::to_string(spelltype) + " ";
 		}

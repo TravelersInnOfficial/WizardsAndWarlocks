@@ -37,7 +37,7 @@ bool MasterAction::run(Blackboard* bb){
 		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
 		setChild(t);
 	}
-	if(child!=NULL){
+	if(child!=nullptr){
 		child->run(bb);
 	}
 	
@@ -63,7 +63,7 @@ bool MasterMovement::run(Blackboard* bb){
 		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
 		setChild(t);
 	}
-	if(child!=NULL){
+	if(child!=nullptr){
 		child->run(bb);
 	}
 
@@ -132,7 +132,7 @@ bool CatchPotion::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(character != NULL && target!=NULL){
+	if(character != nullptr && target!=nullptr){
 		character->SetController(ACTION_RAYCAST, PRESSED);
 		bb->CleanSense(target->id);
 		return true;
@@ -153,7 +153,7 @@ bool TravelRoom::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	RoomGraph* room = bb->GetRoomGraph();
-	if(character!=NULL && room!=NULL){
+	if(character!=nullptr && room!=nullptr){
 		vector3df pos = room->NextRoomPos();
 		character->ShortestPath(pos);
 
@@ -206,7 +206,7 @@ bool MoveEscape::run(Blackboard* bb){
 	AIPlayer* character = bb->GetPlayer();
 	RoomGraph* room = bb->GetRoomGraph();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(room!=NULL && character!=NULL && target!=NULL){
+	if(room!=nullptr && character!=nullptr && target!=nullptr){
 		vector3df pos = room->GetEscapeRoom(target->kinematic.position);
 
 		character->ShortestPath(pos);
@@ -236,7 +236,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckDoorInFront\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	if(character!=NULL){
+	if(character!=nullptr){
 		// Obtenemos la posicion inicial y final de raycast
 		vector3df charPos = character->GetPos();
 		vector3df endPos;
@@ -252,7 +252,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 		endPos);
 
 		// Miramos si encontramos una puerta en el camino
-		if(Object!=NULL){
+		if(Object!=nullptr){
 			Entidad* h = (Entidad*)Object;
 			if(h->GetClase()==EENUM_DOOR){
 				Door* door = (Door*)Object;
@@ -279,7 +279,7 @@ bool CheckTravel::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	RoomGraph* room = bb->GetRoomGraph();
-	if(character!=NULL && room!=NULL){
+	if(character!=nullptr && room!=nullptr){
 		if(room->NextRoom()){
 			bb->SetMasterAction(AI_TASK_TRAVEL);
 			bb->SetMasterMovement(AI_MOVE_TRAVEL);
@@ -302,7 +302,7 @@ bool WhereExplore::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	RoomGraph* room = bb->GetRoomGraph();
-	if(room!=NULL && character!=NULL){
+	if(room!=nullptr && character!=nullptr){
 		vector3df pos = room->WhereExplore(character->GetPos());
 		character->ShortestPath(pos);
 
@@ -333,7 +333,7 @@ bool CheckExplore::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"Check Explore\n";
 
 	RoomGraph* room = bb->GetRoomGraph();
-	if(room!=NULL){
+	if(room!=nullptr){
 		if(!room->RoomExplored()){
 			bb->SetMasterAction(AI_TASK_EXPLORE);
 			bb->SetMasterMovement(AI_MOVE_EXPLORE);
@@ -375,7 +375,7 @@ bool UseFountain::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target != NULL){
+	if(target != nullptr){
 		character->SetController(ACTION_RAYCAST, PRESSED);
 
 		return true;
@@ -421,7 +421,7 @@ bool ReleaseSpell::run(Blackboard* bb){
     // En el caso de que no lo haya conseguido para asegurarnos
     // reseteamos el hechizo. De esta forma si el hechizo se cancela
     // este Decorador se encarga de resetearlo.
-    if(child != NULL){
+    if(child != nullptr){
         if(!child->run(bb)){
         	AIPlayer* character = bb->GetPlayer();
         	character->SetController(ACTION_SHOOT, RELEASED);
@@ -498,7 +498,7 @@ bool CatchGrail::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CatchGrail\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	if(character!=NULL){
+	if(character!=nullptr){
 		character->SetController(ACTION_RAYCAST, PRESSED);
 
 		return true;
@@ -519,7 +519,7 @@ bool DefuseTrap::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(character != NULL && target!=NULL){
+	if(character != nullptr && target!=nullptr){
 		character->SetController(ACTION_RAYCAST, PRESSED);
 		bb->CleanSense(target->id);
 		return true;
@@ -616,7 +616,7 @@ bool CheckDistance::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
+	if(target!=nullptr){
 		Kinematic cKin;
         Kinematic tKin;
 
@@ -648,7 +648,7 @@ bool FaceObject::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(character!=NULL && target!=NULL){
+	if(character!=nullptr && target!=nullptr){
 		Kinematic cKin = character->GetKinematic();
 		Kinematic tKin = target->kinematic;
 
@@ -697,7 +697,7 @@ bool CheckPlayerEscape::run(Blackboard* bb){
 
 	if(character_HP<25.0f){	// Si la vida del personaje es inferior al 25% escapa
 		RoomGraph* room = bb->GetRoomGraph();
-		if(room!=NULL){
+		if(room!=nullptr){
 			// Conseguimos el codigo de la IA del equipo enemigo
 			AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
 			bb->SetTargetSight(enemy, AI_TARGET);
@@ -766,7 +766,7 @@ bool HasArrived::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
+	if(target!=nullptr){
 
 
 		Kinematic cKin;
@@ -804,7 +804,7 @@ bool FaceTarget::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
+	if(target!=nullptr){
 
 		Kinematic cKin;
     	Kinematic tKin;
@@ -844,7 +844,7 @@ bool TargetPath::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(character!=NULL && target!=NULL){
+	if(character!=nullptr && target!=nullptr){
 		Kinematic cKin = character->GetKinematic();
 
 		character->ShortestPath(target->kinematic.position);
@@ -874,7 +874,7 @@ bool GoToTarget::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
+	if(target!=nullptr){
 
 		Kinematic cKin;
 		Kinematic tKin;
@@ -908,7 +908,7 @@ bool FleeFromTarget::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
-	if(target!=NULL){
+	if(target!=nullptr){
 
 		Kinematic cKin;
     	Kinematic tKin;
@@ -980,7 +980,7 @@ bool SpellSecuencia::run(Blackboard* bb){
 		// Conseguimos la tarea desde el blackboard
 		// Cada vez que se cambie de hechizo tocará actualizar el puntero correspondiente
 		Task* child = (Task*)bb->GetPuntero((AI_code)(AI_TASK_SPELL00 + spellsOrder[i]));
-		if(child!=NULL){
+		if(child!=nullptr){
 			if(child->run(bb)){
 				// En el caso de que este en medio de un casteo y quiero poner otro hechizo debera hacer release
 				if(character->GetCastingSpell() && spellsOrder[i] != character->GetCurrentSpell()){

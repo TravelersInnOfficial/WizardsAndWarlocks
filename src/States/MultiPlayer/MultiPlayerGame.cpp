@@ -38,7 +38,7 @@ MultiPlayerGame::MultiPlayerGame(){
 
 	// Si es un servidor creado INGAME lo muteamos
 	Server* myServer = n_engine->GetServer();
-	if(myServer != NULL){
+	if(myServer != nullptr){
 		m_isServer = true;
 		if(myServer->GetCreatedFromGame()){
 			mute = true;
@@ -127,7 +127,7 @@ bool MultiPlayerGame::Input(){
 
 	if(g_engine->IsKeyPressed(KEY_F2)){
 		Server* myServer = n_engine->GetServer();
-		if(myServer == NULL || (myServer != NULL && !myServer->GetCreatedFromGame())){	
+		if(myServer == nullptr || (myServer != nullptr && !myServer->GetCreatedFromGame())){	
 			float vol = 1;
 			if(!mute) vol = 0;
 			SoundSystem::getInstance()->setVolume(vol);
@@ -152,12 +152,12 @@ void MultiPlayerGame::Update(float deltaTime){
 
 
 void MultiPlayerGame::Draw(){
-	if(n_engine != NULL){
+	if(n_engine != nullptr){
 		bool draw = true;
 		
 		if(m_isServer){
 			Server* myServer = n_engine->GetServer();
-			if(myServer != NULL && myServer->GetCreatedFromGame()) draw = false;
+			if(myServer != nullptr && myServer->GetCreatedFromGame()) draw = false;
 		}
 
 		if(draw){

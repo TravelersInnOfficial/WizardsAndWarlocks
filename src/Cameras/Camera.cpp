@@ -4,9 +4,9 @@ Camera::Camera(){}
 
 Camera::~Camera(){
 	// La camara la elimina el propio motor grafico
-	/*if(p_Camera!=NULL){
+	/*if(p_Camera!=nullptr){
 		delete p_Camera;
-		p_Camera = NULL;
+		p_Camera = nullptr;
 	}*/
 	
 }

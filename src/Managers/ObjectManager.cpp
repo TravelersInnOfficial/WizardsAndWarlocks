@@ -6,9 +6,9 @@
 ObjectManager* ObjectManager::instance = 0;
 
 ObjectManager::ObjectManager(){
-	navmesh = NULL;
-	roomGraph = NULL;
-	grail = NULL;
+	navmesh = nullptr;
+	roomGraph = nullptr;
+	grail = nullptr;
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
@@ -83,7 +83,7 @@ Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TR
 }
 
 Grail* ObjectManager::AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	if(grail==NULL) grail = new Grail(TPosition, TScale, TRotation);
+	if(grail==nullptr) grail = new Grail(TPosition, TScale, TRotation);
 	return grail;
 }
 
@@ -101,7 +101,7 @@ Switch* ObjectManager::AddSwitch(vector3df TPosition, vector3df TScale, vector3d
 }
 
 Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type){
-	Potion* p = NULL;
+	Potion* p = nullptr;
 	switch(type){
 		case POTION_LIFE:
 			p = (Potion*) new LifePotion(TPosition, TScale, TRotation);
@@ -139,7 +139,7 @@ Fountain* ObjectManager::AddFountain(vector3df TPosition, vector3df TScale, vect
 }
 
 Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type){
-	Npc* n = NULL;
+	Npc* n = nullptr;
 	switch(type){
 		case(NPC_SELLER):{
 			n = new NpcSeller(TPosition, TScale, TRotation);
@@ -155,12 +155,12 @@ Npc* ObjectManager::AddNpc(vector3df TPosition, vector3df TScale, vector3df TRot
 		}
 		default:{ break; }
 	}
-	if(n != NULL) npcs.push_back(n);
+	if(n != nullptr) npcs.push_back(n);
 	return n;
 }
 
 Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type){
-	Invocation* in = NULL;
+	Invocation* in = nullptr;
 	switch(type){
 		case INVO_WALL:
 			in = new InvocationWall(100, 10, TPosition, TScale, TRotation);
@@ -178,12 +178,12 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 			in = new BaseT(TPosition,  TScale, TRotation);
 		break;
 	}
-	if(in!=NULL)invocations.push_back(in);
+	if(in!=nullptr)invocations.push_back(in);
 	return in;
 }
 
 DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type){
-	DamageArea* ar = NULL;
+	DamageArea* ar = nullptr;
 
 	switch(type){
 		case AREA_ICE:
@@ -194,26 +194,26 @@ DamageArea* ObjectManager::AddDamageArea(vector3df TPosition, vector3df TScale, 
 			ar = new PoisonArea(0, TPosition, TScale, TRotation);
 		break;
 	}
-	if(ar!=NULL) damageAreas.push_back(ar);
+	if(ar!=nullptr) damageAreas.push_back(ar);
 	return ar;
 }
 
 void ObjectManager::AddNavmesh(std::string path){
-	if(navmesh!=NULL) delete navmesh;
+	if(navmesh!=nullptr) delete navmesh;
 	navmesh = new NavMesh();
 	NavMeshLoader::LoadNavMeshGraph(navmesh, path);
 	//navmesh->Draw();
 }
 
 void ObjectManager::AddRoomGraph(std::string path){
-	if(roomGraph!=NULL) delete roomGraph;
+	if(roomGraph!=nullptr) delete roomGraph;
 	roomGraph = new RoomGraph();
 	LoaderRoomGraph::LoadRoomGraph(roomGraph, path);
 }
 
 PlayerParts* ObjectManager::AddPlayerParts(Alliance alliance, vector3df TPosition, vector3df TScale, vector3df TRotation){
 	PlayerParts* newBP = new PlayerParts(alliance, TPosition, TScale, TRotation);
-	if(newBP != NULL) playerParts.push_back(newBP);
+	if(newBP != nullptr) playerParts.push_back(newBP);
 	return newBP;
 }
 
@@ -248,7 +248,7 @@ void ObjectManager::SendInvocationSignal(){
 }
 
 void ObjectManager::SendGrailSignal(){
-	if(grail!=NULL){
+	if(grail!=nullptr){
 		grail->SendSignal();
 	}
 }
@@ -297,7 +297,7 @@ int ObjectManager::GetDoorVecPos(Door* door){
 	int toRet = -1;
 	for(int i = 0; i < doors.size() && toRet == -1; i++){
 		Door* auxDoor = doors.at(i);
-		if(auxDoor != NULL && door != NULL && auxDoor == door) toRet = i;
+		if(auxDoor != nullptr && door != nullptr && auxDoor == door) toRet = i;
 	}
 	return toRet;
 }
@@ -306,7 +306,7 @@ int ObjectManager::GetPotionVecPos(Potion* potion){
 	int toRet = -1;
 	for(int i = 0; i < potions.size() && toRet == -1; i++){
 		Potion* auxPotion = potions.at(i);
-		if(auxPotion != NULL && potion != NULL && auxPotion == potion) toRet = i;
+		if(auxPotion != nullptr && potion != nullptr && auxPotion == potion) toRet = i;
 	}
 	return toRet;
 }
@@ -314,7 +314,7 @@ int ObjectManager::GetPotionVecPos(Potion* potion){
 NavMesh* ObjectManager::GetNavMesh(){return navmesh;}
 
 void ObjectManager::CopyRoomGraph(RoomGraph* copy){
-	if(roomGraph!=NULL) roomGraph->CopyGraph(copy);
+	if(roomGraph!=nullptr) roomGraph->CopyGraph(copy);
 }
 
 // ===================================================================================================== //
@@ -424,19 +424,19 @@ void ObjectManager::ClearMap(){
 	}
 	playerParts.clear();
 
-	if(grail != NULL){
+	if(grail != nullptr){
 		delete grail;
-		grail = NULL;
+		grail = nullptr;
 	}
 
-	if(navmesh != NULL){
+	if(navmesh != nullptr){
 		delete navmesh;
-		navmesh = NULL;
+		navmesh = nullptr;
 	}
 
-	if(roomGraph != NULL){
+	if(roomGraph != nullptr){
 		delete roomGraph;
-		roomGraph = NULL;
+		roomGraph = nullptr;
 	}
 
 	wizardSpawn.clear();
@@ -446,7 +446,7 @@ void ObjectManager::ClearMap(){
 
 bool ObjectManager::CheckIfWon(){
 	bool toRet = false;
-	if(grail != NULL) toRet = grail->CheckIfWon();
+	if(grail != nullptr) toRet = grail->CheckIfWon();
 	return toRet;
 }
 
@@ -469,7 +469,7 @@ void ObjectManager::Update(float deltaTime){
 }
 
 void ObjectManager::UpdateGrail(float deltaTime){
-	if(grail!=NULL) grail->Update(deltaTime);
+	if(grail!=nullptr) grail->Update(deltaTime);
 }
 
 void ObjectManager::UpdateDoors(){
@@ -558,14 +558,14 @@ void ObjectManager::UpdatePlayerParts(float deltaTime){
 void ObjectManager::UseNetworkDoor(int doorVecPos){
 	if(doorVecPos < doors.size()){
 		Door* doorToInteract = doors.at(doorVecPos);
-		if(doorToInteract != NULL) doorToInteract->NetInteract();
+		if(doorToInteract != nullptr) doorToInteract->NetInteract();
 	}
 }
 
 void ObjectManager::UseNetworkPotion(int potionVecPos, Player* p){
 	if(potionVecPos < potions.size()){
 		Potion* potionToInteract = potions.at(potionVecPos);
-		if(potionToInteract != NULL) potionToInteract->NetInteract(p);
+		if(potionToInteract != nullptr) potionToInteract->NetInteract(p);
 	}
 }
 

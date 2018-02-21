@@ -75,7 +75,7 @@ void Door::Interact(){
         if(!working){
             if (n_engine->IsServerInit()){
                 Server* server = n_engine->GetServer();
-                if(server != NULL){
+                if(server != nullptr){
                     int pos = ObjectManager::GetInstance()->GetDoorVecPos(this);
                     server->NotifyDoorInteracted(pos);
                 }
