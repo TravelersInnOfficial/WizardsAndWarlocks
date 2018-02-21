@@ -42,6 +42,7 @@ public:
     // Functions
     void ResetInformacion();
     void LoadRoomGraph();
+    void UnloadRoomGraph();
 
     // Getters
     Blackboard* GetBlackboard();
@@ -60,9 +61,11 @@ private:
 	void CreateMovement();
     void PrepareSubTrees();
 
+    void CreateMoveDefault();   // SubArbol de movimiento por defecto
+    void CreateTaskDefault();   // SubArbol de tareas por defecto
+    void CreateMoveFace();      // SubArbol de movimiento para mirar
     void CreateNoMove();        // SubArbol de no movimiento
     void CreateMoveSpell();     // SubArboles de movimiento con hechizos
-    void CreateMoveDefault();   // SubArbol de movimiento por defecto
     void CreateMoveToTarget();  // SubArbol de movimiento hacia el target
     void CreatePathToTarget();  // SubArbol de movimiento hacia el target con path
     void CreateShootSpell();    // SubArbol de lanzar hechizo

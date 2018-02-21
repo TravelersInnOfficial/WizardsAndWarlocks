@@ -63,7 +63,9 @@ class Player: public Entidad{
 		bool CheckIfReady();
 		void Run(bool runningStatus);
 		void ApplyFuzyEffect();
-		virtual void InitGame();
+
+		virtual void InitGame();			// Metodo init de Game
+		virtual void RestartMatchStatus();	// Metodo init vuelta Lobby
 
 		// Spells
 		bool StartSpell();

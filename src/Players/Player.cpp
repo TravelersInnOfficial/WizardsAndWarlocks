@@ -89,6 +89,10 @@ void Player::InitGame(){
 	Respawn();
 }
 
+void Player::RestartMatchStatus(){
+	Respawn();
+}
+
 void Player::PlayerInit(){
 	potion = nullptr;
 	m_HP = 100;

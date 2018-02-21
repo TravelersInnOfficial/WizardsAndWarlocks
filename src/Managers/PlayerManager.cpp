@@ -158,12 +158,20 @@ void PlayerManager::RespawnDeadPlayers(){
 }
 
 void PlayerManager::RestartMatchStatus(){
-	int size = players.size();
+	// Pasamos todos los jugadores muertos a vivos
+	int size = deadPlayers.size();
+	for(int i=size-1; i>=0; i--){
+		Player* p = deadPlayers[i];
+		deadPlayers.erase(deadPlayers.begin() + i);	
+		players.push_back(p);
+	}
+
+	size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];
-		p->Respawn();
+		p->RestartMatchStatus();
 	}
-	RespawnDeadPlayers();
+
 	warlocksWin = false;
 	wizardsWin = false;
 }

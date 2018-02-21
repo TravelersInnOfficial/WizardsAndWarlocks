@@ -52,6 +52,10 @@ void BehaviourTree::LoadRoomGraph(){
     informacion->LoadRoomGraph();
 }
 
+void BehaviourTree::UnloadRoomGraph(){
+    informacion->UnloadRoomGraph();
+}
+
 void BehaviourTree::SetInformation(Blackboard* bb){
     informacion->SaveParent(bb);
 }
@@ -84,17 +88,27 @@ void BehaviourTree::SetPlayer(AIPlayer* p){
 
 void BehaviourTree::CreateReceive(){
 
-    Selector* sl_checkPlayer = new Selector();          // Selector para las comprobacion de vision de player
-    sl_checkPlayer->addChild(new CheckPlayerEscape());
-    sl_checkPlayer->addChild(new CheckPlayerAttack());
+    Selector* sl_checkSightPlayer = new Selector();          // Selector para las comprobacion de vision de player
+    sl_checkSightPlayer->addChild(new CheckPlayerEscape());
+    sl_checkSightPlayer->addChild(new CheckPlayerAttack());
 
     Secuencia* sc_seePlayers = new Secuencia();         // Secuencia de comprobaciones por vision de player
     sc_seePlayers->addChild(new CheckPlayerSight());
-    sc_seePlayers->addChild(sl_checkPlayer);
+    sc_seePlayers->addChild(sl_checkSightPlayer);
+
+    Selector* sl_checkHearPlayer = new Selector();
+    sl_checkHearPlayer->addChild(new CheckPlayerEscape);
+    sl_checkHearPlayer->addChild(new PlayerHearing());
+
+    Secuencia* sc_hearPlayers = new Secuencia();
+    sc_hearPlayers->addChild(new CheckPlayerHearing());
+    sc_hearPlayers->addChild(sl_checkHearPlayer);
+
 
     Selector* sc_checkActions = new Selector();
     sc_checkActions->addChild(new CheckUsePotion());    // Comprobamos si usar una pocion
     sc_checkActions->addChild(sc_seePlayers);           // Comprobamos si estamos viendo algun jugador
+    sc_checkActions->addChild(sc_hearPlayers);          // Comprobamos si estamos oyendo algun jugador
     sc_checkActions->addChild(new CheckSawTrap());      // Comprobamos si hemos visto alguna trampa
     sc_checkActions->addChild(new CheckSawPotion());    // Comprobamos si hemos visto alguan fuente
     sc_checkActions->addChild(new CheckSawFountain());  // Comprobamos si hemos visto alguna fuente
@@ -119,6 +133,10 @@ void BehaviourTree::CreateMovement(){
 void BehaviourTree::PrepareSubTrees(){
     // No movimiento
     CreateNoMove();
+    // Tarea por defecto
+    CreateTaskDefault();
+    // Encarar target
+    CreateMoveFace();
     // Movimiento Default
     CreateMoveDefault();
     // Movimiento a un target
@@ -185,6 +203,12 @@ void BehaviourTree::CreateShootSpell(){
     tasks.push_back(d_attack);
 }
 
+void BehaviourTree::CreateTaskDefault(){
+    Task* t = new EmptyTask();
+    informacion->SetPuntero(AI_TASK_DEFAULT, t);
+    tasks.push_back(t);
+}
+
 void BehaviourTree::CreateMoveDefault(){
     Secuencia* sc_sight = new Secuencia();
     sc_sight->addChild(new CheckPlayerSight());
@@ -233,6 +257,12 @@ void BehaviourTree::CreateCathPotion(){
 
     informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
     tasks.push_back(sc_catchPotion);
+}
+
+void BehaviourTree::CreateMoveFace(){
+    Task* t = new FaceTarget();
+    informacion->SetPuntero(AI_MOVE_FACE, t);
+    tasks.push_back(t);
 }
 
 void BehaviourTree::CreateMoveToTarget(){

@@ -208,7 +208,6 @@ bool MoveEscape::run(Blackboard* bb){
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(room!=nullptr && character!=nullptr && target!=nullptr){
 		vector3df pos = room->GetEscapeRoom(target->kinematic.position);
-
 		character->ShortestPath(pos);
 
 		Kinematic cKin = character->GetKinematic();
@@ -673,11 +672,10 @@ bool CheckPlayerAttack::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckPlayerAttack\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	// if(Meter condicion para atacar)
-	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
-
-	bb->SetTargetSight(enemy, AI_TARGET);
-	bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+	if(character!=nullptr){
+		// if(Meter condicion para atacar)
+		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+	}
 	return true;
 }
 
@@ -698,9 +696,6 @@ bool CheckPlayerEscape::run(Blackboard* bb){
 	if(character_HP<25.0f){	// Si la vida del personaje es inferior al 25% escapa
 		RoomGraph* room = bb->GetRoomGraph();
 		if(room!=nullptr){
-			// Conseguimos el codigo de la IA del equipo enemigo
-			AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
-			bb->SetTargetSight(enemy, AI_TARGET);
 			// Ponemos la tarea y movimiento de escape
 			bb->SetMasterAction(AI_TASK_ESCAPE);
 			bb->SetMasterMovement(AI_MOVE_ESCAPE);
@@ -733,6 +728,26 @@ bool CheckPlayerHearing::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	PLAYER HEARING
+//
+// ================================================================================================= //
+
+PlayerHearing::PlayerHearing(){}
+
+bool PlayerHearing::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"PlayerHearing\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character != nullptr){
+		bb->SetMasterAction(AI_TASK_DEFAULT);
+		bb->SetMasterMovement(AI_MOVE_FACE);
+		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	CHECK PLAYER SIGHT
 //
 // ================================================================================================= //
@@ -756,6 +771,10 @@ bool CheckPlayerSight::run(Blackboard* bb){
 			float value = -10.0f*number*delta;
 			room->ChangeSecurityLevel(value);
 		}
+		// Preparamos el target para las siguientes operaciones
+		// Conseguimos el codigo de la IA del equipo enemigo
+		AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
+		bb->SetTargetSight(enemy, AI_TARGET);
 		return true;
 	}
 	return false;

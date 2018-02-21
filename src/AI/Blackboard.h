@@ -30,6 +30,7 @@ public:
     ~Blackboard();
 
     void LoadRoomGraph();
+    void UnloadRoomGraph();
     void UpdateRoomGraph(float deltaTime);
     void SetPlayer(AIPlayer* p);
 

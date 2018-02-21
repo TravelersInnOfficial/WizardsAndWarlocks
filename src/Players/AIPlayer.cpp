@@ -44,10 +44,31 @@ void AIPlayer::SetSteerings(){
 }
 
 void AIPlayer::InitGame(){
+	// Inicializamos las variables de lanzar hechizos propias del IAPlayer
+	shootSpell = false;
+	castingSpell = false;
+	// Reseteamos la informacion del BehaviourTree
 	behaviour->ResetInformacion();
+	// Reseteamos las notificaciones que queden en el sensor
 	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
+	// Hacemos que la IA cargue la habitacion
 	behaviour->LoadRoomGraph();
+	// Hacemos init del player
 	Player::InitGame();
+}
+
+void AIPlayer::RestartMatchStatus(){
+	// Inicializamos las variables de lanzar hechizos propias del IAPlayer
+	shootSpell = false;
+	castingSpell = false;
+	// Resetemos la informacion del BehaviourTree
+	behaviour->ResetInformacion();
+	// Reseteamos las notificaciones que queden en el sensor
+	RegionalSenseManager::GetInstance()->ResetSensor(sensor);
+	// Hacemos que la IA cargue la habitacion
+	behaviour->UnloadRoomGraph();
+	// Hacemos RestartMatchStatus
+	Player::RestartMatchStatus();
 }
 
 // STEERINGS

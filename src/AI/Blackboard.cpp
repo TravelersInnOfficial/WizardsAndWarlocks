@@ -20,6 +20,13 @@ Blackboard::~Blackboard(){
     delete roomGraph;
 }
 
+void Blackboard::UnloadRoomGraph(){
+    if(roomGraph!=nullptr){
+        delete roomGraph;
+        roomGraph = nullptr;
+    }
+}
+
 void Blackboard::LoadRoomGraph(){
     if(roomGraph!=nullptr){
         delete roomGraph;

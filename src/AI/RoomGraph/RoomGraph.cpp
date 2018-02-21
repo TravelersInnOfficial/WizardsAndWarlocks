@@ -52,7 +52,7 @@ bool RoomGraph::AddConnection(int first, int second){
 		}
 
 		// Si hemos encontrado ambas habitaciones salimos
-		if(firstRoom!=nullptr && secondRoom!=nullptr){
+		if(firstRoom != nullptr && secondRoom != nullptr){
 			break;
 		}
 	}
@@ -67,13 +67,13 @@ bool RoomGraph::AddConnection(int first, int second){
 
 bool RoomGraph::RoomExplored(){
 	bool output = false;
-	if(m_actualRoom!=nullptr) output = m_actualRoom->GetExplored();
+	if(m_actualRoom != nullptr) output = m_actualRoom->GetExplored();
 	return output;
 }
 
 vector3df RoomGraph::RoomPos(){
 	vector3df output;
-	if(m_actualRoom!=nullptr) output = m_actualRoom->GetPosition();
+	if(m_actualRoom != nullptr) output = m_actualRoom->GetPosition();
 	return output;
 }
 
@@ -133,7 +133,7 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad
 		m_actualRoom->ChangeSecurityLevel(10.0f*deltaTime);
 		//std::cout<<deltaTime<<std::endl;
-		std::cout<<m_actualRoom->GetSecurityLevel()<<std::endl;
+		//std::cout<<m_actualRoom->GetSecurityLevel()<<std::endl;
 	}
 }
 
@@ -220,31 +220,8 @@ vector3df RoomGraph::GetSecondCorner(){
 }
 
 vector3df RoomGraph::GetEscapeRoom(vector3df target){
-	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
 	vector3df output;
-
-	// Creamos los valores iniciales de distancia y valor, inicializados a la maxima distancia posible
-	float distance = std::numeric_limits<float>::max();
-	int value = -1;
-
-	// Miramos habitacion a habitacion si la distancia es menor
-	uint8_t size = m_rooms.size();
-	for(uint8_t i=0; i<size; i++){
-		RoomInfo* info = m_rooms[i];
-		float currentLength = info->GetDistance(target);
-		if(currentLength<distance){
-			distance = currentLength;
-			value = i;
-		}
-	}
-
-	// Miramos si hemos llegado a encontrar algun valor
-	if(value != -1){
-		// Igualamos el valor al centro de la habitacion mas cercana para escapar
-		output = m_rooms[value]->GetPosition();
-	}
-
-	// Devolvemos el valor al que ir
+	if(m_actualRoom != nullptr) output = m_actualRoom->GetEscapeRoom(target);
 	return output;
 }
 

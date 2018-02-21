@@ -26,6 +26,7 @@ public:
 	vector3df GetPosition();
 	std::vector<int> GetConnections();
 	std::vector<vector3df> GetExplorePoints();
+	vector3df GetEscapeRoom(vector3df target);
 private:
 	void ShuffleVector();
 	float NearestPoint(float pointA, float pointB, float target);

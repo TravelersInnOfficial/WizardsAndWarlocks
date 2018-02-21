@@ -20,7 +20,9 @@ public:
 	void DeadUpdate();
 	void SetAngularForce(vector3df v);
 	void Die();
+
 	void InitGame();
+	void RestartMatchStatus();
 
 	// Draw
 	void Debug();
