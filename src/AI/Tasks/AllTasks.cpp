@@ -749,7 +749,7 @@ bool CheckPlayerSight::run(Blackboard* bb){
 		// En el caso de que se haya visto a alguno de los enemigos decrementamos
 		// el nivel de seguridad de la habitacion
 		RoomGraph* room = bb->GetRoomGraph();
-		if(room != NULL){
+		if(room != nullptr){
 			// Cambiamos el nivel de seguridad en funcion de los enemigos que haya visto
 			// Quitamos 10 de seguridad por enemigo visto
 			float delta = bb->GetFloat(AI_DELTA);

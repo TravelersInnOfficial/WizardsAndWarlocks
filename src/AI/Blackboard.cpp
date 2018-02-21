@@ -85,13 +85,8 @@ float Blackboard::GetFloat(AI_code name){
     if(it != dataFloat.end()){
         return dataFloat[name];
     }
-<<<<<<< HEAD
-    else if(blackboardParent != NULL){
-        return blackboardParent->GetFloat(name);
-=======
     else if(blackboardParent != nullptr){
-        return blackboardParent->GetInt(name);
->>>>>>> b24cf3b8710fe14cca353c2d5dfdfa6c8531e3af
+        return blackboardParent->GetFloat(name);
     }
     else{
         return -1; //Numero que devuelve en caso negativo

@@ -23,7 +23,7 @@ RoomGraph::~RoomGraph(){
 }
 
 void RoomGraph::ChangeSecurityLevel(float value){
-	if(m_actualRoom != NULL){
+	if(m_actualRoom != nullptr){
 		m_actualRoom->ChangeSecurityLevel(value);
 	}
 }
@@ -129,7 +129,7 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 	}
 	// En el caso de que no este dentro de ninguna habitacion supondremos que esta en la misma
 	// habitacion que anteriormente
-	if(m_actualRoom!=NULL){
+	if(m_actualRoom != nullptr){
 		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad
 		m_actualRoom->ChangeSecurityLevel(10.0f*deltaTime);
 		//std::cout<<deltaTime<<std::endl;
