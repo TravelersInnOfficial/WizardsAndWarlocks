@@ -104,7 +104,7 @@ void AIPlayer::ResetValues(){
 void AIPlayer::Update(float deltaTime){
 	if(hasCharacter){
 		ResetValues();
-		behaviour->Update();
+		behaviour->Update(deltaTime);
 		Steering2Controller(deltaTime);
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update(deltaTime);		// Check Inputs

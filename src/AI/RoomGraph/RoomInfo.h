@@ -14,11 +14,13 @@ public:
 	vector3df WhereExplore(vector3df pos);
 	RoomInfo* GetNextRoom();
 	void AddPositionExplore(vector3df position);
+	void ChangeSecurityLevel(float value);
 
 	// GETTERS
 	int GetId();
 	bool GetExplored();
 	float GetDistance(vector3df target);
+	float GetSecurityLevel();
 	vector3df GetFirstSide();
 	vector3df GetSecondSide();
 	vector3df GetPosition();
@@ -32,7 +34,7 @@ private:
 	vector3df 				m_position;			// Posicion central de la habitacion
 	vector3df				m_firstSide;		// Posicion de la primera esquina de la habitacion
 	vector3df				m_secondSide;		// Posicion de la segunda esquina de la habitacion
-	float					m_securityLevel;	// Nivel de seguridad de la habitacion
+	float					m_securityLevel;	// Nivel de seguridad de la habitacion [0, 100] inseguro/seguro
 	std::vector<RoomInfo*>	m_nextRooms;		// Habitaciones contiguas de la habitacion
 
 	std::vector<vector3df> 	m_explored;			// Array con posiciones que explorar de la habitacion

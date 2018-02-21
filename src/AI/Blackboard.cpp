@@ -26,13 +26,13 @@ void Blackboard::LoadRoomGraph(){
     }
     roomGraph = new RoomGraph();
     ObjectManager::GetInstance()->CopyRoomGraph(roomGraph);
-    UpdateRoomGraph();
+    UpdateRoomGraph(0);
 }
 
 void Blackboard::UpdateRoomGraph(){
     if(roomGraph!=nullptr){
         vector3df pos = currentPlayer->GetPos();
-        roomGraph->InitRoom(pos);
+        roomGraph->InitRoom(pos, deltaTime);
         roomGraph->UpdateExplore(currentPlayer->GetPos());
     }
 }
@@ -79,14 +79,19 @@ void* Blackboard::GetPuntero(AI_code name){
     }
 }
 
-int Blackboard::GetInt(AI_code name){
-    std::map<AI_code, int>::iterator it;
-    it = dataInt.find(name);
-    if(it != dataInt.end()){
-        return dataInt[name];
+float Blackboard::GetFloat(AI_code name){
+    std::map<AI_code, float>::iterator it;
+    it = dataFloat.find(name);
+    if(it != dataFloat.end()){
+        return dataFloat[name];
     }
+<<<<<<< HEAD
+    else if(blackboardParent != NULL){
+        return blackboardParent->GetFloat(name);
+=======
     else if(blackboardParent != nullptr){
         return blackboardParent->GetInt(name);
+>>>>>>> b24cf3b8710fe14cca353c2d5dfdfa6c8531e3af
     }
     else{
         return -1; //Numero que devuelve en caso negativo
@@ -101,8 +106,8 @@ void Blackboard::SetPuntero(AI_code name, void* value){
     dataPuntero[name] = value;
 }
 
-void Blackboard::SetInt(AI_code name, int value){
-    dataInt[name] = value;
+void Blackboard::SetFloat(AI_code name, float value){
+    dataFloat[name] = value;
 }
 
 void Blackboard::SetSound(int id, void* punt, AI_code name, Kinematic kin, float dur){

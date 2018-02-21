@@ -44,6 +44,7 @@ enum AI_code{
 	AI_MOVE_SPELL03 	= 0x24, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
 	// VARIABLES DE BLACKBOARD
 	AI_TARGET			= 0x25,	// (Puntero) Target de la IA (Kinematic Object)
+	AI_DELTA			= 0x26	// (Int) DeltaTime del frame actual
 };
 
 enum AI_modalities
