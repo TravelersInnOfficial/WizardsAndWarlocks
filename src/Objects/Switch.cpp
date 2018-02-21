@@ -53,7 +53,7 @@ void Switch::UpdatePosShape(){
 }
 
 void Switch::Contact(void* punt, EntityEnum tipo){
-    if(tipo == EENUM_PROJECTILE && actualDoor != NULL){
+    if(tipo == EENUM_PROJECTILE && actualDoor != nullptr){
         open = true;
         actualDoor->Interact();
     }

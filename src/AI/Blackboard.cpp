@@ -7,9 +7,9 @@ Sense_struct::~Sense_struct(){
 }
 
 Blackboard::Blackboard(){
-    blackboardParent = NULL;
-    currentPlayer = NULL;
-    roomGraph = NULL;
+    blackboardParent = nullptr;
+    currentPlayer = nullptr;
+    roomGraph = nullptr;
     
     masterMovement = 0;
     masterAction = 0;
@@ -21,7 +21,7 @@ Blackboard::~Blackboard(){
 }
 
 void Blackboard::LoadRoomGraph(){
-    if(roomGraph!=NULL){
+    if(roomGraph!=nullptr){
         delete roomGraph;
     }
     roomGraph = new RoomGraph();
@@ -29,8 +29,8 @@ void Blackboard::LoadRoomGraph(){
     UpdateRoomGraph(0);
 }
 
-void Blackboard::UpdateRoomGraph(float deltaTime){
-    if(roomGraph!=NULL){
+void Blackboard::UpdateRoomGraph(){
+    if(roomGraph!=nullptr){
         vector3df pos = currentPlayer->GetPos();
         roomGraph->InitRoom(pos, deltaTime);
         roomGraph->UpdateExplore(currentPlayer->GetPos());
@@ -42,22 +42,22 @@ void Blackboard::SetPlayer(AIPlayer* p){
 }
 
 AIPlayer* Blackboard::GetPlayer(){
-    if(currentPlayer!= NULL){
+    if(currentPlayer!= nullptr){
         return currentPlayer;
-    }else if(blackboardParent != NULL){
+    }else if(blackboardParent != nullptr){
         return blackboardParent->GetPlayer();
     }else{
-        return NULL;
+        return nullptr;
     }
 }
 
 RoomGraph* Blackboard::GetRoomGraph(){
-    if(roomGraph != NULL){
+    if(roomGraph != nullptr){
         return roomGraph;
-    }else if(blackboardParent != NULL){
+    }else if(blackboardParent != nullptr){
         return blackboardParent->GetRoomGraph();
     }else{
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -71,11 +71,11 @@ void* Blackboard::GetPuntero(AI_code name){
     if(it != dataPuntero.end()){
         return dataPuntero[name];
     }
-    else if(blackboardParent != NULL){
+    else if(blackboardParent != nullptr){
         return blackboardParent->GetPuntero(name);
     }
     else{
-        return NULL;
+        return nullptr;
     }
 }
 
@@ -85,8 +85,13 @@ float Blackboard::GetFloat(AI_code name){
     if(it != dataFloat.end()){
         return dataFloat[name];
     }
+<<<<<<< HEAD
     else if(blackboardParent != NULL){
         return blackboardParent->GetFloat(name);
+=======
+    else if(blackboardParent != nullptr){
+        return blackboardParent->GetInt(name);
+>>>>>>> b24cf3b8710fe14cca353c2d5dfdfa6c8531e3af
     }
     else{
         return -1; //Numero que devuelve en caso negativo
@@ -94,7 +99,7 @@ float Blackboard::GetFloat(AI_code name){
 }
 
 void Blackboard::CleanPuntero(AI_code name){
-    dataPuntero[name] = NULL;
+    dataPuntero[name] = nullptr;
 }
 
 void Blackboard::SetPuntero(AI_code name, void* value){
@@ -248,9 +253,9 @@ int Blackboard::GetNumberSight(AI_code name){
  */
 void Blackboard::SetTargetSight(AI_code name, AI_code where){
     vector3df playerPos;
-    if(currentPlayer!=NULL) playerPos = currentPlayer->GetPos();
+    if(currentPlayer!=nullptr) playerPos = currentPlayer->GetPos();
 
-    void* em = NULL;
+    void* em = nullptr;
     float d = std::numeric_limits<float>::max();
 
     int size = sightSense.size();
@@ -264,16 +269,16 @@ void Blackboard::SetTargetSight(AI_code name, AI_code where){
             }
         }
     }
-    if(em != NULL){
+    if(em != nullptr){
         SetPuntero(where, em);
     }
 }
 
 void Blackboard::SetTargetSound(AI_code name, AI_code where){
     vector3df playerPos;
-    if(currentPlayer!=NULL) playerPos = currentPlayer->GetPos();
+    if(currentPlayer!=nullptr) playerPos = currentPlayer->GetPos();
 
-    void* em = NULL;
+    void* em = nullptr;
     float d = std::numeric_limits<float>::max();
 
     int size = soundSense.size();
@@ -287,7 +292,7 @@ void Blackboard::SetTargetSound(AI_code name, AI_code where){
             }
         }
     }
-     if(em != NULL){
+     if(em != nullptr){
         SetPuntero(where, em);
     }
 }

@@ -177,7 +177,7 @@ RoomInfo* RoomInfo::GetNextRoom(){
 			return m_nextRooms[i];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 void RoomInfo::ShuffleVector(){

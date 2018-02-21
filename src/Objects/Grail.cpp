@@ -105,7 +105,7 @@ void Grail::drawGUI(){
 	if(timeCasting > 0){
 		if(playerOneInteraction || n_engine->IsServerInit()){
 			GraphicEngine* engine = GraphicEngine::getInstance();
-			if(engine != NULL) engine->drawGrailGUI(timeCasting, maxCasting);
+			if(engine != nullptr) engine->drawGrailGUI(timeCasting, maxCasting);
 		}
 	}
 }

@@ -13,14 +13,14 @@ class NetworkEngine{
 public:
 
 	// Returns Instance of the engine. If it not created, this method initializes it.
-	static NetworkEngine* GetInstance(ServerInfo* serverInfo = NULL);
+	static NetworkEngine* GetInstance(ServerInfo* serverInfo = nullptr);
 
 	~NetworkEngine();
 	
 	// Start a Server, must declare port before
 	// Or
 	// Start a Client, must declare IP && port before
-	void StartServer(ServerInfo* serverInfo = NULL);
+	void StartServer(ServerInfo* serverInfo = nullptr);
 	void StartClient(bool proprietary = false);
 
 	// We retrieve our SERVER or the CLIENT to operate
@@ -58,7 +58,7 @@ private:
 	Server* server;						// Server variable (uninitialized)
 	Client* client;						// Client variable (uninitialized)
 
-	NetworkEngine(ServerInfo* serverInfo = NULL);
+	NetworkEngine(ServerInfo* serverInfo = nullptr);
 
 };
 

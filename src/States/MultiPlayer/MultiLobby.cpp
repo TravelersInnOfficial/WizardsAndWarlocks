@@ -27,7 +27,7 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	playerOne = playerManager->GetPlayerOne();
 
 	// GraphicEngine
-	if(playerOne==NULL) g_engine->addCameraSceneNodeFPS(120.f, 0.005);
+	if(playerOne==nullptr) g_engine->addCameraSceneNodeFPS(120.f, 0.005);
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
@@ -54,7 +54,7 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	n_engine->Update(deltaTime, true);
 	f_engine->UpdateWorld(deltaTime);
 
-	if(g_engine->getActiveCamera() != NULL){
+	if(g_engine->getActiveCamera() != nullptr){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
@@ -73,7 +73,7 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	g_engine->UpdateReceiver();
 
 	// Empezamos la partida si recibimos un TRUE en MULTIGAME_CHANGE (lo volvemos a poner a FALSE)
-	if(networkObject != NULL && networkObject->GetBoolVar(MULTIGAME_CHANGE)){
+	if(networkObject != nullptr && networkObject->GetBoolVar(MULTIGAME_CHANGE)){
 		networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
 		father->StartGame();
 	}
@@ -82,14 +82,14 @@ void MultiLobby::UpdateLobby(float deltaTime){
 }
 
 void MultiLobby::Update(float deltaTime){
-	if(playerOne == NULL && !isServer) playerOne = playerManager->GetPlayerOne();
-	if(networkObject == NULL) networkObject = networkManager->GetMultiGame();
+	if(playerOne == nullptr && !isServer) playerOne = playerManager->GetPlayerOne();
+	if(networkObject == nullptr) networkObject = networkManager->GetMultiGame();
 	UpdateLobby(deltaTime);
 }
 
 
 void MultiLobby::Draw(){
-	if(playerOne != NULL){
+	if(playerOne != nullptr){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}

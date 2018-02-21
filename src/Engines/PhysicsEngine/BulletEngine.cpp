@@ -5,7 +5,7 @@
 static BulletEngine* instance;
 
 BulletEngine* BulletEngine::GetInstance() {
-    if (instance == NULL) instance = new BulletEngine();
+    if (instance == nullptr) instance = new BulletEngine();
     return (instance);
 }
 
@@ -15,15 +15,15 @@ BulletEngine::~BulletEngine(){
 
 BulletEngine::BulletEngine(){
 
-	m_broadphase = NULL;
-	m_collisionConfiguration = NULL;
-	m_dispatcher = NULL;
-	m_solver = NULL;
-	m_dynamicsWorld = NULL;
-	m_groundShape = NULL;
-	m_groundMotionState = NULL;
-    m_groundRigidBody = NULL;
-    m_physicsDebug = NULL;
+	m_broadphase = nullptr;
+	m_collisionConfiguration = nullptr;
+	m_dispatcher = nullptr;
+	m_solver = nullptr;
+	m_dynamicsWorld = nullptr;
+	m_groundShape = nullptr;
+	m_groundMotionState = nullptr;
+    m_groundRigidBody = nullptr;
+    m_physicsDebug = nullptr;
 }
 
 void BulletEngine::CreateWorld(){
@@ -122,12 +122,12 @@ void* BulletEngine::Raycast(vector3df S, vector3df E, int collisionFilter){
     m_dynamicsWorld->rayTest(Start, End, RayCallback);
 
     if(RayCallback.hasHit()) {
-		if(RayCallback.m_collisionObject->getUserPointer()!=0){
+		if(RayCallback.m_collisionObject->getUserPointer() != nullptr){
 			return RayCallback.m_collisionObject->getUserPointer();
    		}
     }
 
-    return NULL;
+    return nullptr;
 }
 
 bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df* normal, int collisionFilter){
@@ -141,7 +141,7 @@ bool BulletEngine::Raycast(vector3df S, vector3df E, vector3df* point, vector3df
 	m_dynamicsWorld->rayTest(Start, End, RayCallback);
 
 	if(RayCallback.hasHit()){
-		if(RayCallback.m_collisionObject->getUserPointer()!=0){
+		if(RayCallback.m_collisionObject->getUserPointer() != nullptr){
 			btVector3 N = RayCallback.m_hitNormalWorld;
 
 			normal->X = acos(N.getY())*180/M_PI;
@@ -177,7 +177,7 @@ void BulletEngine::motorProcessCallback(btScalar timeStep){
         for (int j = 0; j < numContacts; j++) {
             btManifoldPoint& pt = contactManifold->getContactPoint(j);
             if (pt.getDistance() < 0.f) {
-               	if(objetoA != 0 && objetoB != 0){
+               	if(objetoA != nullptr && objetoB != nullptr){
 					Entidad* a = (Entidad*)objetoA;
 					Entidad* b = (Entidad*)objetoB;
 

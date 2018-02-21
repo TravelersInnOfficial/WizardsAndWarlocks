@@ -17,18 +17,18 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 
 	type = code;
 	HUDTexturePath = HUDMiniature;
-	shotEvent = NULL;
-	voiceEvent = NULL;
+	shotEvent = nullptr;
+	voiceEvent = nullptr;
 }
 
 Hechizo::~Hechizo(){
-	if (voiceEvent != NULL) {
+	if (voiceEvent != nullptr) {
 		if (voiceEvent->isPlaying()) voiceEvent->stop();	//Stop the sound if its playing
 		voiceEvent->release();		//Release the sound
 		delete voiceEvent;
 	}
 
-	if(shotEvent!=NULL) {
+	if(shotEvent!=nullptr) {
 		if (shotEvent->isPlaying()) shotEvent->stop();		//Stop the sound if its playing
 		shotEvent->release();			//Release the sound
 		delete shotEvent;
@@ -133,7 +133,7 @@ float Hechizo::CalculateUtility(float value, float optim){ 	// 100 1
 	}
 
 	float pendiente = 0;
-	if(base!=0){
+	if(base != 0){
 		pendiente = 100/base;
 	} 
 	float utility = pendiente * abs(value - optim);

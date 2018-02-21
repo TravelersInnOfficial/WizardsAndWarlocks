@@ -34,7 +34,7 @@ void Menu::CalculateFlags(){
     if (w_opt.no_move)      w_flags |= ImGuiWindowFlags_NoMove;
     if (w_opt.no_resize)    w_flags |= ImGuiWindowFlags_NoResize;
     if (w_opt.no_collapse)  w_flags |= ImGuiWindowFlags_NoCollapse;
-    //if (no_close)     p_open = NULL; // Don't pass our bool* to Begin
+    //if (no_close)     p_open = nullptr; // Don't pass our bool* to Begin
 }
 
 float Menu::GetWidth(){return m_width;}

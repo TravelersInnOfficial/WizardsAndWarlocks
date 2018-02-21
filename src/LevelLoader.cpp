@@ -30,7 +30,7 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 	else return false;
 
 	ObjectManager* objManager = ObjectManager::GetInstance();
-	return objManager->AddPotion(position, size, rotation, pot) != NULL ? true : false;
+	return objManager->AddPotion(position, size, rotation, pot) != nullptr ? true : false;
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){

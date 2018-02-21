@@ -5,7 +5,7 @@
 
 NpcSeller::NpcSeller(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
-	hp = NULL;
+	hp = nullptr;
 }
 
 NpcSeller::~NpcSeller(){

@@ -8,7 +8,7 @@ ResourceManager::ResourceManager(){
 void ResourceManager::LoadResources(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
-	GBody* auxBody = NULL;
+	GBody* auxBody = nullptr;
 	vector3df zeroVector = vector3df(0,0,0);
 
 	std::map<GAMEMESHES,std::string>::iterator meshIterator;

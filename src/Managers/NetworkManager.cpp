@@ -8,7 +8,7 @@ NetworkManager* NetworkManager::GetInstance(){
 }
 
 NetworkManager::NetworkManager(){ 
-	multiGame = NULL;
+	multiGame = nullptr;
 }
 
 NetworkManager::~NetworkManager(){
@@ -104,7 +104,7 @@ void NetworkManager::SpawnNewObjects(){
 void NetworkManager::EraseObjects(){
 	std::map<int, NetworkObject*>::reverse_iterator row;
 	for (row = toEraseNetworkObjects.rbegin(); row != toEraseNetworkObjects.rend(); row++){
-		if(row->second == NULL) continue;
+		if(row->second == nullptr) continue;
 		switch(row->second->GetObjType()){
 			case ID_NO_OBJ:{
 				continue;

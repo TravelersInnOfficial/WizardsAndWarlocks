@@ -3,7 +3,7 @@
 
 GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
-    board = NULL;
+    board = nullptr;
 }
 
 GBody::~GBody(){
@@ -35,7 +35,7 @@ void GBody::Remove(){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	if(board!=NULL){  
+	if(board!=nullptr){  
 		std::wstring textTmp(text.begin(), text.end());
 		board->setText(textTmp.c_str());
 

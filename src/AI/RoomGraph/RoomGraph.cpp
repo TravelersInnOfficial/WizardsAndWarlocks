@@ -3,14 +3,14 @@
 #include <limits>
 
 RoomGraph::RoomGraph(){
-	m_actualRoom = NULL;
-	m_nextRoom = NULL;
+	m_actualRoom = nullptr;
+	m_nextRoom = nullptr;
 }
 
 RoomGraph::RoomGraph(RoomGraph* graph){
 	graph->CopyGraph(this);
-	m_actualRoom = NULL;
-	m_nextRoom = NULL;
+	m_actualRoom = nullptr;
+	m_nextRoom = nullptr;
 }
 
 RoomGraph::~RoomGraph(){
@@ -35,8 +35,8 @@ RoomInfo* RoomGraph::AddRoom(int id, vector3df position, vector3df firstSide, ve
 }
 
 bool RoomGraph::AddConnection(int first, int second){
-	RoomInfo* firstRoom = NULL;
-	RoomInfo* secondRoom = NULL;
+	RoomInfo* firstRoom = nullptr;
+	RoomInfo* secondRoom = nullptr;
 	int size = m_rooms.size();
 	for(int i=0; i<size; i++){
 		// Cogemos los datos importante de la habitacion I
@@ -52,12 +52,12 @@ bool RoomGraph::AddConnection(int first, int second){
 		}
 
 		// Si hemos encontrado ambas habitaciones salimos
-		if(firstRoom!=NULL && secondRoom!=NULL){
+		if(firstRoom!=nullptr && secondRoom!=nullptr){
 			break;
 		}
 	}
 	// Comprobamos si hemos acabado el bucle con los dos valores o sin alguno de ellos
-	if(firstRoom!=NULL && secondRoom!=NULL){
+	if(firstRoom!=nullptr && secondRoom!=nullptr){
 		firstRoom->AddNextRoom(secondRoom);
 		return true;
 	}
@@ -67,13 +67,13 @@ bool RoomGraph::AddConnection(int first, int second){
 
 bool RoomGraph::RoomExplored(){
 	bool output = false;
-	if(m_actualRoom!=NULL) output = m_actualRoom->GetExplored();
+	if(m_actualRoom!=nullptr) output = m_actualRoom->GetExplored();
 	return output;
 }
 
 vector3df RoomGraph::RoomPos(){
 	vector3df output;
-	if(m_actualRoom!=NULL) output = m_actualRoom->GetPosition();
+	if(m_actualRoom!=nullptr) output = m_actualRoom->GetPosition();
 	return output;
 }
 
@@ -138,17 +138,17 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 }
 
 void RoomGraph::UpdateExplore(vector3df pos){
-	if(m_actualRoom!=NULL) m_actualRoom->UpdateExplore(pos);
+	if(m_actualRoom!=nullptr) m_actualRoom->UpdateExplore(pos);
 }
 
 vector3df RoomGraph::WhereExplore(vector3df pos){
 	vector3df output = 0;
-	if(m_actualRoom!=NULL) output = m_actualRoom->WhereExplore(pos);
+	if(m_actualRoom!=nullptr) output = m_actualRoom->WhereExplore(pos);
 	return output;
 }
 
 RoomInfo* RoomGraph::GetUnexploredRoom(){
-	RoomInfo* output = NULL;
+	RoomInfo* output = nullptr;
 
 	ShuffleVector();
 	int size = m_rooms.size();
@@ -164,25 +164,25 @@ RoomInfo* RoomGraph::GetUnexploredRoom(){
 
 bool RoomGraph::NextRoom(){
 	// En el caso de haber llegado a la habitacion que teniamos planeado
-	// reseteamos la variable a NULL
-	if(m_nextRoom!=NULL){
+	// reseteamos la variable a nullptr
+	if(m_nextRoom!=nullptr){
 		if(m_nextRoom == m_actualRoom){
-			m_nextRoom = NULL;
+			m_nextRoom = nullptr;
 		}
 	}
 	// Primer intento para saber cual sera la siguiente habitacion
 	// Miramos entre las habitaciones contiguas
-	if(m_nextRoom == NULL){
+	if(m_nextRoom == nullptr){
 		m_nextRoom = m_actualRoom->GetNextRoom();
 	}
 	// Segundo intento para saber cual será la siguiente habitacion
 	// Miramos si queda alguna habitacion sin explorar
-	if(m_nextRoom == NULL){
+	if(m_nextRoom == nullptr){
 		m_nextRoom = GetUnexploredRoom();
 	}
 	// Se acabaron los intentos, en el caso de que no exista ninguna habitacion
 	// Nos rendimos y devolvemos un buen false
-	if(m_nextRoom == NULL){
+	if(m_nextRoom == nullptr){
 		return false;
 	}
 	return true;
@@ -190,7 +190,7 @@ bool RoomGraph::NextRoom(){
 
 vector3df RoomGraph::NextRoomPos(){
 	vector3df output;
-	if(m_nextRoom!=NULL){
+	if(m_nextRoom!=nullptr){
 		output = m_nextRoom->GetPosition();
 	}
 	return output;
@@ -209,13 +209,13 @@ void RoomGraph::ShuffleVector(){
 
 vector3df RoomGraph::GetFirstCorner(){
 	vector3df output;
-	if(m_actualRoom!=NULL) output = m_actualRoom->GetFirstSide();
+	if(m_actualRoom!=nullptr) output = m_actualRoom->GetFirstSide();
 	return output;
 }
 
 vector3df RoomGraph::GetSecondCorner(){
 	vector3df output;
-	if(m_actualRoom!=NULL) output = m_actualRoom->GetSecondSide();
+	if(m_actualRoom!=nullptr) output = m_actualRoom->GetSecondSide();
 	return output;
 }
 

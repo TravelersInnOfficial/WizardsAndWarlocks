@@ -24,7 +24,7 @@ Player::Player(bool isPlayer1){
 	engine = GraphicEngine::getInstance();
 
 	if(isPlayer1) overlayManager = new OverlayManager();
-	else overlayManager = NULL;
+	else overlayManager = nullptr;
 
 	createSoundEvents();
 	changeSurface(2);
@@ -42,11 +42,11 @@ Player::Player(bool isPlayer1){
 	isPlayerOne = isPlayer1;
 	clase = EENUM_PLAYER;
 
-	bt_body = NULL;
-	m_playerNode = NULL;
-	m_camera = NULL;
-	networkObject = NULL;
-	targetDeadCam = NULL;
+	bt_body = nullptr;
+	m_playerNode = nullptr;
+	m_camera = nullptr;
+	networkObject = nullptr;
+	targetDeadCam = nullptr;
 
 	canJump = false;
 	matchStarted = false;
@@ -90,7 +90,7 @@ void Player::InitGame(){
 }
 
 void Player::PlayerInit(){
-	potion = NULL;
+	potion = nullptr;
 	m_HP = 100;
 	m_MP = 100;
 	m_SP = 100;
@@ -101,7 +101,7 @@ void Player::PlayerInit(){
 	m_dead = false;
 	canJump = false;
 
-	if(overlayManager != NULL){
+	if(overlayManager != nullptr){
 		overlayManager->SetTime(BLOOD, 0);
 		overlayManager->SetTime(HITLANDED, 0);
 		overlayManager->SetTime(FUZZY, 0);
@@ -117,19 +117,19 @@ Player::~Player(){
 	delete controller;
 	delete overlayManager;
 
-	if(bt_body != NULL){
+	if(bt_body != nullptr){
 		delete bt_body;
-		bt_body = NULL;
+		bt_body = nullptr;
 	}
 
-    if(m_playerNode != NULL){
+    if(m_playerNode != nullptr){
 		delete m_playerNode;
-		m_playerNode = NULL;
+		m_playerNode = nullptr;
 	}
 
-	if(m_camera!=NULL){
+	if(m_camera!=nullptr){
 		delete m_camera;
-		m_camera = NULL;
+		m_camera = nullptr;
 	}
 
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
@@ -182,7 +182,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 
 		// Camera
 		if(isPlayerOne){ 
-			if(m_camera!=NULL) delete m_camera;
+			if(m_camera!=nullptr) delete m_camera;
 			m_camera = new FPSCamera(120.0f, 0);		
 		}
 
@@ -195,17 +195,17 @@ void Player::CreatePlayerCharacter(bool firstInit){
  * 
  */
 void Player::DestroyPlayerCharacter(){
-	if(bt_body != NULL){
+	if(bt_body != nullptr){
 		delete bt_body;
-		bt_body = NULL;
+		bt_body = nullptr;
 	}
 
-    if(m_playerNode != NULL){
+    if(m_playerNode != nullptr){
 		delete m_playerNode;
-		m_playerNode = NULL;
+		m_playerNode = nullptr;
 	}
 	
-	if(isPlayerOne && m_camera!=NULL){
+	if(isPlayerOne && m_camera!=nullptr){
 		delete m_camera;
 		m_camera = new WatcherCamera(GetPos());
 	}
@@ -235,7 +235,7 @@ void Player::DeclareInput(){
 
 void Player::SetAllInput(keyStatesENUM state){
 	controller->SetAllStatus(state);
-	if(isPlayerOne && networkObject != NULL) {
+	if(isPlayerOne && networkObject != nullptr) {
 		networkObject->SetIntVar(PLAYER_SET_ALL_INPUT, (keyStatesENUM)state, true, false);
 	}
 }
@@ -322,11 +322,11 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
-		if(setPos && newP!=NULL){
+		if(setPos && newP!=nullptr){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 		}
-		if(targetDeadCam!=NULL) m_camera->UpdateCamera(targetDeadCam->GetPos());
+		if(targetDeadCam!=nullptr) m_camera->UpdateCamera(targetDeadCam->GetPos());
 	}
 }
 
@@ -369,7 +369,7 @@ void Player::Update(float deltaTime){
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
-		if(isPlayerOne && m_camera != NULL){
+		if(isPlayerOne && m_camera != nullptr){
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
@@ -381,7 +381,7 @@ void Player::Update(float deltaTime){
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
 		checkMaxVelocity();
 
-		if(overlayManager!=NULL) overlayManager->Update(deltaTime);
+		if(overlayManager!=nullptr) overlayManager->Update(deltaTime);
 	}
 }
 
@@ -476,7 +476,7 @@ void Player::Jump(){
 void Player::ChangeHP(float HP){
 
 	// SERVIDOR
-	if(networkObject != NULL){
+	if(networkObject != nullptr){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
 		if(isServer){
@@ -489,13 +489,13 @@ void Player::ChangeHP(float HP){
 	else{
 		if (HP < 0) {
 			if (m_HP + HP > 0) playSoundEvent(soundEvents["hit"]); //We want to play while its alive but not when it dies
-			if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 1);
+			if(overlayManager != nullptr) overlayManager->SetTime(BLOOD, 1);
 			SetController(ACTION_RAYCAST, RELEASED);
 		}
 
 		// Solo le aplica danyo si su armadura es inferior a 5
 		if(m_Defense<5.0f) m_HP += HP / m_Defense;
-		else if(overlayManager != NULL)  overlayManager->SetTime(BLOOD, 0);
+		else if(overlayManager != nullptr)  overlayManager->SetTime(BLOOD, 0);
 	}
 	
 	// AMBOS
@@ -503,7 +503,7 @@ void Player::ChangeHP(float HP){
 	else if(m_HP <= 0){
 		m_HP = 0;
 		m_dead = true;
-		if(overlayManager != NULL) overlayManager->SetTime(BLOOD, 0);
+		if(overlayManager != nullptr) overlayManager->SetTime(BLOOD, 0);
 	}
 }
 
@@ -539,12 +539,12 @@ void Player::UpdateSP(float deltaTime){
 void Player::Respawn(){
 	if(isPlayerOne){ 
 		MenuType * current_menu = MenuManager::GetInstance()->GetCurrentMenu();
-		if(current_menu != NULL && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();
+		if(current_menu != nullptr && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();
 	}
 
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isServer = n_engine->IsServerInit();
-	if(isServer && networkObject != NULL){
+	if(isServer && networkObject != nullptr){
 		networkObject->SetBoolVar(PLAYER_RESPAWN, true, true, false);
 		networkObject->SetBoolVar(PLAYER_RESPAWN, false, false, false);
 	}
@@ -567,7 +567,7 @@ void Player::Raycast(){
 	vector3df End(EndX, EndY, EndZ);
 	
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
-	if(Object!=NULL){
+	if(Object!=nullptr){
 		Entidad* h = (Entidad*)Object;
 		h->Interact(this);
 	}
@@ -638,9 +638,9 @@ void Player::Die(){
 
 void Player::ReturnToLobby(){
 
-	if(networkObject == NULL) Respawn();
+	if(networkObject == nullptr) Respawn();
 
-	else if(networkObject != NULL){
+	else if(networkObject != nullptr){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		bool isServer = n_engine->IsServerInit();
 
@@ -651,7 +651,7 @@ void Player::ReturnToLobby(){
 }
 
 void Player::DrawOverlays(){
-	if(overlayManager != NULL && isPlayerOne) overlayManager->Draw();	
+	if(overlayManager != nullptr && isPlayerOne) overlayManager->Draw();	
 }
 
 bool Player::CheckIfReady(){
@@ -690,27 +690,27 @@ void Player::CatchObject(Potion* p){
 }
 
 void Player::DropObject(){
-	if(potion!=NULL){
+	if(potion!=nullptr){
 		potion->CreatePotion(m_position, vector3df(0,0,0));
-		potion = NULL;
+		potion = nullptr;
 	}
 }
 
 void Player::LosePotion(){
-	if(potion!=NULL) potion = NULL;
+	if(potion!=nullptr) potion = nullptr;
 	playSoundEvent(soundEvents["losepotion"]);
 }
 
 void Player::UseObject(){
-	if(potion!=NULL){
+	if(potion!=nullptr){
 		playSoundEvent(soundEvents["drink"]);
 		potion->Use(this);
-		potion = NULL;
+		potion = nullptr;
 	}
 }
 
 bool Player::HasObject(){
-	if(potion!=NULL){
+	if(potion!=nullptr){
 		return true;
 	}
 	return false;
@@ -729,12 +729,12 @@ void Player::DeployTrap(){
 	vector3df End(EndX, EndY, EndZ);
 
 	void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
-	if(Object!=NULL){
+	if(Object!=nullptr){
 		Entidad* h = (Entidad*)Object;
 		if(h->GetClase() == EENUM_FLOOR){
 			bool putTrap = false;
 			
-			if(networkObject == NULL) putTrap = true;
+			if(networkObject == nullptr) putTrap = true;
 			else{
 				NetworkEngine* n_engine = NetworkEngine::GetInstance();
 				bool isServer = n_engine->IsServerInit();
@@ -759,11 +759,11 @@ void Player::UpdatePosShape(){
 bool Player::IsPlayerOne(){ return(isPlayerOne); }
 
 void Player::HitMade(Player* player){
-	if(overlayManager != NULL) overlayManager->SetTime(HITLANDED, 0.205);
+	if(overlayManager != nullptr) overlayManager->SetTime(HITLANDED, 0.205);
 }
 
 void Player::ApplyFuzyEffect(){
-	if(overlayManager != NULL) overlayManager->SetTime(FUZZY, 5.0f);
+	if(overlayManager != nullptr) overlayManager->SetTime(FUZZY, 5.0f);
 }
 
 /********************************************************************************************************
@@ -821,12 +821,12 @@ void Player::stopPulse() {
 //Update the event positions for continuous events or usable while moving events (like spells)
 void Player::UpdateSoundsPosition(){
 	if(stepsStarted){
-		if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setPosition(GetHeadPos());
+		if (soundEvents["footsteps"] != nullptr) soundEvents["footsteps"]->setPosition(GetHeadPos());
 	}
 }
 
 void Player::changeSurface(float n) {
-	if (soundEvents["footsteps"] != NULL) soundEvents["footsteps"]->setParamValue("Surface", n);
+	if (soundEvents["footsteps"] != nullptr) soundEvents["footsteps"]->setParamValue("Surface", n);
 }
 
 /********************************************************************************************************
@@ -923,7 +923,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+			if(isPlayerOne && networkObject != nullptr) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -934,7 +934,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
+			if(isPlayerOne && networkObject != nullptr) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
 			TrapManager::GetInstance()->setPlayerUsings(this, 4);
 			break;
 		}
@@ -946,7 +946,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
-			if(isPlayerOne && networkObject != NULL) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
+			if(isPlayerOne && networkObject != nullptr) networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
 			break;
 		}
 	}
@@ -1004,7 +1004,7 @@ void Player::SetMatchStatus(bool started){ matchStarted = started; }
 void Player::SetName(std::string newName){
 	name = newName;
 	if(!name.empty()){
-		if(networkObject != NULL && isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
+		if(networkObject != nullptr && isPlayerOne) networkObject->SetStringVar(PLAYER_NAME, name, true, false);
 		else if(!isPlayerOne) SetBillboard();
 	}
 }
@@ -1027,7 +1027,7 @@ void Player::SetBillboard(){
 }
 
 void Player::Draw(){
-	if(m_dead && targetDeadCam!=NULL){
+	if(m_dead && targetDeadCam!=nullptr){
 		targetDeadCam->Draw();
 	}else{	
 		DrawOverlays();
@@ -1080,7 +1080,7 @@ void Player::DrawSpellSelector(){
 }
 
 void Player::DrawInventory(){
-	if(potion != NULL) potion->DrawHUD();
+	if(potion != nullptr) potion->DrawHUD();
 }
 
 void Player::DrawTraps(){
@@ -1108,7 +1108,7 @@ bool Player::JumpRaycast(){
 	vector3df startCenter = GetHeadPos();
 	vector3df endCenter(startCenter.X, startCenter.Y - bodyLength, startCenter.Z);
 	void* Object = BulletEngine::GetInstance()->Raycast(startCenter, endCenter);
-	if(Object != NULL) auxCanJump = true;
+	if(Object != nullptr) auxCanJump = true;
 	
 	// Esquinas
 	float headRotation = GetRotY();
@@ -1130,7 +1130,7 @@ bool Player::JumpRaycast(){
 		vector3df cornerEnd = vector3df(offsetX, startCenter.Y - bodyLength, offsetZ);
 
 		void* Object = BulletEngine::GetInstance()->Raycast(cornerStart, cornerEnd);
-		if(Object != NULL) auxCanJump = true;
+		if(Object != nullptr) auxCanJump = true;
 		headRotation += M_PI/4.0f;
 	}
 

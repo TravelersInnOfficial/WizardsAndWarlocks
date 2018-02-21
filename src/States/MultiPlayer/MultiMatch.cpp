@@ -31,7 +31,7 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	playerOne = playerManager->GetPlayerOne();
 	networkObject = networkManager->GetMultiGame();
 
-	if(networkObject != NULL) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
+	if(networkObject != nullptr) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
 
 	// Si estaba algun menu activado lo desactivamos
 	g_engine->ToggleCameraMovement(true);
@@ -66,7 +66,7 @@ void MultiMatch::Update(float deltaTime){
 	n_engine->Update();
 	f_engine->UpdateWorld(deltaTime);
 
-	if(g_engine->getActiveCamera() != NULL){
+	if(g_engine->getActiveCamera() != nullptr){
 		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	}
 
@@ -85,13 +85,13 @@ void MultiMatch::Update(float deltaTime){
 
 	// Comprobamos si terminamos la partida
 	Alliance winnerAlliance = (Alliance) networkObject->GetIntVar(MULTIGAME_WINNER_ALLIANCE);
-	if(networkObject != NULL &&  winnerAlliance != NO_ALLIANCE && winnerAlliance != ERR_ALLIANCE){
+	if(networkObject != nullptr &&  winnerAlliance != NO_ALLIANCE && winnerAlliance != ERR_ALLIANCE){
 
 		if(!isServer && !winnerMenuCreated){
 			networkObject->SetBoolVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, false, false);
 			winnerMenuCreated = true;
 
-			if(playerOne != NULL) {
+			if(playerOne != nullptr) {
 				if (playerOne->GetAlliance() != winnerAlliance) father->PlayEvent("defeat");
 				else father->PlayEvent("victory");
 				playerOne->SetAllInput(UP);
@@ -101,13 +101,13 @@ void MultiMatch::Update(float deltaTime){
 			g_engine->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, winnerAlliance);
 		}
-		//if(MenuManager::GetInstance()->GetCurrentMenu() == NULL)
+		//if(MenuManager::GetInstance()->GetCurrentMenu() == nullptr)
 		father->ReturnLobby();
 	}
 }
 
 void MultiMatch::Draw(){
-	if(playerOne != NULL){
+	if(playerOne != nullptr){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
 	}

@@ -2,8 +2,8 @@
 
 Connection::Connection(){
     m_cost = 0;
-    m_FromNode  = NULL;
-    m_ToNode = NULL;
+    m_FromNode  = nullptr;
+    m_ToNode = nullptr;
 }
 
 Connection::Connection(float cost, Node* FromNode, Node* ToNode){

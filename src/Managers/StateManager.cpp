@@ -4,7 +4,7 @@
 StateManager* StateManager::instance = 0;
 
 StateManager::StateManager(ServerInfo* serverInfo){
-	if(serverInfo == NULL){
+	if(serverInfo == nullptr){
 		ServerInfo dummyInfo;
 		serverInfo = &dummyInfo;
 		serverInfo->isServer = false;
@@ -27,7 +27,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	gui_engine = GUIEngine::GetInstance();
 
 	srand(time(0));
-	currentState = NULL;
+	currentState = nullptr;
 	
 	State_Code firstState = STATE_MENU;
 	if(serverInfo->isServer) firstState = STATE_NETGAME_SERVER;
@@ -38,7 +38,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 }
 
 StateManager::~StateManager(){
-	if(currentState != NULL) delete currentState;
+	if(currentState != nullptr) delete currentState;
 	delete f_engine;
 	delete g_engine;
 	delete s_engine;
@@ -85,9 +85,9 @@ void StateManager::PrepareStatus(State_Code status){
 }
 
 void StateManager::LoadState(State_Code code, bool* end){
-	if(currentState!=NULL){
+	if(currentState!=nullptr){
 		delete currentState;
-		currentState = NULL;
+		currentState = nullptr;
 	}
 	
 	switch(code){
@@ -120,7 +120,7 @@ void StateManager::LoadState(State_Code code, bool* end){
 			*end = true;
 			break;
 		case WITHOUT_STATE:
-			currentState = NULL;
+			currentState = nullptr;
 			break;
 	}
 }

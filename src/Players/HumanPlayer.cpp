@@ -95,7 +95,7 @@ void HumanPlayer::GetNetInput(){
 				if(life < m_HP){
 					playSoundEvent(soundEvents["hit"]);
 					SetController(ACTION_RAYCAST, RELEASED);
-					if(overlayManager!=NULL)overlayManager->SetTime(BLOOD, 1);
+					if(overlayManager!=nullptr)overlayManager->SetTime(BLOOD, 1);
 				}
 				m_HP = life;
 			}
@@ -259,7 +259,7 @@ void HumanPlayer::CheckInput(){
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ spellChanged = ChangeCurrentSpell(1); }
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ spellChanged = ChangeCurrentSpell(2); }
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ spellChanged = ChangeCurrentSpell(3); }
-		if(spellChanged && networkObject != NULL) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
+		if(spellChanged && networkObject != nullptr) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }

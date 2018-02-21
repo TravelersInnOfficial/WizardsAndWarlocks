@@ -62,7 +62,7 @@ bool TrapManager::PlayerDeployTrap(Player* player,vector3df Start, vector3df End
 	int uses = getPlayerUsings(player);
 
 	Alliance alliance = NO_ALLIANCE;
-	if(player != NULL) alliance = player->GetAlliance();
+	if(player != nullptr) alliance = player->GetAlliance();
 
 	if(uses > 0 && alliance == ALLIANCE_WARLOCK){
 		if(DeployTrap(getPlayerTrap(player),Start,End, player->GetId())){
@@ -93,7 +93,7 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End, int p
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		if(n_engine->IsServerInit()){
 			Server* server = n_engine->GetServer();
-			if(server != NULL){
+			if(server != nullptr){
 				myTrap->SetTrapId(lastTrapId);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
 				int netPlayerId = player->GetNetworkObject()->GetObjId();
@@ -147,7 +147,7 @@ int TrapManager::getPlayerUsings(Player* player){
 	
 	for(; it != playerUsings.end(); ++it){
 		Player* p = it->first;
-		if(p != NULL && p == player) return it->second;
+		if(p != nullptr && p == player) return it->second;
 	}
 
 	return -1;
@@ -169,7 +169,7 @@ bool TrapManager::setPlayerTrap(Player* player, TrapEnum trap, bool broadcast){
 		NetworkEngine* n_engine = NetworkEngine::GetInstance();
 		if(player->IsPlayerOne() && n_engine->IsClientInit()){
 			Client* client = n_engine->GetClient();
-			if(client != NULL){
+			if(client != nullptr){
 				int netPlayerId = player->GetNetworkObject()->GetObjId();
 				client->SetPlayerTrap(netPlayerId, trap);
 			}
@@ -197,9 +197,9 @@ bool TrapManager::setPlayerUsings(Player* player, int uses){
 void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df normal, int id){
 	Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
     TrapEnum type = TENUM_NO_TRAP;
-    Trap* myTrap = NULL;
+    Trap* myTrap = nullptr;
     
-    if(player != NULL){
+    if(player != nullptr){
         int uses = getPlayerUsings(player);
 		uses--;
         setPlayerUsings(player, uses);
@@ -207,27 +207,27 @@ void TrapManager::DirectDeploy(int playerId, vector3df position, vector3df norma
     }
 
     if(type != TENUM_NO_TRAP) myTrap = AddTrap(position, normal, type);
-    if(myTrap != NULL) myTrap->SetTrapId(id);
+    if(myTrap != nullptr) myTrap->SetTrapId(id);
 }
 
 // Only for NETWORK
 void TrapManager::NoPlayerDeploy(vector3df position, vector3df normal, TrapEnum type, int id){
 	Trap* myTrap = AddTrap(position, normal, type);
-	if(myTrap != NULL) myTrap->SetTrapId(id);
+	if(myTrap != nullptr) myTrap->SetTrapId(id);
 }
 
 void TrapManager::IdErase(int id){
 	Trap* trapToErase = GetTrapWithId(id);
-	if(trapToErase != NULL) DeleteTrap(trapToErase);
+	if(trapToErase != nullptr) DeleteTrap(trapToErase);
 }
 
 Trap* TrapManager::GetTrapWithId(int id){
-	Trap* toRet = NULL;
+	Trap* toRet = nullptr;
 
 	int size = traps.size();
 	for(int i = size-1; i >= 0; i--){
 		Trap* t = traps[i];
-		if(t != NULL && t->GetTrapId() == id) toRet = t;
+		if(t != nullptr && t->GetTrapId() == id) toRet = t;
 	}
 
 	return toRet;
@@ -327,12 +327,12 @@ void TrapManager::RefreshServerAll(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(n_engine->IsServerInit()){
 		Server* server = n_engine->GetServer();
-		if(server != NULL){
+		if(server != nullptr){
 			for (std::map<Player*, TrapEnum>::iterator it=playerTrap.begin(); it!=playerTrap.end(); ++it){
 				Player* p = it->first;
-				if(p != NULL){
+				if(p != nullptr){
 					NetworkObject* nObj = p->GetNetworkObject();
-					if(nObj != NULL){
+					if(nObj != nullptr){
 						int netPlayerId = nObj->GetObjId();
 						server->SetPlayerTrap(netPlayerId, it->second, getPlayerUsings(p));
 					}

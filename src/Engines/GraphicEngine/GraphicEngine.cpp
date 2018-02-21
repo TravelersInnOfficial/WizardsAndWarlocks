@@ -4,13 +4,13 @@ static GraphicEngine* instance;
 GraphicEngine::GraphicEngine(bool isServer){
 	m_isServer = isServer;
 
-	privateDevice = NULL;
-	privateDriver = NULL;
-	privateSManager = NULL;
-	privateGUIEnv = NULL;
-	privateReceiver = NULL;
-	privateMenuReceiver = NULL;
-	privateCamera = NULL;
+	privateDevice = nullptr;
+	privateDriver = nullptr;
+	privateSManager = nullptr;
+	privateGUIEnv = nullptr;
+	privateReceiver = nullptr;
+	privateMenuReceiver = nullptr;
+	privateCamera = nullptr;
 
 	privateReceiver = new EventReceiver();
 	privateMenuReceiver = new MenuReceiver();
@@ -68,8 +68,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 GraphicEngine::~GraphicEngine(){
 	drop();
-	if(privateReceiver != NULL) delete privateReceiver;
-	if(privateMenuReceiver != NULL) delete privateMenuReceiver;
+	if(privateReceiver != nullptr) delete privateReceiver;
+	if(privateMenuReceiver != nullptr) delete privateMenuReceiver;
 }
 
 GraphicEngine* GraphicEngine::getInstance(bool isServer){
@@ -79,32 +79,32 @@ GraphicEngine* GraphicEngine::getInstance(bool isServer){
 
 bool GraphicEngine::run(){
 	bool toRet = false;
-	if(privateDevice != NULL) toRet = privateDevice->run();
+	if(privateDevice != nullptr) toRet = privateDevice->run();
 	return toRet;
 }
 
 bool GraphicEngine::drop(){
 	bool toRet = false;
-	if(privateDevice != NULL) toRet = privateDevice->drop();
+	if(privateDevice != nullptr) toRet = privateDevice->drop();
 	return toRet;
 }
 
 void GraphicEngine::setCursorVisible(bool visible){
-	if(privateDevice != NULL) privateDevice->getCursorControl()->setVisible(false);
+	if(privateDevice != nullptr) privateDevice->getCursorControl()->setVisible(false);
 }
 
 int GraphicEngine::getTime(){
 	float toRet = 0;
-	if(privateDevice != NULL) toRet = privateDevice->getTimer()->getTime();
+	if(privateDevice != nullptr) toRet = privateDevice->getTimer()->getTime();
 	return toRet;
 }
 
 void GraphicEngine::ChangeWindowName(std::wstring newName){
-	if(privateDevice != NULL) privateDevice->setWindowCaption(newName.c_str());
+	if(privateDevice != nullptr) privateDevice->setWindowCaption(newName.c_str());
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
-	if(privateDevice != NULL){
+	if(privateDevice != nullptr){
 		if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
 		else privateDevice->setEventReceiver(privateReceiver);
 		ToggleCameraMovement(!newState);
@@ -113,37 +113,37 @@ void GraphicEngine::ToggleMenu(bool newState){
 }
 
 void GraphicEngine::ToggleCameraMovement(bool newState){
-	if (privateCamera != NULL){
+	if (privateCamera != nullptr){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
-		if(cam != NULL) cam->setInputReceiverEnabled(newState);
+		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
 	}
 }
 
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
 	bool toRet = false;
-	if(privateDriver != NULL) toRet = privateDriver->beginScene();
+	if(privateDriver != nullptr) toRet = privateDriver->beginScene();
 	return toRet;
 }
 
 bool GraphicEngine::beginSceneDefault(){
 	bool toRet = false;
-	if(privateDriver != NULL) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
+	if(privateDriver != nullptr) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 	return toRet;
 }
 
 bool GraphicEngine::endScene(){
 	bool toRet = false;
-	if(privateDriver != NULL) toRet = privateDriver->endScene();
+	if(privateDriver != nullptr) toRet = privateDriver->endScene();
 	return toRet;
 }
 
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
-	if(privateDriver != NULL) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
+	if(privateDriver != nullptr) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::video::SColorf fromC;
 		fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
 
@@ -158,7 +158,7 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 }
 
 void GraphicEngine::drawAim(bool moving){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
 		irr::u32 size = 15;
 		irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
@@ -182,7 +182,7 @@ void GraphicEngine::drawAim(bool moving){
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
 
@@ -206,9 +206,9 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 }
 
 void GraphicEngine::drawOverlays(OverlayCodes type){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
-		irr::video::ITexture* overlay = NULL;
+		irr::video::ITexture* overlay = nullptr;
 		overlay = privateDriver->getTexture(overlayTexture.c_str());
 
 		if(overlayTexture.length() > 0){
@@ -223,7 +223,7 @@ void GraphicEngine::drawOverlays(OverlayCodes type){
 
 int GraphicEngine::GetScreenHeight(){
 	int toRet = 0;
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Height;
 		toRet = (int)W;
 	}
@@ -232,7 +232,7 @@ int GraphicEngine::GetScreenHeight(){
 
 int GraphicEngine::GetScreenWidth(){
 	int toRet = 0;
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Width;
 		toRet = (int)H;
 	}
@@ -240,7 +240,7 @@ int GraphicEngine::GetScreenWidth(){
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
 		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
@@ -250,7 +250,7 @@ void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	if(privateDriver != NULL){
+	if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
 		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
 	}
@@ -258,13 +258,13 @@ void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float
 
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
-	if(privateSManager != NULL) privateSManager->drawAll();
+	if(privateSManager != nullptr) privateSManager->drawAll();
 }
 
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
-	GBody* gb = NULL;
+	GBody* gb = nullptr;
 
-	if(privateSManager != NULL){
+	if(privateSManager != nullptr){
 		gb = new GBody(
 			privateSManager->addCubeSceneNode(
 				size,   //size
@@ -284,8 +284,8 @@ GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float
 }
 
 GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
-	GBody* gb = NULL;
-	if(privateSManager != NULL){
+	GBody* gb = nullptr;
+	if(privateSManager != nullptr){
 		gb = new GBody(
 			privateSManager->addSphereSceneNode(
 				radius,     //size
@@ -347,7 +347,7 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 		privateSManager->setActiveCamera(0);
 		oldCamera->remove();
 		delete privateCamera;
-		privateCamera = NULL;
+		privateCamera = nullptr;
 	}
 
 	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
@@ -361,7 +361,7 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	if (oldCamera){
 		privateSManager->setActiveCamera(0);
 		oldCamera->remove();
-		privateCamera = NULL;
+		privateCamera = nullptr;
 	}
 
 	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
@@ -372,7 +372,7 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
-	if(privateCamera != NULL) privateCamera->privateNode = privateSManager->getActiveCamera();
+	if(privateCamera != nullptr) privateCamera->privateNode = privateSManager->getActiveCamera();
 	return privateCamera;
 }
 

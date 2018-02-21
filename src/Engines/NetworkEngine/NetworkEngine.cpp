@@ -3,7 +3,7 @@
 static NetworkEngine* instance = 0;
 
 NetworkEngine::NetworkEngine(ServerInfo* serverInfo){
-	if(serverInfo == NULL){
+	if(serverInfo == nullptr){
 		ServerInfo dummyInfo;
 		serverInfo = &dummyInfo;
 		serverInfo->isServer = false;
@@ -15,8 +15,8 @@ NetworkEngine::NetworkEngine(ServerInfo* serverInfo){
 	serverPort = 60000;
 	isServer = false;
 	isClient = false;
-	server = NULL;
-	client = NULL;
+	server = nullptr;
+	client = nullptr;
 	
 	if(serverInfo->isServer) StartServer(serverInfo);
 }
@@ -32,15 +32,15 @@ NetworkEngine::~NetworkEngine(){
 }
 
 void NetworkEngine::Update(float deltaTime, bool isLobby){
-	if (isServer && server != NULL){
+	if (isServer && server != nullptr){
 		server->Update(deltaTime);
 		server->RecievePackages(isLobby);
 	}
-	if (isClient && client != NULL) client->RecievePackages();
+	if (isClient && client != nullptr) client->RecievePackages();
 }
 
 void NetworkEngine::StartServer(ServerInfo* serverInfo){
-	if(serverInfo == NULL){
+	if(serverInfo == nullptr){
 		ServerInfo dummyInfo;
 		serverInfo = &dummyInfo;
 		serverInfo->isServer = false;
@@ -74,14 +74,14 @@ bool NetworkEngine::IsServerInit(){ return(isServer); }
 bool NetworkEngine::IsClientInit(){ return(isClient); }
 
 void NetworkEngine::EndService(){
-	if(client != NULL){
+	if(client != nullptr){
 		delete client;
-		client = NULL;
+		client = nullptr;
 		isClient = false;
 	}
-	if(server != NULL) {
+	if(server != nullptr) {
 		delete server;
-		server = NULL;
+		server = nullptr;
 		isServer = false;
 	}
 }

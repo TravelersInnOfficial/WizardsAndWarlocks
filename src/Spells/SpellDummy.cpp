@@ -8,7 +8,7 @@ SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, 
 }
 	
 SpellDummy::~SpellDummy(){
-	if (spawnEvent != NULL) {
+	if (spawnEvent != nullptr) {
 		if (spawnEvent->isPlaying()) spawnEvent->stop();
 		spawnEvent->release();
 		delete spawnEvent;
@@ -29,7 +29,7 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
 
 	pos.Y += 0.25;
 
-	Dummy* target = NULL;
+	Dummy* target = nullptr;
 
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
 		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WIZARD);

@@ -42,24 +42,24 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
             void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
             
             // Hacemos un procesado inicial del puntero
-            if(object!=NULL){
+            if(object!=nullptr){
                 Entidad* entity = (Entidad*)object;
                 if(entity->GetClase()==EENUM_DOOR){
                     Door* door = (Door*)entity;
                     if(!door->GetOpenState()){
                         // En el caso de que la puerte este cerrada puede ver a traves
-                        object = NULL;
+                        object = nullptr;
                     }
                 }
             }
            
 
 
-            if(object == NULL){
+            if(object == nullptr){
                 output = i;
             }
             // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
-            if(object!=NULL && i == start){
+            if(object!=nullptr && i == start){
                 output = start-1;
                 if(output<0) output = 0;
                 break;
@@ -103,7 +103,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
     float endNodeHeuristic = 0;
     //Add the nearest nodes to the open list  
     NavMesh* navmesh = ObjectManager::GetInstance()->GetNavMesh();
-    if(navmesh!=NULL){
+    if(navmesh!=nullptr){
         std::vector<Node*> nearests = navmesh->SearchNearestNodes(from, firstC, secondC);
         std::vector<Node*> finals = navmesh->SearchNearestNodes(to);
 
@@ -139,7 +139,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         //Initialize the record for the start node
         NodeRecord* m_startRecord = new NodeRecord();
         m_startRecord->m_node = StartNode;
-        m_startRecord->m_connection = NULL;
+        m_startRecord->m_connection = nullptr;
         m_startRecord->m_costSoFar = 0;
         m_startRecord->m_heuristic = heur->estimate(StartNode);
         m_startRecord->m_estimatedTotalCost = m_startRecord->m_costSoFar + m_startRecord->m_heuristic;
@@ -152,7 +152,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
 
         //Iterate through processing each node
         NodeRecord* current = m_startRecord;
-        Node* endNode = NULL;
+        Node* endNode = nullptr;
         float endNodeCost = 0;
         NodeRecord* endNodeRecord = new NodeRecord();
         std::vector<Connection*> nodeConnections;
@@ -216,7 +216,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                     endNodeRecord = m_openList->find(endNode);
 
                     //If our route is no better, then skip
-                    if(endNodeRecord!=NULL && endNodeRecord->m_costSoFar <= endNodeCost){ 
+                    if(endNodeRecord!=nullptr && endNodeRecord->m_costSoFar <= endNodeCost){ 
                         continue;
                     }
 
@@ -256,12 +256,12 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
-        if(current!=NULL){
+        if(current!=nullptr){
             if(current->m_node != EndNode) m_path.push_back(EndNode);
             do{
                 m_path.push_back(current->m_node);
                 current = m_closedList->find(current->m_connection->getFromNode());
-            }while(current!=NULL && current->m_node != StartNode);
+            }while(current!=nullptr && current->m_node != StartNode);
             m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode
             std::reverse(m_path.begin(), m_path.end());
         }
@@ -276,7 +276,7 @@ std::list<Connection*> *Pathfinding::DijkstraPF( Node* StartNode, Node* EndNode)
     //Initialize the record for the start node
     NodeRecord* m_startRecord = new NodeRecord();
     m_startRecord->m_node = StartNode;
-    m_startRecord->m_connection = NULL;
+    m_startRecord->m_connection = nullptr;
     m_startRecord->m_costSoFar = 0;
     //m_startRecord->previous = 0;
 
@@ -306,7 +306,7 @@ std::list<Connection*> *Pathfinding::DijkstraPF( Node* StartNode, Node* EndNode)
         std::cout<<"Finding the smallest element in the open list... "<<std::endl;
         current = m_openList->smallestElement();
 
-        //if(current->previous!=0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
+        //if(current->previous != 0)std::cout<<"previous node:" << current->previous->m_node->getRegionName()<<std::endl;
         std::cout<<"--------------------------- CURRENT NODE "<<current->m_node->getRegionName()<<" ---------------------------"<<std::endl;
         
          //If it is the goal node, then terminate
@@ -340,7 +340,7 @@ std::list<Connection*> *Pathfinding::DijkstraPF( Node* StartNode, Node* EndNode)
                 std::cout<<"!! The node with the region: "<< endNode->getRegionName()<<" was already in the OPEN list\n"<<std::endl;
                 //Here we find the record in the open list corresponding to the endNode.
                 endNodeRecord = m_openList->find(endNode);
-                if(endNodeRecord!=NULL && endNodeRecord->m_costSoFar <= endNodeCost){ 
+                if(endNodeRecord!=nullptr && endNodeRecord->m_costSoFar <= endNodeCost){ 
                     std::cout<<"Checking the current costSoFar with the new founded..."<<std::endl;
                     std::cout<<" CURRENT COSTSOFAR "<< endNodeCost<< " // COSTSOFAR FOUND "<< endNodeRecord->m_costSoFar<<std::endl;
                     continue;
@@ -378,13 +378,13 @@ std::list<Connection*> *Pathfinding::DijkstraPF( Node* StartNode, Node* EndNode)
     if(current->m_node != EndNode){
         //We’ve run out of nodes without finding the goal, so there’s no solution
         std::cout<<"!! COULDNT FIND THE PATH TO THE END NODE"<<std::endl;
-        return NULL;
+        return nullptr;
     }
     else{
         std::cout<<"!! FOUND THE PATH TO THE END NODE with cost "<< current->m_costSoFar<<std::endl;
         path = new std::list<Connection*>();
     /*
-        while(current->previous !=0 && current->m_node!= StartNode){
+        while(current->previous != 0 && current->m_node!= StartNode){
             path->push_back(current->m_connection);
             current = current->previous;
         }

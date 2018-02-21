@@ -12,9 +12,9 @@ BT_Body::BT_Body(){
 	m_Mass = 0;
 	m_Friction = 0;
 
-	m_Shape = NULL;
-	m_MotionState = NULL;
-	m_RigidBody = NULL;
+	m_Shape = nullptr;
+	m_MotionState = nullptr;
+	m_RigidBody = nullptr;
 }
 
 void BT_Body::CreateBox(vector3df position, vector3df dimensions, float mass, float friction, vector3df center, CollisionTypes mask, int collideWith){

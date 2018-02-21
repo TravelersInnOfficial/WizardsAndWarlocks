@@ -99,7 +99,7 @@ bool SightModality::checkSightCone(vector3df sigPos, vector3df srPos, vector3df 
 bool SightModality::checkLineOfSight(vector3df sigPos, vector3df srPos){
 	BulletEngine* f_engine = BulletEngine::GetInstance();
 	void* obj = f_engine->Raycast(sigPos, srPos);
-	if(obj!=NULL){
+	if(obj!=nullptr){
 		Entidad* e = (Entidad*)obj;
 		EntityEnum valor = e->GetClase();
 		if(valor == EENUM_PLAYER){

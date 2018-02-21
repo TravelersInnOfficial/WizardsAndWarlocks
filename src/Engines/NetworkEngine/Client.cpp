@@ -53,7 +53,7 @@ void Client::EraseTrap(int trapId, int playerAffectedId){
 	if(playerAffectedId != -1){
 		Trap* trap = TrapManager::GetInstance()->GetTrapWithId(trapId);
 		Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerAffectedId);
-		if(trap != NULL && player != NULL) trap->ForceEffect(player);
+		if(trap != nullptr && player != nullptr) trap->ForceEffect(player);
 	}
 	else TrapManager::GetInstance()->IdErase(trapId);
 }
@@ -63,7 +63,7 @@ void Client::CreateNetworkObject(int id, ObjectType type){
 }
 
 void Client::RemoveNetworkObject(int id){
-	if(networkObjects[id] != NULL){
+	if(networkObjects[id] != nullptr){
 		toEraseNetworkObjects[id] = networkObjects[id];
 		networkObjects.erase(id);
 	}
@@ -139,7 +139,7 @@ void Client::RecievePackages(){
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(id);
 				
 				std::string name = "Unknown Player";
-				if(player != NULL) name = player->GetName();
+				if(player != nullptr) name = player->GetName();
 				GUIEngine::GetInstance()->MakeCustomNotification(name + " has disconnected.");
 
 				break;
@@ -194,7 +194,7 @@ void Client::RecievePackages(){
 				bitstream.Read(trap);
 				bitstream.Read(usings);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL){
+				if(player != nullptr){
 					TrapManager::GetInstance()->setPlayerTrap(player, trap, false);
 					TrapManager::GetInstance()->setPlayerUsings(player, usings);
 				}
@@ -213,7 +213,7 @@ void Client::RecievePackages(){
 				bitstream.Read(spellPosition);
 				bitstream.Read(spell);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerId);
-				if(player != NULL) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell, false);
+				if(player != nullptr) SpellManager::GetInstance()->AddHechizo(spellPosition, player, spell, false);
 				break;
 			}
 
@@ -236,7 +236,7 @@ void Client::RecievePackages(){
 				bitstream.Read(potionVecPos);
 				bitstream.Read(playerNetworkId);
 				Player* player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetworkId);
-				if(player != NULL) ObjectManager::GetInstance()->UseNetworkPotion(potionVecPos, player);
+				if(player != nullptr) ObjectManager::GetInstance()->UseNetworkPotion(potionVecPos, player);
 				break;
 			}
 
@@ -248,7 +248,7 @@ void Client::RecievePackages(){
 				bitstream.Read(doorVecPos);
 				std::vector<Door*> doors = ObjectManager::GetInstance()->GetAllDoors();
 				Door* d = doors.at(doorVecPos);
-				if(d != NULL) d->ForceOpen();
+				if(d != nullptr) d->ForceOpen();
 				break;
 			}
 
@@ -268,12 +268,12 @@ void Client::RecievePackages(){
 				std::vector<Potion*> potions = ObjectManager::GetInstance()->GetAllPotions();
 				Potion* p = potions.at(potionVecPos);
 
-				if(p != NULL){
+				if(p != nullptr){
 					if(picked){
 						bitstream.Read(playerNetId);
-						Player* player = NULL;
+						Player* player = nullptr;
 						player = PlayerManager::GetInstance()->GetPlayerFromNetID(playerNetId);
-						if(player != NULL) p->NetInteract(player);
+						if(player != nullptr) p->NetInteract(player);
 					}
 					else{
 						bitstream.Read(pos);
@@ -334,7 +334,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL) networkObjects[k]->SetBoolVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetBoolVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_INT: {
@@ -344,7 +344,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL) networkObjects[k]->SetIntVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetIntVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_FLOAT: {
@@ -354,7 +354,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL) networkObjects[k]->SetFloatVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetFloatVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_VECINT: {
@@ -364,7 +364,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL) networkObjects[k]->SetVecIVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetVecIVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_VECFLOAT: {
@@ -374,7 +374,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			if(networkObjects[k] != NULL) networkObjects[k]->SetVecFVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetVecFVar(k_var, v, false, false);
 			break;
 		}
 		case ID_CHANGE_STRING: {
@@ -386,7 +386,7 @@ void Client::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k_var);
 			bitstream->Read(vAux);
 			v = vAux;
-			if(networkObjects[k] != NULL) networkObjects[k]->SetStringVar(k_var, v, false, false);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetStringVar(k_var, v, false, false);
 			break;
 		}
 	}

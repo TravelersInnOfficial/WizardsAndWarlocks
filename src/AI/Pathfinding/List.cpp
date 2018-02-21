@@ -69,7 +69,7 @@ NodeRecord* List::find(Node* n){
     if(pos != -1 ){
         return m_list[pos];
     }
-    return NULL;
+    return nullptr;
 }
 
 NodeRecord* List::smallestElement(){
@@ -126,8 +126,8 @@ void List::printListOfNodes(){
         std::cout<<"---------- "<<i<<" ----------"<<std::endl;
         std::cout<<" Node ID: "<<m_list[i]->m_node->getNodeID()<<std::endl;
         std::cout<<" Node Region: "<<m_list[i]->m_node->getRegionName()<<std::endl;
-        if(m_list[i]->m_connection!=NULL) std::cout<<" Connection from < : "<<m_list[i]->m_connection->getFromNode()->getRegionName()<<" // To > "<< m_list[i]->m_connection->getToNode()->getRegionName()<<std::endl;
-        else std::cout<<" Connection is NULL"<<std::endl;
+        if(m_list[i]->m_connection!=nullptr) std::cout<<" Connection from < : "<<m_list[i]->m_connection->getFromNode()->getRegionName()<<" // To > "<< m_list[i]->m_connection->getToNode()->getRegionName()<<std::endl;
+        else std::cout<<" Connection is nullptr"<<std::endl;
         std::cout<<" NodeRecord CostSoFar: "<<m_list[i]->m_costSoFar<<std::endl;
         std::cout<<" NodeRecord heuristic value: "<<m_list[i]->m_heuristic<<std::endl;
         std::cout<<" NodeRecord estimatedTotalCost: "<<m_list[i]->m_estimatedTotalCost<<"\n"<<std::endl;
