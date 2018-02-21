@@ -1,7 +1,7 @@
 #include "GUIEngine.h"
 #include <DeathMessages.h>
 
-GUIEngine* GUIEngine::instance = 0;
+GUIEngine* GUIEngine::instance = nullptr;
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();
@@ -15,12 +15,13 @@ GUIEngine::GUIEngine(){
 }
 
 GUIEngine* GUIEngine::GetInstance(){
-	if(instance == 0) instance = new GUIEngine();
+	if(instance == nullptr) instance = new GUIEngine();
 	return instance;
 }
 
 GUIEngine::~GUIEngine(){
     m_GUIHandler->drop();
+    instance = nullptr;
 }
 
 void GUIEngine::Update(){

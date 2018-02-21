@@ -4,17 +4,17 @@
 #include "./../Projectiles/ThunderProjectile.h"
 #include "./../Projectiles/PoisonBomb.h"
 
-BulletManager* BulletManager::instance = 0;
+BulletManager* BulletManager::instance = nullptr;
 
 BulletManager::BulletManager(){}
 
 BulletManager::~BulletManager(){
 	DeleteAllProyectiles();
-	instance = 0;
+	instance = nullptr;
 }
 
 BulletManager* BulletManager::GetInstance(){
-	if(instance==0){
+	if(instance == nullptr){
 		instance = new BulletManager();
 	}
 	return instance;

@@ -1,9 +1,9 @@
 #include "NetworkManager.h"
 
-NetworkManager* NetworkManager::instance = 0;
+NetworkManager* NetworkManager::instance = nullptr;
 
 NetworkManager* NetworkManager::GetInstance(){
-	if(instance == 0) instance = new NetworkManager();
+	if(instance == nullptr) instance = new NetworkManager();
 	return instance;
 }
 
@@ -12,7 +12,7 @@ NetworkManager::NetworkManager(){
 }
 
 NetworkManager::~NetworkManager(){
-	instance = 0;
+	instance = nullptr;
 }
 
 NetworkObject* NetworkManager::GetMultiGame(){

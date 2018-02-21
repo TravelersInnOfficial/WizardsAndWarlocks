@@ -1,10 +1,10 @@
 #include "PlayerManager.h"
 #include "ObjectManager.h"
 
-PlayerManager* PlayerManager::instance = 0;
+PlayerManager* PlayerManager::instance = nullptr;
 
 PlayerManager* PlayerManager::GetInstance(){
-	if(instance==0) instance = new PlayerManager();
+	if(instance == nullptr) instance = new PlayerManager();
 	return instance;
 }
 
@@ -29,7 +29,7 @@ PlayerManager::~PlayerManager(){
 	}
 	deadPlayers.clear();
 
-	instance = 0;
+	instance = nullptr;
 	wizardsWin = false;
 	warlocksWin = false;
 	playerOne = nullptr;

@@ -4,7 +4,7 @@
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"
 
-SpellManager* SpellManager::instance = 0;
+SpellManager* SpellManager::instance = nullptr;
 
 SpellManager::SpellManager(){
 }
@@ -13,11 +13,11 @@ SpellManager::~SpellManager(){
 	for(int i=0; i<numHechizos; i++){
 		hechizos[i].clear();
 	}
-	instance = 0;
+	instance = nullptr;
 }
 
 SpellManager* SpellManager::GetInstance(){
-	if(instance==0) instance = new SpellManager();
+	if(instance == nullptr) instance = new SpellManager();
 	return instance;
 }
 

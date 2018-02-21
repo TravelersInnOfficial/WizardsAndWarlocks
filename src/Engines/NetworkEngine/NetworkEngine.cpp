@@ -1,6 +1,6 @@
 #include "NetworkEngine.h"
 
-static NetworkEngine* instance = 0;
+static NetworkEngine* instance = nullptr;
 
 NetworkEngine::NetworkEngine(ServerInfo* serverInfo){
 	if(serverInfo == nullptr){
@@ -22,13 +22,13 @@ NetworkEngine::NetworkEngine(ServerInfo* serverInfo){
 }
 
 NetworkEngine* NetworkEngine::GetInstance(ServerInfo* serverInfo){
-	if(instance == 0) instance = new NetworkEngine(serverInfo);
+	if(instance == nullptr) instance = new NetworkEngine(serverInfo);
 	return instance;
 }
 
 NetworkEngine::~NetworkEngine(){
 	EndService();
-	instance = 0;
+	instance = nullptr;
 }
 
 void NetworkEngine::Update(float deltaTime, bool isLobby){

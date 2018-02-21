@@ -6,7 +6,7 @@
 #include <TrapCodes.h>
 #include <GUIEngine/GUIEngine.h>
 
-MenuManager* MenuManager::instance = 0;
+MenuManager* MenuManager::instance = nullptr;
 
 MenuManager::MenuManager(){
 	g_engine = GraphicEngine::getInstance();
@@ -20,10 +20,11 @@ MenuManager::MenuManager(){
 
 MenuManager::~MenuManager(){
 	ClearMenu();
+	instance = nullptr;
 }
 
 MenuManager* MenuManager::GetInstance(){
-	if(instance == 0) instance = new MenuManager();
+	if(instance == nullptr) instance = new MenuManager();
 	return instance;
 }
 
