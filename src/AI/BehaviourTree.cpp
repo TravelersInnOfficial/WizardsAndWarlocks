@@ -19,8 +19,9 @@ BehaviourTree::~BehaviourTree(){
     tasks.clear();
 }
 
-void BehaviourTree::Update(){
-    informacion->UpdateRoomGraph();
+void BehaviourTree::Update(float deltaTime){
+    informacion->SetFloat(AI_DELTA, deltaTime);
+    informacion->UpdateRoomGraph(deltaTime);
     Run();
 }
 
@@ -59,8 +60,8 @@ void BehaviourTree::AnyadirInformacion(AI_code name, void* value){
     informacion->SetPuntero(name, value);
 }
 
-void BehaviourTree::AnyadirInformacion(AI_code name, int value){
-    informacion->SetInt(name, value);
+void BehaviourTree::AnyadirInformacion(AI_code name, float value){
+    informacion->SetFloat(name, value);
 }
 
 Blackboard* BehaviourTree::GetBlackboard(){

@@ -29,7 +29,7 @@ public:
     BehaviourTree();
     ~BehaviourTree();
 
-    void Update();
+    void Update(float deltaTime);
     void Run();
 
     // Setters
@@ -49,7 +49,7 @@ public:
 
     // Adders
     void AnyadirInformacion(AI_code name, void* value);
-    void AnyadirInformacion(AI_code name, int value);
+    void AnyadirInformacion(AI_code name, float value);
    
 
 private:

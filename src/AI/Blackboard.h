@@ -30,7 +30,7 @@ public:
     ~Blackboard();
 
     void LoadRoomGraph();
-    void UpdateRoomGraph();
+    void UpdateRoomGraph(float deltaTime);
     void SetPlayer(AIPlayer* p);
 
     AIPlayer* GetPlayer();
@@ -38,9 +38,9 @@ public:
     AI_code GetEnemyAlliance();
     //Information
     void*   GetPuntero(AI_code name);
- 	int 	GetInt(AI_code name); 
+ 	float 	GetFloat(AI_code name); 
     void    SetPuntero(AI_code name, void* value);
-    void    SetInt(AI_code name, int value);
+    void    SetFloat(AI_code name, float value);
     void    CleanPuntero(AI_code name);
     //Senses
     void    CleanSense(int id);
@@ -69,7 +69,7 @@ private:
     Blackboard* 			    blackboardParent;       // El blackboard padre del que pillar la informacion que pueda faltar
 
     std::map< AI_code, void*> 	dataPuntero;            // Vector de punteros del blackboard
-    std::map< AI_code, int > 	dataInt;                // Vector de ints del blackboad
+    std::map< AI_code, float > 	dataFloat;                // Vector de ints del blackboad
 
     std::vector<Sense_struct*>  soundSense;             // Vector con todas las cosas que haya OIDO
     std::vector<Sense_struct*>  sightSense;             // Vector con todas las cosas que haya VISTO

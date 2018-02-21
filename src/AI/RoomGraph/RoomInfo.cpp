@@ -12,6 +12,13 @@ RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondS
 
 RoomInfo::~RoomInfo(){}
 
+void RoomInfo::ChangeSecurityLevel(float value){
+	// Alteramos el valor de seguridad de la habitacion
+	m_securityLevel += value;
+	if(m_securityLevel<0) m_securityLevel = 0;
+	else if(m_securityLevel>100) m_securityLevel = 100;
+}
+
 void RoomInfo::AddPositionExplore(vector3df position){
 	m_explored.push_back(position);
 	m_statusExplored.push_back(false);
@@ -83,6 +90,10 @@ std::vector<int> RoomInfo::GetConnections(){
 
 std::vector<vector3df> RoomInfo::GetExplorePoints(){
 	return m_explored;
+}
+
+float RoomInfo::GetSecurityLevel(){
+	return m_securityLevel;
 }
 
 bool RoomInfo::GetExplored(){

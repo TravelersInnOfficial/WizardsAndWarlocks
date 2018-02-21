@@ -746,6 +746,16 @@ bool CheckPlayerSight::run(Blackboard* bb){
 	AI_code enemy = (AI_code)(AI_PLAYER_WIZA - character->GetAlliance());
 	int number = bb->GetNumberSight(enemy);
 	if(number>0){
+		// En el caso de que se haya visto a alguno de los enemigos decrementamos
+		// el nivel de seguridad de la habitacion
+		RoomGraph* room = bb->GetRoomGraph();
+		if(room != NULL){
+			// Cambiamos el nivel de seguridad en funcion de los enemigos que haya visto
+			// Quitamos 10 de seguridad por enemigo visto
+			float delta = bb->GetFloat(AI_DELTA);
+			float value = -10.0f*number*delta;
+			room->ChangeSecurityLevel(value);
+		}
 		return true;
 	}
 	return false;

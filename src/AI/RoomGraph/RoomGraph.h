@@ -12,6 +12,7 @@ public:
 	RoomGraph();
 	RoomGraph(RoomGraph* graph);
 	~RoomGraph();
+	void ChangeSecurityLevel(float value);
 
 	// Generate RoomGraph
 	RoomInfo* AddRoom(int id, vector3df position, vector3df firstSide, vector3df secondSide);
@@ -19,7 +20,7 @@ public:
 	void CopyGraph(RoomGraph* copyGraph);
 
 
-	void InitRoom(vector3df pos);
+	void InitRoom(vector3df pos, float deltaTime);
 	// ACTUAL ROOMINFO
 	vector3df RoomPos();
 	bool RoomExplored();

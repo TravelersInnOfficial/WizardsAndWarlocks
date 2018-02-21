@@ -22,6 +22,12 @@ RoomGraph::~RoomGraph(){
 	m_rooms.clear();
 }
 
+void RoomGraph::ChangeSecurityLevel(float value){
+	if(m_actualRoom != NULL){
+		m_actualRoom->ChangeSecurityLevel(value);
+	}
+}
+
 RoomInfo* RoomGraph::AddRoom(int id, vector3df position, vector3df firstSide, vector3df secondSide){
 	RoomInfo* room = new RoomInfo(id, position, firstSide, secondSide);
 	m_rooms.push_back(room);
@@ -107,16 +113,27 @@ bool RoomGraph::CheckInside(float A, float B, float C){
 	return output;
 }
 
-void RoomGraph::InitRoom(vector3df pos){
+void RoomGraph::InitRoom(vector3df pos, float deltaTime){
+	// Recorremos todas las habitaciones que hay en el vector
 	int size = m_rooms.size();
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_rooms[i];
+		// Conseguimos las dos esquinas de cada habitacion
 		vector3df firstSide = info->GetFirstSide();
 		vector3df secondSide = info->GetSecondSide();
+		// Miramos si la posicion pasado por parametros esta dentro de las dos esquinas
 		if(CheckInside(firstSide.X, secondSide.X, pos.X) && CheckInside(firstSide.Z, secondSide.Z, pos.Z)){
 			m_actualRoom = m_rooms[i];
 			break;	
 		}
+	}
+	// En el caso de que no este dentro de ninguna habitacion supondremos que esta en la misma
+	// habitacion que anteriormente
+	if(m_actualRoom!=NULL){
+		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad
+		m_actualRoom->ChangeSecurityLevel(10.0f*deltaTime);
+		//std::cout<<deltaTime<<std::endl;
+		std::cout<<m_actualRoom->GetSecurityLevel()<<std::endl;
 	}
 }
 
