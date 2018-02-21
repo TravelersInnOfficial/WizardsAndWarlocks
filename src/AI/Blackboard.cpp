@@ -29,7 +29,7 @@ void Blackboard::LoadRoomGraph(){
     UpdateRoomGraph(0);
 }
 
-void Blackboard::UpdateRoomGraph(){
+void Blackboard::UpdateRoomGraph(float deltaTime){
     if(roomGraph!=nullptr){
         vector3df pos = currentPlayer->GetPos();
         roomGraph->InitRoom(pos, deltaTime);
