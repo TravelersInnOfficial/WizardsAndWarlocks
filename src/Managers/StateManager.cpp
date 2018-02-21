@@ -1,7 +1,7 @@
 #include "StateManager.h"
 #include <time.h>
 
-StateManager* StateManager::instance = 0;
+StateManager* StateManager::instance = nullptr;
 
 StateManager::StateManager(ServerInfo* serverInfo){
 	if(serverInfo == nullptr){
@@ -44,11 +44,11 @@ StateManager::~StateManager(){
 	delete s_engine;
 	delete n_engine;
 	delete gui_engine;
-	instance = 0;
+	instance = nullptr;
 }
 
 StateManager* StateManager::GetInstance(ServerInfo* serverInfo){
-	if(instance==0) instance = new StateManager(serverInfo);
+	if(instance == nullptr) instance = new StateManager(serverInfo);
 	return instance;
 }
 

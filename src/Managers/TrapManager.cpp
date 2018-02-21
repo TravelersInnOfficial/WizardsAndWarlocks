@@ -4,10 +4,10 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
 
-TrapManager* TrapManager::instance = 0;
+TrapManager* TrapManager::instance = nullptr;
 
 TrapManager* TrapManager::GetInstance(){
-	if(instance == 0) instance = new TrapManager();
+	if(instance == nullptr) instance = new TrapManager();
 	return instance;
 }
 
@@ -23,7 +23,7 @@ TrapManager::~TrapManager(){
 	ClearTraps();
 	playerTrap.clear();
 	playerUsings.clear();
-	instance = 0;
+	instance = nullptr;
 }
 
 void TrapManager::ClearTraps(){

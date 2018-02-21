@@ -6,10 +6,10 @@
 #include "./../../Managers/PlayerManager.h"
 #include "./../../Managers/ObjectManager.h"
 
-RegionalSenseManager* RegionalSenseManager::instance = 0;
+RegionalSenseManager* RegionalSenseManager::instance = nullptr;
 
 RegionalSenseManager* RegionalSenseManager::GetInstance(){
-	if(instance==0){
+	if(instance == nullptr){
 		instance = new RegionalSenseManager();
 	}
 	return instance;
@@ -33,7 +33,7 @@ RegionalSenseManager::~RegionalSenseManager(){
 		delete n;
 	}
 	notificationQueue.clear();
-	instance = 0;
+	instance = nullptr;
 }
 
 Sensor* RegionalSenseManager::AddSensor(int id, vector3df* cPos, vector3df* cOri, float thresh, Blackboard* inf){

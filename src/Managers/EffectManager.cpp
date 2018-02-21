@@ -1,6 +1,6 @@
 #include "EffectManager.h"
 
-EffectManager* EffectManager::instance = 0;
+EffectManager* EffectManager::instance = nullptr;
 
 EffectManager::EffectManager(){
 	maxTime = 0.5f;
@@ -19,11 +19,11 @@ EffectManager::~EffectManager(){
 		}
 		delete currentV;
 	}
-	instance = 0;
+	instance = nullptr;
 }
 
 EffectManager* EffectManager::GetInstance(){
-	if(instance==0){
+	if(instance == nullptr){
 		instance = new EffectManager();
 	}
 	return instance;

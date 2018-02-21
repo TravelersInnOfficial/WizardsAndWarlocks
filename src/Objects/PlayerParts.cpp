@@ -78,14 +78,14 @@ void PlayerParts::GenerateWarlockBodyParts(vector3df bodyPos){
 }
 
 void PlayerParts::GenerateWizardBodyParts(vector3df bodyPos){
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/head.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.5, 0.2), "./../assets/modelos/PlayerParts/Warlock/body.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/rightArm.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/leftArm.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
-	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Wizards/head.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.5, 0.2), "./../assets/modelos/PlayerParts/Wizards/body.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Wizards/rightArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Wizards/leftArm.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Wizards/rightLeg.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Wizards/leftLeg.obj");
 	for(int i = 0; i < m_graphicParts.size(); i++){
-		if(m_graphicParts.at(i) != nullptr) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
+		if(m_graphicParts.at(i) != nullptr) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Wizard.png");
 	}
 }
 

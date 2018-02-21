@@ -2,10 +2,15 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <Constants.h>
 
-static BulletEngine* instance;
+static BulletEngine* instance = nullptr;
 
 BulletEngine* BulletEngine::GetInstance() {
-    if (instance == nullptr) instance = new BulletEngine();
+/*    if (instance == nullptr){
+		BulletEngine inst = BulletEngine();
+		instance = &inst;
+	}
+*/
+	if (instance == nullptr) instance = new BulletEngine();
     return (instance);
 }
 

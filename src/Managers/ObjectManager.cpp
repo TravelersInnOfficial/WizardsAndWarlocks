@@ -3,7 +3,7 @@
 #include "./../Objects/AllPotions.h"
 #include "./../NavMeshLoader.h"
 
-ObjectManager* ObjectManager::instance = 0;
+ObjectManager* ObjectManager::instance = nullptr;
 
 ObjectManager::ObjectManager(){
 	navmesh = nullptr;
@@ -14,11 +14,11 @@ ObjectManager::ObjectManager(){
 
 ObjectManager::~ObjectManager(){
 	ClearMap();
-	instance = 0;
+	instance = nullptr;
 }
 
 ObjectManager* ObjectManager::GetInstance(){
-	if(instance==0) instance = new ObjectManager();
+	if(instance == nullptr) instance = new ObjectManager();
 	return instance;
 }
 
