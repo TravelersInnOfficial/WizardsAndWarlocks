@@ -47,7 +47,6 @@ private:
 	bool resourcesLoaded;
 
 	StateManager(ServerInfo* serverInfo = nullptr);
-	static StateManager* instance;
 };
 
 #endif

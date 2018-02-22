@@ -1,6 +1,5 @@
 #include "IncludeEventChilds.h"
 #define ERRCHECK(_result) ERRCHECK_fn(_result, __FILE__, __LINE__)
-static SoundSystem* instance;
 
 //Function that shows an error when something goes wrong
 void ERRCHECK_fn(FMOD_RESULT result, const char *file, int line){
@@ -15,8 +14,8 @@ void ERRCHECK_fn(FMOD_RESULT result, const char *file, int line){
 *********************************************************************************************************/
 
 SoundSystem* SoundSystem::getInstance() {
-	if (instance == nullptr) instance = new SoundSystem();
-	return (instance);
+	static SoundSystem instance = SoundSystem();
+	return &instance;
 }
 
 /******************************************************
@@ -56,8 +55,6 @@ SoundSystem::~SoundSystem() {
 	delete listener;	//Delete the sound listener
 
 	ERRCHECK(FMOD_Studio_System_Release(system));	//Delete the sound system
-
-	instance = nullptr;
 }
 
 /******************************************************
