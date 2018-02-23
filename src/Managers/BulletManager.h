@@ -13,6 +13,8 @@ class BulletManager{
 public:
 	static BulletManager* GetInstance();
 	~BulletManager();
+	void InitObject();
+	void EmptyObject();
 
 	void AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect = WEAK_BASIC);
 	void AddToDeleteProyecil(Projectile* pro);
@@ -25,7 +27,8 @@ private:
 	std::vector<Projectile*> proyectilesToDelete;
 
 	BulletManager();
-	static BulletManager* instance;
+	BulletManager(BulletManager&);
+	BulletManager operator =(BulletManager&);
 };
 
 

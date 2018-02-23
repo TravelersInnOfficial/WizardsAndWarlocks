@@ -1,13 +1,28 @@
 #include "EffectManager.h"
 
-EffectManager* EffectManager::instance = nullptr;
+static EffectManager* instance = nullptr;
 
-EffectManager::EffectManager(){
+EffectManager* EffectManager::GetInstance(){
+	static EffectManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
+	return instance;
+}
+
+EffectManager::EffectManager(){}
+
+EffectManager::~EffectManager(){
+	EmptyObject();
+}
+
+void EffectManager::InitObject(){
 	maxTime = 0.5f;
 	currentTime = 0.0f;
 }
 
-EffectManager::~EffectManager(){
+void EffectManager::EmptyObject(){
 	std::map<Player*, std::vector<Effect*>* >::iterator it = effects.begin();
 	for(; it != effects.end(); ++it){				// Recorremos entre todos los efectos
 		std::vector<Effect*>* currentV(it->second);	// Pillamos el vector de efectos de cada jugador
@@ -20,13 +35,6 @@ EffectManager::~EffectManager(){
 		delete currentV;
 	}
 	instance = nullptr;
-}
-
-EffectManager* EffectManager::GetInstance(){
-	if(instance == nullptr){
-		instance = new EffectManager();
-	}
-	return instance;
 }
 
 void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT_CODE){

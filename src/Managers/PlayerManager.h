@@ -14,6 +14,8 @@ class PlayerManager{
 public:
 	static PlayerManager* GetInstance();
 	~PlayerManager();
+	void InitObject();
+	void EmptyObject();
 
 	Player* AddHumanPlayer(bool isPlayer1 = true);
 	AIPlayer* AddAIPlayer();
@@ -59,7 +61,8 @@ private:
 	std::vector<Player*> playersToDelete;
 
 	PlayerManager();
-	static PlayerManager* instance;
+	PlayerManager(PlayerManager&);
+	PlayerManager operator =(PlayerManager&);
 };
 
 #endif

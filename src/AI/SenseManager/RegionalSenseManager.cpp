@@ -6,20 +6,29 @@
 #include "./../../Managers/PlayerManager.h"
 #include "./../../Managers/ObjectManager.h"
 
-RegionalSenseManager* RegionalSenseManager::instance = nullptr;
+static RegionalSenseManager* instance = nullptr;
 
 RegionalSenseManager* RegionalSenseManager::GetInstance(){
+	static RegionalSenseManager localInstance;
 	if(instance == nullptr){
-		instance = new RegionalSenseManager();
+		localInstance.InitObject();
+		instance = &localInstance;
 	}
 	return instance;
 }
 
 RegionalSenseManager::RegionalSenseManager(){
-	g_engine = GraphicEngine::getInstance();
 }
 
 RegionalSenseManager::~RegionalSenseManager(){
+	EmptyObject();
+}
+
+void RegionalSenseManager::InitObject(){
+	g_engine = GraphicEngine::getInstance();
+}
+
+void RegionalSenseManager::EmptyObject(){
 	int size = sensors.size();
 	for(int i=0; i<size; i++){
 		Sensor* s = sensors[i];

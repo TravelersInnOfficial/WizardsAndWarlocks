@@ -14,6 +14,8 @@ class EffectManager{
 public:
 	static EffectManager* GetInstance();
 	~EffectManager();
+	void InitObject();
+	void EmptyObject();
 
 	void AddEffect(Player* p, EFFECTCODE e);
 	void CleanEffects(Player* p);
@@ -28,7 +30,8 @@ private:
 	float maxTime;
 
 	EffectManager();
-	static EffectManager* instance;
+	EffectManager(EffectManager&);
+	EffectManager operator =(EffectManager&);
 };
 
 #endif

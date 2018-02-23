@@ -4,10 +4,14 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
 
-TrapManager* TrapManager::instance = nullptr;
+static TrapManager* instance = nullptr;
 
 TrapManager* TrapManager::GetInstance(){
-	if(instance == nullptr) instance = new TrapManager();
+	static TrapManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
 	return instance;
 }
 
@@ -15,11 +19,17 @@ void TrapManager::Update(float deltaTime){
 	UpdateTrap(deltaTime);
 }
 
-TrapManager::TrapManager(){
+TrapManager::TrapManager(){}
+
+TrapManager::~TrapManager(){
+	EmptyObject();
+}
+
+void TrapManager::InitObject(){
 	lastTrapId = 0;
 }
 
-TrapManager::~TrapManager(){
+void TrapManager::EmptyObject(){
 	ClearTraps();
 	playerTrap.clear();
 	playerUsings.clear();

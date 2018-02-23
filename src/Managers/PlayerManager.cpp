@@ -1,20 +1,30 @@
 #include "PlayerManager.h"
 #include "ObjectManager.h"
 
-PlayerManager* PlayerManager::instance = nullptr;
+static PlayerManager* instance = nullptr;
 
 PlayerManager* PlayerManager::GetInstance(){
-	if(instance == nullptr) instance = new PlayerManager();
+	static PlayerManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
 	return instance;
 }
 
-PlayerManager::PlayerManager(){
+PlayerManager::PlayerManager(){}
+
+PlayerManager::~PlayerManager(){
+	EmptyObject();
+}
+
+void PlayerManager::InitObject(){
 	wizardsWin = false;
 	warlocksWin = false;
 	playerOne = nullptr;
 }
 
-PlayerManager::~PlayerManager(){
+void PlayerManager::EmptyObject(){
 	int size = players.size();
 	for(int i=0; i<size; i++){
 		Player* p = players[i];

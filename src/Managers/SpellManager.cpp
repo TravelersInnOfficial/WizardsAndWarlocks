@@ -4,21 +4,31 @@
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"
 
-SpellManager* SpellManager::instance = nullptr;
+static SpellManager* instance = nullptr;
 
-SpellManager::SpellManager(){
+SpellManager* SpellManager::GetInstance(){
+	static SpellManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
+	return instance;
 }
 
+SpellManager::SpellManager(){}
+
 SpellManager::~SpellManager(){
+	EmptyObject();
+}
+
+void SpellManager::InitObject(){
+}
+
+void SpellManager::EmptyObject(){
 	for(int i=0; i<numHechizos; i++){
 		hechizos[i].clear();
 	}
 	instance = nullptr;
-}
-
-SpellManager* SpellManager::GetInstance(){
-	if(instance == nullptr) instance = new SpellManager();
-	return instance;
 }
 
 /**
