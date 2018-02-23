@@ -215,8 +215,6 @@ bool MoveEscape::run(Blackboard* bb){
 		Kinematic tKin = target->kinematic;
 		SteeringOutput steering;
 
-		std::cout<<"Intentando Escapar a: "<<pos<<std::endl;
-
 		if(pos.X != std::numeric_limits<float>::max()){
 			character->ShortestPath(pos);
 	    	steering = character->GetFollowPath(cKin);
@@ -228,7 +226,6 @@ bool MoveEscape::run(Blackboard* bb){
 
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);
-		std::cout<<"No llego"<<std::endl;
 		return true;
 	}
 	return false;

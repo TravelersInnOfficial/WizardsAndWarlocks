@@ -5,6 +5,12 @@
 #include <GraphicEngine/GraphicEngine.h>
 
 AIPlayer::AIPlayer():Player(false){
+	SpellManager* spellManager = SpellManager::GetInstance();
+	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
+	spellManager->AddHechizo(1, this, SPELL_FIRE);
+	spellManager->AddHechizo(2, this, SPELL_WALL);
+	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+
 	behaviour = new BehaviourTree();
 	behaviour->SetPlayer(this);
 

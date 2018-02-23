@@ -1,6 +1,7 @@
 #include "RoomInfo.h"
 #include <Constants.h>
 #include <limits>
+#include <stdlib.h>
 
 RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondSide){
 	m_id = id;
@@ -8,6 +9,7 @@ RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondS
 	m_firstSide = firstSide;
 	m_secondSide = secondSide;
 	m_securityLevel = 0;
+	m_exploreSecurity = -1;
 }
 
 RoomInfo::~RoomInfo(){}
@@ -25,25 +27,39 @@ void RoomInfo::AddPositionExplore(vector3df position){
 }
 
 vector3df RoomInfo::WhereExplore(vector3df pos){
+	// Creamos la variable que vamos a devolver
 	vector3df output;
 
+	// Preparamos las variables para comparar distancia
 	int value = -1;
 	float distance = std::numeric_limits<float>::max();
 
+	// Recorremos todos los puntos explorables de la habitacion
 	int size = m_explored.size();
 	for(int i=0; i<size; i++){
+		// Miramos si el punto esta explorado o no
 		bool explored = m_statusExplored[i];
 		if(!explored){
+			// Ademas comparamos si esta mas cerca que el ultimo punto
 			float currentDistance = (pos - m_explored[i]).length();
 			if(currentDistance<distance){
+				// En el caso de que este mas cerca nos guardamos nos valores
 				distance = currentDistance;
 				value = i;
 			}
 		}
 	}
 
+	// En el caso que quede algun punto para explorar devolvemos su punto
 	if(value!=-1){
 		output = m_explored[value];
+	// En el caso de que no quede ningun punto por explorar, elegiremos un punto al
+	// azar y haremos que se tenga volver a explorar
+	}else{
+		if(m_exploreSecurity == -1){
+			m_exploreSecurity = rand() % size;
+		}
+		output = m_explored[m_exploreSecurity];
 	}
 
 	return output;
@@ -59,6 +75,9 @@ void RoomInfo::UpdateExplore(vector3df pos){
 			float distance = (comparePos-pos).length();
 			if(distance<1){
 				m_statusExplored[i] = true;
+				if( i == m_exploreSecurity){
+					m_exploreSecurity = -1;
+				}
 			}
 		}
 	}
@@ -98,8 +117,11 @@ float RoomInfo::GetSecurityLevel(){
 
 bool RoomInfo::GetExplored(){
 	bool output = true;
+
+	if(m_securityLevel<100.0f) output = false;
+
 	int size = m_explored.size();
-	for(int i=0; i<size; i++){
+	for(int i=0; i<size && output; i++){
 		bool explored = m_statusExplored[i];
 		if(!explored){
 			output = false;

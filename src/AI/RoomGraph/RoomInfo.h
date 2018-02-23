@@ -43,6 +43,8 @@ private:
 
 	std::vector<vector3df> 	m_explored;			// Array con posiciones que explorar de la habitacion
 	std::vector<bool> 		m_statusExplored;	// Array con el estado de exploracion de cada posicion
+
+	int						m_exploreSecurity;	// Posicion del vector de puntos a explorar, el cual iremos en el caso de que todo este explorado y no este al nivel maximo de seguridad
 };
 
 #endif
