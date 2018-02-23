@@ -55,7 +55,9 @@
         "ios": "cpp",
         "cinttypes": "cpp",
         "__config": "cpp",
-        "__nullptr": "cpp"
+        "__nullptr": "cpp",
+        "slist": "cpp",
+        "future": "cpp"
     },
 
     "editor.quickSuggestions": {

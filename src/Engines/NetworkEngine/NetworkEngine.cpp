@@ -20,7 +20,7 @@ NetworkEngine::NetworkEngine(ServerInfo* serverInfo){
 }
 
 NetworkEngine* NetworkEngine::GetInstance(ServerInfo* serverInfo){
-	static NetworkEngine instance = NetworkEngine(serverInfo);
+	static NetworkEngine instance(serverInfo);
 	return &instance;
 }
 

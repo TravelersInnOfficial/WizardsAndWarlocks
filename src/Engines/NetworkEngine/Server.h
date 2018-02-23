@@ -78,6 +78,7 @@ private:
 	int multiGameId;
 	NetworkObject* multiGameObject;
 	std::string serverName;
+	bool gameNotInited;
 
 	bool createdFromGame;
 	float maxTimeToConnectPlayerOne;	
@@ -98,6 +99,8 @@ private:
 
 	void CheckIfPlayerOneConnected(float deltaTime);
 	void SetServerData(bool isLobby);
+
+	void InitGameObject();
 
 };
 
