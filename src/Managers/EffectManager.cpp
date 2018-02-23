@@ -32,8 +32,10 @@ void EffectManager::EmptyObject(){
 			Effect* effect = currentV->at(i);
 			delete effect;
 		}
+		currentV->clear();
 		delete currentV;
 	}
+	effects.clear();
 	instance = nullptr;
 }
 
