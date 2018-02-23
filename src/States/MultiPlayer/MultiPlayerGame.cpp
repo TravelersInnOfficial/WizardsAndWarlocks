@@ -14,8 +14,8 @@ MultiPlayerGame::MultiPlayerGame(){
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
 	objectManager	= ObjectManager::GetInstance();
-	playerManager	= PlayerManager::GetInstance();
 	trapManager		= TrapManager::GetInstance();
+	playerManager	= PlayerManager::GetInstance();
 	networkManager	= NetworkManager::GetInstance();
 
 	// Creamos un nuevo MultiLobby
@@ -50,14 +50,14 @@ MultiPlayerGame::MultiPlayerGame(){
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
-	delete m_stateGame;
-	delete bulletManager;
-	delete effectManager;
-	delete objectManager;
-	delete playerManager;
-	delete spellManager;		// Tiene que eliminarse despues de el playerManager NECESARIO
-	delete trapManager;
-	delete networkManager;
+	networkManager->EmptyObject();	
+	playerManager->EmptyObject();
+	trapManager->EmptyObject();
+	objectManager->EmptyObject();
+	effectManager->EmptyObject();
+	bulletManager->EmptyObject();
+	spellManager->EmptyObject();	// Tiene que eliminarse despues de el playerManager NECESARIO
+
 	n_engine->EndService();
 
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();

@@ -242,7 +242,7 @@ void AIPlayer::ShortestPath(vector3df to){
 	if(room!=nullptr){
 		vector3df firstC = room->GetFirstCorner();
 		vector3df secondC = room->GetSecondCorner();
-		vector3df from = this->GetPos();
+		vector3df from = m_position;
 		if(path->AStar(from,to, firstC, secondC)){
 			followPath->ResetValues();
 		}

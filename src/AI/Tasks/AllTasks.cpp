@@ -79,6 +79,8 @@ bool MasterMovement::run(Blackboard* bb){
 EmptyTask::EmptyTask(){}
 
 bool EmptyTask::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"EmptyTask"<<std::endl;
+
 	return true;
 }
 
@@ -207,15 +209,26 @@ bool MoveEscape::run(Blackboard* bb){
 	RoomGraph* room = bb->GetRoomGraph();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(room!=nullptr && character!=nullptr && target!=nullptr){
-		vector3df pos = room->GetEscapeRoom(target->kinematic.position);
-		character->ShortestPath(pos);
+		vector3df pos = room->GetEscapeRoom(character->GetPos(), target->kinematic.position);
 
 		Kinematic cKin = character->GetKinematic();
+		Kinematic tKin = target->kinematic;
+		SteeringOutput steering;
 
-    	SteeringOutput steering = character->GetFollowPath(cKin);
+		std::cout<<"Intentando Escapar a: "<<pos<<std::endl;
+
+		if(pos.X != std::numeric_limits<float>::max()){
+			character->ShortestPath(pos);
+	    	steering = character->GetFollowPath(cKin);
+		}else{
+			steering = character->GetFlee(cKin, tKin);
+			SteeringOutput steering2 = character->GetLookWhereYoureGoing(cKin);
+			steering.angular = steering2.angular;
+		}
 
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);
+		std::cout<<"No llego"<<std::endl;
 		return true;
 	}
 	return false;

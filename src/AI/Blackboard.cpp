@@ -37,7 +37,7 @@ void Blackboard::LoadRoomGraph(){
 }
 
 void Blackboard::UpdateRoomGraph(float deltaTime){
-    if(roomGraph!=nullptr){
+    if(roomGraph!=nullptr && currentPlayer!=nullptr){
         vector3df pos = currentPlayer->GetPos();
         roomGraph->InitRoom(pos, deltaTime);
         roomGraph->UpdateExplore(currentPlayer->GetPos());

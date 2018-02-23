@@ -18,6 +18,8 @@ public:
 
 	static NetworkManager* GetInstance();
 	~NetworkManager();
+	void InitObject();
+	void EmptyObject();
 
 	void Update();
 	NetworkObject* GetMultiGame();
@@ -29,13 +31,14 @@ private:
 	std::map<int, NetworkObject*> newNetworkObjects;		// Map of Network Objects not spawned
 	std::map<int, NetworkObject*> toEraseNetworkObjects;	// Map of Network Objects to be erased
 	std::map<int, NetworkObject*> spawnedObjects;			// Map of Network Objects already spawned
-	static NetworkManager* instance;
 
-	NetworkManager();
 	void RetrieveObjects();
 	void SpawnNewObjects();
 	void EraseObjects();
 	void setPlayerManager(PlayerManager* playerManager);
+	NetworkManager();
+	NetworkManager(NetworkManager&);
+	NetworkManager operator=(NetworkManager&);
 
 };
 
