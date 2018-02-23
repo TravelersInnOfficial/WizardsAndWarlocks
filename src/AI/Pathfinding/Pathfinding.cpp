@@ -24,17 +24,31 @@ Pathfinding::~Pathfinding(){
 }
 
  vector3df Pathfinding::GetPosNode(int index){
-    if(index >= m_path.size()){
-        index = m_path.size()-1;
-        if(index < 0) return vector3df(0,0,0);
+    // Preparamos el vector3df a devolver
+    vector3df output;
+
+    // Miramos si el camino es superior a 1
+    if(m_path.size() > 0){
+        //Miramos si el index es mayor o igual al tamanyo del m_path
+        if(index >= m_path.size()){
+            // En este caso lo igualamos al ultimo puesto
+            index = m_path.size()-1;
+        }
+
+        // Igualamos la posicion del array
+        output = m_path[index]->getPosition();
     }
-    return m_path[index]->getPosition();
+    return output;
  }
 
 int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
+    // Creamos el valor el cual vamos a devolver
     int output = start;
-    if(start < m_path.size()){     // Comprobamos si se sale del array 
+
+    // Miramos que no se pase del tamanyo del camino
+    if(start < m_path.size()){
         BulletEngine* f_engine = BulletEngine::GetInstance();
+        // Recorremos todos nodos del vector en busca del nodo mas cercano
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
@@ -52,23 +66,27 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
                     }
                 }
             }
-           
-
-
+            
+            // En el caso de que no haya nada en medio avanzamos el output a i
             if(object == nullptr){
                 output = i;
             }
             // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
-            if(object!=nullptr && i == start){
+            if(object!=nullptr && i == start && i!=0){
                 output = start-1;
-                if(output<0) output = 0;
                 break;
             }
         }
-    }else{
-        // En el caso de que se salga del size de nodos lo igualamos el ultimo
+    // En el caso de que se pase, miramos que el camino sea superior a 1
+    }else if(m_path.size() > 0){
+        // Lo ponemos al ultimo
         output = m_path.size()-1;
+        // En el caso de que no se pase lo ponemos a 0
+    }else{
+        output = 0;
     }
+
+    // Devolvemos el valor
     return output;
 }
 
@@ -84,14 +102,16 @@ void Pathfinding::ResetValues(){
 }
 
 bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3df secondC){
-    if(m_path.size()>0){ 
+    if(m_path.size() > 0){ 
         float dirFinal = (to - m_path[m_path.size() - 1]->getPosition()).length();
-        if(dirFinal > 1){
-            m_path.clear();         // Limpiamos el vector de nodos, no se han creado variables en este vector
-        }else{
-            return false;
+        if(dirFinal <= 1){
+          return false;         // Limpiamos el vector de nodos, no se han creado variables en este vector
         }
     }
+
+    // Reseteamos el camino
+    m_path.clear();
+
     // Put values
     StartNode->setData(-1,from);
     EndNode->setData(-2,to);
@@ -216,7 +236,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                     endNodeRecord = m_openList->find(endNode);
 
                     //If our route is no better, then skip
-                    if(endNodeRecord!=nullptr && endNodeRecord->m_costSoFar <= endNodeCost){ 
+                    if(endNodeRecord != nullptr && endNodeRecord->m_costSoFar <= endNodeCost){ 
                         continue;
                     }
 
@@ -256,10 +276,11 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
-        if(current!=nullptr){
+        if(current!=nullptr && current->m_connection!=nullptr){
             if(current->m_node != EndNode) m_path.push_back(EndNode);
             do{
                 m_path.push_back(current->m_node);
+                if(current->m_connection == nullptr) std::cout<<"Era aqui?"<<std::endl;
                 current = m_closedList->find(current->m_connection->getFromNode());
             }while(current!=nullptr && current->m_node != StartNode);
             m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode

@@ -1,6 +1,8 @@
 #include "StateManager.h"
 #include <time.h>
 
+StateManager* StateManager::instance = nullptr;
+
 StateManager::StateManager(ServerInfo* serverInfo){
 	if(serverInfo == nullptr){
 		ServerInfo dummyInfo;
@@ -37,12 +39,17 @@ StateManager::StateManager(ServerInfo* serverInfo){
 
 StateManager::~StateManager(){
 	if(currentState != nullptr) delete currentState;
-	//Engines are deleted automatically
+	delete f_engine;
+	delete g_engine;
+	delete s_engine;
+	delete n_engine;
+	delete gui_engine;
+	instance = nullptr;
 }
 
 StateManager* StateManager::GetInstance(ServerInfo* serverInfo){
-	static StateManager instance = StateManager(serverInfo);
-	return &instance;
+	if(instance == nullptr) instance = new StateManager(serverInfo);
+	return instance;
 }
 
 void StateManager::CloseGame(){

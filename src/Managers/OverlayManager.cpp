@@ -36,13 +36,18 @@ void OverlayManager::CleanOverlays(){
 void OverlayManager::Update(float deltaTime){
 	std::map<OverlayCodes, OverlayInfo*>::iterator it = overlays.begin();
 	
-	for(; it != overlays.end(); it++){
+	for(; it != overlays.end(); /* No ponemos el incremento aqui*/){
+		bool iterate  = true;
 		if(it->second != nullptr){
 			it->second->time -= deltaTime;
 			if(it->second->time <= 0){ 
 				delete it->second;
-				overlays.erase(it);
+				overlays.erase(it++);
+				iterate = false;
 			}
+		}
+		if(iterate){
+			++it;
 		}
 	}
 }

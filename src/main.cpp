@@ -27,6 +27,7 @@ int main(int argc, char* argv[]) {
 	StateManager* stateManager = StateManager::GetInstance(&serverInfo);
 
 	while(stateManager->Update()){}
+	delete stateManager;
 
 	return 0;
 }
