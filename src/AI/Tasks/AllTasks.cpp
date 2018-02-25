@@ -207,12 +207,27 @@ bool MoveEscape::run(Blackboard* bb){
 	RoomGraph* room = bb->GetRoomGraph();
 	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
 	if(room!=nullptr && character!=nullptr && target!=nullptr){
-		vector3df pos = room->GetEscapeRoom(target->kinematic.position);
-		character->ShortestPath(pos);
+		vector3df pos = room->GetEscapeRoom(character->GetPos(), target->kinematic.position);
+
+		// Calculamos la distancia que hay entre el target y la posicion a la que huir
+		//float distanceTarget = (target->kinematic.position - pos).length();
+		// Calculamos la distancia que hay entre e personaje y la posicion a la que huir
+		//float distanceChar = (character->GetPos() - pos).length();
 
 		Kinematic cKin = character->GetKinematic();
-
-    	SteeringOutput steering = character->GetFollowPath(cKin);
+		Kinematic tKin = target->kinematic;
+		SteeringOutput steering;
+		// En el caso de que el target este mas cerca del punto al que huir que 
+		// al propia player es que es mejor simplemente alejarse como pueda
+		//std::cout<<distanceChar<<" "<<distanceTarget<<std::endl;
+		//if(distanceTarget<distanceChar){
+			// Nos alejamos del player
+		//	steering = character->GetFlee(cKin, tKin);
+		//}else{
+			// Intentamos huir
+			character->ShortestPath(pos);
+    		steering = character->GetFollowPath(cKin);
+		//}
 
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);

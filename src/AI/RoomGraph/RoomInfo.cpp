@@ -191,7 +191,7 @@ void RoomInfo::ShuffleVector(){
 	}
 }
 
-vector3df RoomInfo::GetEscapeRoom(vector3df target){
+vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
 	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
 	vector3df output;
 
@@ -203,17 +203,28 @@ vector3df RoomInfo::GetEscapeRoom(vector3df target){
 	uint8_t size = m_nextRooms.size();
 	for(uint8_t i=0; i<size; i++){
 		RoomInfo* info = m_nextRooms[i];
-		float currentLength = info->GetDistance(target);
-		if(currentLength<distance){
-			distance = currentLength;
-			value = i;
+		// Miramos la distancia del player y del target a la habitacion
+		float currentLengthTarget = info->GetDistance(target);
+		float currentLengthPlayer = info->GetDistance(player);
+
+		// Miramos si es valido: el player tiene mas cerca la habitacion que el player
+		if(currentLengthPlayer<currentLengthTarget){
+			// Nos quedamos con la habiacion mas cercana al player de entre las validas
+			if(currentLengthPlayer<distance){
+				distance = currentLengthPlayer;
+				value = i;
+			}
 		}
+
 	}
 
 	// Miramos si hemos llegado a encontrar algun valor
 	if(value != -1){
 		// Igualamos el valor al centro de la habitacion mas cercana para escapar
 		output = m_nextRooms[value]->GetPosition();
+	}else{
+		// En el caso de no encontrar habitacion devolvemos el centro de esta
+		output = m_position;
 	}
 	// Devolvemos el valor al que ir
 	return output;

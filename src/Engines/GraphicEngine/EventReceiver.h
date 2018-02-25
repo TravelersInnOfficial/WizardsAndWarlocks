@@ -10,7 +10,7 @@ protected:
     
     static const int numMouseButtons = 4;
     keyStatesENUM mouseButtonState[numMouseButtons];
-    virtual bool OnEvent(const irr::SEvent& event);
+    bool OnEvent(const irr::SEvent& event);
 
 public:
 

@@ -132,8 +132,6 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 	if(m_actualRoom != nullptr){
 		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad
 		m_actualRoom->ChangeSecurityLevel(10.0f*deltaTime);
-		//std::cout<<deltaTime<<std::endl;
-		//std::cout<<m_actualRoom->GetSecurityLevel()<<std::endl;
 	}
 }
 
@@ -219,9 +217,9 @@ vector3df RoomGraph::GetSecondCorner(){
 	return output;
 }
 
-vector3df RoomGraph::GetEscapeRoom(vector3df target){
+vector3df RoomGraph::GetEscapeRoom(vector3df player, vector3df target){
 	vector3df output;
-	if(m_actualRoom != nullptr) output = m_actualRoom->GetEscapeRoom(target);
+	if(m_actualRoom != nullptr) output = m_actualRoom->GetEscapeRoom(player, target);
 	return output;
 }
 
