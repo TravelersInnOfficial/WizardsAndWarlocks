@@ -31,6 +31,8 @@ class ObjectManager{
 public:
 	static ObjectManager* GetInstance();
 	~ObjectManager();
+	void InitObject();
+	void EmptyObject();
 
 	// Adders
 	Block* 			AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
@@ -113,7 +115,8 @@ private:
 	RoomGraph*					roomGraph;		// Grafo de habitaciones del nivel, utilizado por la IA
 
 	ObjectManager();
-	static ObjectManager* instance; 
+	ObjectManager(ObjectManager&);
+	ObjectManager operator =(ObjectManager&);
 };
 
 #endif

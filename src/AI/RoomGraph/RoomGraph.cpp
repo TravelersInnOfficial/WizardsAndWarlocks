@@ -106,7 +106,7 @@ void RoomGraph::CopyGraph(RoomGraph* copyGraph){
 }
 
 bool RoomGraph::CheckInside(float A, float B, float C){
-	float output = false;
+	bool output = false;
 	if((C<A && C>B) || (C>A && C<B)){
 		output = true;
 	}
@@ -130,8 +130,16 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 	// En el caso de que no este dentro de ninguna habitacion supondremos que esta en la misma
 	// habitacion que anteriormente
 	if(m_actualRoom != nullptr){
+		// Calculamos el area de la habitacion
+		vector3df firstSide = m_actualRoom->GetFirstSide();
+		vector3df secondSide = m_actualRoom->GetSecondSide();
+		float perimeter = abs(secondSide.X - firstSide.X) + abs(secondSide.Z - firstSide.Z);
+		float value = 1/(perimeter/6.0f) * 100;
+		//if(value<10) value = 10.0f;
 		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad
-		m_actualRoom->ChangeSecurityLevel(10.0f*deltaTime);
+		m_actualRoom->ChangeSecurityLevel(value*deltaTime);
+
+		//std::cout<<m_actualRoom->GetSecurityLevel()<<" "<<perimeter<<" "<<value<<std::endl;
 	}
 }
 

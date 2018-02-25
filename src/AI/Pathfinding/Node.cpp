@@ -19,7 +19,7 @@ void Node::setData(int id, vector3df position){
 
 void Node::eraseConnection(Node* n){
     int size = m_connections.size();
-    for(int i=0; i<size; i++){
+    for(int i=size-1; i>=0; i--){
         Node* node = m_connections[i]->getToNode();
         if(node == n){
             m_connections.erase(m_connections.begin() + i);

@@ -28,6 +28,9 @@ public:
 	std::vector<vector3df> GetExplorePoints();
 	vector3df GetEscapeRoom(vector3df player, vector3df target);
 private:
+	vector3df GetEscapeRoomSameRoom(vector3df player, vector3df target);
+	vector3df GetEscapeRoomDifferentRoom(vector3df player, vector3df target);
+
 	void ShuffleVector();
 	float NearestPoint(float pointA, float pointB, float target);
 
@@ -40,6 +43,8 @@ private:
 
 	std::vector<vector3df> 	m_explored;			// Array con posiciones que explorar de la habitacion
 	std::vector<bool> 		m_statusExplored;	// Array con el estado de exploracion de cada posicion
+
+	int						m_exploreSecurity;	// Posicion del vector de puntos a explorar, el cual iremos en el caso de que todo este explorado y no este al nivel maximo de seguridad
 };
 
 #endif

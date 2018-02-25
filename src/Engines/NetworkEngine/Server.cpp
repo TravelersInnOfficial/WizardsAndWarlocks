@@ -12,6 +12,7 @@ Server::Server(int serverPort, int maxClients, bool createdFromGame, std::string
 	if(serverName == "") serverName = "Unknown Castle";
 	this->serverName = serverName;
 	this->createdFromGame = createdFromGame;
+	gameNotInited = true;
 
 	peer = RakNet::RakPeerInterface::GetInstance();
 	descriptor = RakNet::SocketDescriptor(serverPort, 0);
@@ -24,10 +25,6 @@ Server::Server(int serverPort, int maxClients, bool createdFromGame, std::string
 	multiGameObject = new NetworkObject(lastObjectId, ID_MULTIGAME_O);
 	networkObjects[lastObjectId] = multiGameObject;
 	newNetworkObjects[lastObjectId] = networkObjects[lastObjectId];
-	
-	// Inicializo su variable
-	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
-	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
 
 	maxTimeToConnectPlayerOne = 15;
 	playerOneID = RakNet::UNASSIGNED_RAKNET_GUID;
@@ -46,7 +43,15 @@ Server::~Server(){
 }
 
 void Server::Update(float deltaTime){
+	if(gameNotInited) InitGameObject();
 	if(createdFromGame) CheckIfPlayerOneConnected(deltaTime);
+}
+
+void Server::InitGameObject(){
+	// Inicializo su variable
+	multiGameObject->SetBoolVar(MULTIGAME_CHANGE, false, true, false);
+	multiGameObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, true, false);
+	gameNotInited = false;
 }
 
 void Server::CheckIfPlayerOneConnected(float deltaTime){

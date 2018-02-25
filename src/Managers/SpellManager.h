@@ -11,6 +11,8 @@ class SpellManager{
 public:
 	static SpellManager* GetInstance();
 	~SpellManager();
+	void InitObject();
+	void EmptyObject();
 
 	bool AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast = true);
 	
@@ -45,10 +47,11 @@ private:
 	
 	float m_deltaTime;
 
-	SpellManager();
 	void updateSoundEvents(Hechizo* h, Player* p); 	//Update sound event spell position, otherwise will sound far as we move
-	static SpellManager* instance;
 
+	SpellManager();
+	SpellManager(SpellManager&);
+	SpellManager operator =(SpellManager&);
 };
 
 #endif

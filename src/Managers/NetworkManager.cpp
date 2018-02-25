@@ -1,17 +1,27 @@
 #include "NetworkManager.h"
 
-NetworkManager* NetworkManager::instance = nullptr;
+NetworkManager* instance = nullptr;
 
 NetworkManager* NetworkManager::GetInstance(){
-	if(instance == nullptr) instance = new NetworkManager();
+	static NetworkManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
 	return instance;
 }
 
-NetworkManager::NetworkManager(){ 
+NetworkManager::NetworkManager(){}
+
+NetworkManager::~NetworkManager(){
+	EmptyObject();
+}
+
+void NetworkManager::InitObject(){
 	multiGame = nullptr;
 }
 
-NetworkManager::~NetworkManager(){
+void NetworkManager::EmptyObject(){
 	instance = nullptr;
 }
 

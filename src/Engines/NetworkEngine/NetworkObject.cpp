@@ -27,7 +27,8 @@ int NetworkObject::GetObjId(){
 void NetworkObject::SetBoolVar(ObjectVariable k, bool v, bool notify, bool expandClientChange){
 	boolVariables[k] = v;
 	if(notify){
-		Server* server = NetworkEngine::GetInstance()->GetServer();
+		NetworkEngine* ne = NetworkEngine::GetInstance();
+		Server* server = ne->GetServer();
 		if(server != nullptr) server->SetObjectBool(objectId, k, v, expandClientChange);
 		else{
 			Client* client = NetworkEngine::GetInstance()->GetClient();

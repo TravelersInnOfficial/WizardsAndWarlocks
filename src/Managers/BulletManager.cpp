@@ -4,20 +4,28 @@
 #include "./../Projectiles/ThunderProjectile.h"
 #include "./../Projectiles/PoisonBomb.h"
 
-BulletManager* BulletManager::instance = nullptr;
+static BulletManager* instance = nullptr;
+
+BulletManager* BulletManager::GetInstance(){
+	static BulletManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
+	return instance;
+}
 
 BulletManager::BulletManager(){}
 
 BulletManager::~BulletManager(){
-	DeleteAllProyectiles();
-	instance = nullptr;
+	EmptyObject();
 }
 
-BulletManager* BulletManager::GetInstance(){
-	if(instance == nullptr){
-		instance = new BulletManager();
-	}
-	return instance;
+void BulletManager::InitObject(){}
+
+void BulletManager::EmptyObject(){
+	DeleteAllProyectiles();
+	instance = nullptr;
 }
 
 void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect){

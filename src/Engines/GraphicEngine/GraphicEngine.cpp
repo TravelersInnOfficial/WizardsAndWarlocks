@@ -1,5 +1,4 @@
 #include "GraphicEngine.h"
-static GraphicEngine* instance = nullptr;
 
 GraphicEngine::GraphicEngine(bool isServer){
 	m_isServer = isServer;
@@ -70,12 +69,11 @@ GraphicEngine::~GraphicEngine(){
 	drop();
 	if(privateReceiver != nullptr) delete privateReceiver;
 	if(privateMenuReceiver != nullptr) delete privateMenuReceiver;
-	instance = nullptr;
 }
 
 GraphicEngine* GraphicEngine::getInstance(bool isServer){
-	if(instance == nullptr) instance = new GraphicEngine(isServer);
-	return instance;
+	static GraphicEngine instance = GraphicEngine(isServer);
+	return &instance;
 }
 
 bool GraphicEngine::run(){

@@ -1,6 +1,7 @@
 #include "RoomInfo.h"
 #include <Constants.h>
 #include <limits>
+#include <stdlib.h>
 
 RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondSide){
 	m_id = id;
@@ -8,6 +9,7 @@ RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondS
 	m_firstSide = firstSide;
 	m_secondSide = secondSide;
 	m_securityLevel = 0;
+	m_exploreSecurity = -1;
 }
 
 RoomInfo::~RoomInfo(){}
@@ -25,25 +27,39 @@ void RoomInfo::AddPositionExplore(vector3df position){
 }
 
 vector3df RoomInfo::WhereExplore(vector3df pos){
+	// Creamos la variable que vamos a devolver
 	vector3df output;
 
+	// Preparamos las variables para comparar distancia
 	int value = -1;
 	float distance = std::numeric_limits<float>::max();
 
+	// Recorremos todos los puntos explorables de la habitacion
 	int size = m_explored.size();
 	for(int i=0; i<size; i++){
+		// Miramos si el punto esta explorado o no
 		bool explored = m_statusExplored[i];
 		if(!explored){
+			// Ademas comparamos si esta mas cerca que el ultimo punto
 			float currentDistance = (pos - m_explored[i]).length();
 			if(currentDistance<distance){
+				// En el caso de que este mas cerca nos guardamos nos valores
 				distance = currentDistance;
 				value = i;
 			}
 		}
 	}
 
+	// En el caso que quede algun punto para explorar devolvemos su punto
 	if(value!=-1){
 		output = m_explored[value];
+	// En el caso de que no quede ningun punto por explorar, elegiremos un punto al
+	// azar y haremos que se tenga volver a explorar
+	}else{
+		if(m_exploreSecurity == -1){
+			m_exploreSecurity = rand() % size;
+		}
+		output = m_explored[m_exploreSecurity];
 	}
 
 	return output;
@@ -59,6 +75,9 @@ void RoomInfo::UpdateExplore(vector3df pos){
 			float distance = (comparePos-pos).length();
 			if(distance<1){
 				m_statusExplored[i] = true;
+				if( i == m_exploreSecurity){
+					m_exploreSecurity = -1;
+				}
 			}
 		}
 	}
@@ -98,8 +117,11 @@ float RoomInfo::GetSecurityLevel(){
 
 bool RoomInfo::GetExplored(){
 	bool output = true;
+
+	if(m_securityLevel<100.0f) output = false;
+
 	int size = m_explored.size();
-	for(int i=0; i<size; i++){
+	for(int i=0; i<size && output; i++){
 		bool explored = m_statusExplored[i];
 		if(!explored){
 			output = false;
@@ -191,7 +213,9 @@ void RoomInfo::ShuffleVector(){
 	}
 }
 
-vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
+// En el caso de que ambos jugadores esten en la misma habitacion, el jugador debera ir
+// a la habitacion mas cercana que tenga sin pasar por detras del enemigo
+vector3df RoomInfo::GetEscapeRoomSameRoom(vector3df player, vector3df target){
 	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
 	vector3df output;
 
@@ -200,8 +224,8 @@ vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
 	int value = -1;
 
 	// Miramos habitacion a habitacion si la distancia es menor
-	uint8_t size = m_nextRooms.size();
-	for(uint8_t i=0; i<size; i++){
+	int size = m_nextRooms.size();
+	for(int i=0; i<size; i++){
 		RoomInfo* info = m_nextRooms[i];
 		// Miramos la distancia del player y del target a la habitacion
 		float currentLengthTarget = info->GetDistance(target);
@@ -222,10 +246,77 @@ vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
 	if(value != -1){
 		// Igualamos el valor al centro de la habitacion mas cercana para escapar
 		output = m_nextRooms[value]->GetPosition();
+	}else if(size>=1){
+		// En el caso de no encontrar habitacion devolvemos la primera salida
+		output = m_nextRooms[0]->GetPosition();
 	}else{
-		// En el caso de no encontrar habitacion devolvemos el centro de esta
+		// Ya en el caso de que no tenga habitaciones conectadas devolvemos el centro de esta
 		output = m_position;
 	}
 	// Devolvemos el valor al que ir
+	return output;
+}
+
+// En el caso de que ambos jugadores esten en diferentes habitaciones, el jugador ira a la habitacion mas lejana
+// al target
+vector3df RoomInfo::GetEscapeRoomDifferentRoom(vector3df player, vector3df target){
+	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
+	vector3df output;
+
+	// Creamos los valores iniciales de distancia y valor
+	float distance = -1;
+	int value = -1;
+
+	// Miramos habitacion a habitacion si la distancia es mayor
+	int size = m_nextRooms.size();
+	for(int i=0; i<size; i++){
+		RoomInfo* info = m_nextRooms[i];
+
+
+		vector3df oneSide = info->GetFirstSide();
+		vector3df secondSide = info->GetSecondSide();
+
+		// Comprobamos que el player no se encuentre en esta habitacion
+		bool insideX = (target.X < oneSide.X && target.X > secondSide.X) 
+					|| (target.X > oneSide.X && target.X < secondSide.X);
+		bool insideZ = (target.Z < oneSide.Z && target.Z > secondSide.Z) 
+					|| (target.Z > oneSide.Z && target.Z < secondSide.Z);
+
+		if(!(insideX && insideZ)){
+		// Miramos la distancia del target a la habitacion
+			float currentLengthTarget = info->GetDistance(target);
+			if(currentLengthTarget>distance){
+				distance = currentLengthTarget;
+				value = i;
+			}
+		}
+	}
+
+	// Miramos si hemos llegado a encontrar algun valor
+	if(value != -1){
+		output = m_nextRooms[value]->GetPosition();
+	}else{
+		// En el caso de no encontrar habitacion
+		// Enviamos un vector3df con "booleanos"
+		output = vector3df(std::numeric_limits<float>::max());
+	}
+	return output;
+}
+
+// Meter comparatiba de si el target esta en la misma habitacion
+vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
+	// Comprobamos si el target esta dentro de la misma habitacion que el player
+	bool insideX = (target.X < m_firstSide.X && target.X > m_secondSide.X) 
+					|| (target.X > m_firstSide.X && target.X < m_secondSide.X);
+	bool insideZ = (target.Z < m_firstSide.Z && target.Z > m_secondSide.Z) 
+					|| (target.Z > m_firstSide.Z && target.Z < m_secondSide.Z);
+
+	// Creamos el valor de output
+	vector3df output;
+	if(insideX && insideZ){
+		output = GetEscapeRoomSameRoom(player, target);
+	}else{
+		output = GetEscapeRoomDifferentRoom(player, target);
+	}
 	return output;
 }

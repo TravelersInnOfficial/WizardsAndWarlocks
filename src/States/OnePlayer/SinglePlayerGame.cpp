@@ -7,9 +7,9 @@ SinglePlayerGame::SinglePlayerGame(){
 	bulletManager 	= BulletManager::GetInstance();
 	effectManager 	= EffectManager::GetInstance();
 	objectManager	= ObjectManager::GetInstance();
-	playerManager	= PlayerManager::GetInstance();
 	trapManager		= TrapManager::GetInstance();
 	senseManager	= RegionalSenseManager::GetInstance();
+	playerManager	= PlayerManager::GetInstance();
 
 	g_engine		= GraphicEngine::getInstance();
 	f_engine		= BulletEngine::GetInstance();
@@ -29,13 +29,14 @@ SinglePlayerGame::SinglePlayerGame(){
 
 SinglePlayerGame::~SinglePlayerGame(){
 	delete m_stateGame;
-	delete bulletManager;
-	delete effectManager;
-	delete objectManager;
-	delete playerManager;
-	delete spellManager;	// Tiene que eliminarse despues de el playerManager NECESARIO
-	delete trapManager;
-	delete senseManager;
+
+	playerManager->EmptyObject();
+	senseManager->EmptyObject();
+	trapManager->EmptyObject();
+	objectManager->EmptyObject();
+	effectManager->EmptyObject();
+	bulletManager->EmptyObject();
+	spellManager->EmptyObject();	// Tiene que eliminarse despues de el playerManager NECESARIO
 
 	// Liberamos los sonidos que teniamos puestos
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();

@@ -3,23 +3,33 @@
 #include "./../Objects/AllPotions.h"
 #include "./../NavMeshLoader.h"
 
-ObjectManager* ObjectManager::instance = nullptr;
+static ObjectManager* instance = nullptr;
 
-ObjectManager::ObjectManager(){
+ObjectManager* ObjectManager::GetInstance(){
+	static ObjectManager localInstance;
+	if(instance == nullptr){
+		localInstance.InitObject();
+		instance = &localInstance;
+	}
+	return instance;
+}
+
+ObjectManager::ObjectManager(){}
+
+ObjectManager::~ObjectManager(){
+	EmptyObject();
+}
+
+void ObjectManager::InitObject(){
 	navmesh = nullptr;
 	roomGraph = nullptr;
 	grail = nullptr;
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
 }
 
-ObjectManager::~ObjectManager(){
+void ObjectManager::EmptyObject(){
 	ClearMap();
 	instance = nullptr;
-}
-
-ObjectManager* ObjectManager::GetInstance(){
-	if(instance == nullptr) instance = new ObjectManager();
-	return instance;
 }
 
 // ===================================================================================================== //

@@ -14,7 +14,6 @@ public:
 
 	// Returns Instance of the engine. If it not created, this method initializes it.
 	static NetworkEngine* GetInstance(ServerInfo* serverInfo = nullptr);
-
 	~NetworkEngine();
 	
 	// Start a Server, must declare port before
@@ -59,6 +58,8 @@ private:
 	Client* client;						// Client variable (uninitialized)
 
 	NetworkEngine(ServerInfo* serverInfo = nullptr);
+	NetworkEngine(NetworkEngine&);
+	NetworkEngine operator=(NetworkEngine&);
 
 };
 

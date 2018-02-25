@@ -79,6 +79,8 @@ bool MasterMovement::run(Blackboard* bb){
 EmptyTask::EmptyTask(){}
 
 bool EmptyTask::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"EmptyTask"<<std::endl;
+
 	return true;
 }
 
@@ -209,25 +211,19 @@ bool MoveEscape::run(Blackboard* bb){
 	if(room!=nullptr && character!=nullptr && target!=nullptr){
 		vector3df pos = room->GetEscapeRoom(character->GetPos(), target->kinematic.position);
 
-		// Calculamos la distancia que hay entre el target y la posicion a la que huir
-		//float distanceTarget = (target->kinematic.position - pos).length();
-		// Calculamos la distancia que hay entre e personaje y la posicion a la que huir
-		//float distanceChar = (character->GetPos() - pos).length();
 
 		Kinematic cKin = character->GetKinematic();
 		Kinematic tKin = target->kinematic;
 		SteeringOutput steering;
-		// En el caso de que el target este mas cerca del punto al que huir que 
-		// al propia player es que es mejor simplemente alejarse como pueda
-		//std::cout<<distanceChar<<" "<<distanceTarget<<std::endl;
-		//if(distanceTarget<distanceChar){
-			// Nos alejamos del player
-		//	steering = character->GetFlee(cKin, tKin);
-		//}else{
-			// Intentamos huir
+
+		if(pos.X != std::numeric_limits<float>::max()){
 			character->ShortestPath(pos);
-    		steering = character->GetFollowPath(cKin);
-		//}
+	    	steering = character->GetFollowPath(cKin);
+		}else{
+			steering = character->GetFlee(cKin, tKin);
+			SteeringOutput steering2 = character->GetLookWhereYoureGoing(cKin);
+			steering.angular = steering2.angular;
+		}
 
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);

@@ -12,6 +12,8 @@ class TrapManager{
 public:
 	static TrapManager* GetInstance();
 	~TrapManager();
+	void InitObject();
+	void EmptyObject();
 
 	void Update(float deltaTime);
 	void DeleteTrap(Trap* t);
@@ -51,11 +53,12 @@ private:
 	std::map<Player*,TrapEnum> playerTrap;
 	std::map<Player*, int> playerUsings;
 	int lastTrapId;
-	static TrapManager* instance;
 	int MaxUsings = 4;
 
-	TrapManager();
 	std::string GetPathFromUsings(int usings);
+	TrapManager();
+	TrapManager(TrapManager&);
+	TrapManager operator =(TrapManager&);
 };
 
 #endif

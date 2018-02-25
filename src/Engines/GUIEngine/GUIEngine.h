@@ -22,8 +22,6 @@ public:
     void ShowDeathMessage(std::string, float time = 3.5f);
 
 private:
-    static GUIEngine* instance; 
-
     GraphicEngine* g_engine;
     irr::IrrlichtDevice* pDevice;
     IrrIMGUI::IIMGUIHandle * m_GUIHandler; //MGUI handler

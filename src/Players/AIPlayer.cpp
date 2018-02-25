@@ -5,6 +5,12 @@
 #include <GraphicEngine/GraphicEngine.h>
 
 AIPlayer::AIPlayer():Player(false){
+	SpellManager* spellManager = SpellManager::GetInstance();
+	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
+	spellManager->AddHechizo(1, this, SPELL_FIRE);
+	spellManager->AddHechizo(2, this, SPELL_WALL);
+	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+
 	behaviour = new BehaviourTree();
 	behaviour->SetPlayer(this);
 
@@ -242,7 +248,7 @@ void AIPlayer::ShortestPath(vector3df to){
 	if(room!=nullptr){
 		vector3df firstC = room->GetFirstCorner();
 		vector3df secondC = room->GetSecondCorner();
-		vector3df from = this->GetPos();
+		vector3df from = m_position;
 		if(path->AStar(from,to, firstC, secondC)){
 			followPath->ResetValues();
 		}

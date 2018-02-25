@@ -2,16 +2,9 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <Constants.h>
 
-static BulletEngine* instance = nullptr;
-
 BulletEngine* BulletEngine::GetInstance() {
-/*    if (instance == nullptr){
-		BulletEngine inst = BulletEngine();
-		instance = &inst;
-	}
-*/
-	if (instance == nullptr) instance = new BulletEngine();
-    return (instance);
+	static BulletEngine instance = BulletEngine();
+    return &instance;
 }
 
 BulletEngine::~BulletEngine(){
@@ -19,7 +12,6 @@ BulletEngine::~BulletEngine(){
 }
 
 BulletEngine::BulletEngine(){
-
 	m_broadphase = nullptr;
 	m_collisionConfiguration = nullptr;
 	m_dispatcher = nullptr;
