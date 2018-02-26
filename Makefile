@@ -1,17 +1,27 @@
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./src/TravelersOcularEngine/src/Common
+USER_FLAGS				=
+USER_FLAGS_C			=
+
+# DONT EDIT ---------------------------------------------------
+
+CPPFLAGS        	:= $(INCLUDE_FOLDERS)
+CXXFLAGS			:= -O3 -g -Wall -std=c++11 $(USER_FLAGS)
+CCFLAGS				:= -O3 -g -Wall $(USER_FLAGS_C)
+LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lsfml-window -lsfml-graphics -lsfml-system -lassimp
+
+
 ifeq ($(OS),Windows_NT)
-    Target				:= WizardsAndWarlocks.exe
-    CXXFLAGS			:= -O3 -ffast-math -Wall -std=c++11 -m64
-    CPPFLAGS        	:= -I./src/Includes -I/mingw64/include -I/mingw64/include/bullet -I./src/irrimgui/lib_includes/ -I./src/Engines/
-    LDFLAGS				:= -L/mingw64/lib -L./libs/Windows
-    LIBS 				:= -lopengl32 -lm -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lRakNet -lfmod64 -lfmodstudio64
+    Target				:= WizardsAndWarlocks.exe    
+    CPPFLAGS        	+= -I/mingw64/include -I/mingw64/include/bullet
+    LDFLAGS				:= -L/mingw64/lib
+    LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32 -lglew32 -lm
 	ICO 				:= assets/game-icon-res.rc
 	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else
     Target				:= WizardsAndWarlocks
-    CXXFLAGS			:= -O3 -g -Wall -std=c++11
-    CPPFLAGS        	:= -I/usr/include -I/usr/include/bullet -I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/
+    CPPFLAGS        	+= -I/usr/include -I/usr/include/bullet
     LDFLAGS				:= -L./libs/Linux
-    LIBS 				:= -lIrrlicht -lXxf86vm -lXext -lX11 -lXcursor -lGL -lBulletDynamics -lBulletCollision -lLinearMath -lraknet -lfmod -lfmodstudio
+    LIBS 				+= -lraknet -lfmod -lfmodstudio -lXxf86vm -lXext -lX11 -lXcursor -lGL -lGLEW
 endif
 
 BinPath 			:= ./bin
@@ -19,12 +29,14 @@ BuildPath 			:= ./obj
 
 SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
 SourcePath			:= $(shell find src -name '*.cpp')
+SourcePath			+= $(shell find src -name '*.c')
 
 CXX					:= clang++
+CC					:= clang
 
 EXECUTABLE 			:= $(BinPath)/$(Target)
-SRC 	   			:= $(wildcard $(SourcePath)/*.cpp)
-OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))
+OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))			# Subst src path by obj
+OBJ					:= $(patsubst src/%.c,obj/%.o,$(OBJ))					# Subst src path by obj
 
 # Assuming four folders to ignore
 GAMEOBJ				 = $(shell find src \( -path "src/Engines" \) -prune -o -name "*.cpp" -print)
@@ -41,9 +53,15 @@ all: prepare ico $(OBJ)
 	$(info ==============================================)	
 	$(info Compile OK)
 
+# Compile .cpp files
 obj/%.o: src/%.cpp
 	$(info Compiling-> $@)
 	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+# Compile .c files
+obj/%.o: src/%.c
+	$(info Compiling-> $@)
+	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c $< -o $@
 
 prepare:
 	$(info ==============================================)
