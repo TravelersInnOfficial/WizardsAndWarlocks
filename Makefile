@@ -1,4 +1,4 @@
-INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./src/TravelersOcularEngine/src/Common
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./src/Engines/TravelersOcularEngine/src/Common
 USER_FLAGS				=
 USER_FLAGS_C			=
 

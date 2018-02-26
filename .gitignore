@@ -19,4 +19,4 @@ WizardsAndWarlocks*
 src/.vscode
 
 # The graphic engine files
-src/TravelersOcularEngine
+src/Engines/TravelersOcularEngine
