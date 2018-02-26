@@ -16,6 +16,9 @@ public:
 	void AddPositionExplore(vector3df position);
 	void ChangeSecurityLevel(float value);
 
+	bool IntoSameRoom(vector3df pos);
+	bool IntoNextRoom(vector3df pos);
+
 	// GETTERS
 	int GetId();
 	bool GetExplored();

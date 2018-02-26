@@ -11,6 +11,9 @@ AIPlayer::AIPlayer():Player(false){
 	spellManager->AddHechizo(2, this, SPELL_WALL);
 	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
 
+	minCostPM = SpellManager::GetInstance()->GetMinCostPM(this);
+
+
 	behaviour = new BehaviourTree();
 	behaviour->SetPlayer(this);
 
@@ -278,6 +281,10 @@ bool AIPlayer::GetShootSpell(){
 
 bool AIPlayer::GetCastingSpell(){
 	return castingSpell;
+}
+
+float AIPlayer::GetMinCostPM(){
+	return minCostPM;
 }
 
 // ========================================================================================= //

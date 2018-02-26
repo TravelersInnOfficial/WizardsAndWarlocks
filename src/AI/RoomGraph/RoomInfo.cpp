@@ -26,6 +26,34 @@ void RoomInfo::AddPositionExplore(vector3df position){
 	m_statusExplored.push_back(false);
 }
 
+bool RoomInfo::IntoSameRoom(vector3df pos){
+	bool output = false;
+
+	bool insideX = (pos.X < m_firstSide.X && pos.X > m_secondSide.X) 
+					|| (pos.X > m_firstSide.X && pos.X < m_secondSide.X);
+	bool insideZ = (pos.Z < m_firstSide.Z && pos.Z > m_secondSide.Z) 
+					|| (pos.Z > m_firstSide.Z && pos.Z < m_secondSide.Z);
+
+	if(insideX && insideZ) output = true;
+
+	return output;
+}
+
+bool RoomInfo::IntoNextRoom(vector3df pos){
+	bool output = false;
+
+	int size = m_nextRooms.size();
+	for(int i=0; i<size; i++){
+		RoomInfo* info = m_nextRooms[i];
+		if(info->IntoSameRoom(pos)){
+			output = true;
+			break;
+		}
+	}
+
+	return output;
+}
+
 vector3df RoomInfo::WhereExplore(vector3df pos){
 	// Creamos la variable que vamos a devolver
 	vector3df output;
@@ -272,17 +300,10 @@ vector3df RoomInfo::GetEscapeRoomDifferentRoom(vector3df player, vector3df targe
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_nextRooms[i];
 
-
-		vector3df oneSide = info->GetFirstSide();
-		vector3df secondSide = info->GetSecondSide();
-
 		// Comprobamos que el player no se encuentre en esta habitacion
-		bool insideX = (target.X < oneSide.X && target.X > secondSide.X) 
-					|| (target.X > oneSide.X && target.X < secondSide.X);
-		bool insideZ = (target.Z < oneSide.Z && target.Z > secondSide.Z) 
-					|| (target.Z > oneSide.Z && target.Z < secondSide.Z);
+		bool same = info->IntoSameRoom(target);
 
-		if(!(insideX && insideZ)){
+		if(!same){
 		// Miramos la distancia del target a la habitacion
 			float currentLengthTarget = info->GetDistance(target);
 			if(currentLengthTarget>distance){
@@ -306,14 +327,11 @@ vector3df RoomInfo::GetEscapeRoomDifferentRoom(vector3df player, vector3df targe
 // Meter comparatiba de si el target esta en la misma habitacion
 vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
 	// Comprobamos si el target esta dentro de la misma habitacion que el player
-	bool insideX = (target.X < m_firstSide.X && target.X > m_secondSide.X) 
-					|| (target.X > m_firstSide.X && target.X < m_secondSide.X);
-	bool insideZ = (target.Z < m_firstSide.Z && target.Z > m_secondSide.Z) 
-					|| (target.Z > m_firstSide.Z && target.Z < m_secondSide.Z);
+	bool same = IntoSameRoom(target);
 
 	// Creamos el valor de output
 	vector3df output;
-	if(insideX && insideZ){
+	if(same){
 		output = GetEscapeRoomSameRoom(player, target);
 	}else{
 		output = GetEscapeRoomDifferentRoom(player, target);

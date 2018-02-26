@@ -27,6 +27,7 @@ public:
 	void ResetHechizo(Player* p);
 	
 	float GetUtility(int num, Player* p);
+	float GetMinCostPM(Player* p);
 	int GetNumSpells();
 	std::vector<Hechizo*> GetSpells(Player* player);
 

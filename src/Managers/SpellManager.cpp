@@ -3,6 +3,7 @@
 #include "EffectManager.h"
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"
+#include <limits>
 
 static SpellManager* instance = nullptr;
 
@@ -216,6 +217,24 @@ float SpellManager::GetUtility(int num, Player* p){
 		}
 	}
 	return 0;
+}
+
+float SpellManager::GetMinCostPM(Player* p){
+	float min = std::numeric_limits<float>::max();;
+
+	for(int i=0; i<numHechizos; i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			if(h != nullptr){
+				float cost = h->GetMP();
+				if(cost<min){
+					min = cost;
+				}
+			}
+		}
+	}
+
+	return min;
 }
 
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){

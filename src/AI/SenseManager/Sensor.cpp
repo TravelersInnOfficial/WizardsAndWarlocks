@@ -3,11 +3,11 @@
 #include "Signal.h"
 
 Sensor::Sensor(int _id, vector3df* pos, vector3df* ori, float thresh, Blackboard* inf){
-	id = _id;
-	position = pos;
-	orientation = ori;
-	information = inf;
-	threshold = thresh;
+	m_id = _id;
+	m_position = pos;
+	m_orientation = ori;
+	m_information = inf;
+	m_threshold = thresh;
 }
 
 Sensor::~Sensor(){
@@ -31,28 +31,32 @@ void Sensor::Notify(Signal* sig, float currentTime){
 
 	switch(type){
 		case AI_SIGHT:
-			information->SetSight(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 2000)*temporal); // Tiempo en milisegundos
+			m_information->SetSight(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 2000)*temporal); // Tiempo en milisegundos
 			break;
 		case AI_HEARING:
-			information->SetSound(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 5000)*temporal); // Tiempo en milisengundos
+			m_information->SetSound(sig->GetId(), sig->GetPointer(), sig->GetCode(), sig->GetKinematic(), (currentTime + 5000)*temporal); // Tiempo en milisengundos
 			break;
 	}
 }
 
+Blackboard* Sensor::GetBlackboard(){
+	return m_information;
+}
+
 vector3df Sensor::GetPosition(){
-	vector3df output(position->X, position->Y, position->Z);
+	vector3df output(m_position->X, m_position->Y, m_position->Z);
 	return output;
 }
 
 vector3df Sensor::GetOrientation(){
-	vector3df output(orientation->X, orientation->Y, orientation->Z);
+	vector3df output(m_orientation->X, m_orientation->Y, m_orientation->Z);
 	return output;
 }
 
 float Sensor::GetThreshold(){
-	return threshold;
+	return m_threshold;
 }
 
 int Sensor::GetId(){
-	return id;
+	return m_id;
 }

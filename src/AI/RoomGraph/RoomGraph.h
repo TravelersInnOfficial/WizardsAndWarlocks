@@ -19,8 +19,8 @@ public:
 	bool AddConnection(int first, int second);
 	void CopyGraph(RoomGraph* copyGraph);
 
-
 	void InitRoom(vector3df pos, float deltaTime);
+
 	// ACTUAL ROOMINFO
 	vector3df RoomPos();
 	bool RoomExplored();
@@ -28,6 +28,9 @@ public:
 	void UpdateExplore(vector3df pos);
 	vector3df GetFirstCorner();
 	vector3df GetSecondCorner();
+
+	bool IntoSameRoom(vector3df pos);
+	bool IntoNextRoom(vector3df pos);
 
 	// NEXT ROOM
 	RoomInfo* GetUnexploredRoom();

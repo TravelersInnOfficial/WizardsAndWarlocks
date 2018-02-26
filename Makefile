@@ -9,12 +9,11 @@ CXXFLAGS			:= -O3 -g -Wall -std=c++11 $(USER_FLAGS)
 CCFLAGS				:= -O3 -g -Wall $(USER_FLAGS_C)
 LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lsfml-window -lsfml-graphics -lsfml-system -lassimp
 
-
 ifeq ($(OS),Windows_NT)
     Target				:= WizardsAndWarlocks.exe    
     CPPFLAGS        	+= -I/mingw64/include -I/mingw64/include/bullet
-    LDFLAGS				:= -L/mingw64/lib
-    LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32 -lglew32 -lm
+    LDFLAGS				:= -L/mingw64/lib -L/mingw64/lib/SFML
+    LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32 -lglew32 -lm 
 	ICO 				:= assets/game-icon-res.rc
 	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else

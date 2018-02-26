@@ -267,7 +267,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 			if(h->GetClase()==EENUM_DOOR){
 				Door* door = (Door*)Object;
 				if(!door->GetOpenState()){
-					door->Interact(character);
+					character->SetController(ACTION_RAYCAST, PRESSED);
 					return true;
 				}
 			}
@@ -684,8 +684,12 @@ bool CheckPlayerAttack::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	if(character!=nullptr){
-		// if(Meter condicion para atacar)
-		bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+		float min = character->GetMinCostPM();
+		float MP = character->GetMP();
+		if(MP>min){
+			// if(Meter condicion para atacar)
+			bb->SetMasterAction(AI_TASK_SHOOT_SPELL);
+		}
 	}
 	return true;
 }
@@ -750,8 +754,15 @@ bool PlayerHearing::run(Blackboard* bb){
 
 	AIPlayer* character = bb->GetPlayer();
 	if(character != nullptr){
-		bb->SetMasterAction(AI_TASK_DEFAULT);
-		bb->SetMasterMovement(AI_MOVE_FACE);
+		RoomGraph* room = bb->GetRoomGraph();
+		if(room!=nullptr){
+			bb->SetMasterAction(AI_TASK_TRAVEL);
+			bb->SetMasterMovement(AI_MOVE_TARGETPATH);
+		}else{
+			bb->SetMasterAction(AI_TASK_DEFAULT);
+			bb->SetMasterMovement(AI_MOVE_FACE);
+		}
+
 		return true;
 	}
 	return false;

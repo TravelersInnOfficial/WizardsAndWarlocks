@@ -231,3 +231,14 @@ vector3df RoomGraph::GetEscapeRoom(vector3df player, vector3df target){
 	return output;
 }
 
+bool RoomGraph::IntoSameRoom(vector3df pos){
+	bool output = false;
+	if(m_actualRoom != nullptr) output = m_actualRoom->IntoSameRoom(pos);
+	return output;
+}
+
+bool RoomGraph::IntoNextRoom(vector3df pos){
+	bool output = false;
+	if(m_actualRoom != nullptr) output = m_actualRoom->IntoNextRoom(pos);
+	return output;
+}

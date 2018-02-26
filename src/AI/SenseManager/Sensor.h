@@ -17,16 +17,17 @@ public:
 	~Sensor();
 	bool DetectsModality(Modality* mod);
 	void Notify(Signal* sig, float currentTime);
+	Blackboard* GetBlackboard();
 	vector3df GetPosition();
 	vector3df GetOrientation();
 	float GetThreshold();
 	int GetId();
 private:
-	vector3df* position;
-	vector3df* orientation;
-	Blackboard* information;
-	int id;
-	float threshold;
+	vector3df* 	m_position;
+	vector3df* 	m_orientation;
+	Blackboard* m_information;
+	int 		m_id;
+	float 		m_threshold;
 };
 
 #endif

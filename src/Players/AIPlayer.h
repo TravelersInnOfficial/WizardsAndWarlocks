@@ -40,6 +40,7 @@ public:
 	int GetCurrentSpell();
 	bool GetShootSpell();
 	bool GetCastingSpell();
+	float GetMinCostPM();
 
 	// Setters
 	void SetCurrentSpell(int num);
@@ -80,6 +81,7 @@ private:
 	// ShootSpells
 	bool				shootSpell; 	// Ha conseguido lanzar el hechizo en este frame? Si/No
 	bool 				castingSpell;	// Esta lanzando un hechizo? Si/No
+	float 				minCostPM;		// El coste minimo de los hechizos de la IA
 };
 
 

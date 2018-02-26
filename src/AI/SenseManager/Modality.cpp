@@ -4,6 +4,7 @@
 #include <PhysicsEngine/BulletEngine.h>
 #include "./../../Entidad.h"
 #include "./../../Players/Player.h"
+#include "./../RoomGraph/RoomGraph.h"
 
 Modality::Modality(Modality* mod){
 	maximumRange = mod->GetMaximumRange();
@@ -128,5 +129,22 @@ HearingModality::HearingModality(float maxR, float att, float inSpeed):Modality(
 HearingModality::~HearingModality(){}
 
 bool HearingModality::ExtraChecks(Signal* sig, Sensor* sr){
-	return true;
+	bool output = false;
+
+	// Tenemos que comprobar que el sonido provenga de la misma habitacion o en todo caso de una contigua
+	Blackboard* info = sr->GetBlackboard();
+	RoomGraph* room = info->GetRoomGraph(); 
+	// Miramos si tiene cargados un blackboard y un RoomGraph
+	if(info != nullptr && room != nullptr){
+		// Compruebo si se encuentra en la misma habitacion que el sensor
+		output = room->IntoSameRoom(sig->GetPosition());
+		// En el caso de que no este en la misma habitacion probamos si esta en una habitacion contigua
+		if(!output) output = room->IntoNextRoom(sig->GetPosition());
+	// En el caso de no tener cargados ninguno de los dos ( LOBBY ), lo damos por valido el sonido
+	}else{
+		output = true;
+	}
+
+
+	return output;
 }
