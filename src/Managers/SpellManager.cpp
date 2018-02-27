@@ -247,8 +247,8 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_FIRE:		// Hechizo bola fuego
-			//h = new DragonBreath(-20, .5f, 2.5f, 100, 100);
-			h = new DragonBreath(-0, 0.0f, 0.2f, 100, 100);
+			h = new DragonBreath(-20, .5f, 2.5f, 100, 100);
+			//h = new DragonBreath(-0, 0.0f, 0.2f, 100, 100);
 		break;
 		
 		case SPELL_THUNDER:		// Hechizo paralizador
