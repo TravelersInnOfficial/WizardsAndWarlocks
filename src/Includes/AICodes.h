@@ -39,13 +39,14 @@ enum AI_code{
 	AI_MOVE_TARGETPATH	= 0x1F, // (Puntero) SubArbol de decisiones de movimiento hacia el target con path
 	AI_MOVE_FOUNTAIN	= 0x20, // (Puntero) SubArbol de decisiones de movimiento para beber de una fuente
 	AI_MOVE_FACE		= 0x21, // (Puntero) SubArbol de decisiones de movimiento para mirar a la cara
-	AI_MOVE_SPELL00 	= 0x22,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
-	AI_MOVE_SPELL01 	= 0x23,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
-	AI_MOVE_SPELL02 	= 0x24, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
-	AI_MOVE_SPELL03 	= 0x25, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
+	AI_MOVE_AVOID		= 0x22, // (Puntero) SubArbol de decisiones de movimiento para esquivar obstaculo (mirando al objetivo)
+	AI_MOVE_SPELL00 	= 0x23,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 00
+	AI_MOVE_SPELL01 	= 0x24,	// (Puntero) SubArbol de decisiones de movimiento del hechizo 01
+	AI_MOVE_SPELL02 	= 0x25, // (Puntero) SubArbol de decisiones de movimiento del hechizo 02
+	AI_MOVE_SPELL03 	= 0x26, // (Puntero) SubArbol de decisiones de movimiento del hechizo 03
 	// VARIABLES DE BLACKBOARD
-	AI_TARGET			= 0x26,	// (Puntero) Target de la IA (Kinematic Object)
-	AI_DELTA			= 0x27	// (Float) DeltaTime del frame actual
+	AI_TARGET			= 0x27,	// (Puntero) Target de la IA (Kinematic Object)
+	AI_DELTA			= 0x28	// (Float) DeltaTime del frame actual
 };
 
 enum AI_modalities

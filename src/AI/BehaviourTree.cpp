@@ -86,6 +86,8 @@ void BehaviourTree::SetPlayer(AIPlayer* p){
 //
 // ====================================================================================== //
 
+// ObstacleAvoidanceTask
+
 void BehaviourTree::CreateReceive(){
 
     Selector* sl_checkSightPlayer = new Selector();          // Selector para las comprobacion de vision de player
@@ -134,6 +136,8 @@ void BehaviourTree::CreateMovement(){
 void BehaviourTree::PrepareSubTrees(){
     // No movimiento
     CreateNoMove();
+    // Movimiento esquivando
+    CreateMoveAvoid();
     // Tarea por defecto
     CreateTaskDefault();
     // Encarar target
@@ -386,4 +390,13 @@ void BehaviourTree::CreateMoveInteract(){
 
     informacion->SetPuntero(AI_MOVE_INTERACT, sc_moveTarget);
     tasks.push_back(sc_moveTarget);
+}
+
+void BehaviourTree::CreateMoveAvoid(){
+    Selector* sl_moveAvoid = new Selector();
+    sl_moveAvoid->addChild(new ObstacleAvoidanceTask());
+    sl_moveAvoid->addChild(new TargetPath());
+
+    informacion->SetPuntero(AI_MOVE_AVOID, sl_moveAvoid);
+    tasks.push_back(sl_moveAvoid);
 }

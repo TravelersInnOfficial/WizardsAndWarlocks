@@ -253,7 +253,8 @@ bool CheckDirectVision::run(Blackboard* bb){
 		void* object = f_engine->Raycast(cPos, tPos, collisionFilter);
 
 		if(object != nullptr){
-			std::cout<<"Mmmmm....."<<std::endl;
+			bb->SetMasterAction(AI_TASK_DEFAULT);
+			bb->SetMasterMovement(AI_MOVE_AVOID);
 			return true;
 		}
 	}
@@ -685,12 +686,17 @@ bool ObstacleAvoidanceTask::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"ObstacleAvoidanceTask\n";
 
 	AIPlayer* character = bb->GetPlayer();
-	if(character != nullptr){
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(character != nullptr && target != nullptr){
 		Kinematic cKin = character->GetKinematic();
+		Kinematic tKin = target->kinematic;
 
 		SteeringOutput steering = character->GetObstacleAvoid(cKin);
 		if(steering.linear.length()!=0){
-			
+			character->SetForceToMove(steering.linear);
+			steering = character->GetFace(cKin, tKin);
+			character->SetForceToRotate(steering.angular);
+			return true;
 		}
 	}
 

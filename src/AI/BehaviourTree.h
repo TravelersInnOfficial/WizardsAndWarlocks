@@ -62,6 +62,7 @@ private:
     void PrepareSubTrees();
 
     void CreateMoveDefault();   // SubArbol de movimiento por defecto
+    void CreateMoveAvoid();     // SubArbol de movimiento para esquivar
     void CreateTaskDefault();   // SubArbol de tareas por defecto
     void CreateMoveFace();      // SubArbol de movimiento para mirar
     void CreateNoMove();        // SubArbol de no movimiento
