@@ -31,16 +31,15 @@ bool MasterAction::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterAction\n";
 
 	int number = (int)(bb->masterAction);
-
 	if(number != lastTask){
 		lastTask = number;
-		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
+		Task* t  = (Task*)bb->GetPuntero((AI_code)lastTask);
 		setChild(t);
 	}
-	if(child!=nullptr){
+
+	if(child != nullptr){
 		child->run(bb);
 	}
-	
 	return true;
 }
 
@@ -60,13 +59,13 @@ bool MasterMovement::run(Blackboard* bb){
 	int number = (int)(bb->masterMovement);
 	if(number != lastTask){
 		lastTask = number;
-		Task* t = (Task*)bb->GetPuntero((AI_code)lastTask);
+		Task* t  = (Task*)bb->GetPuntero((AI_code)lastTask);
 		setChild(t);
 	}
-	if(child!=nullptr){
+
+	if(child != nullptr){
 		child->run(bb);
 	}
-
 	return true;
 }
 
@@ -113,11 +112,11 @@ bool NoMove::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"NoMove\n";
 
 	AIPlayer* character = bb->GetPlayer();
-
-	SteeringOutput steering;
-	character->SetForceToMove(steering.linear);
-	character->SetForceToRotate(steering.angular);
-	
+	if(character != nullptr){
+		SteeringOutput steering;
+		character->SetForceToMove(steering.linear);
+		character->SetForceToRotate(steering.angular);
+	}
 	return true;
 }
 
@@ -228,6 +227,35 @@ bool MoveEscape::run(Blackboard* bb){
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);
 		return true;
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	CHECK DIRECT VISION
+//
+// ================================================================================================= //
+
+CheckDirectVision::CheckDirectVision(){}
+
+bool CheckDirectVision::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"CheckDirectVision\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	Sense_struct* target = (Sense_struct*)bb->GetPuntero(AI_TARGET);
+	if(character != nullptr && target != nullptr){
+		vector3df cPos = character->GetPos();
+		vector3df tPos = target->kinematic.position;
+
+		int collisionFilter = C_WALL | C_FOUNTAIN | C_DOOR | C_GRAIL;
+		BulletEngine* f_engine = BulletEngine::GetInstance();
+		void* object = f_engine->Raycast(cPos, tPos, collisionFilter);
+
+		if(object != nullptr){
+			std::cout<<"Mmmmm....."<<std::endl;
+			return true;
+		}
 	}
 	return false;
 }
@@ -642,6 +670,30 @@ bool CheckDistance::run(Blackboard* bb){
         	return true;
         }
 	}
+	return false;
+}
+
+// ================================================================================================= //
+//
+//	OBSTACLE AVOIDANCE TASK
+//
+// ================================================================================================= //
+
+ObstacleAvoidanceTask::ObstacleAvoidanceTask(){}
+
+bool ObstacleAvoidanceTask::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"ObstacleAvoidanceTask\n";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character != nullptr){
+		Kinematic cKin = character->GetKinematic();
+
+		SteeringOutput steering = character->GetObstacleAvoid(cKin);
+		if(steering.linear.length()!=0){
+			
+		}
+	}
+
 	return false;
 }
 

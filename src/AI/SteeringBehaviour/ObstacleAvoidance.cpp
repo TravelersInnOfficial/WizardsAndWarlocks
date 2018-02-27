@@ -69,5 +69,6 @@ SteeringOutput ObstacleAvoidance::GetSteering(Kinematic cKin){
 	}
 	position_final = position_final / goodPoints;
 	tKin.position = position_final;
+
 	return Seek::GetSteering(cKin, tKin);
 }

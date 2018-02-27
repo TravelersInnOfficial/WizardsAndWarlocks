@@ -90,6 +90,7 @@ void BehaviourTree::CreateReceive(){
 
     Selector* sl_checkSightPlayer = new Selector();          // Selector para las comprobacion de vision de player
     sl_checkSightPlayer->addChild(new CheckPlayerEscape());
+    sl_checkSightPlayer->addChild(new CheckDirectVision());
     sl_checkSightPlayer->addChild(new CheckPlayerAttack());
 
     Secuencia* sc_seePlayers = new Secuencia();         // Secuencia de comprobaciones por vision de player
@@ -193,7 +194,6 @@ void BehaviourTree::PrepareSubTrees(){
 
 void BehaviourTree::CreateShootSpell(){
     Secuencia* sc_attack = new Secuencia();
-    sc_attack->addChild(new CheckPlayerSight());   
     sc_attack->addChild(new SpellSecuencia());  
 
     Decorador* d_attack = new ReleaseSpell();
@@ -231,7 +231,7 @@ void BehaviourTree::CreateMoveDefault(){
 void BehaviourTree::CreateMoveSpell(){
     Secuencia* sc_dontMove = new Secuencia();
     sc_dontMove->addChild(new CheckDistance(9.0f));
-    sc_dontMove->addChild(new NoMove());
+    sc_dontMove->addChild(new FaceObject());
 
     Secuencia* sc_moveToTarget = new Secuencia();
     sc_moveToTarget->addChild(new CheckDistance(8.0f));

@@ -236,7 +236,8 @@ void AIPlayer::Steering2Controller(float deltaTime){
 	SetAngularForce(vector3df( 0 ,forceToRotate.Y, 0));
 
 	// CAMBIAMOS LA ROTACION EN X DE LA IA, MIRAR ARRIBA/ABAJO
-	elevation += forceToRotate.X * deltaTime;
+	float changeElevation = (forceToRotate.X) * deltaTime;
+	elevation += changeElevation;
 }
 
 // ========================================================================================= //

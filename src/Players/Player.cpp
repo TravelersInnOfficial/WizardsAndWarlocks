@@ -880,7 +880,7 @@ vector3df Player::GetVelocity(){
 
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
-	cKin.position = GetHeadPos();
+	cKin.position = m_position;
 	cKin.orientation =  vector2df(GetRot());
    	cKin.velocity = GetVelocity();
     cKin.rotation = vector2df(GetAngularVelocity());
