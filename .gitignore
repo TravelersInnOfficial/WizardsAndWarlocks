@@ -1,9 +1,3 @@
-# Compiled Object files
-obj/*
-
-# Binary of the game
-WizardsAndWarlocks*
-
 # Compiled Dynamic libraries
 #*.so
 *.dylib
@@ -14,6 +8,15 @@ WizardsAndWarlocks*
 *.la
 *.a
 *.lib
+
+# Compiled Object files
+obj/*
+
+# Binary of the game
+WizardsAndWarlocks*
+
+# Imgui init
+bin/imgui.ini
 
 # .vs in src
 src/.vscode

@@ -1,4 +1,5 @@
-INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./src/Engines/TravelersOcularEngine/src/Common
+GESRCPATH				=src/Engines/TravelersOcularEngine/src
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./$(GESRCPATH)/Common
 USER_FLAGS				=
 USER_FLAGS_C			=
 
@@ -27,8 +28,8 @@ BinPath 			:= ./bin
 BuildPath 			:= ./obj
 
 SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
-SourcePath			:= $(shell find src -name '*.cpp')
-SourcePath			+= $(shell find src -name '*.c')
+SourcePath			:= $(shell find src -name '*.c')
+SourcePath			+= $(shell find src -name '*.cpp' -not -path '$(GESRCPATH)/main.cpp')
 
 CXX					:= clang++
 CC					:= clang
