@@ -12,7 +12,7 @@ FireProjectile::FireProjectile(vector3df pos, vector3df dir, int emi, float dama
     20 * damageMult,        // damage of the projectile
     20.0f,                  // max distance the projectile can travel
     "./../assets/textures/projectils/SPELL_FIRE.png",        // texture of the projectile
-    "event:/Spells/Projectiles/Dragon Breath")          //Sound event
+    "event:/Spells/Projectiles/Dragon Breath")               //Sound event
 {
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
