@@ -14,8 +14,7 @@ ifeq ($(OS),Windows_NT)
     Target				:= WizardsAndWarlocks.exe    
     CPPFLAGS        	+= -I/mingw64/include -I/mingw64/include/bullet
     LDFLAGS				:= -L/mingw64/lib -L/mingw64/lib/SFML
-    LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32  -lm 
-#-lglew32
+    LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32 -lglew32 -lm 
 	ICO 				:= assets/game-icon-res.rc
 	ICOOBJ				:= $(patsubst assets/%.rc,obj/%.o,$(ICO))
 else

@@ -130,8 +130,8 @@ void WatcherCamera::UpdateAngles(){
 	lastPos = mousePos;
 	if(lastPos.X<=0 || lastPos.Y<=0 || lastPos.X>=screenW || lastPos.Y>=screenH){
 		lastPos = vector2di(screenW/2, screenH/2);
+		engine->SetCursorPosition(lastPos);
 	}
-	engine->SetCursorPosition(lastPos);
 
 	// Update the Y angle
 	int yDiff = dirMouse.Y;
