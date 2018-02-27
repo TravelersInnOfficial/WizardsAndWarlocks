@@ -597,7 +597,15 @@ bool Player::ShootSpell(){
 	}
 
 	SetController(ACTION_RAYCAST, RELEASED);
-	return SpellManager::GetInstance()->LanzarHechizo(currentSpell,this);
+
+	bool shoot = SpellManager::GetInstance()->LanzarHechizo(currentSpell, this);
+	// En el caso de que se consiga lanzar el hechizo se enviara una senyal de sonido a la IA
+	if(shoot){
+		RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
+		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
+	}
+
+	return shoot;
 }
 
 void Player::ResetAllSpells(){
