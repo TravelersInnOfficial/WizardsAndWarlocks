@@ -1,5 +1,5 @@
-GESRCPATH				=src/Engines/TravelersOcularEngine/src
-INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./$(GESRCPATH)/Common
+GESRCPATH				=src/Engines/TravelersOcularEngine
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/irrimgui/lib_includes/ -I./src/Engines/ -I./$(GESRCPATH)/src/Common
 USER_FLAGS				=
 USER_FLAGS_C			=
 
@@ -8,8 +8,7 @@ USER_FLAGS_C			=
 CPPFLAGS        	:= $(INCLUDE_FOLDERS)
 CXXFLAGS			:= -O3 -g -Wall -std=c++11 $(USER_FLAGS)
 CCFLAGS				:= -O3 -g -Wall $(USER_FLAGS_C)
-LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath 
-#-lsfml-window -lsfml-graphics -lsfml-system -lassimp
+LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lsfml-window -lsfml-graphics -lsfml-system -lassimp
 
 ifeq ($(OS),Windows_NT)
     Target				:= WizardsAndWarlocks.exe    
@@ -29,9 +28,10 @@ endif
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
 
-SOURCE_DIRS			:= $(shell find ./src -type d -not -path "./src/.vscode" -not -path "./src")
+SOURCE_DIRS			:= $(shell find "./$(GESRCPATH)/src" -type d)
+SOURCE_DIRS			+= $(shell find ./src -type d -not -path "./src" -not -path "./$(GESRCPATH)/*")
 SourcePath			:= $(shell find src -name '*.c')
-SourcePath			+= $(shell find src -name '*.cpp' -not -path '$(GESRCPATH)/main.cpp')
+SourcePath			+= $(shell find src -name '*.cpp' -not -path '$(GESRCPATH)/src/main.cpp')
 
 CXX					:= clang++
 CC					:= clang
