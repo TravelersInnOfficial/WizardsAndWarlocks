@@ -99,7 +99,6 @@ private:
 // WEAK_MADNESS
 class Madness: public Effect{
 public:
-	~Madness();
 	Madness(float time);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);

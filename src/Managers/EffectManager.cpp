@@ -46,6 +46,8 @@ void EffectManager::AddEffect(Player* p, EFFECTCODE EFFECT_CODE){
 	if(it == effects.end()){
 		effects[p] = new std::vector<Effect*>();
 	}
+
+	// Comprobamos que el jugador no tenga ya puesto el efecto
 	std::vector<Effect*>* currentV = effects.at(p);
 	int size = currentV->size();
 	for(int i=0; i<size; i++){

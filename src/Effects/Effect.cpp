@@ -16,9 +16,9 @@ Effect::Effect(float time, EFFECTCODE cod){
 
 Effect::~Effect(){
 	if (effectEvent != nullptr) {
-	 	if (effectEvent->isPlaying()) effectEvent->stop();
-		 effectEvent->release();
-		 delete effectEvent;
+	 	if(effectEvent->isPlaying()) effectEvent->stop();
+		effectEvent->release();
+		delete effectEvent;
 	}
 }
 
@@ -87,7 +87,7 @@ EFFECTCODE Effect::getCode(){
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
 void Effect::createSoundEvent() {
-
+	effectEvent = nullptr;
 }
 
 void Effect::playEffectEvent() {

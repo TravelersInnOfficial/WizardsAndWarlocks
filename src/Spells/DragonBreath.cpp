@@ -26,9 +26,9 @@ void DragonBreath::Lanzar(Player* p){
 	pos.Y = pos.Y + sin(rot.X)*max;
 	pos.Z = pos.Z + cos(rot.Y)*cos(rot.X)*max;
 
-	BulletManager* bullman = BulletManager::GetInstance();
+	BulletManager* bulletMananager = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
-	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_FIRE);
+	bulletMananager->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_FIRE);
 	
 	playSoundEvent(voiceEvent, pos); //Play voice event
 	playSoundEvent(shotEvent, pos); //Play shot event

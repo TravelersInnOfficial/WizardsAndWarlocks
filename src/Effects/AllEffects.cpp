@@ -158,10 +158,6 @@ void Silenced::createSoundEvent() {
 //================================================================
 // MADNESS
 //================================================================
-Madness::~Madness(){
-	
-}
-
 Madness::Madness(float time):Effect(time, WEAK_MADNESS){
 	actions.push_back(ACTION_MOVE_UP);
 	actions.push_back(ACTION_MOVE_DOWN);
