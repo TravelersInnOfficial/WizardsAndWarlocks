@@ -314,21 +314,6 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 	return body;
 }
 
-void GraphicEngine::setAnimationFlyStraight(GBody* body, vector3df initialPos, vector3df finalPos, float time, bool loop, bool pingpong){
-	irr::scene::ISceneNodeAnimator* anim = privateSManager->createFlyStraightAnimator(
-		irr::core::vector3df(initialPos.X, initialPos.Y, initialPos.Z),
-		irr::core::vector3df(  finalPos.X,   finalPos.Y,   finalPos.Z),
-		time,
-		loop,
-		pingpong);
-
-	if (anim)
-	{
-		body->privateNode->addAnimator(anim);
-		anim->drop();
-	}
-}
-
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 
 	irr::SKeyMap keyMap[4];
@@ -440,43 +425,6 @@ void GraphicEngine::addEditBox(vector4di p, std::wstring text, int id, irr::gui:
 	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
 }
 
-irr::scene::ITriangleSelector* GraphicEngine::AddTriangleSelector(irr::scene::ISceneNode* node){
-	irr::scene::ITriangleSelector* selector = privateSManager->createTriangleSelectorFromBoundingBox(node);
-	return selector;
-}
-
-std::map<int,std::vector<vector3df>> GraphicEngine::Raycast(vector3df Start, vector3df End){
-	std::map<int,std::vector<vector3df>> NodePointData;
-	std::vector<vector3df> PointData;
-
-	irr::core::vector3df point;
-	irr::core::triangle3df triangle;
-	irr::scene::ISceneNode *node = 0;
-	irr::scene::ISceneCollisionManager* collisionManager = privateSManager->getSceneCollisionManager();
-	irr::scene::ITriangleSelector* selector = 0;
-
-	const irr::core::line3d<irr::f32> ray(Start.X,Start.Y,Start.Z,End.X,End.Y,End.Z);
-
-	if(collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle)){
-		node = collisionManager->getSceneNodeAndCollisionPointFromRay(ray,point,triangle);
-		selector = node->getTriangleSelector();
-	}
-	if(collisionManager->getCollisionPoint(ray,selector,point,triangle,node)){
-		irr::core::vector3df triangleN = triangle.getNormal().getHorizontalAngle();
-		//irr::core::vector3df triangleN = triangle.getNormal();
-		vector3df collisionPoint(point.X,point.Y,point.Z);
-		vector3df normalVector(triangleN.X, triangleN.Y, triangleN.Z);
-
-		int nodeID = node->getID();
-		PointData.push_back(normalVector);
-		PointData.push_back(collisionPoint);
-
-		NodePointData.insert(std::pair<int,std::vector<vector3df>>(nodeID, PointData));
-	}
-
-	return NodePointData;
-}
-
 void GraphicEngine::SetCursorPosition(vector2di cursor){
 	privateDevice->getCursorControl()->setPosition(irr::core::vector2di(cursor.X, cursor.Y));
 }
@@ -519,27 +467,6 @@ keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
 
 void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
 	privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
-}
-
-
-void GraphicEngine::Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal){
-	std::map<int,std::vector<vector3df>> NodePointData = GraphicEngine::getInstance()->Raycast(Start,End);
-
-	std::map<int,std::vector<vector3df>>::iterator it = NodePointData.begin();
-	for(; it != NodePointData.end(); ++it){
-		std::vector<vector3df> PointData = it->second;
-		std::vector<vector3df>::iterator pointIt = PointData.begin();
-		for (; pointIt != PointData.end(); ++pointIt){
-			vector3df p = PointData.at(0);
-			normal->X = p.X;
-			normal->Y = p.Y;
-			normal->Z = p.Z;
-			p = PointData.at(1);
-			point->X = p.X;
-			point->Y = p.Y;
-			point->Z = p.Z;
-		}
-	}
 }
 
 irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){

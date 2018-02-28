@@ -1,10 +1,10 @@
 #include "MenuManager.h"
-#include "./../Players/Player.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
-#include "./../Managers/TrapManager.h"
 #include <TrapCodes.h>
 #include <GUIEngine/GUIEngine.h>
+#include "GraphicEngine.h"
+#include <MenusHeaders.h>
 
 MenuManager* MenuManager::instance = nullptr;
 
@@ -125,7 +125,7 @@ void MenuManager::CreateNetDebug(){
 }
 
 void MenuManager::UpdateNetDebug(){
-
+ 
 	std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers();
 
 	if(netDebugWindow != nullptr){

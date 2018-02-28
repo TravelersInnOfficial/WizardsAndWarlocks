@@ -176,22 +176,6 @@ public:
     GBody* addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale = vector3df(1,1,1));
 
     /**
-     * Creates a fly straight animator, which lets the attached scene node fly or move along a line between two points
-     * body: pointer to body to set animation
-     * initialPos: Start point of the line
-     * finalPos: End point of the line
-     * time: Time in milli seconds how long the node should need to move
-     * loop: If set to false, the node stops when the end point is reached
-     * pinpong: Flag to set whether the animator should fly back from back to start again
-    */
-    void setAnimationFlyStraight(GBody* body,
-        vector3df initialPos, 
-        vector3df finalPos, 
-        float time, 
-        bool loop = true, 
-        bool pingpong = true);
-
-    /**
      * @brief Adds a camera scene node with an animator appropriate for FPS.
      * 
      * @param rotateSpeed: Speed in degress with which the camera is rotated
@@ -229,19 +213,6 @@ public:
      * Reads a GUI EditBox from the reciever
     */
     std::string ReadText(MenuOption id);
-
-    /**
-     * Returns a triangle selector for applying to a node
-     * */
-    irr::scene::ITriangleSelector* AddTriangleSelector(irr::scene::ISceneNode*);
-
-    /**
-     * Detects Irrlicht collisions with node triangles. 
-     * Returns:
-     *      - the node ID
-     *      - vector(raycast collision point, normal vector of the triangle hitted)
-     */
-    std::map<int,std::vector<vector3df>> Raycast(vector3df, vector3df);
 
     /**
      * @brief Returns mouse position in the screen
@@ -292,8 +263,6 @@ public:
     keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
-
-    void Raycast(vector3df Start, vector3df End, vector3df* point, vector3df* normal);
 
     irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 

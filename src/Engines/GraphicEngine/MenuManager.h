@@ -1,16 +1,16 @@
 #ifndef MENUMANAGER_H
 #define MENUMANAGER_H
 
-#include <iostream>
+#include <string>
 #include <vector>
 #include <Menus.h>
 #include <vector2d.h>
-#include "GraphicEngine.h"
-
 #include <Alliance.h>
-#include <MenusHeaders.h>
 
 class Player;
+class Menu;
+class GraphicEngine;
+namespace irr{ namespace gui{ class IGUIWindow; } }
 
 class MenuManager{
 public:

@@ -12,7 +12,6 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
         graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
         graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
         graphBody->setAutomaticCulling();
-        graphBody->setTriangleSelector();
 
     }else{
         graphBody = engine->addCube2Scene(TPosition, TRotation, TScale);

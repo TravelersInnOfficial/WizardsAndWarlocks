@@ -25,11 +25,6 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
     privateNode->setMaterialType((irr::video::E_MATERIAL_TYPE)type);
 }
 
-void GBody::setTriangleSelector(){
-	// POSIBLE LEAK
-    privateNode->setTriangleSelector(GraphicEngine::getInstance()->AddTriangleSelector(privateNode));
-}
-
 void GBody::Remove(){
     privateNode->remove();
 }

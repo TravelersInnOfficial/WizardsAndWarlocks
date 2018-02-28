@@ -89,26 +89,20 @@ bool TrapManager::DeployTrap(TrapEnum type,vector3df Start, vector3df End, int p
 	bool toRet = false;
 	vector3df point(0,0,0);
 	vector3df normal(0,0,0);
-	GraphicEngine::getInstance()->Raycast(Start,End, &point, &normal);
+	BulletEngine::GetInstance()->Raycast(Start, End, &point, &normal);
 
 	// Paredes
-	if(!(normal.X == 0 && normal.Y != 0 && normal.Z == 0)
-	&& !(normal.X == 0 && normal.Y == 0 && normal.Z == 0)
-	&& !(normal.X == 90 && normal.Y == 0 && normal.Z == 0)
-	&& (normal.Y >=0 && normal.Y <=180)
-	){
-		Trap* myTrap = AddTrap(point,normal,type);
-		toRet = true;
-		
-		NetworkEngine* n_engine = NetworkEngine::GetInstance();
-		if(n_engine->IsServerInit()){
-			Server* server = n_engine->GetServer();
-			if(server != nullptr){
-				myTrap->SetTrapId(lastTrapId);
-				Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
-				int netPlayerId = player->GetNetworkObject()->GetObjId();
-				server->SetTrap(point, normal, netPlayerId, lastTrapId++);
-			}
+	Trap* myTrap = AddTrap(point,normal,type);
+	toRet = true;
+	
+	NetworkEngine* n_engine = NetworkEngine::GetInstance();
+	if(n_engine->IsServerInit()){
+		Server* server = n_engine->GetServer();
+		if(server != nullptr){
+			myTrap->SetTrapId(lastTrapId);
+			Player* player = PlayerManager::GetInstance()->GetPlayerFromID(playerId);
+			int netPlayerId = player->GetNetworkObject()->GetObjId();
+			server->SetTrap(point, normal, netPlayerId, lastTrapId++);
 		}
 	}
 
