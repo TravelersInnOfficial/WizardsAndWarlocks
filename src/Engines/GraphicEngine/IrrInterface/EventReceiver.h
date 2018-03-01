@@ -1,5 +1,4 @@
 #include <iostream>
-#include "./irrlicht/irrlicht.h"
 #include <KeyStates.h>
 
 class EventReceiver : public irr::IEventReceiver {

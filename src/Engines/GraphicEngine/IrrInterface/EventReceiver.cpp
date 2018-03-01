@@ -1,5 +1,5 @@
 #include "EventReceiver.h"
-#include "Keycodes.h"
+#include <Keycodes.h>
 
 EventReceiver::EventReceiver() {
 	InitReceiver();

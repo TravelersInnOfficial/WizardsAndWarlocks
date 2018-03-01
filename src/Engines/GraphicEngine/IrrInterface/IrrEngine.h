@@ -2,9 +2,9 @@
 #define IRRENGINE_H
 
 #include <irrlicht/irrlicht.h>
-#include "GBody.h"
-#include "GCamera.h"
-#include "GEntity.h"
+#include "IrrGBody.h"
+#include "IrrGCamera.h"
+#include "IrrGEntity.h"
 #include "EventReceiver.h"
 #include "MenuReceiver.h"
 #include <Keycodes.h>
@@ -19,8 +19,8 @@
 class IrrEngine : public GraphicEngine{
     friend class MenuManager;
     friend class GUIEngine;
-    friend class GEntity;
-    friend class GBody;
+    friend class IrrGEntity;
+    friend class IrrGBody;
     
 public:
     /// DEVICE FUNCTIONS
