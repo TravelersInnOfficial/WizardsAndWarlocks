@@ -1,6 +1,8 @@
 #include "Camera.h"
 
-Camera::Camera(){}
+Camera::Camera(){
+	m_working = true;
+}
 
 Camera::~Camera(){
 	// La camara la elimina el propio motor grafico
@@ -36,5 +38,8 @@ void Camera::SetRotation(vector3df rotation){
 vector3df Camera::GetRotation(){
 	vector3df rotation = p_Camera->getRotation();
 	return rotation;
-	
+}
+
+void Camera::SetWorking(bool work){
+	m_working = work;
 }

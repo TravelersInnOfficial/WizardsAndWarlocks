@@ -19,10 +19,13 @@ public:
     void SetRotation(vector3df rotation);
     vector3df GetRotation();
 
+    virtual void SetWorking(bool wor) = 0;
+
     virtual void UpdateCamera(vector3df target) = 0;
 
 protected:
     GCamera*    p_Camera;
+    bool        m_working;
 };
 
 
