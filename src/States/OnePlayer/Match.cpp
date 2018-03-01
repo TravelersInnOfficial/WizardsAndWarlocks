@@ -92,6 +92,7 @@ void Match::CheckIfWon(){
 
 			g_engine->ToggleCameraMovement(false);
 			g_engine->ToggleMenu(true);
+			((HumanPlayer*)playerOne)->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, whosWon);
 		}
 	}

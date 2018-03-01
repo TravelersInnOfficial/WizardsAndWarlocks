@@ -19,9 +19,9 @@ FPSCamera::~FPSCamera(){
 }
 
 void FPSCamera::UpdateCamera(vector3df position){
+    vector3df rotation = p_Camera->getRotation();
+	p_Camera->setPosition(position);
 	if(m_working){
-    	vector3df rotation = p_Camera->getRotation();
-		p_Camera->setPosition(position);
 		vector3df target = position;
 		float max = 1;
 		target.X = target.X + sin(rotation.Y)*cos(rotation.X)*max;
@@ -30,9 +30,9 @@ void FPSCamera::UpdateCamera(vector3df position){
 	
 		p_Camera->setTarget(target);
 		CatchMouseInput();
-		rotation = GetNewRotation(rotation);
-		p_Camera->setRotation(rotation);
 	}
+	rotation = GetNewRotation(rotation);
+	p_Camera->setRotation(rotation);
 }
 
 
@@ -45,6 +45,8 @@ vector3df FPSCamera::GetNewRotation(vector3df rotation){
 	float min = -M_PI/2 + variation;
 	rotation.X = rotation.X>max? max: rotation.X<min? min: rotation.X;
 
+	changeY = 0;
+	changeX = 0;
 
 	return rotation;
 }

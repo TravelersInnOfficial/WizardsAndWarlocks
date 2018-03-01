@@ -99,6 +99,7 @@ void MultiMatch::Update(float deltaTime){
 
 			g_engine->ToggleCameraMovement(false);
 			g_engine->ToggleMenu(true);
+			((HumanPlayer*)playerOne)->ToggleMenu(true);
 			MenuManager::GetInstance()->CreateMenu(ENDMATCH_M, winnerAlliance);
 		}
 		//if(MenuManager::GetInstance()->GetCurrentMenu() == nullptr)
