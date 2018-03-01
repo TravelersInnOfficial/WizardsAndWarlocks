@@ -17,7 +17,7 @@ bool GraphicEngine::run(){
 
 bool GraphicEngine::drop(){
 	bool toRet = false;
-	if(privateDevice != nullptr) toRet = privateDevice->drop();
+	//if(privateDevice != nullptr) toRet = privateDevice->drop();
 	return toRet;
 }
 
@@ -182,10 +182,10 @@ void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	if(privateDriver != nullptr){
+	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
 		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
-	}
+	}*/
 }
 
 // SMANAGER FUNCTIONS
@@ -241,8 +241,9 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 }
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
-	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+	GBody* body= nullptr;
 /*
+	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
 	body->setPosition(position);
 	body->setRotation(rotation);
 	body->setScale(scale);
@@ -300,11 +301,6 @@ GCamera* GraphicEngine::getActiveCamera(){
 }
 
 // GUIENV FUNCTIONS
-MenuOption GraphicEngine::ReadButtonPressed(){
-	//return(privateMenuReceiver->ReadButtonPressed());
-	return 0;
-}
-
 bool GraphicEngine::EscPressed(){
 	//return (privateMenuReceiver->EscPressed());
 	return false;

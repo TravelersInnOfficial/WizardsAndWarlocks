@@ -21,9 +21,6 @@ public:
 
 	void CreateMenu(MenuType type, int option = -1);
 	void ClearMenu();
-	void ClearElement(MenuOption elementID);
-	void UpdateNetDebug();
-	bool CheckIfExists(MenuOption elementID);
 	MenuType* GetCurrentMenu();
 
 private:
@@ -37,8 +34,6 @@ private:
 	irr::gui::IGUIWindow* netDebugWindow;
 
 	MenuManager();
-	void CreateNetDebug();
-	std::string GetStringFromPlayer(Player* player);
 
 };
 

@@ -198,13 +198,8 @@ public:
     */
     GCamera* getActiveCamera();
 
-        /// GUIENV FUNCTIONS
-
-    /**
-     * Reads a GUI Menu from the reciever
-    */
-    MenuOption ReadButtonPressed();
-
+    /// GUIENV FUNCTIONS
+    
     bool EscPressed();
 
     /**
