@@ -52,5 +52,5 @@ void GEntity::setAutomaticCulling(){
 }
 
 void GEntity::Erase(){
-    GraphicEngine::getInstance()->addToDeletionQueue(privateNode);
+    GraphicEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
 }

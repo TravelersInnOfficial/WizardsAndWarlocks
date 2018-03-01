@@ -33,9 +33,10 @@
                 "/usr/include/linux",
                 "/usr/local/include/",
                 "/usr/include",
-                "${workspaceRoot}",
                 "/usr/include/bullet",
-                "${workspaceRoot}/src/Includes"
+                "${workspaceRoot}",
+                "${workspaceRoot}/src/Includes",
+                "${workspaceRoot}/src/Engines"
             ],
             "defines": [],
             "intelliSenseMode": "clang-x64",
@@ -47,7 +48,8 @@
                     "/usr/local/include/",
                     "/usr/include",
                     "${workspaceRoot}",
-                    "${workspaceRoot}/src/Includes"
+                    "${workspaceRoot}/src/Includes",
+                    "${workspaceRoot}/src/Engines"                
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
@@ -58,9 +60,12 @@
             "includePath": [
                 "${workspaceRoot}",
                 "${workspaceRoot}/src/includes",
+                "${workspaceRoot}/src/Engines",
                 "C:/msys64/mingw64/include",
                 "C:/msys64/mingw64/include/c++/7.2.0",
-                "C:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32"
+                "C:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32",
+                "C:/msys64/mingw64/x86_64-w64-mingw32/include",
+                "${workspaceRoot}/src/irrimgui/lib_includes"
             ],
             "defines": [
                 "_DEBUG",
@@ -71,9 +76,11 @@
                 "path": [
                     "${workspaceRoot}",
                     "${workspaceRoot}/src/includes",
+                    "${workspaceRoot}/src/Engines",
                     "C:/msys64/mingw64/include",
                     "C:/msys64/mingw64/include/c++/7.2.0",
-                    "C:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32"
+                    "C:/msys64/mingw64/include/c++/7.2.0/x86_64-w64-mingw32",
+                    "C:/msys64/mingw64/x86_64-w64-mingw32/include"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""

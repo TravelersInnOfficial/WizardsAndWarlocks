@@ -18,6 +18,8 @@
 class GraphicEngine{
     friend class MenuManager;
     friend class GUIEngine;
+    friend class GEntity;
+    friend class GBody;
 
 public:
     /// DEVICE FUNCTIONS
@@ -197,9 +199,6 @@ public:
     */
     GCamera* getActiveCamera();
 
-    //
-    void addToDeletionQueue(irr::scene::ISceneNode*);
-    
         /// GUIENV FUNCTIONS
 
     /**
@@ -264,8 +263,6 @@ public:
 
     void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
 
-    irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
-
 private:
     GraphicEngine(bool isServer = false);
     bool m_isServer;
@@ -288,22 +285,8 @@ private:
      * id: id to easily access the button
     */
     void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
-    
-    /**
-     * Adds a button to hud
-     * p: position (x, y) and size (x2,y2) of the button
-     * text: text to be displayed
-     * infoText: text to help the user
-     * id: id to easily access the button
-    */
-    void addButton(vector4di p, std::wstring text = L"Button", std::wstring infoText = L"", int id = -1, irr::gui::IGUIWindow* parent = nullptr, std::string texturePath = "");
-
-    /**
-     * Adds an editable text box to given position
-     * p: position (x, y) and size (x2,y2) of the button
-     * text: text to initally display in the box
-    */
-    void addEditBox(vector4di p, std::wstring text = L"", int id = -1, irr::gui::IGUIWindow* parent = nullptr);
+        
+    irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 
     /**
      * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
