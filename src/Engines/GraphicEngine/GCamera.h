@@ -35,7 +35,7 @@ public:
     void bindTargetAndRotation(bool bound);
 
     // allows graphic engine to access private variables and methods
-    friend class GraphicEngine;
+    friend class IrrEngine;
 
 private:
 

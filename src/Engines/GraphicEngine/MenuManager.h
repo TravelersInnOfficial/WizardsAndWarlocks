@@ -9,7 +9,7 @@
 
 class Player;
 class Menu;
-class GraphicEngine;
+class IrrEngine;
 namespace irr{ namespace gui{ class IGUIWindow; } }
 
 class MenuManager{
@@ -32,7 +32,7 @@ private:
 
 	static MenuManager*	instance; 
 	std::vector<int>	loadedOptions;
-	GraphicEngine*		g_engine;
+	IrrEngine*		g_engine;
 	vector2di			screenSize;
 	irr::gui::IGUIWindow* netDebugWindow;
 

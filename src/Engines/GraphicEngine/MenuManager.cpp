@@ -3,13 +3,13 @@
 #include "./../Managers/PlayerManager.h"
 #include <TrapCodes.h>
 #include <GUIEngine/GUIEngine.h>
-#include "GraphicEngine.h"
+#include "IrrEngine.h"
 #include <MenusHeaders.h>
 
 MenuManager* MenuManager::instance = nullptr;
 
 MenuManager::MenuManager(){
-	g_engine = GraphicEngine::getInstance();
+	g_engine = IrrEngine::getInstance();
 	irr::core::dimension2du res = g_engine->privateDriver->getScreenSize();
 	screenSize.X = res.Width;
 	screenSize.Y = res.Height;

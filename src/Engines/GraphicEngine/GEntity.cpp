@@ -1,5 +1,5 @@
 #include "GEntity.h"
-#include "GraphicEngine.h"
+#include "IrrEngine.h"
 
 void GEntity::setPosition(vector3df pos){
     privateNode->setPosition(irr::core::vector3df(pos.X, pos.Y, pos.Z));
@@ -52,5 +52,5 @@ void GEntity::setAutomaticCulling(){
 }
 
 void GEntity::Erase(){
-    GraphicEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
+    IrrEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
 }

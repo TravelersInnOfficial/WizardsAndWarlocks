@@ -37,7 +37,7 @@ public:
 
 	void AddText(std::string text, vector3df position, int id = 0);
 
-	friend class GraphicEngine;
+	friend class IrrEngine;
 
 private:
 

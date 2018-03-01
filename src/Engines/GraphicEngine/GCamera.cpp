@@ -1,5 +1,5 @@
 #include "GCamera.h"
-#include "GraphicEngine.h"
+#include "IrrEngine.h"
 
 GCamera::GCamera(irr::scene::ISceneNode* node){
     privateNode = node;

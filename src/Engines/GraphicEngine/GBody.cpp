@@ -1,5 +1,5 @@
 #include "GBody.h"
-#include "GraphicEngine.h"
+#include "IrrEngine.h"
 
 GBody::GBody(irr::scene::ISceneNode* node){
     privateNode = node;
@@ -12,7 +12,7 @@ GBody::~GBody(){
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
-    GraphicEngine::getInstance()->setTextureToBody(this, layer, path);
+    IrrEngine::getInstance()->setTextureToBody(this, layer, path);
     privateNode->setMaterialType(irr::video::EMT_SOLID);
 	privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 }
@@ -40,6 +40,6 @@ void GBody::AddText(std::string text, vector3df position, int id){
 		board->setSize(dim);
 
 	}else{ 
-		board = GraphicEngine::getInstance()->addBillboardText(text, privateNode, position, id);
+		board = IrrEngine::getInstance()->addBillboardText(text, privateNode, position, id);
 	}
 }

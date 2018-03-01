@@ -1,7 +1,6 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
-#include <irrlicht/irrlicht.h>
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
@@ -23,11 +22,11 @@ class GraphicEngine{
     
 public:
     /// DEVICE FUNCTIONS
-    
+
     /**
      * Returns Instance of the engine. If it not created, this method initializes it.
     */
-    static GraphicEngine* getInstance(bool isServer = false);
+    static GraphicEngine& getInstance(bool isServer = false);
     
     ~GraphicEngine();
     /**
@@ -268,13 +267,13 @@ private:
     bool m_isServer;
 
     /** Irrlicht provisional devices*/
-    irr::IrrlichtDevice*        privateDevice;
-    irr::video::IVideoDriver*   privateDriver;
-    irr::scene::ISceneManager*  privateSManager;
-    irr::gui::IGUIEnvironment*  privateGUIEnv;
-    EventReceiver* privateReceiver;
-    MenuReceiver* privateMenuReceiver;
-    GCamera* privateCamera;    
+    //irr::IrrlichtDevice*        privateDevice;
+    //irr::video::IVideoDriver*   privateDriver;
+    //irr::scene::ISceneManager*  privateSManager;
+    //irr::gui::IGUIEnvironment*  privateGUIEnv;
+    //EventReceiver* privateReceiver;
+    //MenuReceiver* privateMenuReceiver;
+    //GCamera* privateCamera;    
 
     /**
      * Adds a static text
@@ -284,15 +283,15 @@ private:
      * wordWrap: Enable if the text should wrap into multiple lines
      * id: id to easily access the button
     */
-    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
+    //void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
         
-    irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
+    //irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 
     /**
      * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
     */
-    irr::IrrlichtDevice* GetIrrlichtDevice();
-    MenuReceiver* GetMenuReceiver();
+    //irr::IrrlichtDevice* GetIrrlichtDevice();
+    //MenuReceiver* GetMenuReceiver();
 };
 
 #endif
