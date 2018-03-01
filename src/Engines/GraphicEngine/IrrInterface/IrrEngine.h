@@ -5,8 +5,8 @@
 #include "IrrGBody.h"
 #include "IrrGCamera.h"
 #include "IrrGEntity.h"
-#include "EventReceiver.h"
-#include "MenuReceiver.h"
+#include "IrrEventReceiver.h"
+#include "IrrMenuReceiver.h"
 #include <Keycodes.h>
 #include <vector2d.h>
 #include <vector3d.h>
@@ -14,10 +14,9 @@
 #include <map>
 #include <vector>
 #include <OverlayCodes.h>
-#include <GraphicEngine/GraphicEngine.h>
 
-class IrrEngine : public GraphicEngine{
-    friend class MenuManager;
+class IrrEngine{
+    friend class IrrMenuManager;
     friend class GUIEngine;
     friend class IrrGEntity;
     friend class IrrGBody;
@@ -40,7 +39,7 @@ public:
     bool beginScene();
     bool beginSceneDefault();
     bool endScene();
-    void setTextureToBody(GBody* body, int layer, std::string path);
+    void setTextureToBody(IrrGBody* body, int layer, std::string path);
     void paintLineDebug(vector3df, vector3df, vector3df);
     void drawAim(bool playerMoving);
     void drawGrailGUI(float currentValue, float maxValue);
@@ -53,7 +52,7 @@ public:
     /// SMANAGER FUNCTIONS
     void drawAll();
 
-    GBody* addCube2Scene(
+    IrrGBody* addCube2Scene(
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
@@ -61,7 +60,7 @@ public:
         int id = -1
         );
     
-    GBody* addSphere2Scene(
+    IrrGBody* addSphere2Scene(
         vector3df position = vector3df(0,0,0), 
         vector3df rotation = vector3df(0,0,0), 
         vector3df scale = vector3df(1,1,1),
@@ -69,15 +68,15 @@ public:
         int id = -1
         );
 
-    GBody* addObjMeshSceneNode(std::string path);
-    GBody* addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale = vector3df(1,1,1));
-    GCamera* addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed);
-    GCamera* addCameraSceneNode(vector3df position, vector3df lookat);
-    GCamera* getActiveCamera();
+    IrrGBody* addObjMeshSceneNode(std::string path);
+    IrrGBody* addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale = vector3df(1,1,1));
+    IrrGCamera* addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed);
+    IrrGCamera* addCameraSceneNode(vector3df position, vector3df lookat);
+    IrrGCamera* getActiveCamera();
 
     /// GUIENV FUNCTIONS
     bool EscPressed();
-    std::string ReadText(MenuOption id);
+    //std::string ReadText(MenuOption id);
     vector2di GetCursorPosition();
     void SetCursorPosition(vector2di cursor);
     
@@ -100,19 +99,18 @@ private:
     irr::video::IVideoDriver*   privateDriver;
     irr::scene::ISceneManager*  privateSManager;
     irr::gui::IGUIEnvironment*  privateGUIEnv;
-    EventReceiver* privateReceiver;
-    MenuReceiver* privateMenuReceiver;
-    GCamera* privateCamera;    
+    IrrEventReceiver* privateReceiver;
+    IrrMenuReceiver* privateMenuReceiver;
+    IrrGCamera* privateCamera;    
 
     // PRIVATE FUNCIONTS
-    void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
     irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 
     /**
      * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
     */
     irr::IrrlichtDevice* GetIrrlichtDevice();
-    MenuReceiver* GetMenuReceiver();
+    IrrMenuReceiver* GetMenuReceiver();
 };
 
 #endif

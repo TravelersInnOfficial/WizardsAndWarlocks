@@ -6,10 +6,10 @@ GraphicEngine::GraphicEngine(bool isServer){
 GraphicEngine::~GraphicEngine(){
 }
 
-GraphicEngine& GraphicEngine::getInstance(bool isServer){
+GraphicEngine* GraphicEngine::getInstance(bool isServer){
 	static GraphicEngine instance = GraphicEngine(isServer);
 
-	return instance;
+	return &instance;
 }
 
 bool GraphicEngine::run(){
@@ -305,32 +305,18 @@ bool GraphicEngine::EscPressed(){
 	//return (privateMenuReceiver->EscPressed());
 	return false;
 }
-
+/*
 std::string GraphicEngine::ReadText(MenuOption id){
-	/*irr::gui::IGUIElement* textElem;
+	irr::gui::IGUIElement* textElem;
 	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);
 
 	const wchar_t *text = textElem->getText();
 	std::wstring ws(text);
 	std::string text_str(ws.begin(), ws.end());
 
-	return (text_str);*/
+	return (text_str);
 	return "";
-}
-
-void GraphicEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id, irr::gui::IGUIWindow* parent){
-	/*irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(
-		text.c_str(),
-		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
-		border,
-		wordWrap,
-		parent,
-		id
-	);
-	
-	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
-	ge->setDrawBorder(false);*/
-}
+}*/
 
 void GraphicEngine::SetCursorPosition(vector2di cursor){
 	//privateDevice->getCursorControl()->setPosition(irr::core::vector2di(cursor.X, cursor.Y));

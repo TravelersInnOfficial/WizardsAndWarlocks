@@ -26,7 +26,7 @@ public:
     /**
      * Returns Instance of the engine. If it not created, this method initializes it.
     */
-    static GraphicEngine& getInstance(bool isServer = false);
+    static GraphicEngine* getInstance(bool isServer = false);
     
     ~GraphicEngine();
     /**
@@ -205,7 +205,7 @@ public:
     /**
      * Reads a GUI EditBox from the reciever
     */
-    std::string ReadText(MenuOption id);
+    //std::string ReadText(MenuOption id);
 
     /**
      * @brief Returns mouse position in the screen
@@ -278,7 +278,6 @@ private:
      * wordWrap: Enable if the text should wrap into multiple lines
      * id: id to easily access the button
     */
-    //void addStaticText(vector4di position, std::wstring text, bool border = false, bool wordWrap = true, int id = -1, irr::gui::IGUIWindow* parent = nullptr);
         
     //irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
 

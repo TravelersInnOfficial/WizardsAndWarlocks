@@ -1,17 +1,17 @@
 #include "GEntity.h"
-#include "IrrEngine.h"
+#include "GraphicEngine.h"
 
 void GEntity::setPosition(vector3df pos){
-    privateNode->setPosition(irr::core::vector3df(pos.X, pos.Y, pos.Z));
+    //privateNode->setPosition(irr::core::vector3df(pos.X, pos.Y, pos.Z));
 }
 
 void GEntity::setRotation(vector3df rot){
-    irr::core::vector3df irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
-    privateNode->setRotation(irrRotation);
+    //irr::core::vector3df irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
+    //privateNode->setRotation(irrRotation);
 }
 
 void GEntity::Rotate(vector3df rot){
-    irr::core::matrix4 m;
+    /*irr::core::matrix4 m;
     irr::core::matrix4 n;
     irr::core::vector3df irrRotation;
 
@@ -21,36 +21,39 @@ void GEntity::Rotate(vector3df rot){
     m *= n;
     
     privateNode->setRotation(m.getRotationDegrees());
-    privateNode->updateAbsolutePosition();
+    privateNode->updateAbsolutePosition();*/
 }
 
 void GEntity::setScale(vector3df scale){
-    privateNode->setScale(irr::core::vector3df(scale.X, scale.Y, scale.Z));
+    //privateNode->setScale(irr::core::vector3df(scale.X, scale.Y, scale.Z));
 }
 
 vector3df GEntity::getPosition(){
-    irr::core::vector3df v = privateNode->getPosition();
-    return vector3df(v.X, v.Y, v.Z);
+    //irr::core::vector3df v = privateNode->getPosition();
+    //return vector3df(v.X, v.Y, v.Z);
+    return vector3df(0, 0, 0);
 }
 
 vector3df GEntity::getRotation(){
-    irr::core::vector3df v = privateNode->getRotation();
-    return vector3df(v.X, v.Y, v.Z);
+    //irr::core::vector3df v = privateNode->getRotation();
+    //return vector3df(v.X, v.Y, v.Z);
+    return vector3df(0, 0, 0);
 }
 
 vector3df GEntity::getScale(){
-    irr::core::vector3df v = privateNode->getScale();
-    return vector3df(v.X, v.Y, v.Z);
+    //irr::core::vector3df v = privateNode->getScale();
+    //return vector3df(v.X, v.Y, v.Z);
+    return vector3df(0, 0, 0);
 }
 
 void GEntity::updateAbsolutePosition(){
-    privateNode->updateAbsolutePosition();
+    //privateNode->updateAbsolutePosition();
 }
 
 void GEntity::setAutomaticCulling(){
-    privateNode->setAutomaticCulling(irr::scene::EAC_FRUSTUM_BOX);
+    //privateNode->setAutomaticCulling(irr::scene::EAC_FRUSTUM_BOX);
 }
 
 void GEntity::Erase(){
-    IrrEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
+    //IrrEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
 }

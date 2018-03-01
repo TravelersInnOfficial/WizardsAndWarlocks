@@ -1,7 +1,8 @@
 #include <iostream>
 #include <KeyStates.h>
+#include <irrlicht/irrlicht.h>
 
-class EventReceiver : public irr::IEventReceiver {
+class IrrEventReceiver : public irr::IEventReceiver {
 
 protected:
 
@@ -24,6 +25,6 @@ public:
 
     void Update();
 
-    EventReceiver();
+    IrrEventReceiver();
 
 };

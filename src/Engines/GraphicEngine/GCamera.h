@@ -38,8 +38,7 @@ public:
     friend class IrrEngine;
 
 private:
-
-    GCamera(irr::scene::ISceneNode* node);    
+    GCamera(void* node);    
   
 };
 

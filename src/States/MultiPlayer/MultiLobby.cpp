@@ -69,7 +69,6 @@ void MultiLobby::UpdateLobby(float deltaTime){
 	
 	playerManager->RespawnDeadPlayers();
 	
-	MenuManager::GetInstance()->UpdateNetDebug();
 	g_engine->UpdateReceiver();
 
 	// Empezamos la partida si recibimos un TRUE en MULTIGAME_CHANGE (lo volvemos a poner a FALSE)

@@ -1,4 +1,4 @@
-#include "MenuManager.h"
+#include "IrrMenuManager.h"
 #include "./../../Managers/SpellManager.h"
 #include "./../../Managers/PlayerManager.h"
 #include <TrapCodes.h>
@@ -6,9 +6,9 @@
 #include "IrrEngine.h"
 #include <MenusHeaders.h>
 
-MenuManager* MenuManager::instance = nullptr;
+IrrMenuManager* IrrMenuManager::instance = nullptr;
 
-MenuManager::MenuManager(){
+IrrMenuManager::IrrMenuManager(){
 	g_engine = IrrEngine::getInstance();
 	irr::core::dimension2du res = g_engine->privateDriver->getScreenSize();
 	screenSize.X = res.Width;
@@ -18,18 +18,18 @@ MenuManager::MenuManager(){
 	currentMenu = nullptr;
 }
 
-MenuManager::~MenuManager(){
+IrrMenuManager::~IrrMenuManager(){
 	ClearMenu();
 	instance = nullptr;
 }
 
-MenuManager* MenuManager::GetInstance(){
-	if(instance == nullptr) instance = new MenuManager();
+IrrMenuManager* IrrMenuManager::GetInstance(){
+	if(instance == nullptr) instance = new IrrMenuManager();
 	return instance;
 }
 
-void MenuManager::CreateMenu(MenuType type, int option){
-	switch(type){
+void IrrMenuManager::CreateMenu(MenuType type, int option){
+	/*switch(type){
 		case(MAIN_M):{
 			open_menu = true;
 			currentMenu = new MainMenu(type);
@@ -67,10 +67,10 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			open_menu = false;
 			break;
 		}
-	}
+	}*/
 }
 
-void MenuManager::Update(float deltaTime){
+void IrrMenuManager::Update(float deltaTime){
 	GUIEngine::GetInstance()->Update();
 	if(currentMenu != nullptr){ 
 		g_engine->ToggleCameraMovement(false);
@@ -78,12 +78,12 @@ void MenuManager::Update(float deltaTime){
 	}
 }
 
-void MenuManager::Draw(){
+void IrrMenuManager::Draw(){
 	GUIEngine::GetInstance()->Draw();
 	if(!open_menu) ClearMenu();
 }
 
-void MenuManager::ClearMenu(){
+void IrrMenuManager::ClearMenu(){
 	if(currentMenu != nullptr ){
 		if(open_menu) currentMenu->Close(&open_menu);
 		currentMenu->Drop();
@@ -93,7 +93,7 @@ void MenuManager::ClearMenu(){
 
 }
 
-MenuType* MenuManager::GetCurrentMenu(){
+MenuType* IrrMenuManager::GetCurrentMenu(){
 	MenuType *toRet = nullptr;
 	if(currentMenu!=nullptr) toRet  = currentMenu->GetType();
 	return toRet;

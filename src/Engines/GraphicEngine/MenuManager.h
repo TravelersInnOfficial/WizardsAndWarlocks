@@ -29,9 +29,9 @@ private:
 
 	static MenuManager*	instance; 
 	std::vector<int>	loadedOptions;
-	IrrEngine*		g_engine;
+	//IrrEngine*		g_engine;
 	vector2di			screenSize;
-	irr::gui::IGUIWindow* netDebugWindow;
+	//irr::gui::IGUIWindow* netDebugWindow;
 
 	MenuManager();
 

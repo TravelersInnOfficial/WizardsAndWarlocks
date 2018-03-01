@@ -3,9 +3,11 @@
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();
-    pDevice = g_engine->GetIrrlichtDevice();
-    m_EventReceiver = g_engine->GetMenuReceiver();
-    
+    //pDevice = g_engine->GetIrrlichtDevice();
+    pDevice = nullptr;
+    //m_EventReceiver = g_engine->GetMenuReceiver();
+    m_EventReceiver = nullptr;
+
     // Create GUI object
     m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
     m_notifications_Ypos = 10;

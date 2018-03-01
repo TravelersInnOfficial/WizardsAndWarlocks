@@ -77,7 +77,6 @@ void MultiMatch::Update(float deltaTime){
 	effectManager->UpdateEffects(deltaTime);
 	objectManager->Update(deltaTime);
 	trapManager->Update(deltaTime);
-	MenuManager::GetInstance()->UpdateNetDebug();
 
 	g_engine->UpdateReceiver();
 

@@ -8,7 +8,7 @@ MenuPrincipal::MenuPrincipal(){
 	g_engine->setCursorVisible(false);
 	g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
-	selectedOption = NO_OPT;
+	//selectedOption = NO_OPT;
 	createSoundEvent();
 	playMenuMusic();
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
@@ -28,7 +28,7 @@ bool MenuPrincipal::Input(){
 	if(!g_engine->run()) return true;
 	if(g_engine->EscPressed()) return true;
 
-	selectedOption = g_engine->ReadButtonPressed();
+	//selectedOption = g_engine->ReadButtonPressed();
 	return false;
 }
 
@@ -36,7 +36,7 @@ void MenuPrincipal::Update(float deltaTime){
 	SoundSystem::getInstance()->Update();
 
 	// En el caso de que se haya cambiado de opcion
-	if(selectedOption != NO_OPT){
+	/*if(selectedOption != NO_OPT){
 		// Dependiendo de la seleccion hacemos una cosa u otra
 		if (menuMusic->isPlaying()) menuMusic->stop();
 		switch(selectedOption){
@@ -47,10 +47,10 @@ void MenuPrincipal::Update(float deltaTime){
 			case MAIN_M_SERVER:{
 				//std::string path = "./WizardsAndWarlocks -i "+server_name +" &";
 				std::string path = "./WizardsAndWarlocks -i &";
-				#ifdef _WIN64
-				//path = "START /B WizardsAndWarlocks.exe -i"+server_name;
+				--ifdef _WIN64
+				path = "START /B WizardsAndWarlocks.exe -i"+server_name;
 					path = "START /B WizardsAndWarlocks.exe -i";
-				#endif
+				--endif
 				std::system(path.c_str());
 				PrepareClient(true);
 				break;
@@ -61,7 +61,7 @@ void MenuPrincipal::Update(float deltaTime){
 			}
 		}
 		g_engine->ToggleMenu(false);
-	}
+	}*/
 
 	MenuManager::GetInstance()->Update(deltaTime);
 }
@@ -83,9 +83,9 @@ void MenuPrincipal::PrepareGame(){
 void MenuPrincipal::PrepareClient(bool proprietary){
 	NetworkEngine* n_engine;
 	n_engine = NetworkEngine::GetInstance();
-	n_engine->SetIp(g_engine->ReadText(MAIN_M_IP));
+	//n_engine->SetIp(g_engine->ReadText(MAIN_M_IP));
 	n_engine->StartClient(proprietary);
-	n_engine->GetClient()->SetClientName(g_engine->ReadText(MAIN_M_NAME));
+	//n_engine->GetClient()->SetClientName(g_engine->ReadText(MAIN_M_NAME));
 	StateManager::GetInstance()->PrepareStatus(STATE_NETGAME_CLIENT);
 }
 

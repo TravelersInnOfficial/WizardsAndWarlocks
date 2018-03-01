@@ -1,5 +1,5 @@
-#ifndef MENUMANAGER_H
-#define MENUMANAGER_H
+#ifndef IRRMENUMANAGER_H
+#define IRRMENUMANAGER_H
 
 #include <string>
 #include <vector>
@@ -12,10 +12,10 @@ class Menu;
 class IrrEngine;
 namespace irr{ namespace gui{ class IGUIWindow; } }
 
-class MenuManager{
+class IrrMenuManager{
 public:
-	static MenuManager* GetInstance();
-	~MenuManager();
+	static IrrMenuManager* GetInstance();
+	~IrrMenuManager();
 	void Update(float deltaTime);
 	void Draw();
 
@@ -27,13 +27,13 @@ private:
 	Menu* currentMenu;
 	bool open_menu;
 
-	static MenuManager*	instance; 
+	static IrrMenuManager*	instance; 
 	std::vector<int>	loadedOptions;
 	IrrEngine*		g_engine;
 	vector2di			screenSize;
 	irr::gui::IGUIWindow* netDebugWindow;
 
-	MenuManager();
+	IrrMenuManager();
 
 };
 

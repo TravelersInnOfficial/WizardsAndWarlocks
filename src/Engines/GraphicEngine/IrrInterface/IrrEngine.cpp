@@ -11,8 +11,8 @@ IrrEngine::IrrEngine(bool isServer){
 	privateMenuReceiver = nullptr;
 	privateCamera = nullptr;
 
-	privateReceiver = new EventReceiver();
-	privateMenuReceiver = new MenuReceiver();
+	privateReceiver = new IrrEventReceiver();
+	privateMenuReceiver = new IrrMenuReceiver();
 
 	irr::IrrlichtDevice *nulldevice = irr::createDevice(irr::video::EDT_NULL);
 	irr::core::dimension2d<irr::u32> deskres = nulldevice->getVideoModeList()->getDesktopResolution();
@@ -138,7 +138,7 @@ bool IrrEngine::endScene(){
 	return toRet;
 }
 
-void IrrEngine::setTextureToBody(GBody* body, int layer, std::string s){
+void IrrEngine::setTextureToBody(IrrGBody* body, int layer, std::string s){
 	if(privateDriver != nullptr) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
@@ -261,11 +261,11 @@ void IrrEngine::drawAll(){
 	if(privateSManager != nullptr) privateSManager->drawAll();
 }
 
-GBody* IrrEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
-	GBody* gb = nullptr;
+IrrGBody* IrrEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
+	IrrGBody* gb = nullptr;
 
 	if(privateSManager != nullptr){
-		gb = new GBody(
+		gb = new IrrGBody(
 			privateSManager->addCubeSceneNode(
 				size,   //size
 				0,      //parent
@@ -283,10 +283,10 @@ GBody* IrrEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float siz
 	return gb;
 }
 
-GBody* IrrEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
-	GBody* gb = nullptr;
+IrrGBody* IrrEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
+	IrrGBody* gb = nullptr;
 	if(privateSManager != nullptr){
-		gb = new GBody(
+		gb = new IrrGBody(
 			privateSManager->addSphereSceneNode(
 				radius,     //size
 				16,         //polycount
@@ -301,12 +301,12 @@ GBody* IrrEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float r
 	return gb;
 }
 
-GBody* IrrEngine::addObjMeshSceneNode(std::string path){
-	return new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+IrrGBody* IrrEngine::addObjMeshSceneNode(std::string path){
+	return new IrrGBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
 }
 
-GBody* IrrEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
-	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
+IrrGBody* IrrEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
+	IrrGBody* body= new IrrGBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
 
 	body->setPosition(position);
 	body->setRotation(rotation);
@@ -315,8 +315,7 @@ GBody* IrrEngine::addObjMeshSceneNode(std::string path, vector3df position, vect
 	return body;
 }
 
-GCamera* IrrEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
-
+IrrGCamera* IrrEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 	irr::SKeyMap keyMap[4];
 	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
 	keyMap[0].KeyCode = irr::KEY_KEY_W;
@@ -335,13 +334,12 @@ GCamera* IrrEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 		privateCamera = nullptr;
 	}
 
-	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
+	privateCamera = new IrrGCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
 
 	return privateCamera;
 }
 
-GCamera* IrrEngine::addCameraSceneNode(vector3df position, vector3df lookat){
-
+IrrGCamera* IrrEngine::addCameraSceneNode(vector3df position, vector3df lookat){
 	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
 	if (oldCamera){
 		privateSManager->setActiveCamera(0);
@@ -351,12 +349,12 @@ GCamera* IrrEngine::addCameraSceneNode(vector3df position, vector3df lookat){
 
 	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
 	irr::core::vector3df cameraLookat(lookat.X, lookat.Y, lookat.Z);	
-	privateCamera = new GCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
+	privateCamera = new IrrGCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
 
 	return privateCamera;
 }
 
-GCamera* IrrEngine::getActiveCamera(){
+IrrGCamera* IrrEngine::getActiveCamera(){
 	if(privateCamera != nullptr) privateCamera->privateNode = privateSManager->getActiveCamera();
 	return privateCamera;
 }
@@ -365,7 +363,7 @@ GCamera* IrrEngine::getActiveCamera(){
 bool IrrEngine::EscPressed(){
 	return (privateMenuReceiver->EscPressed());
 }
-
+/*
 std::string IrrEngine::ReadText(MenuOption id){
 	irr::gui::IGUIElement* textElem;
 	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);
@@ -375,21 +373,7 @@ std::string IrrEngine::ReadText(MenuOption id){
 	std::string text_str(ws.begin(), ws.end());
 
 	return (text_str);
-}
-
-void IrrEngine::addStaticText(vector4di p, std::wstring text, bool border, bool wordWrap, int id, irr::gui::IGUIWindow* parent){
-	irr::gui::IGUIStaticText* ge = privateGUIEnv->addStaticText(
-		text.c_str(),
-		irr::core::rect<irr::s32>(p.X, p.Y, p.X + p.X2, p.Y + p.Y2),
-		border,
-		wordWrap,
-		parent,
-		id
-	);
-	
-	ge->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
-	ge->setDrawBorder(false);
-}
+}*/
 
 void IrrEngine::SetCursorPosition(vector2di cursor){
 	privateDevice->getCursorControl()->setPosition(irr::core::vector2di(cursor.X, cursor.Y));
@@ -397,7 +381,6 @@ void IrrEngine::SetCursorPosition(vector2di cursor){
 
 vector2di IrrEngine::GetCursorPosition(){
 	irr::core::vector2di ctrlP =  privateDevice->getCursorControl()->getPosition();
-
 	return vector2di(ctrlP.X, ctrlP.Y);
 }
 
@@ -452,6 +435,7 @@ irr::scene::IBillboardTextSceneNode* IrrEngine::addBillboardText(std::string tex
 irr::IrrlichtDevice* IrrEngine::GetIrrlichtDevice(){
 	return privateDevice;
 }
-MenuReceiver* IrrEngine::GetMenuReceiver(){
+
+IrrMenuReceiver* IrrEngine::GetMenuReceiver(){
 	return privateMenuReceiver;
 }

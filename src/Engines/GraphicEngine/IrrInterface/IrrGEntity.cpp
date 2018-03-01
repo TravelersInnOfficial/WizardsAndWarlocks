@@ -1,4 +1,4 @@
-#include "IrrIrrGEntity.h"
+#include "IrrGEntity.h"
 #include "IrrEngine.h"
 
 void IrrGEntity::setPosition(vector3df pos){

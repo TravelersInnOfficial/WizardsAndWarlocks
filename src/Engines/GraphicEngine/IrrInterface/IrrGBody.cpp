@@ -7,7 +7,6 @@ IrrGBody::IrrGBody(irr::scene::ISceneNode* node){
 }
 
 IrrGBody::~IrrGBody(){
-	// Remove()
 	Erase();
 }
 

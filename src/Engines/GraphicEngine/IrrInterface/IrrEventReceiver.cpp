@@ -1,16 +1,16 @@
-#include "EventReceiver.h"
+#include "IrrEventReceiver.h"
 #include <Keycodes.h>
 
-EventReceiver::EventReceiver() {
+IrrEventReceiver::IrrEventReceiver() {
 	InitReceiver();
 }
 
-void EventReceiver::InitReceiver(){
+void IrrEventReceiver::InitReceiver(){
 	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++) keyState[i] = UP;
 	for (int i = 0; i < numMouseButtons; i++) mouseButtonState[i] = UP;
 }
 
-bool EventReceiver::OnEvent(const irr::SEvent& event) {
+bool IrrEventReceiver::OnEvent(const irr::SEvent& event) {
 
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		if (event.KeyInput.PressedDown == true) {
@@ -64,17 +64,17 @@ bool EventReceiver::OnEvent(const irr::SEvent& event) {
 	return false;
 }
 
-bool EventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
-bool EventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
-bool EventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
-bool EventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
+bool IrrEventReceiver::keyPressed(irr::EKEY_CODE keycode) { return (keyState[keycode] == PRESSED); }
+bool IrrEventReceiver::keyDown(irr::EKEY_CODE keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
+bool IrrEventReceiver::keyRelease(irr::EKEY_CODE keycode) { return (keyState[keycode] == RELEASED); }
+bool IrrEventReceiver::keyUp(irr::EKEY_CODE keycode) { return (keyState[keycode] == UP); }
 
-keyStatesENUM EventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
+keyStatesENUM IrrEventReceiver::GetKeyStatus(irr::EKEY_CODE keycode){
 	if(keycode > numMouseButtons) return keyState[keycode];
 	else return mouseButtonState[keycode];
 }
 
-void EventReceiver::Update(){
+void IrrEventReceiver::Update(){
 
 	for (int i = 0; i < irr::KEY_KEY_CODES_COUNT; i++){
 		if(keyState[i] == PRESSED) keyState[i] = DOWN;
@@ -87,7 +87,7 @@ void EventReceiver::Update(){
 
 }
 
-void EventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
+void IrrEventReceiver::setKeyStatus(irr::EKEY_CODE keycode, keyStatesENUM state){
 	if(keycode > numMouseButtons) keyState[keycode] = state;
 	else mouseButtonState[keycode] = state;
 }

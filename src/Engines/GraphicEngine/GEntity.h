@@ -56,8 +56,7 @@ public:
 	void setAutomaticCulling();
 
 protected:
-
-	irr::scene::ISceneNode* privateNode;
+	//irr::scene::ISceneNode* privateNode;
 	void Erase();
   
 };

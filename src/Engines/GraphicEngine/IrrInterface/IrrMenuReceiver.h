@@ -1,27 +1,27 @@
+#ifndef IRRMENURECEIVER_H
+#define IRRMENURECEIVER_H
+
 #include <iostream>
-//#include "./irrlicht/irrlicht.h"
 #include <SoundEngine/SoundSystem.h>
 #include <Menus.h>
 #include <Keycodes.h>
 #include <IrrIMGUI/IrrIMGUI.h>
 #include <irrlicht/irrlicht.h>
 
-class MenuReceiver : public IrrIMGUI::CIMGUIEventReceiver{
+class IrrMenuReceiver : public IrrIMGUI::CIMGUIEventReceiver{
 
 protected:
 	bool escape;
-    MenuOption selectedOption = NO_OPT;
-    virtual bool OnEvent(const irr::SEvent& event);
     SoundEvent* soundEvent;
+    
+    virtual bool OnEvent(const irr::SEvent& event);
     void createSoundEvent();
     
-
 public:
-
-    MenuOption ReadMenu();
-    MenuOption ReadButtonPressed();
     bool EscPressed();
     void Update();
-    MenuReceiver();
+    IrrMenuReceiver();
 
 };
+
+#endif

@@ -1,36 +1,35 @@
 #include "GBody.h"
-#include "IrrEngine.h"
+#include "GraphicEngine.h"
 
-GBody::GBody(irr::scene::ISceneNode* node){
-    privateNode = node;
-    board = nullptr;
+GBody::GBody(void* node){
+    //privateNode = node;
+    //board = nullptr;
 }
 
 GBody::~GBody(){
-	// Remove()
 	Erase();
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
-    IrrEngine::getInstance()->setTextureToBody(this, layer, path);
-    privateNode->setMaterialType(irr::video::EMT_SOLID);
-	privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
+    //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
+    //privateNode->setMaterialType(irr::video::EMT_SOLID);
+	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 }
 
 void GBody::setMaterialFlag(MATERIAL_FLAG flag, bool value){
-    privateNode->setMaterialFlag((irr::video::E_MATERIAL_FLAG)flag, value);
+    //privateNode->setMaterialFlag((irr::video::E_MATERIAL_FLAG)flag, value);
 }
 
 void GBody::setMaterialType(MATERIAL_TYPE type){
-    privateNode->setMaterialType((irr::video::E_MATERIAL_TYPE)type);
+    //privateNode->setMaterialType((irr::video::E_MATERIAL_TYPE)type);
 }
 
 void GBody::Remove(){
-    privateNode->remove();
+    //privateNode->remove();
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	if(board!=nullptr){  
+	/*if(board!=nullptr){  
 		std::wstring textTmp(text.begin(), text.end());
 		board->setText(textTmp.c_str());
 
@@ -41,5 +40,5 @@ void GBody::AddText(std::string text, vector3df position, int id){
 
 	}else{ 
 		board = IrrEngine::getInstance()->addBillboardText(text, privateNode, position, id);
-	}
+	}*/
 }

@@ -41,9 +41,10 @@ public:
 
 private:
 
-	GBody(irr::scene::ISceneNode* node);
-	irr::scene::IAnimatedMesh* privateAnimatedMesh; 
-	irr::scene::IBillboardTextSceneNode* board;
+	//GBody(irr::scene::ISceneNode* node);
+	GBody(void* node);
+	//irr::scene::IAnimatedMesh* privateAnimatedMesh; 
+	//irr::scene::IBillboardTextSceneNode* board;
   
 };
 

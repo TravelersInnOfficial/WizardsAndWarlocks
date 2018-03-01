@@ -1,13 +1,12 @@
 #include "MenuReceiver.h"
 
 MenuReceiver::MenuReceiver() {
-	escape = false;
-	
+	//escape = false;
 }
 
 bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 
-	if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
+	/*if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		if (event.KeyInput.PressedDown == true) {
 			if (event.KeyInput.Key == (irr::EKEY_CODE)KEY_ESCAPE ){
 				escape = true;
@@ -27,9 +26,7 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 				break;
 			}
 			//case ImGui::GetIO()->
-			/*
-			for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseClicked(i)) 
-			*/
+			// for (int i = 0; i < IM_ARRAYSIZE(io.MouseDown); i++) if (ImGui::IsMouseClicked(i)) 
 			default:{
 				break;
 			}
@@ -37,7 +34,8 @@ bool MenuReceiver::OnEvent(const irr::SEvent& event) {
 	}
 
 	//return false;
-	return CIMGUIEventReceiver::OnEvent(event);
+	return CIMGUIEventReceiver::OnEvent(event);*/
+	return false;
 }
 
 bool MenuReceiver::EscPressed(){
@@ -45,13 +43,7 @@ bool MenuReceiver::EscPressed(){
 }
 
 void MenuReceiver::Update(){
-	selectedOption = NO_OPT;
-}
-
-MenuOption MenuReceiver::ReadButtonPressed(){
-	MenuOption toRet = selectedOption;
-	selectedOption = NO_OPT;
-	return (toRet);
+	//selectedOption = NO_OPT;
 }
 
 void MenuReceiver::createSoundEvent() {
