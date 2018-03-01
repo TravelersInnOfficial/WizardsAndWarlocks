@@ -555,7 +555,7 @@ void Player::Respawn(){
 
 void Player::Raycast(){
 	vector3df rot = GetRot();
-	rot.X = -rot.X;
+	//rot.X = -rot.X;
 
 	vector3df Start = GetHeadPos();
 	float EndX = Start.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
@@ -724,7 +724,7 @@ bool Player::HasObject(){
 
 void Player::DeployTrap(){
 	vector3df rot = GetRot();
-	rot.X = -rot.X;
+	//rot.X = -rot.X;
 
 	vector3df Start = GetHeadPos();
 	float trapRayDist = raycastDistance*1.5;

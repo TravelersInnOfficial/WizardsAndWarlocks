@@ -281,7 +281,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 		vector3df endPos;
 		// Calculamos la posicion final del raycast
 		vector3df rot = character->GetRot();
-		rot.X = -rot.X;
+		//rot.X = -rot.X;
 		endPos.X = charPos.X + sin(rot.Y)*cos(rot.X)*raycastDistance;
 		endPos.Y = charPos.Y + sin(rot.X)*raycastDistance;
 		endPos.Z = charPos.Z + cos(rot.Y)*cos(rot.X)*raycastDistance;
