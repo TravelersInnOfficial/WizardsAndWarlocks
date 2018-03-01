@@ -13,7 +13,7 @@ public:
 
     void UpdateCamera(vector3df target);
     void SetPosition(vector3df target);
-
+    void SetWorking(bool work);
 private:
     void CheckDistance();
     void Contact(void* punt, EntityEnum tipo);

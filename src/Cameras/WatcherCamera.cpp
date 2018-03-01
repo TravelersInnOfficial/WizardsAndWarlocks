@@ -2,7 +2,7 @@
 
 float lastDistance = 0;
 
-WatcherCamera::WatcherCamera(vector3df lookat){
+WatcherCamera::WatcherCamera(vector3df lookat):Camera(){
 	// intialize variables
 	XAngle = 180;
 	YAngle = 0;
@@ -159,4 +159,8 @@ void WatcherCamera::CheckMaxVelocity(){
 		auxVelocity *= max_velocity/speed;
 		p_BtBody->SetLinearVelocity(auxVelocity);
 	}
+}
+
+void WatcherCamera::SetWorking(bool work){
+	m_working = work;
 }

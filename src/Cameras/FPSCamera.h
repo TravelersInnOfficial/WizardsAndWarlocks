@@ -10,6 +10,7 @@ public:
     ~FPSCamera();
 
     void UpdateCamera(vector3df position);
+    void SetWorking(bool work);
 private:
 	vector3df GetNewRotation(vector3df rotation);
 	void CatchMouseInput();

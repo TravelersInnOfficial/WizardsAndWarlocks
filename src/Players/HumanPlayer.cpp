@@ -231,6 +231,7 @@ void HumanPlayer::GetNetInput(){
 
 void HumanPlayer::ToggleMenu(bool newState){
 	menuActivated = newState;
+	if(m_camera != nullptr) m_camera->SetWorking(!menuActivated);
 	GraphicEngine::getInstance()->ToggleMenu(menuActivated);
 }
 
