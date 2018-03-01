@@ -32,9 +32,7 @@ public:
 	 * type: New type of material to be set.
 	*/
 	void setMaterialType(MATERIAL_TYPE type);
-
-	void setTriangleSelector();
-
+	
 	void Remove();
 
 	void AddText(std::string text, vector3df position, int id = 0);

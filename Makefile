@@ -11,7 +11,7 @@ CCFLAGS				:= -O3 -g -Wall $(USER_FLAGS_C)
 LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lsfml-window -lsfml-graphics -lsfml-system -lassimp
 
 ifeq ($(OS),Windows_NT)
-    Target				:= WizardsAndWarlocks.exe    
+    Target				:= WizardsAndWarlocks.exe
     CPPFLAGS        	+= -I/mingw64/include -I/mingw64/include/bullet
     LDFLAGS				:= -L/mingw64/lib -L/mingw64/lib/SFML
     LIBS 				+= -lRakNet -lfmod64 -lfmodstudio64 -lopengl32 -lglew32 -lm 
@@ -47,12 +47,14 @@ SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 #MAKE OPTIONS
 .PHONY: all clean cleanall ico
 
-all: prepare ico $(OBJ)
+all: prepare ico $(OBJ) link
+	$(info Compile OK)
+
+link:
 	$(info ==============================================)
 	$(info Linking executable $(Target)...)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS) $(ICOOBJ)
 	$(info ==============================================)	
-	$(info Compile OK)
 
 # Compile .cpp files
 obj/%.o: src/%.cpp

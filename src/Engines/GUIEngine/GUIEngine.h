@@ -3,10 +3,8 @@
 
 #include <IrrIMGUI/IrrIMGUI.h>
 #include <IMGUI/imgui.h>
-#include <irrlicht/irrlicht.h>
 #include <vector3d.h>
 #include <vector2d.h>
-#include <iostream>
 #include <GraphicEngine/GraphicEngine.h>
 #include <map>
 

@@ -22,7 +22,6 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::st
 
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
 	graphBody->setAutomaticCulling();
-	graphBody->setTriangleSelector();
 
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X * 0.5f, TScale.Y * 0.5f, TScale.Z * 0.5f);
