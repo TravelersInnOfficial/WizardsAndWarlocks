@@ -17,11 +17,11 @@
 #include "./../Cameras/WatcherCamera.h"
 #include "./../Cameras/FPSCamera.h"
 
-GraphicEngine* engine;
+GraphicEngine* g_engine = nullptr;
 
 Player::Player(bool isPlayer1){
 	// Inicializamos la variable global
-	engine = GraphicEngine::getInstance();
+	g_engine = GraphicEngine::getInstance();
 
 	if(isPlayer1) overlayManager = new OverlayManager();
 	else overlayManager = nullptr;
@@ -145,24 +145,22 @@ Player::~Player(){
 void Player::CreatePlayerCharacter(bool firstInit){
 	if(!hasCharacter){
 
-		// Graphic Player
-		GraphicEngine* engine = GraphicEngine::getInstance();
-		
+		// Graphic Player		
 		if(playerAlliance == ALLIANCE_WIZARD) {
-			if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+			if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 		}
 		
 		else if(playerAlliance == ALLIANCE_WARLOCK){
-			if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+			if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 		}
 		
 		else{
-			if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+			if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 		}
 		
@@ -924,8 +922,8 @@ void Player::SetAlliance(Alliance newAlliance){
 		case(ALLIANCE_WIZARD):{
 			if(hasCharacter){
 				m_playerNode->Remove();
-				if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
@@ -935,8 +933,8 @@ void Player::SetAlliance(Alliance newAlliance){
 		case(ALLIANCE_WARLOCK):{
 			if(hasCharacter){
 				m_playerNode->Remove();
-				if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
@@ -947,8 +945,8 @@ void Player::SetAlliance(Alliance newAlliance){
 		default:{
 			if(hasCharacter){
 				m_playerNode->Remove();
-				if(isPlayerOne) m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
@@ -1045,8 +1043,8 @@ void Player::Draw(){
 }
 
 void Player::DrawBars(){
-	int W = engine->GetScreenWidth();		
-	int H = engine->GetScreenHeight();
+	int W = g_engine->GetScreenWidth();		
+	int H = g_engine->GetScreenHeight();
 
 	float size = 20.0f;			// Height of the bar
 
@@ -1068,17 +1066,17 @@ void Player::DrawBars(){
 
 	// Black Bar
 	vector3df color(0,0,0);
-	engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
-	engine->draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
-	engine->draw2DRectangle(color, xInit, yInitS, xEnd, yEndS);
+	g_engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
+	g_engine->draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
+	g_engine->draw2DRectangle(color, xInit, yInitS, xEnd, yEndS);
 	
 	// Helath & Mana Bar
 	color = vector3df(255,0,0);
-	engine->draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
+	g_engine->draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
 	color = vector3df(0,0,255);
-	engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+	g_engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
 	color = vector3df(255, 255, 0);
-	engine->draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
+	g_engine->draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
 }
 
 void Player::DrawSpellSelector(){

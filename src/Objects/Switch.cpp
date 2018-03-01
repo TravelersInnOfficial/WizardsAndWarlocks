@@ -14,10 +14,10 @@ Switch::~Switch(){
 
 void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
     //IRRLICHT
-    GraphicEngine* engine = GraphicEngine::getInstance();
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo
-    m_switchNode = engine->addObjMeshSceneNode("./../assets/modelos/button.obj", TPosition, TRotation, TScale);
+    m_switchNode = g_engine->addObjMeshSceneNode("./../assets/modelos/button.obj", TPosition, TRotation, TScale);
 
     // Aplicamos Material unlit y Textura
     if (m_switchNode) {

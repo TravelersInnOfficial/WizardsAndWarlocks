@@ -7,13 +7,13 @@ Block::~Block(){
 }
 
 Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture){
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
 	float TMass = 0;
 	clase = EENUM_FLOOR;
 
 	// Create an Irrlicht cube
-	graphBody = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
+	graphBody = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 	if (texture == "")
 		graphBody->setMaterialTexture(0, "../assets/textures/none.png");

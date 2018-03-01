@@ -79,12 +79,12 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	picked = false;
 	player = nullptr;
 
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	vector3df TCenter = vector3df(0,0,0);
 
 	// Create an Irrlicht cube
-	m_potionNode = engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
+	m_potionNode = g_engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
 	m_potionNode->setPosition(TPosition);
 	m_potionNode->setScale(potionScale);
 	m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);

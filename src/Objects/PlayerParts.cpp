@@ -30,9 +30,9 @@ PlayerParts::~PlayerParts(){
 void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisicalScale, std::string objPath){
 	GBody* newGraphicBody = nullptr;
 	BT_Body* newPhysicBody = nullptr;	
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	newGraphicBody = engine->addObjMeshSceneNode(objPath, bodyPartPosition, m_rotation, vector3df(1, 1, 1));
+	newGraphicBody = g_engine->addObjMeshSceneNode(objPath, bodyPartPosition, m_rotation, vector3df(1, 1, 1));
 	newGraphicBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	newPhysicBody = new BT_Body();

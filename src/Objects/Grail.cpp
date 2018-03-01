@@ -13,10 +13,10 @@ Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 }
 
 void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	// Create an Irrlicht cube
-	m_grailNode = engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, vector3df(0,0,0), TScale);
+	m_grailNode = g_engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, vector3df(0,0,0), TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
@@ -104,8 +104,8 @@ void Grail::drawGUI(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(timeCasting > 0){
 		if(playerOneInteraction || n_engine->IsServerInit()){
-			GraphicEngine* engine = GraphicEngine::getInstance();
-			if(engine != nullptr) engine->drawGrailGUI(timeCasting, maxCasting);
+			GraphicEngine* g_engine = GraphicEngine::getInstance();
+			if(g_engine != nullptr) g_engine->drawGrailGUI(timeCasting, maxCasting);
 		}
 	}
 }

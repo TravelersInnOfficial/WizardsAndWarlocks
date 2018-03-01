@@ -2,11 +2,11 @@
 #include <GraphicEngine/GraphicEngine.h>
 
 Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string model, std::string tex){
-    GraphicEngine* engine = GraphicEngine::getInstance();
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
 	if(model != ""){
         // Create an Irrlicht model
-        graphBody = engine->addObjMeshSceneNode(model, TPosition, TRotation, TScale);
+        graphBody = g_engine->addObjMeshSceneNode(model, TPosition, TRotation, TScale);
         graphBody->setMaterialTexture(0, tex);
         
         graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
@@ -14,7 +14,7 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
         graphBody->setAutomaticCulling();
 
     }else{
-        graphBody = engine->addCube2Scene(TPosition, TRotation, TScale);
+        graphBody = g_engine->addCube2Scene(TPosition, TRotation, TScale);
         graphBody->setMaterialTexture(0, tex);
     }
 }

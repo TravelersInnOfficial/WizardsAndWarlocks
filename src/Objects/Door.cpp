@@ -39,10 +39,10 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     TCenter.Z *= TScale.Z;
 
     //IRRLICHT
-    GraphicEngine* engine = GraphicEngine::getInstance();
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     // Cargamos el modelo
-    m_doorNode = engine->addObjMeshSceneNode("./../assets/modelos/door.obj");
+    m_doorNode = g_engine->addObjMeshSceneNode("./../assets/modelos/door.obj");
     m_doorNode->setPosition(TPosition);
     m_doorNode->setRotation(TRotation);
     m_doorNode->setScale(vector3df(1,1,1));

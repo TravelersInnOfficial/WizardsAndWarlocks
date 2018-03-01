@@ -37,10 +37,10 @@ void IceArea::SetEmisor(int emi){
 }
 
 void IceArea::CreateIceArea(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	// Cargamos el cubo
-    m_areaNode = engine->addCube2Scene(TPosition, TRotation, TScale);
+    m_areaNode = g_engine->addCube2Scene(TPosition, TRotation, TScale);
 
     // Aplicamos Material unlit y Textura
     if (m_areaNode) {

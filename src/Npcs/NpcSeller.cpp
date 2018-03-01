@@ -12,10 +12,10 @@ NpcSeller::~NpcSeller(){
 }
 
 void NpcSeller::CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	clase = EENUM_NPC;
 
-	gBody = engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+	gBody = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 	gBody->setPosition(TPosition);
 	gBody->setScale(TScale);
 	gBody->setRotation(TRotation);

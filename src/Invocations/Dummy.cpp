@@ -11,14 +11,14 @@ Dummy::Dummy(int HP, float time, bool alli, vector3df TPosition, vector3df TScal
 void Dummy::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
 
 	// GraphicEngine
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	if(alliance) {
-		m_invocationNode = engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+		m_invocationNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
 		m_invocationNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 	}	
 	else{
-		m_invocationNode = engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+		m_invocationNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 		m_invocationNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 	}
 

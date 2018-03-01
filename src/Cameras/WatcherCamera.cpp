@@ -120,17 +120,17 @@ void WatcherCamera::CheckDistance(){
 }
 
 void WatcherCamera::UpdateAngles(){
-	GraphicEngine* engine = GraphicEngine::getInstance();
-	int screenW = engine->GetScreenWidth();
-	int screenH = engine->GetScreenHeight();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	int screenW = g_engine->GetScreenWidth();
+	int screenH = g_engine->GetScreenHeight();
 	
-	vector2di mousePos = engine->GetCursorPosition();
+	vector2di mousePos = g_engine->GetCursorPosition();
 	vector2di dirMouse = lastPos - mousePos;
 
 	lastPos = mousePos;
 	if(lastPos.X<=0 || lastPos.Y<=0 || lastPos.X>=screenW || lastPos.Y>=screenH){
 		lastPos = vector2di(screenW/2, screenH/2);
-		engine->SetCursorPosition(lastPos);
+		g_engine->SetCursorPosition(lastPos);
 	}
 
 	// Update the Y angle

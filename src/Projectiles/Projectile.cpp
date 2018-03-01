@@ -36,10 +36,10 @@ Projectile::~Projectile(){
 
 void Projectile::CreateProjectile(){
 	// GRAPHIC ENGINE
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	// Cargamos la esfera
-	m_ProjectileNode = engine->addSphere2Scene(initPos,vector3df(0,0,0),vector3df(1,1,1), radius, -1);
+	m_ProjectileNode = g_engine->addSphere2Scene(initPos,vector3df(0,0,0),vector3df(1,1,1), radius, -1);
 	m_ProjectileNode->setScale(vector3df(1,1,1));
 
 	// Aplicamos Material unlit y Textura

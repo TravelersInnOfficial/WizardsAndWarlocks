@@ -10,9 +10,9 @@ BaseT::BaseT(vector3df TPosition, vector3df TScale, vector3df TRotation)
 void BaseT::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
 
 	// GraphicEngine
-	GraphicEngine* engine = GraphicEngine::getInstance();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	m_invocationNode = engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
+	m_invocationNode = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	m_invocationNode->setPosition(TPosition);
 	m_invocationNode->setScale(TScale);
 	m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
