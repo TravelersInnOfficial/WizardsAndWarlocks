@@ -1,6 +1,7 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
+#include <TravelersOcularEngine/src/TOcularEngine.h>
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
@@ -263,12 +264,12 @@ private:
 
     /** Irrlicht provisional devices*/
     //irr::IrrlichtDevice*        privateDevice;
-    //irr::video::IVideoDriver*   privateDriver;
-    //irr::scene::ISceneManager*  privateSManager;
+    VideoDriver*   privateDriver;
+    SceneManager*  privateSManager;
     //irr::gui::IGUIEnvironment*  privateGUIEnv;
-    //EventReceiver* privateReceiver;
-    //MenuReceiver* privateMenuReceiver;
-    //GCamera* privateCamera;    
+    EventReceiver* privateReceiver;
+    MenuReceiver* privateMenuReceiver;
+    GCamera* privateCamera;    
 
     /**
      * Adds a static text
