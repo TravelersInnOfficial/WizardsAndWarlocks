@@ -20,10 +20,10 @@ class GraphicEngine{
     friend class GUIEngine;
     friend class GEntity;
     friend class GBody;
-
+    
 public:
     /// DEVICE FUNCTIONS
-
+    
     /**
      * Returns Instance of the engine. If it not created, this method initializes it.
     */

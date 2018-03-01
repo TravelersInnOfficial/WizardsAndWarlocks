@@ -73,6 +73,7 @@ GraphicEngine::~GraphicEngine(){
 
 GraphicEngine* GraphicEngine::getInstance(bool isServer){
 	static GraphicEngine instance = GraphicEngine(isServer);
+
 	return &instance;
 }
 
@@ -195,7 +196,7 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 		float hP = currentValue/maxValue;
 
 		// Black Bar
-		vector3df color(0,0,0);
+		vector3df color = vector3df(0.0f,0.0f,0.0f);
 		draw2DRectangle(color, xInit, yInit, xEnd, yEnd);
 
 		// Helath & Mana Bar

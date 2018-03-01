@@ -47,10 +47,10 @@ SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 #MAKE OPTIONS
 .PHONY: all clean cleanall ico
 
-all: prepare ico $(OBJ) link
+all: prepare ico compile
 	$(info Compile OK)
 
-link:
+compile: $(OBJ)
 	$(info ==============================================)
 	$(info Linking executable $(Target)...)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS) $(ICOOBJ)
