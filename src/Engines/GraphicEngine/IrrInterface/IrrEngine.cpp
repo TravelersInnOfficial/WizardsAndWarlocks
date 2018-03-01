@@ -362,10 +362,6 @@ GCamera* IrrEngine::getActiveCamera(){
 }
 
 // GUIENV FUNCTIONS
-MenuOption IrrEngine::ReadButtonPressed(){
-	return(privateMenuReceiver->ReadButtonPressed());
-}
-
 bool IrrEngine::EscPressed(){
 	return (privateMenuReceiver->EscPressed());
 }

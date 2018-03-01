@@ -14,7 +14,7 @@
 #include <map>
 #include <vector>
 #include <OverlayCodes.h>
-#include "GraphicEngine.h"
+#include <GraphicEngine/GraphicEngine.h>
 
 class IrrEngine : public GraphicEngine{
     friend class MenuManager;
@@ -76,8 +76,6 @@ public:
     GCamera* getActiveCamera();
 
     /// GUIENV FUNCTIONS
-    MenuOption ReadButtonPressed();
-
     bool EscPressed();
     std::string ReadText(MenuOption id);
     vector2di GetCursorPosition();
