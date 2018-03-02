@@ -42,7 +42,7 @@ private:
 
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(void* node);
-	//irr::scene::IAnimatedMesh* privateAnimatedMesh; 
+	TFMesh* privateAnimatedMesh; 
 	//irr::scene::IBillboardTextSceneNode* board;
   
 };

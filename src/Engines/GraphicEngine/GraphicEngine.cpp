@@ -22,11 +22,8 @@ bool GraphicEngine::drop(){
 	return true;
 }
 
-//####################
-//####################
-//####################
 void GraphicEngine::setCursorVisible(bool visible){
-	//if(privateDevice != nullptr) privateDevice->getCursorControl()->setVisible(false);
+	if(privateDriver != nullptr) privateDriver->SetMouseVisibility(visible);
 }
 
 int GraphicEngine::getTime(){
@@ -86,11 +83,11 @@ bool GraphicEngine::endScene(){
 	return toRet;
 }
 
-//####################
-//####################
-//####################
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
-	//if(privateDriver != nullptr) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
+	if(privateDriver != nullptr){
+		TFMesh* auxMesh = (TFMesh*) body->privateNode;
+		auxMesh->SetTexture(s.c_str());
+	}
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
