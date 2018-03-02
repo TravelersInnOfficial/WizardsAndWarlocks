@@ -4,6 +4,7 @@
 #include "GEntity.h"
 
 class GCamera: public GEntity{
+    friend class GraphicEngine;
 
 public:
 
@@ -33,9 +34,6 @@ public:
      * @param bound: bind or free camera rotation
      */
     void bindTargetAndRotation(bool bound);
-
-    // allows graphic engine to access private variables and methods
-    friend class IrrEngine;
 
 private:
     GCamera(void* node);    

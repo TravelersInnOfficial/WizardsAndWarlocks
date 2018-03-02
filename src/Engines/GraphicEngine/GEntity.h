@@ -3,6 +3,8 @@
 
 #include <irrlicht/irrlicht.h>
 #include <vector3d.h>
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+
 class GEntity{
 
 public:
@@ -56,7 +58,7 @@ public:
 	void setAutomaticCulling();
 
 protected:
-	//irr::scene::ISceneNode* privateNode;
+	TFNode* privateNode;
 	void Erase();
   
 };

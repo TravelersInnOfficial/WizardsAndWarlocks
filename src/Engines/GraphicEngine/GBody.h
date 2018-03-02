@@ -7,6 +7,7 @@
 #include <MaterialFlags.h>
 
 class GBody: public GEntity{
+	friend class GraphicEngine;
 
 public:
 
@@ -37,13 +38,11 @@ public:
 
 	void AddText(std::string text, vector3df position, int id = 0);
 
-	friend class IrrEngine;
-
 private:
 
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(void* node);
-	//irr::scene::IAnimatedMesh* privateAnimatedMesh; 
+	TFMesh* privateAnimatedMesh; 
 	//irr::scene::IBillboardTextSceneNode* board;
   
 };
