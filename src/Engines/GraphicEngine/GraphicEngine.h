@@ -1,7 +1,7 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
-#include <TravelersOcularEngine/src/TOcularEngine.h>
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
