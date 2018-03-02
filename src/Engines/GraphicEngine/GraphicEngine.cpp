@@ -283,50 +283,38 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
 	GCamera* privateCamera = nullptr;
-/*
-	irr::SKeyMap keyMap[4];
-	keyMap[0].Action = irr::EKA_MOVE_FORWARD;
-	keyMap[0].KeyCode = irr::KEY_KEY_W;
-	keyMap[1].Action = irr::EKA_MOVE_BACKWARD;
-	keyMap[1].KeyCode = irr::KEY_KEY_S;
-	keyMap[2].Action = irr::EKA_STRAFE_LEFT;
-	keyMap[2].KeyCode = irr::KEY_KEY_A;
-	keyMap[3].Action = irr::EKA_STRAFE_RIGHT;
-	keyMap[3].KeyCode = irr::KEY_KEY_D;
 
-	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
-	if (oldCamera){
-		privateSManager->setActiveCamera(0);
-		oldCamera->remove();
+	TFCamera* oldCamera = privateSManager->GetMainCamera();
+	if (oldCamera != nullptr){
+		privateSManager->DeleteCamera(oldCamera);
 		delete privateCamera;
 		privateCamera = nullptr;
 	}
-
-	privateCamera = new GCamera(privateSManager->addCameraSceneNodeFPS(0, rotateSpeed, moveSpeed, -1, keyMap, 4));
-*/
+	
+	toe::core::TOEvector3df defaultdata = toe::core::TOEvector3df(0, 0, 0);
+	privateCamera = new GCamera(privateSManager->AddCamera(defaultdata, defaultdata, true));
 	return privateCamera;
 }
 
 GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
 	GCamera* privateCamera = nullptr;
-/*
-	irr::scene::ICameraSceneNode* oldCamera = privateSManager->getActiveCamera();
-	if (oldCamera){
-		privateSManager->setActiveCamera(0);
-		oldCamera->remove();
+
+	TFCamera* oldCamera = privateSManager->GetMainCamera();
+	if (oldCamera != nullptr){
+		privateSManager->DeleteCamera(oldCamera);
+		delete privateCamera;
 		privateCamera = nullptr;
 	}
-
-	irr::core::vector3df cameraPosition(position.X, position.Y, position.Z);
-	irr::core::vector3df cameraLookat(lookat.X, lookat.Y, lookat.Z);	
-	privateCamera = new GCamera(privateSManager->addCameraSceneNode(0, cameraPosition, cameraLookat, -1));
-*/
+	
+	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
+	privateCamera = new GCamera(privateSManager->AddCamera(position_TOE, lookat_TOE, true));
 	return privateCamera;
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
 	GCamera* privateCamera = nullptr;
-	//if(privateCamera != nullptr) privateCamera->privateNode = privateSManager->getActiveCamera();
+	if(privateCamera != nullptr) privateCamera->privateNode = privateSManager->GetMainCamera();
 	return privateCamera;
 }
 
