@@ -1,7 +1,7 @@
 #include "MenuReceiver.h"
 
 MenuReceiver::MenuReceiver() {
-	//escape = false;
+	escape = false;
 }
 
 bool MenuReceiver::OnEvent(const irr::SEvent& event) {
