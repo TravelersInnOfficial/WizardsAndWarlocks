@@ -522,9 +522,8 @@ bool Player::ChangeMP(float MP){
 void Player::UpdateSP(float deltaTime){
 	float useCost = 30*deltaTime;	// 30 = Consumo en 1 segundo
 
-	if(isRunning && moving) m_SP -= useCost;
-	else m_SP += (useCost/2);
-	
+	if(isRunning && moving) m_SP -= useCost/2;
+	else m_SP += (useCost);	
 	if(m_SP <= 0){
 		m_SP = 0;
 		Run(false);
