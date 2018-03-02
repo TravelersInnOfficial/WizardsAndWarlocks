@@ -237,24 +237,21 @@ GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float
 	return gb;
 }
 
-//####################
-//####################
-//####################
 GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
 	GBody* gb = nullptr;
-	/*if(privateSManager != nullptr){
+
+	if(privateSManager != nullptr){
 		gb = new GBody(
-			privateSManager->addSphereSceneNode(
-				radius,     //size
-				16,         //polycount
-				0,          //parent
-				id,         //id
-				irr::core::vector3df(p.X, p.Y, p.Z),    //position
-				irr::core::vector3df(r.X, r.Y, r.Z),    //rotation
-				irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+			toe::AddSphere(
+				toe::core::TOEvector3df(p.X, p.Y, p.Z),
+				toe::core::TOEvector3df(0, 0, 0),
+				toe::core::TOEvector3df(s.X * radius, s.Y * radius, s.Z * radius)
 			)
 		);
-	}*/
+		gb->Rotate(vector3df(r.X, r.Y, 0));
+		gb->Rotate(vector3df(0, 0, r.Z));
+	}
+
 	return gb;
 }
 
