@@ -317,6 +317,7 @@ bool GraphicEngine::EscPressed(){
 	//return (privateMenuReceiver->EscPressed());
 	return false;
 }
+
 /*
 std::string GraphicEngine::ReadText(MenuOption id){
 	irr::gui::IGUIElement* textElem;
@@ -331,15 +332,12 @@ std::string GraphicEngine::ReadText(MenuOption id){
 }*/
 
 void GraphicEngine::SetCursorPosition(vector2di cursor){
-	//privateDevice->getCursorControl()->setPosition(irr::core::vector2di(cursor.X, cursor.Y));
+	privateDriver->SetCursorPosition(cursor.X, cursor.Y);
 }
 
 vector2di GraphicEngine::GetCursorPosition(){
-	/*irr::core::vector2di ctrlP =  privateDevice->getCursorControl()->getPosition();
-	irr::core::vector2di ctrlP =  privateDevice->getCursorControl()->getPosition();
-*/
-//	return vector2di(ctrlP.X, ctrlP.Y);
-	return vector2di(0,0);
+	toe::core::TOEvector2di auxPos = privateDriver->GetCursorPosition();
+	return vector2di(auxPos.X, auxPos.Y);
 }
 
 // RECEIVER FUNCTIONS
