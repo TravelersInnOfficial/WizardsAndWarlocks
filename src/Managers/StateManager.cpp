@@ -67,8 +67,7 @@ bool StateManager::Update(){
 
 	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
 		std::string myFps = std::to_string(int(1/deltaTime));
-		std::wstring wsTmp(myFps.begin(), myFps.end());
-		g_engine->ChangeWindowName(wsTmp);
+		g_engine->ChangeWindowName(myFps);
 
 	return !end;
 }

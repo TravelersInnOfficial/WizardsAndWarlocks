@@ -8,31 +8,33 @@ GraphicEngine::~GraphicEngine(){
 
 GraphicEngine* GraphicEngine::getInstance(bool isServer){
 	static GraphicEngine instance = GraphicEngine(isServer);
-
 	return &instance;
 }
 
 bool GraphicEngine::run(){
-}
-
-bool GraphicEngine::drop(){
 	bool toRet = false;
-	//if(privateDevice != nullptr) toRet = privateDevice->drop();
+	if(privateDriver != nullptr) toRet = privateDriver->Update();
 	return toRet;
 }
 
+bool GraphicEngine::drop(){
+	if(privateDriver != nullptr) privateDriver->Drop();
+	return true;
+}
+
 void GraphicEngine::setCursorVisible(bool visible){
+	std::cout<<"En nuestro motor no usamos el SET CURSOR VISIBLE"<<std::endl;
 	//if(privateDevice != nullptr) privateDevice->getCursorControl()->setVisible(false);
 }
 
 int GraphicEngine::getTime(){
 	float toRet = 0;
-	//if(privateDevice != nullptr) toRet = privateDevice->getTimer()->getTime();
+	if(privateDriver != nullptr) toRet = privateDriver->GetTime();
 	return toRet;
 }
 
-void GraphicEngine::ChangeWindowName(std::wstring newName){
-	//if(privateDevice != nullptr) privateDevice->setWindowCaption(newName.c_str());
+void GraphicEngine::ChangeWindowName(std::string newName){
+	if(privateDriver != nullptr) privateDriver->SetWindowName(newName);
 }
 
 void GraphicEngine::ToggleMenu(bool newState){
@@ -45,6 +47,7 @@ void GraphicEngine::ToggleMenu(bool newState){
 }
 
 void GraphicEngine::ToggleCameraMovement(bool newState){
+	std::cout<<"Esta funcion solo era para la CAMARA LIBRE de Irrlicht, ya no se usa."<<std::endl;
 	/*if (privateCamera != nullptr){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
 		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
@@ -54,27 +57,38 @@ void GraphicEngine::ToggleCameraMovement(bool newState){
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
 	bool toRet = false;
+	std::cout<<"En nuestro motor no usamos el BEGIN SCENE"<<std::endl;
+	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->beginScene();
 	return toRet;
 }
 
 bool GraphicEngine::beginSceneDefault(){
 	bool toRet = false;
+	std::cout<<"En nuestro motor no usamos el BEGIN SCENE DEFAULT"<<std::endl;
+	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 	return toRet;
 }
 
 bool GraphicEngine::endScene(){
 	bool toRet = false;
+	std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
+	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
 	return toRet;
 }
 
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
+	//####################
+	//####################
+	//####################
 	//if(privateDriver != nullptr) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
+	std::cout<<"En nuestro motor no hacemos PAINT LINE DEBUG"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		irr::video::SColorf fromC;
 		fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
@@ -90,6 +104,8 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 }
 
 void GraphicEngine::drawAim(bool moving){
+	std::cout<<"En nuestro motor no usamos el DRAW AIM"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
 		irr::u32 size = 15;
@@ -114,6 +130,8 @@ void GraphicEngine::drawAim(bool moving){
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
+	std::cout<<"En nuestro motor no usamos el DRAW GRAIL GUI"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
@@ -138,6 +156,8 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 }
 
 void GraphicEngine::drawOverlays(OverlayCodes type){
+	std::cout<<"En nuestro motor no usamos el DRAW OVERLAYS"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
 		irr::video::ITexture* overlay = nullptr;
@@ -155,23 +175,23 @@ void GraphicEngine::drawOverlays(OverlayCodes type){
 
 int GraphicEngine::GetScreenHeight(){
 	int toRet = 0;
-	/*if(privateDriver != nullptr){
-		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Height;
-		toRet = (int)W;
-	}*/
+	if(privateDriver != nullptr){
+		int toRet = (int) privateDriver->GetWindowDimensions().Y;
+	}
 	return toRet;
 }
 
 int GraphicEngine::GetScreenWidth(){
 	int toRet = 0;
-	/*if(privateDriver != nullptr){
-		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Width;
-		toRet = (int)H;
-	}*/
+	if(privateDriver != nullptr){
+		int toRet = (int) privateDriver->GetWindowDimensions().X;
+	}
 	return toRet;
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
+	std::cout<<"En nuestro motor no usamos el DRAW 2D IMAGE"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
@@ -182,6 +202,8 @@ void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
+	std::cout<<"En nuestro motor no usamos el DRAW 2D RECTANGLE"<<std::endl;
+
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
 		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
@@ -190,7 +212,7 @@ void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float
 
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
-	//if(privateSManager != nullptr) privateSManager->drawAll();
+	if(privateDriver != nullptr) privateDriver->Draw();
 }
 
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
@@ -368,9 +390,10 @@ keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
 void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
 	//privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
 }
+
 /*
 irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){
-	/*irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
+	irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
 	auxPos.X = position.X; auxPos.Y = position.Y; auxPos.Z = position.Z;
 
 	float dimX = text.length() * 0.1;
@@ -386,6 +409,8 @@ irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string
 irr::IrrlichtDevice* GraphicEngine::GetIrrlichtDevice(){
 	return privateDevice;
 }
+
 MenuReceiver* GraphicEngine::GetMenuReceiver(){
 	return privateMenuReceiver;
-}*/
+}
+*/

@@ -54,7 +54,7 @@ public:
 	/**
 	 * Sets the window name
 	*/
-	void ChangeWindowName(std::wstring newName);
+	void ChangeWindowName(std::string newName);
 
 	/**
 	 * Activates / Deactivates the main camera input and sets the cursor
