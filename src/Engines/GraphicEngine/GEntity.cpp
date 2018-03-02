@@ -2,48 +2,38 @@
 #include "GraphicEngine.h"
 
 void GEntity::setPosition(vector3df pos){
-    //privateNode->setPosition(irr::core::vector3df(pos.X, pos.Y, pos.Z));
+    toe::core::TOEvector3df matrix = toe::core::TOEvector3df(pos.X, pos.Y, pos.Z);
+    privateNode->SetTranslate(matrix);
 }
 
 void GEntity::setRotation(vector3df rot){
-    //irr::core::vector3df irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
-    //privateNode->setRotation(irrRotation);
+    toe::core::TOEvector3df matrix = toe::core::TOEvector3df(rot.X, rot.Y, rot.Z);
+    privateNode->SetRotation(matrix);
 }
 
 void GEntity::Rotate(vector3df rot){
-    /*irr::core::matrix4 m;
-    irr::core::matrix4 n;
-    irr::core::vector3df irrRotation;
-
-    irrRotation = irr::core::vector3df(rot.X, rot.Y, rot.Z);
-    m.setRotationDegrees(privateNode->getRotation());
-    n.setRotationDegrees(irrRotation);
-    m *= n;
-    
-    privateNode->setRotation(m.getRotationDegrees());
-    privateNode->updateAbsolutePosition();*/
+    toe::core::TOEvector3df matrix = toe::core::TOEvector3df(rot.X, rot.Y, rot.Z);
+    privateNode->Rotate(matrix);
 }
 
 void GEntity::setScale(vector3df scale){
-    //privateNode->setScale(irr::core::vector3df(scale.X, scale.Y, scale.Z));
+    toe::core::TOEvector3df matrix = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+    privateNode->SetScale(matrix);
 }
 
 vector3df GEntity::getPosition(){
-    //irr::core::vector3df v = privateNode->getPosition();
-    //return vector3df(v.X, v.Y, v.Z);
-    return vector3df(0, 0, 0);
+    toe::core::TOEvector3df position = privateNode->GetTranslation();
+    return vector3df(position.X, position.Y, position.Z);
 }
 
 vector3df GEntity::getRotation(){
-    //irr::core::vector3df v = privateNode->getRotation();
-    //return vector3df(v.X, v.Y, v.Z);
-    return vector3df(0, 0, 0);
+    toe::core::TOEvector3df rotation = privateNode->GetRotation();
+    return vector3df(rotation.X, rotation.Y, rotation.Z);
 }
 
 vector3df GEntity::getScale(){
-    //irr::core::vector3df v = privateNode->getScale();
-    //return vector3df(v.X, v.Y, v.Z);
-    return vector3df(0, 0, 0);
+    toe::core::TOEvector3df scale = privateNode->GetScale();
+    return vector3df(scale.X, scale.Y, scale.Z);
 }
 
 void GEntity::updateAbsolutePosition(){
@@ -55,5 +45,6 @@ void GEntity::setAutomaticCulling(){
 }
 
 void GEntity::Erase(){
+    
     //IrrEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
 }
