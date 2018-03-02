@@ -22,8 +22,10 @@ bool GraphicEngine::drop(){
 	return true;
 }
 
+//####################
+//####################
+//####################
 void GraphicEngine::setCursorVisible(bool visible){
-	std::cout<<"En nuestro motor no usamos el SET CURSOR VISIBLE"<<std::endl;
 	//if(privateDevice != nullptr) privateDevice->getCursorControl()->setVisible(false);
 }
 
@@ -37,6 +39,9 @@ void GraphicEngine::ChangeWindowName(std::string newName){
 	if(privateDriver != nullptr) privateDriver->SetWindowName(newName);
 }
 
+//####################
+//####################
+//####################
 void GraphicEngine::ToggleMenu(bool newState){
 	/*if(privateDevice != nullptr){
 		if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
@@ -46,8 +51,10 @@ void GraphicEngine::ToggleMenu(bool newState){
 	}*/
 }
 
+//####################
+//####################
+//####################
 void GraphicEngine::ToggleCameraMovement(bool newState){
-	std::cout<<"Esta funcion solo era para la CAMARA LIBRE de Irrlicht, ya no se usa."<<std::endl;
 	/*if (privateCamera != nullptr){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
 		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
@@ -56,8 +63,8 @@ void GraphicEngine::ToggleCameraMovement(bool newState){
 
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
-	bool toRet = false;
 	std::cout<<"En nuestro motor no usamos el BEGIN SCENE"<<std::endl;
+	bool toRet = false;
 	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->beginScene();
 	return toRet;
@@ -72,17 +79,17 @@ bool GraphicEngine::beginSceneDefault(){
 }
 
 bool GraphicEngine::endScene(){
-	bool toRet = false;
 	std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
+	bool toRet = false;
 	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
 	return toRet;
 }
 
+//####################
+//####################
+//####################
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
-	//####################
-	//####################
-	//####################
 	//if(privateDriver != nullptr) body->privateNode->setMaterialTexture(0, privateDriver->getTexture(s.c_str()));
 }
 
@@ -176,7 +183,7 @@ void GraphicEngine::drawOverlays(OverlayCodes type){
 int GraphicEngine::GetScreenHeight(){
 	int toRet = 0;
 	if(privateDriver != nullptr){
-		int toRet = (int) privateDriver->GetWindowDimensions().Y;
+		toRet = (int) privateDriver->GetWindowDimensions().Y;
 	}
 	return toRet;
 }
@@ -184,7 +191,7 @@ int GraphicEngine::GetScreenHeight(){
 int GraphicEngine::GetScreenWidth(){
 	int toRet = 0;
 	if(privateDriver != nullptr){
-		int toRet = (int) privateDriver->GetWindowDimensions().X;
+		toRet = (int) privateDriver->GetWindowDimensions().X;
 	}
 	return toRet;
 }
@@ -218,25 +225,24 @@ void GraphicEngine::drawAll(){
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
 	GBody* gb = nullptr;
 
-	/*if(privateSManager != nullptr){
+	if(privateSManager != nullptr){
 		gb = new GBody(
-			privateSManager->addCubeSceneNode(
-				size,   //size
-				0,      //parent
-				id,     //id
-				irr::core::vector3df(p.X, p.Y, p.Z),    //position
-				irr::core::vector3df(0,0, 0),    		//rotation
-				irr::core::vector3df(s.X, s.Y, s.Z)     //scale
+			toe::AddCube(
+				toe::core::TOEvector3df(p.X, p.Y, p.Z),
+				toe::core::TOEvector3df(0, 0, 0),
+				toe::core::TOEvector3df(s.X * size, s.Y * size, s.Z * size)
 			)
 		);
-
 		gb->Rotate(vector3df(r.X, r.Y, 0));
 		gb->Rotate(vector3df(0, 0, r.Z));
-	}*/
+	}
 
 	return gb;
 }
 
+//####################
+//####################
+//####################
 GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, float radius, int id){
 	GBody* gb = nullptr;
 	/*if(privateSManager != nullptr){
@@ -257,20 +263,22 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	GBody* gb = nullptr;
-	//gb = new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
-	
+	toe::core::TOEvector3df data = toe::core::TOEvector3df(0, 0, 0);
+	gb = new GBody(
+		privateSManager->AddMesh(data, data, data, path)
+	);
 	return gb;
 }
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
-	GBody* body= nullptr;
-/*
-	GBody* body= new GBody(privateSManager->addAnimatedMeshSceneNode(privateSManager->getMesh(path.c_str())));
-	body->setPosition(position);
-	body->setRotation(rotation);
-	body->setScale(scale);
-*/
-	return body;
+	GBody* gb = nullptr;
+	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+	gb = new GBody(
+		privateSManager->AddMesh(position_TOE, rotation_TOE, scale_TOE, path)
+	);
+	return gb;
 }
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){

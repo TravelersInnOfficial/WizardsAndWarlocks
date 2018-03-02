@@ -7,6 +7,7 @@
 #include <MaterialFlags.h>
 
 class GBody: public GEntity{
+	friend class GraphicEngine;
 
 public:
 
@@ -36,8 +37,6 @@ public:
 	void Remove();
 
 	void AddText(std::string text, vector3df position, int id = 0);
-
-	friend class IrrEngine;
 
 private:
 
