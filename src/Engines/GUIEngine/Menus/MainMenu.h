@@ -46,9 +46,9 @@ private:
                                                 TEXTUREMAP[TEXTURE_MAINMENU_OPTIONS].c_str(),
                                                 TEXTUREMAP[TEXTURE_MAINMENU_EXIT].c_str()};
 
-
-    irr::video::ITexture* texture[N_BUTTONS];
-    IrrIMGUI::IGUITexture * imageid[N_BUTTONS];
+    sf::Texture* texture[N_BUTTONS];
+    //irr::video::ITexture* texture[N_BUTTONS];
+    //IrrIMGUI::IGUITexture * imageid[N_BUTTONS];
     const char * descriptions[N_BUTTONS] ={ "Play as a warlock against our AI",
                                             "Play with your friends in LAN",
                                             "Customize the game options",

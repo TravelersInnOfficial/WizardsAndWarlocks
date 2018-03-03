@@ -19,17 +19,18 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
 
     hp = PlayerManager::GetInstance()->GetPlayerOne();
 
-    load_imagesid(N_OSPELLS, o_spellLayouts, o_spelltexture, o_spellimageid, o_spells_codes, &spells_map);
-    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spellimageid, d_spells_codes, &spells_map);
-    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spellimageid, t_spells_codes, &spells_map);
-    load_imagesid(N_TRAPS, trapLayouts, trap_texture, trap_imageid, traps_codes, &traps_map);
+    load_imagesid(N_OSPELLS, o_spellLayouts, o_spelltexture, o_spells_codes, &spells_map);
+    load_imagesid(N_DSPELLS, d_spellLayouts, d_spelltexture, d_spells_codes, &spells_map);
+    load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spells_codes, &spells_map);
+    load_imagesid(N_TRAPS, trapLayouts, trap_texture, traps_codes, &traps_map);
 
-    buttonSize = ImVec2(trap_texture[0]->getSize().Width/10,trap_texture[0]->getSize().Height/10);
+    //buttonSize = ImVec2(trap_texture[0]->getSize().Width/10,trap_texture[0]->getSize().Height/10);
+    buttonSize = ImVec2(trap_texture[0]->getSize().x/10,trap_texture[0]->getSize().y/10);
 
     imgui_ddflags = 0;
     if (ddflags.parentNullID)  imgui_ddflags |= ImGuiDragDropFlags_SourceAllowNullID;
 
-    std::map<IrrIMGUI::IGUITexture*,SPELLCODE>::iterator it;
+    std::map<sf::Texture*,SPELLCODE>::iterator it;
     for(int i = 1; i<N_SPELL_SOCKETS; i++){
         SPELLCODE spell = SpellManager::GetInstance()->GetSpellCode(i,hp);
         for(it = spells_map.begin(); it!=spells_map.end(); ++it){
@@ -40,7 +41,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
         }
     }
 
-    std::map<IrrIMGUI::IGUITexture*,TrapEnum>::iterator itt;
+    std::map<sf::Texture*,TrapEnum>::iterator itt;
     TrapEnum trap = TrapManager::GetInstance()->getPlayerTrap(hp);
     for(itt = traps_map.begin(); itt!=traps_map.end(); ++itt){
         if(itt->second ==  trap ){
@@ -53,6 +54,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
 }
 
 ShopMenu::~ShopMenu(){
+    /*
     for(int i = 0; i<N_OSPELLS; i++){
         GUI->deleteTexture(o_spellimageid[i]);
     }
@@ -65,6 +67,7 @@ ShopMenu::~ShopMenu(){
     for(int i = 0; i<N_TRAPS; i++){
         GUI->deleteTexture(trap_imageid[i]);
     }
+    */
 }
 
 void ShopMenu::Drop(){
@@ -75,23 +78,27 @@ void ShopMenu::Close(bool* open){
     closeMenu(open);
 }
 
-void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE> codes, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>* map){
+void ShopMenu::load_imagesid(int total, const char *layouts[], sf::Texture* texture[], std::vector<SPELLCODE> codes, std::map<sf::Texture*,SPELLCODE>* map){
     for(int i = 0; i<total;i++){
-        texture[i] = pDevice->getVideoDriver()->getTexture(layouts[i]);
-        imageid[i] = GUI->createTexture(texture[i]);
-        map->insert(std::pair<IrrIMGUI::IGUITexture*,SPELLCODE>(imageid[i],codes[i]));
+        sf::Texture* t = new sf::Texture();
+        if(t->loadFromFile(layouts[i])){
+            texture[i] = t;
+            map->insert(std::pair<sf::Texture*,SPELLCODE>(texture[i],codes[i]));
+        }
     }
 }
 
-void ShopMenu::load_imagesid(int total, const char *layouts[], irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum> codes, std::map<IrrIMGUI::IGUITexture*,TrapEnum>* map){
+void ShopMenu::load_imagesid(int total, const char *layouts[], sf::Texture* texture[], std::vector<TrapEnum> codes, std::map<sf::Texture*,TrapEnum>* map){
     for(int i = 0; i<total;i++){
-        texture[i] = pDevice->getVideoDriver()->getTexture(layouts[i]);
-        imageid[i] = GUI->createTexture(texture[i]);
-        map->insert(std::pair<IrrIMGUI::IGUITexture*,TrapEnum>(imageid[i],codes[i]));
+        sf::Texture* t = new sf::Texture();
+        if(t->loadFromFile(layouts[i])){
+            texture[i] = t;
+            map->insert(std::pair<sf::Texture*,TrapEnum>(texture[i],codes[i]));
+        }
     }
 }
 
-void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols,std::vector<IrrIMGUI::IGUITexture*> &items_selected){
+void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols,std::vector<sf::Texture*> &items_selected){
     ImGui::Columns(cols, id, false);
     int next_focused = -1; 
     for(int i = 0; i<total ;i++){
@@ -108,7 +115,7 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
         if (ImGui::BeginDragDropTarget()){ 
             if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload(type,imgui_ddflags)){
                 if(!already_selected(items_selected)){
-                    memcpy((float*)&items_selected[i], payload->Data, sizeof(IrrIMGUI::IGUITexture));
+                    memcpy((float*)&items_selected[i], payload->Data, sizeof(sf::Texture));
                     
                     //GET THE ELEMENT ENUM CODE
                     if(type == TYPE_SPELL){
@@ -127,20 +134,20 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
     ImGui::Separator();
 }
 
-void ShopMenu::load_items(const char* id, const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[],const char * names[], const char * descriptions[]){
+void ShopMenu::load_items(const char* id, const char* type, int total, int cols, sf::Texture* texture[],const char * names[], const char * descriptions[]){
     ImGui::Columns(cols, id, false);
     for(int i = 0; i<total; i++){
         ImGui::PushID(i);
-        if(ImGui::ImageButton(imageids[i],buttonSize)){
-            selected = imageids[i];
+        if(ImGui::ImageButton(texture[i],buttonSize)){
+            selected = texture[i];
             if(!already_selected(selected_spells)){
                 if(type == TYPE_SPELL){
-                    memcpy((float*)&selected_spells[focused_button], &selected, sizeof(IrrIMGUI::IGUITexture));
+                    memcpy((float*)&selected_spells[focused_button], &selected, sizeof(sf::Texture));
                     ChangeSpell(focused_button+1, spells_map[selected]);
                     next_focused_button();
                 }
                 else{
-                    memcpy((float*)&selected_trap[0], &selected, sizeof(IrrIMGUI::IGUITexture));
+                    memcpy((float*)&selected_trap[0], &selected, sizeof(sf::Texture));
                     ChangeTrap(traps_map[selected]);
                 }
             }
@@ -149,9 +156,9 @@ void ShopMenu::load_items(const char* id, const char* type, int total, int cols,
         ImGui::PopID();
         
         if(ImGui::BeginDragDropSource()){
-            ImGui::SetDragDropPayload(type, &imageids[i], sizeof(IrrIMGUI::IGUITexture), ImGuiCond_Once);
-            ImGui::Image(imageids[i],buttonSize);
-            selected = imageids[i];
+            ImGui::SetDragDropPayload(type, &texture[i], sizeof(sf::Texture), ImGuiCond_Once);
+            ImGui::Image(texture[i],buttonSize);
+            selected = texture[i];
             ImGui::EndDragDropSource();
         }
         if (ImGui::IsItemHovered()){ 
@@ -177,10 +184,10 @@ void ShopMenu::Update(bool* open, float deltaTime){
         load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
         load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
 
-        load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spellimageid, o_spellKeys, o_spell_descriptions);
-        load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spellimageid, d_spellKeys, d_spell_descriptions);
-        load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spellimageid, t_spellKeys, t_spell_descriptions);
-        load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_imageid, trapKeys, trap_descriptions); 
+        load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spelltexture, o_spellKeys, o_spell_descriptions);
+        load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spelltexture, d_spellKeys, d_spell_descriptions);
+        load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spelltexture, t_spellKeys, t_spell_descriptions);
+        load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_texture, trapKeys, trap_descriptions); 
         
         if(ImGui::Button("Close",ImVec2(100,50))){
             closeMenu(open);
@@ -210,7 +217,7 @@ void ShopMenu::ChangeTrap(TrapEnum tEnum){
 	}
 }
 
-bool ShopMenu::already_selected(std::vector<IrrIMGUI::IGUITexture*> &items_selected){
+bool ShopMenu::already_selected(std::vector<sf::Texture*> &items_selected){
     bool already_in = false;
     for(int j = 0; j<items_selected.size();j++){
         if(items_selected[j] == selected){ 

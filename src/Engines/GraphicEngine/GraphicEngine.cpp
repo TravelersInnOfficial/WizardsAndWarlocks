@@ -1,6 +1,8 @@
 #include "GraphicEngine.h"
 
 GraphicEngine::GraphicEngine(bool isServer){
+	privateDriver = VideoDriver::GetInstance();
+	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
 }
 
 GraphicEngine::~GraphicEngine(){

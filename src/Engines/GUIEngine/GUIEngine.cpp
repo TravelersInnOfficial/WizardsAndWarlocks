@@ -1,15 +1,16 @@
 #include "GUIEngine.h"
 #include <DeathMessages.h>
+#include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();
     //pDevice = g_engine->GetIrrlichtDevice();
-    pDevice = nullptr;
+    //pDevice = nullptr;
     //m_EventReceiver = g_engine->GetMenuReceiver();
-    m_EventReceiver = nullptr;
+    //m_EventReceiver = nullptr;
 
     // Create GUI object
-    m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
+    //m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
     m_notifications_Ypos = 10;
     m_notifications_distance = 10;
 }
@@ -20,17 +21,20 @@ GUIEngine* GUIEngine::GetInstance(){
 }
 
 GUIEngine::~GUIEngine(){
-    m_GUIHandler->drop();
+    //m_GUIHandler->drop();
+    ImGui::SFML::Shutdown();
 }
 
 void GUIEngine::Update(){
     // create the GUI elements
-    m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
+    //m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
+    ImGui::SFML::Init(*VideoDriver::GetInstance()->m_window);
     printNotifications();
 }
 
 void GUIEngine::Draw(){
-   m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
+   //m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
+   ImGui::SFML::Render(*VideoDriver::GetInstance()->m_window);
 }
 
 void GUIEngine::printNotifications(){
@@ -90,5 +94,5 @@ void GUIEngine::ShowDeathMessage(std::string victim, float time){
     m_notifications_data.insert(std::pair<std::string,float>(death_phrase, time+ImGui::GetTime()));
 }
 
-IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}
-irr::IrrlichtDevice* GUIEngine::GetPDevice(){return pDevice;}
+//IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}
+//irr::IrrlichtDevice* GUIEngine::GetPDevice(){return pDevice;}

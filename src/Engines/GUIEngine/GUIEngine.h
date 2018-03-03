@@ -1,8 +1,8 @@
 #ifndef GUIENGINE_H
 #define GUIENGINE_H
 
-#include <IrrIMGUI/IrrIMGUI.h>
 #include <IMGUI/imgui.h>
+#include <IMGUI/imgui-SFML.h>
 #include <vector3d.h>
 #include <vector2d.h>
 #include <GraphicEngine/GraphicEngine.h>
@@ -10,6 +10,7 @@
 
 class GUIEngine{
     friend class Menu;
+    friend class VideoDriver;
     
 public:
 	static GUIEngine* GetInstance();
@@ -21,16 +22,16 @@ public:
 
 private:
     GraphicEngine* g_engine;
-    irr::IrrlichtDevice* pDevice;
-    IrrIMGUI::IIMGUIHandle * m_GUIHandler; //MGUI handler
+    //irr::IrrlichtDevice* pDevice;
+    //IrrIMGUI::IIMGUIHandle * m_GUIHandler; //MGUI handler
 
     //Create standard event receiver for the IrrIMGUI
-    MenuReceiver* m_EventReceiver;
+    //MenuReceiver* m_EventReceiver;
 
     GUIEngine();
 
-    IrrIMGUI::IIMGUIHandle * GetGuiHandler();
-    irr::IrrlichtDevice* GetPDevice();
+    //IrrIMGUI::IIMGUIHandle * GetGuiHandler();
+    //irr::IrrlichtDevice* GetPDevice();
     void printNotifications();
 
     //notifications data

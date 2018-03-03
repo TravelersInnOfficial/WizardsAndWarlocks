@@ -1,6 +1,6 @@
 #include "IrrMenuManager.h"
-#include "./../../Managers/SpellManager.h"
-#include "./../../Managers/PlayerManager.h"
+//#include "./../../Managers/SpellManager.h"
+//#include "./../../Managers/PlayerManager.h"
 #include <TrapCodes.h>
 #include <GUIEngine/GUIEngine.h>
 #include "IrrEngine.h"

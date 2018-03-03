@@ -34,8 +34,8 @@ public:
 protected:
     GUIEngine* gui_engine;
     GraphicEngine* g_engine;
-    irr::IrrlichtDevice* pDevice;
-    IrrIMGUI::IIMGUIHandle * GUI;
+    //irr::IrrlichtDevice* pDevice;
+    //IrrIMGUI::IIMGUIHandle * GUI;
     
     ImGuiWindowFlags w_flags;
     WindowOptions w_opt;

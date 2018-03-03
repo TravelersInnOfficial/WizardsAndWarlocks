@@ -3,8 +3,8 @@
 Menu::Menu(MenuType type){
     g_engine = GraphicEngine::getInstance();
     gui_engine = GUIEngine::GetInstance();
-    pDevice = gui_engine->GetPDevice();
-    GUI = gui_engine->GetGuiHandler();
+    //pDevice = gui_engine->GetPDevice();
+    //GUI = gui_engine->GetGuiHandler();
 
     m_id = "";
     m_type = type;

@@ -33,7 +33,7 @@ bool IrrMenuReceiver::OnEvent(const irr::SEvent& event) {
 		}
 	}
 
-	return CIMGUIEventReceiver::OnEvent(event);
+	return false;/*CIMGUIEventReceiver::OnEvent(event);*/
 }
 
 bool IrrMenuReceiver::EscPressed(){

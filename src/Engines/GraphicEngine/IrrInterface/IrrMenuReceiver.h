@@ -5,10 +5,10 @@
 #include <SoundEngine/SoundSystem.h>
 #include <Menus.h>
 #include <Keycodes.h>
-#include <IrrIMGUI/IrrIMGUI.h>
+//#include <IrrIMGUI/IrrIMGUI.h>
 #include <irrlicht/irrlicht.h>
 
-class IrrMenuReceiver : public IrrIMGUI::CIMGUIEventReceiver{
+class IrrMenuReceiver : public irr::IEventReceiver /*IrrIMGUI::CIMGUIEventReceiver*/{
 
 protected:
 	bool escape;

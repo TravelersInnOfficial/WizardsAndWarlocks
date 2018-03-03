@@ -29,22 +29,29 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     
     //BUTTONS DATA
     for(int i = 0; i<N_BUTTONS;i++){
-        texture[i] = pDevice->getVideoDriver()->getTexture(buttonLayouts[i]);
-        imageid[i] = GUI->createTexture(texture[i]);
+        //texture[i] = pDevice->getVideoDriver()->getTexture(buttonLayouts[i]);
+        //imageid[i] = GUI->createTexture(texture[i]);
+        sf::Texture* t = new sf::Texture();
+        if(t->loadFromFile(buttonLayouts[i])){
+            texture[i] = t;
+        }
     }
-    buttonSize = ImVec2(texture[0]->getSize().Width,texture[0]->getSize().Height);
+    //buttonSize = ImVec2(texture[0]->getSize().Width,texture[0]->getSize().Height);
+    buttonSize = ImVec2(texture[0]->getSize().x,texture[0]->getSize().y);
     pu_buttonSize = ImVec2(140,0);
 
     //WIDGET SIZE
-    m_width = texture[0]->getSize().Width + 30;
-    m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
+    //m_width = texture[0]->getSize().Width + 30;
+    m_width = texture[0]->getSize().x + 30;
+    //m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
+    m_height = texture[0]->getSize().y * N_BUTTONS + 50;
 
     netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
-    for(int i = 0; i<N_BUTTONS; i++){
-        GUI->deleteTexture(imageid[i]);
-    }
+    //for(int i = 0; i<N_BUTTONS; i++){
+    //    GUI->deleteTexture(imageid[i]);
+    //}
     delete netSeeker;
 }
 
@@ -89,7 +96,7 @@ void MainMenu::Update(bool* open, float deltaTime){
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
 
-            if(ImGui::ImageButton(imageid[i],buttonSize)){
+            if(ImGui::ImageButton(texture[i]/*imageid[i]*/,buttonSize)){
                 PlaySound();
                 actions[i](open);
             }

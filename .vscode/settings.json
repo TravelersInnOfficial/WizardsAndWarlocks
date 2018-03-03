@@ -57,7 +57,8 @@
         "__config": "cpp",
         "__nullptr": "cpp",
         "slist": "cpp",
-        "future": "cpp"
+        "future": "cpp",
+        "hash_map": "cpp"
     },
 
     "editor.quickSuggestions": {

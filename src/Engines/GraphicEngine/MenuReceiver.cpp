@@ -4,7 +4,7 @@ MenuReceiver::MenuReceiver() {
 	escape = false;
 }
 
-bool MenuReceiver::OnEvent(const irr::SEvent& event) {
+bool MenuReceiver::OnEvent(/*const irr::SEvent& event*/) {
 
 	/*if (event.EventType == irr::EET_KEY_INPUT_EVENT) {
 		if (event.KeyInput.PressedDown == true) {
