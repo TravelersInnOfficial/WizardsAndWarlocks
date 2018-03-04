@@ -1,6 +1,7 @@
 #include "GUIEngine.h"
 #include <DeathMessages.h>
 #include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
+#include <SFML/Graphics.hpp>
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();

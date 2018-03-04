@@ -2,12 +2,12 @@
 #include "GraphicEngine.h"
 
 GBody::GBody(void* node){
-    //privateNode = node;
-    //board = nullptr;
+    privateNode = (TFNode*)node;
 }
 
 GBody::~GBody(){
-	Erase();
+	toe::privateSceneManager->DeleteMesh(privateNode);
+	// El TFNode se elimina correctamente
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
@@ -29,16 +29,19 @@ void GBody::Remove(){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	/*if(board!=nullptr){  
-		std::wstring textTmp(text.begin(), text.end());
-		board->setText(textTmp.c_str());
+	toe::core::TOEvector3df motorPosition(position.X, position.Y, position.Z);
+	// COmprobamos si ya existia la id almacenada
+	if(m_billboards.find(id) != m_billboards.end()){
+		// Comprobamos que haya algo creado ahi
+		int motorId = m_billboards[id];
+		if(motorId != -1){
+			privateNode->SetBillboardText(text, motorId);
+			privateNode->SetBillboardPosition(motorPosition, motorId);
 
-		float dimX = text.length() * 0.1;
-		float dimY = 0.25f;
-		irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
-		board->setSize(dim);
-
-	}else{ 
-		board = IrrEngine::getInstance()->addBillboardText(text, privateNode, position, id);
-	}*/
+			// Una vez cambiado el texto y su posicion volvemos
+			return;
+		}
+	}
+	// Si se llega aqui significa que no existe ningun billboard
+	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);
 }

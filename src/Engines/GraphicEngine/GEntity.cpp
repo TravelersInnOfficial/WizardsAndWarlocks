@@ -45,6 +45,5 @@ void GEntity::setAutomaticCulling(){
 }
 
 void GEntity::Erase(){
-    
     //IrrEngine::getInstance()->privateSManager->addToDeletionQueue(privateNode);
 }

@@ -43,6 +43,7 @@ private:
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(void* node);
 	TFMesh* privateAnimatedMesh; 
+	std::map<int, int> m_billboards;		// ID del billboard, ID en el motor
 	//irr::scene::IBillboardTextSceneNode* board;
   
 };
