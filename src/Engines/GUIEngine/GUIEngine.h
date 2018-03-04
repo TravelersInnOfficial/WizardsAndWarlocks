@@ -2,6 +2,7 @@
 #define GUIENGINE_H
 
 #include <IMGUI/imgui.h>
+#include <IMGUI/imgui_internal.h>
 #include <IMGUI/imgui-SFML.h>
 #include <vector3d.h>
 #include <vector2d.h>
