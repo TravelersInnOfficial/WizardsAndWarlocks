@@ -1,8 +1,12 @@
 #include "GraphicEngine.h"
 
 GraphicEngine::GraphicEngine(bool isServer){
+	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = VideoDriver::GetInstance();
 	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
+
+	//EventReceiver* receiver = new EventReceiver();
+	//privateDriver->SetIODriver(receiver);
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -368,9 +372,8 @@ bool GraphicEngine::IsKeyUp(TKEY_CODE code){
 	return false;
 }
 
-bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
-	//return privateReceiver->keyPressed((irr::EKEY_CODE)code);
-	return false;
+bool GraphicEngine::IsKeyPressed(KeyboardKey code){
+	return privateReceiver->keyPressed(code);
 }
 
 keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
