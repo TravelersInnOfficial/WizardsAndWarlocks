@@ -21,6 +21,7 @@ FPSCamera::~FPSCamera(){
 void FPSCamera::UpdateCamera(vector3df position){
 	if(m_working){
     	vector3df rotation = p_Camera->getRotation();
+    		std::cout<<rotation<<std::endl;
 		p_Camera->setPosition(position);
 		vector3df target = position;
 		float max = 1;
