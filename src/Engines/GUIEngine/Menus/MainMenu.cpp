@@ -80,7 +80,6 @@ void MainMenu::ExitGame(bool * open){
 
 void MainMenu::Update(bool* open, float deltaTime){
     netSeeker->Update(deltaTime);
-
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));

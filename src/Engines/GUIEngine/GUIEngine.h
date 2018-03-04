@@ -2,12 +2,12 @@
 #define GUIENGINE_H
 
 #include <IMGUI/imgui.h>
-#include <IMGUI/imgui_internal.h>
 #include <IMGUI/imgui-SFML.h>
 #include <vector3d.h>
 #include <vector2d.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include <map>
+#include <SFML/Graphics.hpp>
 
 class GUIEngine{
     friend class Menu;
@@ -38,6 +38,7 @@ private:
     float m_notifications_Ypos;
     float m_notifications_distance;
     std::map<std::string,float> m_notifications_data;
+    sf::Texture* cursor;
 
 };
 #endif
