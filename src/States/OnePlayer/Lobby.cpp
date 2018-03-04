@@ -34,11 +34,11 @@ Lobby::~Lobby(){
 }
 
 bool Lobby::Input(){
-	if(g_engine->IsKeyPressed(KEY_KEY_V)){
+	if(g_engine->IsKeyPressed(Key_V)){
 		playerManager->AddAIPlayer();
 	}
 
-	if(g_engine->IsKeyPressed(KEY_KEY_B)){
+	if(g_engine->IsKeyPressed(Key_B)){
 		Player* p = playerManager->AddAIPlayer();
 		p->SetAlliance(ALLIANCE_WARLOCK);
 	}

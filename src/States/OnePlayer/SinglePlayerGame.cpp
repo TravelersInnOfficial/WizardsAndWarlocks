@@ -95,28 +95,28 @@ bool SinglePlayerGame::Input(){
 		return true;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)){
+	if(g_engine->IsKeyPressed(Key_Escape)){
 		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 	}
 
 	// DEBUG
-	if(g_engine->IsKeyPressed(KEY_F1)) debug =! debug;
+	if(g_engine->IsKeyPressed(Key_F1)) debug =! debug;
 
 
-	if(g_engine->IsKeyPressed(KEY_F2)){
+	if(g_engine->IsKeyPressed(Key_F2)){
 		float vol = 1;
 		if(!mute) vol = 0;
 		SoundSystem::getInstance()->setVolume(vol);
 		mute = !mute;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_F3)){
+	if(g_engine->IsKeyPressed(Key_F3)){
 		g_engine->ToggleCameraMovement(captured);
 		g_engine->setCursorVisible(!captured);
 		captured = !captured;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_KEY_M)){
+	if(g_engine->IsKeyPressed(Key_M)){
 		AL = playerManager->AddAIPlayer();
 	}
 

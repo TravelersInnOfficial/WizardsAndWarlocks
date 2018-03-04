@@ -1,5 +1,5 @@
 GESRCPATH				=src/Engines/TravelersOcularEngine
-INCLUDE_FOLDERS			=-I./src/Includes -I./src/Engines/ -I./$(GESRCPATH)/src/Common
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/Engines/TravelersOcularEngine/src/Common -I./src/Engines/ -I./$(GESRCPATH)/src/Common
 USER_FLAGS				=
 USER_FLAGS_C			=
 

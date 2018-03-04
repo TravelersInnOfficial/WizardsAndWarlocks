@@ -117,15 +117,15 @@ void MultiPlayerGame::CleanGame(){
 bool MultiPlayerGame::Input(){
 	if(!g_engine->run()) return true;
 
-	if(g_engine->IsKeyPressed(KEY_ESCAPE)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+	if(g_engine->IsKeyPressed(Key_Escape)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
 
 	// DEBUG
-	if(g_engine->IsKeyPressed(KEY_F1)) {
+	if(g_engine->IsKeyPressed(Key_F1)) {
 		MenuManager::GetInstance()->CreateMenu(NETDEBUG_M);
 		debug = !debug;
 	}
 
-	if(g_engine->IsKeyPressed(KEY_F2)){
+	if(g_engine->IsKeyPressed(Key_F2)){
 		Server* myServer = n_engine->GetServer();
 		if(myServer == nullptr || (myServer != nullptr && !myServer->GetCreatedFromGame())){	
 			float vol = 1;
@@ -135,7 +135,7 @@ bool MultiPlayerGame::Input(){
 		}
 	}
 
-	if(g_engine->IsKeyPressed(KEY_F3)){
+	if(g_engine->IsKeyPressed(Key_F3)){
 		g_engine->ToggleCameraMovement(captured);
 		g_engine->setCursorVisible(!captured);
 		captured = !captured;

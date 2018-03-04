@@ -1,8 +1,12 @@
 #include "GraphicEngine.h"
 
 GraphicEngine::GraphicEngine(bool isServer){
+	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = VideoDriver::GetInstance();
 	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
+
+	EventReceiver* receiver = new EventReceiver();
+	privateDriver->SetIODriver(receiver);
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -62,7 +66,7 @@ void GraphicEngine::ToggleCameraMovement(bool newState){
 
 // DRIVER FUNCTIONS
 bool GraphicEngine::beginScene(){
-	std::cout<<"En nuestro motor no usamos el BEGIN SCENE"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el BEGIN SCENE"<<std::endl;
 	bool toRet = false;
 	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->beginScene();
@@ -71,14 +75,14 @@ bool GraphicEngine::beginScene(){
 
 bool GraphicEngine::beginSceneDefault(){
 	bool toRet = false;
-	std::cout<<"En nuestro motor no usamos el BEGIN SCENE DEFAULT"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el BEGIN SCENE DEFAULT"<<std::endl;
 	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
 	return toRet;
 }
 
 bool GraphicEngine::endScene(){
-	std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
 	bool toRet = false;
 	toRet = true;
 	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
@@ -93,7 +97,7 @@ void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-	std::cout<<"En nuestro motor no hacemos PAINT LINE DEBUG"<<std::endl;
+	//std::cout<<"En nuestro motor no hacemos PAINT LINE DEBUG"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		irr::video::SColorf fromC;
@@ -110,7 +114,7 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 }
 
 void GraphicEngine::drawAim(bool moving){
-	std::cout<<"En nuestro motor no usamos el DRAW AIM"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el DRAW AIM"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
@@ -136,7 +140,7 @@ void GraphicEngine::drawAim(bool moving){
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
-	std::cout<<"En nuestro motor no usamos el DRAW GRAIL GUI"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el DRAW GRAIL GUI"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
@@ -162,7 +166,7 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 }
 
 void GraphicEngine::drawOverlays(OverlayCodes type){
-	std::cout<<"En nuestro motor no usamos el DRAW OVERLAYS"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el DRAW OVERLAYS"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
@@ -196,7 +200,7 @@ int GraphicEngine::GetScreenWidth(){
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
-	std::cout<<"En nuestro motor no usamos el DRAW 2D IMAGE"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el DRAW 2D IMAGE"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
@@ -208,7 +212,7 @@ void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	std::cout<<"En nuestro motor no usamos el DRAW 2D RECTANGLE"<<std::endl;
+	//std::cout<<"En nuestro motor no usamos el DRAW 2D RECTANGLE"<<std::endl;
 
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
@@ -367,9 +371,8 @@ bool GraphicEngine::IsKeyUp(TKEY_CODE code){
 	return false;
 }
 
-bool GraphicEngine::IsKeyPressed(TKEY_CODE code){
-	//return privateReceiver->keyPressed((irr::EKEY_CODE)code);
-	return false;
+bool GraphicEngine::IsKeyPressed(KeyboardKey code){
+	return privateReceiver->keyPressed(code);
 }
 
 keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){

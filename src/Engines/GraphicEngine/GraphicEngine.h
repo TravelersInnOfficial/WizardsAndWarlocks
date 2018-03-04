@@ -7,7 +7,7 @@
 #include "GEntity.h"
 #include "EventReceiver.h"
 #include "MenuReceiver.h"
-#include <Keycodes.h>
+#include <EventEnum.h>
 #include <vector2d.h>
 #include <vector3d.h>
 #include <vector4d.h>
@@ -252,7 +252,7 @@ public:
 	/**
 	 * Returns true is given code is held down
 	*/
-	bool IsKeyPressed(TKEY_CODE code);
+	bool IsKeyPressed(KeyboardKey code);
 
 	keyStatesENUM GetKeyStatus(TKEY_CODE code);
 
