@@ -85,6 +85,7 @@ bool GraphicEngine::endScene(){
 	//std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
 	bool toRet = false;
 	toRet = true;
+	if(privateDriver != nullptr) privateDriver->Draw();
 	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
 	return toRet;
 }

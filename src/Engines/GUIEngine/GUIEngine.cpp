@@ -1,7 +1,6 @@
 #include "GUIEngine.h"
 #include <DeathMessages.h>
 #include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
-#include <SFML/Graphics.hpp>
 
 GUIEngine::GUIEngine(){
 
@@ -14,11 +13,11 @@ GUIEngine::GUIEngine(){
     //pDevice = nullptr;
     //m_EventReceiver = g_engine->GetMenuReceiver();
     //m_EventReceiver = nullptr;
+    cursor = new sf::Texture();
+    cursor->loadFromFile("./../assets/textures/HUD/cursor.png");
     unsigned char* pixels;
     int width, height;
     ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
-    sf::Texture* cursor = new sf::Texture();
-    cursor->loadFromFile("./../assets/textures/HUD/cursor.png");
     ImGui::GetIO().Fonts->TexID = (void*)cursor;
 
     // Create GUI object
@@ -35,6 +34,7 @@ GUIEngine* GUIEngine::GetInstance(){
 GUIEngine::~GUIEngine(){
     //m_GUIHandler->drop();
     ImGui::SFML::Shutdown();
+    delete cursor;
 }
 
 void GUIEngine::Update(){
