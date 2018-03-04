@@ -4,8 +4,9 @@
 #include <vector3d.h>
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
+//fast forward declaration
+class TFNode;
 class GEntity{
-
 public:
 	
 	/**

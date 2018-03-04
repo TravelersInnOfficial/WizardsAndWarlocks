@@ -4,6 +4,13 @@
 
 GUIEngine::GUIEngine(){
     g_engine = GraphicEngine::getInstance();
+    //unsigned char* pixels;
+    //int width, height;
+    //ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
+    //sf::Texture* texture = MyEngine::CreateTextureFromMemoryPixels(pixels, width, height, TEXTURE_TYPE_RGBA);
+     // TODO: Store your texture pointer/identifier (whatever your engine uses) in 'io.Fonts->TexID'. This will be passed back to your via the renderer.
+    //ImGui::GetIO().Fonts->TexID = (void*)texture
+    ImGui::SFML::Init(*VideoDriver::GetInstance()->m_window);
     //pDevice = g_engine->GetIrrlichtDevice();
     //pDevice = nullptr;
     //m_EventReceiver = g_engine->GetMenuReceiver();
@@ -28,12 +35,15 @@ GUIEngine::~GUIEngine(){
 void GUIEngine::Update(){
     // create the GUI elements
     //m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
-    ImGui::SFML::Init(*VideoDriver::GetInstance()->m_window);
+    std::cout<<"heyoo\n";
+    //ImGui::NewFrame();
+    ImGui::SFML::Update(*VideoDriver::GetInstance()->m_window,VideoDriver::GetInstance()->m_clock->getElapsedTime());
     printNotifications();
 }
 
 void GUIEngine::Draw(){
    //m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
+   //ImGui::EndFrame();
    ImGui::SFML::Render(*VideoDriver::GetInstance()->m_window);
 }
 

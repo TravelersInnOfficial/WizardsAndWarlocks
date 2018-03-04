@@ -6,6 +6,7 @@
 #include <Menus.h>
 #include <vector2d.h>
 #include <Alliance.h>
+#include <GraphicEngine/GraphicEngine.h>
 
 class Player;
 class Menu;
@@ -29,7 +30,7 @@ private:
 
 	static MenuManager*	instance; 
 	std::vector<int>	loadedOptions;
-	//IrrEngine*		g_engine;
+	GraphicEngine*		g_engine;
 	vector2di			screenSize;
 	//irr::gui::IGUIWindow* netDebugWindow;
 
