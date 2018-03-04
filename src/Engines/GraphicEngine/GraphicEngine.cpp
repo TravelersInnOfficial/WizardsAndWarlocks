@@ -5,8 +5,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateDriver = VideoDriver::GetInstance();
 	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
 
-	EventReceiver* receiver = new EventReceiver();
-	privateDriver->SetIODriver(receiver);
+	//EventReceiver* receiver = new EventReceiver();
+	//privateDriver->SetIODriver(receiver);
 }
 
 GraphicEngine::~GraphicEngine(){
