@@ -15,7 +15,7 @@ Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	// Create an Irrlicht cube
+	// Create graphic body loading mesh
 	m_grailNode = g_engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, vector3df(0,0,0), TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 

@@ -5,7 +5,7 @@ Prop::Prop(vector3df TPosition, vector3df TRotation, vector3df TScale, std::stri
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
 	if(model != ""){
-        // Create an Irrlicht model
+    	// Create graphic body loading mesh
         graphBody = g_engine->addObjMeshSceneNode(model, TPosition, TRotation, TScale);
         graphBody->setMaterialTexture(0, tex);
         

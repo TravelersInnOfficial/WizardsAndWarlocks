@@ -12,7 +12,7 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::st
 	float TMass = 0;
 	clase = EENUM_FLOOR;
 
-	// Create an Irrlicht cube
+	// Create graphic body block
 	graphBody = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	graphBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 	if (texture == "")

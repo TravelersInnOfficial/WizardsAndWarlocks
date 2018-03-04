@@ -38,7 +38,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     TCenter.Y *= TScale.Y;
     TCenter.Z *= TScale.Z;
 
-    //IRRLICHT
+    // Graphic Engine
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     // Cargamos el modelo

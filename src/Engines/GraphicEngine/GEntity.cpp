@@ -1,5 +1,6 @@
 #include "GEntity.h"
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 void GEntity::setPosition(vector3df pos){
     toe::core::TOEvector3df matrix = toe::core::TOEvector3df(pos.X, pos.Y, pos.Z);
