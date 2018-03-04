@@ -6,9 +6,10 @@
 #include <MaterialTypes.h>
 #include <MaterialFlags.h>
 
+//fast forward declaration
+class TFMesh;
 class GBody: public GEntity{
 	friend class GraphicEngine;
-
 public:
 
 	GBody();
@@ -39,7 +40,6 @@ public:
 	void AddText(std::string text, vector3df position, int id = 0);
 
 private:
-
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(void* node);
 	TFMesh* privateAnimatedMesh; 

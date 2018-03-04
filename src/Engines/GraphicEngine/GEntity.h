@@ -3,8 +3,9 @@
 
 #include <vector3d.h>
 
+//fast forward declaration
+class TFNode;
 class GEntity{
-
 public:
 	
 	/**
