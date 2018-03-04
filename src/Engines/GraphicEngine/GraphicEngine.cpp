@@ -2,11 +2,14 @@
 
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
-	privateDriver = VideoDriver::GetInstance();
+	privateDriver = toe::GetVideoDriver();
 	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
+	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 
-	//EventReceiver* receiver = new EventReceiver();
-	//privateDriver->SetIODriver(receiver);
+	privateSManager = privateDriver->GetSceneManager();
+
+	privateReceiver = new EventReceiver();
+	privateDriver->SetIODriver(privateReceiver);
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -408,3 +411,7 @@ MenuReceiver* GraphicEngine::GetMenuReceiver(){
 	return privateMenuReceiver;
 }
 */
+
+void GraphicEngine::LoadMesh(std::string path){
+	
+}

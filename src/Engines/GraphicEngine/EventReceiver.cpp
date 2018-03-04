@@ -41,11 +41,7 @@ bool EventReceiver::OnEvent(const TEvent& event) {
 	return false;
 }
 
-bool EventReceiver::keyPressed(KeyboardKey keycode) { 
-	std::cout<<keycode<<std::endl;
-	bool output = (keyState[keycode] == PRESSED);
-	std::cout<<"<"<<std::endl;
-	return output; }
+bool EventReceiver::keyPressed(KeyboardKey keycode) { return (keyState[keycode] == PRESSED); }
 bool EventReceiver::keyDown(KeyboardKey keycode) { return (keyState[keycode] == DOWN || keyState[keycode] == PRESSED); }
 bool EventReceiver::keyRelease(KeyboardKey keycode) { return (keyState[keycode] == RELEASED); }
 bool EventReceiver::keyUp(KeyboardKey keycode) { return (keyState[keycode] == UP); }

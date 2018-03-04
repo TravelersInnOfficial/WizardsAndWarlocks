@@ -258,6 +258,8 @@ public:
 
 	void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
 
+	void LoadMesh(std::string path);
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;

@@ -1,7 +1,7 @@
 #include "GCamera.h"
 
 GCamera::GCamera(void* node){
-    //privateNode = node;
+    privateNode = (TFNode*) node;
 }
 
 void GCamera::setTarget(vector3df target){

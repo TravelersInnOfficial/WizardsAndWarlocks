@@ -16,12 +16,14 @@ void ResourceManager::LoadResources(){
 
 	// Load Meshes
 	for (meshIterator = MESHMAP.begin(); meshIterator != MESHMAP.end(); meshIterator++){
-		auxBody = g_engine->addObjMeshSceneNode(meshIterator->second, zeroVector, zeroVector, zeroVector);
+		toe::LoadMesh(meshIterator->second);
+		//auxBody = g_engine->addObjMeshSceneNode(meshIterator->second, zeroVector, zeroVector, zeroVector);
 	}
 
 	// Load Textures
 	for (textureIterator = TEXTUREMAP.begin(); textureIterator != TEXTUREMAP.end(); textureIterator++){
-		auxBody->setMaterialTexture(0, textureIterator->second);
+		toe::LoadTexture(textureIterator->second);
+		//auxBody->setMaterialTexture(0, textureIterator->second);
 	}
 
 }
