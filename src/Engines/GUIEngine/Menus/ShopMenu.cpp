@@ -1,8 +1,9 @@
 #include "ShopMenu.h"
-#include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/TrapManager.h"
 #include <string.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <SFML/Graphics/Texture.hpp>
 
 ShopMenu::ShopMenu(MenuType type) : Menu(type){
     N_SPELL_SOCKETS = SpellManager::GetInstance()->GetNumSpells();

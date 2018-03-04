@@ -5,9 +5,13 @@
 #include <IMGUI/imgui-SFML.h>
 #include <vector3d.h>
 #include <vector2d.h>
-#include <GraphicEngine/GraphicEngine.h>
 #include <map>
-#include <SFML/Graphics.hpp>
+#include <GraphicEngine/GraphicEngine.h>
+
+// Fast-forward declaration
+namespace sf{
+    class Texture;
+}
 
 class GUIEngine{
     friend class Menu;

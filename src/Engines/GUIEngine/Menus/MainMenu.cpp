@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
 #include <vector2d.h>
+#include <SFML/Graphics/Texture.hpp>
 
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;
