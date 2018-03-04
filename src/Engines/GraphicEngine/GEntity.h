@@ -2,6 +2,7 @@
 #define GENTITY_H
 
 #include <vector3d.h>
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 class GEntity{
 
