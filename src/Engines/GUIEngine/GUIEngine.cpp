@@ -1,20 +1,25 @@
 #include "GUIEngine.h"
 #include <DeathMessages.h>
 #include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
+#include <SFML/Graphics.hpp>
 
 GUIEngine::GUIEngine(){
+
     g_engine = GraphicEngine::getInstance();
-    //unsigned char* pixels;
-    //int width, height;
-    //ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
     //sf::Texture* texture = MyEngine::CreateTextureFromMemoryPixels(pixels, width, height, TEXTURE_TYPE_RGBA);
      // TODO: Store your texture pointer/identifier (whatever your engine uses) in 'io.Fonts->TexID'. This will be passed back to your via the renderer.
     //ImGui::GetIO().Fonts->TexID = (void*)texture
-    ImGui::SFML::Init(*VideoDriver::GetInstance()->m_window);
+    ImGui::SFML::Init(*VideoDriver::GetInstance()->GetWindow());
     //pDevice = g_engine->GetIrrlichtDevice();
     //pDevice = nullptr;
     //m_EventReceiver = g_engine->GetMenuReceiver();
     //m_EventReceiver = nullptr;
+    unsigned char* pixels;
+    int width, height;
+    ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
+    sf::Texture* cursor = new sf::Texture();
+    cursor->loadFromFile("./../assets/textures/HUD/cursor.png");
+    ImGui::GetIO().Fonts->TexID = (void*)cursor;
 
     // Create GUI object
     //m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
@@ -35,16 +40,17 @@ GUIEngine::~GUIEngine(){
 void GUIEngine::Update(){
     // create the GUI elements
     //m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
-    std::cout<<"heyoo\n";
     //ImGui::NewFrame();
-    ImGui::SFML::Update(*VideoDriver::GetInstance()->m_window,VideoDriver::GetInstance()->m_clock->getElapsedTime());
+    std::vector<sf::Event*> m_events = VideoDriver::GetInstance()->GetSFMLEvents();
+    for(int i = 0; i<m_events.size(); i++)ImGui::SFML::ProcessEvent(*m_events[i]);
+    ImGui::SFML::Update(*VideoDriver::GetInstance()->GetWindow(),VideoDriver::GetInstance()->GetElapsedTime());
     printNotifications();
 }
 
 void GUIEngine::Draw(){
    //m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
    //ImGui::EndFrame();
-   ImGui::SFML::Render(*VideoDriver::GetInstance()->m_window);
+   ImGui::SFML::Render(*VideoDriver::GetInstance()->GetWindow());
 }
 
 void GUIEngine::printNotifications(){
