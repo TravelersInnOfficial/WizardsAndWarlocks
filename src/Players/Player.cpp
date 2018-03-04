@@ -350,7 +350,7 @@ void Player::Update(float deltaTime){
 			if(!stepsStarted && canJump) playFootsteps();
 			moving = false;
 		}
-
+		
 		// Si no se estaba moviendo lo frenamos
 		else{
 			if(stepsStarted) stopFootsteps();
@@ -358,6 +358,8 @@ void Player::Update(float deltaTime){
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
+		//MoveZ(-1);
+		//std::cout<<"Position: "<< m_position<<std::endl;
 		CheckInput(); // Comprobamos los Input del personaje
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico

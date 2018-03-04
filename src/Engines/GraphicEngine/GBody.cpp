@@ -1,16 +1,19 @@
 #include "GBody.h"
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 GBody::GBody(void* node){
     privateNode = (TFNode*)node;
 }
 
 GBody::~GBody(){
-	toe::GetSceneManager()->DeleteMesh(privateNode);
+	VideoDriver::GetInstance()->GetSceneManager()->DeleteMesh(privateNode);
 	// El TFNode se elimina correctamente
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
+	TFMesh* mesh = (TFMesh*)privateNode;
+	mesh->SetTexture(path);
     //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
     //privateNode->setMaterialType(irr::video::EMT_SOLID);
 	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);

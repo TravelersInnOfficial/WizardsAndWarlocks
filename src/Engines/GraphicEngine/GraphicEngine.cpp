@@ -1,4 +1,5 @@
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
