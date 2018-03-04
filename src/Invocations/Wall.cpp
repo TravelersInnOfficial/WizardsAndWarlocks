@@ -20,7 +20,7 @@ bool InvocationWall::Update(float deltaTime){
 void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	// Create an Irrlicht cube
+	// Create a cube
 	m_invocationNode = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	m_invocationNode->setPosition(TPosition);
 	m_invocationNode->setScale(TScale);

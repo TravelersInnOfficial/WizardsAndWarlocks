@@ -1,9 +1,7 @@
 #ifndef GENTITY_H
 #define GENTITY_H
 
-#include <irrlicht/irrlicht.h>
 #include <vector3d.h>
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 class GEntity{
 

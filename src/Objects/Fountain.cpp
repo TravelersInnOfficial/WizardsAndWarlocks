@@ -33,7 +33,7 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	float TMass = 0;
 
-	// Create an Irrlicht cube
+	// Create graphic body loading mesh
 	m_fountainNode = g_engine->addObjMeshSceneNode("./../assets/modelos/fountain.obj");
 	m_fountainNode->setPosition(TPosition);
 	m_fountainNode->setScale(TScale);

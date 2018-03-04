@@ -13,7 +13,7 @@ Switch::~Switch(){
 }
 
 void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
-    //IRRLICHT
+    // Graphic Engine
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     // Cargamos el cubo

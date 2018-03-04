@@ -83,7 +83,7 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 
 	vector3df TCenter = vector3df(0,0,0);
 
-	// Create an Irrlicht cube
+	// Create graphic body loading mesh
 	m_potionNode = g_engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
 	m_potionNode->setPosition(TPosition);
 	m_potionNode->setScale(potionScale);
