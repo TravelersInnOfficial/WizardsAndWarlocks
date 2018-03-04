@@ -9,31 +9,25 @@
 MenuManager* MenuManager::instance = nullptr;
 
 MenuManager::MenuManager(){
-	/*
 	g_engine = GraphicEngine::getInstance();
 	screenSize.X = g_engine->GetScreenWidth();
 	screenSize.Y = g_engine->GetScreenHeight();
 	//netDebugWindow = nullptr;
 	open_menu = false;
-	*/currentMenu = nullptr;
+	currentMenu = nullptr;
 }
 
 MenuManager::~MenuManager(){
-	/*
 	ClearMenu();
 	instance = nullptr;
-	*/
 }
 
 MenuManager* MenuManager::GetInstance(){
-	/*
 	if(instance == nullptr) instance = new MenuManager();
 	return instance;
-	*/
 }
 
 void MenuManager::CreateMenu(MenuType type, int option){
-	/*
 	switch(type){
 		case(MAIN_M):{
 			open_menu = true;
@@ -57,9 +51,9 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 		case(NETDEBUG_M):{
-			if(netDebugWindow == nullptr) CreateNetDebug();
+			/*if(netDebugWindow == nullptr) CreateNetDebug();
 			else ClearMenu();
-			
+			*/
 			break;
 		}
 		case(SELLER_M):{
@@ -74,41 +68,32 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			break;
 		}
 	}
-	*/
 }
 
 void MenuManager::Update(float deltaTime){
-	/*
 	GUIEngine::GetInstance()->Update();
 	if(currentMenu != nullptr){ 
 		//g_engine->ToggleCameraMovement(false);
 		currentMenu->Update(&open_menu, deltaTime);
 	}
-	*/
 }
 
 void MenuManager::Draw(){
-	/*
 	GUIEngine::GetInstance()->Draw();
 	if(!open_menu) ClearMenu();
-	*/
 }
 
 void MenuManager::ClearMenu(){
-	/*
 	if(currentMenu != nullptr ){
 		if(open_menu) currentMenu->Close(&open_menu);
 		currentMenu->Drop();
 		currentMenu = nullptr;
 	}
 	//netDebugWindow = nullptr;
-	*/
 }
 
 MenuType* MenuManager::GetCurrentMenu(){
-	/*
 	MenuType *toRet = nullptr;
 	if(currentMenu!=nullptr) toRet  = currentMenu->GetType();
 	return toRet;
-	*/
 }

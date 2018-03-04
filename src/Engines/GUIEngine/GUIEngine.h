@@ -11,7 +11,6 @@
 
 class GUIEngine{
     friend class Menu;
-    friend class VideoDriver;
     
 public:
 	static GUIEngine* GetInstance();
