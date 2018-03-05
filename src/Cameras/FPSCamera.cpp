@@ -42,10 +42,11 @@ vector3df FPSCamera::GetNewRotation(vector3df rotation){
 	rotation.Y += changeX * sensibility;
 	rotation.X += changeY * sensibility;
 
-	float variation = M_PI/16;
-	//float max = M_PI/2 - variation;
-	//float min = -M_PI/2 + variation;
-	//rotation.X = rotation.X>max? max: rotation.X<min? min: rotation.X;
+	float variation = 180/16;
+	float max = 180/2 - variation;
+	float min = -180/2 + variation;
+
+	rotation.X = rotation.X>max? max: rotation.X<min? min: rotation.X;
 
 	return rotation;
 }
