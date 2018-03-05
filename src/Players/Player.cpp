@@ -210,23 +210,23 @@ void Player::DestroyPlayerCharacter(){
 }
 
 void Player::DeclareInput(){
-	controller->AddAction(KEY_KEY_W, ACTION_MOVE_UP);
-	controller->AddAction(KEY_KEY_S, ACTION_MOVE_DOWN);
-	controller->AddAction(KEY_KEY_A, ACTION_MOVE_LEFT);
-	controller->AddAction(KEY_KEY_D, ACTION_MOVE_RIGHT);
-	controller->AddAction(KEY_KEY_E, ACTION_RAYCAST);
-	controller->AddAction(KEY_SPACE, ACTION_JUMP);
-	controller->AddAction(KEY_KEY_R, ACTION_USE_OBJECT);
-	controller->AddAction(KEY_KEY_T, ACTION_DROP_OBJECT);
-	controller->AddAction(KEY_LBUTTON, ACTION_SHOOT);
-	controller->AddAction(KEY_KEY_F, ACTION_DEPLOY_TRAP);
-	controller->AddAction(KEY_WHEEL_UP, ACTION_CHANGE_SPELL_UP);
-	controller->AddAction(KEY_WHEEL_DOWN, ACTION_CHANGE_SPELL_DOWN);
-	controller->AddAction(KEY_KEY_1, ACTION_SELECT_SPELL_00);
-	controller->AddAction(KEY_KEY_2, ACTION_SELECT_SPELL_01);
-	controller->AddAction(KEY_KEY_3, ACTION_SELECT_SPELL_02);
-	controller->AddAction(KEY_KEY_4, ACTION_SELECT_SPELL_03);
-	controller->AddAction(KEY_LSHIFT, ACTION_RUN);
+	controller->AddAction(Key_W, ACTION_MOVE_UP);
+	controller->AddAction(Key_S, ACTION_MOVE_DOWN);
+	controller->AddAction(Key_A, ACTION_MOVE_LEFT);
+	controller->AddAction(Key_D, ACTION_MOVE_RIGHT);
+	controller->AddAction(Key_E, ACTION_RAYCAST);
+	controller->AddAction(Key_Space, ACTION_JUMP);
+	controller->AddAction(Key_R, ACTION_USE_OBJECT);
+	controller->AddAction(Key_T, ACTION_DROP_OBJECT);
+	controller->AddAction(Key_MouseLeft, ACTION_SHOOT);
+	controller->AddAction(Key_F, ACTION_DEPLOY_TRAP);
+	controller->AddAction(Key_MouseMiddle_Up, ACTION_CHANGE_SPELL_UP);
+	controller->AddAction(Key_MouseMiddle_Down, ACTION_CHANGE_SPELL_DOWN);
+	controller->AddAction(Key_Num1, ACTION_SELECT_SPELL_00);
+	controller->AddAction(Key_Num2, ACTION_SELECT_SPELL_01);
+	controller->AddAction(Key_Num3, ACTION_SELECT_SPELL_02);
+	controller->AddAction(Key_Num4, ACTION_SELECT_SPELL_03);
+	controller->AddAction(Key_LShift, ACTION_RUN);
 }
 
 void Player::SetAllInput(keyStatesENUM state){

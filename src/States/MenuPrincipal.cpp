@@ -28,8 +28,6 @@ bool MenuPrincipal::Input(){
 	if(!g_engine->run()) return true;
 	if(g_engine->EscPressed()) return true;
 
-	if(g_engine->IsKeyPressed(Key_A)) std::cout<<"funciona"<<std::endl;
-
 	//selectedOption = g_engine->ReadButtonPressed();
 	return false;
 }
