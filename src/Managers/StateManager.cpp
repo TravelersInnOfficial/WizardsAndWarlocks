@@ -27,8 +27,8 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	srand(time(0));
 	currentState = nullptr;
 	
-	//State_Code firstState = STATE_MENU;
-	State_Code firstState = STATE_GAME;
+	State_Code firstState = STATE_MENU;
+	//State_Code firstState = STATE_GAME;
 	if(serverInfo->isServer) firstState = STATE_NETGAME_SERVER;
 	
 	LoadState(firstState);

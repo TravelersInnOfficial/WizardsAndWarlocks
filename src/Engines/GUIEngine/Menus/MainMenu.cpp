@@ -30,14 +30,14 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     for(int i = 0; i<N_BUTTONS;i++){
         texture[i] = (void*) toe::GetTextureID(buttonLayouts[i]);
     }
-    //buttonSize = ImVec2(texture[0]->getSize().x,texture[0]->getSize().y);
-    buttonSize = ImVec2(500,500);
+    
+    toe::core::TOEvector2di dims = toe::GetTextureDims(buttonLayouts[0]);
+    buttonSize = ImVec2(dims.X,dims.Y);
     pu_buttonSize = ImVec2(140,0);
+
     //WIDGET SIZE
-    //m_width = texture[0]->getSize().x + 30;
-    m_width = 130;
-    //m_height = texture[0]->getSize().y * N_BUTTONS + 50;
-    m_height = 130;
+    m_width = dims.X + 30;
+    m_height = dims.Y * N_BUTTONS + 50;
     netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
@@ -71,7 +71,6 @@ void MainMenu::ExitGame(bool * open){
 }
 
 void MainMenu::Update(bool* open, float deltaTime){
-    std::cout<<"Update menu\n";
     netSeeker->Update(deltaTime);
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
@@ -348,7 +347,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         //HELP WINDOWS
-        ImGui::ShowTestWindow();
+        //ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();
