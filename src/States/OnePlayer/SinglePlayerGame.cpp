@@ -96,7 +96,8 @@ bool SinglePlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(Key_Escape)){
-		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+		//StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+		StateManager::GetInstance()->CloseGame();
 	}
 
 	// DEBUG
@@ -126,15 +127,15 @@ bool SinglePlayerGame::Input(){
 void SinglePlayerGame::Update(float deltaTime){
 	if(m_changeMode != 0) ChangeMode();
 	m_stateGame->Update(deltaTime);
-	MenuManager::GetInstance()->Update(deltaTime);
+	//MenuManager::GetInstance()->Update(deltaTime);
 }
 
 void SinglePlayerGame::Draw(){
 	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 
-	m_stateGame->Draw();
-	MenuManager::GetInstance()->Draw();
+	//m_stateGame->Draw();
+	//MenuManager::GetInstance()->Draw();
 
 	if(debug){
 		f_engine->DebugDrawWorld();

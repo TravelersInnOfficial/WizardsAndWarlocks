@@ -1,12 +1,16 @@
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
-	privateDriver = VideoDriver::GetInstance();
+	privateDriver = toe::GetVideoDriver();
 	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
+	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 
-	//EventReceiver* receiver = new EventReceiver();
-	//privateDriver->SetIODriver(receiver);
+	privateSManager = privateDriver->GetSceneManager();
+
+	privateReceiver = new EventReceiver();
+	privateDriver->SetIODriver(privateReceiver);
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -348,27 +352,24 @@ vector2di GraphicEngine::GetCursorPosition(){
 
 // RECEIVER FUNCTIONS
 void GraphicEngine::UpdateReceiver(){
-	/*privateReceiver->Update();
-	privateMenuReceiver->Update();*/
+	privateReceiver->Update();
+	//privateMenuReceiver->Update();
 }
 
 void GraphicEngine::InitReceiver(){
-	//privateReceiver->InitReceiver();
+	privateReceiver->InitReceiver();
 }
 
-bool GraphicEngine::IsKeyDown(TKEY_CODE code){
-	//return privateReceiver->keyDown((irr::EKEY_CODE)code);
-	return false;
+bool GraphicEngine::IsKeyDown(KeyboardKey code){
+	return privateReceiver->keyDown(code);
 }
 
-bool GraphicEngine::IsKeyReleased(TKEY_CODE code){
-	//return privateReceiver->keyRelease((irr::EKEY_CODE)code);
-	return false;
+bool GraphicEngine::IsKeyReleased(KeyboardKey code){
+	return privateReceiver->keyRelease(code);
 }
 
-bool GraphicEngine::IsKeyUp(TKEY_CODE code){
-	//return privateReceiver->keyUp((irr::EKEY_CODE)code);
-	return false;
+bool GraphicEngine::IsKeyUp(KeyboardKey code){
+	return privateReceiver->keyUp(code);
 }
 
 bool GraphicEngine::IsKeyPressed(KeyboardKey code){
@@ -376,13 +377,12 @@ bool GraphicEngine::IsKeyPressed(KeyboardKey code){
 	return false;
 }
 
-keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){
-	//return privateReceiver->GetKeyStatus((irr::EKEY_CODE)code);
-	return keyStatesENUM::UP;
+keyStatesENUM GraphicEngine::GetKeyStatus(KeyboardKey code){
+	return privateReceiver->GetKeyStatus(code);
 }
 
-void GraphicEngine::SetKeyStatus(TKEY_CODE code, keyStatesENUM status){
-	//privateReceiver->setKeyStatus((irr::EKEY_CODE)code, status);
+void GraphicEngine::SetKeyStatus(KeyboardKey code, keyStatesENUM status){
+	privateReceiver->setKeyStatus(code, status);
 }
 
 /*
@@ -408,3 +408,7 @@ MenuReceiver* GraphicEngine::GetMenuReceiver(){
 	return privateMenuReceiver;
 }
 */
+
+void GraphicEngine::LoadMesh(std::string path){
+	
+}

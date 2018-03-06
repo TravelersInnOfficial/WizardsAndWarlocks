@@ -11,14 +11,14 @@
 class Key_player {
 public:
 	~Key_player();
-	Key_player(TKEY_CODE k, ACTION_ENUM a);
+	Key_player(KeyboardKey k, ACTION_ENUM a);
   	void SetStatus(keyStatesENUM);
   	void SetAction(ACTION_ENUM action);
   	ACTION_ENUM GetAction();
   	keyStatesENUM GetStatus();
-  	TKEY_CODE GetKey();
+  	KeyboardKey GetKey();
 private:
-	TKEY_CODE key;
+	KeyboardKey key;
 	keyStatesENUM status;
 	ACTION_ENUM action;
 };
@@ -27,7 +27,7 @@ class PlayerController{
 public:
 	PlayerController();
 	~PlayerController();
-	bool AddAction(TKEY_CODE key, ACTION_ENUM ac);
+	bool AddAction(KeyboardKey key, ACTION_ENUM ac);
 	bool SetStatus(ACTION_ENUM ac, keyStatesENUM st);
 	bool IsKeyDown(int n);
 	bool IsKeyDown(ACTION_ENUM a);

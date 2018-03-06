@@ -6,7 +6,7 @@
 MenuPrincipal::MenuPrincipal(){
 	g_engine = GraphicEngine::getInstance();
 	g_engine->setCursorVisible(false);
-	g_engine->ToggleMenu(true);
+	//g_engine->ToggleMenu(true);
 	g_engine->InitReceiver();
 	//selectedOption = NO_OPT;
 	createSoundEvent();
@@ -27,8 +27,6 @@ MenuPrincipal::~MenuPrincipal(){
 bool MenuPrincipal::Input(){
 	if(!g_engine->run()) return true;
 	if(g_engine->EscPressed()) return true;
-
-	if(g_engine->IsKeyPressed(Key_A)) std::cout<<"funciona"<<std::endl;
 
 	//selectedOption = g_engine->ReadButtonPressed();
 	return false;

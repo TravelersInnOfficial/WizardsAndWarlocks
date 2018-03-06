@@ -1,6 +1,6 @@
 #include "PlayerController.h"
 
-Key_player::Key_player(TKEY_CODE k, ACTION_ENUM a){
+Key_player::Key_player(KeyboardKey k, ACTION_ENUM a){
 	key = k;
 	status = UP;
 	action = a;
@@ -16,7 +16,7 @@ void Key_player::SetAction(ACTION_ENUM act){
 	action = act;
 }
 
-TKEY_CODE Key_player::GetKey(){
+KeyboardKey Key_player::GetKey(){
 	return key;
 }
 
@@ -50,7 +50,7 @@ PlayerController::PlayerController(){}
  * 
  * @return - Si se ha podido crear bien la accion (No permite dos acciones con la misma tecla)
  */
-bool PlayerController::AddAction(TKEY_CODE key, ACTION_ENUM ac){
+bool PlayerController::AddAction(KeyboardKey key, ACTION_ENUM ac){
 	int size = keys.size();						
 	for(int i=0; i<size; i++){					// Recorremos todas las acciones actuales
 		Key_player* k = keys[i];		

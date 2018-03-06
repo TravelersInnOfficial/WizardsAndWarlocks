@@ -3,9 +3,10 @@
 
 #include <vector3d.h>
 #include <vector2d.h>
-#include <GraphicEngine/GraphicEngine.h>
 #include <map>
+#include <GraphicEngine/GraphicEngine.h>
 
+// Fast-forward declaration
 class GUIEngine{
     friend class Menu;
     

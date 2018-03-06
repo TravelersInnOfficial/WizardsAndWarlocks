@@ -8,7 +8,7 @@ USER_FLAGS_C			=
 CPPFLAGS        	:= $(INCLUDE_FOLDERS)
 CXXFLAGS			:= -O3 -Wall -std=c++11 $(USER_FLAGS)
 CCFLAGS				:= -O3 -Wall $(USER_FLAGS_C)
-LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lsfml-window -lsfml-graphics -lsfml-system -lassimp
+LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lassimp
 
 ifeq ($(OS),Windows_NT)
     Target				:= WizardsAndWarlocks.exe
@@ -21,7 +21,7 @@ else
     Target				:= WizardsAndWarlocks
     CPPFLAGS        	+= -I/usr/include -I/usr/include/bullet
     LDFLAGS				:= -L./libs/Linux
-    LIBS 				+= -lraknet -lfmod -lfmodstudio -lXxf86vm -lXext -lX11 -lXcursor -lGL -lGLEW
+    LIBS 				+= -lraknet -lfmod -lfmodstudio -lXxf86vm -lXext -lX11 -lXcursor -lGL -lGLEW -lglfw
 endif
 
 BinPath 			:= ./bin

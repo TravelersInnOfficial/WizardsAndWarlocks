@@ -7,12 +7,10 @@
 #include <map>
 #include "TrapCodes.h"
 #include "SpellCodes.h"
-#include "./../Managers/PlayerManager.h"
-#include "./../Managers/SpellManager.h"
 
+class Player;
 struct DDFlags{
     bool parentNullID = true;
-
 };
 
 class ShopMenu : public Menu{
@@ -24,23 +22,16 @@ public:
     void Drop();
 
 private:
-    //void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<SPELLCODE>, std::map<IrrIMGUI::IGUITexture*,SPELLCODE>*);
-    //void load_imagesid(int number,const char * layouts[],irr::video::ITexture* texture[], IrrIMGUI::IGUITexture* imageid[], std::vector<TrapEnum>, std::map<IrrIMGUI::IGUITexture*,TrapEnum>*);
+    void load_imagesid(int number,const char * layouts[],ImTextureID texture[], std::vector<SPELLCODE>, std::map<ImTextureID*,SPELLCODE>*);
+    void load_imagesid(int number,const char * layouts[],ImTextureID texture[], std::vector<TrapEnum>, std::map<ImTextureID*,TrapEnum>*);
 
-    void load_imagesid(int number,const char * layouts[],sf::Texture* texture[], std::vector<SPELLCODE>, std::map<sf::Texture*,SPELLCODE>*);
-    void load_imagesid(int number,const char * layouts[],sf::Texture* texture[], std::vector<TrapEnum>, std::map<sf::Texture*,TrapEnum>*);
-
-    //void load_sockets(const char* id,const char* type, int total, int cols, std::vector<IrrIMGUI::IGUITexture*> &items_selected);
-    //void load_items(const char* id,const char* type, int total, int cols, IrrIMGUI::IGUITexture* imageids[], const char * names[], const char * descriptions[]);
-   
-    void load_sockets(const char* id,const char* type, int total, int cols, std::vector<sf::Texture*> &items_selected);
-    void load_items(const char* id,const char* type, int total, int cols, sf::Texture* texture[], const char * names[], const char * descriptions[]);
+    void load_sockets(const char* id,const char* type, int total, int cols, std::vector<ImTextureID*> &items_selected);
+    void load_items(const char* id,const char* type, int total, int cols, ImTextureID texture[], const char * names[], const char * descriptions[]);
 
     void ChangeSpell(int pos, SPELLCODE sEnum);
     void ChangeTrap(TrapEnum tEnum);
 
-    //bool already_selected(std::vector<IrrIMGUI::IGUITexture*> &items_selected);
-    bool already_selected(std::vector<sf::Texture*> &items_selected);
+    bool already_selected(std::vector<ImTextureID*> &items_selected);
     void set_focused_button(int);
     void next_focused_button();
     static void closeMenu(bool*);
@@ -64,29 +55,15 @@ private:
     ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
     DDFlags ddflags;                    //DRAG N DROP PRIVATE FLAGS
 
-    //irr::video::ITexture* o_spelltexture[N_OSPELLS];
-    //irr::video::ITexture* d_spelltexture[N_DSPELLS];
-    //irr::video::ITexture* t_spelltexture[N_TSPELLS];
-    //irr::video::ITexture* trap_texture[N_TRAPS];
+   ImTextureID o_spelltexture[N_OSPELLS];
+   ImTextureID d_spelltexture[N_DSPELLS];
+   ImTextureID t_spelltexture[N_TSPELLS];
+   ImTextureID trap_texture[N_TRAPS];
 
-    sf::Texture* o_spelltexture[N_OSPELLS];
-    sf::Texture* d_spelltexture[N_DSPELLS];
-    sf::Texture* t_spelltexture[N_TSPELLS];
-    sf::Texture* trap_texture[N_TRAPS];
+    std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
+    std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS
 
-    //IrrIMGUI::IGUITexture * o_spellimageid[N_OSPELLS];
-    //IrrIMGUI::IGUITexture * d_spellimageid[N_DSPELLS];
-    //IrrIMGUI::IGUITexture * t_spellimageid[N_TSPELLS];
-    //IrrIMGUI::IGUITexture * trap_imageid[N_TRAPS];
-
-    //std::vector<IrrIMGUI::IGUITexture*> selected_spells;    //ACTUAL SELECTED SPELLS
-    //std::vector<IrrIMGUI::IGUITexture*> selected_trap;      //ACTUAL SELECTED TRAPS
-
-    std::vector<sf::Texture*> selected_spells;    //ACTUAL SELECTED SPELLS
-    std::vector<sf::Texture*> selected_trap;      //ACTUAL SELECTED TRAPS
-
-    //IrrIMGUI::IGUITexture* selected;                        //ITEM SELECTED FOR DRAG N DROP
-    sf::Texture* selected;                        //ITEM SELECTED FOR DRAG N DROP
+    ImTextureID* selected;                        //ITEM SELECTED FOR DRAG N DROP
 
     Player* hp;
 
@@ -96,12 +73,9 @@ private:
     std::vector<SPELLCODE> d_spells_codes = {SPELL_DEFENSE, SPELL_UNTARGET};
     std::vector<SPELLCODE> t_spells_codes = {SPELL_CLEANSE, SPELL_DUMMY, SPELL_INVISIBILITY, SPELL_SPEED,SPELL_TELEPORT, SPELL_TELEPORTBASE, SPELL_WALL};
     std::vector<TrapEnum> traps_codes = {TENUM_DEATH_CLAWS, TENUM_DISTURBANCE, TENUM_EXPLOSIVE, TENUM_SILENCE, TENUM_SPIRITS, TENUM_TAXES};
-
-    //std::map<IrrIMGUI::IGUITexture*,SPELLCODE> spells_map;
-    //std::map<IrrIMGUI::IGUITexture*,TrapEnum> traps_map;
     
-    std::map<sf::Texture*,SPELLCODE> spells_map;
-    std::map<sf::Texture*,TrapEnum> traps_map;
+    std::map<ImTextureID*,SPELLCODE> spells_map;
+    std::map<ImTextureID*,TrapEnum> traps_map;
 
 //TEXTURES
     const char * o_spellLayouts[N_OSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_BLIZZARD_HUD].c_str(),

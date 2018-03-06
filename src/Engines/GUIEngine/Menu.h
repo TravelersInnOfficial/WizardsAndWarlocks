@@ -5,6 +5,9 @@
 #include <iostream>
 #include <Menus.h>
 
+#include <IMGUI/imgui.h>
+#include <IMGUI/imgui_impl_glfw_gl3.h>
+
 struct WindowOptions{
     bool no_titlebar = true;
     bool no_scrollbar = true;
@@ -34,8 +37,6 @@ public:
 protected:
     GUIEngine* gui_engine;
     GraphicEngine* g_engine;
-    //irr::IrrlichtDevice* pDevice;
-    //IrrIMGUI::IIMGUIHandle * GUI;
     
     ImGuiWindowFlags w_flags;
     WindowOptions w_opt;

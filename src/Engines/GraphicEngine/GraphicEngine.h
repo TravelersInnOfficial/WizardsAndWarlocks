@@ -1,7 +1,6 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
@@ -227,17 +226,17 @@ public:
 	/**
 	 * Returns true is given code is pressed
 	*/
-	bool IsKeyDown(TKEY_CODE code);
+	bool IsKeyDown(KeyboardKey code);
 
 	/**
 	 * Returns true is given code is released
 	*/
-	bool IsKeyReleased(TKEY_CODE code);
+	bool IsKeyReleased(KeyboardKey code);
 
 	/**
 	 * Returns true is given code is released
 	*/
-	bool IsKeyUp(TKEY_CODE code);
+	bool IsKeyUp(KeyboardKey code);
 
 	/*
 	 Updates the reciever so we can controll if a key is pressed down
@@ -254,9 +253,11 @@ public:
 	*/
 	bool IsKeyPressed(KeyboardKey code);
 
-	keyStatesENUM GetKeyStatus(TKEY_CODE code);
+	keyStatesENUM GetKeyStatus(KeyboardKey code);
 
-	void SetKeyStatus(TKEY_CODE code, keyStatesENUM status);
+	void SetKeyStatus(KeyboardKey code, keyStatesENUM status);
+
+	void LoadMesh(std::string path);
 
 private:
 	GraphicEngine(bool isServer = false);

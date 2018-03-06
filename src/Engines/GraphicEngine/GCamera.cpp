@@ -1,10 +1,12 @@
 #include "GCamera.h"
 
 GCamera::GCamera(void* node){
-    //privateNode = node;
+    privateNode = (TFNode*) node;
 }
 
 void GCamera::setTarget(vector3df target){
+	toe::core::TOEvector3df targetPos = toe::core::TOEvector3df(target.X, target.Y, target.Z);
+	((TFCamera*)privateNode)->LookAt(targetPos);
     //irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*)privateNode;
     //cam->setTarget(irr::core::vector3df(target.X, target.Y, target.Z));
 }

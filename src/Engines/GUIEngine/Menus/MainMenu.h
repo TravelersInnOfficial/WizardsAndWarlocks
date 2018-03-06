@@ -3,8 +3,8 @@
 
 #include <GUIEngine/Menu.h>
 #include <NetworkEngine/NetSeeker.h>
-#include <Assets.h>
 #include <SoundEngine/SoundSystem.h>
+#include <Assets.h>
 
 class MainMenu : public Menu{
 public:
@@ -45,8 +45,11 @@ private:
                                                 TEXTUREMAP[TEXTURE_MAINMENU_MULTIPLAYER].c_str(),
                                                 TEXTUREMAP[TEXTURE_MAINMENU_OPTIONS].c_str(),
                                                 TEXTUREMAP[TEXTURE_MAINMENU_EXIT].c_str()};
-
-    sf::Texture* texture[N_BUTTONS];
+    
+    //In this binding, ImTextureID is used to store an OpenGL 'GLuint' texture identifier.
+    //ImTextureID texture = (void*) GLuint;
+    ImTextureID texture[N_BUTTONS];
+    //sf::Texture* texture[N_BUTTONS];
     //irr::video::ITexture* texture[N_BUTTONS];
     //IrrIMGUI::IGUITexture * imageid[N_BUTTONS];
     const char * descriptions[N_BUTTONS] ={ "Play as a warlock against our AI",

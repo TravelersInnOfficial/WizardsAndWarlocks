@@ -32,7 +32,6 @@ private:
 	std::vector<int>	loadedOptions;
 	GraphicEngine*		g_engine;
 	vector2di			screenSize;
-	//irr::gui::IGUIWindow* netDebugWindow;
 
 	MenuManager();
 

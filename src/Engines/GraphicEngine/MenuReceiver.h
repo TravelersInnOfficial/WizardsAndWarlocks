@@ -5,8 +5,6 @@
 #include <SoundEngine/SoundSystem.h>
 #include <Menus.h>
 #include <Keycodes.h>
-#include <IMGUI/imgui.h>
-#include <IMGUI/imgui-SFML.h>
 
 class MenuReceiver /*: public IrrIMGUI::CIMGUIEventReceiver*/{
 

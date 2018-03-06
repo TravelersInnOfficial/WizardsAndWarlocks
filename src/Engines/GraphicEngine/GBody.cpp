@@ -1,16 +1,19 @@
 #include "GBody.h"
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 GBody::GBody(void* node){
     privateNode = (TFNode*)node;
 }
 
 GBody::~GBody(){
-	toe::privateSceneManager->DeleteMesh(privateNode);
+	VideoDriver::GetInstance()->GetSceneManager()->DeleteMesh(privateNode);
 	// El TFNode se elimina correctamente
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
+	TFMesh* mesh = (TFMesh*)privateNode;
+	mesh->SetTexture(path);
     //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
     //privateNode->setMaterialType(irr::video::EMT_SOLID);
 	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
@@ -29,6 +32,7 @@ void GBody::Remove(){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
+	/*
 	toe::core::TOEvector3df motorPosition(position.X, position.Y, position.Z);
 	// COmprobamos si ya existia la id almacenada
 	if(m_billboards.find(id) != m_billboards.end()){
@@ -43,5 +47,5 @@ void GBody::AddText(std::string text, vector3df position, int id){
 		}
 	}
 	// Si se llega aqui significa que no existe ningun billboard
-	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);
+	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);*/
 }
