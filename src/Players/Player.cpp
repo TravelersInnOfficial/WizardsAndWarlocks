@@ -925,8 +925,10 @@ void Player::SetAlliance(Alliance newAlliance){
 		case(ALLIANCE_WIZARD):{
 			if(hasCharacter){
 				m_playerNode->Remove();
+
 				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}

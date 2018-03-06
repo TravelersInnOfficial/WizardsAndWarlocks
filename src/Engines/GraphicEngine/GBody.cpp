@@ -2,7 +2,7 @@
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
-GBody::GBody(void* node){
+GBody::GBody(TFMesh* node){
     privateNode = (TFNode*)node;
 }
 

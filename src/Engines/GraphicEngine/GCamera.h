@@ -36,7 +36,7 @@ public:
     void bindTargetAndRotation(bool bound);
 
 private:
-    GCamera(void* node);    
+    GCamera(TFCamera* node);    
   
 };
 

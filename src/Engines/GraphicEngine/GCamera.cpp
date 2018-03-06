@@ -1,6 +1,6 @@
 #include "GCamera.h"
 
-GCamera::GCamera(void* node){
+GCamera::GCamera(TFCamera* node){
     privateNode = (TFNode*) node;
 }
 
