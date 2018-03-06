@@ -269,8 +269,9 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	GBody* gb = nullptr;
 	toe::core::TOEvector3df data = toe::core::TOEvector3df(0, 0, 0);
+	toe::core::TOEvector3df scale = toe::core::TOEvector3df(1, 1, 1);
 	gb = new GBody(
-		privateSManager->AddMesh(data, data, data, path)
+		privateSManager->AddMesh(data, data, scale, path)
 	);
 	return gb;
 }

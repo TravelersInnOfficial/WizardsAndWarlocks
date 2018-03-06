@@ -756,6 +756,7 @@ void Player::UpdatePosShape(){
 	if(hasCharacter){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
+
 		m_playerNode->setPosition(m_position);
 		rotation = bt_body->GetRotation();
 		m_playerNode->setRotation(rotation * 180 / M_PI);
