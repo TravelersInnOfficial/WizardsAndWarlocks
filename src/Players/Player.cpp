@@ -369,8 +369,8 @@ void Player::Update(float deltaTime){
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne && m_camera != nullptr){
 			vector3df newRot = m_camera->GetRotation();
-			//vector3df rot = newRot * M_PI / 180.0;	
-			SetRotation(newRot);
+			vector3df rot = newRot * M_PI / 180.0;	
+			SetRotation(rot);
 
 			//Position camera FPS Y TPS
 			m_camera->UpdateCamera(GetHeadPos());

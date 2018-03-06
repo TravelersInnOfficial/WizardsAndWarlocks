@@ -28,7 +28,7 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 }
 
 void GBody::Remove(){
-    //privateNode->remove();
+    VideoDriver::GetInstance()->GetSceneManager()->DeleteMesh(privateNode);
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
