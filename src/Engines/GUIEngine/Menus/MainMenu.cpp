@@ -11,8 +11,7 @@ char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
 char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown Castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
-//FOR TESTING NOTIFICATIONS 
-//bool f1 = true ,f2 = true,f3 = true,f4 = true,f5 = true, f6 = true, f7 = true;
+//FOR TESTING NOTIFICATIONS
 
 MainMenu::MainMenu(MenuType type) : Menu(type){
     m_id = "MainMenu";
@@ -39,13 +38,11 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     //buttonSize = ImVec2(texture[0]->getSize().Width,texture[0]->getSize().Height);
     buttonSize = ImVec2(texture[0]->getSize().x,texture[0]->getSize().y);
     pu_buttonSize = ImVec2(140,0);
-
     //WIDGET SIZE
     //m_width = texture[0]->getSize().Width + 30;
     m_width = texture[0]->getSize().x + 30;
     //m_height = texture[0]->getSize().Height * N_BUTTONS + 50;
     m_height = texture[0]->getSize().y * N_BUTTONS + 50;
-
     netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
@@ -79,6 +76,7 @@ void MainMenu::ExitGame(bool * open){
 }
 
 void MainMenu::Update(bool* open, float deltaTime){
+    std::cout<<"Update menu\n";
     netSeeker->Update(deltaTime);
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window

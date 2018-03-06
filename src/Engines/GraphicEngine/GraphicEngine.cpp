@@ -85,7 +85,6 @@ bool GraphicEngine::endScene(){
 	//std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
 	bool toRet = false;
 	toRet = true;
-	if(privateDriver != nullptr) privateDriver->Draw();
 	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
 	return toRet;
 }
@@ -373,7 +372,8 @@ bool GraphicEngine::IsKeyUp(TKEY_CODE code){
 }
 
 bool GraphicEngine::IsKeyPressed(KeyboardKey code){
-	return privateReceiver->keyPressed(code);
+	//return privateReceiver->keyPressed(code);
+	return false;
 }
 
 keyStatesENUM GraphicEngine::GetKeyStatus(TKEY_CODE code){

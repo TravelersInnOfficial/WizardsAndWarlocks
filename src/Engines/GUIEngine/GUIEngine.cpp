@@ -1,27 +1,20 @@
 #include "GUIEngine.h"
+
 #include <DeathMessages.h>
 #include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
 
+#include <GLFW/glfw3.h>
+#include <imgui.h>
+#include "imgui_impl_glfw_gl3.h"
+
 GUIEngine::GUIEngine(){
-
     g_engine = GraphicEngine::getInstance();
-    //sf::Texture* texture = MyEngine::CreateTextureFromMemoryPixels(pixels, width, height, TEXTURE_TYPE_RGBA);
-     // TODO: Store your texture pointer/identifier (whatever your engine uses) in 'io.Fonts->TexID'. This will be passed back to your via the renderer.
-    //ImGui::GetIO().Fonts->TexID = (void*)texture
-    ImGui::SFML::Init(*VideoDriver::GetInstance()->GetWindow());
-    //pDevice = g_engine->GetIrrlichtDevice();
-    //pDevice = nullptr;
-    //m_EventReceiver = g_engine->GetMenuReceiver();
-    //m_EventReceiver = nullptr;
-    cursor = new sf::Texture();
-    cursor->loadFromFile("./../assets/textures/HUD/cursor.png");
-    unsigned char* pixels;
-    int width, height;
-    ImGui::GetIO().Fonts->GetTexDataAsRGBA32(&pixels, &width, &height);
-    ImGui::GetIO().Fonts->TexID = (void*)cursor;
 
-    // Create GUI object
-    //m_GUIHandler = IrrIMGUI::createIMGUI(pDevice, m_EventReceiver);
+    //BIND IMGUI WITH GLFW
+    GLFWindow* glf_win = VideoDriver::GetInstance->GetWindow();
+    ImGui_ImplGlfwGL3_Init(glf_win, true);
+
+    //INITIAL NOTIFICATIONS POSITION
     m_notifications_Ypos = 10;
     m_notifications_distance = 10;
 }
@@ -32,25 +25,19 @@ GUIEngine* GUIEngine::GetInstance(){
 }
 
 GUIEngine::~GUIEngine(){
-    //m_GUIHandler->drop();
-    ImGui::SFML::Shutdown();
-    delete cursor;
+    //END IMGUI
+    ImGui_ImplGlfwGL3_Shutdown();
 }
 
 void GUIEngine::Update(){
-    // create the GUI elements
-    //m_GUIHandler->startGUI(); //HERE YOU CALL THE NEW FRAME METHOD
-    //ImGui::NewFrame();
-    std::vector<sf::Event*> m_events = VideoDriver::GetInstance()->GetSFMLEvents();
-    for(int i = 0; i<m_events.size(); i++)ImGui::SFML::ProcessEvent(*m_events[i]);
-    ImGui::SFML::Update(*VideoDriver::GetInstance()->GetWindow(),VideoDriver::GetInstance()->GetElapsedTime());
+    //IMGUI BEGUIN DRAW
+    ImGui_ImplGlfwGL3_NewFrame();
     printNotifications();
 }
 
 void GUIEngine::Draw(){
-   //m_GUIHandler->drawAll(); //HERE YOU CALL THE RENDER METHOD
-   //ImGui::EndFrame();
-   ImGui::SFML::Render(*VideoDriver::GetInstance()->GetWindow());
+   //IMGUI END DRAW
+   ImGui::Render();
 }
 
 void GUIEngine::printNotifications(){
@@ -109,6 +96,3 @@ void GUIEngine::ShowDeathMessage(std::string victim, float time){
 
     m_notifications_data.insert(std::pair<std::string,float>(death_phrase, time+ImGui::GetTime()));
 }
-
-//IrrIMGUI::IIMGUIHandle * GUIEngine::GetGuiHandler(){return m_GUIHandler;}
-//irr::IrrlichtDevice* GUIEngine::GetPDevice(){return pDevice;}
