@@ -369,8 +369,8 @@ void Player::Update(float deltaTime){
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(isPlayerOne && m_camera != nullptr){
 			vector3df newRot = m_camera->GetRotation();
-			//vector3df rot = newRot * M_PI / 180.0;	
-			SetRotation(newRot);
+			vector3df rot = newRot * M_PI / 180.0;	
+			SetRotation(rot);
 
 			//Position camera FPS Y TPS
 			m_camera->UpdateCamera(GetHeadPos());
@@ -756,6 +756,7 @@ void Player::UpdatePosShape(){
 	if(hasCharacter){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
+
 		m_playerNode->setPosition(m_position);
 		rotation = bt_body->GetRotation();
 		m_playerNode->setRotation(rotation * 180 / M_PI);
@@ -924,8 +925,10 @@ void Player::SetAlliance(Alliance newAlliance){
 		case(ALLIANCE_WIZARD):{
 			if(hasCharacter){
 				m_playerNode->Remove();
+
 				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+				
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}

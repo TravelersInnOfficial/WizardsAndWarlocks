@@ -12,7 +12,6 @@ class GBody: public GEntity{
 	friend class GraphicEngine;
 public:
 
-	GBody();
 	~GBody();
 
 	/**
@@ -41,7 +40,7 @@ public:
 
 private:
 	//GBody(irr::scene::ISceneNode* node);
-	GBody(void* node);
+	GBody(TFMesh* node);
 	TFMesh* privateAnimatedMesh; 
 	std::map<int, int> m_billboards;		// ID del billboard, ID en el motor
 	//irr::scene::IBillboardTextSceneNode* board;
