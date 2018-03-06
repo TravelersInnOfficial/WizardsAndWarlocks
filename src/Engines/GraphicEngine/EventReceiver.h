@@ -1,3 +1,6 @@
+#ifndef EVENTRECEIVER_H
+#define EVENTRECEIVER_H
+
 #include <iostream>
 #include <KeyStates.h>
 #include <TravelersOcularEngine/src/TOcularEngine/IODriver.h>
@@ -25,3 +28,5 @@ public:
     EventReceiver();
 
 };
+
+#endif
