@@ -18,7 +18,7 @@ Teleport::Teleport(float costPM, float tCast, float tCoolDown, float optHP, floa
 void Teleport::Lanzar(Player* p){
 	vector3df rot = p->GetRot();
 
-	//rot.X = -rot.X;
+	rot.X = -rot.X;
 
 	vector3df pos = p->GetHeadPos();
 

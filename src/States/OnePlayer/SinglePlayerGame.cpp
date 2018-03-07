@@ -96,8 +96,8 @@ bool SinglePlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(Key_Escape)){
-		//StateManager::GetInstance()->PrepareStatus(STATE_MENU);
-		StateManager::GetInstance()->CloseGame();
+		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+		//StateManager::GetInstance()->CloseGame();
 	}
 
 	// DEBUG

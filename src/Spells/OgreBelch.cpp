@@ -17,7 +17,7 @@ OgreBelch::OgreBelch(float costPM, float tCast, float tCoolDown, float optHP, fl
 void OgreBelch::Lanzar(Player* p){
 	vector3df pos = p->GetHeadPos();
 	vector3df rot = p->GetRot();
-	//rot.X = -rot.X;
+	rot.X = -rot.X;
 
 	float max = 1;
 	pos.X = pos.X + sin(rot.Y)*cos(rot.X)*max;
