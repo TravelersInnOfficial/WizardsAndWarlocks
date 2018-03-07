@@ -1,5 +1,9 @@
 #include "StateManager.h"
 #include <time.h>
+#include <iostream>
+#include <cstdio>
+#include <thread>
+#include <chrono>
 
 StateManager::StateManager(ServerInfo* serverInfo){
 	if(serverInfo == nullptr){
@@ -119,17 +123,23 @@ void StateManager::LoadState(State_Code code, bool* end){
 }
 
 void StateManager::UpdateDelta(){
+	using namespace std::chrono_literals;
+	using clk = std::chrono::high_resolution_clock;
+	static auto t = clk::now();
 
-	// Capping FPS & Calculating deltaTime
-	deltaTime = 0;
-	timeStart = g_engine->getTime();
-	float currentTime = timeStart;
-	
-	while(deltaTime < minFrameTime){
-		deltaTime = currentTime - timeStart;
-		g_engine->run();
-		currentTime = g_engine->getTime();
-	}
+	// DECLARAMOS SPF y FPS
+	constexpr auto fps = 200.0f;
+	constexpr auto spf = 1.0s / fps;
 
-	deltaTime *= 0.001;
+	// CALCULAMOS DELTA TIME ANTES DE ESPERAR Y ESPERAMOS
+	auto passed = clk::now() - t;
+	if (passed < spf) std::this_thread::sleep_for(spf - passed);
+
+	// CALCULAMOS DELTA TIME TOTAL
+	passed = clk::now() - t;
+	std::chrono::duration<double, std::milli> milisecondsPassed = passed;
+	deltaTime = milisecondsPassed.count() / 1000;
+
+	// GUARDAMOS LA T
+	t = clk::now();
 }
