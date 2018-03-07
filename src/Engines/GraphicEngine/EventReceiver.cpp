@@ -11,8 +11,6 @@ void EventReceiver::InitReceiver(){
 
 bool EventReceiver::OnEvent(const TEvent& event) {
 
-	std::cout<<"ENTRO"<<std::endl;
-
 	if (event.m_type == Type_KeyPressed || event.m_type == Type_KeyReleased) {
 		KeyboardKey eventKey = event.m_key.code;
 		if (event.m_type == Type_KeyPressed) {

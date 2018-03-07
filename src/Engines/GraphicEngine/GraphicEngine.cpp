@@ -1,5 +1,6 @@
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include "./../GUIEngine/GUIEngine.h"
 
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
@@ -50,6 +51,13 @@ void GraphicEngine::ChangeWindowName(std::string newName){
 //####################
 //####################
 void GraphicEngine::ToggleMenu(bool newState){
+	if(privateDriver != nullptr){
+		if(newState){
+			GUIEngine::GetInstance()->InitReceiver();
+		}else{
+			privateDriver->SetReceiver();
+		}
+	}
 	/*if(privateDevice != nullptr){
 		if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
 		else privateDevice->setEventReceiver(privateReceiver);
@@ -374,8 +382,7 @@ bool GraphicEngine::IsKeyUp(KeyboardKey code){
 }
 
 bool GraphicEngine::IsKeyPressed(KeyboardKey code){
-	//return privateReceiver->keyPressed(code);
-	return false;
+	return privateReceiver->keyPressed(code);
 }
 
 keyStatesENUM GraphicEngine::GetKeyStatus(KeyboardKey code){

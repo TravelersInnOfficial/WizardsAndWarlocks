@@ -17,6 +17,7 @@ public:
     void Draw();
     void MakeCustomNotification(std::string, float time = 3.5f);
     void ShowDeathMessage(std::string, float time = 3.5f);
+    void InitReceiver();
 
 private:
     GraphicEngine* g_engine;

@@ -96,3 +96,7 @@ void GUIEngine::ShowDeathMessage(std::string victim, float time){
 
     m_notifications_data.insert(std::pair<std::string,float>(death_phrase, time+ImGui::GetTime()));
 }
+
+void GUIEngine::InitReceiver(){
+    ImGui_ImplGlfwGL3_InitReceiver();
+}

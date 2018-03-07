@@ -347,13 +347,17 @@ bool    ImGui_ImplGlfwGL3_Init(GLFWwindow* window, bool install_callbacks)
 
     if (install_callbacks)
     {
-        glfwSetMouseButtonCallback(window, ImGui_ImplGlfwGL3_MouseButtonCallback);
-        glfwSetScrollCallback(window, ImGui_ImplGlfwGL3_ScrollCallback);
-        glfwSetKeyCallback(window, ImGui_ImplGlfwGL3_KeyCallback);
-        glfwSetCharCallback(window, ImGui_ImplGlfwGL3_CharCallback);
+        ImGui_ImplGlfwGL3_InitReceiver();
     }
 
     return true;
+}
+
+void ImGui_ImplGlfwGL3_InitReceiver(){
+    glfwSetMouseButtonCallback(g_Window, ImGui_ImplGlfwGL3_MouseButtonCallback);
+    glfwSetScrollCallback(g_Window, ImGui_ImplGlfwGL3_ScrollCallback);
+    glfwSetKeyCallback(g_Window, ImGui_ImplGlfwGL3_KeyCallback);
+    glfwSetCharCallback(g_Window, ImGui_ImplGlfwGL3_CharCallback);
 }
 
 void ImGui_ImplGlfwGL3_Shutdown()
