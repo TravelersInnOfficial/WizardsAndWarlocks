@@ -271,23 +271,7 @@ private:
 	EventReceiver* privateReceiver;
 	//MenuReceiver* privateMenuReceiver;
 	GCamera* privateCamera;
-
-	/**
-	 * Adds a static text
-	 * text: Text to be displayed
-	 * position: Rectangle specifying the borders of the static text
-	 * border: Set to true if the static text should have a 3d border
-	 * wordWrap: Enable if the text should wrap into multiple lines
-	 * id: id to easily access the button
-	*/
-
-	//irr::scene::IBillboardTextSceneNode* addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position = vector3df(0,0,0), int id = -1);
-
-	/**
-	 * Returns the irrlicht device of the motor graphic ---> ONLY FOR GUI ENGINE INITIALIZATION <---
-	*/
-	//irr::IrrlichtDevice* GetIrrlichtDevice();
-	//MenuReceiver* GetMenuReceiver();
+	
 };
 
 #endif
