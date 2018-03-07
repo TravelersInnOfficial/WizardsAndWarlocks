@@ -12,6 +12,9 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 	privateReceiver = new EventReceiver();
 	privateDriver->SetIODriver(privateReceiver);
+	privateDriver->SetMouseVisibility(false);
+
+	privateCamera = nullptr;
 }
 
 GraphicEngine::~GraphicEngine(){
