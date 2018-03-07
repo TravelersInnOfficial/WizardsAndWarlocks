@@ -32,7 +32,7 @@ void GBody::Remove(){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	/*
+	
 	toe::core::TOEvector3df motorPosition(position.X, position.Y, position.Z);
 	// COmprobamos si ya existia la id almacenada
 	if(m_billboards.find(id) != m_billboards.end()){
@@ -47,5 +47,5 @@ void GBody::AddText(std::string text, vector3df position, int id){
 		}
 	}
 	// Si se llega aqui significa que no existe ningun billboard
-	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);*/
+	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);
 }

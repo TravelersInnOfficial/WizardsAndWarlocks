@@ -13,7 +13,7 @@ FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
     changeX = 0;
     changeY = 0;
     sensibility = 0.5f;
-    //sensibility = 0.005;
+
 }
 
 FPSCamera::~FPSCamera(){
@@ -30,7 +30,7 @@ void FPSCamera::UpdateCamera(vector3df position){
 		target.Y = target.Y + sin(rotation.X)*max;
 		target.Z = target.Z + cos(rotation.Y)*cos(rotation.X)*max;
 
-		p_Camera->setTarget(target);
+		//p_Camera->setTarget(target);
 		CatchMouseInput();
 		rotation = GetNewRotation(rotation);
 		p_Camera->setRotation(rotation);
@@ -42,7 +42,7 @@ vector3df FPSCamera::GetNewRotation(vector3df rotation){
 	rotation.Y += changeX * sensibility;
 	rotation.X += changeY * sensibility;
 
-	float variation = 180/16;
+	float variation = 180/5;
 	float max = 180/2 - variation;
 	float min = -180/2 + variation;
 
@@ -63,7 +63,7 @@ void FPSCamera::CatchMouseInput(){
 	g_engine->SetCursorPosition(lastPos);
 
 	// Update the Y angle
-	changeY = dirMouse.Y;
+	changeY = -dirMouse.Y;
 
 	// Update the X angle
 	changeX = -dirMouse.X;

@@ -320,7 +320,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	}
 	
 	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
+	//toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
+	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(0,0,0);
 	privateCamera = new GCamera(privateSManager->AddCamera(position_TOE, lookat_TOE, true));
 	return privateCamera;
 }
