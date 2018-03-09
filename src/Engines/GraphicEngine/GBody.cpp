@@ -49,3 +49,7 @@ void GBody::AddText(std::string text, vector3df position, int id){
 	// Si se llega aqui significa que no existe ningun billboard
 	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);
 }
+
+void GBody::SetInvisible(){
+	((TFMesh*)privateNode)->SetInvisible();
+}

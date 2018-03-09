@@ -38,6 +38,8 @@ public:
 
 	void AddText(std::string text, vector3df position, int id = 0);
 
+	void SetInvisible();
+
 private:
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(TFMesh* node);

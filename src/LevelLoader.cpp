@@ -14,7 +14,7 @@
 #include "Managers/PlayerManager.h"
 
 LevelLoader::LevelLoader(){
-	
+
 }
 
 bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vector3df rotation){
@@ -39,7 +39,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 	ObjectManager* objManager = ObjectManager::GetInstance();
 
 	std::map<int, Door*> doors;
-	
+
 	//Takes path from binary location (/bin)
 	std::ifstream i(jsonPath);
 	nlohmann::json j;
@@ -58,7 +58,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		//pointer to object body
 		auto ptr = j["Objects"][i]["Body"];
 		type = j["Objects"][i]["Type"];
-		
+
 		//unity transform
 		position = vector3df(ptr["Position"][0], 	ptr["Position"][1], ptr["Position"][2]);
 		rotation = vector3df(ptr["Rotation"][0], 	ptr["Rotation"][1], ptr["Rotation"][2]);
@@ -69,23 +69,23 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		model = ptr["3DModel"];
 
 		//aditional variables
-		axis = ptr["AxisCoord"].empty()? vector3df() : 
+		axis = ptr["AxisCoord"].empty()? vector3df() :
 		vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
-		
+
 		//create object
 		if(type == "Block"){
-			objManager->AddBlock(position, size, rotation, texture);           
+			objManager->AddBlock(position, size, rotation, texture);
 		}
 		else if(type == "Prop"){
-			objManager->AddProp(position, size, rotation, model, texture); 
+			objManager->AddProp(position, size, rotation, model, texture);
 		}
 		else if(type == "WizardSpawn"){
-			objManager->AddProp(position, size, rotation, model, texture); 
+			objManager->AddProp(position, size, rotation, model, texture);
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WIZARD, position);
 		}
 		else if(type == "WarlockSpawn"){
-			objManager->AddProp(position, size, rotation, model, texture); 
+			objManager->AddProp(position, size, rotation, model, texture);
 			position.Y += 1;
 			objManager->AddSpawner(ALLIANCE_WARLOCK, position);
 		}
@@ -138,9 +138,9 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
 			size     = vector3df(ptr["Scale"][0], ptr["Scale"][1], ptr["Scale"][2]);
 
-			//axis = ptr["AxisCoord"].empty()? vector3df() : 
+			//axis = ptr["AxisCoord"].empty()? vector3df() :
 			//vector3df(ptr["AxisCoord"][0], ptr["AxisCoord"][1], ptr["AxisCoord"][2]);
-						
+
 			int assignedDoorID = j["Objects"][i]["TargetDoor"];
 			objManager->AddSwitch(doors[assignedDoorID], position, vector3df(1,1,1), rotation, vector3df(0,0,0));
 		}
