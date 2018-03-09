@@ -298,40 +298,45 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 }
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
-	GCamera* privateCamera = nullptr;
-
-	TFCamera* oldCamera = privateSManager->GetMainCamera();
-	if (oldCamera != nullptr){
-		privateSManager->DeleteCamera(oldCamera);
+	// DESTRUIMOS NUESTRA PROPIA CAMARA
+	if(privateCamera != nullptr){
 		delete privateCamera;
 		privateCamera = nullptr;
 	}
+
+	// DESTRUIMOS LA CAMARA DEL MOTOR
+	TFCamera* oldCamera = privateSManager->GetMainCamera();
+	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
+	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
 	toe::core::TOEvector3df defaultdata = toe::core::TOEvector3df(0, 0, 0);
 	privateCamera = new GCamera(privateSManager->AddCamera(defaultdata, defaultdata, true));
+
+	// LA DEVOLVEMOS
 	return privateCamera;
 }
 
 GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
-	GCamera* privateCamera = nullptr;
-
-	TFCamera* oldCamera = privateSManager->GetMainCamera();
-	if (oldCamera != nullptr){
-		privateSManager->DeleteCamera(oldCamera);
+	// DESTRUIMOS NUESTRA PROPIA CAMARA
+	if(privateCamera != nullptr){
 		delete privateCamera;
 		privateCamera = nullptr;
 	}
+
+	// DESTRUIMOS LA CAMARA DEL MOTOR
+	TFCamera* oldCamera = privateSManager->GetMainCamera();
+	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
+	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
 	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	//toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
-	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(0,0,0);
+	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
 	privateCamera = new GCamera(privateSManager->AddCamera(position_TOE, lookat_TOE, true));
+
+	// LA DEVOLVEMOS
 	return privateCamera;
 }
 
 GCamera* GraphicEngine::getActiveCamera(){
-	GCamera* privateCamera = nullptr;
-	if(privateCamera != nullptr) privateCamera->privateNode = privateSManager->GetMainCamera();
 	return privateCamera;
 }
 
