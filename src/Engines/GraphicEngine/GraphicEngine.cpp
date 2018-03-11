@@ -14,7 +14,6 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateDriver->SetIODriver(privateReceiver);
 
 	privateCamera = nullptr;
-	privateDriver->SetMouseVisibility(false);
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -36,6 +35,10 @@ bool GraphicEngine::drop(){
 	return true;
 }
 
+void GraphicEngine::ResetScene(){
+	if(privateSManager != nullptr) privateSManager->ResetManager();
+}
+
 void GraphicEngine::setCursorVisible(bool visible){
 	if(privateDriver != nullptr) privateDriver->SetMouseVisibility(visible);
 }
@@ -50,58 +53,18 @@ void GraphicEngine::ChangeWindowName(std::string newName){
 	if(privateDriver != nullptr) privateDriver->SetWindowName(newName);
 }
 
-//####################
-//####################
-//####################
 void GraphicEngine::ToggleMenu(bool newState){
 	if(privateDriver != nullptr){
-		if(newState){
-			GUIEngine::GetInstance()->InitReceiver();
-		}else{
-			privateDriver->SetReceiver();
-		}
+		if(newState) GUIEngine::GetInstance()->InitReceiver();
+		else privateDriver->SetReceiver();
 	}
-	/*if(privateDevice != nullptr){
-		if(newState) privateDevice->setEventReceiver(privateMenuReceiver);
-		else privateDevice->setEventReceiver(privateReceiver);
-		ToggleCameraMovement(!newState);
-		privateDevice->getCursorControl()->setVisible(false);
-	}*/
 }
 
-//####################
-//####################
-//####################
 void GraphicEngine::ToggleCameraMovement(bool newState){
 	/*if (privateCamera != nullptr){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
 		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
 	}*/
-}
-
-// DRIVER FUNCTIONS
-bool GraphicEngine::beginScene(){
-	//std::cout<<"En nuestro motor no usamos el BEGIN SCENE"<<std::endl;
-	bool toRet = false;
-	toRet = true;
-	//if(privateDriver != nullptr) toRet = privateDriver->beginScene();
-	return toRet;
-}
-
-bool GraphicEngine::beginSceneDefault(){
-	bool toRet = false;
-	//std::cout<<"En nuestro motor no usamos el BEGIN SCENE DEFAULT"<<std::endl;
-	toRet = true;
-	//if(privateDriver != nullptr) toRet = privateDriver->beginScene(true, true, irr::video::SColor(255,0,0,0));
-	return toRet;
-}
-
-bool GraphicEngine::endScene(){
-	//std::cout<<"En nuestro motor no usamos el END SCENE"<<std::endl;
-	bool toRet = false;
-	toRet = true;
-	//if(privateDriver != nullptr) toRet = privateDriver->endScene();
-	return toRet;
 }
 
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
@@ -112,8 +75,6 @@ void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-	//std::cout<<"En nuestro motor no hacemos PAINT LINE DEBUG"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		irr::video::SColorf fromC;
 		fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
@@ -129,8 +90,6 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 }
 
 void GraphicEngine::drawAim(bool moving){
-	//std::cout<<"En nuestro motor no usamos el DRAW AIM"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
 		irr::u32 size = 15;
@@ -155,8 +114,6 @@ void GraphicEngine::drawAim(bool moving){
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
-	//std::cout<<"En nuestro motor no usamos el DRAW GRAIL GUI"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
 		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
@@ -181,8 +138,6 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 }
 
 void GraphicEngine::drawOverlays(OverlayCodes type){
-	//std::cout<<"En nuestro motor no usamos el DRAW OVERLAYS"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
 		irr::video::ITexture* overlay = nullptr;
@@ -215,8 +170,6 @@ int GraphicEngine::GetScreenWidth(){
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
-	//std::cout<<"En nuestro motor no usamos el DRAW 2D IMAGE"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
 		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
@@ -227,8 +180,6 @@ void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
 }
 
 void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	//std::cout<<"En nuestro motor no usamos el DRAW 2D RECTANGLE"<<std::endl;
-
 	/*if(privateDriver != nullptr){
 		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
 		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
@@ -340,25 +291,6 @@ GCamera* GraphicEngine::getActiveCamera(){
 	return privateCamera;
 }
 
-// GUIENV FUNCTIONS
-bool GraphicEngine::EscPressed(){
-	//return (privateMenuReceiver->EscPressed());
-	return false;
-}
-
-/*
-std::string GraphicEngine::ReadText(MenuOption id){
-	irr::gui::IGUIElement* textElem;
-	textElem = privateGUIEnv->getRootGUIElement()->getElementFromId((int)id, true);
-
-	const wchar_t *text = textElem->getText();
-	std::wstring ws(text);
-	std::string text_str(ws.begin(), ws.end());
-
-	return (text_str);
-	return "";
-}*/
-
 void GraphicEngine::SetCursorPosition(vector2di cursor){
 	privateDriver->SetCursorPosition(cursor.X, cursor.Y);
 }
@@ -371,7 +303,6 @@ vector2di GraphicEngine::GetCursorPosition(){
 // RECEIVER FUNCTIONS
 void GraphicEngine::UpdateReceiver(){
 	privateReceiver->Update();
-	//privateMenuReceiver->Update();
 }
 
 void GraphicEngine::InitReceiver(){
@@ -402,30 +333,6 @@ void GraphicEngine::SetKeyStatus(KeyboardKey code, keyStatesENUM status){
 	privateReceiver->setKeyStatus(code, status);
 }
 
-/*
-irr::scene::IBillboardTextSceneNode* GraphicEngine::addBillboardText(std::string text, irr::scene::ISceneNode* parent, vector3df position, int id){
-	irr::core::vector3df auxPos = irr::core::vector3df(0, 0, 0);
-	auxPos.X = position.X; auxPos.Y = position.Y; auxPos.Z = position.Z;
-
-	float dimX = text.length() * 0.1;
-	float dimY = 0.25f;
-	irr::core::dimension2d<irr::f32> dim = irr::core::dimension2d<irr::f32>(dimX, dimY);
-	
-	std::wstring wText = std::wstring(text.begin(), text.end());
-
-	irr::scene::IBillboardTextSceneNode* board = privateSManager->addBillboardTextSceneNode(0, wText.c_str(), parent, dim, auxPos, id);
-	return board;
-}
-
-irr::IrrlichtDevice* GraphicEngine::GetIrrlichtDevice(){
-	return privateDevice;
-}
-
-MenuReceiver* GraphicEngine::GetMenuReceiver(){
-	return privateMenuReceiver;
-}
-*/
-
-void GraphicEngine::LoadMesh(std::string path){
-	
+void GraphicEngine::AddDome(){
+	privateSManager->AddDome();
 }

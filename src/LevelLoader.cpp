@@ -6,12 +6,16 @@
 #include <vector3d.h>
 #include <NPCTypes.h>
 #include <PotionTypes.h>
+
+#include <GraphicEngine/GraphicEngine.h>
+
 // Managers
 #include "Managers/TrapManager.h"
 #include "Managers/SpellManager.h"
 #include "Managers/BulletManager.h"
 #include "Managers/ObjectManager.h"
 #include "Managers/PlayerManager.h"
+
 
 LevelLoader::LevelLoader(){
 
@@ -34,9 +38,12 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
+	
+	GraphicEngine::getInstance()->AddDome();
 
 	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
+
 
 	std::map<int, Door*> doors;
 

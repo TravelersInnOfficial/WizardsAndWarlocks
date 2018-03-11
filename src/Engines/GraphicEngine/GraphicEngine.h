@@ -70,16 +70,6 @@ public:
 	bool beginScene();
 
 	/**
-	 * Application must call this method before performing any rendering (default begin).
-	*/
-	bool beginSceneDefault();
-
-	/**
-	 * Presents the rendered image to the screen.
-	*/
-	bool endScene();
-
-	/**
 	 * Sets a texture to the giben body
 	 * layer: layer of texture
 	 * body: pointer to body where to apply texture
@@ -198,15 +188,6 @@ public:
 	*/
 	GCamera* getActiveCamera();
 
-	/// GUIENV FUNCTIONS
-
-	bool EscPressed();
-
-	/**
-	 * Reads a GUI EditBox from the reciever
-	*/
-	//std::string ReadText(MenuOption id);
-
 	/**
 	 * @brief Returns mouse position in the screen
 	 *
@@ -257,21 +238,18 @@ public:
 
 	void SetKeyStatus(KeyboardKey code, keyStatesENUM status);
 
-	void LoadMesh(std::string path);
+	void ResetScene();
+
+	void AddDome();
 
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
 
-	/** Irrlicht provisional devices*/
-	//irr::IrrlichtDevice*        privateDevice;
 	VideoDriver*   privateDriver;
 	SceneManager*  privateSManager;
-	//irr::gui::IGUIEnvironment*  privateGUIEnv;
 	EventReceiver* privateReceiver;
-	//MenuReceiver* privateMenuReceiver;
 	GCamera* privateCamera;
-	
 };
 
 #endif

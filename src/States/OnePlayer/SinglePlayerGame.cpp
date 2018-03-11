@@ -130,7 +130,6 @@ void SinglePlayerGame::Update(float deltaTime){
 }
 
 void SinglePlayerGame::Draw(){
-	g_engine->beginSceneDefault();
 	g_engine->drawAll();
 
 	m_stateGame->Draw();
@@ -140,8 +139,6 @@ void SinglePlayerGame::Draw(){
 		f_engine->DebugDrawWorld();
 		if(AL != nullptr) AL->Debug();
 	}
-
-	g_engine->endScene();
 }
 
 /********************************************************************************************************
