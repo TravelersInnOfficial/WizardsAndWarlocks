@@ -46,7 +46,7 @@ vector3df FPSCamera::GetNewRotation(vector3df rotation){
 	rotation.Y += changeX * sensibility;
 	rotation.X += changeY * sensibility;
 
-	float variation = 180/5;
+	float variation = 180/10;
 	float max = 180/2 - variation;
 	float min = -180/2 + variation;
 
