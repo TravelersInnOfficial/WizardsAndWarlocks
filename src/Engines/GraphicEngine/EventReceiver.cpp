@@ -34,8 +34,8 @@ bool EventReceiver::OnEvent(const TEvent& event) {
 	}
 
 	if (event.m_type == Type_MouseWheelScrolled){
-		if(event.m_mouseWheel.delta > 0) keyState[Key_MouseMiddle_Up] = RELEASED;
-		else if (event.m_mouseWheel.delta < 0) keyState[Key_MouseMiddle_Down] = RELEASED;
+		if(event.m_mouseWheel.y > 0) keyState[Key_MouseMiddle_Up] = RELEASED;
+		else if (event.m_mouseWheel.y < 0) keyState[Key_MouseMiddle_Down] = RELEASED;
 	}
 
 	return false;
