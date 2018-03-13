@@ -129,16 +129,19 @@ void StateManager::UpdateDelta(){
 
 	// DECLARAMOS SPF y FPS
 	constexpr auto fps = 200.0f;
-	constexpr auto spf = 1.0s / fps;
+	constexpr auto spf = 1000000000ns / fps;
 
 	// CALCULAMOS DELTA TIME ANTES DE ESPERAR Y ESPERAMOS
 	auto passed = clk::now() - t;
-	if (passed < spf) std::this_thread::sleep_for(spf - passed);
+	if (passed < spf){
+		auto ns = std::chrono::duration_cast<std::chrono::nanoseconds>(spf - passed - 100us);
+		std::this_thread::sleep_for(ns);
+	}
 
-	// CALCULAMOS DELTA TIME TOTAL
+	// CALCULAMOS DELTA TIM
 	passed = clk::now() - t;
 	std::chrono::duration<double, std::milli> milisecondsPassed = passed;
-	deltaTime = milisecondsPassed.count() / 1000;
+	deltaTime = milisecondsPassed.count() / 1000.0f;
 
 	// GUARDAMOS LA T
 	t = clk::now();
