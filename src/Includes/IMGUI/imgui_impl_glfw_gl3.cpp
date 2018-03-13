@@ -352,7 +352,7 @@ bool    ImGui_ImplGlfwGL3_Init(GLFWwindow* window, bool install_callbacks)
 
     return true;
 }
-
+#include <iostream>
 void ImGui_ImplGlfwGL3_InitReceiver(){
     glfwSetMouseButtonCallback(g_Window, ImGui_ImplGlfwGL3_MouseButtonCallback);
     glfwSetScrollCallback(g_Window, ImGui_ImplGlfwGL3_ScrollCallback);

@@ -250,6 +250,8 @@ private:
 	SceneManager*  privateSManager;
 	EventReceiver* privateReceiver;
 	GCamera* privateCamera;
+	std::vector<TFRect*> m_aim;
+	bool moving_aim = true;
 };
 
 #endif

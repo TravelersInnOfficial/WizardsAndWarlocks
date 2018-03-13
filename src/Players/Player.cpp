@@ -179,6 +179,7 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		// Camera
 		if(isPlayerOne){ 
 			if(m_camera!=nullptr) delete m_camera;
+			//m_camera = new WatcherCamera(m_position);	
 			m_camera = new FPSCamera(m_position, rotation);		
 		}
 

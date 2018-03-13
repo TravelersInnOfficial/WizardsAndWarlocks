@@ -238,20 +238,20 @@ void HumanPlayer::ToggleMenu(bool newState){
 void HumanPlayer::CheckInput(){
 	if(!menuActivated){
 		// Movimiento
-		if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-		if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-		if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
-		if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+		if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ MoveX(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ MoveZ(-1); }
+		if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ MoveX(1); }
+		if(controller->IsKeyDown(ACTION_MOVE_UP)){ MoveZ(1); }
+		if(controller->IsKeyPressed(ACTION_JUMP)){ Jump(); }
 		
-		if(controller->IsKeyPressed(ACTION_RUN)){ this->Run(true); }
-		if(controller->IsKeyReleased(ACTION_RUN)){ this->Run(false); }
+		if(controller->IsKeyPressed(ACTION_RUN)){ Run(true); }
+		if(controller->IsKeyReleased(ACTION_RUN)){ Run(false); }
 		
 		// Acciones
-		if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+		if(controller->IsKeyDown(ACTION_RAYCAST)){ Raycast(); }
 
-		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
-		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+		if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ UseObject();}
+		if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ DropObject(); }
 		
 		// Hechizos
 		if(controller->IsKeyPressed(ACTION_SHOOT)){ StartSpell(); }
@@ -269,7 +269,7 @@ void HumanPlayer::CheckInput(){
 		if(spellChanged && networkObject != nullptr) networkObject->SetIntVar(PLAYER_SPELL, currentSpell, true, false);
 		
 		// Trampas
-		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ DeployTrap(); }
 	}
 }
 

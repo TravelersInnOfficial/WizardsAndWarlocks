@@ -90,27 +90,48 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 }
 
 void GraphicEngine::drawAim(bool moving){
-	/*if(privateDriver != nullptr){
-		irr::video::SColor color = irr::video::SColor(255, 255, 255, 255);
-		irr::u32 size = 15;
-		irr::u32 cenW = (irr::u32) (privateDriver->getScreenSize().Width * 0.5);
-		irr::u32 cenH = (irr::u32) (privateDriver->getScreenSize().Height * 0.5);
+	if(moving != moving_aim){
+		if(privateDriver != nullptr){
+			if(m_aim.size() == 0){
+				for(int i=0; i<5; i++){
+					m_aim.push_back(toe::Add2DRect());
+					m_aim[i]->SetColor(0,0,1);
+				}
+			}
 
-		irr::u32 rDist = 0;
-		if(moving) rDist = 30;
-		
-		// Not moving, Draws center point
-		else{
-			rDist = 4;
-			privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1, cenH - 1, cenW + 1, cenH + 1)); //center of screen
+			int size_w = 15;
+			int size_h = 2;
+
+			float cenW =  privateDriver->GetWindowDimensions().X * 0.5;
+			float cenH =  privateDriver->GetWindowDimensions().Y * 0.5;
+
+			float rDist = 0;
+			if(moving) rDist = 30;
+
+			else{
+				rDist = 4;
+
+				//center of screen
+				m_aim[0]->SetPosition(cenW, cenH);
+				m_aim[0]->SetSize(size_h, size_h);
+			}
+
+			//Draw Crosshair
+			m_aim[1]->SetPosition(cenW					, cenH - rDist - size_w	); //down
+			m_aim[1]->SetSize(size_h					, size_w					);
+
+			m_aim[2]->SetPosition(cenW + rDist + size_h	, cenH 	 				); //right
+			m_aim[2]->SetSize(size_w					, size_h				);
+
+			m_aim[3]->SetPosition(cenW 					, cenH + rDist + size_h	); //up
+			m_aim[3]->SetSize(size_h					, size_w);
+
+			m_aim[4]->SetPosition(cenW - rDist - size_w	, cenH 					); //left
+			m_aim[4]->SetSize(size_w					, size_h				);
+
 		}
-
-		//Draw Crosshair
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH - rDist - size	, cenW + 1				, cenH - rDist			)); //above
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW + rDist		, cenH - 1	 			, cenW + rDist + size	, cenH + 1				)); //right
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - 1			, cenH + rDist			, cenW + 1				, cenH + rDist + size	)); //down
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(cenW - rDist - size	, cenH - 1	 			, cenW - rDist			, cenH + 1				)); //left
-	}*/
+		moving_aim = moving;
+	}
 }
 
 void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
