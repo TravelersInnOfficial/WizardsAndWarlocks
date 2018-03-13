@@ -5,7 +5,7 @@
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
-	privateDriver->CreateWindows("WW",toe::core::TOEvector2df(800,600));
+	privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
 	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 
 	privateSManager = privateDriver->GetSceneManager();
