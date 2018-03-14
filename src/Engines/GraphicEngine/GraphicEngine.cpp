@@ -193,6 +193,11 @@ void GraphicEngine::ClearOverlay(){
 	m_actual_overlay->SetTexture("");
 	
 }
+
+void GraphicEngine::SetOverlayTransparency(float t){
+	if(m_actual_overlay!= nullptr) m_actual_overlay->SetAlpha(t);
+}
+
 void GraphicEngine::drawOverlays(OverlayCodes type){
 	if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
@@ -201,11 +206,8 @@ void GraphicEngine::drawOverlays(OverlayCodes type){
 			float H = GetScreenHeight();
 
 			m_actual_overlay = toe::AddSprite("", toe::core::TOEvector2df(0,0),toe::core::TOEvector2df(W,H));
-			std::cout<<"constructor actual overlay: "<<m_actual_overlay->GetTexture()<<"\n";
 		}
 		else if(overlayTexture.length() > 0 && m_actual_overlay->GetTexture() != overlayTexture){
-			std::cout<<"heyoo: "<<overlayTexture<<"\n";
-			std::cout<<"hehe heyoo: "<<m_actual_overlay->GetTexture()<<"\n";
 			m_actual_overlay->SetTexture(overlayTexture);
 		}
 	}

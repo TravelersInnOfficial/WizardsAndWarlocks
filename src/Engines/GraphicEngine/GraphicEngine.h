@@ -244,6 +244,8 @@ public:
 
 	void ClearOverlay();
 
+	void SetOverlayTransparency(float t);
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;

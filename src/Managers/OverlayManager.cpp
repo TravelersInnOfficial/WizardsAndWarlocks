@@ -40,6 +40,7 @@ void OverlayManager::Update(float deltaTime){
 		bool iterate  = true;
 		if(it->second != nullptr){
 			it->second->time -= deltaTime;
+			GraphicEngine::GraphicEngine::getInstance()->SetOverlayTransparency(it->second->time/1);
 			if(it->second->time <= 0){ 
 				delete it->second;
 				overlays.erase(it++);
