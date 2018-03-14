@@ -220,6 +220,12 @@ class Player: public Entidad{
 		Potion* potion;						// Pocion en el inventario
 
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
+
+		//***HUD**//
+		TFRect* m_health_bar;
+		TFRect* m_mana_bar;
+		TFRect* m_stamina_bar;
+
 };
 
 #endif

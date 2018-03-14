@@ -55,6 +55,8 @@ private:
 	int lastTrapId;
 	int MaxUsings = 4;
 
+	std::map<Player*,std::vector<TFDrawable*>> traps_hud;
+
 	std::string GetPathFromUsings(int usings);
 	TrapManager();
 	TrapManager(TrapManager&);

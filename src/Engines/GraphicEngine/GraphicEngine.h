@@ -242,6 +242,8 @@ public:
 
 	void AddDome();
 
+	void ClearOverlay();
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
@@ -252,6 +254,10 @@ private:
 	GCamera* privateCamera;
 	std::vector<TFRect*> m_aim;
 	bool moving_aim = true;
+
+	TFSprite* m_actual_overlay;
+
+	void CreateAim();
 };
 
 #endif

@@ -14,6 +14,8 @@ Potion::Potion(vector3df TScale, int val, std::string tex){
 	value = val;
 	player = nullptr;
 	picked = false;
+
+	m_rect = nullptr;
 }
 
 Potion::~Potion(){
@@ -158,24 +160,34 @@ vector3df Potion::GetPosition(){
 	return(toRet);
 }
 
+void Potion::EraseHUD(){
+	m_rect->Erase();
+	m_sprite->Erase();
+
+	m_rect = nullptr;
+	m_sprite = nullptr;
+}
+
 void Potion::DrawHUD(){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	float W =			g_engine->GetScreenWidth();
-	float H =			g_engine->GetScreenHeight();
-	float size =		W * 0.075;
-	float xInit =		W * 0.87;
-	float yInit =		H * 0.05;
-	float outline =		5;
+	if(m_rect != nullptr){
 
-	g_engine->draw2DRectangle(vector3df(0,0,0), 
-								xInit, 
-								yInit, 
-								xInit + size, 
-								yInit + size);
+	}
+	else{
+		GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
-	g_engine->draw2DImage(HUDTexturePath, sizeImage);
+		float W =			g_engine->GetScreenWidth();
+		float H =			g_engine->GetScreenHeight();
+		float size =		W * 0.075;
+		float xInit =		W * 0.87;
+		float yInit =		H - size*2;
+		float outline =		5;
+
+		vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
+
+		m_rect = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size,size));
+		m_sprite = toe::AddSprite(HUDTexturePath,toe::core::TOEvector2df(sizeImage.X,sizeImage.Y),toe::core::TOEvector2df(size-outline,size-outline));
+	}
 }
 
 void Potion::SetPosition(vector3df pos){

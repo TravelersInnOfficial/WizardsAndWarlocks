@@ -76,6 +76,56 @@ Player::Player(bool isPlayer1){
 		SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 	}
 
+	//***HUD***//
+	int W = g_engine->GetScreenWidth();		
+	int H = g_engine->GetScreenHeight();
+
+	float size = 20.0f;			// Height of the bar
+
+	float xInit = W/20.0f;		// Calculate the Init and End of the bar on X axis
+	float xEnd =  W/3.0f;		
+
+	float yInitH = H - size*1.5;	// Calculate the Init of the bar on Y axis
+	float yInitM = H - size*3;
+	float yInitS = H - size*4.5;
+
+	float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
+	float yEndM = yInitM + size;
+	float yEndS = yInitS + size;
+
+	float hP = m_HP/100.0f;		// % of the life
+	float mP = m_MP/100.0f;		// % of the mana
+	float sP = m_SP/100.0f;		// % of the stamina
+
+	/*
+	// Black Bar
+	vector3df color(0,0,0);
+	g_engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
+	g_engine->draw2DRectangle(color, xInit, yInitM, xEnd, yEndM);
+	g_engine->draw2DRectangle(color, xInit, yInitS, xEnd, yEndS);
+	
+	// Helath & Mana Bar
+	color = vector3df(255,0,0);
+	g_engine->draw2DRectangle(color, xInit, yInitH, xInit + (xEnd - xInit) * hP, yEndH);
+	color = vector3df(0,0,255);
+	g_engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
+	color = vector3df(255, 255, 0);
+	g_engine->draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
+*/
+	//blackbars
+	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
+	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
+	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
+
+	m_health_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
+	m_health_bar->SetColor(1,0,0);
+	
+	m_mana_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
+	m_mana_bar->SetColor(0,0,1);
+	
+	m_stamina_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
+	m_stamina_bar->SetColor(1,1,0);
+
 	Respawn();
 }
 
@@ -490,6 +540,15 @@ void Player::ChangeHP(float HP){
 			if (m_HP + HP > 0) playSoundEvent(soundEvents["hit"]); //We want to play while its alive but not when it dies
 			if(overlayManager != nullptr) overlayManager->SetTime(BLOOD, 1);
 			SetController(ACTION_RAYCAST, RELEASED);
+
+			//float xInit = W/20.0f;		// Calculate the Init and End of the bar on X axis
+			//float xEnd =  W/3.0f;		
+			// xInit + (xEnd - xInit) * hP
+			float hP = m_health_bar->GetWidth()*(m_HP/100);		// % of the life
+			std::cout<<"m_HP: "<<m_HP<<"\n";
+			std::cout<<"hp: "<<hP<<"\n";
+			std::cout<<"health bar width: "<<m_health_bar->GetWidth()<<"\n";
+			m_health_bar->SetWidth(hP);
 		}
 
 		// Solo le aplica danyo si su armadura es inferior a 5
@@ -694,17 +753,22 @@ void Player::Run(bool runStatus){
 void Player::CatchObject(Potion* p){
 	DropObject();
 	potion = p;
+	potion->DrawHUD();
 }
 
 void Player::DropObject(){
 	if(potion!=nullptr){
 		potion->CreatePotion(m_position, vector3df(0,0,0));
+		potion->EraseHUD();
 		potion = nullptr;
 	}
 }
 
 void Player::LosePotion(){
-	if(potion!=nullptr) potion = nullptr;
+	if(potion!=nullptr){
+		potion->EraseHUD();
+		potion = nullptr;
+	}
 	playSoundEvent(soundEvents["losepotion"]);
 }
 
@@ -712,6 +776,7 @@ void Player::UseObject(){
 	if(potion!=nullptr){
 		playSoundEvent(soundEvents["drink"]);
 		potion->Use(this);
+		potion->EraseHUD();
 		potion = nullptr;
 	}
 }
@@ -1040,11 +1105,13 @@ void Player::Draw(){
 	if(m_dead && targetDeadCam!=nullptr){
 		targetDeadCam->Draw();
 	}else{	
+		/***/
 		DrawOverlays();
 		DrawBars();
 		DrawSpellSelector();
 		DrawInventory();
 		DrawTraps();
+		/***/
 	}
 }
 
@@ -1069,7 +1136,7 @@ void Player::DrawBars(){
 	float mP = m_MP/100.0f;		// % of the mana
 	float sP = m_SP/100.0f;		// % of the stamina
 
-
+/*
 	// Black Bar
 	vector3df color(0,0,0);
 	g_engine->draw2DRectangle(color, xInit, yInitH, xEnd, yEndH);
@@ -1083,6 +1150,7 @@ void Player::DrawBars(){
 	g_engine->draw2DRectangle(color, xInit, yInitM, xInit + (xEnd - xInit) * mP, yEndM);
 	color = vector3df(255, 255, 0);
 	g_engine->draw2DRectangle(color, xInit, yInitS, xInit + (xEnd - xInit) * sP, yEndS);
+*/
 }
 
 void Player::DrawSpellSelector(){
@@ -1090,7 +1158,8 @@ void Player::DrawSpellSelector(){
 }
 
 void Player::DrawInventory(){
-	if(potion != nullptr) potion->DrawHUD();
+	//if(potion != nullptr) potion->DrawHUD();
+
 }
 
 void Player::DrawTraps(){

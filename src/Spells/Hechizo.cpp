@@ -19,6 +19,10 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 	HUDTexturePath = HUDMiniature;
 	shotEvent = nullptr;
 	voiceEvent = nullptr;
+
+	m_rect = nullptr;
+	m_cast_cd = nullptr;
+	m_sprite = nullptr;
 }
 
 Hechizo::~Hechizo(){
@@ -187,35 +191,34 @@ float Hechizo::GetTotalCasting(){
 	return casting;
 }
 
-void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
+void Hechizo::EraseHUD(){
+	m_rect->Erase();
+	m_cast_cd->Erase();
+	m_sprite->Erase();
 
-	g_engine->draw2DRectangle(vector3df(0,0,0), 
-								initX, 
-								initY, 
-								initX + size, 
-								initY + size);
-	if(current){
-	g_engine->draw2DRectangle(vector3df(255,255,0), 
-								initX, 
-								initY, 
-								initX + size, 
-								initY + size);
-	}	
-	if(timeCasting>0){
-		g_engine->draw2DRectangle(vector3df(0,0,255), 
-									initX, 
-									(initY + size) - size * (timeCasting/casting), 
-									initX + size, 
-									initY + size);
+	m_rect = nullptr;
+	m_cast_cd = nullptr;
+	m_sprite = nullptr;
+}
+
+void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current){
+	if(m_rect!=nullptr){
+		if(current) m_rect->SetColor(1,1,0);
+		else m_rect->SetColor(0,0,0);
+
+		if(timeCasting>0){ 
+			m_cast_cd->SetColor(0,0,1);
+			m_cast_cd->SetHeight((size + outline)*(1-(currentCooldown/cooldown))); //(initY + size) - size * (timeCasting/casting), 
+		}
+		
+		if(currentCooldown>0){ 
+			m_cast_cd->SetColor(1,0,0);
+			m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown)); //(initY) + size * (1-(currentCooldown/cooldown))
+		}
 	}
-	else if(currentCooldown>0){
-		g_engine->draw2DRectangle(vector3df(255,0,0), 
-									initX, 
-									(initY) + size * (1-(currentCooldown/cooldown)) , 
-									initX + size, 
-									initY + size);
+	else{
+		m_rect = toe::Add2DRect(toe::core::TOEvector2df(initX, initY),toe::core::TOEvector2df(size+outline, size+outline));
+		m_cast_cd = toe::Add2DRect(toe::core::TOEvector2df(initX,initY), toe::core::TOEvector2df(size+outline,0));
+		m_sprite = toe::AddSprite(HUDTexturePath,toe::core::TOEvector2df(initX+outline, initY+outline),toe::core::TOEvector2df(size-outline, size-outline));
 	}
-	vector4df sizeImage(initX+outline, initY+outline, initX+size-outline, initY+size-outline);
-	g_engine->draw2DImage(HUDTexturePath, sizeImage);
 }

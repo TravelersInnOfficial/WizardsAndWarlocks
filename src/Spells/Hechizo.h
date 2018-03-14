@@ -34,6 +34,7 @@ public:
 
 	// Draw
 	void DrawHUD(float initX, float initY, float size, float outline, bool current);
+	void EraseHUD();
 
 	std::string GetHUDTexturePath();
 	float GetTimeCasting();
@@ -62,6 +63,10 @@ protected:
 	//Sound Functions
 	virtual void createSoundEvent();
 	virtual void playSoundEvent(SoundEvent* event,vector3df pos);
+
+	TFRect* m_rect;
+	TFRect* m_cast_cd;
+	TFSprite* m_sprite;
 	
 };
 

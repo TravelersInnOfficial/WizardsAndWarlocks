@@ -13,6 +13,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateReceiver = new EventReceiver();
 	privateDriver->SetIODriver(privateReceiver);
 
+	m_actual_overlay = nullptr;
 	privateCamera = nullptr;
 }
 
@@ -37,6 +38,13 @@ bool GraphicEngine::drop(){
 
 void GraphicEngine::ResetScene(){
 	if(privateSManager != nullptr) privateSManager->ResetManager();
+	
+	for(int i = 0; i<m_aim.size(); i++){
+		m_aim[i] = nullptr;
+	}
+	m_aim.clear();
+	
+	m_actual_overlay = nullptr;
 }
 
 void GraphicEngine::setCursorVisible(bool visible){
@@ -89,16 +97,47 @@ void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 	}*/
 }
 
+void GraphicEngine::CreateAim(){
+	if(m_aim.size() == 0){
+		int size_w = 15;
+		int size_h = 2;
+
+		float cenW =  privateDriver->GetWindowDimensions().X * 0.5;
+		float cenH =  privateDriver->GetWindowDimensions().Y * 0.5;
+
+		float rDist = 4;
+		
+		for(int i=0; i<5; i++){
+			m_aim.push_back(toe::Add2DRect());
+			m_aim[i]->SetColor(0,0,1);
+		}
+
+		//Draw Crosshair
+		m_aim[0]->SetPosition(cenW, cenH);
+		m_aim[0]->SetSize(0,0);
+
+		m_aim[1]->SetPosition(cenW					, cenH - rDist - size_w	); //down
+		m_aim[1]->SetSize(size_h					, size_w					);
+
+		m_aim[2]->SetPosition(cenW + rDist + size_h	, cenH 	 				); //right
+		m_aim[2]->SetSize(size_w					, size_h				);
+
+		m_aim[3]->SetPosition(cenW 					, cenH + rDist + size_h	); //up
+		m_aim[3]->SetSize(size_h					, size_w);
+
+		m_aim[4]->SetPosition(cenW - rDist - size_w	, cenH 					); //left
+		m_aim[4]->SetSize(size_w					, size_h				);
+
+
+	}
+}
+
 void GraphicEngine::drawAim(bool moving){
+	CreateAim();
+
 	if(moving != moving_aim){
 		if(privateDriver != nullptr){
-			if(m_aim.size() == 0){
-				for(int i=0; i<5; i++){
-					m_aim.push_back(toe::Add2DRect());
-					m_aim[i]->SetColor(0,0,1);
-				}
-			}
-
+		
 			int size_w = 15;
 			int size_h = 2;
 
@@ -106,29 +145,22 @@ void GraphicEngine::drawAim(bool moving){
 			float cenH =  privateDriver->GetWindowDimensions().Y * 0.5;
 
 			float rDist = 0;
-			if(moving) rDist = 30;
-
+			if(moving){
+				rDist = 30;
+				//center of screen
+				m_aim[0]->SetSize(0, 0);
+			}
 			else{
 				rDist = 4;
-
 				//center of screen
-				m_aim[0]->SetPosition(cenW, cenH);
-				m_aim[0]->SetSize(size_h, size_h);
+				m_aim[0]->SetSize(2, 2);
 			}
 
 			//Draw Crosshair
 			m_aim[1]->SetPosition(cenW					, cenH - rDist - size_w	); //down
-			m_aim[1]->SetSize(size_h					, size_w					);
-
 			m_aim[2]->SetPosition(cenW + rDist + size_h	, cenH 	 				); //right
-			m_aim[2]->SetSize(size_w					, size_h				);
-
 			m_aim[3]->SetPosition(cenW 					, cenH + rDist + size_h	); //up
-			m_aim[3]->SetSize(size_h					, size_w);
-
 			m_aim[4]->SetPosition(cenW - rDist - size_w	, cenH 					); //left
-			m_aim[4]->SetSize(size_w					, size_h				);
-
 		}
 		moving_aim = moving;
 	}
@@ -157,21 +189,26 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 		draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
 	}*/
 }
-
+void GraphicEngine::ClearOverlay(){
+	m_actual_overlay->SetTexture("");
+	
+}
 void GraphicEngine::drawOverlays(OverlayCodes type){
-	/*if(privateDriver != nullptr){
+	if(privateDriver != nullptr){
 		std::string overlayTexture = OverlayPath[type];
-		irr::video::ITexture* overlay = nullptr;
-		overlay = privateDriver->getTexture(overlayTexture.c_str());
+		if(m_actual_overlay == nullptr){
+			float W = GetScreenWidth();
+			float H = GetScreenHeight();
 
-		if(overlayTexture.length() > 0){
-			const irr::core::dimension2du& size = privateDriver->getScreenSize();
-			irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-			const irr::core::dimension2d<irr::u32> size2 = overlay->getSize();
-			irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size2.Width, size2.Height);
-			privateDriver->draw2DImage(overlay, destRect, imgRect, 0, 0, true);
+			m_actual_overlay = toe::AddSprite("", toe::core::TOEvector2df(0,0),toe::core::TOEvector2df(W,H));
+			std::cout<<"constructor actual overlay: "<<m_actual_overlay->GetTexture()<<"\n";
 		}
-	}*/
+		else if(overlayTexture.length() > 0 && m_actual_overlay->GetTexture() != overlayTexture){
+			std::cout<<"heyoo: "<<overlayTexture<<"\n";
+			std::cout<<"hehe heyoo: "<<m_actual_overlay->GetTexture()<<"\n";
+			m_actual_overlay->SetTexture(overlayTexture);
+		}
+	}
 }
 
 int GraphicEngine::GetScreenHeight(){

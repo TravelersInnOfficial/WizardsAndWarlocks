@@ -43,6 +43,17 @@ void TrapManager::ClearTraps(){
 		delete t;
 	}
 	traps.clear();
+
+	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.begin();
+	for(;it!=traps_hud.end(); ++it){
+		std::vector<TFDrawable*> drawables = it->second;
+
+		for(int i = 0; i<drawables.size();i++) drawables[i]->Erase();
+		drawables.clear();
+
+		traps_hud.erase(it);
+	}
+	traps_hud.clear();
 }
 
 Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
@@ -242,39 +253,62 @@ std::vector<Trap*> TrapManager::GetAllTraps(){
 }
 
 void TrapManager::DrawHUD(Player* player){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	//comprobamos si existe el player en el mapa
+	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.find(player);
+	std::vector<TFDrawable*> drawables;
 
-	std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
-	if(kindImagePath.length() > 0){
+	if(it != traps_hud.end()){
+		//si existe comparamos el estado de sus drawables	
+		drawables = it->second;
 
-		std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
-
-		float W =			g_engine->GetScreenWidth();
-		float H =			g_engine->GetScreenHeight();
-		float size =		W * 0.075;
-		float xInit =		W * 0.85;
-		float yInit =		H * 0.175;
-		float outline =		5;
-
-		g_engine->draw2DRectangle(vector3df(0,0,0), 
-									xInit, 
-									yInit, 
-									xInit + size, 
-									yInit + size);
-
-		vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
-		g_engine->draw2DImage(kindImagePath, sizeImage);
-
-		g_engine->draw2DRectangle(vector3df(0,0,0), 
-							xInit + size, 
-							yInit, 
-							xInit + size + size/2, 
-							yInit + size);
-
-		vector4df sizeCounter(xInit + size, sizeImage.Y, xInit + size + size/2, sizeImage.Y2);
-		g_engine->draw2DImage(countImagePath, sizeCounter);
-
+		if(drawables.size() > 0){
+			//si la textura asignada es diferente a la actual del jugador se actualiza
+			std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
+			if(drawables[1]->GetTexture() != kindImagePath && kindImagePath.length() > 0){
 		
+		
+				drawables[1]->SetTexture(kindImagePath);
+		
+			}
+
+			std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
+			if(drawables[2]->GetTexture() != countImagePath && countImagePath.length() > 0){
+		
+		
+				drawables[2]->SetTexture(countImagePath);
+		
+			}
+		}
+	}
+	//si no existe se añade el player y sus trampas
+	else{
+		std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
+		if(kindImagePath.length() > 0){
+
+			std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
+			
+			GraphicEngine* g_engine = GraphicEngine::getInstance();
+			float W =			g_engine->GetScreenWidth();
+			float H =			g_engine->GetScreenHeight();
+			float size =		W * 0.075;
+			float xInit =		W * 0.87;
+			float yInit =		H - size*3.5;
+			float outline =		5;
+
+			TFRect* m_bckg = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size,size));
+			drawables.push_back(m_bckg);
+
+			vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
+			TFSprite* m_trap_sprite = toe::AddSprite(kindImagePath, toe::core::TOEvector2df(xInit + outline, yInit + outline), toe::core::TOEvector2df(size-outline, size-outline));
+			drawables.push_back(m_trap_sprite);
+		
+			vector4df sizeCounter(xInit + size, sizeImage.Y, xInit + size + size/2, sizeImage.Y2);
+			TFSprite* m_trap_count = toe::AddSprite(countImagePath, toe::core::TOEvector2df(xInit + size*0.75, yInit - size/4), toe::core::TOEvector2df(size/2,size/2));
+			drawables.push_back(m_trap_count);
+
+			traps_hud.insert(std::pair<Player*,std::vector<TFDrawable*>>(player,drawables));
+	
+		}
 	}
 }
 

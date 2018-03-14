@@ -44,6 +44,7 @@ void OverlayManager::Update(float deltaTime){
 				delete it->second;
 				overlays.erase(it++);
 				iterate = false;
+				GraphicEngine::getInstance()->ClearOverlay();
 			}
 		}
 		if(iterate){

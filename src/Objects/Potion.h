@@ -23,6 +23,7 @@ public:
 	void CreatePotion(vector3df TPosition, vector3df TRotation);
 	void Drop(vector3df force);
 	void DrawHUD();
+	void EraseHUD();
 
 	// child functions
 	virtual void Use(Player* p)=0;
@@ -62,6 +63,9 @@ protected:
 	Potion(vector3df TScale, int value, std::string tex);
 	void DeletePotion();
 	void UpdatePosShape();
+
+	TFRect* m_rect;
+	TFSprite* m_sprite;
 };
 
 #endif
