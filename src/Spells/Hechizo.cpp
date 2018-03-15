@@ -210,10 +210,12 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 			m_cast_cd->SetColor(0,0,1);
 			m_cast_cd->SetHeight((size + outline)*(1-(currentCooldown/cooldown))); //(initY + size) - size * (timeCasting/casting), 
 		}
-		
-		if(currentCooldown>0){ 
+		else if(currentCooldown>0){ 
 			m_cast_cd->SetColor(1,0,0);
 			m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown)); //(initY) + size * (1-(currentCooldown/cooldown))
+		}
+		else{
+			m_cast_cd->SetHeight(0);
 		}
 	}
 	else{

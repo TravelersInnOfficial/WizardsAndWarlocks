@@ -36,9 +36,7 @@ class Player: public Entidad{
 
 		// Draw
 		void Draw();
-		void DrawBars();
 		void DrawSpellSelector();
-		void DrawInventory();
 		void DrawTraps();
 
 		// Controller
@@ -225,6 +223,8 @@ class Player: public Entidad{
 		TFRect* m_health_bar;
 		TFRect* m_mana_bar;
 		TFRect* m_stamina_bar;
+
+		float m_bar_widths;
 
 };
 

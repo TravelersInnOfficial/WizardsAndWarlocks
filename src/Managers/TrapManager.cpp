@@ -265,18 +265,12 @@ void TrapManager::DrawHUD(Player* player){
 			//si la textura asignada es diferente a la actual del jugador se actualiza
 			std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
 			if(drawables[1]->GetTexture() != kindImagePath && kindImagePath.length() > 0){
-		
-		
 				drawables[1]->SetTexture(kindImagePath);
-		
 			}
 
 			std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
 			if(drawables[2]->GetTexture() != countImagePath && countImagePath.length() > 0){
-		
-		
 				drawables[2]->SetTexture(countImagePath);
-		
 			}
 		}
 	}
@@ -295,7 +289,7 @@ void TrapManager::DrawHUD(Player* player){
 			float yInit =		H - size*3.5;
 			float outline =		5;
 
-			TFRect* m_bckg = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size,size));
+			TFRect* m_bckg = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size+outline,size+outline));
 			drawables.push_back(m_bckg);
 
 			vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
