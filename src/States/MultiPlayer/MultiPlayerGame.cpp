@@ -161,10 +161,11 @@ void MultiPlayerGame::Draw(){
 		}
 
 		if(draw){
-			g_engine->drawAll();
+			g_engine->BeginDraw();
 			m_stateGame->Draw();
 			if(debug) f_engine->DebugDrawWorld();
 			if(!m_isServer) MenuManager::GetInstance()->Draw();
+			g_engine->EndDraw();
 		}
 	}
 }

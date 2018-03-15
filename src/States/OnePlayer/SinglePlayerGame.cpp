@@ -130,11 +130,12 @@ void SinglePlayerGame::Update(float deltaTime){
 }
 
 void SinglePlayerGame::Draw(){
-	g_engine->drawAll();
+	g_engine->BeginDraw();
 
 	m_stateGame->Draw();
 	MenuManager::GetInstance()->Draw();
-
+	
+	g_engine->EndDraw();
 	if(debug){
 		f_engine->DebugDrawWorld();
 		if(AL != nullptr) AL->Debug();

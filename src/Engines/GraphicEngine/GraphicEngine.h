@@ -118,6 +118,9 @@ public:
 	*/
 	void drawAll();
 
+	void BeginDraw();
+	void EndDraw();
+
 	/**
 	 * Adds a sphere to scene and returns body
 	 * position: vector which contains position of the body

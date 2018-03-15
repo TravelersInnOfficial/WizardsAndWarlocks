@@ -248,7 +248,18 @@ void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float
 
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
-	if(privateDriver != nullptr) privateDriver->Draw();
+	if(privateDriver != nullptr){ 
+		privateDriver->BeginDraw();
+		privateDriver->EndDraw();
+	}
+}
+
+void GraphicEngine::BeginDraw(){
+	if(privateDriver != nullptr) privateDriver->BeginDraw();
+}
+
+void GraphicEngine::EndDraw(){
+	if(privateDriver != nullptr) privateDriver->EndDraw();
 }
 
 GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float size, int id){
