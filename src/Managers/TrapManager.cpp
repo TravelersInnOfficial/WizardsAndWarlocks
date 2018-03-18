@@ -306,6 +306,19 @@ void TrapManager::DrawHUD(Player* player){
 	}
 }
 
+void TrapManager::EraseHUD(Player* player){
+	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.find(player);
+	std::vector<TFDrawable*> drawables;
+	if(it != traps_hud.end()){
+		drawables = it->second;
+		if(!drawables.empty()){
+			for(int i = 0; i<drawables.size();i++) drawables[i]->Erase();
+			drawables.clear();
+		}
+		traps_hud.erase(it);
+	}
+}
+
 std::string TrapManager::GetPathFromEnum(TrapEnum tKind){
 	std::string toRet = "./../assets/textures/HUD/Traps/";
 	

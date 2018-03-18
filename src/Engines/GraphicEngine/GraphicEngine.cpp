@@ -190,7 +190,7 @@ void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
 	}*/
 }
 void GraphicEngine::ClearOverlay(){
-	m_actual_overlay->SetTexture("");
+	if(m_actual_overlay!=nullptr) m_actual_overlay->SetTexture("");
 	
 }
 

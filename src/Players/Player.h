@@ -34,10 +34,18 @@ class Player: public Entidad{
 		virtual void Update(float deltaTime);
 		virtual void DeadUpdate();
 
-		// Draw
+		//Draw visuals
 		void Draw();
+		void InitHUDBars();
+
 		void DrawSpellSelector();
 		void DrawTraps();
+		void DrawHUDBars();
+
+		//Erase visuals
+		void EraseHUDBars();
+		void EraseSpellSelector();
+		void EraseTrapHUD();
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
@@ -220,9 +228,9 @@ class Player: public Entidad{
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
 		//***HUD**//
-		TFRect* m_health_bar;
-		TFRect* m_mana_bar;
-		TFRect* m_stamina_bar;
+		TFRect* m_hp_bar;
+		TFRect* m_mp_bar;
+		TFRect* m_sp_bar;
 
 		float m_bar_widths;
 

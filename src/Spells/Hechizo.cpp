@@ -192,9 +192,11 @@ float Hechizo::GetTotalCasting(){
 }
 
 void Hechizo::EraseHUD(){
-	m_rect->Erase();
-	m_cast_cd->Erase();
-	m_sprite->Erase();
+	if(m_rect != nullptr && m_cast_cd != nullptr && m_sprite != nullptr){
+		m_rect->Erase();
+		m_cast_cd->Erase();
+		m_sprite->Erase();
+	}
 
 	m_rect = nullptr;
 	m_cast_cd = nullptr;
@@ -202,13 +204,13 @@ void Hechizo::EraseHUD(){
 }
 
 void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current){
-	if(m_rect!=nullptr){
+	if(m_rect!=nullptr && m_cast_cd != nullptr && m_sprite != nullptr){
 		if(current) m_rect->SetColor(1,1,0);
 		else m_rect->SetColor(0,0,0);
 
 		if(timeCasting>0){ 
 			m_cast_cd->SetColor(0,0,1);
-			m_cast_cd->SetHeight((size + outline)*(1-(currentCooldown/cooldown))); //(initY + size) - size * (timeCasting/casting), 
+			m_cast_cd->SetHeight((size + outline)*(timeCasting/casting)); //(initY + size) - size * (timeCasting/casting), 
 		}
 		else if(currentCooldown>0){ 
 			m_cast_cd->SetColor(1,0,0);

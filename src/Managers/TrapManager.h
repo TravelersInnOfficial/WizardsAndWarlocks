@@ -44,6 +44,7 @@ public:
 	Trap* GetTrapWithId(int id);
 
 	void DrawHUD(Player* player);
+	void EraseHUD(Player* player);
 
 	void ErasePlayer(Player* player);
 	void RefreshServerAll();

@@ -344,6 +344,16 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 		}
 	}
 }
+void SpellManager::EraseHUDSpells(Player* p){
+	for(int i = 0; i<numHechizos;i++){
+		if(hechizos[i].find(p) != hechizos[i].end()){
+			Hechizo* h = hechizos[i][p];
+			if(h!=nullptr){
+				h->EraseHUD();
+			}
+		}
+	}
+}
 
 std::string SpellManager::GetPathFromEnum(SPELLCODE sKind){
 	std::string toRet = "./../assets/textures/HUD/Spells/";

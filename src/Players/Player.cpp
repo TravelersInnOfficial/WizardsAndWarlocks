@@ -76,40 +76,48 @@ Player::Player(bool isPlayer1){
 		SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 	}
 
-	//***HUD***//
-	int W = g_engine->GetScreenWidth();		
-	int H = g_engine->GetScreenHeight();
-
-	float size = 20.0f;			// Height of the bar
-
-	float xInit = W/20.0f;		// Calculate the Init and End of the bar on X axis
-	float xEnd =  W/3.0f;		
-
-	float yInitH = H - size*1.5;	// Calculate the Init of the bar on Y axis
-	float yInitM = H - size*3;
-	float yInitS = H - size*4.5;
-
-	float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
-	float yEndM = yInitM + size;
-	float yEndS = yInitS + size;
-
-	//blackbars
-	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-	toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
-
-	m_health_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-	m_health_bar->SetColor(1,0,0);
-	
-	m_mana_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-	m_mana_bar->SetColor(0,0,1);
-	
-	m_stamina_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
-	m_stamina_bar->SetColor(1,1,0);
-
-	m_bar_widths =  m_health_bar->GetWidth();
+	m_hp_bar = nullptr;
+	m_mp_bar = nullptr;
+	m_sp_bar = nullptr;
+	m_bar_widths = 0.0f;
 
 	Respawn();
+}
+
+void Player::InitHUDBars(){
+	if(m_hp_bar == nullptr && m_mp_bar == nullptr && m_sp_bar == nullptr){
+		int W = g_engine->GetScreenWidth();		
+		int H = g_engine->GetScreenHeight();
+
+		float size = 20.0f;			// Height of the bar
+
+		float xInit = W/20.0f;		// Calculate the Init and End of the bar on X axis
+		float xEnd =  W/3.0f;		
+
+		float yInitH = H - size*1.5;	// Calculate the Init of the bar on Y axis
+		float yInitM = H - size*3;
+		float yInitS = H - size*4.5;
+
+		float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
+		float yEndM = yInitM + size;
+		float yEndS = yInitS + size;
+
+		//blackbars
+		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
+		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
+		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
+
+		m_hp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
+		m_hp_bar->SetColor(1,0,0);
+		
+		m_mp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
+		m_mp_bar->SetColor(0,0,1);
+		
+		m_sp_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
+		m_sp_bar->SetColor(1,1,0);
+
+		m_bar_widths =  m_hp_bar->GetWidth();
+	}
 }
 
 void Player::InitGame(){
@@ -126,10 +134,13 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_SP = 100;
 
-	//here put the overlay width
-	m_health_bar->SetWidth(m_bar_widths);
-	m_mana_bar->SetWidth(m_bar_widths);
-	m_stamina_bar->SetWidth(m_bar_widths);
+	if(isPlayerOne){
+		InitHUDBars();
+	}
+
+	if(m_hp_bar!=nullptr) m_hp_bar->SetWidth(m_bar_widths);
+	if(m_mp_bar!=nullptr) m_mp_bar->SetWidth(m_bar_widths);
+	if(m_sp_bar!=nullptr) m_sp_bar->SetWidth(m_bar_widths);
 
 	m_DamageMult = 1;
 	m_Defense = 1;
@@ -358,9 +369,17 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
+		if(targetDeadCam != newP && newP!=nullptr && targetDeadCam != nullptr){
+			targetDeadCam->EraseHUDBars();
+			targetDeadCam->EraseSpellSelector();
+			targetDeadCam->EraseTrapHUD();
+		}
+
 		if(setPos && newP!=nullptr){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
+			targetDeadCam->InitHUDBars();
+
 		}
 		if(targetDeadCam!=nullptr) m_camera->UpdateCamera(targetDeadCam->GetPos());
 	}
@@ -520,7 +539,6 @@ void Player::ChangeHP(float HP){
 		if(isServer){
 			if(HP < 0) SetController(ACTION_RAYCAST, RELEASED);
 			m_HP += HP / m_Defense;
-			if(HP!=0) m_health_bar->SetWidth(m_bar_widths*(m_HP/100));
 		}
 	}
 
@@ -535,7 +553,6 @@ void Player::ChangeHP(float HP){
 		// Solo le aplica danyo si su armadura es inferior a 5
 		if(m_Defense<5.0f){ 
 			m_HP += HP / m_Defense;
-			if(HP!=0) m_health_bar->SetWidth(m_bar_widths*(m_HP/100));
 		}
 		else if(overlayManager != nullptr)  overlayManager->SetTime(BLOOD, 0);
 	}
@@ -543,12 +560,10 @@ void Player::ChangeHP(float HP){
 	// AMBOS
 	if(m_HP >= 100){ 
 		m_HP = 100;
-		m_health_bar->SetWidth(m_bar_widths);
 	}
 	else if(m_HP <= 0){
 		m_HP = 0;
 		m_dead = true;
-		m_health_bar->SetWidth(0);
 		if(overlayManager != nullptr) overlayManager->SetTime(BLOOD, 0);
 	}
 }
@@ -564,7 +579,6 @@ bool Player::ChangeMP(float MP){
 		m_MP += MP;
 		toRet = true;
 		if(m_MP>100) m_MP = 100;
-		m_mana_bar->SetWidth(m_bar_widths*(m_MP/100));		// % of mana
 	}
 
 	return (toRet);
@@ -581,8 +595,6 @@ void Player::UpdateSP(float deltaTime){
 		Run(false);
 	}
 	else if (m_SP > 100) m_SP = 100;
-
-	m_stamina_bar->SetWidth(m_bar_widths*(m_SP/100));
 }
 
 void Player::Respawn(){
@@ -691,6 +703,21 @@ void Player::Die(){
 
 	PlayerManager::GetInstance()->AddToDead(this);			// Lo anyadimos a la lista de muertos		
 	if(matchStarted) DestroyPlayerCharacter();				// Destruimos cuerpo fisico
+	if(overlayManager!=nullptr) GraphicEngine::getInstance()->ClearOverlay();
+
+	EraseHUDBars();
+	EraseSpellSelector();
+	EraseTrapHUD();
+}
+
+void Player::EraseHUDBars(){
+	if(m_hp_bar != nullptr){ m_hp_bar->Erase(); m_hp_bar = nullptr;} 
+	if(m_mp_bar != nullptr){ m_mp_bar->Erase(); m_mp_bar = nullptr;}
+	if(m_sp_bar != nullptr){ m_sp_bar->Erase(); m_sp_bar = nullptr;}
+}
+
+void Player::EraseTrapHUD(){
+	TrapManager::GetInstance()->EraseHUD(this);
 }
 
 void Player::ReturnToLobby(){
@@ -990,6 +1017,7 @@ void Player::SetAlliance(Alliance newAlliance){
 				m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 			}
 			if(isPlayerOne && networkObject != nullptr) networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
+			EraseTrapHUD();
 			break;
 		}
 		case(ALLIANCE_WARLOCK):{
@@ -1098,15 +1126,28 @@ void Player::Draw(){
 	}else{	
 		/***/
 		DrawOverlays();
+		DrawHUDBars();
 		DrawSpellSelector();
 		DrawTraps();
 		/***/
 	}
 }
 
+void Player::DrawHUDBars(){
+	if(m_hp_bar != nullptr && m_mp_bar != nullptr && m_sp_bar != nullptr){
+		m_hp_bar->SetWidth(m_bar_widths*(m_HP/100));
+		m_mp_bar->SetWidth(m_bar_widths*(m_MP/100));
+		m_sp_bar->SetWidth(m_bar_widths*(m_SP/100));
+	}
+}
+
 
 void Player::DrawSpellSelector(){
 	SpellManager::GetInstance()->DrawHUDSpells(this, currentSpell);
+}
+
+void Player::EraseSpellSelector(){
+	SpellManager::GetInstance()->EraseHUDSpells(this);
 }
 
 
