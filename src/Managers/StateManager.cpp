@@ -70,10 +70,6 @@ bool StateManager::Update(){
 
 	UpdateDelta();
 
-	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
-		std::string myFps = std::to_string(int(1/deltaTime));
-		g_engine->ChangeWindowName(myFps);
-
 	return !end;
 }
 
@@ -138,11 +134,15 @@ void StateManager::UpdateDelta(){
 		std::this_thread::sleep_for(ns);
 	}
 
-	// CALCULAMOS DELTA TIM
+	// CALCULAMOS DELTA TIME
 	passed = clk::now() - t;
 	std::chrono::duration<double, std::milli> milisecondsPassed = passed;
 	deltaTime = milisecondsPassed.count() / 1000.0f;
 
 	// GUARDAMOS LA T
 	t = clk::now();
+
+	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
+	std::string myFps = std::to_string(int(1/(deltaTime)));
+	g_engine->ChangeWindowName(myFps);
 }

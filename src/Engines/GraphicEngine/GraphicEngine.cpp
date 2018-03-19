@@ -407,3 +407,11 @@ void GraphicEngine::SetKeyStatus(KeyboardKey code, keyStatesENUM status){
 void GraphicEngine::AddDome(){
 	privateSManager->AddDome();
 }
+
+void GraphicEngine::EnableClipping(){
+	privateDriver->EnableClipping();
+}
+
+void GraphicEngine::DisableClipping(){
+	privateDriver->DisableClipping();
+}

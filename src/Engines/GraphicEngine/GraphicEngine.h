@@ -249,6 +249,10 @@ public:
 
 	void SetOverlayTransparency(float t);
 
+	void EnableClipping();
+
+	void DisableClipping();
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
