@@ -409,9 +409,9 @@ void GraphicEngine::AddDome(){
 }
 
 void GraphicEngine::EnableClipping(){
-	privateDriver->EnableClipping();
+	//privateDriver->EnableClipping();
 }
 
 void GraphicEngine::DisableClipping(){
-	privateDriver->DisableClipping();
+	//privateDriver->DisableClipping();
 }

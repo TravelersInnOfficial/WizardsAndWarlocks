@@ -11,6 +11,7 @@
 class Player;
 struct DDFlags{
     bool parentNullID = true;
+
 };
 
 class ShopMenu : public Menu{
@@ -22,12 +23,11 @@ public:
     void Drop();
 
 private:
-    void load_imagesid(int number,const char * layouts[],ImTextureID texture[], std::vector<SPELLCODE>, std::map<ImTextureID*,SPELLCODE>*);
-    void load_imagesid(int number,const char * layouts[],ImTextureID texture[], std::vector<TrapEnum>, std::map<ImTextureID*,TrapEnum>*);
-
+    void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<SPELLCODE>, std::map<ImTextureID*, SPELLCODE>*);
+    void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<TrapEnum>,  std::map<ImTextureID*, TrapEnum>*);
     void load_sockets(const char* id,const char* type, int total, int cols, std::vector<ImTextureID*> &items_selected);
-    void load_items(const char* id,const char* type, int total, int cols, ImTextureID texture[], const char * names[], const char * descriptions[]);
-
+    void load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[]);
+   
     void ChangeSpell(int pos, SPELLCODE sEnum);
     void ChangeTrap(TrapEnum tEnum);
 
@@ -40,9 +40,9 @@ private:
     static const int N_DSPELLS = 2;     //NUMBER OF DEFENSIVE SPELLS
     static const int N_TSPELLS = 7;     //NUMBER OF TACTIC SPELLS
     static const int N_TRAPS = 6;       //NUMBER OF TRAPS
-    int N_SPELL_SOCKETS;    //NUMBER OF SPELL SOCKETS
-    int N_TRAP_SOCKETS;     //NUMBER OF TRAP SOCKETS
-    int focused_button;     //ACTUAL FOCUSED BUTTON
+    int N_SPELL_SOCKETS;                //NUMBER OF SPELL SOCKETS
+    int N_TRAP_SOCKETS;                 //NUMBER OF TRAP SOCKETS
+    int focused_button;                 //ACTUAL FOCUSED BUTTON
 
     const char* TYPE_SPELL = "image_spell";
     const char* TYPE_TRAP = "image_trap";
@@ -55,10 +55,10 @@ private:
     ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
     DDFlags ddflags;                    //DRAG N DROP PRIVATE FLAGS
 
-   ImTextureID o_spelltexture[N_OSPELLS];
-   ImTextureID d_spelltexture[N_DSPELLS];
-   ImTextureID t_spelltexture[N_TSPELLS];
-   ImTextureID trap_texture[N_TRAPS];
+    ImTextureID* o_spelltexture[N_OSPELLS];
+    ImTextureID* d_spelltexture[N_DSPELLS];
+    ImTextureID* t_spelltexture[N_TSPELLS];
+    ImTextureID* trap_texture[N_TRAPS];
 
     std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
     std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS
@@ -73,7 +73,7 @@ private:
     std::vector<SPELLCODE> d_spells_codes = {SPELL_DEFENSE, SPELL_UNTARGET};
     std::vector<SPELLCODE> t_spells_codes = {SPELL_CLEANSE, SPELL_DUMMY, SPELL_INVISIBILITY, SPELL_SPEED,SPELL_TELEPORT, SPELL_TELEPORTBASE, SPELL_WALL};
     std::vector<TrapEnum> traps_codes = {TENUM_DEATH_CLAWS, TENUM_DISTURBANCE, TENUM_EXPLOSIVE, TENUM_SILENCE, TENUM_SPIRITS, TENUM_TAXES};
-    
+
     std::map<ImTextureID*,SPELLCODE> spells_map;
     std::map<ImTextureID*,TrapEnum> traps_map;
 
