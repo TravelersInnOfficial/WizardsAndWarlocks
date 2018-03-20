@@ -20,12 +20,12 @@
 #include "./../Objects/PlayerParts.h"
 #include "./../Npcs/Npc.h"
 
-
 #include <InvocationCodes.h>
 #include <PotionTypes.h>
 #include <AreaCodes.h>
 #include <NPCTypes.h>
 #include <Alliance.h>
+#include <GraphicEngine/Light.h>
 
 class ObjectManager{
 public:
@@ -51,6 +51,7 @@ public:
 	void 			AddNavmesh(std::string path);
 	void 			AddRoomGraph(std::string path);
 	PlayerParts*	AddPlayerParts(Alliance alliance, vector3df TPosition, vector3df TScale, vector3df TRotation);
+	Light*			AddLight(vector3df TPosition, vector3df Color, float range);
 
 	// SenseFunctions
 	void SendAllSignal();
@@ -71,6 +72,7 @@ public:
 	// Deleters
 	void DeletePotion(Potion* p);
 	void DeleteBlock(Block* b);
+	void DeleteLight(Light* l);
 	void StopInteractionsNPC();
 
 	// Actions
@@ -99,6 +101,7 @@ private:
 
 	std::vector<Invocation*>	invocations;	// Vector donde se almacenan todas las invocaciones (creacion hechizo)
 	std::vector<DamageArea*>	damageAreas;	// Vector donde se almacenan todas las areas de danyo	vector<Block*>
+	std::vector<Light*>			lights;			// Vector donde se almacenan todas LAS LUCES
 	std::vector<Block*>			blocks;			// Vector donde se almacenan todos los bloques (paredes, suelo)
 	std::vector<Prop*>			props;			// Vector donde se almacenan todos los props (decoracion)
 	std::vector<Door*>			doors;			// Vector donde se almacenan todas las puertas

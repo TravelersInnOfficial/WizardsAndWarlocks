@@ -15,6 +15,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 	m_actual_overlay = nullptr;
 	privateCamera = nullptr;
+
+	privateDriver->EnableClipping();
 }
 
 GraphicEngine::~GraphicEngine(){

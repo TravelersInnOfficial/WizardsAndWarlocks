@@ -38,6 +38,12 @@ void ObjectManager::EmptyObject(){
 //
 // ===================================================================================================== //
 
+Light* ObjectManager::AddLight(vector3df TPosition, vector3df Color, float range){
+	Light* light = new Light(TPosition, Color, range);
+	lights.push_back(light);
+	return light;
+}
+
 Block* ObjectManager::AddBlock(vector3df pos, vector3df size, vector3df rot, std::string texture){
 	Block* b = new Block(pos, rot, size, texture);
 	blocks.push_back(b);
@@ -370,6 +376,13 @@ void ObjectManager::ClearMap(){
 	}
 	blocks.clear();
 
+	size = lights.size();
+	for(int i=0; i<size; i++){
+		Light* light = lights[i];
+		delete light;
+	}
+	lights.clear();
+
 	size = props.size();
 	for(int i=0; i<size; i++){
 		Prop* p = props[i];
@@ -585,4 +598,15 @@ std::vector<Door*> ObjectManager::GetAllDoors(){
 
 std::vector<Potion*> ObjectManager::GetAllPotions(){
 	return(potions);
+}
+
+void ObjectManager::DeleteLight(Light* l){
+	int size = lights.size();
+	for(int i=size-1; i>=0; i--){
+		Light* light = lights[i];
+		if(light == l){
+			lights.erase(lights.begin() + i);
+			delete light;
+		}
+	}
 }
