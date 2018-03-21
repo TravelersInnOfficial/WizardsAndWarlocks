@@ -45,10 +45,13 @@ private:
                                                 TEXTUREMAP[TEXTURE_MAINMENU_MULTIPLAYER].c_str(),
                                                 TEXTUREMAP[TEXTURE_MAINMENU_OPTIONS].c_str(),
                                                 TEXTUREMAP[TEXTURE_MAINMENU_EXIT].c_str()};
+
+    const char * pressedButtonLayout = TEXTUREMAP[TEXTURE_MAIMMENU_DEFAULT_PRESSED].c_str();
     
     //In this binding, ImTextureID is used to store an OpenGL 'GLuint' texture identifier.
     //ImTextureID texture = (void*) GLuint;
     ImTextureID texture[N_BUTTONS];
+    ImTextureID texturePressed;
     //sf::Texture* texture[N_BUTTONS];
     //irr::video::ITexture* texture[N_BUTTONS];
     //IrrIMGUI::IGUITexture * imageid[N_BUTTONS];

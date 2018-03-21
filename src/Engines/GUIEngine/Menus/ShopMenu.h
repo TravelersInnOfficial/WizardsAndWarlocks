@@ -47,9 +47,9 @@ private:
     const char* TYPE_SPELL = "image_spell";
     const char* TYPE_TRAP = "image_trap";
     
-    int KEY_1 = 35;
-    int KEY_2 = 40;
-    int KEY_3 = 34;
+    char KEY_1 = '1';
+    char KEY_2 = '2';
+    char KEY_3 = '3';
 
     ImVec2 buttonSize;                  //MENU BUTTONS SIZE
     ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
