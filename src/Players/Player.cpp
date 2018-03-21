@@ -101,10 +101,10 @@ void Player::InitHUDBars(){
 		float yEndS = yInitS + size;
 
 		//blackbars
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
-
+		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH)));
+		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM)));
+		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS)));
+		
 		m_hp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
 		m_hp_bar->SetColor(1,0,0);
 		
@@ -367,19 +367,25 @@ void Player::DeadUpdate(){
 			setPos = true;
 		}
 
-		if(targetDeadCam != newP && newP!=nullptr && targetDeadCam != nullptr){
-			targetDeadCam->EraseHUDBars();
-			targetDeadCam->EraseSpellSelector();
-			targetDeadCam->EraseTrapHUD();
+		if(targetDeadCam!=newP && newP!=nullptr && targetDeadCam!=nullptr){
+			eraseTargetHUD();
 		}
 
 		if(setPos && newP!=nullptr){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
 			targetDeadCam->InitHUDBars();
-
 		}
+
 		if(targetDeadCam!=nullptr) m_camera->UpdateCamera(targetDeadCam->GetPos());
+	}
+}
+
+void Player::eraseTargetHUD(){
+	if(targetDeadCam!=nullptr){
+		targetDeadCam->EraseHUDBars();
+		targetDeadCam->EraseSpellSelector();
+		targetDeadCam->EraseTrapHUD();
 	}
 }
 
@@ -599,6 +605,7 @@ void Player::Respawn(){
 	if(isPlayerOne){ 
 		MenuType * current_menu = MenuManager::GetInstance()->GetCurrentMenu();
 		if(current_menu != nullptr && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();
+		eraseTargetHUD();
 	}
 
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
@@ -709,6 +716,12 @@ void Player::Die(){
 }
 
 void Player::EraseHUDBars(){
+	if(!m_blackbars.empty()){
+		for(int i = 0; i<m_blackbars.size(); i++){
+			if(m_blackbars[i]!=nullptr) m_blackbars[i]->Erase();
+			m_blackbars[i] = nullptr;
+		}
+	}
 	if(m_hp_bar != nullptr){ m_hp_bar->Erase(); m_hp_bar = nullptr;} 
 	if(m_mp_bar != nullptr){ m_mp_bar->Erase(); m_mp_bar = nullptr;}
 	if(m_sp_bar != nullptr){ m_sp_bar->Erase(); m_sp_bar = nullptr;}

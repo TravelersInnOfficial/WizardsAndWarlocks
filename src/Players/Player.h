@@ -176,6 +176,7 @@ class Player: public Entidad{
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
 		void createSoundEvents();			//Create the sound events needed for the player
 		void SetBillboard();				// Ponemos el billboard en el player
+		void eraseTargetHUD();
 		
 		// We check if the player can jump
 		float currentJumpCheckTime;
@@ -228,6 +229,7 @@ class Player: public Entidad{
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
 		//***HUD**//
+		std::vector<TFRect*> m_blackbars;
 		TFRect* m_hp_bar;
 		TFRect* m_mp_bar;
 		TFRect* m_sp_bar;
