@@ -390,7 +390,6 @@ void Player::eraseTargetHUD(){
 }
 
 void Player::Update(float deltaTime){
-	std::cout<<m_camera->GetRotation()<<std::endl;
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
