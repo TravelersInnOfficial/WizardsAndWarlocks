@@ -82,7 +82,8 @@ enum GAMETEXTURES {
 	TEXTURE_MAINMENU_OPTIONS,
 	TEXTURE_MAINMENU_EXIT,
 	TEXTURE_MAINMENU_BACKGROUND,
-	TEXTURE_SHOPMENU_NONE
+	TEXTURE_SHOPMENU_NONE,
+	TEXTURE_MAIMMENU_DEFAULT_PRESSED
 };
 
 enum GAMEMESHES {
@@ -182,6 +183,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_MAINMENU_EXIT]				= "./../assets/textures/GUI/Menus/MainMenu/exit_button.png";
 	m[TEXTURE_MAINMENU_BACKGROUND]			= "./../assets/textures/GUI/Menus/MainMenu/background.png";
 	m[TEXTURE_SHOPMENU_NONE]				= "./../assets/textures/GUI/Menus/ShopMenu/none.png";
+	m[TEXTURE_MAIMMENU_DEFAULT_PRESSED]		= "./../assets/textures/GUI/Menus/MainMenu/default_button_pressed.png";
 
 	return m;
 };

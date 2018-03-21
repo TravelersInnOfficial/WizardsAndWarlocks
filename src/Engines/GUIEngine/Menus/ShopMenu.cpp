@@ -26,9 +26,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spells_codes, &spells_map);
     load_imagesid(N_TRAPS, trapLayouts, trap_texture, traps_codes, &traps_map);
 
-    //buttonSize = ImVec2(trap_texture[0]->getSize().Width/10,trap_texture[0]->getSize().Height/10);
-    //buttonSize = ImVec2(trap_texture[0]->getSize().x/10,trap_texture[0]->getSize().y/10);
-    buttonSize = ImVec2(100,100);
+    buttonSize = ImVec2(screenWidth/16,screenWidth/16);
 
     imgui_ddflags = 0;
     if (ddflags.parentNullID)  imgui_ddflags |= ImGuiDragDropFlags_SourceAllowNullID;
@@ -177,9 +175,9 @@ void ShopMenu::Update(bool* open, float deltaTime){
         if(ImGui::Button("Close",ImVec2(100,50))){
             closeMenu(open);
         }
-        if(ImGui::IsKeyPressed('3')) set_focused_button(2);
-        if(ImGui::IsKeyPressed('2')) set_focused_button(1);
-        if(ImGui::IsKeyPressed('1')) set_focused_button(0);
+        if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
+        if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
+        if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
         
         //HELP WINDOWS
         //ImGui::ShowTestWindow();

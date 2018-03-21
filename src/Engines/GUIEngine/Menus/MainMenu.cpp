@@ -29,6 +29,7 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     //BUTTONS DATA
     for(int i = 0; i<N_BUTTONS;i++){
         texture[i] = (void*) toe::GetTextureID(buttonLayouts[i]);
+        texturePressed = (void*) toe::GetTextureID(pressedButtonLayout);
     }
     
     toe::core::TOEvector2di dims = toe::GetTextureDims(buttonLayouts[0]);
@@ -41,9 +42,6 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     netSeeker = new NetSeeker();
 }
 MainMenu::~MainMenu(){
-    //for(int i = 0; i<N_BUTTONS; i++){
-    //    GUI->deleteTexture(imageid[i]);
-    //}
     delete netSeeker;
 }
 
@@ -83,18 +81,22 @@ void MainMenu::Update(bool* open, float deltaTime){
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
             //NEXT BUTTON STYLE
-            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(7.0f, 0.7f, 0.7f));
-            ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(7.0f, 0.8f, 0.8f));
+            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
 
+            //ImTextureID prev = texture[i];
             if(ImGui::ImageButton(texture[i],buttonSize)){
                 PlaySound();
                 actions[i](open);
             }
-
             ImGui::PopStyleColor(3);
             ImGui::PopID();
-            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
+            if(ImGui::IsItemHovered()){ 
+                ImGui::SetTooltip("%s",descriptions[i]);
+                //texture[i] = texturePressed;
+            }
+            //else texture[i] = prev;
         }
         ImGui::PopStyleVar();
 
@@ -347,7 +349,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         //HELP WINDOWS
-        //ImGui::ShowTestWindow();
+        ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();
