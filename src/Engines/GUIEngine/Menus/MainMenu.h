@@ -21,8 +21,10 @@ private:
     static const int MAX_STRING_SIZE = 21;
     static const int MAX_NAME_SIZE = 16;
 
-    ImVec2 buttonSize;
+    ImVec2 buttonSize[N_BUTTONS];
     ImVec2 pu_buttonSize;
+
+    ImVec2 initButtonSize;
 
     static bool m_options;
     static bool m_exit;

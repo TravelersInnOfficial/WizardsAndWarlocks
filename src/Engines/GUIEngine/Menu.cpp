@@ -3,8 +3,6 @@
 Menu::Menu(MenuType type){
     g_engine = GraphicEngine::getInstance();
     gui_engine = GUIEngine::GetInstance();
-    //pDevice = gui_engine->GetPDevice();
-    //GUI = gui_engine->GetGuiHandler();
 
     m_id = "";
     m_type = type;
@@ -13,7 +11,6 @@ Menu::Menu(MenuType type){
     screenWidth = g_engine->GetScreenWidth();
     screenHeight = g_engine->GetScreenHeight();
 
-    w_flags = 0;
     CalculateFlags();
 }
 
@@ -27,6 +24,7 @@ void Menu::Drop(){std::cout<<"REACHED MENU INTERFACE DROP"<<std::endl;}
 
 void Menu::CalculateFlags(){
     w_flags = 0;
+    popup_flags = 0;
 
     if (w_opt.no_titlebar)  w_flags |= ImGuiWindowFlags_NoTitleBar;
     if (w_opt.no_scrollbar) w_flags |= ImGuiWindowFlags_NoScrollbar;
@@ -35,6 +33,15 @@ void Menu::CalculateFlags(){
     if (w_opt.no_resize)    w_flags |= ImGuiWindowFlags_NoResize;
     if (w_opt.no_collapse)  w_flags |= ImGuiWindowFlags_NoCollapse;
     //if (no_close)     p_open = nullptr; // Don't pass our bool* to Begin
+
+    popup_opt.no_titlebar = false;
+    
+    if (popup_opt.no_titlebar)  popup_flags |= ImGuiWindowFlags_NoTitleBar;
+    if (popup_opt.no_scrollbar) popup_flags |= ImGuiWindowFlags_NoScrollbar;
+    if (!popup_opt.no_menu)     popup_flags |= ImGuiWindowFlags_MenuBar;
+    if (popup_opt.no_move)      popup_flags |= ImGuiWindowFlags_NoMove;
+    if (popup_opt.no_resize)    popup_flags |= ImGuiWindowFlags_NoResize;
+    if (popup_opt.no_collapse)  popup_flags |= ImGuiWindowFlags_NoCollapse;
 }
 
 float Menu::GetWidth(){return m_width;}

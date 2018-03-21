@@ -23,6 +23,7 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
 
     //WIDGET STYLE
     m_style.WindowBorderSize = 0.0f; //widget border size
+    //m_style.FrameBorderSize = 1.0f;
     
     ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     
@@ -33,8 +34,10 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     }
     
     toe::core::TOEvector2di dims = toe::GetTextureDims(buttonLayouts[0]);
-    buttonSize = ImVec2(dims.X,dims.Y);
+
+    for(int i = 0; i<N_BUTTONS; i++) buttonSize[i] = ImVec2(dims.X,dims.Y);
     pu_buttonSize = ImVec2(140,0);
+    initButtonSize = ImVec2(dims.X,dims.Y);
 
     //WIDGET SIZE
     m_width = dims.X + 30;
@@ -77,7 +80,9 @@ void MainMenu::Update(bool* open, float deltaTime){
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
-        ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5)); //widget items spacing
+        //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,20)); //widget items spacing
+        //ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0,20));
+
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
             //NEXT BUTTON STYLE
@@ -86,25 +91,28 @@ void MainMenu::Update(bool* open, float deltaTime){
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
 
             //ImTextureID prev = texture[i];
-            if(ImGui::ImageButton(texture[i],buttonSize)){
+            if(ImGui::ImageButton(texture[i],buttonSize[i])){
+                buttonSize[i] = ImVec2(initButtonSize[0]*0.8,initButtonSize[1]*0.8);
                 PlaySound();
                 actions[i](open);
             }
-            ImGui::PopStyleColor(3);
-            ImGui::PopID();
-            if(ImGui::IsItemHovered()){ 
+            else if(ImGui::IsItemHovered()){ 
                 ImGui::SetTooltip("%s",descriptions[i]);
                 //texture[i] = texturePressed;
+                buttonSize[i] = ImVec2(initButtonSize[0]*1.2,initButtonSize[1]*1.2);
             }
+            else{ buttonSize[i] = initButtonSize;}
+            ImGui::PopStyleColor(3);
+            ImGui::PopID();
             //else texture[i] = prev;
         }
-        ImGui::PopStyleVar();
+        //ImGui::PopStyleVar(2);
 
         //SERVER LIST MODAL
        if(m_multiplayer){
             ImGui::OpenPopup("Server list");
             ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
-            if(!ImGui::BeginPopupModal("Server list")) ImGui::EndPopup();
+            if(!ImGui::BeginPopupModal("Server list",nullptr,popup_flags)) ImGui::EndPopup();
             else{
                 ImGui::Columns(4, "server-labels"); // 4-ways, with border
                 ImGui::Separator();
@@ -199,7 +207,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //SERVER SELECTED
         if(m_some_selected){
             ImGui::OpenPopup("Introduce your name");
-            if(ImGui::BeginPopupModal("Introduce your name")){
+            if(ImGui::BeginPopupModal("Introduce your name",nullptr,popup_flags)){
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
                 ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
@@ -224,7 +232,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //NO SERVER SELECTED
         if(m_none_selected){
             ImGui::OpenPopup("Select a server");
-            if(ImGui::BeginPopupModal("Select a server")){
+            if(ImGui::BeginPopupModal("Select a server",nullptr,popup_flags)){
                 ImGui::Text("Select a server from the list");
                 ImGui::Separator();
                 if(ImGui::Button("OK",pu_buttonSize)){
@@ -241,7 +249,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         if(m_direct_connection){
             ImGui::OpenPopup("Direct connection");
             ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
-            if(ImGui::BeginPopupModal("Direct connection")){
+            if(ImGui::BeginPopupModal("Direct connection",nullptr,popup_flags)){
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
                 ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
@@ -274,7 +282,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         if(m_start_host){
             ImGui::OpenPopup("Start a host");
             ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
-            if(ImGui::BeginPopupModal("Start a host")){
+            if(ImGui::BeginPopupModal("Start a host",nullptr,popup_flags)){
                 ImGui::Text("Server Name: ");
                 ImGui::SameLine();
                 ImGui::InputText("##server_name", server_name, IM_ARRAYSIZE(player_name));
@@ -314,7 +322,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //OPTIONS MODAL
         if(m_options){
             ImGui::OpenPopup("Options");
-            if(!ImGui::BeginPopupModal("Options")) ImGui::EndPopup();
+            if(!ImGui::BeginPopupModal("Options",nullptr,popup_flags)) ImGui::EndPopup();
             else{
                 ImGui::Text("SOON\n\n");
                 ImGui::Separator();
@@ -330,7 +338,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //EXIT MENU MODAL
         if(m_exit){
             ImGui::OpenPopup("Exit?");
-            if(!ImGui::BeginPopupModal("Exit?")) ImGui::EndPopup();
+            if(!ImGui::BeginPopupModal("Exit?",nullptr,popup_flags)) ImGui::EndPopup();
             else{
                 ImGui::Text("Are you sure?\n\n");
                 ImGui::Separator();

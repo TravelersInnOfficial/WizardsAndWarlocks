@@ -40,6 +40,9 @@ protected:
     
     ImGuiWindowFlags w_flags;
     WindowOptions w_opt;
+
+    ImGuiWindowFlags popup_flags;
+    WindowOptions popup_opt;
     ImGuiStyle& m_style = ImGui::GetStyle();
     
     const char * m_id;

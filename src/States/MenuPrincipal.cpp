@@ -13,6 +13,7 @@ MenuPrincipal::MenuPrincipal(){
 	createSoundEvent();
 	playMenuMusic();
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
+	bkg = nullptr;
 }
 
 MenuPrincipal::~MenuPrincipal(){
@@ -23,6 +24,11 @@ MenuPrincipal::~MenuPrincipal(){
 	g_engine->setCursorVisible(false);
 
 	MenuManager::GetInstance()->~MenuManager();
+	
+	if(bkg!=nullptr){
+		bkg->Erase();
+		bkg = nullptr;
+	}
 }
 
 bool MenuPrincipal::Input(){
@@ -39,8 +45,15 @@ void MenuPrincipal::Update(float deltaTime){
 }
 
 void MenuPrincipal::Draw(){
+	g_engine->BeginDraw();
+	if(bkg == nullptr){
+		toe::core::TOEvector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
+		bkg = toe::AddSprite("./../assets/textures/GUI/Menus/MainMenu/background.png",toe::core::TOEvector2df(0,0), dims);
+	}
 	MenuManager::GetInstance()->Draw();
-	g_engine->drawAll();
+	g_engine->EndDraw();
+	
+
 }
 
 void MenuPrincipal::PrepareGame(){
