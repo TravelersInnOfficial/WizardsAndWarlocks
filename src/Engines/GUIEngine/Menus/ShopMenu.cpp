@@ -177,9 +177,9 @@ void ShopMenu::Update(bool* open, float deltaTime){
         if(ImGui::Button("Close",ImVec2(100,50))){
             closeMenu(open);
         }
-        if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
-        if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
-        if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
+        if(ImGui::IsKeyPressed('3')) set_focused_button(2);
+        if(ImGui::IsKeyPressed('2')) set_focused_button(1);
+        if(ImGui::IsKeyPressed('1')) set_focused_button(0);
         
         //HELP WINDOWS
         //ImGui::ShowTestWindow();
