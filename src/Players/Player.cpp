@@ -28,7 +28,7 @@ Player::Player(bool isPlayer1){
 
 	createSoundEvents();
 	changeSurface(2);
-	m_position = vector3df(0,0,0);
+	m_position = vector3df(0,2,0);
 	m_dimensions = vector3df(1.8,1.8,1.8);
 
 	controller = new PlayerController();
@@ -72,9 +72,7 @@ Player::Player(bool isPlayer1){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isClient = n_engine->IsClientInit();
 	bool isServer = n_engine->IsServerInit();
-	if(!isClient && !isServer){ 
-		SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
-	}
+	if(!isClient && !isServer) SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 
 	m_hp_bar = nullptr;
 	m_mp_bar = nullptr;

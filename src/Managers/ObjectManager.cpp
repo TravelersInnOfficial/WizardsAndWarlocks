@@ -292,7 +292,7 @@ void ObjectManager::SendFountainSignal(){
 // ===================================================================================================== //
 
 vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
-	vector3df toRet = vector3df(0,1,0);
+	vector3df toRet = vector3df(0,2,0);
 	
 	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
 		int randIndex = rand() % wizardSpawn.size();

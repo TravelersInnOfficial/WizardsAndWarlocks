@@ -19,9 +19,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 
 	playerOne = playerManager->GetPlayerOne();
-	if(playerOne == nullptr){
-		playerOne = playerManager->AddHumanPlayer(true);
-	}
+	if(playerOne == nullptr) playerOne = playerManager->AddHumanPlayer(true);
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);

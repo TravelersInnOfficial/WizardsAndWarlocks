@@ -138,6 +138,7 @@ void StateManager::UpdateDelta(){
 	passed = clk::now() - t;
 	std::chrono::duration<double, std::milli> milisecondsPassed = passed;
 	deltaTime = milisecondsPassed.count() / 1000.0f;
+	if(deltaTime > 1.0f) deltaTime = 0.02f;
 
 	// GUARDAMOS LA T
 	t = clk::now();
