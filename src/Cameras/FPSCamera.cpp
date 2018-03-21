@@ -14,6 +14,10 @@ FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
     changeY = 0;
     sensibility = 0.5f;
 
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	int screenW = g_engine->GetScreenWidth();
+	int screenH = g_engine->GetScreenHeight();
+	g_engine->SetCursorPosition(vector2di(screenW/2, screenH/2));
 }
 
 FPSCamera::~FPSCamera(){

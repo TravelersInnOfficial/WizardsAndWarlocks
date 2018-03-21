@@ -80,6 +80,8 @@ Player::Player(bool isPlayer1){
 	m_bar_widths = 0.0f;
 
 	Respawn();
+
+	if(m_camera != nullptr) m_camera->SetRotation(vector3df(0,180,0));
 }
 
 void Player::InitHUDBars(){
@@ -99,11 +101,6 @@ void Player::InitHUDBars(){
 		float yEndH = yInitH + size;	// Calculate the End of the bar on Y axis with the size
 		float yEndM = yInitM + size;
 		float yEndS = yInitS + size;
-
-		//blackbars
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-		//toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
 
 		m_hp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
 		m_hp_bar->SetColor(1,0,0);
@@ -132,9 +129,7 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_SP = 100;
 
-	if(isPlayerOne){
-		InitHUDBars();
-	}
+	if(isPlayerOne) InitHUDBars();
 
 	if(m_hp_bar!=nullptr) m_hp_bar->SetWidth(m_bar_widths);
 	if(m_mp_bar!=nullptr) m_mp_bar->SetWidth(m_bar_widths);
@@ -227,12 +222,12 @@ void Player::CreatePlayerCharacter(bool firstInit){
 		// Camera
 		if(isPlayerOne){ 
 			if(m_camera!=nullptr) delete m_camera;
-			//m_camera = new WatcherCamera(m_position);	
 			m_camera = new FPSCamera(m_position, rotation);		
 		}
 
 		hasCharacter = true;
 	}
+	
 }
 
 /**
@@ -384,6 +379,7 @@ void Player::DeadUpdate(){
 }
 
 void Player::Update(float deltaTime){
+	std::cout<<m_camera->GetRotation()<<std::endl;
 	// Actualizamos el HP con 0 para comprobar la muerte
 	ChangeHP(0);
 
@@ -415,8 +411,6 @@ void Player::Update(float deltaTime){
 			bt_body->SetLinearVelocity(vector3df(velocity.X/1.5, velocity.Y, velocity.Z/1.5));
 		}
 
-		//MoveZ(-1);
-		//std::cout<<"Position: "<< m_position<<std::endl;
 		CheckInput(); // Comprobamos los Input del personaje
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
