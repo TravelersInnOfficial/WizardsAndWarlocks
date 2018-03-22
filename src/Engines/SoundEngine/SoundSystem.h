@@ -41,6 +41,20 @@ public:
     void setVolume(float vol);
     
     /******************************************************
+     *  @brief Modifies the vca volume
+     *  @param string name of the vca
+     *  @param vol Volume required
+     ******************************************************/
+    void setVolumeVCA(std::string name, float vol);
+
+    /******************************************************
+     * @brief Get the volume of the vca
+     * @param string name of the vca
+     * @return volume of the required vca
+     ******************************************************/
+    float getVolumeVCA(std::string name);
+
+    /******************************************************
      *  Modifies the position and orientation of the listener point
      ******************************************************/
     void Update(vector3df headPos, vector3df headRot);
@@ -77,11 +91,22 @@ public:
     void loadBanks();
 
     /******************************************************
+     *  Load all the avc
+     ******************************************************/
+    void loadAvc();
+
+    /******************************************************
+     * @brief Loads an specific vca
+     * @param string path of the vca to load
+     ******************************************************/
+    void loadAvc(std::string path);
+
+    /******************************************************
      * @brief Loads an specific bank
      * @param string path of the bank to load
-     * @param FMOD_STUDIO_BANK* bank where will be loaded the bank
+     * @param string name of the bank to save it in the map 
      ******************************************************/
-    void loadBank(std::string path, FMOD_STUDIO_BANK* bank);
+    void loadBank(std::string path, std::string name);
 
     /******************************************************
      *  @brief Creates the a FMOD eventDescription
@@ -139,6 +164,7 @@ private:
     FMOD_STUDIO_BUS* busMaster;
     FMOD_3D_ATTRIBUTES* listener;
     std::map<std::string, FMOD_STUDIO_BANK*> banks;
+    std::map<std::string, FMOD_STUDIO_VCA*> vcas;
     std::map<std::string, FMOD_STUDIO_EVENTDESCRIPTION*> eventDescriptions;
     std::map<std::string, SoundEvent*> soundEvents;
 };

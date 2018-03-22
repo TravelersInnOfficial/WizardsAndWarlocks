@@ -84,10 +84,12 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	//ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
+	loadAvc();
 
 	// Load the bus
 	ERRCHECK(FMOD_Studio_System_GetBus(system, "bus:/", &busMaster));
@@ -98,6 +100,10 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setVel(listener,vector3df(0.0f,0.0f,0.0f));
 	setForward(listener,vector3df(1.0f,0.0f,0.0f));
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
+
+	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 10.0f));
+
+	setVolumeVCA("Music", 0.0f);
 }
 
 /******************************************************
@@ -112,9 +118,12 @@ SoundEvent* SoundSystem::getEvent(const char * eventPath) {
 /******************************************************
 * @brief Loads an specific bank
 * @param string path of the bank to load
-* @param FMOD_STUDIO_BANK* bank where will be loaded the 
+* @param string name of the bank to save it in the map 
 ******************************************************/
-void SoundSystem::loadBank(std::string filePath, FMOD_STUDIO_BANK* bank) {
+void SoundSystem::loadBank(std::string filePath, std::string bankName) {
+
+	FMOD_STUDIO_BANK* bank = nullptr;
+
 	std::string path = "";
 	const char * finalPath = "";
 
@@ -122,42 +131,49 @@ void SoundSystem::loadBank(std::string filePath, FMOD_STUDIO_BANK* bank) {
 	finalPath = path.c_str();        //Convert to const char*
 	
 	ERRCHECK(FMOD_Studio_System_LoadBankFile(system, finalPath, FMOD_STUDIO_LOAD_BANK_NORMAL, &bank));   //Load the bank
+
+	if(bank != nullptr){
+		banks[bankName] = bank;
+	}
 }
 
 /******************************************************
 *  Loads all the needed banks
 ******************************************************/
 void SoundSystem::loadBanks() {
-
-	//Initialize the banks
-	FMOD_STUDIO_BANK* masterBank      = nullptr;
-	FMOD_STUDIO_BANK* stringsBank     = nullptr;
-	FMOD_STUDIO_BANK* characterBank   = nullptr;
-	FMOD_STUDIO_BANK* spellsBank      = nullptr;
-	FMOD_STUDIO_BANK* ambienceBank    = nullptr;
-	FMOD_STUDIO_BANK* HUDBank         = nullptr;
-	FMOD_STUDIO_BANK* MusicBank       = nullptr;
-	FMOD_STUDIO_BANK* commonSoundBank = nullptr;
-
 	//Load the banks
-	loadBank("Master Bank.bank", masterBank);
-	loadBank("Master Bank.strings.bank", stringsBank);
-	loadBank("Character.bank", characterBank);
-	loadBank("Spells.bank", spellsBank);
-	loadBank("Ambience.bank", ambienceBank);
-	loadBank("HUD.bank", HUDBank);
-	loadBank("Music.bank", MusicBank);
-	loadBank("CommonSound.bank", commonSoundBank);
-	
-	//Insert the banks at the banks map
-	banks["masterBank"] = masterBank;
-	banks["stringsBank"] = stringsBank;
-	banks["characterBank"] = characterBank;
-	banks["spellsBank"] = spellsBank;
-	banks["AmbienceBank"] = ambienceBank;
-	banks["HUDBank"] = HUDBank;
-	banks["MusicBank"] = MusicBank;
-	banks["CommonSoundBank"] = commonSoundBank;
+	loadBank("Master Bank.bank", "masterBank");
+	loadBank("Master Bank.strings.bank", "stringsBank");
+	loadBank("Character.bank", "characterBank");
+	loadBank("Spells.bank", "spellsBank");
+	loadBank("Ambience.bank", "AmbienceBank");
+	loadBank("HUD.bank", "HUDBank");
+	loadBank("Music.bank", "MusicBank");
+	loadBank("CommonSound.bank", "CommonSoundBank");
+}
+
+/******************************************************
+*  Loads all the needed avc
+******************************************************/
+void SoundSystem::loadAvc(){
+	loadAvc("Music");
+	loadAvc("SFX");
+	loadAvc("Voices");
+}
+
+/******************************************************
+* @brief Loads an specific vca
+* @param string path of the vca to load
+******************************************************/
+void SoundSystem::loadAvc(std::string path){
+	std::string completPath = "vca:/" + path;
+	FMOD_STUDIO_VCA* createVCA = nullptr;
+
+	ERRCHECK(FMOD_Studio_System_GetVCA(system, completPath.c_str(), &createVCA));
+
+	if(createVCA != nullptr){
+		vcas[path] = createVCA;
+	}
 }
 
 /******************************************************
@@ -165,6 +181,34 @@ void SoundSystem::loadBanks() {
 ******************************************************/
 void SoundSystem::setVolume(float vol) {
 	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, vol));
+}
+
+/******************************************************
+ *  @brief Modifies the vca volume
+ *  @param string name of the vca
+ *  @param vol Volume required
+ ******************************************************/
+void SoundSystem::setVolumeVCA(std::string name, float vol){
+	if(vcas.find(name) != vcas.end()){
+		FMOD_STUDIO_VCA* currentVca = vcas[name];
+		ERRCHECK(FMOD_Studio_VCA_SetVolume(currentVca, vol));
+	}
+}
+
+/******************************************************
+ * @brief Get the volume of the vca
+ * @param string name of the vca
+ * @return volume of the required vca
+ ******************************************************/
+float SoundSystem::getVolumeVCA(std::string name){
+	float output = -1.0f;
+	if(vcas.find(name) != vcas.end()){
+		FMOD_STUDIO_VCA* currentVca = vcas[name];
+		float finalVolume = 0.0f;
+		ERRCHECK(FMOD_Studio_VCA_GetVolume(currentVca, &output, 0));
+		ERRCHECK(FMOD_Studio_VCA_GetVolume(currentVca, &output, &finalVolume));
+	}
+	return output;
 }
 
 /******************************************************
@@ -208,15 +252,7 @@ vector3df SoundSystem::getListenerPosition() {
 void SoundSystem::Update(vector3df headPos, vector3df headRot) {
 	setListenerPosRot(headPos, headRot);	//Position and rotation of the listener
 	ERRCHECK(FMOD_Studio_System_Update(system));
-/* DEBUG TRY
-	int number, hello;
-	ERRCHECK(FMOD_System_GetChannelsPlaying(
-	  lowLevelSystem,
-	  &number,
-	  &hello
-	));
 
-	std::cout<<number<<" "<<hello<<std::endl;*/
 }
 
 void SoundSystem::Update(){
@@ -268,6 +304,8 @@ SoundEvent* SoundSystem::createEvent(std::string eventPath) {
 	newEvent->setDescription(eventDesc);
 	//soundEvents[eventPath] = newEvent;  //Store the event in the sound events map
 
+
+
 	return newEvent;
 }
 
@@ -307,7 +345,6 @@ void SoundSystem::setUp(FMOD_3D_ATTRIBUTES * var,vector3df vec) {
 * @param playerRot rotation where should play the event and/or of the listener
 ******************************************************/
 void SoundSystem::checkAndPlayEvent(SoundEvent* event, vector3df playerPos) {
-	
 	//Checks if the event exists and is being played
 	if (!event->isPlaying()) {
 		playEvent(event, playerPos); //Plays the event
