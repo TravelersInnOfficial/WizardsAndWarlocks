@@ -35,8 +35,8 @@ Player::Player(bool isPlayer1){
 	DeclareInput();
 
 	raycastDistance = 2.0f;
-	max_velocity = 3.0f;
-	max_velocityY = 6.0f;
+	max_velocity = 4.5f;
+	max_velocityY = 8.0f;
 
 	playerAlliance = NO_ALLIANCE;
 	isPlayerOne = isPlayer1;

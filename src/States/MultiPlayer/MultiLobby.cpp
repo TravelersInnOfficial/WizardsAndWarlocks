@@ -18,7 +18,7 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	networkManager	= NetworkManager::GetInstance();
 	
 	// Level
-	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("./../assets/json/UnknownCastle.json");
 
 	if(n_engine->IsServerInit()) isServer = true;
 	else if(n_engine->IsClientInit()) isServer = false;
