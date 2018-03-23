@@ -16,7 +16,7 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	senseManager	= RegionalSenseManager::GetInstance();
 
 	// Level
-	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
+	LevelLoader::LoadLevel("./../assets/json/UnknownCastle.json");
 
 	playerOne = playerManager->GetPlayerOne();
 	if(playerOne == nullptr) playerOne = playerManager->AddHumanPlayer(true);

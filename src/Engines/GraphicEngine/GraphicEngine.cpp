@@ -5,7 +5,9 @@
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
-	privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
+	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
+	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
+	privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 
 	privateSManager = privateDriver->GetSceneManager();
@@ -16,7 +18,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 	m_actual_overlay = nullptr;
 	privateCamera = nullptr;
 
-	privateDriver->EnableClipping();
+	//privateDriver->EnableClipping();
+	//privateSManager->SetAmbientLight(toe::core::TOEvector3df(0.75f,0.75f,0.75f)){
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -271,12 +274,10 @@ GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float
 		gb = new GBody(
 			toe::AddCube(
 				toe::core::TOEvector3df(p.X, p.Y, p.Z),
-				toe::core::TOEvector3df(0, 0, 0),
+				toe::core::TOEvector3df(r.X, r.Y, r.Z),
 				toe::core::TOEvector3df(s.X * size, s.Y * size, s.Z * size)
 			)
 		);
-		gb->Rotate(vector3df(r.X, r.Y, 0));
-		gb->Rotate(vector3df(0, 0, r.Z));
 	}
 
 	return gb;
