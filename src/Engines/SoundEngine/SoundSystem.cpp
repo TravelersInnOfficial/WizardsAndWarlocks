@@ -81,14 +81,13 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	lowLevelSystem = nullptr;
 	ERRCHECK(FMOD_Studio_System_GetLowLevelSystem(system, &lowLevelSystem));
 	
-	
 	ERRCHECK(FMOD_System_SetSoftwareFormat(lowLevelSystem, 44100, FMOD_SPEAKERMODE_STEREO, 0));
 	ERRCHECK(FMOD_System_SetSoftwareChannels(lowLevelSystem, 32));
 	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	//ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
-	ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	//ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
@@ -104,7 +103,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setForward(listener,vector3df(1.0f,0.0f,0.0f));
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
 
-	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 10.0f));
+	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 15.0f));
 }
 
 /******************************************************
