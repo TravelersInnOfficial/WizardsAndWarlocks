@@ -80,12 +80,15 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	//Initializing the fmod low level api
 	lowLevelSystem = nullptr;
 	ERRCHECK(FMOD_Studio_System_GetLowLevelSystem(system, &lowLevelSystem));
-	ERRCHECK(FMOD_System_SetSoftwareFormat(lowLevelSystem, 0, FMOD_SPEAKERMODE_5POINT1, 0));
+	
+	
+	ERRCHECK(FMOD_System_SetSoftwareFormat(lowLevelSystem, 44100, FMOD_SPEAKERMODE_STEREO, 0));
+	ERRCHECK(FMOD_System_SetSoftwareChannels(lowLevelSystem, 32));
 	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
-	//ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(FMOD_Studio_System_Initialize(system, 256, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	//ERRCHECK(FMOD_Studio_System_Initialize(system, 256, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
@@ -102,8 +105,6 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
 
 	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 10.0f));
-
-	setVolumeVCA("Music", 0.0f);
 }
 
 /******************************************************
