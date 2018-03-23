@@ -87,8 +87,8 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
 
 	//Initialize the system
-	ERRCHECK(FMOD_Studio_System_Initialize(system, 256, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
-	//ERRCHECK(FMOD_Studio_System_Initialize(system, 256, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
+	//ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
+	ERRCHECK(FMOD_Studio_System_Initialize(system, 32, FMOD_STUDIO_INIT_LIVEUPDATE, FMOD_INIT_NORMAL, 0));
 
 	//Load the needed banks
 	loadBanks();
