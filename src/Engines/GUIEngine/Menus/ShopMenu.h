@@ -60,6 +60,8 @@ private:
     ImTextureID* t_spelltexture[N_TSPELLS];
     ImTextureID* trap_texture[N_TRAPS];
 
+    ImTextureID* bkg;
+
     std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
     std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS
 
@@ -67,7 +69,6 @@ private:
 
     Player* hp;
 
-    const char* emptyLayout = TEXTUREMAP[TEXTURE_SHOPMENU_NONE].c_str();
 
     std::vector<SPELLCODE> o_spells_codes = {SPELL_BLIZZARD, SPELL_FIRE, SPELL_POISON, SPELL_THUNDER};
     std::vector<SPELLCODE> d_spells_codes = {SPELL_DEFENSE, SPELL_UNTARGET};

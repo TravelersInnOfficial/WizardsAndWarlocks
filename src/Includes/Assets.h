@@ -77,13 +77,12 @@ enum GAMETEXTURES {
 	TEXTURE_negro,
 	TEXTURE_yellow,
 	TEXTURE_madera,
-	TEXTURE_MAINMENU_SINGLEPLAYER,
-	TEXTURE_MAINMENU_MULTIPLAYER,
-	TEXTURE_MAINMENU_OPTIONS,
-	TEXTURE_MAINMENU_EXIT,
 	TEXTURE_MAINMENU_BACKGROUND,
-	TEXTURE_SHOPMENU_NONE,
-	TEXTURE_MAIMMENU_DEFAULT_PRESSED
+	TEXTURE_MAINMENU_BUTTON,
+	TEXTURE_MAINMENU_BUTTON_HOVER,
+	TEXTURE_MAINMENU_BUTTON_PRESSED,
+	TEXTURE_GUI_CURSOR,
+	TEXTURE_GUI_CURSOR_GLOW
 };
 
 enum GAMEMESHES {
@@ -177,13 +176,12 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
 	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
 	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
-	m[TEXTURE_MAINMENU_SINGLEPLAYER]		= "./../assets/textures/GUI/Menus/MainMenu/single_player_button.png";
-	m[TEXTURE_MAINMENU_MULTIPLAYER]			= "./../assets/textures/GUI/Menus/MainMenu/multiplayer_button.png";
-	m[TEXTURE_MAINMENU_OPTIONS]				= "./../assets/textures/GUI/Menus/MainMenu/options_button.png";
-	m[TEXTURE_MAINMENU_EXIT]				= "./../assets/textures/GUI/Menus/MainMenu/exit_button.png";
+	m[TEXTURE_MAINMENU_BUTTON]				= "./../assets/textures/GUI/Menus/MainMenu/button.png";
+	m[TEXTURE_MAINMENU_BUTTON_HOVER]		= "./../assets/textures/GUI/Menus/MainMenu/button_hover.png";
+	m[TEXTURE_MAINMENU_BUTTON_PRESSED]		= "./../assets/textures/GUI/Menus/MainMenu/button_pressed.png";
 	m[TEXTURE_MAINMENU_BACKGROUND]			= "./../assets/textures/GUI/Menus/MainMenu/background.png";
-	m[TEXTURE_SHOPMENU_NONE]				= "./../assets/textures/GUI/Menus/ShopMenu/none.png";
-	m[TEXTURE_MAIMMENU_DEFAULT_PRESSED]		= "./../assets/textures/GUI/Menus/MainMenu/default_button_pressed.png";
+	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
+	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
 
 	return m;
 };

@@ -15,6 +15,7 @@ private:
     static const int N_BUTTONS = 2;
 
     ImVec2 buttonSize;
+    ImTextureID* bkg;
     
     const char * buttonKeys[N_BUTTONS] = {"WIZARDS", "WARLOCKS"};
     const char * descriptions[N_BUTTONS] ={"Get the grial back from the warlocks nasty claws!","Deploy traps and protect the grial from the wizards.. or just KILL EM ALL"};

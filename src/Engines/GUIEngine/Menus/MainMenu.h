@@ -6,6 +6,8 @@
 #include <SoundEngine/SoundSystem.h>
 #include <Assets.h>
 
+
+class TFRect;
 class MainMenu : public Menu{
 public:
     MainMenu(MenuType);
@@ -21,10 +23,8 @@ private:
     static const int MAX_STRING_SIZE = 21;
     static const int MAX_NAME_SIZE = 16;
 
-    ImVec2 buttonSize[N_BUTTONS];
+    ImVec2 buttonSize;
     ImVec2 pu_buttonSize;
-
-    ImVec2 initButtonSize;
 
     static bool m_options;
     static bool m_exit;
@@ -43,20 +43,24 @@ private:
     std::vector<ServerData> serverList;
     static int m_selected_server;
     
-    const char * buttonLayouts[N_BUTTONS]   = { TEXTUREMAP[TEXTURE_MAINMENU_SINGLEPLAYER].c_str(),
-                                                TEXTUREMAP[TEXTURE_MAINMENU_MULTIPLAYER].c_str(),
-                                                TEXTUREMAP[TEXTURE_MAINMENU_OPTIONS].c_str(),
-                                                TEXTUREMAP[TEXTURE_MAINMENU_EXIT].c_str()};
-
-    const char * pressedButtonLayout = TEXTUREMAP[TEXTURE_MAIMMENU_DEFAULT_PRESSED].c_str();
+    const char * button_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON].c_str();
+    const char * button_hover_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON_HOVER].c_str();
+    const char * button_pressed_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON_PRESSED].c_str();
     
     //In this binding, ImTextureID is used to store an OpenGL 'GLuint' texture identifier.
     //ImTextureID texture = (void*) GLuint;
     ImTextureID texture[N_BUTTONS];
-    ImTextureID texturePressed;
-    //sf::Texture* texture[N_BUTTONS];
-    //irr::video::ITexture* texture[N_BUTTONS];
-    //IrrIMGUI::IGUITexture * imageid[N_BUTTONS];
+    ImTextureID texture_init;
+    ImTextureID texture_hover;
+    ImTextureID texture_pressed;
+    ImTextureID bkg;
+    TFSprite* gauntlet_cursor;
+
+    std::vector<std::string> text_buttons = {"Single Player",
+                                            "Multiplayer",
+                                            "Options",
+                                            "Exit"};
+
     const char * descriptions[N_BUTTONS] ={ "Play as a warlock against our AI",
                                             "Play with your friends in LAN",
                                             "Customize the game options",
@@ -64,6 +68,7 @@ private:
 
     void PrepareClient(bool proprietary = false);
     void PlaySound();
+    void UpdateCursor();
 
     static void SinglePlayer(bool*);
     static void MultiPlayer(bool*);

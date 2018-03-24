@@ -26,6 +26,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spells_codes, &spells_map);
     load_imagesid(N_TRAPS, trapLayouts, trap_texture, traps_codes, &traps_map);
 
+    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND]);
     buttonSize = ImVec2(screenWidth/16,screenWidth/16);
 
     imgui_ddflags = 0;
@@ -164,6 +165,7 @@ void ShopMenu::Update(bool* open, float deltaTime){
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
     else{
+        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(m_width,m_height));
         load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
         load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
 

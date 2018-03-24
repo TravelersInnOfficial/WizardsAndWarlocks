@@ -1,6 +1,7 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
 #include <vector2d.h>
+#include <GraphicEngine/GraphicEngine.h>
 
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;
@@ -11,8 +12,6 @@ char MainMenu::player_name[MAX_NAME_SIZE] = "Player Name";
 char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown Castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
-//FOR TESTING NOTIFICATIONS
-
 MainMenu::MainMenu(MenuType type) : Menu(type){
     m_id = "MainMenu";
 
@@ -22,30 +21,36 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     m_some_selected = false;
 
     //WIDGET STYLE
-    m_style.WindowBorderSize = 0.0f; //widget border size
-    //m_style.FrameBorderSize = 1.0f;
+    m_style.WindowBorderSize = 1.0f; //widget border size
+    m_style.FrameBorderSize = 1.0f;
     
-    ImGui::GetIO().MouseDrawCursor = true; //cursor visible
-    
+    //ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     //BUTTONS DATA
+    texture_init = (void*) toe::GetTextureID(button_layout);
     for(int i = 0; i<N_BUTTONS;i++){
-        texture[i] = (void*) toe::GetTextureID(buttonLayouts[i]);
-        texturePressed = (void*) toe::GetTextureID(pressedButtonLayout);
+        texture[i] = texture_init;
     }
+    texture_hover = (void*) toe::GetTextureID(button_hover_layout);
+    texture_pressed = (void*) toe::GetTextureID(button_pressed_layout);
+    bkg = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND].c_str());
     
-    toe::core::TOEvector2di dims = toe::GetTextureDims(buttonLayouts[0]);
+    toe::core::TOEvector2di dims = toe::GetTextureDims(button_layout);
 
-    for(int i = 0; i<N_BUTTONS; i++) buttonSize[i] = ImVec2(dims.X,dims.Y);
+    buttonSize = ImVec2(dims.X,dims.Y);
     pu_buttonSize = ImVec2(140,0);
-    initButtonSize = ImVec2(dims.X,dims.Y);
 
     //WIDGET SIZE
     m_width = dims.X + 30;
     m_height = dims.Y * N_BUTTONS + 50;
     netSeeker = new NetSeeker();
+    
+    gauntlet_cursor = nullptr;
 }
+
 MainMenu::~MainMenu(){
     delete netSeeker;
+    gauntlet_cursor->Erase();
+    gauntlet_cursor = nullptr;
 }
 
 void MainMenu::Close(bool* open){
@@ -70,44 +75,74 @@ void MainMenu::GameOptions(bool * open){
 void MainMenu::ExitGame(bool * open){
     m_exit = true;
 }
+void MainMenu::UpdateCursor(){
+    toe::core::TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+    if(gauntlet_cursor == nullptr){
+        toe::core::TOEvector2df d = toe::core::TOEvector2df(cursor_dims.X,cursor_dims.Y);
+        gauntlet_cursor = toe::AddSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR],toe::core::TOEvector2df(0,0),d);
+    }else{
+        ImVec2 mouse = ImGui::GetMousePos();
+        if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
+            toe::core::TOEvector2df pos = gauntlet_cursor->GetPosition();
+            if(pos.X != mouse[0]-cursor_dims.X/2 || pos.Y != screenHeight-cursor_dims.Y-mouse[1]){
+                gauntlet_cursor->SetPosition(mouse[0]-cursor_dims.X/2,screenHeight-cursor_dims.Y-mouse[1]);
+            }
+        }
+    }
+}
 
 void MainMenu::Update(bool* open, float deltaTime){
     netSeeker->Update(deltaTime);
+    UpdateCursor();
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight - m_height*2));
+    ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight/2 - m_height/2));
+    //ImGui::SetNextWindowSize(ImVec2(screenWidth,screenHeight));//sets the size of the next window
+    //ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
         //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,20)); //widget items spacing
-        //ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2(0,20));
 
+        std::vector<ImVec2> text_pos;
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
+            
             //NEXT BUTTON STYLE
+            //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100,100));
             ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
 
-            //ImTextureID prev = texture[i];
-            if(ImGui::ImageButton(texture[i],buttonSize[i])){
-                buttonSize[i] = ImVec2(initButtonSize[0]*0.8,initButtonSize[1]*0.8);
+
+            text_pos.push_back(ImGui::GetCursorScreenPos());
+            
+            ImGui::ImageButton(texture[i],buttonSize);
+            
+            if(ImGui::IsItemActive()){
+                texture[i] = texture_pressed;
                 PlaySound();
                 actions[i](open);
             }
             else if(ImGui::IsItemHovered()){ 
                 ImGui::SetTooltip("%s",descriptions[i]);
-                //texture[i] = texturePressed;
-                buttonSize[i] = ImVec2(initButtonSize[0]*1.2,initButtonSize[1]*1.2);
+                texture[i] = texture_hover;
+                //gauntlet_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR_GLOW]);
             }
-            else{ buttonSize[i] = initButtonSize;}
+            else texture[i] = texture_init;
+
+            //ImGui::PopStyleVar();
             ImGui::PopStyleColor(3);
             ImGui::PopID();
-            //else texture[i] = prev;
-        }
-        //ImGui::PopStyleVar(2);
 
+        }
+
+        for(int i = 0; i < N_BUTTONS; i++){
+            ImVec2 offset(buttonSize.x/2 - (text_buttons[i].size()/2)*ImGui::GetFontSize(), buttonSize.y/2 - ImGui::GetFontSize());
+            ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize()*2.0f, ImVec2(text_pos[i].x+offset.x,text_pos[i].y+offset.y), IM_COL32(255,255,255,255), text_buttons[i].c_str());
+        }
+        
         //SERVER LIST MODAL
        if(m_multiplayer){
             ImGui::OpenPopup("Server list");
@@ -361,17 +396,6 @@ void MainMenu::Update(bool* open, float deltaTime){
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();
-
-        //NOTIFICATIONS TEST
-        /*
-        if(ImGui::GetTime() > 5 && f1) {gui_engine->MakeTemporalNotification("dentro del pecho"); f1 = false;}
-        if(ImGui::GetTime() > 6 && f2) {gui_engine->MakeTemporalNotification("hay algo que hace pom pom");f2 = false;}
-        if(ImGui::GetTime() > 6 && f6) {gui_engine->MakeCustomNotification("custom popup (10s)", 10);f6 = false;}
-        if(ImGui::GetTime() > 6 && f7) {gui_engine->ShowDeathMessage("Florbo", 10); f7 = false;}
-        if(ImGui::GetTime() > 7 && f3) {gui_engine->MakeTemporalNotification("pom\n pom\n pom\n pom\n");f3 = false;}
-        if(ImGui::GetTime() > 8 && f4) {gui_engine->MakeTemporalNotification("si se te para");f4 = false;}
-        if(ImGui::GetTime() > 9 && f5) {gui_engine->MakeTemporalNotification("ya puedes decir adios");f5 = false;}      
-        */
     }
 }
 

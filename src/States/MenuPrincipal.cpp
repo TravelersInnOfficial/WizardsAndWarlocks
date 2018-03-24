@@ -46,11 +46,12 @@ void MenuPrincipal::Update(float deltaTime){
 
 void MenuPrincipal::Draw(){
 	g_engine->BeginDraw();
+	MenuManager::GetInstance()->Draw();
 	if(bkg == nullptr){
 		toe::core::TOEvector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
 		bkg = toe::AddSprite("./../assets/textures/GUI/Menus/MainMenu/background.png",toe::core::TOEvector2df(0,0), dims);
+		bkg->ToBkg();
 	}
-	MenuManager::GetInstance()->Draw();
 	g_engine->EndDraw();
 	
 

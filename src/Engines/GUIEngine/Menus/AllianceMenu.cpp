@@ -2,6 +2,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/PlayerManager.h"
+#include <Assets.h>
 
 AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
@@ -12,6 +13,7 @@ AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     buttonSize = ImVec2(120,60);
     m_style.WindowBorderSize = 1.0f;
     ImGui::GetIO().MouseDrawCursor = true;
+    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND]);
 }
 
 AllianceMenu::~AllianceMenu(){
@@ -46,6 +48,7 @@ void AllianceMenu::Update(bool* open, float deltaTime){
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
     else{
+        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(m_width,m_height));
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
