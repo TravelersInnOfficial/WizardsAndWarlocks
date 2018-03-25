@@ -17,7 +17,7 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	networkManager	= NetworkManager::GetInstance();
 
 	// Level
-	LevelLoader::LoadLevel("../assets/json/Map1.json");
+	LevelLoader::LoadLevel("../assets/json/map.json");
 
 	// Ponemos a true el inicio de la partida de los players
 	playerManager->ManageMatchStatus(true);
