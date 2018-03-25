@@ -2,6 +2,9 @@
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include "./../GUIEngine/GUIEngine.h"
 
+#include <ShaderTypes.h>
+#include <EntityTypes.h>
+
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
@@ -416,4 +419,8 @@ void GraphicEngine::EnableClipping(){
 
 void GraphicEngine::DisableClipping(){
 	privateDriver->DisableClipping();
+}
+
+void GraphicEngine::ChangeMeshShader(SHADERTYPE shader){
+	privateDriver->ChangeShader(shader, TMESH_ENTITY);
 }

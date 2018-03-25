@@ -66,7 +66,7 @@ Player::Player(bool isPlayer1){
 	currentSpell = 0;
 	numberSpells = 3;   // Rango de hechizos [0 a numberSpells]
 
-	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_EXPLOSIVE);
+	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_SPIRITS);
 	CreatePlayerCharacter(true);
 
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
@@ -862,10 +862,6 @@ void Player::HitMade(Player* player){
 	if(overlayManager != nullptr) overlayManager->SetTime(HITLANDED, 0.205);
 }
 
-void Player::ApplyFuzyEffect(){
-	if(overlayManager != nullptr) overlayManager->SetTime(FUZZY, 5.0f);
-}
-
 /********************************************************************************************************
  ****************************************** SOUND FUNCTIONS *********************************************
  ********************************************************************************************************/
@@ -1223,4 +1219,8 @@ void Player::SetRandomName(){
 	int index = rand() % arraySize;
 	std::string auxName = defaultNames[index];
 	SetName(auxName);
+}
+
+void Player::SetShader(SHADERTYPE shader){
+	m_playerNode->ChangeShader(shader);
 }

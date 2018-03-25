@@ -173,6 +173,10 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 			e = new DefenseUp(7.0f);
 		break;
 
+		case WEAK_FUZZY:
+			e = new Fuzzy(5.0f);
+		break;
+
 		/*
 		case POWERUP_ELEMDEFENSE:
 			e = new ElementUp(7.0f);
@@ -198,7 +202,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		case POWERUP_INVISIBLE:
 			e = new Invisible(5.0f);
 		break;
-		
+
 		default:
 			e = new Effect(5.0f, WEAK_BASIC);
 		break;

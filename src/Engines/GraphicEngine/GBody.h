@@ -40,6 +40,8 @@ public:
 
 	void SetInvisible();
 
+	void ChangeShader(SHADERTYPE shader);
+
 private:
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(TFMesh* node);

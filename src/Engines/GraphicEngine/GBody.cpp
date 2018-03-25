@@ -53,3 +53,7 @@ void GBody::AddText(std::string text, vector3df position, int id){
 void GBody::SetInvisible(){
 	((TFMesh*)privateNode)->SetInvisible();
 }
+
+void GBody::ChangeShader(SHADERTYPE shader){
+	((TFMesh*)privateNode)->SetProgram(shader);
+}
