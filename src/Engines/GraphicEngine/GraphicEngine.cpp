@@ -6,7 +6,6 @@ GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
 	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
-	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
 	privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 
@@ -18,8 +17,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 	m_actual_overlay = nullptr;
 	privateCamera = nullptr;
 
-	//privateDriver->EnableClipping();
-	//privateSManager->SetAmbientLight(toe::core::TOEvector3df(0.75f,0.75f,0.75f)){
+	privateDriver->EnableClipping();
+	privateSManager->SetAmbientLight(toe::core::TOEvector3df(0.45f,0.45f,0.45f));
 }
 
 GraphicEngine::~GraphicEngine(){
