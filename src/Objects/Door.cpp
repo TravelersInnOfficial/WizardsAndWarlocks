@@ -3,7 +3,9 @@
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
-	CreateDoor(TPosition, TScale, TRotation, TCenter);
+	TRotation.Y += 180;
+    CreateDoor(TPosition, TScale, TRotation, TCenter);
+
     min = TRotation.Y;
     max = TRotation.Y + 90;
     increment = -5;

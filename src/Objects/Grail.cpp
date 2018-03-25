@@ -16,12 +16,12 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	// Create graphic body loading mesh
-	m_grailNode = g_engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, vector3df(0,0,0), TScale);
+	m_grailNode = g_engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, TRotation, TScale);
 	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_grailNode) {
 		m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_grailNode->setMaterialTexture(0, "./../assets/textures/gold.jpg");
+        //m_grailNode->setMaterialTexture(0, "./../assets/textures/gold.jpg");
     }
 
 	//Bullet Physics
