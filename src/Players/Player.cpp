@@ -80,8 +80,6 @@ Player::Player(bool isPlayer1){
 	m_bar_widths = 0.0f;
 
 	Respawn();
-
-	if(m_camera != nullptr) m_camera->SetRotation(vector3df(0,180,0));
 }
 
 void Player::InitHUDBars(){
