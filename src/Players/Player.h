@@ -68,7 +68,6 @@ class Player: public Entidad{
 		void DrawOverlays();
 		bool CheckIfReady();
 		void Run(bool runningStatus);
-		void ApplyFuzyEffect();
 
 		virtual void InitGame();			// Metodo init de Game
 		virtual void RestartMatchStatus();	// Metodo init vuelta Lobby
@@ -142,6 +141,7 @@ class Player: public Entidad{
 		bool IsDead();
 
 		// Seters
+		void SetShader(SHADERTYPE shader);
 		void SetPosition(vector3df);
 		void SetPosX(float);
 		void SetPosY(float);

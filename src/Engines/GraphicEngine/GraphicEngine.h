@@ -253,6 +253,8 @@ public:
 
 	void DisableClipping();
 
+	void ChangeMeshShader(SHADERTYPE shader);
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;

@@ -151,7 +151,7 @@ void Trap::Activate(Player* player){
         break;
 
         case TENUM_SPIRITS:
-            player->ApplyFuzyEffect();
+            EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
             player->ChangeHP(-25);
         break;
 
@@ -190,7 +190,7 @@ void Trap::ForceEffect(Player* player){
         break;
 
         case TENUM_SPIRITS:
-            player->ApplyFuzyEffect();
+            EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
         break;
 
         case TENUM_SILENCE:

@@ -108,6 +108,16 @@ private:
 	std::vector<ACTION_ENUM> actions;
 };
 
+// FUZZY_EFFECT
+class Fuzzy: public Effect{
+public:
+	Fuzzy(float time);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
+private:
+
+};
+
 // ===============================================================================================//
 //
 //	BOTH EFFECTS

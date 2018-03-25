@@ -3,6 +3,8 @@
 #include "./../Players/HumanPlayer.h"
 #include <algorithm>    // std::random_shuffle
 
+#include <GraphicEngine/GraphicEngine.h>
+
 ////////////////////////////////////////////
 ///	WEAKENINGS 	////////////////////////////
 ////////////////////////////////////////////
@@ -61,7 +63,7 @@ void Frozen::createSoundEvent() {
 }
 
 //================================================================
-// terED
+// POISON
 //================================================================
 Poisoned::Poisoned(float time, float d):Effect(time, WEAK_POISONED){
 	createSoundEvent();
@@ -218,6 +220,23 @@ void DeathSnare::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Death Snare"); //MORTAL INMOVILITATION
 }
 
+//================================================================
+// FUZZY EFFECT
+//================================================================
+Fuzzy::Fuzzy(float time):Effect(time, WEAK_FUZZY){
+	createSoundEvent();
+}
+
+void Fuzzy::ApplyEffect(Player* p){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	g_engine->ChangeMeshShader(DISTORSION_SHADER);
+	p->SetShader(STANDARD_SHADER);
+}
+
+void Fuzzy::RemoveEffect(Player* p){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	g_engine->ChangeMeshShader(STANDARD_SHADER);
+}
 
 ////////////////////////////////////////////
 ///	UPGRADES 	////////////////////////////
