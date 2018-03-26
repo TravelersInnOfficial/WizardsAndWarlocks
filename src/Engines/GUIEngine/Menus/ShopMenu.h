@@ -61,7 +61,6 @@ private:
     ImTextureID texture_button;
     ImTextureID texture_hover;
     ImTextureID texture_pressed;
-    ImTextureID texture_slot;
 
     ImTextureID ospells_banner;
     ImTextureID dspells_banner;
@@ -73,7 +72,9 @@ private:
     ImTextureID* t_spelltexture[N_TSPELLS];
     ImTextureID* trap_texture[N_TRAPS];
 
-    ImTextureID* bkg;
+    TFSprite* bkg;
+    std::vector<ImVec2> slot_pos;
+    std::vector<TFSprite*> slots;
 
     std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
     std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS
@@ -99,8 +100,8 @@ private:
                                                 TEXTUREMAP[TEXTURE_SPELL_POISON_HUD].c_str(),
                                                 TEXTUREMAP[TEXTURE_SPELL_THUNDER_HUD].c_str()};
 
-    const char * d_spellLayouts[N_DSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_DEFENSE_HUD].c_str(),
-                                                TEXTUREMAP[TEXTURE_SPELL_UNTARGET_HUD].c_str()};
+    const char * d_spellLayouts[N_DSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_UNTARGET_HUD].c_str(),
+                                                TEXTUREMAP[TEXTURE_SPELL_DEFENSE_HUD].c_str()};
 
     const char * t_spellLayouts[N_TSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_CLEANSE_HUD].c_str(),
                                                 TEXTUREMAP[TEXTURE_SPELL_DUMMY_HUD].c_str(),

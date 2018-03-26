@@ -15,10 +15,11 @@ private:
     static const int N_BUTTONS = 2;
 
     ImVec2 buttonSize;
-    ImTextureID* bkg;
     
-    std::vector<std::string> buttonKeys = {"WIZARDS", "WARLOCKS"};
-    const char * descriptions[N_BUTTONS] = {"Get the grial back from the warlocks nasty claws!","Deploy traps and protect the grial from the wizards.. or just KILL EM ALL"};
+    TFSprite* bkg;
+
+    std::vector<std::string> buttonKeys = { "WARLOCKS","WIZARDS"};
+    const char * descriptions[N_BUTTONS] = {"Deploy traps and protect the grial from the wizards.. or just KILL EM ALL","Get the grial back from the warlocks nasty claws!"};
     
     ImTextureID tex_alliances_init[N_BUTTONS];
     ImTextureID tex_alliances[N_BUTTONS];
@@ -28,7 +29,7 @@ private:
     static void setPlayerWizard(bool*);
 
     typedef void (*METHOD_PTR)(bool*);
-    METHOD_PTR actions[N_BUTTONS] = {&AllianceMenu::setPlayerWizard,&AllianceMenu::setPlayerWarlock};
+    METHOD_PTR actions[N_BUTTONS] = {&AllianceMenu::setPlayerWarlock,&AllianceMenu::setPlayerWizard};
 
     static void closeMenu(bool*);
 };

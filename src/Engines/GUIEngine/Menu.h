@@ -7,7 +7,7 @@
 
 #include <IMGUI/imgui.h>
 #include <IMGUI/imgui_impl_glfw_gl3.h>
-
+class TFSprite;
 struct WindowOptions{
     bool no_titlebar = true;
     bool no_scrollbar = true;
@@ -33,6 +33,7 @@ public:
 
     void SetWidth(float);
     void SetHeight(float);
+    void UpdateCursor();
     
 protected:
     GUIEngine* gui_engine;
@@ -51,6 +52,11 @@ protected:
     float m_height;
     float screenWidth;
     float screenHeight;
+    float m_posX;
+    float m_posY;
+
+    TFSprite* m_cursor;
+    float m_fontSize;
 
     void CalculateFlags();
     static void closeMenu(bool*);

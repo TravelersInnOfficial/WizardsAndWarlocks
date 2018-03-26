@@ -54,7 +54,9 @@ private:
     ImTextureID texture_hover;
     ImTextureID texture_pressed;
     ImTextureID bkg;
-    TFSprite* gauntlet_cursor;
+    
+    ImTextureID title_texture;
+    ImVec2 titleSize;
 
     std::vector<std::string> text_buttons = {"Single Player",
                                             "Multiplayer",
@@ -68,7 +70,6 @@ private:
 
     void PrepareClient(bool proprietary = false);
     void PlaySound();
-    void UpdateCursor();
 
     static void SinglePlayer(bool*);
     static void MultiPlayer(bool*);

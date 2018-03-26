@@ -1,4 +1,6 @@
 #include "Menu.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <Assets.h>
 
 Menu::Menu(MenuType type){
     g_engine = GraphicEngine::getInstance();
@@ -10,6 +12,8 @@ Menu::Menu(MenuType type){
     m_height = 0;
     screenWidth = g_engine->GetScreenWidth();
     screenHeight = g_engine->GetScreenHeight();
+    m_cursor = nullptr;
+    m_fontSize = ImGui::GetFontSize();
 
     CalculateFlags();
 }
@@ -50,3 +54,20 @@ MenuType* Menu::GetType(){return &m_type;}
 
 void Menu::SetWidth(float w){m_width = w;}
 void Menu::SetHeight(float h){m_height = h;}
+
+void Menu::UpdateCursor(){
+    toe::core::TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+    if(m_cursor == nullptr){
+        toe::core::TOEvector2df d = toe::core::TOEvector2df(cursor_dims.X,cursor_dims.Y);
+        m_cursor = toe::AddSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR],toe::core::TOEvector2df(0,0),d);
+        m_cursor->ToFront();
+    }else{
+        ImVec2 mouse = ImGui::GetMousePos();
+        if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
+            toe::core::TOEvector2df pos = m_cursor->GetPosition();
+            if(pos.X != mouse[0]-cursor_dims.X/2 || pos.Y != screenHeight-cursor_dims.Y-mouse[1]){
+                m_cursor->SetPosition(mouse[0]-cursor_dims.X/2,screenHeight-cursor_dims.Y-mouse[1]);
+            }
+        }
+    }
+}

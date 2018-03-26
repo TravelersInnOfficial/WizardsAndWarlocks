@@ -33,6 +33,9 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     texture_hover = (void*) toe::GetTextureID(button_hover_layout);
     texture_pressed = (void*) toe::GetTextureID(button_pressed_layout);
     bkg = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
+    title_texture = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MENU_TITLE]);
+    toe::core::TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_MENU_TITLE]);
+    titleSize = ImVec2(t_dims.X/1.6,t_dims.Y/1.5);
     
     toe::core::TOEvector2di dims = toe::GetTextureDims(button_layout);
 
@@ -41,16 +44,16 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
 
     //WIDGET SIZE
     m_width = dims.X + 30;
-    m_height = dims.Y * N_BUTTONS + 50;
+    m_height = dims.Y * N_BUTTONS + 50 + titleSize.y;
     netSeeker = new NetSeeker();
     
-    gauntlet_cursor = nullptr;
+    m_fontSize = 0;
 }
 
 MainMenu::~MainMenu(){
     delete netSeeker;
-    gauntlet_cursor->Erase();
-    gauntlet_cursor = nullptr;
+    m_cursor->Erase();
+    m_cursor = nullptr;
 }
 
 void MainMenu::Close(bool* open){
@@ -75,22 +78,6 @@ void MainMenu::GameOptions(bool * open){
 void MainMenu::ExitGame(bool * open){
     m_exit = true;
 }
-void MainMenu::UpdateCursor(){
-    toe::core::TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
-    if(gauntlet_cursor == nullptr){
-        toe::core::TOEvector2df d = toe::core::TOEvector2df(cursor_dims.X,cursor_dims.Y);
-        gauntlet_cursor = toe::AddSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR],toe::core::TOEvector2df(0,0),d);
-        gauntlet_cursor->ToFront();
-    }else{
-        ImVec2 mouse = ImGui::GetMousePos();
-        if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
-            toe::core::TOEvector2df pos = gauntlet_cursor->GetPosition();
-            if(pos.X != mouse[0]-cursor_dims.X/2 || pos.Y != screenHeight-cursor_dims.Y-mouse[1]){
-                gauntlet_cursor->SetPosition(mouse[0]-cursor_dims.X/2,screenHeight-cursor_dims.Y-mouse[1]);
-            }
-        }
-    }
-}
 
 void MainMenu::Update(bool* open, float deltaTime){
     netSeeker->Update(deltaTime);
@@ -104,6 +91,7 @@ void MainMenu::Update(bool* open, float deltaTime){
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
         std::vector<ImVec2> text_pos;
+        ImGui::Image(title_texture,titleSize);
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
             
@@ -123,13 +111,13 @@ void MainMenu::Update(bool* open, float deltaTime){
             else if(ImGui::IsItemHovered()){ 
                 ImGui::SetTooltip("%s",descriptions[i]);
                 texture[i] = texture_hover;
-                //gauntlet_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR_GLOW]);
+                //m_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR_GLOW]);
             }
             else{
                 texture[i] = texture_init;
                 /*
-                if(gauntlet_cursor->GetTexture()!=TEXTUREMAP[TEXTURE_GUI_CURSOR]){
-                        gauntlet_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+                if(m_cursor->GetTexture()!=TEXTUREMAP[TEXTURE_GUI_CURSOR]){
+                        m_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
                         std::cout<<"changing cursor texture\n";
                 }
                 */
@@ -141,8 +129,9 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         for(int i = 0; i < N_BUTTONS; i++){
-            ImVec2 offset(buttonSize.x/2 - (text_buttons[i].size()/2)*ImGui::GetFontSize(), buttonSize.y/2 - ImGui::GetFontSize());
-            ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize()*2.0f, ImVec2(text_pos[i].x+offset.x,text_pos[i].y+offset.y), IM_COL32(255,255,255,255), text_buttons[i].c_str());
+            if(m_fontSize == 0) m_fontSize = ImGui::GetFontSize()*2.0f;
+            ImVec2 offset((buttonSize.x - (text_buttons[i].size()/2*m_fontSize))/2, buttonSize.y/2 - m_fontSize/2);
+            ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), m_fontSize, ImVec2(text_pos[i].x+offset.x,text_pos[i].y+offset.y), IM_COL32(255,255,255,255), text_buttons[i].c_str());
         }
         
         //SERVER LIST MODAL

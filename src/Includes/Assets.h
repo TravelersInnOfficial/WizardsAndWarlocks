@@ -78,7 +78,8 @@ enum GAMETEXTURES {
 	TEXTURE_yellow,
 	TEXTURE_madera,
 	TEXTURE_BOOK_BACKGROUND,
-	TEXTURE_PAPER_BACKGROUND,
+	TEXTURE_SHOP_BACKGROUND,
+	TEXTURE_ALLIANCE_BACKGROUND,
 	TEXTURE_BUTTON,
 	TEXTURE_BUTTON_HOVER,
 	TEXTURE_BUTTON_PRESSED,
@@ -92,7 +93,8 @@ enum GAMETEXTURES {
 	TEXTURE_OSPELLS_BANNER,
 	TEXTURE_DSPELLS_BANNER,
 	TEXTURE_TSPELLS_BANNER,
-	TEXTURE_TRAPS_BANNER
+	TEXTURE_TRAPS_BANNER,
+	TEXTURE_MENU_TITLE
 };
 
 enum GAMEMESHES {
@@ -189,8 +191,9 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_BUTTON]						= "./../assets/textures/GUI/Menus/Common/button.png";
 	m[TEXTURE_BUTTON_HOVER]					= "./../assets/textures/GUI/Menus/Common/button_hover.png";
 	m[TEXTURE_BUTTON_PRESSED]				= "./../assets/textures/GUI/Menus/Common/button_pressed.png";
-	m[TEXTURE_PAPER_BACKGROUND]				= "./../assets/textures/GUI/Menus/Common/paper_background.png";
+	m[TEXTURE_SHOP_BACKGROUND]				= "./../assets/textures/GUI/Menus/ShopMenu/shop_background.png";
 	m[TEXTURE_SHOP_SLOT]					= "./../assets/textures/GUI/Menus/ShopMenu/slot.png";
+	m[TEXTURE_ALLIANCE_BACKGROUND]			= "./../assets/textures/GUI/Menus/AllianceMenu/alliance_background.png";
 	m[TEXTURE_BOOK_BACKGROUND]				= "./../assets/textures/GUI/Menus/MainMenu/book_background.png";
 	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
 	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
@@ -202,6 +205,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_DSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/defensive_spells_banner.png";
 	m[TEXTURE_TSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/tactic_spells_banner.png";
 	m[TEXTURE_TRAPS_BANNER]					= "./../assets/textures/GUI/Menus/ShopMenu/traps_banner.png";
+	m[TEXTURE_MENU_TITLE]					= "./../assets/textures/GUI/Menus/MainMenu/titulo.png";
 
 	return m;
 };

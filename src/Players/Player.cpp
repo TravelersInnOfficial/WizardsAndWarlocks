@@ -106,13 +106,13 @@ void Player::InitHUDBars(){
 		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS)));
 		
 		m_hp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-		m_hp_bar->SetColor(1,0,0);
+		m_hp_bar->SetColor(0.9,0.2,0);
 		
 		m_mp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-		m_mp_bar->SetColor(0,0,1);
+		m_mp_bar->SetColor(0,0.5,1);
 		
 		m_sp_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
-		m_sp_bar->SetColor(1,1,0);
+		m_sp_bar->SetColor(0.5,0.5,0.5);
 
 		m_bar_widths =  m_hp_bar->GetWidth();
 	}
