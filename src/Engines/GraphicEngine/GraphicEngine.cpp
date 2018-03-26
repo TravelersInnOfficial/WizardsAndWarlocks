@@ -8,10 +8,16 @@
 GraphicEngine::GraphicEngine(bool isServer){
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
+	
+	if(isServer){
+		privateDriver->CreateWindows("Wizards&Warlocks", toe::core::TOEvector2di(1,1), false);
+		privateDriver->Minimize();
+	}
+	else
 	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
 	privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
+	
 	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
-
 	privateSManager = privateDriver->GetSceneManager();
 
 	privateReceiver = new EventReceiver();
