@@ -7,13 +7,26 @@
 AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
 
-    m_width = screenWidth/5;
-    m_height = screenHeight/2;
+    m_width = screenWidth/6.5;
+    m_height = screenHeight/4;
 
-    buttonSize = ImVec2(120,60);
-    m_style.WindowBorderSize = 1.0f;
+    m_style.WindowBorderSize = 0.0f;
+    m_style.FrameBorderSize = 0.0f;
+    
     ImGui::GetIO().MouseDrawCursor = true;
-    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND]);
+    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_PAPER_BACKGROUND]);
+
+    tex_alliances_init[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+    tex_alliances_init[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
+
+    tex_alliances[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+    tex_alliances[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
+
+    tex_alliances_hover[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE_HOVER]);
+    tex_alliances_hover[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE_HOVER]);
+
+    toe::core::TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+    buttonSize = ImVec2(dims.X,dims.Y);
 }
 
 AllianceMenu::~AllianceMenu(){
@@ -44,20 +57,41 @@ void AllianceMenu::setPlayerWizard(bool* open){
 
 void AllianceMenu::Update(bool* open, float deltaTime){
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight/2 - m_height/2));
+    ImGui::SetNextWindowBgAlpha(0.0f);
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
     else{
-        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(m_width,m_height));
+        ImVec2 text_pos;
+        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(screenWidth,screenHeight));
         ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,5));
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
-            if(ImGui::Button(buttonKeys[i], buttonSize)){
+
+            ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+            ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+
+            text_pos = ImGui::GetCursorScreenPos();
+            if(ImGui::ImageButton(tex_alliances[i], buttonSize)){
                 actions[i](open);
             }
+
+            ImGui::PopStyleColor(3);
             ImGui::PopID();
             
-            if (ImGui::IsItemHovered()) ImGui::SetTooltip("%s",descriptions[i]);
+            if (ImGui::IsItemHovered()){
+                ImGui::SetTooltip("%s",descriptions[i]);
+                tex_alliances[i] = tex_alliances_hover[i];
+            }
+            else{
+                tex_alliances[i] = tex_alliances_init[i];
+            }
+
+            
+            ImVec2 offset(buttonSize.x/2 - (buttonKeys[i].size()/2)*ImGui::GetFontSize(), buttonSize.y/2 - ImGui::GetFontSize());
+            ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize()*2.0f, ImVec2(text_pos.x+offset.x,text_pos.y+offset.y), IM_COL32(255,255,255,255), buttonKeys[i].c_str());
+            
         }
 
         //HELP WINDOWS

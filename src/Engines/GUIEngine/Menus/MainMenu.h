@@ -43,9 +43,9 @@ private:
     std::vector<ServerData> serverList;
     static int m_selected_server;
     
-    const char * button_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON].c_str();
-    const char * button_hover_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON_HOVER].c_str();
-    const char * button_pressed_layout = TEXTUREMAP[TEXTURE_MAINMENU_BUTTON_PRESSED].c_str();
+    const char * button_layout = TEXTUREMAP[TEXTURE_BUTTON].c_str();
+    const char * button_hover_layout = TEXTUREMAP[TEXTURE_BUTTON_HOVER].c_str();
+    const char * button_pressed_layout = TEXTUREMAP[TEXTURE_BUTTON_PRESSED].c_str();
     
     //In this binding, ImTextureID is used to store an OpenGL 'GLuint' texture identifier.
     //ImTextureID texture = (void*) GLuint;

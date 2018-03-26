@@ -17,8 +17,12 @@ private:
     ImVec2 buttonSize;
     ImTextureID* bkg;
     
-    const char * buttonKeys[N_BUTTONS] = {"WIZARDS", "WARLOCKS"};
-    const char * descriptions[N_BUTTONS] ={"Get the grial back from the warlocks nasty claws!","Deploy traps and protect the grial from the wizards.. or just KILL EM ALL"};
+    std::vector<std::string> buttonKeys = {"WIZARDS", "WARLOCKS"};
+    const char * descriptions[N_BUTTONS] = {"Get the grial back from the warlocks nasty claws!","Deploy traps and protect the grial from the wizards.. or just KILL EM ALL"};
+    
+    ImTextureID tex_alliances_init[N_BUTTONS];
+    ImTextureID tex_alliances[N_BUTTONS];
+    ImTextureID tex_alliances_hover[N_BUTTONS];
 
     static void setPlayerWarlock(bool*);
     static void setPlayerWizard(bool*);

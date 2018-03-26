@@ -49,8 +49,7 @@ void MenuPrincipal::Draw(){
 	MenuManager::GetInstance()->Draw();
 	if(bkg == nullptr){
 		toe::core::TOEvector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
-		bkg = toe::AddSprite("./../assets/textures/GUI/Menus/MainMenu/background.png",toe::core::TOEvector2df(0,0), dims);
-		bkg->ToBkg();
+		bkg = toe::AddSprite("./../assets/textures/GUI/Menus/MainMenu/book_background.png",toe::core::TOEvector2df(0,0), dims);
 	}
 	g_engine->EndDraw();
 	

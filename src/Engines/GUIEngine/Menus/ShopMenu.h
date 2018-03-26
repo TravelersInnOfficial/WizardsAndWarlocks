@@ -26,7 +26,7 @@ private:
     void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<SPELLCODE>, std::map<ImTextureID*, SPELLCODE>*);
     void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<TrapEnum>,  std::map<ImTextureID*, TrapEnum>*);
     void load_sockets(const char* id,const char* type, int total, int cols, std::vector<ImTextureID*> &items_selected);
-    void load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[]);
+    void load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[], ImTextureID category_banner, std::string banner_text);
    
     void ChangeSpell(int pos, SPELLCODE sEnum);
     void ChangeTrap(TrapEnum tEnum);
@@ -51,9 +51,22 @@ private:
     char KEY_2 = '2';
     char KEY_3 = '3';
 
-    ImVec2 buttonSize;                  //MENU BUTTONS SIZE
+    ImVec2 itemSize;                    //MENU ITEMS SIZE
+    ImVec2 buttonSize;                  //MENU BUTTON SIZE
+    ImVec2 bannerSize;                  //MENU BANNER SIZE
     ImGuiDragDropFlags imgui_ddflags;   //DRAG N DROP IMGUI FLAGS
     DDFlags ddflags;                    //DRAG N DROP PRIVATE FLAGS
+
+    ImTextureID texture_init;
+    ImTextureID texture_button;
+    ImTextureID texture_hover;
+    ImTextureID texture_pressed;
+    ImTextureID texture_slot;
+
+    ImTextureID ospells_banner;
+    ImTextureID dspells_banner;
+    ImTextureID tspells_banner;
+    ImTextureID traps_banner;
 
     ImTextureID* o_spelltexture[N_OSPELLS];
     ImTextureID* d_spelltexture[N_DSPELLS];
@@ -77,6 +90,8 @@ private:
 
     std::map<ImTextureID*,SPELLCODE> spells_map;
     std::map<ImTextureID*,TrapEnum> traps_map;
+
+    std::vector<std::string> banner_text;
 
 //TEXTURES
     const char * o_spellLayouts[N_OSPELLS] = {  TEXTUREMAP[TEXTURE_SPELL_BLIZZARD_HUD].c_str(),

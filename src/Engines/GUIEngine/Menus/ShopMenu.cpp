@@ -16,7 +16,8 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     m_width = screenWidth/1.3;
     m_height = screenHeight/1.05;
 
-    m_style.WindowBorderSize = 1.0f;
+    m_style.WindowBorderSize = 0.0f;
+    m_style.FrameBorderSize = 0.0f;
     ImGui::GetIO().MouseDrawCursor = true;
 
     hp = PlayerManager::GetInstance()->GetPlayerOne();
@@ -26,8 +27,9 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     load_imagesid(N_TSPELLS, t_spellLayouts, t_spelltexture, t_spells_codes, &spells_map);
     load_imagesid(N_TRAPS, trapLayouts, trap_texture, traps_codes, &traps_map);
 
-    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND]);
-    buttonSize = ImVec2(screenWidth/16,screenWidth/16);
+    bkg = (ImTextureID*) toe::GetTextureID(TEXTUREMAP[TEXTURE_PAPER_BACKGROUND]);
+    toe::core::TOEvector2di b_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_BLIZZARD_HUD]);
+    itemSize = ImVec2(b_dims.X/7,b_dims.Y/7);
 
     imgui_ddflags = 0;
     if (ddflags.parentNullID)  imgui_ddflags |= ImGuiDragDropFlags_SourceAllowNullID;
@@ -51,6 +53,22 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
             break;
         }
     }
+
+    ospells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_OSPELLS_BANNER]);
+    dspells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_DSPELLS_BANNER]);
+    tspells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_TSPELLS_BANNER]);
+    traps_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_TRAPS_BANNER]);
+    toe::core::TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_BUTTON]);
+    bannerSize = ImVec2(dims.X,dims.Y/3);
+
+    texture_init = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
+    texture_button = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
+    texture_hover = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_HOVER]);
+    texture_pressed = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_PRESSED]);
+    texture_slot = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_SHOP_SLOT]);
+
+    dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_BUTTON]);
+    buttonSize = ImVec2(dims.X,dims.Y);
 
     selected = nullptr;
 }
@@ -86,7 +104,9 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
     for(int i = 0; i<total ;i++){
         ImGui::PushID(i);
         if(i == focused_button && type != TYPE_TRAP) ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(7.0f, 0.6f, 0.6f));
-        if(ImGui::ImageButton( items_selected[i],buttonSize)){
+
+        ImGui::ImageButton(items_selected[i],itemSize);
+        if(ImGui::IsItemActive()){
             if(type == TYPE_SPELL) next_focused = i;
         }
         if(i == focused_button && type != TYPE_TRAP) ImGui::PopStyleColor();
@@ -117,11 +137,27 @@ void ShopMenu::load_sockets(const char* id,const char* type, int total, int cols
     ImGui::Separator();
 }
 
-void ShopMenu::load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[]){
+void ShopMenu::load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[], ImTextureID category_banner, std::string banner_text){
+    //ImGui::Text("Spell Type Here");
+    ImVec2 banner_text_pos = ImGui::GetCursorScreenPos();
+    ImGui::Image(category_banner,bannerSize);
     ImGui::Columns(cols, id, false);
+    std::vector<ImVec2> pos;
+
     for(int i = 0; i<total; i++){
+
         ImGui::PushID(i);
-        if(ImGui::ImageButton( texture[i],buttonSize)){
+        //NEXT BUTTON STYLE
+        //ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+        //ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+        //ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+
+        //ImGui::Image(texture_slot,itemSize);
+        //std::cout<<"slot_position:\t("<<pos.x<<","<<pos.y<<") \n size:\t("<<itemSize.x<<","<<itemSize.y<<"\n";
+        
+        pos.push_back(ImGui::GetCursorScreenPos());
+        
+        if(ImGui::ImageButton(texture[i], ImVec2(itemSize.x/1.2,itemSize.y/1.2))){
             selected = texture[i];
 
             if(!already_selected(selected_spells)){
@@ -137,11 +173,13 @@ void ShopMenu::load_items(const char* id,const char* type, int total, int cols, 
             }
             else if(type == TYPE_SPELL && selected_spells[focused_button] == selected) next_focused_button();
         }
+
+        //ImGui::PopStyleColor(3);
         ImGui::PopID();
         
         if(ImGui::BeginDragDropSource()){
             ImGui::SetDragDropPayload(type, &texture[i], sizeof(ImTextureID), ImGuiCond_Once);
-            ImGui::Image(texture[i],buttonSize);
+            ImGui::Image(texture[i],itemSize);
             selected = texture[i];
             ImGui::EndDragDropSource();
         }
@@ -155,28 +193,58 @@ void ShopMenu::load_items(const char* id,const char* type, int total, int cols, 
         }
         ImGui::NextColumn();
     }
+    //for(int i = 0;i<pos.size();i++) ImGui::GetWindowDrawList()->AddImage(texture_slot,pos[i],itemSize);
     ImGui::Columns(1);
     ImGui::Separator();
+    ImVec2 offset(bannerSize.x/2 - (banner_text.size()/2)*ImGui::GetFontSize(), bannerSize.y/2 - ImGui::GetFontSize());
+    ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize()*1.5f, ImVec2(banner_text_pos.x+offset.x,banner_text_pos.y+offset.y), IM_COL32(255,255,255,255), banner_text.c_str());
+    
 }
 
 void ShopMenu::Update(bool* open, float deltaTime){
+    //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight/2 - m_height/2));
+    ImGui::SetNextWindowBgAlpha(0.0f);
 
+    ImVec2 close_text_pos;
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
     else{
-        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(m_width,m_height));
+        ImGui::GetWindowDrawList()->AddImage(bkg,ImVec2(0,0),ImVec2(screenWidth,screenHeight));
+        
         load_sockets("selected_items_columns",TYPE_SPELL,(N_SPELL_SOCKETS-1),3, selected_spells);
         load_sockets("selected_items_columns",TYPE_TRAP,N_TRAP_SOCKETS,1, selected_trap);
 
-        load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spelltexture, o_spellKeys, o_spell_descriptions);
-        load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spelltexture, d_spellKeys, d_spell_descriptions);
-        load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spelltexture, t_spellKeys, t_spell_descriptions);
-        load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_texture, trapKeys, trap_descriptions); 
+        ImGui::BeginChild("##list-of-items",ImVec2(0,screenHeight/1.7));
         
-        if(ImGui::Button("Close",ImVec2(100,50))){
+        load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, 4, o_spelltexture, o_spellKeys, o_spell_descriptions, ospells_banner, "Ofensive Spells");
+        load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, 4, d_spelltexture, d_spellKeys, d_spell_descriptions, dspells_banner, "Defensive Spells");
+        load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, 4, t_spelltexture, t_spellKeys, t_spell_descriptions, tspells_banner, "Tactic Spells");
+        load_items("traps_columns", TYPE_TRAP, N_TRAPS, 3, trap_texture, trapKeys, trap_descriptions, traps_banner, "Traps"); 
+        
+        ImGui::EndChild();
+
+        close_text_pos = ImGui::GetCursorScreenPos();
+
+        //NEXT BUTTON STYLE
+        ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+        ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
+
+        ImGui::ImageButton(texture_button,buttonSize);
+        if(ImGui::IsItemActive()){
+            texture_button = texture_pressed;
             closeMenu(open);
         }
+        else if(ImGui::IsItemHovered()){ 
+            texture_button = texture_hover;
+        }
+        else{
+            texture_button = texture_init;
+        }
+        
+        ImGui::PopStyleColor(3);
+
         if(ImGui::IsKeyPressed(KEY_3)) set_focused_button(2);
         if(ImGui::IsKeyPressed(KEY_2)) set_focused_button(1);
         if(ImGui::IsKeyPressed(KEY_1)) set_focused_button(0);
@@ -184,6 +252,10 @@ void ShopMenu::Update(bool* open, float deltaTime){
         //HELP WINDOWS
         //ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
+        
+        ImVec2 offset(buttonSize.x/2 - (5/2)*ImGui::GetFontSize(), buttonSize.y/2 - ImGui::GetFontSize());
+        ImGui::GetWindowDrawList()->AddText(ImGui::GetFont(), ImGui::GetFontSize()*2.0f, ImVec2(close_text_pos.x+offset.x,close_text_pos.y+offset.y), IM_COL32(255,255,255,255), "Close");
+
 
         ImGui::End();
     }

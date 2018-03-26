@@ -21,8 +21,8 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     m_some_selected = false;
 
     //WIDGET STYLE
-    m_style.WindowBorderSize = 1.0f; //widget border size
-    m_style.FrameBorderSize = 1.0f;
+    m_style.WindowBorderSize = 0.0f; //widget border size
+    m_style.FrameBorderSize = 0.0f;
     
     //ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     //BUTTONS DATA
@@ -32,7 +32,7 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     }
     texture_hover = (void*) toe::GetTextureID(button_hover_layout);
     texture_pressed = (void*) toe::GetTextureID(button_pressed_layout);
-    bkg = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MAINMENU_BACKGROUND].c_str());
+    bkg = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
     
     toe::core::TOEvector2di dims = toe::GetTextureDims(button_layout);
 
@@ -80,6 +80,7 @@ void MainMenu::UpdateCursor(){
     if(gauntlet_cursor == nullptr){
         toe::core::TOEvector2df d = toe::core::TOEvector2df(cursor_dims.X,cursor_dims.Y);
         gauntlet_cursor = toe::AddSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR],toe::core::TOEvector2df(0,0),d);
+        gauntlet_cursor->ToFront();
     }else{
         ImVec2 mouse = ImGui::GetMousePos();
         if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
@@ -94,32 +95,26 @@ void MainMenu::UpdateCursor(){
 void MainMenu::Update(bool* open, float deltaTime){
     netSeeker->Update(deltaTime);
     UpdateCursor();
+
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight/2 - m_height/2));
-    //ImGui::SetNextWindowSize(ImVec2(screenWidth,screenHeight));//sets the size of the next window
-    //ImGui::SetNextWindowPos(ImVec2(0,0));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
-        //ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0,20)); //widget items spacing
-
         std::vector<ImVec2> text_pos;
         for(int i = 0; i<N_BUTTONS; i++){
             ImGui::PushID(i);
             
             //NEXT BUTTON STYLE
-            //ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(100,100));
             ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
 
-
             text_pos.push_back(ImGui::GetCursorScreenPos());
             
             ImGui::ImageButton(texture[i],buttonSize);
-            
             if(ImGui::IsItemActive()){
                 texture[i] = texture_pressed;
                 PlaySound();
@@ -130,9 +125,16 @@ void MainMenu::Update(bool* open, float deltaTime){
                 texture[i] = texture_hover;
                 //gauntlet_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR_GLOW]);
             }
-            else texture[i] = texture_init;
+            else{
+                texture[i] = texture_init;
+                /*
+                if(gauntlet_cursor->GetTexture()!=TEXTUREMAP[TEXTURE_GUI_CURSOR]){
+                        gauntlet_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+                        std::cout<<"changing cursor texture\n";
+                }
+                */
+            }
 
-            //ImGui::PopStyleVar();
             ImGui::PopStyleColor(3);
             ImGui::PopID();
 

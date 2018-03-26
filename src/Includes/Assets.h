@@ -77,12 +77,22 @@ enum GAMETEXTURES {
 	TEXTURE_negro,
 	TEXTURE_yellow,
 	TEXTURE_madera,
-	TEXTURE_MAINMENU_BACKGROUND,
-	TEXTURE_MAINMENU_BUTTON,
-	TEXTURE_MAINMENU_BUTTON_HOVER,
-	TEXTURE_MAINMENU_BUTTON_PRESSED,
+	TEXTURE_BOOK_BACKGROUND,
+	TEXTURE_PAPER_BACKGROUND,
+	TEXTURE_BUTTON,
+	TEXTURE_BUTTON_HOVER,
+	TEXTURE_BUTTON_PRESSED,
 	TEXTURE_GUI_CURSOR,
-	TEXTURE_GUI_CURSOR_GLOW
+	TEXTURE_GUI_CURSOR_GLOW,
+	TEXTURE_SHOP_SLOT,
+	TEXTURE_WARLOCK_ALLIANCE,
+	TEXTURE_WIZARD_ALLIANCE,
+	TEXTURE_WARLOCK_ALLIANCE_HOVER,
+	TEXTURE_WIZARD_ALLIANCE_HOVER,
+	TEXTURE_OSPELLS_BANNER,
+	TEXTURE_DSPELLS_BANNER,
+	TEXTURE_TSPELLS_BANNER,
+	TEXTURE_TRAPS_BANNER
 };
 
 enum GAMEMESHES {
@@ -176,12 +186,22 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
 	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
 	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
-	m[TEXTURE_MAINMENU_BUTTON]				= "./../assets/textures/GUI/Menus/MainMenu/button.png";
-	m[TEXTURE_MAINMENU_BUTTON_HOVER]		= "./../assets/textures/GUI/Menus/MainMenu/button_hover.png";
-	m[TEXTURE_MAINMENU_BUTTON_PRESSED]		= "./../assets/textures/GUI/Menus/MainMenu/button_pressed.png";
-	m[TEXTURE_MAINMENU_BACKGROUND]			= "./../assets/textures/GUI/Menus/MainMenu/background.png";
+	m[TEXTURE_BUTTON]						= "./../assets/textures/GUI/Menus/Common/button.png";
+	m[TEXTURE_BUTTON_HOVER]					= "./../assets/textures/GUI/Menus/Common/button_hover.png";
+	m[TEXTURE_BUTTON_PRESSED]				= "./../assets/textures/GUI/Menus/Common/button_pressed.png";
+	m[TEXTURE_PAPER_BACKGROUND]				= "./../assets/textures/GUI/Menus/Common/paper_background.png";
+	m[TEXTURE_SHOP_SLOT]					= "./../assets/textures/GUI/Menus/ShopMenu/slot.png";
+	m[TEXTURE_BOOK_BACKGROUND]				= "./../assets/textures/GUI/Menus/MainMenu/book_background.png";
 	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
 	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
+	m[TEXTURE_WARLOCK_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance.png";
+	m[TEXTURE_WIZARD_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/wizard_alliance.png";
+	m[TEXTURE_WARLOCK_ALLIANCE_HOVER]		= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance_hover.png";
+	m[TEXTURE_WIZARD_ALLIANCE_HOVER]		= "./../assets/textures/GUI/Menus/AllianceMenu/wizard_alliance_hover.png";
+	m[TEXTURE_OSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/ofensive_spells_banner.png";
+	m[TEXTURE_DSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/defensive_spells_banner.png";
+	m[TEXTURE_TSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/tactic_spells_banner.png";
+	m[TEXTURE_TRAPS_BANNER]					= "./../assets/textures/GUI/Menus/ShopMenu/traps_banner.png";
 
 	return m;
 };
