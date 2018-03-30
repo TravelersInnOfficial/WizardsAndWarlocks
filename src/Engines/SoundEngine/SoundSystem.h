@@ -39,10 +39,15 @@ public:
      *  Modifies the general volume of the engine
      ******************************************************/
     void setVolume(float vol);
+
+    /******************************************************
+     *  Returns the general volume of the engine
+     ******************************************************/
+    float getVolume();
     
     /******************************************************
      *  @brief Modifies the vca volume
-     *  @param string name of the vca
+     *  @param string name of the vca (Music, SFX, Voices)
      *  @param vol Volume required
      ******************************************************/
     void setVolumeVCA(std::string name, float vol);

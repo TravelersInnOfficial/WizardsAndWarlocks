@@ -2,6 +2,7 @@
 #include "./../Managers/StateManager.h"
 #include <vector2d.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <SoundEngine/SoundSystem.h>
 
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;
@@ -348,11 +349,61 @@ void MainMenu::Update(bool* open, float deltaTime){
         //OPTIONS MODAL
         if(m_options){
             ImGui::OpenPopup("Options");
+            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
             if(!ImGui::BeginPopupModal("Options",nullptr,popup_flags)) ImGui::EndPopup();
             else{
-                ImGui::Text("SOON\n\n");
+                ImGui::Text("Sound Options");
                 ImGui::Separator();
-                if(ImGui::Button("OK", pu_buttonSize)){
+                ImGui::Text("\nVolume:\n");
+                
+                static float master = SoundSystem::getInstance()->getVolume();
+                static float music = SoundSystem::getInstance()->getVolumeVCA("Music");
+                static float sfx = SoundSystem::getInstance()->getVolumeVCA("SFX");
+                static float voices = SoundSystem::getInstance()->getVolumeVCA("Voices");
+
+                master =master*10;
+                music =music*10;
+                sfx =sfx*10;
+                voices =voices*10;
+
+                ImGui::SliderFloat("Master", &master, 0.0f, 100.0f, "%.2f");
+                ImGui::SliderFloat("Music", &music, 0.0f, 100.0f, "%.2f");
+                ImGui::SliderFloat("SFX", &sfx, 0.0f, 100.0f, "%.2f");
+                ImGui::SliderFloat("Voices", &voices, 0.0f, 100.0f, "%.2f");
+
+                master =master/10;
+                music =music/10;
+                sfx =sfx/10;
+                voices =voices/10;
+
+                SoundSystem::getInstance()->setVolume(master);
+                SoundSystem::getInstance()->setVolumeVCA("Music",music);
+                SoundSystem::getInstance()->setVolumeVCA("SFX",sfx);
+                SoundSystem::getInstance()->setVolumeVCA("Voices",voices);
+                ImGui::Separator();
+
+                ImGui::Text("\nScreen Options");
+                ImGui::Separator();
+                static bool shadows = true, particles  = true;
+                ImGui::Checkbox("Shadows", &shadows);
+                ImGui::Checkbox("Particles", &particles);
+                ImGui::Separator();
+
+                ImGui::Text("\nAI Options");
+                ImGui::Separator();
+                static int wizard_ai=3, warlock_ai=3, total_ai=7;
+                ImGui::InputInt("Wizard AI", &wizard_ai);
+                ImGui::InputInt("Warlock AI", &warlock_ai);
+                if(wizard_ai<0) wizard_ai = 0;
+                else if(wizard_ai> total_ai-warlock_ai) wizard_ai = total_ai-warlock_ai;
+                
+                if(warlock_ai<0) warlock_ai = 0;
+                else if(warlock_ai> total_ai-wizard_ai) warlock_ai = total_ai-wizard_ai;
+
+
+                ImGui::Separator();
+
+                if(ImGui::Button("Close", pu_buttonSize)){
                     PlaySound();
                     ImGui::CloseCurrentPopup(); 
                     m_options = false;
@@ -383,7 +434,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         //HELP WINDOWS
-        //ImGui::ShowTestWindow();
+        ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();

@@ -103,7 +103,7 @@ void SoundSystem::createSystem(std::string soundBanksPath){
 	setForward(listener,vector3df(1.0f,0.0f,0.0f));
 	setUp(listener,vector3df(0.0f,1.0f,0.0f));
 
-	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 15.0f));
+	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, 10.0f));
 }
 
 /******************************************************
@@ -182,6 +182,16 @@ void SoundSystem::loadAvc(std::string path){
 void SoundSystem::setVolume(float vol) {
 	ERRCHECK(FMOD_Studio_Bus_SetVolume(busMaster, vol));
 }
+
+/******************************************************
+*  Returns the general volume of the engine
+******************************************************/
+float SoundSystem::getVolume() {
+	float vol, finalvol;
+	ERRCHECK(FMOD_Studio_Bus_GetVolume(busMaster, &vol, &finalvol));
+	return vol;
+}
+
 
 /******************************************************
  *  @brief Modifies the vca volume
