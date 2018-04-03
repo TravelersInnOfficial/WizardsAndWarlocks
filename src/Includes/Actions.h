@@ -19,7 +19,8 @@ enum ACTION_ENUM
 	ACTION_SELECT_SPELL_01		= 0x0D, 	// Cambiar el hechizo por el 1
 	ACTION_SELECT_SPELL_02		= 0x0E,		// Cambiar el hechizo por el 2
 	ACTION_SELECT_SPELL_03		= 0x0F,		// Cambiar el hechizo por el 3
-	ACTION_RUN					= 0x10		// Empezamos a Correr
+	ACTION_RUN					= 0x10,		// Empezamos a Correr
+	ACTION_SHOW_STATUS_MENU		= 0x11		// Mostramos el menu contextual	
 };
 
 #endif

@@ -62,6 +62,12 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			//CreateSeller(option);
 			break;
 		}
+		case(STATUS_M):{
+			open_menu = true;
+			currentMenu = new StatusMenu(type);
+			//currentMenu = new AllianceMenu(type);
+			break;
+		}
 		default:{
 			currentMenu = nullptr;
 			open_menu = false;
@@ -72,7 +78,7 @@ void MenuManager::CreateMenu(MenuType type, int option){
 
 void MenuManager::Update(float deltaTime){
 	GUIEngine::GetInstance()->Update();
-	if(currentMenu != nullptr){ 
+	if(currentMenu != nullptr){
 		//g_engine->ToggleCameraMovement(false);
 		currentMenu->Update(&open_menu, deltaTime);
 	}

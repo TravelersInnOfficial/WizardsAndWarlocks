@@ -362,9 +362,9 @@ void MainMenu::Update(bool* open, float deltaTime){
                 static float voices = SoundSystem::getInstance()->getVolumeVCA("Voices");
 
                 master =master*10;
-                music =music*10;
-                sfx =sfx*10;
-                voices =voices*10;
+                music =music*100;
+                sfx =sfx*100;
+                voices =voices*100;
 
                 ImGui::SliderFloat("Master", &master, 0.0f, 100.0f, "%.2f");
                 ImGui::SliderFloat("Music", &music, 0.0f, 100.0f, "%.2f");
@@ -372,9 +372,9 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::SliderFloat("Voices", &voices, 0.0f, 100.0f, "%.2f");
 
                 master =master/10;
-                music =music/10;
-                sfx =sfx/10;
-                voices =voices/10;
+                music =music/100;
+                sfx =sfx/100;
+                voices =voices/100;
 
                 SoundSystem::getInstance()->setVolume(master);
                 SoundSystem::getInstance()->setVolumeVCA("Music",music);
@@ -394,9 +394,10 @@ void MainMenu::Update(bool* open, float deltaTime){
                 static int wizard_ai=3, warlock_ai=3, total_ai=7;
                 ImGui::InputInt("Wizard AI", &wizard_ai);
                 ImGui::InputInt("Warlock AI", &warlock_ai);
+                
                 if(wizard_ai<0) wizard_ai = 0;
                 else if(wizard_ai> total_ai-warlock_ai) wizard_ai = total_ai-warlock_ai;
-                
+
                 if(warlock_ai<0) warlock_ai = 0;
                 else if(warlock_ai> total_ai-wizard_ai) warlock_ai = total_ai-wizard_ai;
 
@@ -434,7 +435,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         //HELP WINDOWS
-        ImGui::ShowTestWindow();
+        //ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();

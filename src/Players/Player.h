@@ -92,6 +92,10 @@ class Player: public Entidad{
 		void DeployTrap();
 		bool HasObject();
 
+		//Menu Functions
+		void ShowStatusMenu();
+		void QuitStatusMenu();
+
 		// Controller
 		void SetController(ACTION_ENUM action, keyStatesENUM state);
 

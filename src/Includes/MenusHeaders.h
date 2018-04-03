@@ -3,3 +3,4 @@
 #include "./../Engines/GUIEngine/Menus/AllianceMenu.h"
 #include "./../Engines/GUIEngine/Menus/EndMatchMenu.h"
 #include "./../Engines/GUIEngine/Menus/ShopMenu.h"
+#include "./../Engines/GUIEngine/Menus/StatusMenu.h"

@@ -53,11 +53,14 @@
                     "/usr/include",
                     "${workspaceRoot}",
                     "${workspaceRoot}/src/Includes",
-                    "${workspaceRoot}/src/Engines"                
+                    "${workspaceRoot}/src/Engines"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
-            }
+            },
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17"
         },
         {
             "name": "Win32",

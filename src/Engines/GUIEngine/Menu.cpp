@@ -66,7 +66,7 @@ void Menu::UpdateCursor(){
         if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
             toe::core::TOEvector2df pos = m_cursor->GetPosition();
             if(pos.X != mouse[0]-cursor_dims.X/2 || pos.Y != screenHeight-cursor_dims.Y-mouse[1]){
-                m_cursor->SetPosition(mouse[0]-cursor_dims.X/2,screenHeight-cursor_dims.Y-mouse[1]);
+                m_cursor->SetPosition(mouse[0]-cursor_dims.X/5,screenHeight-cursor_dims.Y-mouse[1]);
             }
         }
     }

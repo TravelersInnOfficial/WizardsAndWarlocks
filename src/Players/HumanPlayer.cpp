@@ -270,6 +270,10 @@ void HumanPlayer::CheckInput(){
 		
 		// Trampas
 		if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ DeployTrap(); }
+
+		//Menus
+		if(controller->IsKeyPressed(ACTION_SHOW_STATUS_MENU)){ ShowStatusMenu(); }
+		if(controller->IsKeyReleased(ACTION_SHOW_STATUS_MENU)){ QuitStatusMenu(); }
 	}
 }
 

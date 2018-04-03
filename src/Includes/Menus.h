@@ -2,13 +2,14 @@
 #define MENUS_H
 
 enum MenuType {
-	MAIN_M		= 0,
-	OPTIONS_M	= 1, 
-	ALLIANCE_M	= 2,
-	STORE_M		= 3,
-	ENDMATCH_M	= 4,
-	NETDEBUG_M	= 5,
-	SELLER_M	= 6
+	MAIN_M		= 0x00,
+	OPTIONS_M	= 0x01, 
+	ALLIANCE_M	= 0x02,
+	STORE_M		= 0x03,
+	ENDMATCH_M	= 0x04,
+	NETDEBUG_M	= 0x05,
+	SELLER_M	= 0x06,
+	STATUS_M	= 0x07
 };
 
 #endif

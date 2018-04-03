@@ -274,6 +274,7 @@ void Player::DeclareInput(){
 	controller->AddAction(Key_3, ACTION_SELECT_SPELL_02);
 	controller->AddAction(Key_4, ACTION_SELECT_SPELL_03);
 	controller->AddAction(Key_LEFT_SHIFT, ACTION_RUN);
+	controller->AddAction(Key_TAB,ACTION_SHOW_STATUS_MENU);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -841,6 +842,14 @@ void Player::DeployTrap(){
 			if(putTrap) TrapManager::GetInstance()->PlayerDeployTrap(this,Start,End);
 		}
 	}
+}
+
+void Player::ShowStatusMenu(){
+	MenuManager::GetInstance()->CreateMenu(STATUS_M);
+
+}
+void Player::QuitStatusMenu(){
+	MenuManager::GetInstance()->ClearMenu();
 }
 
 void Player::UpdatePosShape(){
