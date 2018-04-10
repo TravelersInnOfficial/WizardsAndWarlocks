@@ -1,6 +1,7 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
+#include "GRoom.h"
 #include "GBody.h"
 #include "GCamera.h"
 #include "GEntity.h"
@@ -19,6 +20,7 @@ class GraphicEngine{
 	friend class GUIEngine;
 	friend class GEntity;
 	friend class GBody;
+	friend class GRoom;
 
 public:
 	/// DEVICE FUNCTIONS
@@ -255,6 +257,14 @@ public:
 
 	void ChangeMeshShader(SHADERTYPE shader);
 
+	GRoom* AddRoom(int id, vector3df position, vector3df rotation, vector3df scale);
+
+	void SetCurrentRoom(GRoom* room = nullptr);
+
+	GPortal* AddConnection(int firstID, int secondID, vector3df position, vector3df rotation, vector3df scale);
+
+	void CleanRooms();
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
@@ -265,6 +275,9 @@ private:
 	GCamera* privateCamera;
 	std::vector<TFRect*> m_aim;
 	bool moving_aim = true;
+
+	std::vector<GRoom*> m_rooms;		// Habitaciones actuales en el motor grafico
+	GRoom* m_currentRoom; 				// Habitacion actual al que se anyadiran los modelos
 
 	TFSprite* m_actual_overlay;
 

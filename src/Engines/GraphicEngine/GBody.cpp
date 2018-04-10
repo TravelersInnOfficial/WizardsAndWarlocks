@@ -4,10 +4,13 @@
 
 GBody::GBody(TFMesh* node){
     privateNode = (TFNode*)node;
+    if(GraphicEngine::getInstance()->m_currentRoom != nullptr){
+    	GraphicEngine::getInstance()->m_currentRoom->AddChild(this);
+    }
 }
 
 GBody::~GBody(){
-	VideoDriver::GetInstance()->GetSceneManager()->DeleteMesh(privateNode);
+	GraphicEngine::getInstance()->privateSManager->DeleteMesh(privateNode);
 	// El TFNode se elimina correctamente
 }
 
@@ -28,7 +31,7 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 }
 
 void GBody::Remove(){
-    VideoDriver::GetInstance()->GetSceneManager()->DeleteMesh(privateNode);
+   GraphicEngine::getInstance()->privateSManager->DeleteMesh(privateNode);
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){

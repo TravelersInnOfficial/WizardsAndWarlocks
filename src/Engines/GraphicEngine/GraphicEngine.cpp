@@ -14,8 +14,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 		privateDriver->Minimize();
 	}
 	else
-	//privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
-	privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
+	privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
+	//privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 	
 	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
 	privateSManager = privateDriver->GetSceneManager();
@@ -28,6 +28,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 	privateDriver->EnableClipping();
 	privateSManager->SetAmbientLight(toe::core::TOEvector3df(0.45f,0.45f,0.45f));
+
+	m_currentRoom = nullptr;
 }
 
 GraphicEngine::~GraphicEngine(){
@@ -429,4 +431,43 @@ void GraphicEngine::DisableClipping(){
 
 void GraphicEngine::ChangeMeshShader(SHADERTYPE shader){
 	privateDriver->ChangeShader(shader, TMESH_ENTITY);
+}
+
+GRoom* GraphicEngine::AddRoom(int id, vector3df position, vector3df rotation, vector3df scale){
+	GRoom* room = nullptr;
+	room = new GRoom(id, position, rotation, scale);
+	m_rooms.push_back(room);
+	return room;
+}
+
+void GraphicEngine::SetCurrentRoom(GRoom* room){
+	m_currentRoom = room;
+}
+
+GPortal* GraphicEngine::AddConnection(int firstID, int secondID, vector3df position, vector3df rotation, vector3df scale){
+	GPortal* output = nullptr;
+
+	GRoom* firstRoom = nullptr;
+	GRoom* secondRoom = nullptr;
+
+	int size = m_rooms.size();
+	for(int i=0; i<size; i++){
+		int ID = m_rooms[i]->GetId();
+
+		if(ID == firstID) firstRoom = m_rooms[i];
+		else if(ID == secondID) secondRoom = m_rooms[i];
+	}
+
+	if(firstRoom != nullptr && secondRoom != nullptr){
+		output = firstRoom->AddConnection(secondRoom, position, rotation, scale);
+	}
+	return output;
+}
+
+void GraphicEngine::CleanRooms(){
+	int size = m_rooms.size();
+	for(int i=0; i<size; i++){
+		delete m_rooms[i];
+	}
+	m_rooms.clear();
 }

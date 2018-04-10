@@ -11,6 +11,8 @@
 #include <SoundEngine/SoundSystem.h>
 #include <ColliderMasks.h>
 
+class GPortal;
+
 class Door: public Entidad{
 public:
 	Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
@@ -34,6 +36,9 @@ public:
 
 	bool GetOpenState();
 
+	void AddPortal(GPortal* portal);
+	void SetVisible(bool visibility);
+
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	void WorkDoor();
@@ -51,6 +56,7 @@ private:
 
 	BT_Body*   	bt_body;		// Cuerpo fisico de la puerta
     GBody*    	m_doorNode;		// Cuerpo visual de la puerta
+    std::vector<GPortal*>	m_portals;		// Portal el cual esta vinculado a la puerta
 
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 };

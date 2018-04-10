@@ -2,6 +2,8 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
+#include <GraphicEngine/GPortal.h>
+
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
 	TRotation.Y += 180;
     CreateDoor(TPosition, TScale, TRotation, TCenter);
@@ -86,7 +88,10 @@ void Door::Interact(){
             working = true;
             increment = -increment;
             if (isOpen) playClose();
-            else playOpen();
+            else {
+                playOpen();
+                SetVisible(true);
+            }
         }
     }
 }
@@ -95,7 +100,13 @@ void Door::WorkDoor(){
     rotation.Y += increment;
     bt_body->Rotate(rotation);
 
-    if(rotation.Y <= min || rotation.Y >= max) working = false;
+    if(rotation.Y <= min || rotation.Y >= max){ 
+        working = false;
+        // Comprobamos si se ha cerrado por completo
+        if(rotation.Y <= min){
+            SetVisible(false);
+        }
+    }
 }
 
 void Door::UpdatePosShape(){
@@ -178,4 +189,17 @@ void Door::ForceOpen(){
 
 bool Door::GetOpenState(){
     return(isOpen);
+}
+
+void Door::AddPortal(GPortal* portal){
+    portal->SetVisible(isOpen);
+    m_portals.push_back(portal);
+}
+
+void Door::SetVisible(bool visibility){
+    int size = m_portals.size();
+    for(int i=0; i<size; i++){
+        GPortal* portal = m_portals[i];
+        portal->SetVisible(visibility);
+    }
 }

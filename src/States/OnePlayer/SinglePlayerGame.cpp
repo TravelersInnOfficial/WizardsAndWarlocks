@@ -82,6 +82,8 @@ void SinglePlayerGame::CleanGame(){
 	bulletManager->DeleteAllProyectiles();
 	// Limpiamos las trampas
 	trapManager->ClearTraps();
+	// Eliminamos las habitaciones
+	g_engine->CleanRooms();
 	// Limpiamos los hechizos
 	spellManager->ResetAllDieHechizo();
 
