@@ -6,6 +6,8 @@
 #include <EntityTypes.h>
 
 GraphicEngine::GraphicEngine(bool isServer){
+	ShadowState = true;
+	ParticleState = true;
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
 	
@@ -470,4 +472,20 @@ void GraphicEngine::CleanRooms(){
 		delete m_rooms[i];
 	}
 	m_rooms.clear();
+}
+
+bool* GraphicEngine::GetShadowState(){
+	return &ShadowState;
+}
+	
+bool* GraphicEngine::GetParticleState(){
+	return &ParticleState;
+}
+
+bool GraphicEngine::GetShadowActive(){
+	return ShadowState;
+}
+
+bool GraphicEngine::GetParticleActive(){
+	return ParticleState;
 }

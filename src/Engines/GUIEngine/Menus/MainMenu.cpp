@@ -384,9 +384,10 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::Text("\nScreen Options");
                 ImGui::Separator();
-                static bool shadows = true, particles  = true;
-                ImGui::Checkbox("Shadows", &shadows);
-                ImGui::Checkbox("Particles", &particles);
+                static bool *shadows = GraphicEngine::getInstance()->GetShadowState();
+                static bool *particles  = GraphicEngine::getInstance()->GetParticleState();
+                ImGui::Checkbox("Shadows", shadows);
+                ImGui::Checkbox("Particles", particles);
                 ImGui::Separator();
 
                 ImGui::Text("\nAI Options");

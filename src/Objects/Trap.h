@@ -8,6 +8,7 @@
 #include <SoundEngine/SoundSystem.h>
 #include "./../Players/Player.h"
 #include "./../Entidad.h"
+#include <GraphicEngine/GParticle.h>
 
 class Trap : public Entidad{
 public:
@@ -75,6 +76,8 @@ private:
     float m_world_time;
 
     int trapId;
+
+    GParticle* particle;
 
     void InitializeTrapData();
     void SetTrapData(vector3df, std::string, std::string);

@@ -267,9 +267,16 @@ public:
 
 	void CleanRooms();
 
+	bool* GetShadowState();
+	bool* GetParticleState();
+	bool GetShadowActive();
+	bool GetParticleActive();
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
+	bool ShadowState;
+	bool ParticleState;
 
 	VideoDriver*   privateDriver;
 	SceneManager*  privateSManager;
