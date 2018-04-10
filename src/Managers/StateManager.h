@@ -28,6 +28,8 @@ public:
 	bool Update();
 	void LoadState(State_Code code, bool* end = nullptr);
 	void CloseGame();
+	float GetDeltaTime();
+
 private:
 	void UpdateDelta();
 

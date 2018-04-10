@@ -50,6 +50,10 @@ StateManager* StateManager::GetInstance(ServerInfo* serverInfo){
 	return &instance;
 }
 
+float StateManager::GetDeltaTime(){
+	return deltaTime;
+}
+
 void StateManager::CloseGame(){
 	preparedStatus = STATE_CLOSE_GAME;
 }

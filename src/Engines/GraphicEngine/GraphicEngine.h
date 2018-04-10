@@ -3,6 +3,7 @@
 
 #include "GRoom.h"
 #include "GBody.h"
+#include "GParticle.h"
 #include "GCamera.h"
 #include "GEntity.h"
 #include "EventReceiver.h"
@@ -21,6 +22,7 @@ class GraphicEngine{
 	friend class GEntity;
 	friend class GBody;
 	friend class GRoom;
+	friend class GParticle;
 
 public:
 	/// DEVICE FUNCTIONS
