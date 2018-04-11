@@ -108,7 +108,6 @@ void Player::InitHUD(){
 		m_bar_widths =  m_sp_bar->GetWidth();
 
 		/**Orb**/
-		toe::core::TOEvector2df pos = toe::core::TOEvector2df(0,0);
 		toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
 		float ratio = (W/H);
@@ -117,24 +116,44 @@ void Player::InitHUD(){
 		toe::core::TOEvector2df orb_dims = toe::core::TOEvector2df(new_width,new_height);
 		if(orb_dims.X > tex_dims.X) orb_dims = toe::core::TOEvector2df(tex_dims.X,tex_dims.Y);
 
-		health_orb = new HUD_Orb();
-		health_orb->m_orb_back = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
-		health_orb->m_orb_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
-		health_orb->m_orb_fill->SetColor(1,0,0);
-		health_orb->m_orb_scroll_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
-		health_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
-		health_orb->m_orb_scroll_fill->SetColor(0.5,0,0,0.5);
-		health_orb->m_orb_front = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
-
+		toe::core::TOEvector2df pos = toe::core::TOEvector2df(0,0);
 		toe::core::TOEvector2df pos2 = toe::core::TOEvector2df(g_engine->GetScreenWidth()-orb_dims.X,0);
 
+		//HEALTH
+		health_orb = new HUD_Orb();
+		health_orb->m_orb_back = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
+		
+		health_orb->m_orb_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
+		health_orb->m_orb_fill->SetColor(1,0,0);
+		
+		health_orb->m_orb_scroll_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
+		health_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+		health_orb->m_orb_scroll_fill->SetColor(0.5,0,0,0.8);
+
+		health_orb->m_orb_scroll_lip = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos,orb_dims);
+		health_orb->m_orb_scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+		health_orb->m_orb_scroll_lip->SetColor(0.3,0,0,0.8);
+		//health_orb->m_orb_scroll_lip->SetAlpha(0.3);
+
+		health_orb->m_orb_front = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
+
+		//MANA
 		mana_orb = new HUD_Orb();
 		mana_orb->m_orb_back = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos2,orb_dims);
+		
 		mana_orb->m_orb_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos2,orb_dims);
 		mana_orb->m_orb_fill->SetColor(0,0,1);
+		
 		mana_orb->m_orb_scroll_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos2,orb_dims);
 		mana_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
 		mana_orb->m_orb_scroll_fill->SetColor(0,0,0.5,0.5);
+
+		mana_orb->m_orb_scroll_lip = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos2,orb_dims);
+		mana_orb->m_orb_scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+		mana_orb->m_orb_scroll_lip->SetColor(0,0,0.3);
+		//mana_orb->m_orb_scroll_lip->SetAlpha(0.3);
+
+
 		mana_orb->m_orb_front = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos2,orb_dims);
 
 		m_orb_height = health_orb->m_orb_fill->GetHeight();
@@ -1164,16 +1183,11 @@ void Player::Draw(){
 
 void Player::DrawHUD(){
 	if(health_orb != nullptr && mana_orb != nullptr && m_sp_bar != nullptr){
-		//health_orb->m_orb_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height*(m_HP/100));
-		//health_orb->m_orb_scroll_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height *(m_HP/100));
 		health_orb->SetHeight(m_orb_height*(m_HP/100));
-
-		//mana_orb->m_orb_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height*(m_HP/100));
-		//mana_orb->m_orb_scroll_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height *(m_HP/100));
 		mana_orb->SetHeight(m_orb_height*(m_MP/100));
 
-		health_orb->m_orb_scroll_fill->ScrollV(0.01);
-		mana_orb->m_orb_scroll_fill->ScrollV(0.01);
+		health_orb->Update(0.005);
+		mana_orb->Update(0.005);
 
 		m_sp_bar->SetWidth(m_bar_widths*(m_SP/100));
 	}
@@ -1256,4 +1270,40 @@ void Player::SetRandomName(){
 
 void Player::SetShader(SHADERTYPE shader){
 	m_playerNode->ChangeShader(shader);
+}
+
+Player::HUD_Orb::HUD_Orb(){
+	m_orb_front = nullptr;
+	m_orb_back = nullptr;
+	m_orb_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
+	m_orb_scroll_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
+}
+
+void Player::HUD_Orb::SetHeight(float v){
+	float lip_height = 3;
+	m_orb_fill->SetRect(0,m_orb_fill->GetTextureHeight()-v,m_orb_fill->GetWidth(),v);
+	m_orb_scroll_fill->SetRect(0,m_orb_scroll_fill->GetTextureHeight()-v,m_orb_scroll_fill->GetWidth(),v);
+	m_orb_scroll_lip->SetRect(0,m_orb_scroll_lip->GetTextureHeight()-v,m_orb_scroll_lip->GetWidth(),v - (v - lip_height));
+	m_orb_scroll_lip->SetPosition(m_orb_fill->GetPosX(),m_orb_fill->GetHeight() - lip_height);
+}
+
+void Player::HUD_Orb::Update(float vel){
+	m_orb_scroll_fill->ScrollV(vel);
+	m_orb_scroll_lip->ScrollH(-vel);
+}
+void Player::HUD_Orb::Erase(){
+	m_orb_front->Erase();
+	m_orb_back->Erase();
+	m_orb_fill->Erase();
+	m_orb_scroll_lip->Erase();
+	m_orb_scroll_fill->Erase();
+
+	m_orb_front = nullptr;
+	m_orb_back = nullptr;
+	m_orb_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
+	m_orb_scroll_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
 }

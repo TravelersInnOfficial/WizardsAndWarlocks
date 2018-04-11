@@ -99,6 +99,7 @@ enum GAMETEXTURES {
 	TEXTURE_ORB_FRONT,
 	TEXTURE_ORB_FILL,
 	TEXTURE_ORB_SCROLL_FILL,
+	TEXTURE_ORB_SCROLL_LIP,
 	TEXTURE_ORB_SCROLL_FILL_MASK
 };
 
@@ -215,6 +216,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ORB_FRONT]					= "./../assets/textures/HUD/Orb/orb_front.png";
 	m[TEXTURE_ORB_FILL]						= "./../assets/textures/HUD/Orb/orb_fill.png";
 	m[TEXTURE_ORB_SCROLL_FILL]				= "./../assets/textures/HUD/Orb/orb_scroll_fill.png";
+	m[TEXTURE_ORB_SCROLL_LIP]				= "./../assets/textures/HUD/Orb/orb_scroll_lip.png";
 	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
 
 	return m;

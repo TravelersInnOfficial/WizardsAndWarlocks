@@ -179,27 +179,13 @@ class Player: public Entidad{
 		TFSprite* m_orb_front;
 		TFSprite* m_orb_back;
 		TFSprite* m_orb_fill;
+		TFSprite* m_orb_scroll_lip;
 		TFSprite* m_orb_scroll_fill;
 
-		HUD_Orb(){
-			m_orb_front = nullptr;
-			m_orb_back = nullptr;
-			m_orb_fill = nullptr;
-			m_orb_scroll_fill = nullptr;
-		}
-
-		void SetHeight(float v){
-			m_orb_fill->SetRect(0,m_orb_fill->GetTextureHeight()-v,m_orb_fill->GetWidth(),v);
-			m_orb_scroll_fill->SetRect(0,m_orb_scroll_fill->GetTextureHeight()-v,m_orb_scroll_fill->GetWidth(),v);	
-		}
-
-		void Erase(){
-			m_orb_front->Erase();
-			m_orb_back->Erase();
-			m_orb_fill->Erase();
-			m_orb_scroll_fill->Erase();
-		}
-
+		HUD_Orb();
+		void SetHeight(float v);
+		void Update(float vel);
+		void Erase();
 	};
 
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
