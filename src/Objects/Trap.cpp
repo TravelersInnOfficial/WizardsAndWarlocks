@@ -4,6 +4,7 @@
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include <NetworkEngine/NetworkEngine.h>
 #include <ColliderMasks.h>
+#include <ParticleData.h>
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	clase = EENUM_TRAP;
@@ -42,7 +43,12 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	playPlaceEvent(TPosition);
 
 	particle = nullptr;
-	if(GraphicEngine::getInstance()->GetParticleActive()) particle = new GParticle(TPosition);
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(TPosition);
+		particle->SetTexture("./../assets/textures/particles/TrapParticle.png");
+		particle->SetType(TRAP_PARTICLE);
+		particle->SetQuantityPerSecond(5);
+	}
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
@@ -156,7 +162,7 @@ void Trap::Activate(Player* player){
 		break;
 
 		case TENUM_SPIRITS:
-			EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
+			if(player->IsPlayerOne()) EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
 			player->ChangeHP(-25);
 		break;
 
@@ -195,7 +201,7 @@ void Trap::ForceEffect(Player* player){
 		break;
 
 		case TENUM_SPIRITS:
-			EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
+			if(player->IsPlayerOne()) EffectManager::GetInstance()->AddEffect(player, WEAK_FUZZY);
 		break;
 
 		case TENUM_SILENCE:

@@ -1,7 +1,7 @@
 #ifndef PARTICLEDATA_H
 #define PARTICLEDATA_H
 
-//#include <GraphicEngine/Particles/TrapParticle.h>
+#include <GraphicEngine/Particles/TrapParticle.h>
 //#include <GraphicEngine/Particles/InvisibleParticle.h>
 //#include <GraphicEngine/Particles/FreezeParticle.h>
 //#include <GraphicEngine/Particles/ProjectileParticle.h>

@@ -19,12 +19,16 @@ void GParticle::SetQuantityPerSecond(int particles){
 	ps->SetNewPerSecond(particles);
 }
 
+void GParticle::SetTexture(std::string path){
+	ps->SetTexture(path);
+}
+
 void GParticle::SetType(PARTICLE_TYPE type){
 	switch(type){
-		/*case TRAP_PARTICLE:
-			ps->SetManager(new TrapParticle()); 
+		case TRAP_PARTICLE:
+			ps->SetManager(new TrapParticle());
 			break;
-		case INVISIBLE_PARTICLE:
+		/*case INVISIBLE_PARTICLE:
 			ps->SetManager(new InvisibleParticle()); 
 			break;
 		case FREEZE_PARTICLE:

@@ -1,45 +1,35 @@
-/*#include "./ColoredParticle.h"
+#include "./TrapParticle.h"
 
-ColoredParticle::ColoredParticle(bool r, bool g, bool b){
-	this->r = r;
-	this->g = g;
-	this->b = b;
+TrapParticle::TrapParticle(){
 }
 
-ColoredParticle::~ColoredParticle(){
+TrapParticle::~TrapParticle(){
 }
 
-void ColoredParticle::InitParticle(Particle& p){
-	p.translation = glm::vec3(0,0,0);
+void TrapParticle::InitParticle(Particle& p){
 
 	float X = (rand() % 10)/10.0f - 0.5f;
-	float Y = (rand() % 10)/10.0f - 0.5f;
+	float Y = 0.15f;
 	float Z = (rand() % 10)/10.0f - 0.5f;
+	p.pos 	= toe::core::TOEvector3df(X, Y, Z);
 
-	p.pos 	= glm::vec3(X, Y, Z);
+	Y = (rand() % 2)/10.0f;
+	X = (rand() % 2)/10.0f;
+	Z = (rand() % 2)/10.0f;
+	p.speed = toe::core::TOEvector3df(X,Y,Z);
 
-	Y = (rand() % 4)/10.0f - 0.2f;
-	X = (rand() % 2)/10.0f - 0.1f;
-	Z = (rand() % 2)/10.0f - 0.1f;
+	int color = (unsigned char)(rand() % 255 + 240);
+	p.r = color;
+	p.g = color;
+	p.b = color;
 
-	p.speed = glm::vec3(X,Y,Z);
-
-	if(r) p.r = 255;
-	else p.r = (unsigned char)(rand() % 255);
-	
-	if(g) p.g = 255;
-	else p.g = (unsigned char)(rand() % 255);
-	
-	if(b) p.b = 255;
-	else p.b = (unsigned char)(rand() % 255);
-	
-	p.size = (rand() % 50)/10.0f;
+	p.translation = toe::core::TOEvector3df(0,0,0);
+	p.size = (rand() % 3)/20.0f;
 	p.rotation = (rand() % 360);
-	p.life = 20.0f;
+	p.life = 2.5f;
 }
 
-void ColoredParticle::UpdateParticle(Particle& p, float deltaTime){
-	p.speed += glm::vec3(0.0f,0.25f, 0.0f) * deltaTime * 0.5f;
-	p.pos += p.speed * deltaTime;
+void TrapParticle::UpdateParticle(Particle& p, float deltaTime){
+	p.speed.Y += deltaTime * 0.5f * 0.25f;
+	p.pos.Y += p.speed.Y * deltaTime;
 }
-*/

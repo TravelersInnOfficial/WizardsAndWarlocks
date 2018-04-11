@@ -17,6 +17,7 @@ public:
 	~GParticle();
 
 	void SetQuantityPerSecond(int particles);
+	void SetTexture(std::string path);
 	void SetType(PARTICLE_TYPE type);
 	void SetPos(vector3df position);
 	void Update();
