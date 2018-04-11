@@ -32,7 +32,7 @@ public:
 	vector3df GetEscapeRoom(vector3df player, vector3df target);
 private:
 	vector3df GetEscapeRoomSameRoom(vector3df player, vector3df target);
-	vector3df GetEscapeRoomDifferentRoom(vector3df player, vector3df target);
+	vector3df GetEscapeRoomDifferentRoom(vector3df target);
 
 	void ShuffleVector();
 	float NearestPoint(float pointA, float pointB, float target);

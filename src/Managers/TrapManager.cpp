@@ -45,13 +45,13 @@ void TrapManager::ClearTraps(){
 	traps.clear();
 
 	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.begin();
-	for(;it!=traps_hud.end(); ++it){
-		std::vector<TFDrawable*> drawables = it->second;
+	for(;it!=traps_hud.end(); it++){
 
-		for(int i = 0; i<drawables.size();i++) drawables[i]->Erase();
+		std::vector<TFDrawable*> drawables = it->second;
+		int size = drawables.size();
+		for(int i = 0; i<size; i++) drawables[i]->Erase();
 		drawables.clear();
 
-		traps_hud.erase(it);
 	}
 	traps_hud.clear();
 }
@@ -312,7 +312,9 @@ void TrapManager::EraseHUD(Player* player){
 	if(it != traps_hud.end()){
 		drawables = it->second;
 		if(!drawables.empty()){
-			for(int i = 0; i<drawables.size();i++) drawables[i]->Erase();
+
+			int size = drawables.size();
+			for(int i = 0; i<size; i++) drawables[i]->Erase();
 			drawables.clear();
 		}
 		traps_hud.erase(it);

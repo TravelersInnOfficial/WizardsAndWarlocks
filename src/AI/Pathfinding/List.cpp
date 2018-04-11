@@ -92,14 +92,14 @@ int List::getNodeRecordPosition(Node* n){
 
 int List::getIndexNearestNode(vector3df pos, int start){
     int output = 0;
-    if(start < m_list.size()){  
+    int size = m_list.size();
+    if(start < size){  
         vector3df nodePos = m_list[start]->m_node->getPosition();
         nodePos = nodePos - pos;
   
         float value = nodePos.length();
         output = start;
   
-        int size = m_list.size();
         for(int i=start; i<size; i++){
             nodePos = m_list[i]->m_node->getPosition();
             nodePos = nodePos - pos;
@@ -113,7 +113,8 @@ int List::getIndexNearestNode(vector3df pos, int start){
 }
 
 vector3df List::getPosNode(int index){
-    if(index < m_list.size()){
+    int size = m_list.size();
+    if(index < size){
         return m_list[index]->m_node->getPosition();
     }
     vector3df output(0,0,0);
@@ -121,7 +122,8 @@ vector3df List::getPosNode(int index){
 }
 
 void List::printListOfNodes(){
-    for(int i = 0; i < m_list.size(); i++){
+    int size = m_list.size();
+    for(int i = 0; i < size; i++){
 
         std::cout<<"---------- "<<i<<" ----------"<<std::endl;
         std::cout<<" Node ID: "<<m_list[i]->m_node->getNodeID()<<std::endl;
@@ -161,6 +163,7 @@ NodeRecord* List::getMin(){
 }
 
 void List::heapify(int root){
+    int listSize = m_list.size();
     //get the left node
     int l = leftNodeIndex(root);
     //get the right node
@@ -168,9 +171,9 @@ void List::heapify(int root){
     //asume that the root is the smallest initially
     int min = root;
     //if left index is minor than m_list size and the cost so far of the left is minor that the root, the new smallest is the left
-    if(l!= -1 && l<m_list.size() && m_list[min]->m_estimatedTotalCost > m_list[l]->m_estimatedTotalCost) min = l;
+    if(l!= -1 && l<listSize && m_list[min]->m_estimatedTotalCost > m_list[l]->m_estimatedTotalCost) min = l;
     //if left index is minor than m_list size and the cost so far of the right is minor that the root, the new smallest is the right
-    if(r!=-1 && r<m_list.size() && m_list[min]->m_estimatedTotalCost > m_list[r]->m_estimatedTotalCost) min = r;
+    if(r!=-1 && r<listSize && m_list[min]->m_estimatedTotalCost > m_list[r]->m_estimatedTotalCost) min = r;
 
     //if the smallest is different from the root, switch the actual root and smallest and proceed to the next level of the heap
     if(min != root){
@@ -192,18 +195,21 @@ void List::swapNodes(int nr1, int nr2){
 
 int List::parentNodeIndex(int index){
     int pos = (index-1)/ 2;
-    if(pos >=0 && pos<m_list.size()) return pos;
+    int listSize = m_list.size();
+    if(pos >=0 && pos<listSize) return pos;
     return -1;
 }
 
 int List::leftNodeIndex(int index){
     int pos = (2*index + 1);
-    if(pos >=0 && pos<m_list.size()) return pos;
+    int listSize = m_list.size();
+    if(pos >=0 && pos<listSize) return pos;
     return -1;
 }
 
 int List::rightNodeIndex(int index){
     int pos = (2*index + 2);
-    if(pos >=0 && pos<m_list.size()) return pos;
+    int listSize = m_list.size();
+    if(pos >=0 && pos<listSize) return pos;
     return -1;
 }

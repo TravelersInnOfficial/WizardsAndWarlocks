@@ -287,7 +287,7 @@ vector3df RoomInfo::GetEscapeRoomSameRoom(vector3df player, vector3df target){
 
 // En el caso de que ambos jugadores esten en diferentes habitaciones, el jugador ira a la habitacion mas lejana
 // al target
-vector3df RoomInfo::GetEscapeRoomDifferentRoom(vector3df player, vector3df target){
+vector3df RoomInfo::GetEscapeRoomDifferentRoom(vector3df target){
 	// Creamos un vector3df que sera el que devolvamos en caso de no encontrar ningun valor
 	vector3df output;
 
@@ -334,7 +334,7 @@ vector3df RoomInfo::GetEscapeRoom(vector3df player, vector3df target){
 	if(same){
 		output = GetEscapeRoomSameRoom(player, target);
 	}else{
-		output = GetEscapeRoomDifferentRoom(player, target);
+		output = GetEscapeRoomDifferentRoom(target);
 	}
 	return output;
 }
