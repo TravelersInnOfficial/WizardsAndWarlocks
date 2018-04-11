@@ -326,7 +326,7 @@ void SpellManager::DrawHUDSpells(Player* p, int current){
 
 	float sizeBox = W * 0.075;	// Tamanyo de los cuadrados del hechizo
 
-	float xInit = W/20;			// X inicial del primer hechizo
+	float xInit = W/2.5;			// X inicial del primer hechizo
 	float yInit = H/20;		// Y inicial
 
 	float space = W * 0.03;		// Espacio entre hechizos

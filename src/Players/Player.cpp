@@ -16,7 +16,7 @@
 
 #include "./../Cameras/WatcherCamera.h"
 #include "./../Cameras/FPSCamera.h"
-
+#include <Assets.h>
 GraphicEngine* g_engine = nullptr;
 
 Player::Player(bool isPlayer1){
@@ -74,16 +74,18 @@ Player::Player(bool isPlayer1){
 	bool isServer = n_engine->IsServerInit();
 	if(!isClient && !isServer) SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 
-	m_hp_bar = nullptr;
-	m_mp_bar = nullptr;
+	health_orb = nullptr;
+	mana_orb = nullptr;
 	m_sp_bar = nullptr;
+
 	m_bar_widths = 0.0f;
+	m_orb_height = 0.0f;
 
 	Respawn();
 }
 
-void Player::InitHUDBars(){
-	if(m_hp_bar == nullptr && m_mp_bar == nullptr && m_sp_bar == nullptr){
+void Player::InitHUD(){
+	if(health_orb == nullptr && mana_orb == nullptr && m_sp_bar == nullptr){
 		int W = g_engine->GetScreenWidth();		
 		int H = g_engine->GetScreenHeight();
 
@@ -100,21 +102,42 @@ void Player::InitHUDBars(){
 		float yEndM = yInitM + size;
 		float yEndS = yInitS + size;
 
-		//blackbars
-		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH)));
-		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM)));
-		m_blackbars.push_back(toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS)));
-		
-		m_hp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitH),toe::core::TOEvector2df(xEnd-xInit, yEndH-yInitH));
-		m_hp_bar->SetColor(0.9,0.2,0);
-		
-		m_mp_bar = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitM),toe::core::TOEvector2df(xEnd-xInit, yEndM-yInitM));
-		m_mp_bar->SetColor(0,0.5,1);
-		
 		m_sp_bar =toe::Add2DRect(toe::core::TOEvector2df(xInit,yInitS),toe::core::TOEvector2df(xEnd-xInit, yEndS-yInitS));
 		m_sp_bar->SetColor(0.5,0.5,0.5);
 
-		m_bar_widths =  m_hp_bar->GetWidth();
+		m_bar_widths =  m_sp_bar->GetWidth();
+
+		/**Orb**/
+		toe::core::TOEvector2df pos = toe::core::TOEvector2df(0,0);
+		toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
+
+		float ratio = (W/H);
+		float new_width = W/5.0f;
+		float new_height = ratio * new_width;
+		toe::core::TOEvector2df orb_dims = toe::core::TOEvector2df(new_width,new_height);
+		if(orb_dims.X > tex_dims.X) orb_dims = toe::core::TOEvector2df(tex_dims.X,tex_dims.Y);
+
+		health_orb = new HUD_Orb();
+		health_orb->m_orb_back = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
+		health_orb->m_orb_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
+		health_orb->m_orb_fill->SetColor(1,0,0);
+		health_orb->m_orb_scroll_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
+		health_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+		health_orb->m_orb_scroll_fill->SetColor(0.5,0,0,0.5);
+		health_orb->m_orb_front = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
+
+		toe::core::TOEvector2df pos2 = toe::core::TOEvector2df(g_engine->GetScreenWidth()-orb_dims.X,0);
+
+		mana_orb = new HUD_Orb();
+		mana_orb->m_orb_back = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos2,orb_dims);
+		mana_orb->m_orb_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos2,orb_dims);
+		mana_orb->m_orb_fill->SetColor(0,0,1);
+		mana_orb->m_orb_scroll_fill = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos2,orb_dims);
+		mana_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+		mana_orb->m_orb_scroll_fill->SetColor(0,0,0.5,0.5);
+		mana_orb->m_orb_front = toe::AddSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos2,orb_dims);
+
+		m_orb_height = health_orb->m_orb_fill->GetHeight();
 	}
 }
 
@@ -132,10 +155,10 @@ void Player::PlayerInit(){
 	m_MP = 100;
 	m_SP = 100;
 
-	if(isPlayerOne) InitHUDBars();
+	if(isPlayerOne) InitHUD();
 
-	if(m_hp_bar!=nullptr) m_hp_bar->SetWidth(m_bar_widths);
-	if(m_mp_bar!=nullptr) m_mp_bar->SetWidth(m_bar_widths);
+	if(health_orb!=nullptr) health_orb->SetHeight(m_orb_height);
+	if(mana_orb!=nullptr) mana_orb->SetHeight(m_orb_height);
 	if(m_sp_bar!=nullptr) m_sp_bar->SetWidth(m_bar_widths);
 
 	m_DamageMult = 1;
@@ -373,7 +396,7 @@ void Player::DeadUpdate(){
 		if(setPos && newP!=nullptr){
 			targetDeadCam = newP;
 			m_camera->SetPosition(targetDeadCam->GetPos());
-			targetDeadCam->InitHUDBars();
+			targetDeadCam->InitHUD();
 		}
 
 		if(targetDeadCam!=nullptr) m_camera->UpdateCamera(targetDeadCam->GetPos());
@@ -382,7 +405,7 @@ void Player::DeadUpdate(){
 
 void Player::eraseTargetHUD(){
 	if(targetDeadCam!=nullptr){
-		targetDeadCam->EraseHUDBars();
+		targetDeadCam->EraseHUD();
 		targetDeadCam->EraseSpellSelector();
 		targetDeadCam->EraseTrapHUD();
 	}
@@ -707,20 +730,14 @@ void Player::Die(){
 	if(matchStarted) DestroyPlayerCharacter();				// Destruimos cuerpo fisico
 	if(overlayManager!=nullptr) GraphicEngine::getInstance()->ClearOverlay();
 
-	EraseHUDBars();
+	EraseHUD();
 	EraseSpellSelector();
 	EraseTrapHUD();
 }
 
-void Player::EraseHUDBars(){
-	if(!m_blackbars.empty()){
-		for(int i = 0; i<m_blackbars.size(); i++){
-			if(m_blackbars[i]!=nullptr) m_blackbars[i]->Erase();
-			m_blackbars[i] = nullptr;
-		}
-	}
-	if(m_hp_bar != nullptr){ m_hp_bar->Erase(); m_hp_bar = nullptr;} 
-	if(m_mp_bar != nullptr){ m_mp_bar->Erase(); m_mp_bar = nullptr;}
+void Player::EraseHUD(){
+	if(health_orb != nullptr){ health_orb->Erase(); health_orb = nullptr;} 
+	if(mana_orb != nullptr){ mana_orb->Erase(); mana_orb = nullptr;}
 	if(m_sp_bar != nullptr){ m_sp_bar->Erase(); m_sp_bar = nullptr;}
 }
 
@@ -1138,17 +1155,26 @@ void Player::Draw(){
 	}else{	
 		/***/
 		DrawOverlays();
-		DrawHUDBars();
+		DrawHUD();
 		DrawSpellSelector();
 		DrawTraps();
 		/***/
 	}
 }
 
-void Player::DrawHUDBars(){
-	if(m_hp_bar != nullptr && m_mp_bar != nullptr && m_sp_bar != nullptr){
-		m_hp_bar->SetWidth(m_bar_widths*(m_HP/100));
-		m_mp_bar->SetWidth(m_bar_widths*(m_MP/100));
+void Player::DrawHUD(){
+	if(health_orb != nullptr && mana_orb != nullptr && m_sp_bar != nullptr){
+		//health_orb->m_orb_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height*(m_HP/100));
+		//health_orb->m_orb_scroll_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height *(m_HP/100));
+		health_orb->SetHeight(m_orb_height*(m_HP/100));
+
+		//mana_orb->m_orb_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height*(m_HP/100));
+		//mana_orb->m_orb_scroll_fill->SetRect(0,m_orb_height - (m_orb_height *(m_HP/100)),m_orb_fill->GetWidth(),m_orb_height *(m_HP/100));
+		mana_orb->SetHeight(m_orb_height*(m_MP/100));
+
+		health_orb->m_orb_scroll_fill->ScrollV(0.01);
+		mana_orb->m_orb_scroll_fill->ScrollV(0.01);
+
 		m_sp_bar->SetWidth(m_bar_widths*(m_SP/100));
 	}
 }

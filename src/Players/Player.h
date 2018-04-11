@@ -36,14 +36,14 @@ class Player: public Entidad{
 
 		//Draw visuals
 		void Draw();
-		void InitHUDBars();
+		void InitHUD();
 
 		void DrawSpellSelector();
 		void DrawTraps();
-		void DrawHUDBars();
+		void DrawHUD();
 
 		//Erase visuals
-		void EraseHUDBars();
+		void EraseHUD();
 		void EraseSpellSelector();
 		void EraseTrapHUD();
 
@@ -175,6 +175,33 @@ class Player: public Entidad{
 
 	protected:
 
+	struct HUD_Orb{
+		TFSprite* m_orb_front;
+		TFSprite* m_orb_back;
+		TFSprite* m_orb_fill;
+		TFSprite* m_orb_scroll_fill;
+
+		HUD_Orb(){
+			m_orb_front = nullptr;
+			m_orb_back = nullptr;
+			m_orb_fill = nullptr;
+			m_orb_scroll_fill = nullptr;
+		}
+
+		void SetHeight(float v){
+			m_orb_fill->SetRect(0,m_orb_fill->GetTextureHeight()-v,m_orb_fill->GetWidth(),v);
+			m_orb_scroll_fill->SetRect(0,m_orb_scroll_fill->GetTextureHeight()-v,m_orb_scroll_fill->GetWidth(),v);	
+		}
+
+		void Erase(){
+			m_orb_front->Erase();
+			m_orb_back->Erase();
+			m_orb_fill->Erase();
+			m_orb_scroll_fill->Erase();
+		}
+
+	};
+
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
@@ -233,12 +260,12 @@ class Player: public Entidad{
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
 		//***HUD**//
-		std::vector<TFRect*> m_blackbars;
-		TFRect* m_hp_bar;
-		TFRect* m_mp_bar;
 		TFRect* m_sp_bar;
-
 		float m_bar_widths;
+
+		HUD_Orb* health_orb;
+		HUD_Orb* mana_orb;
+		float m_orb_height;
 
 };
 

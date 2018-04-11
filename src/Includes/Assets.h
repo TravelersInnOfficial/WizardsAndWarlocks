@@ -94,7 +94,12 @@ enum GAMETEXTURES {
 	TEXTURE_DSPELLS_BANNER,
 	TEXTURE_TSPELLS_BANNER,
 	TEXTURE_TRAPS_BANNER,
-	TEXTURE_MENU_TITLE
+	TEXTURE_MENU_TITLE,
+	TEXTURE_ORB_BACK,
+	TEXTURE_ORB_FRONT,
+	TEXTURE_ORB_FILL,
+	TEXTURE_ORB_SCROLL_FILL,
+	TEXTURE_ORB_SCROLL_FILL_MASK
 };
 
 enum GAMEMESHES {
@@ -206,6 +211,11 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_TSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/tactic_spells_banner.png";
 	m[TEXTURE_TRAPS_BANNER]					= "./../assets/textures/GUI/Menus/ShopMenu/traps_banner.png";
 	m[TEXTURE_MENU_TITLE]					= "./../assets/textures/GUI/Menus/MainMenu/titulo.png";
+	m[TEXTURE_ORB_BACK]						= "./../assets/textures/HUD/Orb/orb_back.png";
+	m[TEXTURE_ORB_FRONT]					= "./../assets/textures/HUD/Orb/orb_front.png";
+	m[TEXTURE_ORB_FILL]						= "./../assets/textures/HUD/Orb/orb_fill.png";
+	m[TEXTURE_ORB_SCROLL_FILL]				= "./../assets/textures/HUD/Orb/orb_scroll_fill.png";
+	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
 
 	return m;
 };
