@@ -969,7 +969,7 @@ void Player::SetAlliance(Alliance newAlliance){
 	switch(newAlliance){
 		case(ALLIANCE_WIZARD):{
 			if(hasCharacter){
-				m_playerNode->Remove();
+				delete m_playerNode;
 
 				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
 				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
@@ -982,7 +982,8 @@ void Player::SetAlliance(Alliance newAlliance){
 		}
 		case(ALLIANCE_WARLOCK):{
 			if(hasCharacter){
-				m_playerNode->Remove();
+				delete m_playerNode;
+
 				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
 			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
@@ -994,7 +995,8 @@ void Player::SetAlliance(Alliance newAlliance){
 		}
 		default:{
 			if(hasCharacter){
-				m_playerNode->Remove();
+				delete m_playerNode;
+
 				if(isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
 			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 				m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
