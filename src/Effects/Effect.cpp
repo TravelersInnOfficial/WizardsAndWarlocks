@@ -65,6 +65,10 @@ void Effect::UpdateEffect(Player* p){
 	myPlayer = p;
 }
 
+void Effect::UpdateEffectParticles(Player* p){
+	myPlayer = p;
+}
+
 /**
  * @brief Quito el efecto al jugador
  * 

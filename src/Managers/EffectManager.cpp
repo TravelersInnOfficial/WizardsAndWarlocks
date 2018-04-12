@@ -102,6 +102,20 @@ void EffectManager::UpdateEffects(float deltaTime){
 		}
 		currentTime = 0.0f;
 	}
+
+	// UPDATE PARTICLES
+	std::map<Player*, std::vector<Effect*>* >::iterator it = effects.begin();
+	for(; it != effects.end(); ++it){
+		Player* p = it->first;
+		std::vector<Effect*>* currentV(it->second);
+
+		int size = currentV->size();
+		for(int i=size-1; i>=0; i--){
+			Effect* effect = currentV->at(i);
+			effect->UpdateEffectParticles(p);
+		}
+	}
+
 }
 
 bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){

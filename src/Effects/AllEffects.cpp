@@ -407,10 +407,19 @@ void PoisonShots::createSoundEvent() {
 // INVISIBLE
 //================================================================
 Invisible::Invisible(float time):Effect(time, POWERUP_INVISIBLE){
+	particle = nullptr;
 	createSoundEvent();
 }
 
 void Invisible::ApplyEffect(Player* p){
+	
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/InvisibleParticle.png");
+		particle->SetType(TRAP_PARTICLE);
+		particle->SetQuantityPerSecond(20);
+	}
+
 	playEffectEvent();
 	p->SetVisible(false);
 }
@@ -419,8 +428,19 @@ void Invisible::UpdateEffect(Player* p) {
 	effectEvent->setPosition(p->GetPos());
 }
 
+void Invisible::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
+}
+
 void Invisible::RemoveEffect(Player* p){
-	p->SetVisible(true);	
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
+	p->SetVisible(true);
 }
 
 void Invisible::createSoundEvent() {
