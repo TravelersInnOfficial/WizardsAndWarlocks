@@ -177,7 +177,7 @@ void PlayerManager::SpawnAI(){
 	else auxWa--;
 
 	for(int i = 0; i < auxWi; i++) AddAIPlayer();
-	for(int i = 0; i < 0; i++) {
+	for(int i = 0; i < auxWa; i++) {
 		Player* p = AddAIPlayer();
 		p->SetAlliance(ALLIANCE_WARLOCK);
 	}		
