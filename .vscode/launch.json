@@ -21,7 +21,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": true
                 }
-            ]
+            ],
+            "preLaunchTask": "compile"
         },
         {
             "name": "(gdb) Windows Launch",
@@ -41,7 +42,8 @@
                     "text": "-enable-pretty-printing",
                     "ignoreFailures": false
                 }
-            ]
+            ],
+            "preLaunchTask": "compile"
         }
     ]
 }
