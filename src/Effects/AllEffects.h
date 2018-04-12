@@ -1,6 +1,7 @@
 #ifndef ALLEFFECTS_H
 #define ALLEFFECTS_H
 
+#include <ParticleData.h>
 #include "Effect.h"
 
 ////////////////////////////////////////////
@@ -222,8 +223,10 @@ public:
 	Invisible(float time);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 };
 

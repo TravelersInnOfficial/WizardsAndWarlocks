@@ -174,11 +174,7 @@ void Potion::EraseHUD(){
 }
 
 void Potion::DrawHUD(){
-
-	if(m_rect != nullptr){
-
-	}
-	else{
+	if(m_rect == nullptr){
 		GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 		float W =			g_engine->GetScreenWidth();

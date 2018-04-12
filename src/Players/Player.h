@@ -23,7 +23,7 @@
 #include "./../Managers/OverlayManager.h"
 
 class Potion;
-class GRect;
+class PlayerHUD;
 
 class Player: public Entidad{
 	public:
@@ -39,14 +39,8 @@ class Player: public Entidad{
 		void Draw();
 		void InitHUD();
 
-		void DrawSpellSelector();
-		void DrawTraps();
-		void DrawHUD();
-
 		//Erase visuals
 		void EraseHUD();
-		void EraseSpellSelector();
-		void EraseTrapHUD();
 
 		// Controller
 		virtual void DeclareInput();				// Metodo que declara todas las acciones del player
@@ -176,19 +170,6 @@ class Player: public Entidad{
 
 	protected:
 
-	struct HUD_Orb{
-		GSprite* m_orb_front;
-		GSprite* m_orb_back;
-		GSprite* m_orb_fill;
-		GSprite* m_orb_scroll_lip;
-		GSprite* m_orb_scroll_fill;
-
-		HUD_Orb();
-		void SetHeight(float v);
-		void Update(float vel);
-		void Erase();
-	};
-
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
 		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
@@ -246,13 +227,7 @@ class Player: public Entidad{
 
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
-		//***HUD**//
-		GRect* m_sp_bar;
-		float m_bar_widths;
-
-		HUD_Orb* health_orb;
-		HUD_Orb* mana_orb;
-		float m_orb_height;
+		PlayerHUD* m_hud;
 
 };
 
