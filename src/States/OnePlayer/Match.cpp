@@ -29,6 +29,8 @@ Match::Match(SinglePlayerGame* fat){
 
 	father->PlayEvent("ghosts", vector3df(-0.245, 1.14, 17.25));
 	father->PlayEvent("waterdrops", vector3df(-0.245, 1.20, 17.25));
+
+	playerManager->SpawnAI();
 }
 
 Match::~Match(){

@@ -40,6 +40,9 @@ public:
 	void ReturnAllToLobby();
 	void RefreshServerAll();
 
+	void SpawnAI();
+	void EraseAI();
+
 	Player* GetPlayerOne();
 	Player* GetPlayerFromID(int id);
 	Player* GetPlayerFromNetID(int id);

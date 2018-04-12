@@ -30,6 +30,11 @@ public:
 	void CloseGame();
 	float GetDeltaTime();
 
+	int GetWizardAINumber();
+	int GetWarlockAINumber();
+	int* GetWizardAINumberPointer();
+	int* GetWarlockAINumberPointer();
+
 private:
 	void UpdateDelta();
 
@@ -45,6 +50,9 @@ private:
 	float deltaTime;
 	float timeStart;
 	float minFrameTime;
+
+	int maxWizardPlayers;
+	int maxWarlockPlayers;
 
 	bool resourcesLoaded;
 

@@ -392,15 +392,15 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::Text("\nAI Options");
                 ImGui::Separator();
-                static int wizard_ai=3, warlock_ai=3, total_ai=7;
-                ImGui::InputInt("Wizard AI", &wizard_ai);
-                ImGui::InputInt("Warlock AI", &warlock_ai);
                 
-                if(wizard_ai<0) wizard_ai = 0;
-                else if(wizard_ai> total_ai-warlock_ai) wizard_ai = total_ai-warlock_ai;
-
-                if(warlock_ai<0) warlock_ai = 0;
-                else if(warlock_ai> total_ai-wizard_ai) warlock_ai = total_ai-wizard_ai;
+                static int *wizard_ai = StateManager::GetInstance()->GetWizardAINumberPointer();
+                static int *warlock_ai = StateManager::GetInstance()->GetWarlockAINumberPointer();
+                ImGui::InputInt("Wizard AI", wizard_ai);
+                ImGui::InputInt("Warlock AI", warlock_ai);
+                if(*wizard_ai < 1) *wizard_ai = 1;
+                if(*wizard_ai > 4) *wizard_ai = 4;
+                if(*warlock_ai < 1) *warlock_ai = 1;
+                if(*warlock_ai > 4) *warlock_ai = 4;
 
 
                 ImGui::Separator();

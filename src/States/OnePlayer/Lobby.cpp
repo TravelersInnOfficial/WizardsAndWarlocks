@@ -23,7 +23,8 @@ Lobby::Lobby(SinglePlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
-	
+
+	playerManager->EraseAI();
 }
 
 Lobby::~Lobby(){
@@ -32,23 +33,21 @@ Lobby::~Lobby(){
 }
 
 bool Lobby::Input(){
-	if(g_engine->IsKeyPressed(Key_V)){
+	/*if(g_engine->IsKeyPressed(Key_V)){
 		playerManager->AddAIPlayer();
 	}
 
 	if(g_engine->IsKeyPressed(Key_B)){
 		Player* p = playerManager->AddAIPlayer();
 		p->SetAlliance(ALLIANCE_WARLOCK);
-	}
+	}*/
 
 	return false;
 }
 
 void Lobby::Update(float deltaTime){
 	f_engine->UpdateWorld(deltaTime);
-	if(g_engine->getActiveCamera() != nullptr){
-		s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
-	}
+	if(g_engine->getActiveCamera() != nullptr) s_engine->Update(g_engine->getActiveCamera()->getPosition(), g_engine->getActiveCamera()->getRotation());
 	senseManager->CreateAllSignals();			// Creamos todas las senyales (visuales, sonoras) del juego
 	senseManager->SendSignals();				// Update de las notificaciones sensoriales
 	bulletManager->Update();

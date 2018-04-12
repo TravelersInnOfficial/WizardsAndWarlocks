@@ -6,6 +6,10 @@
 #include <chrono>
 
 StateManager::StateManager(ServerInfo* serverInfo){
+
+	maxWizardPlayers = 4;
+	maxWarlockPlayers = 4;
+
 	if(serverInfo == nullptr){
 		ServerInfo dummyInfo;
 		serverInfo = &dummyInfo;
@@ -150,4 +154,20 @@ void StateManager::UpdateDelta(){
 	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
 	std::string myFps = std::to_string(int(1/(deltaTime)));
 	g_engine->ChangeWindowName(myFps);
+}
+
+int StateManager::GetWizardAINumber(){
+	return maxWizardPlayers;
+}
+
+int StateManager::GetWarlockAINumber(){
+	return maxWarlockPlayers;
+}
+
+int* StateManager::GetWizardAINumberPointer(){
+	return &maxWizardPlayers;
+}
+
+int* StateManager::GetWarlockAINumberPointer(){
+	return &maxWarlockPlayers;
 }
