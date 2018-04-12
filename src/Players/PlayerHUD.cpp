@@ -27,6 +27,12 @@ PlayerHUD::PlayerHUD(Player* p){
 
 PlayerHUD::~PlayerHUD(){
     g_engine = nullptr;
+    p_potion = nullptr;
+    
+    delete health_orb;
+    delete mana_orb;
+    delete stamina_bar;
+    delete spell_slot;
 }
 
 void PlayerHUD::InitHUD(){
@@ -128,6 +134,7 @@ void PlayerHUD::Erase(){
     p_erasePlayerPotion();
     if(p_alliance != ALLIANCE_WARLOCK) p_erasePlayerTrap();
 }
+
 //--------------------------------------------------------------------------------------//
 //---------------------------------------PRIVATE----------------------------------------//
 //--------------------------------------------------------------------------------------//
@@ -187,10 +194,10 @@ void PlayerHUD::p_erasePlayerPotion(){
 void PlayerHUD::p_erasePlayerTrap(){
     TrapManager::GetInstance()->EraseHUD(m_player);
 }
+
 //--------------------------------------------------------------------------------------//
 //------------------------------------HUD ORB STRUCT------------------------------------//
 //--------------------------------------------------------------------------------------//
-
 
 PlayerHUD::HUD_Orb::HUD_Orb(){
     m_orb_front = nullptr;
@@ -198,6 +205,21 @@ PlayerHUD::HUD_Orb::HUD_Orb(){
     m_orb_fill = nullptr;
     m_orb_scroll_lip = nullptr;
     m_orb_scroll_fill = nullptr;
+}
+
+PlayerHUD::HUD_Orb::~HUD_Orb(){
+	delete m_orb_front;
+	delete m_orb_back;
+	delete m_orb_fill;
+	delete m_orb_scroll_lip;
+	delete m_orb_scroll_fill;
+
+	m_orb_front = nullptr;
+	m_orb_back = nullptr;
+	m_orb_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
+	m_orb_scroll_fill = nullptr;
+	m_orb_scroll_lip = nullptr;
 }
 
 void PlayerHUD::HUD_Orb::SetHeight(float v){
@@ -211,18 +233,4 @@ void PlayerHUD::HUD_Orb::SetHeight(float v){
 void PlayerHUD::HUD_Orb::Update(float vel){
 	m_orb_scroll_fill->ScrollV(vel);
 	m_orb_scroll_lip->ScrollH(-vel);
-}
-void PlayerHUD::HUD_Orb::Erase(){
-	delete m_orb_front;
-	delete m_orb_back;
-	delete m_orb_fill;
-	delete m_orb_scroll_lip;
-	delete m_orb_scroll_fill;
-
-	m_orb_front = nullptr;
-	m_orb_back = nullptr;
-	m_orb_fill = nullptr;
-	m_orb_scroll_lip = nullptr;
-	m_orb_scroll_fill = nullptr;
-	m_orb_scroll_lip = nullptr;
 }

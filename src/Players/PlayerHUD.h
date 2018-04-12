@@ -26,9 +26,9 @@ private:
 		GSprite* m_orb_scroll_fill;
 
 		HUD_Orb();
+        ~HUD_Orb();
 		void SetHeight(float v);
 		void Update(float vel);
-		void Erase();
 	};
 
     Player* m_player;
