@@ -9,6 +9,8 @@
 #include "./State.h"
 #include <NetworkEngine/NetSeeker.h>
 
+class GSprite;
+
 class MenuPrincipal: public State{
 public:
 	MenuPrincipal();
@@ -32,7 +34,7 @@ private:
 
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
 	//MenuOption 		selectedOption;		// Opcion dada en el menu
-	TFSprite* bkg;
+	GSprite* bkg;
 	
 };
 

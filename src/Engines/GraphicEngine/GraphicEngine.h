@@ -6,6 +6,8 @@
 #include "GParticle.h"
 #include "GCamera.h"
 #include "GEntity.h"
+#include "GSprite.h"
+#include "GRect.h"
 #include "EventReceiver.h"
 #include "MenuReceiver.h"
 #include <EventEnum.h>
@@ -18,10 +20,15 @@
 
 class GraphicEngine{
 	friend class MenuManager;
+	friend class MainMenu;
+
+
 	friend class GUIEngine;
 	friend class GEntity;
 	friend class GBody;
 	friend class GRoom;
+	friend class GSprite;
+	friend class GRect;
 	friend class GParticle;
 
 public:
@@ -194,6 +201,10 @@ public:
 	 * Returns active camera in scene
 	*/
 	GCamera* getActiveCamera();
+
+	GSprite* addSprite(std::string texture = "", vector2df position = vector2df(0,0), vector2df size = vector2df(10, 10));
+
+	GRect* add2DRect(vector2df position = vector2df(0,0), vector2df size = vector2df(10, 10));
 
 	/**
 	 * @brief Returns mouse position in the screen

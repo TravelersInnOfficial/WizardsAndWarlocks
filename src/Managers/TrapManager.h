@@ -8,6 +8,9 @@
 #include "./../Objects/Trap.h"
 #include "./../Players/Player.h"
 
+class GSprite;
+class GRect;
+
 class TrapManager{
 public:
 	static TrapManager* GetInstance();
@@ -56,7 +59,9 @@ private:
 	int lastTrapId;
 	int MaxUsings = 4;
 
-	std::map<Player*,std::vector<TFDrawable*>> traps_hud;
+	GSprite* trapHud;
+	GSprite* numberTrap;
+	GRect*	 rectHud;
 
 	std::string GetPathFromUsings(int usings);
 	TrapManager();

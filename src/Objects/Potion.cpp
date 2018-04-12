@@ -16,11 +16,16 @@ Potion::Potion(vector3df TScale, int val, std::string tex){
 	picked = false;
 
 	m_rect = nullptr;
+	m_sprite = nullptr;
 }
 
 Potion::~Potion(){
 	if(bt_body != nullptr) delete bt_body;
+	bt_body = nullptr;
 	if(m_potionNode != nullptr) delete m_potionNode;
+	m_potionNode = nullptr;
+	if(m_sprite != nullptr) delete m_sprite;
+	m_sprite = nullptr;
 }
 
 bool Potion::CheckUse(Player* p){
@@ -161,10 +166,10 @@ vector3df Potion::GetPosition(){
 }
 
 void Potion::EraseHUD(){
-	m_rect->Erase();
-	m_sprite->Erase();
-
+	delete m_rect;
 	m_rect = nullptr;
+
+	delete m_sprite;
 	m_sprite = nullptr;
 }
 
@@ -185,8 +190,9 @@ void Potion::DrawHUD(){
 
 		vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
 
-		m_rect = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size,size));
-		m_sprite = toe::AddSprite(HUDTexturePath,toe::core::TOEvector2df(sizeImage.X,sizeImage.Y),toe::core::TOEvector2df(size-outline,size-outline));
+		m_rect = GraphicEngine::getInstance()->add2DRect(vector2df(xInit,yInit), vector2df(size,size));
+		
+		m_sprite = GraphicEngine::getInstance()->addSprite(HUDTexturePath, vector2df(sizeImage.X,sizeImage.Y), vector2df(size-outline,size-outline));
 	}
 }
 

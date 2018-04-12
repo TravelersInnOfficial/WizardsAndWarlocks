@@ -8,6 +8,8 @@
 #include "TrapCodes.h"
 #include "SpellCodes.h"
 
+
+class GSprite;
 class Player;
 struct DDFlags{
     bool parentNullID = true;
@@ -72,9 +74,9 @@ private:
     ImTextureID* t_spelltexture[N_TSPELLS];
     ImTextureID* trap_texture[N_TRAPS];
 
-    TFSprite* bkg;
+    GSprite* bkg;
     std::vector<ImVec2> slot_pos;
-    std::vector<TFSprite*> slots;
+    std::vector<GSprite*> slots;
 
     std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
     std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS

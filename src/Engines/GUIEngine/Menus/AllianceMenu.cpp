@@ -8,14 +8,14 @@ AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
     
     toe::core::TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND]); 
-    toe::core::TOEvector2df siz = toe::core::TOEvector2df(s.X,s.Y);
+    vector2df siz(s.X,s.Y);
     m_width = siz.X;
     m_height = siz.Y;
     m_posX = screenWidth/2 - m_width/2;
     m_posY = screenHeight/2 - m_height/2;
 
-    bkg = toe::AddSprite(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND],toe::core::TOEvector2df(m_posX, m_posY),siz);
-   
+    bkg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND], vector2df(m_posX, m_posY), siz);
+
     m_style.WindowBorderSize = 0.0f;
     m_style.FrameBorderSize = 0.0f;
     
@@ -36,10 +36,10 @@ AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
 }
 
 AllianceMenu::~AllianceMenu(){
-    bkg->Erase();
+    delete bkg;
     bkg = nullptr;
 
-    m_cursor->Erase();
+    delete m_cursor;
     m_cursor = nullptr;
 }
 

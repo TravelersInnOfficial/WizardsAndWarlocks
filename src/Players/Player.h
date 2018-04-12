@@ -23,6 +23,7 @@
 #include "./../Managers/OverlayManager.h"
 
 class Potion;
+class GRect;
 
 class Player: public Entidad{
 	public:
@@ -176,11 +177,11 @@ class Player: public Entidad{
 	protected:
 
 	struct HUD_Orb{
-		TFSprite* m_orb_front;
-		TFSprite* m_orb_back;
-		TFSprite* m_orb_fill;
-		TFSprite* m_orb_scroll_lip;
-		TFSprite* m_orb_scroll_fill;
+		GSprite* m_orb_front;
+		GSprite* m_orb_back;
+		GSprite* m_orb_fill;
+		GSprite* m_orb_scroll_lip;
+		GSprite* m_orb_scroll_fill;
 
 		HUD_Orb();
 		void SetHeight(float v);
@@ -246,7 +247,7 @@ class Player: public Entidad{
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
 		//***HUD**//
-		TFRect* m_sp_bar;
+		GRect* m_sp_bar;
 		float m_bar_widths;
 
 		HUD_Orb* health_orb;

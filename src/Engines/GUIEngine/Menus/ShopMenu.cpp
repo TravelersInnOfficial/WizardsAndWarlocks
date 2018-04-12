@@ -14,14 +14,14 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     focused_button = 0;
      
     toe::core::TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SHOP_BACKGROUND]); 
-    toe::core::TOEvector2df siz = toe::core::TOEvector2df(s.X,s.Y);
+    vector2df siz(s.X,s.Y);
     
     m_width = siz.X;
     m_height = siz.Y;
     m_posX = screenWidth/2 - m_width/2;
     m_posY = screenHeight/2 - m_height/2;
 
-    bkg = toe::AddSprite(TEXTUREMAP[TEXTURE_SHOP_BACKGROUND],toe::core::TOEvector2df(m_posX, m_posY),siz);
+    bkg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_SHOP_BACKGROUND],vector2df(m_posX, m_posY),siz);
     
     itemSize = ImVec2(50,50);
 
@@ -79,14 +79,14 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
 }
 
 ShopMenu::~ShopMenu(){
-    m_cursor->Erase();
+    delete m_cursor;
     m_cursor = nullptr;
 
-    bkg->Erase();
+    delete bkg;
     bkg = nullptr;
 
     for(int i = 0; i<slots.size(); i++){
-        slots[i]->Erase();
+        delete slots[i];
         slots[i] = nullptr;
     }
     slots.clear();
@@ -242,8 +242,12 @@ void ShopMenu::Update(bool* open, float deltaTime){
         load_items("traps_columns", TYPE_TRAP, N_TRAPS, N_TRAPS, trap_texture, trapKeys, trap_descriptions, traps_banner, "Traps"); 
         
         if(slots.empty()){
-            for(int i = 0;i<slot_pos.size();i++) 
-                slots.push_back(toe::AddSprite(TEXTUREMAP[TEXTURE_SHOP_SLOT],toe::core::TOEvector2df(slot_pos[i].x-5,screenHeight-slot_pos[i].y-itemSize.y-5),toe::core::TOEvector2df(itemSize.x+10,itemSize.y+10)));
+            for(int i = 0;i<slot_pos.size();i++){
+                vector2df position(slot_pos[i].x-5,screenHeight-slot_pos[i].y-itemSize.y-5);
+                vector2df dims(itemSize.x+10,itemSize.y+10);
+                GSprite* currentSlot = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_SHOP_SLOT], position, dims);
+                slots.push_back(currentSlot);
+            }
         }
         //ImGui::EndChild();
         ImGui::PopStyleVar();

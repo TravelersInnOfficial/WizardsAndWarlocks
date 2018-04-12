@@ -6,8 +6,6 @@
 #include <SoundEngine/SoundSystem.h>
 #include <Assets.h>
 
-
-class TFRect;
 class MainMenu : public Menu{
 public:
     MainMenu(MenuType);

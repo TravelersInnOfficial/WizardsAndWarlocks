@@ -26,7 +26,7 @@ MenuPrincipal::~MenuPrincipal(){
 	MenuManager::GetInstance()->~MenuManager();
 	
 	if(bkg!=nullptr){
-		bkg->Erase();
+		delete bkg;
 		bkg = nullptr;
 	}
 }
@@ -48,8 +48,8 @@ void MenuPrincipal::Draw(){
 	g_engine->BeginDraw();
 	MenuManager::GetInstance()->Draw();
 	if(bkg == nullptr){
-		toe::core::TOEvector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
-		bkg = toe::AddSprite("./../assets/textures/GUI/Menus/MainMenu/book_background.png",toe::core::TOEvector2df(0,0), dims);
+		vector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
+		bkg = GraphicEngine::getInstance()->addSprite("./../assets/textures/GUI/Menus/MainMenu/book_background.png", vector2df(0,0), dims);
 	}
 	g_engine->EndDraw();
 	

@@ -6,6 +6,9 @@
 #include <SoundEngine/SoundSystem.h>
 #include <SpellCodes.h>
 
+class GSprite;
+class GRect;
+
 class Hechizo{
 public:
 	Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP);
@@ -64,9 +67,9 @@ protected:
 	virtual void createSoundEvent();
 	virtual void playSoundEvent(SoundEvent* event,vector3df pos);
 
-	TFRect* m_rect;
-	TFRect* m_cast_cd;
-	TFSprite* m_sprite;
+	GRect* m_rect;
+	GRect* m_cast_cd;
+	GSprite* m_sprite;
 	
 };
 

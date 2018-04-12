@@ -37,6 +37,11 @@ Hechizo::~Hechizo(){
 		shotEvent->release();			//Release the sound
 		delete shotEvent;
 	}
+
+	if(m_sprite != nullptr){
+		delete m_sprite;
+		m_sprite = nullptr;
+	}
 }
 
 void Hechizo::DieReset(){
@@ -192,12 +197,11 @@ float Hechizo::GetTotalCasting(){
 }
 
 void Hechizo::EraseHUD(){
-	if(m_rect != nullptr && m_cast_cd != nullptr && m_sprite != nullptr){
-		m_rect->Erase();
-		m_cast_cd->Erase();
-		m_sprite->Erase();
-	}
 
+	if(m_rect 		!= nullptr)	delete m_rect;
+	if(m_cast_cd 	!= nullptr)	delete m_cast_cd;
+	if(m_sprite 	!= nullptr) delete m_sprite;
+	
 	m_rect = nullptr;
 	m_cast_cd = nullptr;
 	m_sprite = nullptr;
@@ -221,8 +225,8 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 		}
 	}
 	else{
-		m_rect = toe::Add2DRect(toe::core::TOEvector2df(initX, initY),toe::core::TOEvector2df(size+outline, size+outline));
-		m_cast_cd = toe::Add2DRect(toe::core::TOEvector2df(initX,initY), toe::core::TOEvector2df(size+outline,0));
-		m_sprite = toe::AddSprite(HUDTexturePath,toe::core::TOEvector2df(initX+outline, initY+outline),toe::core::TOEvector2df(size-outline, size-outline));
+		m_rect 		= GraphicEngine::getInstance()->add2DRect(vector2df(initX, initY), vector2df(size+outline, size+outline));
+		m_cast_cd 	= GraphicEngine::getInstance()->add2DRect(vector2df(initX,initY), vector2df(size+outline,0));
+		m_sprite 	= GraphicEngine::getInstance()->addSprite(HUDTexturePath, vector2df(initX+outline, initY+outline),vector2df(size-outline, size-outline));
 	}
 }

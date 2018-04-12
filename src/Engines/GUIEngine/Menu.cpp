@@ -58,13 +58,13 @@ void Menu::SetHeight(float h){m_height = h;}
 void Menu::UpdateCursor(){
     toe::core::TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
     if(m_cursor == nullptr){
-        toe::core::TOEvector2df d = toe::core::TOEvector2df(cursor_dims.X,cursor_dims.Y);
-        m_cursor = toe::AddSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR],toe::core::TOEvector2df(0,0),d);
+        vector2df dims(cursor_dims.X,cursor_dims.Y);
+        m_cursor = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR], vector2df(0,0), dims);
         m_cursor->ToFront();
     }else{
         ImVec2 mouse = ImGui::GetMousePos();
         if(mouse[0]>=0 && mouse[0]<screenWidth && mouse[1]>=0 && mouse[1]<screenHeight){
-            toe::core::TOEvector2df pos = m_cursor->GetPosition();
+            vector2df pos = m_cursor->GetPosition();
             if(pos.X != mouse[0]-cursor_dims.X/2 || pos.Y != screenHeight-cursor_dims.Y-mouse[1]){
                 m_cursor->SetPosition(mouse[0]-cursor_dims.X/5,screenHeight-cursor_dims.Y-mouse[1]);
             }

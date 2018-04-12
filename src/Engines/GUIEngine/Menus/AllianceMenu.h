@@ -3,6 +3,8 @@
 
 #include <GUIEngine/Menu.h>
 
+class GSprite;
+
 class AllianceMenu : public Menu{
 public:
     AllianceMenu(MenuType);
@@ -16,7 +18,7 @@ private:
 
     ImVec2 buttonSize;
     
-    TFSprite* bkg;
+    GSprite* bkg;
 
     std::vector<std::string> buttonKeys = { "WARLOCKS","WIZARDS"};
     const char * descriptions[N_BUTTONS] = {"Deploy traps and protect the grial from the wizards.. or just KILL EM ALL","Get the grial back from the warlocks nasty claws!"};

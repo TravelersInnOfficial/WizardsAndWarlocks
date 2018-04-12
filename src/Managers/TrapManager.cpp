@@ -19,7 +19,11 @@ void TrapManager::Update(float deltaTime){
 	UpdateTrap(deltaTime);
 }
 
-TrapManager::TrapManager(){}
+TrapManager::TrapManager(){
+	trapHud = nullptr;
+	numberTrap = nullptr;
+	rectHud = nullptr;
+}
 
 TrapManager::~TrapManager(){
 	EmptyObject();
@@ -44,16 +48,13 @@ void TrapManager::ClearTraps(){
 	}
 	traps.clear();
 
-	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.begin();
-	for(;it!=traps_hud.end(); it++){
+	if(trapHud != nullptr) delete trapHud;
+	if(numberTrap != nullptr) delete numberTrap;
+	if(rectHud != nullptr) delete rectHud;
 
-		std::vector<TFDrawable*> drawables = it->second;
-		int size = drawables.size();
-		for(int i = 0; i<size; i++) drawables[i]->Erase();
-		drawables.clear();
-
-	}
-	traps_hud.clear();
+	trapHud = nullptr;
+	numberTrap = nullptr;
+	rectHud = nullptr;
 }
 
 Trap* TrapManager::AddTrap(vector3df pos, vector3df normal, TrapEnum type){
@@ -254,25 +255,19 @@ std::vector<Trap*> TrapManager::GetAllTraps(){
 
 void TrapManager::DrawHUD(Player* player){
 	//comprobamos si existe el player en el mapa
-	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.find(player);
-	std::vector<TFDrawable*> drawables;
 
-	if(it != traps_hud.end()){
-		//si existe comparamos el estado de sus drawables	
-		drawables = it->second;
-
-		if(drawables.size() > 0){
-			//si la textura asignada es diferente a la actual del jugador se actualiza
-			std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
-			if(drawables[1]->GetTexture() != kindImagePath && kindImagePath.length() > 0){
-				drawables[1]->SetTexture(kindImagePath);
-			}
-
-			std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
-			if(drawables[2]->GetTexture() != countImagePath && countImagePath.length() > 0){
-				drawables[2]->SetTexture(countImagePath);
-			}
+	if(trapHud != nullptr ){
+		//si la textura asignada es diferente a la actual del jugador se actualiza
+		std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
+		if(trapHud->GetTexture() != kindImagePath && kindImagePath.length() > 0){
+			trapHud->SetTexture(kindImagePath);
 		}
+
+		std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
+		if(numberTrap->GetTexture() != countImagePath && countImagePath.length() > 0){
+			numberTrap->SetTexture(countImagePath);
+		}
+
 	}
 	//si no existe se añade el player y sus trampas
 	else{
@@ -289,36 +284,26 @@ void TrapManager::DrawHUD(Player* player){
 			float yInit =		H - size*3.5;
 			float outline =		5;
 
-			TFRect* m_bckg = toe::Add2DRect(toe::core::TOEvector2df(xInit,yInit), toe::core::TOEvector2df(size+outline,size+outline));
-			drawables.push_back(m_bckg);
+			rectHud = GraphicEngine::getInstance()->add2DRect(vector2df(xInit,yInit), vector2df(size+outline,size+outline));
 
 			vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
-			TFSprite* m_trap_sprite = toe::AddSprite(kindImagePath, toe::core::TOEvector2df(xInit + outline, yInit + outline), toe::core::TOEvector2df(size-outline, size-outline));
-			drawables.push_back(m_trap_sprite);
+			trapHud = GraphicEngine::getInstance()->addSprite(kindImagePath, vector2df(xInit + outline, yInit + outline), vector2df(size-outline, size-outline));
 		
 			vector4df sizeCounter(xInit + size, sizeImage.Y, xInit + size + size/2, sizeImage.Y2);
-			TFSprite* m_trap_count = toe::AddSprite(countImagePath, toe::core::TOEvector2df(xInit + size*0.75, yInit - size/4), toe::core::TOEvector2df(size/2,size/2));
-			drawables.push_back(m_trap_count);
-
-			traps_hud.insert(std::pair<Player*,std::vector<TFDrawable*>>(player,drawables));
+			numberTrap = GraphicEngine::getInstance()->addSprite(countImagePath, vector2df(xInit + size*0.75, yInit - size/4), vector2df(size/2,size/2));
 	
 		}
 	}
 }
 
 void TrapManager::EraseHUD(Player* player){
-	std::map<Player*,std::vector<TFDrawable*>>::iterator it = traps_hud.find(player);
-	std::vector<TFDrawable*> drawables;
-	if(it != traps_hud.end()){
-		drawables = it->second;
-		if(!drawables.empty()){
+	if(trapHud != nullptr) delete trapHud;
+	if(numberTrap != nullptr) delete numberTrap;
+	if(rectHud != nullptr) delete rectHud;
 
-			int size = drawables.size();
-			for(int i = 0; i<size; i++) drawables[i]->Erase();
-			drawables.clear();
-		}
-		traps_hud.erase(it);
-	}
+	trapHud = nullptr;
+	numberTrap = nullptr;
+	rectHud = nullptr;
 }
 
 std::string TrapManager::GetPathFromEnum(TrapEnum tKind){

@@ -8,7 +8,10 @@
 #include "./../Players/Player.h"
 #include <GraphicEngine/GraphicEngine.h>
 #include <PhysicsEngine/BT_Body.h>
+
 class Player;
+class GSprite;
+class GRect;
 
 class Potion:public Entidad{
 public:
@@ -64,8 +67,8 @@ protected:
 	void DeletePotion();
 	void UpdatePosShape();
 
-	TFRect* m_rect;
-	TFSprite* m_sprite;
+	GRect* m_rect;
+	GSprite* m_sprite;
 };
 
 #endif

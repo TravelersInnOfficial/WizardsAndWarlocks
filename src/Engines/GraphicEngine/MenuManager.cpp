@@ -28,6 +28,8 @@ MenuManager* MenuManager::GetInstance(){
 }
 
 void MenuManager::CreateMenu(MenuType type, int option){
+	if(currentMenu != nullptr) delete currentMenu;
+
 	switch(type){
 		case(MAIN_M):{
 			open_menu = true;
@@ -92,7 +94,8 @@ void MenuManager::Draw(){
 void MenuManager::ClearMenu(){
 	if(currentMenu != nullptr ){
 		if(open_menu) currentMenu->Close(&open_menu);
-		currentMenu->Drop();
+		//currentMenu->Drop();
+		delete currentMenu;
 		currentMenu = nullptr;
 	}
 	//netDebugWindow = nullptr;

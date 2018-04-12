@@ -373,6 +373,25 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	return privateCamera;
 }
 
+GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vector2df size){
+	toe::core::TOEvector2df pos(position.X, position.Y);
+	toe::core::TOEvector2df dims(size.X, size.Y);
+	TFSprite* sprite = toe::AddSprite(texture, pos, dims);
+
+	GSprite* output = new GSprite(sprite);
+	return output;
+}
+
+GRect* GraphicEngine::add2DRect(vector2df position, vector2df size){
+	toe::core::TOEvector2df pos(position.X, position.Y);
+	toe::core::TOEvector2df dim(size.X, size.Y);
+	TFRect* rect = toe::Add2DRect(pos, dim);
+
+	GRect* output = new GRect(rect);
+	return output;
+}
+
+
 GCamera* GraphicEngine::getActiveCamera(){
 	return privateCamera;
 }

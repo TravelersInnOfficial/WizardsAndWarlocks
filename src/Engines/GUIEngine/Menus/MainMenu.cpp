@@ -53,7 +53,8 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
 
 MainMenu::~MainMenu(){
     delete netSeeker;
-    m_cursor->Erase();
+
+    delete m_cursor;
     m_cursor = nullptr;
 }
 
@@ -62,7 +63,7 @@ void MainMenu::Close(bool* open){
 }
 
 void MainMenu::Drop(){
-    MainMenu::~MainMenu();
+    //MainMenu::~MainMenu();
 }
 
 void MainMenu::SinglePlayer(bool* open){

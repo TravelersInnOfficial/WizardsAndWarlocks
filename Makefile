@@ -6,7 +6,7 @@ USER_FLAGS_C			=
 # DONT EDIT ---------------------------------------------------
 
 CPPFLAGS        	:= $(INCLUDE_FOLDERS)
-CXXFLAGS			:= -O3 -Wall -Wextra -std=c++14 $(USER_FLAGS)
+CXXFLAGS			:= -O3 -Wall -g -std=c++14 $(USER_FLAGS)
 CCFLAGS				:= -O3 -Wall $(USER_FLAGS_C)
 LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lassimp
 
