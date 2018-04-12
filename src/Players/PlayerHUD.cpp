@@ -26,13 +26,10 @@ PlayerHUD::PlayerHUD(Player* p){
 }
 
 PlayerHUD::~PlayerHUD(){
+	Erase();
+
     g_engine = nullptr;
     p_potion = nullptr;
-    
-    delete health_orb;
-    delete mana_orb;
-    delete stamina_bar;
-    delete spell_slot;
 }
 
 void PlayerHUD::InitHUD(){

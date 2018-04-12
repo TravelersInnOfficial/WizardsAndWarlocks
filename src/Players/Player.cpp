@@ -27,6 +27,9 @@ Player::Player(bool isPlayer1){
 	if(isPlayer1) overlayManager = new OverlayManager();
 	else overlayManager = nullptr;
 
+	if(isPlayer1) m_hud = new PlayerHUD(this);
+	else m_hud = nullptr;
+	
 	createSoundEvents();
 	changeSurface(2);
 	m_position = vector3df(0,2,0);
@@ -75,7 +78,6 @@ Player::Player(bool isPlayer1){
 	bool isServer = n_engine->IsServerInit();
 	if(!isClient && !isServer) SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 
-	m_hud = new PlayerHUD(this);
 
 	Respawn();
 }
@@ -136,6 +138,11 @@ Player::~Player(){
 	if(m_camera!=nullptr){
 		delete m_camera;
 		m_camera = nullptr;
+	}
+
+	if(m_hud != nullptr){
+		delete m_hud;
+		m_hud = nullptr;
 	}
 
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();

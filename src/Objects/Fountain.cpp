@@ -28,6 +28,10 @@ Fountain::~Fountain(){
 	if (!useEvent->isPlaying()) useEvent->stop();
 	useEvent->release();
 	delete useEvent;
+
+	if(cantUseEvent->isPlaying()) cantUseEvent->stop();
+	cantUseEvent->release();
+	delete cantUseEvent;
 }
 
 void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
