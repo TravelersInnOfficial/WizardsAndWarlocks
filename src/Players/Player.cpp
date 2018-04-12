@@ -1166,11 +1166,14 @@ void Player::SetName(std::string newName){
 void Player::SetVisible(bool visible){
 	if(!visible) {
 		m_visible = false;
-		m_playerNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+		m_playerNode->setMaterialTexture(0, "../assets/textures/none.png");
+		//m_playerNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 	}
 	else{
 		m_visible = true;
-	 	m_playerNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
+		if(playerAlliance == ALLIANCE_WARLOCK) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+		else m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+	 	//m_playerNode->setMaterialType(EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
 	}
 }
 
