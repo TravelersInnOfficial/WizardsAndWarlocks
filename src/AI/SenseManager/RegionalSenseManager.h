@@ -35,6 +35,7 @@ public:
 	void CreateAllSignals();
 	void SendSignals();
 	void ResetSensor(Sensor* s);
+	void DeleteSensor(Sensor* s);
 
 private:
 

@@ -32,6 +32,7 @@ AIPlayer::AIPlayer():Player(false){
 AIPlayer::~AIPlayer(){
 	delete behaviour;
 	delete path;
+	RegionalSenseManager::GetInstance()->DeleteSensor(sensor);
 
 	delete lookWhereYoureGoing;
 	delete obstacleAvoidance;

@@ -11,6 +11,9 @@ EndMatchMenu::EndMatchMenu(MenuType type, int winners) : Menu(type){
     if(winners == (int)ALLIANCE_WIZARD) m_winners = "THE WIZARDS WON!";
     else if(winners == (int) ALLIANCE_WARLOCK) m_winners = "THE WARLOCKS WON!";
 
+    HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
+    hp->ToggleMenu(true);
+
     m_returnLobby = false;
 
     m_style.WindowBorderSize = 1.0f;

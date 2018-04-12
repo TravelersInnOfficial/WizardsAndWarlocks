@@ -142,3 +142,16 @@ void RegionalSenseManager::ResetSensor(Sensor* s){
 		}
 	}
 }
+
+void RegionalSenseManager::DeleteSensor(Sensor* s){
+	int size = sensors.size();
+	for(int i=0; i<size; i++){
+		Sensor* currentSensor = sensors[i];
+		if(currentSensor == s){
+			ResetSensor(s);
+			sensors.erase(sensors.begin() + i);
+			delete s;
+			break;
+		}
+	}
+}
