@@ -27,6 +27,12 @@ MasterAction::MasterAction(){
 	lastTask = -1;
 }
 
+MasterAction::~MasterAction(){
+	// En este caso el hijo no esta ligado a la accion
+	// Es eliminada en otro sitio
+	child = nullptr;
+}
+
 bool MasterAction::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"MasterAction\n";
 
@@ -51,6 +57,12 @@ bool MasterAction::run(Blackboard* bb){
 
 MasterMovement::MasterMovement(){
 	lastTask = -1;
+}
+
+MasterMovement::~MasterMovement(){
+	// En este caso el hijo no esta ligado a la accion
+	// Es eliminada en otro sitio
+	child = nullptr;
 }
 
 bool MasterMovement::run(Blackboard* bb){

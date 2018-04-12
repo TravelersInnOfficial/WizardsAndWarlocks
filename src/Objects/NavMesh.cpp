@@ -14,18 +14,21 @@ NavMesh::NavMesh(std::vector<Node*> nodes, std::vector<Connection*> connections,
 }
 
 NavMesh::~NavMesh(){
-    for(int i=m_connections.size()-1; i>=0; i--){
-        m_connections.erase(m_connections.begin()+i);
+    int size = m_connections.size();
+    for(int i = size-1; i>=0; i--){
+        m_connections.erase(m_connections.begin() + i);
     }
     m_connections.clear();
 
-    for(int i=m_triangles.size()-1; i>=0; i--){
-        m_triangles.erase(m_triangles.begin()+i);
+    size = m_triangles.size();
+    for(int i = size-1; i>=0; i--){
+        delete m_triangles[i];
     }
     m_triangles.clear();
 
-    for(int i=m_nodes.size()-1; i>=0; i--){
-        m_nodes.erase(m_nodes.begin()+i);
+    size = m_nodes.size();
+    for(int i = size-1; i>=0; i--){
+        delete m_nodes[i];
     }
     m_nodes.clear();
 }

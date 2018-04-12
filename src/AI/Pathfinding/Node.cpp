@@ -30,7 +30,7 @@ void Node::eraseConnection(Node* n){
 
 Node::~Node(){
     int connectionSize = m_connections.size();
-    for(int i = 0; i<connectionSize; i++) delete m_connections[i];
+    for(int i = connectionSize -1 ; i>=0; i--) delete m_connections[i];
     m_connections.clear();
 }
 

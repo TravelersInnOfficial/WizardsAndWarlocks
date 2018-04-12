@@ -48,6 +48,8 @@ public:
      */
     Node* getToNode();
 
+    void Unlink();
+
 private:
     float m_cost;
     Node* m_FromNode;

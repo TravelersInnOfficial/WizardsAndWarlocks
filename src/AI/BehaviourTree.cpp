@@ -3,6 +3,10 @@
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 
+    rootRecive = nullptr;
+    rootAction = nullptr;
+    rootMove = nullptr;
+
     PrepareSubTrees();
     CreateReceive();
     CreateAction();
@@ -11,12 +15,21 @@ BehaviourTree::BehaviourTree(){
 
 BehaviourTree::~BehaviourTree(){
 	delete informacion;
+
     int size = tasks.size();
     for(int i=0; i<size; i++){
         Task* t = tasks[i];
         delete t;
     }
     tasks.clear();
+
+    if(rootRecive != nullptr) delete rootRecive;
+    if(rootAction != nullptr) delete rootAction;
+    if(rootMove   != nullptr) delete rootMove;
+
+    rootRecive = nullptr;
+    rootAction = nullptr;
+    rootMove   = nullptr;
 }
 
 void BehaviourTree::Update(float deltaTime){
@@ -32,14 +45,17 @@ void BehaviourTree::Run(){
 }
 
 void BehaviourTree::SetRootReceive(Task* t){
+    if(rootRecive != nullptr) delete rootRecive;
     rootRecive = t;
 }
 
 void BehaviourTree::SetRootAction(Task* t){
+    if(rootAction != nullptr) delete rootAction;
     rootAction = t;
 }
 
 void BehaviourTree::SetRootMove(Task* t){
+    if(rootMove != nullptr) delete rootMove;
     rootMove = t;
 }
 

@@ -36,7 +36,9 @@ AIPlayer::~AIPlayer(){
 
 	delete lookWhereYoureGoing;
 	delete obstacleAvoidance;
+	delete followPath;
 	delete wander;
+	delete align;
 	delete face;
 	delete seek;
 	delete flee;

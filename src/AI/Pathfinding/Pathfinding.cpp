@@ -96,6 +96,7 @@ void Pathfinding::ResetValues(){
 
     int size = m_connections.size();
     for(int i=0; i<size; i++){
+        m_connections[i]->Unlink();
         delete m_connections[i];        // Eliminamos las conexiones creadas en esta clase que no se van a usar mas
     }
     m_connections.clear();              // Limpiamos las conexiones, puesto que han sido eliminadas
@@ -196,17 +197,19 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                         nr->m_heuristic = 0;
                         nr->m_estimatedTotalCost = 0;
                         m_openList->add(nr);
+
                         break;
                 }
             }
 
             if(current->m_node == EndNode){
+                m_closedList->add(current);
                 break;
             }
             //Otherwise get its outgoing connections
             nodeConnections = current->m_node->getOutgoingConnections();
             //Loop through each connection in turn
-            if(nodeConnections.size()==0) break;
+            if(nodeConnections.size()==0){ break;}
 
             for(int i = 0; i < nodeConnections.size();i++){
                 //Get the cost estimate for the end node 
@@ -219,7 +222,9 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                     endNodeRecord = m_closedList->find(endNode);
 
                     //If we didn't find a shorter route, skip
-                    if(endNodeRecord->m_costSoFar <= endNodeCost) continue;
+                    if(endNodeRecord->m_costSoFar <= endNodeCost){ 
+                        continue;
+                    }
 
                     //Otherwhise remove it from the closed list
                     m_closedList->remove(endNodeRecord);
@@ -277,12 +282,14 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
         if(current!=nullptr && current->m_connection!=nullptr){
-            if(current->m_node != EndNode) m_path.push_back(EndNode);
+            Node* currentNode = current->m_node;
+            if(currentNode != EndNode) m_path.push_back(EndNode);
             do{
-                m_path.push_back(current->m_node);
-                if(current->m_connection == nullptr) std::cout<<"Era aqui?"<<std::endl;
+                m_path.push_back(currentNode);
                 current = m_closedList->find(current->m_connection->getFromNode());
+                currentNode = current->m_node;
             }while(current!=nullptr && current->m_node != StartNode);
+
             m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode
             std::reverse(m_path.begin(), m_path.end());
         }

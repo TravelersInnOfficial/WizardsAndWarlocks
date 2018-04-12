@@ -48,7 +48,10 @@ void List::remove(NodeRecord* nr) {
             //m_list.erase(m_list.begin() + i);
             //cambiamos el seleccionado por el ultimo y hacemos un heapify
             m_list[i] = m_list[m_list.size()-1];
+            
+            delete m_list[size-1];
             m_list.erase(m_list.end()-1);
+
             heapify(i);
             break;
         }
@@ -155,9 +158,12 @@ void List::insertNode(NodeRecord* nr){
 
 NodeRecord* List::getMin(){
     NodeRecord* min = m_list[0];
-    //m_list.erase(m_list.begin());
-    m_list[0] = m_list[m_list.size()-1];
+
+    int size = m_list.size();
+    m_list[0] = m_list[size-1];
+
     m_list.erase(m_list.end()-1);
+
     heapify(0);
     return min;
 }

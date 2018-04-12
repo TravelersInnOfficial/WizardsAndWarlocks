@@ -19,6 +19,7 @@
 class MasterAction: public Decorador{
 public:
 	MasterAction();
+	~MasterAction();
 	bool run(Blackboard* bb);
 private:
 	int lastTask;
@@ -33,6 +34,7 @@ private:
 class MasterMovement: public Decorador{
 public:
 	MasterMovement();
+	~MasterMovement();
 	bool run(Blackboard* bb);
 private:
 	int lastTask;
