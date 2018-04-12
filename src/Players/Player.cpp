@@ -83,7 +83,7 @@ Player::Player(bool isPlayer1){
 }
 
 void Player::InitHUD(){
-	m_hud->InitHUD();
+	if(m_hud != nullptr) m_hud->InitHUD();
 }
 
 void Player::InitGame(){
@@ -678,7 +678,7 @@ void Player::Die(){
 }
 
 void Player::EraseHUD(){
-	m_hud->Erase();
+	if(m_hud!=nullptr)m_hud->Erase();
 }
 
 void Player::ReturnToLobby(){
@@ -1091,7 +1091,7 @@ void Player::Draw(){
 	}else{	
 		/***/
 		DrawOverlays();
-		m_hud->Draw();
+		if(m_hud!=nullptr)m_hud->Draw();
 		/***/
 	}
 }
