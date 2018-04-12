@@ -18,6 +18,8 @@
 #include <StateCodes.h>
 #include <NetworkStructs.h>
 
+class MenuManager;
+
 class StateManager{
 public:
 	static StateManager* GetInstance(ServerInfo* serverInfo = nullptr);
@@ -45,7 +47,9 @@ private:
 	GraphicEngine*	g_engine;
 	SoundSystem*	s_engine;
 	NetworkEngine*	n_engine;
+	MenuManager*	m_engine;
 	GUIEngine* 		gui_engine;
+
 
 	float deltaTime;
 	float timeStart;

@@ -23,8 +23,8 @@ MenuManager::~MenuManager(){
 }
 
 MenuManager* MenuManager::GetInstance(){
-	if(instance == nullptr) instance = new MenuManager();
-	return instance;
+	static MenuManager instance = MenuManager();
+	return &instance;
 }
 
 void MenuManager::CreateMenu(MenuType type, int option){

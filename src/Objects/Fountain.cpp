@@ -2,6 +2,7 @@
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
+	user = nullptr;
 	inUse = false;
 	value = 100;
 	maxValue = 100;

@@ -23,7 +23,7 @@ MenuPrincipal::~MenuPrincipal(){
 	
 	g_engine->setCursorVisible(false);
 
-	MenuManager::GetInstance()->~MenuManager();
+	MenuManager::GetInstance()->ClearMenu();
 	
 	if(bkg!=nullptr){
 		delete bkg;

@@ -28,7 +28,7 @@ SinglePlayerGame::SinglePlayerGame(){
 }
 
 SinglePlayerGame::~SinglePlayerGame(){
-	delete m_stateGame;
+	if(m_stateGame!=nullptr) delete m_stateGame;
 
 	playerManager->EmptyObject();
 	senseManager->EmptyObject();
@@ -37,6 +37,9 @@ SinglePlayerGame::~SinglePlayerGame(){
 	effectManager->EmptyObject();
 	bulletManager->EmptyObject();
 	spellManager->EmptyObject();	// Tiene que eliminarse despues de el playerManager NECESARIO
+
+	// Eliminamos las habitaciones
+	g_engine->CleanRooms();
 
 	// Liberamos los sonidos que teniamos puestos
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();

@@ -50,6 +50,8 @@ MultiPlayerGame::MultiPlayerGame(){
 }
 
 MultiPlayerGame::~MultiPlayerGame(){
+	if(m_stateGame!=nullptr)delete m_stateGame;
+
 	networkManager->EmptyObject();	
 	playerManager->EmptyObject();
 	trapManager->EmptyObject();
@@ -57,6 +59,9 @@ MultiPlayerGame::~MultiPlayerGame(){
 	effectManager->EmptyObject();
 	bulletManager->EmptyObject();
 	spellManager->EmptyObject();	// Tiene que eliminarse despues de el playerManager NECESARIO
+
+	// Eliminamos las habitaciones
+	g_engine->CleanRooms();
 
 	n_engine->EndService();
 
@@ -108,10 +113,16 @@ void MultiPlayerGame::ChangeMode(){
 }
 
 void MultiPlayerGame::CleanGame(){
-	objectManager->ClearMap(); 				// Limpiamos los objetos
-	bulletManager->DeleteAllProyectiles();	// Limpiamos los proyectiles
-	trapManager->ClearTraps();				// Limpiamos las trampas
-	spellManager->ResetAllDieHechizo();		// Limpiamos los hechizos
+	// Limpiamos los objetos
+	objectManager->ClearMap();
+	// Limpiamos los proyectiles
+	bulletManager->DeleteAllProyectiles();
+	// Limpiamos las trampas
+	trapManager->ClearTraps();
+	// Eliminamos las habitaciones
+	g_engine->CleanRooms();
+	// Limpiamos los hechizos
+	spellManager->ResetAllDieHechizo();
 }
 
 bool MultiPlayerGame::Input(){

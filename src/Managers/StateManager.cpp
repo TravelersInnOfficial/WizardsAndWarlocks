@@ -1,4 +1,5 @@
 #include "StateManager.h"
+#include <GraphicEngine/MenuManager.h>
 #include <time.h>
 #include <iostream>
 #include <cstdio>
@@ -30,6 +31,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
 	n_engine = NetworkEngine::GetInstance(serverInfo);
+	m_engine = MenuManager::GetInstance();
 	gui_engine = GUIEngine::GetInstance();
 
 	srand(time(0));

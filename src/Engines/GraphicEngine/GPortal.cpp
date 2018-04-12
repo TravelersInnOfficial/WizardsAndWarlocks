@@ -5,7 +5,9 @@ GPortal::GPortal(TFPortal* portal){
 	m_portal = portal;
 }
 
-GPortal::~GPortal(){}
+GPortal::~GPortal(){
+	// El TFPortal se elimina al eliminar el TFRoom
+}
 
 void GPortal::SetCenter(vector3df center){
 	toe::core::TOEvector3df input(center.X, center.Y, center.Z);

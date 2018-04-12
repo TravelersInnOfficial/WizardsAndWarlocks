@@ -12,6 +12,12 @@ GRoom::GRoom(int id, vector3df position, vector3df rotation, vector3df scale){
 }
 
 GRoom::~GRoom(){
+	int size = m_portals.size();
+	for(int i=0; i<size; i++){
+		delete m_portals[i];
+	}
+	m_portals.clear();
+
 	GraphicEngine::getInstance()->privateSManager->DeleteRoom(privateNode);
 }
 
@@ -52,8 +58,16 @@ bool GRoom::DeletePortal(GPortal* portal){
 	int size = m_portals.size();
 	for(int i=0; i<size; i++){
 		if(portal == m_portals[i]){
+
+			// Eliminamos el TFPortal
 			TFRoom* room = (TFRoom*)privateNode;
-			return room->DeletePortal(portal->m_portal);
+			bool output = room->DeletePortal(portal->m_portal);
+
+			// Eliminamos el GPortal
+			delete m_portals[i];
+			m_portals.erase(m_portals.begin() + i);
+
+			return output;
 		}
 	}
 	return false;

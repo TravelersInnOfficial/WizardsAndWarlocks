@@ -49,6 +49,9 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     netSeeker = new NetSeeker();
     
     m_fontSize = 0;
+
+    // Create Sound
+    soundEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Click");
 }
 
 MainMenu::~MainMenu(){
@@ -56,6 +59,10 @@ MainMenu::~MainMenu(){
 
     delete m_cursor;
     m_cursor = nullptr;
+
+    if (soundEvent->isPlaying()) soundEvent->stop();    //Stop the sound if its playing
+    soundEvent->release();
+    delete soundEvent;                        //Release the sound
 }
 
 void MainMenu::Close(bool* open){
@@ -460,7 +467,5 @@ void MainMenu::PrepareClient(bool proprietary){
 }
 
 void MainMenu::PlaySound(){
-    soundEvent = SoundSystem::getInstance()->createEvent("event:/HUD/Click");	//Create the click event
-	SoundSystem::getInstance()->playEvent(soundEvent);	                        //Play the event
-	soundEvent->release();								                        //Release the event
+    soundEvent->start();							                        
 }
