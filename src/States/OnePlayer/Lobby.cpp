@@ -23,8 +23,6 @@ Lobby::Lobby(SinglePlayerGame* fat){
 
 	// Ponemos a false el inicio de la partida de los players
 	playerManager->ManageMatchStatus(false);
-
-	playerManager->EraseAI();
 }
 
 Lobby::~Lobby(){

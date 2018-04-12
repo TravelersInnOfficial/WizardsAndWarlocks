@@ -61,6 +61,7 @@ void SinglePlayerGame::ChangeMode(){
 		case 1:
 			delete m_stateGame;						// Eliminamos el estado que haya actualmente
 			CleanGame();							// Limpiamos el juego
+			playerManager->SpawnAI();
 			m_stateGame = new Match(this);			// Cargamos la partida
 			playerManager->InitGame();				// Posicionamos los jugadores
 			m_changeMode = 0;
@@ -68,6 +69,7 @@ void SinglePlayerGame::ChangeMode(){
 		case 2:
 			delete m_stateGame;
 			CleanGame();
+			playerManager->EraseAI();
 			m_stateGame = new Lobby(this);
 			playerManager->RestartMatchStatus();
 			m_changeMode = 0;

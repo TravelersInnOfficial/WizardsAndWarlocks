@@ -53,15 +53,13 @@ public:
 	Player* ChangePlayerTargetCam(Player* player, Alliance alli);	// Cambia el jugador al que mirar en la camara de muerte
 
 private:
-	Player*		playerOne;
-
+	Player*					playerOne;
 	std::vector<Player*>	players;
 	std::vector<Player*>	deadPlayers;
+	std::vector<Player*>	playersToDelete;
 
 	bool wizardsWin;
 	bool warlocksWin;
-
-	std::vector<Player*> playersToDelete;
 
 	PlayerManager();
 	PlayerManager(PlayerManager&);
