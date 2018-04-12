@@ -29,6 +29,7 @@ private:
         ~HUD_Orb();
 		void SetHeight(float v);
 		void Update(float vel);
+        void SetColor(int alliance);
 	};
 
     Player* m_player;
@@ -42,6 +43,9 @@ private:
 
 	float m_orb_height;
     float m_stamina_bar_width;
+    float m_spell_size;
+    float m_spell_space;
+    int m_num_spells;
 
     void p_drawPlayerOrbs() const;
     void p_drawPlayerSpellSelector() const;

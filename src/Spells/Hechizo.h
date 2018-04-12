@@ -36,7 +36,7 @@ public:
 	SoundEvent* getVoiceEvent();
 
 	// Draw
-	void DrawHUD(float initX, float initY, float size, float outline, bool current);
+	void DrawHUD(float initX, float initY, float size, float outline, bool current, bool disabled = false, int alliance = ALLIANCE_WARLOCK);
 	void EraseHUD();
 
 	std::string GetHUDTexturePath();

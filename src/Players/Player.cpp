@@ -411,14 +411,25 @@ void Player::Update(float deltaTime){
 }
 
 bool Player::ChangeCurrentSpell(int value){
+	bool toRet = false;
 	if(currentSpell != value){
+		if(value < 0 ){
+			if(currentSpell-1 < 0) currentSpell = numberSpells;
+			else currentSpell--;
+			toRet = true;
+		}
+		if(value > 3 ){
+			if(currentSpell+1 > 3) currentSpell = 0;
+			else currentSpell++;
+			toRet = true;
+		}
 		if(value >=0 && value<= numberSpells){
 			ResetSpell();
 			currentSpell = value;
-			return true;
+			toRet = true;
 		}
 	}
-	return false;
+	return toRet;
 }
 
 void Player::SetSpell(int value){

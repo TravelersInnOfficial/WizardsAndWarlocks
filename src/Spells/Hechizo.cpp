@@ -207,21 +207,29 @@ void Hechizo::EraseHUD(){
 	m_sprite = nullptr;
 }
 
-void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current){
+void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current, bool disabled, int alliance){
 	if(m_rect!=nullptr && m_cast_cd != nullptr && m_sprite != nullptr){
-		if(current) m_rect->SetColor(1,1,0);
+		if(current){ 
+			if(alliance == ALLIANCE_WARLOCK) m_rect->SetColor(0.5,0,0.5);
+			else m_rect->SetColor(0,0,0.5);
+		}
 		else m_rect->SetColor(0,0,0);
 
-		if(timeCasting>0){ 
+		if(disabled){
+			m_sprite->SetColor(0.2,0.2,0.2);
+		}
+		else if(timeCasting>0){ 
 			m_cast_cd->SetColor(0,0,1);
 			m_cast_cd->SetHeight((size + outline)*(timeCasting/casting)); //(initY + size) - size * (timeCasting/casting), 
 		}
 		else if(currentCooldown>0){ 
 			m_cast_cd->SetColor(1,0,0);
 			m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown)); //(initY) + size * (1-(currentCooldown/cooldown))
+			m_sprite->SetColor(0.2,0.2,0.2);
 		}
 		else{
 			m_cast_cd->SetHeight(0);
+			m_sprite->SetColor(1,1,1);
 		}
 	}
 	else{

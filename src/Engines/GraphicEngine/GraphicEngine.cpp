@@ -126,7 +126,7 @@ void GraphicEngine::CreateAim(){
 		
 		for(int i=0; i<5; i++){
 			m_aim.push_back(toe::Add2DRect());
-			m_aim[i]->SetColor(0,0,1);
+			m_aim[i]->SetColor(0.8f,0.0f,0.8f);
 		}
 
 		//Draw Crosshair
@@ -144,11 +144,12 @@ void GraphicEngine::CreateAim(){
 
 		m_aim[4]->SetPosition(cenW - rDist - size_w	, cenH 					); //left
 		m_aim[4]->SetSize(size_w					, size_h				);
-
-
 	}
 }
 
+void GraphicEngine::SetAimColor(float r, float g, float b){
+	for(int i = 0; i<m_aim.size(); i++) m_aim[i]->SetColor(r,g,b);
+}
 void GraphicEngine::drawAim(bool moving){
 	CreateAim();
 
@@ -244,6 +245,12 @@ int GraphicEngine::GetScreenWidth(){
 		toRet = (int) privateDriver->GetWindowDimensions().X;
 	}
 	return toRet;
+}
+
+float GraphicEngine::GetAspectRatio(){
+	int W = GetScreenWidth();		
+	int H = GetScreenHeight();
+	return W/H;
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){

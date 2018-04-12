@@ -95,6 +95,8 @@ public:
 	*/
 	void drawAim(bool playerMoving);
 
+	void SetAimColor(float r, float g, float b);
+
 	/**
 	 * Draws GUI for the grail
 	*/
@@ -116,6 +118,8 @@ public:
 	int GetScreenWidth();
 
 
+	float GetAspectRatio();
+	
 	void draw2DImage(std::string texturePath, vector4df rect);
 	/**
 	 * Draws a rectangle

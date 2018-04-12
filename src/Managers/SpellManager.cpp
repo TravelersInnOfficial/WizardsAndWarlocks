@@ -318,43 +318,6 @@ void SpellManager::updateSoundEvents(Hechizo* h, Player* p) {
 	}
 }
 
-void SpellManager::DrawHUDSpells(Player* p, int current){
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
-
-	int W = g_engine->GetScreenWidth();
-	int H = g_engine->GetScreenHeight();
-
-	float sizeBox = W * 0.075;	// Tamanyo de los cuadrados del hechizo
-
-	float xInit = W/2.5;			// X inicial del primer hechizo
-	float yInit = H/20;		// Y inicial
-
-	float space = W * 0.03;		// Espacio entre hechizos
-	float outline = 5;			// Borde de los hechizo
-
-
-	float xInitSpell = 0.0f;
-	for(int i = 0; i<numHechizos;i++){
-		if(hechizos[i].find(p) != hechizos[i].end()){
-			Hechizo* h = hechizos[i][p];
-			if(h!=nullptr){
-				xInitSpell = xInit + (sizeBox + space)*i;	// Calcula la X inicial de cada hechizo
-				h->DrawHUD(xInitSpell, yInit, sizeBox, outline, i==current);
-			}
-		}
-	}
-}
-void SpellManager::EraseHUDSpells(Player* p){
-	for(int i = 0; i<numHechizos;i++){
-		if(hechizos[i].find(p) != hechizos[i].end()){
-			Hechizo* h = hechizos[i][p];
-			if(h!=nullptr){
-				h->EraseHUD();
-			}
-		}
-	}
-}
-
 std::string SpellManager::GetPathFromEnum(SPELLCODE sKind){
 	std::string toRet = "./../assets/textures/HUD/Spells/";
 	
