@@ -22,6 +22,16 @@ Burned::Burned(float time, float d):Effect(time, WEAK_BURNED){
 	damage = d;
 	createSoundEvent();
 	playEffectEvent();
+	particle = nullptr;
+}
+
+void Burned::ApplyEffect(Player* p){
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/FireParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
 }
 
 void Burned::UpdateEffect(Player* p){
@@ -33,12 +43,27 @@ void Burned::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Burn");
 }
 
+void Burned::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
+}
+
+void Burned::RemoveEffect(Player* p){
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
+}
+
 //================================================================
 // FROZEN
 //================================================================
 Frozen::Frozen(float time, float d):Effect(time, WEAK_FROZEN){
 	createSoundEvent();
 	damage = d;
+	particle = nullptr;
 }
 
 void Frozen::UpdateEffect(Player* p){
@@ -51,15 +76,32 @@ void Frozen::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
 }
 
 void Frozen::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void Frozen::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Freezing");
+}
+
+void Frozen::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 //================================================================
@@ -69,6 +111,7 @@ Poisoned::Poisoned(float time, float d):Effect(time, WEAK_POISONED){
 	createSoundEvent();
 	playEffectEvent();
 	damage = d;
+	particle = nullptr;
 }
 
 void Poisoned::UpdateEffect(Player* p){
@@ -78,6 +121,29 @@ void Poisoned::UpdateEffect(Player* p){
 
 void Poisoned::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Poison");
+}
+
+void Poisoned::ApplyEffect(Player* p){
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
+}
+
+void Poisoned::RemoveEffect(Player* p){
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
+}
+
+void Poisoned::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 // ===============================================================================================//
@@ -110,17 +176,25 @@ void SlowedDown::RemoveEffect(Player* p){
 void SlowedDown::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Slow Down");
 }
+
 //================================================================
 // PARALYZED
 //================================================================
 Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
 	createSoundEvent();
+	particle = nullptr;
 }
 
 void Paralyzed::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/ElectricParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
 }
 
 void Paralyzed::UpdateEffect(Player* p) {
@@ -130,10 +204,21 @@ void Paralyzed::UpdateEffect(Player* p) {
 void Paralyzed::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;	
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void Paralyzed::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Paralysis");
+}
+
+void Paralyzed::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 //================================================================
@@ -141,13 +226,24 @@ void Paralyzed::createSoundEvent() {
 //================================================================
 Silenced::Silenced(float time):Effect(time, WEAK_SILENCED){
 	createSoundEvent();
+	particle = nullptr;
 }
 
 void Silenced::ApplyEffect(Player* p){
 	playEffectEvent();
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/SilencedParticles.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
 }
 
 void Silenced::RemoveEffect(Player* p){
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void Silenced::UpdateEffect(Player* p) {
@@ -157,6 +253,14 @@ void Silenced::UpdateEffect(Player* p) {
 void Silenced::createSoundEvent() {
 	effectEvent = SoundSystem::getInstance()->createEvent("event:/Spells/Effects/Silence");
 }
+
+void Silenced::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
+}
+
 //================================================================
 // MADNESS
 //================================================================
@@ -166,6 +270,7 @@ Madness::Madness(float time):Effect(time, WEAK_MADNESS){
 	actions.push_back(ACTION_MOVE_LEFT);
 	actions.push_back(ACTION_MOVE_RIGHT);
 	createSoundEvent();
+	particle = nullptr;
 }
 
 void Madness::ApplyEffect(Player* p){
@@ -175,17 +280,34 @@ void Madness::ApplyEffect(Player* p){
 	// create random key assign
 	p->GetController()->SwapActions(actions[0], actions[1]);
 	p->GetController()->SwapActions(actions[2], actions[3]);
-
+	
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/ConfusedParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
 }
 
 void Madness::UpdateEffect(Player* p) {
 	effectEvent->setPosition(p->GetPos());
 }
 
+void Madness::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
+}
+
 void Madness::RemoveEffect(Player* p){
 	p->GetController()->SwapActions(actions[0], actions[1]);
 	p->GetController()->SwapActions(actions[2], actions[3]);
 	actions.clear();
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void Madness::createSoundEvent() {
@@ -198,6 +320,7 @@ void Madness::createSoundEvent() {
 DeathSnare::DeathSnare(float time, float d):Effect(time, WEAK_DEATHSNARE){
 	createSoundEvent();
 	damage = d;
+	particle = nullptr;
 }
 
 void DeathSnare::UpdateEffect(Player* p){
@@ -209,11 +332,28 @@ void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->max_velocity /= 1000.0f;
 	p->canJump = false;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/SnareParticle.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
+}
+
+void DeathSnare::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->max_velocity *= 1000.0f;
 	p->canJump = true;
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void DeathSnare::createSoundEvent() {
@@ -271,11 +411,25 @@ void DamageUp::createSoundEvent() {
 //================================================================
 DefenseUp::DefenseUp(float time):Effect(time, POWERUP_DEFENSE){
 	createSoundEvent();
+	particle = nullptr;
 }
 
 void DefenseUp::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_Defense *= 1.6;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/DefenseParticles.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
+}
+
+void DefenseUp::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 void DefenseUp::UpdateEffect(Player* p) {
@@ -284,6 +438,10 @@ void DefenseUp::UpdateEffect(Player* p) {
 
 void DefenseUp::RemoveEffect(Player* p){
 	p->m_Defense /= 1.6;
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void DefenseUp::createSoundEvent() {
@@ -336,11 +494,25 @@ void SpeedUp::createSoundEvent() {
 //================================================================
 Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
 	createSoundEvent();
+	particle = nullptr;
 }
 
 void Untargetable::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_Defense *= 10.0f;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(p->GetPos());
+		particle->SetTexture("./../assets/textures/particles/DefenseParticles2.png");
+		particle->SetType(FIRE_PARTICLE);
+		particle->SetQuantityPerSecond(200);
+	}
+}
+
+void Untargetable::UpdateEffectParticles(Player* p) {
+	if(particle != nullptr){
+		particle->SetPos(p->GetPos());
+		particle->Update();
+	}
 }
 
 void Untargetable::UpdateEffect(Player* p) {
@@ -349,6 +521,10 @@ void Untargetable::UpdateEffect(Player* p) {
 
 void Untargetable::RemoveEffect(Player* p){
 	p->m_Defense /= 10.0f;
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void Untargetable::createSoundEvent() {
@@ -416,7 +592,7 @@ void Invisible::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/InvisibleParticle.png");
-		particle->SetType(TRAP_PARTICLE);
+		particle->SetType(INVISIBLE_PARTICLE);
 		particle->SetQuantityPerSecond(20);
 	}
 

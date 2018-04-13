@@ -2,12 +2,12 @@
 #define PARTICLEDATA_H
 
 #include <GraphicEngine/Particles/TrapParticle.h>
-//#include <GraphicEngine/Particles/InvisibleParticle.h>
+#include <GraphicEngine/Particles/InvisibleParticle.h>
 //#include <GraphicEngine/Particles/FreezeParticle.h>
 //#include <GraphicEngine/Particles/ProjectileParticle.h>
 //#include <GraphicEngine/Particles/ExplosionParticle.h>
 //#include <GraphicEngine/Particles/PoisonParticle.h>
-//#include <GraphicEngine/Particles/FireParticle.h>
+#include <GraphicEngine/Particles/FireParticle.h>
 //#include <GraphicEngine/Particles/ThunderParticle.h>
 //#include <GraphicEngine/Particles/DefenseParticle.h>
 

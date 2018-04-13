@@ -214,7 +214,7 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		break;
 
 		case POWERUP_INVISIBLE:
-			e = new Invisible(5.0f);
+			e = new Invisible(10.0f);
 		break;
 
 		default:

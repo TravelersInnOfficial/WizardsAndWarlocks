@@ -19,7 +19,11 @@ class Burned: public Effect{
 public:
 	Burned(float time, float dmg);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 	float damage;
 };
@@ -29,9 +33,11 @@ class Frozen: public Effect{
 public:
 	Frozen(float time, float dmg);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 	float damage;
 };
@@ -41,7 +47,11 @@ class Poisoned: public Effect{
 public:
 	Poisoned(float time, float dmg);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
+	void ApplyEffect(Player* p);
+	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 	float damage;
 };
@@ -70,8 +80,10 @@ public:
 	Paralyzed(float time);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 };
 
@@ -81,13 +93,15 @@ public:
 	Silenced(float time);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 };
 
 // WEAK_GHOSTDISTORSION
-class GhostDistorsion: public Effect{
+/*class GhostDistorsion: public Effect{
 public:
 	GhostDistorsion(float time);
 	void ApplyEffect(Player* p);
@@ -95,7 +109,7 @@ public:
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
-};
+};*/
 
 // WEAK_MADNESS
 class Madness: public Effect{
@@ -103,8 +117,10 @@ public:
 	Madness(float time);
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 	std::vector<ACTION_ENUM> actions;
 };
@@ -132,7 +148,9 @@ public:
 	void UpdateEffect(Player* p);
 	void ApplyEffect(Player* p);
 	void RemoveEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 	float damage;
 };
@@ -159,7 +177,9 @@ public:
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 };
 
@@ -191,7 +211,9 @@ public:
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
+	void UpdateEffectParticles(Player* p);
 private:
+	GParticle* particle;
 	void createSoundEvent();
 };
 
