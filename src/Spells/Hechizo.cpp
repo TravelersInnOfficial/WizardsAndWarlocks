@@ -42,6 +42,8 @@ Hechizo::~Hechizo(){
 		delete m_sprite;
 		m_sprite = nullptr;
 	}
+
+	EraseHUD();
 }
 
 void Hechizo::DieReset(){

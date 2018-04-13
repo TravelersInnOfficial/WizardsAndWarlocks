@@ -59,6 +59,8 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 }
 
 Trap::~Trap(){
+
+
 	if(particle != nullptr) delete particle;
 	Erase();
 }
@@ -275,8 +277,15 @@ void Trap::Erase(){
 	delete m_rotation;
 	delete m_dimensions;
 
-	if (placeEvent != nullptr ) placeEvent->release();
-	if (explodeEvent != nullptr ) explodeEvent->release();
+	if (!placeEvent->isPlaying()) placeEvent->stop();
+	placeEvent->release();
+	delete placeEvent;
+
+
+	if (!explodeEvent->isPlaying()) explodeEvent->stop();
+	explodeEvent->release();
+	delete explodeEvent;
+
 }
 
 void Trap::SendSignal(){

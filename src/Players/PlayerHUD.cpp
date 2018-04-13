@@ -32,9 +32,6 @@ PlayerHUD::~PlayerHUD(){
     g_engine = nullptr;
     p_potion = nullptr;
 
-    delete health_orb;
-    delete mana_orb;
-    delete stamina_bar;
     delete spell_slot;
 }
 
@@ -147,6 +144,8 @@ void PlayerHUD::Erase(){
     p_erasePlayerOrbs();
     p_erasePlayerSpellSelector();
     p_erasePlayerPotion();
+    if(spell_slot != nullptr) delete spell_slot;
+    spell_slot = nullptr;
     if(p_alliance != ALLIANCE_WARLOCK) p_erasePlayerTrap();
 }
 
@@ -171,22 +170,24 @@ void PlayerHUD::p_drawPlayerOrbs() const{
 }
 
 void PlayerHUD::p_drawPlayerSpellSelector() const{
-    float W =  g_engine->GetScreenWidth();
-    float xPos = W - mana_orb->m_orb_back->GetWidth();              // X position
-    float yPos = 3;                                                 // Y position
-	float outline = 5;			                                    // Borde de los hechizos
-    int current = m_player->GetCurrentSpell();                      //currentSpell
+    if(mana_orb != nullptr){
+        float W =  g_engine->GetScreenWidth();
+        float xPos = W - mana_orb->m_orb_back->GetWidth();              // X position
+        float yPos = 3;                                                 // Y position
+    	float outline = 5;			                                    // Borde de los hechizos
+        int current = m_player->GetCurrentSpell();                      //currentSpell
 
-    std::vector<Hechizo*> hechizos = SpellManager::GetInstance()->GetSpells(m_player);
+        std::vector<Hechizo*> hechizos = SpellManager::GetInstance()->GetSpells(m_player);
 
-	xPos = xPos - (m_spell_size + m_spell_space) * m_num_spells;
-	float xInitSpell = 0.0f;
-    if(m_player != nullptr){
-        for(int i = 0; i<hechizos.size();i++){
-            if(hechizos[i]!=nullptr){
-                bool disabled = hechizos[i]->CheckMP(m_player->GetMP());
-                xInitSpell = xPos + (m_spell_size + m_spell_space)*i;	// Calcula la X inicial de cada hechizo
-                hechizos[i]->DrawHUD(xInitSpell, yPos, m_spell_size, outline, i==current, !disabled, p_alliance);
+    	xPos = xPos - (m_spell_size + m_spell_space) * m_num_spells;
+    	float xInitSpell = 0.0f;
+        if(m_player != nullptr){
+            for(int i = 0; i<hechizos.size();i++){
+                if(hechizos[i]!=nullptr){
+                    bool disabled = hechizos[i]->CheckMP(m_player->GetMP());
+                    xInitSpell = xPos + (m_spell_size + m_spell_space)*i;	// Calcula la X inicial de cada hechizo
+                    hechizos[i]->DrawHUD(xInitSpell, yPos, m_spell_size, outline, i==current, !disabled, p_alliance);
+                }
             }
         }
     }

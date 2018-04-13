@@ -91,7 +91,7 @@ void BulletEngine::AddRigidBody(btRigidBody* rigidBody, CollisionTypes mask, int
 
 void BulletEngine::AddGhostBody(btGhostObject* ghostBody, CollisionTypes mask, int collideWith){
 	m_dynamicsWorld->addCollisionObject(ghostBody, mask, collideWith);
-	m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
+	//m_dynamicsWorld->getBroadphase()->getOverlappingPairCache()->setInternalGhostPairCallback(new btGhostPairCallback());
 }
 
 void BulletEngine::RemoveRigidBody(btRigidBody* rigidBody){;

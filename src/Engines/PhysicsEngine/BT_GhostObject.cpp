@@ -5,10 +5,10 @@
 #include "./../Objects/Trap.h"
 
 BT_GhostObject::BT_GhostObject(){
-     m_body = new btGhostObject();
-     m_position = new vector3df(0,0,0);
-     m_dimensions = new vector3df(0,0,0);
-     m_center = new vector3df(0,0,0);
+     m_body = nullptr;
+     m_position = nullptr;
+     m_dimensions = nullptr;
+     m_center = nullptr;
 }
 
 BT_GhostObject::~BT_GhostObject(){
