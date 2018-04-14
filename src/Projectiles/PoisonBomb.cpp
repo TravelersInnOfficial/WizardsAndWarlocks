@@ -21,6 +21,13 @@ PoisonBomb::PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult)
     //bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,-9.8,0));
     ready2Burst = false;
+    
+    if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(bt_body->GetPosition());
+		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
+        particle->SetType(PROJECTILE_PARTICLE);
+		particle->SetQuantityPerSecond(250);
+	}
 }
 
 PoisonBomb::~PoisonBomb(){}

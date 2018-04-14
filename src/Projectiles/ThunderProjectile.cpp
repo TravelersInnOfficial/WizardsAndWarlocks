@@ -17,6 +17,13 @@ ThunderProjectile::ThunderProjectile(vector3df pos, vector3df dir, int emi, floa
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,0,0));
+    
+    if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(bt_body->GetPosition());
+		particle->SetTexture("./../assets/textures/particles/ElectricParticle.png");
+        particle->SetType(PROJECTILE_PARTICLE);
+		particle->SetQuantityPerSecond(250);
+	}
 }
 
 void ThunderProjectile::ContactAction(Player* p){

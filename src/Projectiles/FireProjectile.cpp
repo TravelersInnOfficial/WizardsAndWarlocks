@@ -17,6 +17,13 @@ FireProjectile::FireProjectile(vector3df pos, vector3df dir, int emi, float dama
     // this will be called after create projectile
     bt_body->SetCollisionFlags("no_contact");
     bt_body->SetGravity(vector3df(0,0,0));
+
+    if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(bt_body->GetPosition());
+		particle->SetTexture("./../assets/textures/particles/FireParticle.png");
+        particle->SetType(PROJECTILE_PARTICLE);
+		particle->SetQuantityPerSecond(250);
+	}
     
 }
 
