@@ -21,6 +21,19 @@ void GRect::SetHeight(float height){
 	m_rect->SetHeight(height);
 }
 
+void GRect::SetPosition(float x, float y){
+	m_rect->SetPosition(x,y);
+}
+
+void GRect::SetXPos(float x){
+	m_rect->SetPosX(x);
+}
+
+void GRect::SetYPos(float y){
+	m_rect->SetPosY(y);
+}
+
+
 float GRect::GetWidth(){
 	return m_rect->GetWidth();
 }

@@ -71,6 +71,8 @@ private:
     float m_spell_space;
     int m_num_spells;
     int m_trap_usings;
+    float m_stamina_xPos;
+    float m_stamina_yPos;
 
     void p_initPlayerOrbs();
     void p_initStaminaBar();

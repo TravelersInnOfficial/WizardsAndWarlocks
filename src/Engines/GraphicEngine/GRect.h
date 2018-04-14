@@ -13,7 +13,9 @@ public:
 	void SetColor(float r, float g, float b);
 	void SetWidth(float width);
 	void SetHeight(float height);
-
+	void SetPosition(float x, float y);
+	void SetXPos(float x);
+	void SetYPos(float y);
 	float GetWidth();
 
 private:

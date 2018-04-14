@@ -45,7 +45,7 @@ void PlayerHUD::InitHUD(){
             p_initPlayerSpellSelector();
             if(p_alliance != ALLIANCE_WIZARD) p_initPlayerTrap();
         }
-        if(spell_slot!= nullptr && health_orb!=nullptr) p_initStaminaBar();
+        if(spell_slot!= nullptr && health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
 	}
     else{
         health_orb->SetHeight(m_orb_height);
@@ -153,18 +153,21 @@ void PlayerHUD::p_initPlayerOrbs(){
 }
 
 void PlayerHUD::p_initStaminaBar(){
-    float size = 20.0f;			// Height of the bar
+    int W = g_engine->GetScreenWidth();	
+    float size = 10.0f;			// Height of the bar
 
-    float xInit = health_orb->height;		// Calculate the Init and End of the bar on X axis
-    float xEnd =  spell_slot->GetPosition().X;		
+    float xInit = health_orb->width;		// Calculate the Init and End of the bar on X axis
+    float xEnd =  W - mana_orb->width;		
 
-    float yInit = 0;
+    float yInit = spell_slot->GetHeight();
     float yEnd = yInit + size;
 
     stamina_bar =g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
     stamina_bar->SetColor(0.5,1.0,0.5);
 
     m_stamina_bar_width = stamina_bar->GetWidth();
+    m_stamina_xPos = xInit;
+    m_stamina_yPos = yInit;
 }
 
 void PlayerHUD::p_initPlayerSpellSelector(){
@@ -259,10 +262,11 @@ void PlayerHUD::p_drawStaminaBar(){
     if(stamina_bar != nullptr){
         float SP = m_player->GetSP();
         float SP_w = m_stamina_bar_width*(SP/100);
-        float colorG = (SP_w/m_stamina_bar_width) - 0.15;
+        float colorG = (SP_w/m_stamina_bar_width);
         float colorR = 1-colorG;
+        stamina_bar->SetXPos(m_stamina_xPos+(m_stamina_bar_width/2 - SP_w/2));
 		stamina_bar->SetWidth(SP_w);
-        stamina_bar->SetColor(colorR,colorG,0);
+        stamina_bar->SetColor(colorR,colorG - 0.15,0);
     }
 }
 
