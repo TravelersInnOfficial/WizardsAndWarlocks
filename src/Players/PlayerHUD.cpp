@@ -258,7 +258,11 @@ void PlayerHUD::p_drawPlayerOrbs() const{
 void PlayerHUD::p_drawStaminaBar(){
     if(stamina_bar != nullptr){
         float SP = m_player->GetSP();
-		stamina_bar->SetWidth(m_stamina_bar_width*(SP/100));
+        float SP_w = m_stamina_bar_width*(SP/100);
+        float colorG = (SP_w/m_stamina_bar_width) - 0.15;
+        float colorR = 1-colorG;
+		stamina_bar->SetWidth(SP_w);
+        stamina_bar->SetColor(colorR,colorG,0);
     }
 }
 

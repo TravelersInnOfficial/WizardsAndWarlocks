@@ -260,8 +260,8 @@ void HumanPlayer::CheckInput(){
 
 		// Cambiar hechizos
 		bool spellChanged = false;
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ spellChanged = ChangeCurrentSpell(currentSpell -1);}
-		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ spellChanged = ChangeCurrentSpell(currentSpell +1); }
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ spellChanged = ChangeCurrentSpell(currentSpell +1);}
+		if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ spellChanged = ChangeCurrentSpell(currentSpell -1); }
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_00)){ spellChanged = ChangeCurrentSpell(0); }
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ spellChanged = ChangeCurrentSpell(1); }
 		if(controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ spellChanged = ChangeCurrentSpell(2); }
