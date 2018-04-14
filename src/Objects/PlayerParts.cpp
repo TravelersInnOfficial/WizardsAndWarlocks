@@ -3,11 +3,15 @@
 PlayerParts::PlayerParts(Alliance alliance, vector3df position, vector3df scale, vector3df rotation){
 	m_rotation = rotation;
 	m_ragdollTime = 5.0f;
-	m_force = 400.0f;
+	m_force = 200.0f;
 	m_angularForce = 3.0f;
 
 	if(alliance == ALLIANCE_WARLOCK) GenerateWarlockBodyParts(position);
 	else GenerateWizardBodyParts(position);
+
+	for(int i = 0; i < m_physicParts.size(); i++){
+		if(m_physicParts.at(i) != nullptr) GenerateForce(m_physicParts.at(i));
+	}
 
 	for(int i = 0; i < m_physicParts.size(); i++){
 		if(m_physicParts.at(i) != nullptr) GenerateForce(m_physicParts.at(i));
@@ -25,6 +29,13 @@ PlayerParts::~PlayerParts(){
 
 	m_physicParts.clear();
 	m_graphicParts.clear();
+
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		for(int i = 0; i < m_particles.size(); i++){
+			if(m_particles.at(i) != nullptr) delete m_particles.at(i);
+		}
+		m_particles.clear();
+	}
 }
 
 void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisicalScale, std::string objPath){
@@ -41,6 +52,14 @@ void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisic
 
 	m_physicParts.push_back(newPhysicBody);
 	m_graphicParts.push_back(newGraphicBody);
+
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		GParticle* particle = new GParticle(bodyPartPosition);
+		particle->SetTexture("./../assets/textures/particles/SnareParticle.png");
+		particle->SetType(BLOOD_PARTICLE);
+		particle->SetQuantityPerSecond(100);
+		m_particles.push_back(particle);
+	}
 }
 
 void PlayerParts::GenerateForce(BT_Body* bodyPart){
@@ -59,6 +78,11 @@ void PlayerParts::GenerateForce(BT_Body* bodyPart){
 
 bool PlayerParts::Update(float deltaTime){
 	SyncParts();
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		for(int i = 0; i < m_particles.size(); i++){
+			if(m_particles.at(i) != nullptr) m_particles.at(i)->Update();
+		}
+	}
 	m_ragdollTime -= deltaTime;
 	bool toRet = true;
 	if(m_ragdollTime <= 0) toRet = false;
@@ -100,10 +124,12 @@ void PlayerParts::SyncParts(){
     		g_body->setPosition(p_body->GetPosition());
 			vector3df finalRotation = p_body->GetRotation();
 
-
 			g_body->setRotation(vector3df(finalRotation.X, finalRotation.Y, 0)*180/M_PI);
 			g_body->Rotate(vector3df(0,0, finalRotation.Z)*180/M_PI);
-			//g_body->setRotation(vector3df(0,0,0));
+			
+			if(GraphicEngine::getInstance()->GetParticleActive()){
+				if(m_particles.at(i) != nullptr) m_particles.at(i)->SetPos(p_body->GetPosition());
+			}
 		}
 	}
 }

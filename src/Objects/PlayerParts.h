@@ -20,12 +20,14 @@ protected:
 	vector3df m_rotation;
 	std::vector<BT_Body*> m_physicParts;
 	std::vector<GBody*> m_graphicParts;
+	std::vector<GParticle*> m_particles;
 
 	void GenerateWarlockBodyParts(vector3df bodyPos);
 	void GenerateWizardBodyParts(vector3df bodyPos);
 	void GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisicalScale, std::string objPath);
 	void GenerateForce(BT_Body* bodyPart);
 	void SyncParts();
+
 
 };
 

@@ -40,11 +40,11 @@ void GParticle::SetType(PARTICLE_TYPE type){
 		case POISON_PARTICLE:
 			ps->SetManager(new PoisonParticle()); 
 			break;
+		case BLOOD_PARTICLE:
+			ps->SetManager(new BloodParticle()); 
+			break;
 		case WIND_PARTICLE:
 			//ps->SetManager(new WindParticle()); 
-			break;
-		case BLOOD_PARTICLE:
-			//ps->SetManager(new BloodParticle()); 
 			break;
 		default:;
 	}
