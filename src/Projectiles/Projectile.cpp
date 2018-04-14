@@ -5,6 +5,8 @@
 #include "./../Managers/PlayerManager.h"
 
 Projectile::Projectile(vector3df pos,vector3df dir, int emi, float rat, float vel, float dmg, float maxDist, std::string texture, std::string soundPath){
+	particle = nullptr;
+	
 	impact = false;
 	initPos = pos;
 	direction = new vector3df(dir.X, dir.Y, dir.Z);
@@ -27,6 +29,7 @@ Projectile::~Projectile(){
 	delete direction;
 	delete bt_body;
 	delete m_ProjectileNode;
+	if(particle != nullptr) delete particle;
 	if (soundEvent != nullptr){
 		soundEvent->stop();
 		soundEvent->release();
@@ -68,15 +71,15 @@ void Projectile::Update(){
 	vector3df vectorDistance = pos - initPos;
 
 	//Update the sound event position
-	if (soundEvent != nullptr) {
-		soundEvent->setPosition(pos);
-	}
-	
-	float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
+	if (soundEvent != nullptr) soundEvent->setPosition(pos);
 
-	if(currentDistance >= maxDistance){
-        BulletManager::GetInstance()->AddToDeleteProyecil(this);
-	}   
+	float currentDistance = sqrt(pow(vectorDistance.X,2)+pow(vectorDistance.Y,2)+pow(vectorDistance.Z,2));
+	if(currentDistance >= maxDistance) BulletManager::GetInstance()->AddToDeleteProyecil(this);
+
+	if(particle != nullptr){
+		particle->SetPos(bt_body->GetPosition());
+		particle->Update();
+	}
 }
 
 void Projectile::UpdatePosShape(){

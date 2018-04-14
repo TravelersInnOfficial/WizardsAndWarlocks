@@ -9,6 +9,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <SoundEngine/SoundSystem.h>
 #include <ColliderMasks.h>
+#include <ParticleData.h>
 
 class Projectile: public Entidad{
 public:
@@ -46,6 +47,8 @@ protected:
     std::string     m_Texture;
     std::string     soundPath;
     SoundEvent*     soundEvent;
+
+    GParticle* particle;
 };
 
 #endif

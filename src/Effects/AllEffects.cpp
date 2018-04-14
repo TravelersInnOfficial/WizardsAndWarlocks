@@ -29,7 +29,7 @@ void Burned::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/FireParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -79,7 +79,7 @@ void Frozen::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -127,7 +127,7 @@ void Poisoned::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -192,7 +192,7 @@ void Paralyzed::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/ElectricParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -234,7 +234,7 @@ void Silenced::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/SilencedParticles.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -284,7 +284,7 @@ void Madness::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/ConfusedParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -335,7 +335,7 @@ void DeathSnare::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/SnareParticle.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -420,7 +420,7 @@ void DefenseUp::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/DefenseParticles.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -503,7 +503,7 @@ void Untargetable::ApplyEffect(Player* p){
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/DefenseParticles2.png");
-		particle->SetType(FIRE_PARTICLE);
+		particle->SetType(EFFECT_PARTICLE);
 		particle->SetQuantityPerSecond(200);
 	}
 }
@@ -564,7 +564,7 @@ PoisonShots::PoisonShots(float time):Effect(time, POWERUP_POISON){
 
 void PoisonShots::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->m_shotEffect = WEAK_SOFTBURNED;
+	p->m_shotEffect = WEAK_SOFTPOISONED;
 }
 
 void PoisonShots::UpdateEffect(Player* p) {

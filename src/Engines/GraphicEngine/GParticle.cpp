@@ -31,26 +31,20 @@ void GParticle::SetType(PARTICLE_TYPE type){
 		case INVISIBLE_PARTICLE:
 			ps->SetManager(new InvisibleParticle()); 
 			break;
-		case FREEZE_PARTICLE:
-			//ps->SetManager(new FreezeParticle()); 
+		case WIND_PARTICLE:
+			//ps->SetManager(new WindParticle()); 
 			break;
 		case PROJECTILE_PARTICLE:
-			//ps->SetManager(new ProjectileParticle()); 
-			break;
-		case EXPLOSION_PARTICLE:
-			//ps->SetManager(new ExplosionParticle()); 
+			ps->SetManager(new ProjectileParticle()); 
 			break;
 		case POISON_PARTICLE:
 			//ps->SetManager(new PoisonParticle()); 
 			break;
-		case FIRE_PARTICLE:
-			ps->SetManager(new FireParticle()); 
+		case BLOOD_PARTICLE:
+			//ps->SetManager(new BloodParticle()); 
 			break;
-		case THUNDER_PARTICLE:
-			//ps->SetManager(new ThunderParticle()); 
-			break;
-		case DEFENSE_PARTICLE:
-			//ps->SetManager(new DefenseParticle()); 
+		case EFFECT_PARTICLE:
+			ps->SetManager(new EffectParticle()); 
 			break;
 		default:;
 	}

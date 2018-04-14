@@ -1,12 +1,12 @@
-#include "./FireParticle.h"
+#include "./EffectParticle.h"
 
-FireParticle::FireParticle(){
+EffectParticle::EffectParticle(){
 }
 
-FireParticle::~FireParticle(){
+EffectParticle::~EffectParticle(){
 }
 
-void FireParticle::InitParticle(Particle& p){
+void EffectParticle::InitParticle(Particle& p){
 
 	float X = (rand() % 10)/10.0f - 0.5f;
 	float Y = (rand() % 20)/10.0f - 0.5f;
@@ -30,7 +30,7 @@ void FireParticle::InitParticle(Particle& p){
 	p.life = 0.25f;
 }
 
-void FireParticle::UpdateParticle(Particle& p, float deltaTime){
+void EffectParticle::UpdateParticle(Particle& p, float deltaTime){
 	//p.speed.Y += deltaTime * 0.5f * 0.25f;
 	p.pos.Y += p.speed.Y * deltaTime;
 }

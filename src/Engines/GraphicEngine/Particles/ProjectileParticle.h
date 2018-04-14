@@ -1,11 +1,11 @@
-#ifndef FIREPARTICLE_H
-#define FIREPARTICLE_H
+#ifndef PROJECTILEPARTICLE_H
+#define PROJECTILEPARTICLE_H
 #include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
 
-class FireParticle: public ParticleManager{
+class ProjectileParticle: public ParticleManager{
 public:	
-	FireParticle();
-	~FireParticle();
+	ProjectileParticle();
+	~ProjectileParticle();
 
 	void InitParticle(Particle& p);
 	void UpdateParticle(Particle& p, float deltaTime);
