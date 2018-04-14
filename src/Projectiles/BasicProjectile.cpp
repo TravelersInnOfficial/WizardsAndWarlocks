@@ -28,7 +28,7 @@ BasicProjectile::BasicProjectile(vector3df pos, vector3df dir, int emi, EFFECTCO
         if(contactEffect == WEAK_BASIC) particle->SetTexture("./../assets/textures/particles/NeutralParticle.png");
 		
         particle->SetType(PROJECTILE_PARTICLE);
-		particle->SetQuantityPerSecond(100);
+		particle->SetQuantityPerSecond(200);
 	}
 
 }
