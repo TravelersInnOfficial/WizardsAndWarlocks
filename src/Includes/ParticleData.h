@@ -5,7 +5,7 @@
 #include <GraphicEngine/Particles/InvisibleParticle.h>
 #include <GraphicEngine/Particles/EffectParticle.h>
 #include <GraphicEngine/Particles/ProjectileParticle.h>
-//#include <GraphicEngine/Particles/PoisonParticle.h>
+#include <GraphicEngine/Particles/PoisonParticle.h>
 //#include <GraphicEngine/Particles/WindParticle.h>
 //#include <GraphicEngine/Particles/BloodParticle.h>
 

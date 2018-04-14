@@ -21,6 +21,8 @@ protected:
 
 	float 		ghostScale;		// Escala del area de danyo
 	Alliance 	emisor;			// Alianza emisora del area
+
+	GParticle* particle;
 	
 };
 

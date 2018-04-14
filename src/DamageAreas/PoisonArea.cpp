@@ -8,11 +8,23 @@ PoisonArea::PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3
 	ghostScale = 1;
 	emisor = NO_ALLIANCE;
 	CreatePoisonArea(TPosition, TScale, TRotation);
+	
+	particle = nullptr;
+    if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(TPosition);
+		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
+		particle->SetType(POISON_PARTICLE);
+		particle->SetQuantityPerSecond(300);
+	}
 }
 	
-PoisonArea::~PoisonArea(){}
+PoisonArea::~PoisonArea(){
+	if(particle != nullptr) delete particle;
+}
 
 bool PoisonArea::Update(float deltaTime){
+	if(particle != nullptr) particle->Update();
+
 	// Gas bomb update
     ghostScale += 0.010;
     bt_body->SetScale(ghostScale*1.4);
@@ -46,6 +58,7 @@ void PoisonArea::CreatePoisonArea(vector3df TPosition, vector3df TScale, vector3
 	if (m_areaNode) {
 		m_areaNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_areaNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_POISON.png");
+		if(GraphicEngine::getInstance()->GetParticleActive()) m_areaNode->setMaterialTexture(0, "./../assets/textures/none.png");
 	}
 
    	vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5);
