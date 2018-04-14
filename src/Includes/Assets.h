@@ -101,7 +101,9 @@ enum GAMETEXTURES {
 	TEXTURE_ORB_SCROLL_FILL,
 	TEXTURE_ORB_SCROLL_LIP,
 	TEXTURE_ORB_SCROLL_FILL_MASK,
-	TEXTURE_SPELL_SLOT
+	TEXTURE_SPELL_SLOT,
+	TEXTURE_ITEM_SLOT,
+	TEXTURE_ITEM_SLOT_MASK
 };
 
 enum GAMEMESHES {
@@ -220,7 +222,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ORB_SCROLL_LIP]				= "./../assets/textures/HUD/Orb/orb_scroll_lip.png";
 	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
 	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Orb/spell_slot.png";
-
+	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
+	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
 	return m;
 };
 

@@ -253,59 +253,6 @@ std::vector<Trap*> TrapManager::GetAllTraps(){
 	return(traps);
 }
 
-void TrapManager::DrawHUD(Player* player){
-	//comprobamos si existe el player en el mapa
-
-	if(trapHud != nullptr ){
-		//si la textura asignada es diferente a la actual del jugador se actualiza
-		std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
-		if(trapHud->GetTexture() != kindImagePath && kindImagePath.length() > 0){
-			trapHud->SetTexture(kindImagePath);
-		}
-
-		std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
-		if(numberTrap->GetTexture() != countImagePath && countImagePath.length() > 0){
-			numberTrap->SetTexture(countImagePath);
-		}
-
-	}
-	//si no existe se añade el player y sus trampas
-	else{
-		std::string kindImagePath = GetPathFromEnum(getPlayerTrap(player));
-		if(kindImagePath.length() > 0){
-
-			std::string countImagePath = GetPathFromUsings(getPlayerUsings(player));
-			
-			GraphicEngine* g_engine = GraphicEngine::getInstance();
-			float W =			g_engine->GetScreenWidth();
-			float H =			g_engine->GetScreenHeight();
-			float size =		W * 0.075;
-			float xInit =		W * 0.87;
-			float yInit =		H - size*3.5;
-			float outline =		5;
-
-			rectHud = GraphicEngine::getInstance()->add2DRect(vector2df(xInit,yInit), vector2df(size+outline,size+outline));
-
-			vector4df sizeImage(xInit + outline, yInit + outline, xInit + size - outline, yInit + size - outline);
-			trapHud = GraphicEngine::getInstance()->addSprite(kindImagePath, vector2df(xInit + outline, yInit + outline), vector2df(size-outline, size-outline));
-		
-			vector4df sizeCounter(xInit + size, sizeImage.Y, xInit + size + size/2, sizeImage.Y2);
-			numberTrap = GraphicEngine::getInstance()->addSprite(countImagePath, vector2df(xInit + size*0.75, yInit - size/4), vector2df(size/2,size/2));
-	
-		}
-	}
-}
-
-void TrapManager::EraseHUD(Player* player){
-	if(trapHud != nullptr) delete trapHud;
-	if(numberTrap != nullptr) delete numberTrap;
-	if(rectHud != nullptr) delete rectHud;
-
-	trapHud = nullptr;
-	numberTrap = nullptr;
-	rectHud = nullptr;
-}
-
 std::string TrapManager::GetPathFromEnum(TrapEnum tKind){
 	std::string toRet = "./../assets/textures/HUD/Traps/";
 	

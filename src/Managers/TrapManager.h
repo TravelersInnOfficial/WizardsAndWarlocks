@@ -10,8 +10,8 @@
 
 class GSprite;
 class GRect;
-
 class TrapManager{
+	friend class PlayerHUD;
 public:
 	static TrapManager* GetInstance();
 	~TrapManager();
@@ -45,9 +45,6 @@ public:
 
 	void IdErase(int id);
 	Trap* GetTrapWithId(int id);
-
-	void DrawHUD(Player* player);
-	void EraseHUD(Player* player);
 
 	void ErasePlayer(Player* player);
 	void RefreshServerAll();

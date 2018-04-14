@@ -165,31 +165,8 @@ vector3df Potion::GetPosition(){
 	return(toRet);
 }
 
-void Potion::EraseHUD(){
-	delete m_rect;
-	m_rect = nullptr;
-
-	delete m_sprite;
-	m_sprite = nullptr;
-}
-
-void Potion::DrawHUD(){
-	if(m_rect == nullptr){
-		GraphicEngine* g_engine = GraphicEngine::getInstance();
-
-		float W =			g_engine->GetScreenWidth();
-		float H =			g_engine->GetScreenHeight();
-		float size =		W * 0.075;
-		float xInit =		W * 0.87;
-		float yInit =		H - size*2;
-		float outline =		5;
-
-		vector4df sizeImage(xInit+outline, yInit+outline, xInit+size-outline, yInit+size-outline);
-
-		m_rect = GraphicEngine::getInstance()->add2DRect(vector2df(xInit,yInit), vector2df(size,size));
-		
-		m_sprite = GraphicEngine::getInstance()->addSprite(HUDTexturePath, vector2df(sizeImage.X,sizeImage.Y), vector2df(size-outline,size-outline));
-	}
+std::string Potion::GetHUDTexture(){ 
+	return HUDTexturePath;
 }
 
 void Potion::SetPosition(vector3df pos){

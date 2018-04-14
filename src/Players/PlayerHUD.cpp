@@ -5,6 +5,7 @@
 #include "./../Objects/Potion.h"
 #include <Assets.h>
 #include <vector>
+#include <string>
 
 //--------------------------------------------------------------------------------------//
 //---------------------------------------PUBLIC-----------------------------------------//
@@ -19,6 +20,7 @@ PlayerHUD::PlayerHUD(Player* p){
     mana_orb = nullptr;
     stamina_bar = nullptr;
     spell_slot = nullptr;
+    potion_slot = nullptr;
     
     m_orb_height = 0.0f;
     m_stamina_bar_width = 0.0f;
@@ -37,85 +39,13 @@ PlayerHUD::~PlayerHUD(){
 
 void PlayerHUD::InitHUD(){
     if(health_orb == nullptr && mana_orb == nullptr && stamina_bar == nullptr){
-		int W = g_engine->GetScreenWidth();		
-		int H = g_engine->GetScreenHeight();
-		float ratio = g_engine->GetAspectRatio();
-
-		/*************************************ORBS*************************************/
-		toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
-
-		float new_width = W/5.0f;
-		float new_height = ratio * new_width;
-		vector2df orb_dims = vector2df(new_width,new_height);
-		if(orb_dims.X > tex_dims.X) orb_dims = vector2df(tex_dims.X,tex_dims.Y);
-
-		vector2df pos = vector2df(0,0);
-		vector2df pos2 = vector2df(g_engine->GetScreenWidth()-orb_dims.X,0);
-
-		//HEALTH
-		health_orb = new HUD_Orb();
-		health_orb->m_orb_back = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
-		
-		health_orb->m_orb_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
-		health_orb->m_orb_fill->SetColor(1,0,0);
-		
-		health_orb->m_orb_scroll_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
-		health_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
-		health_orb->m_orb_scroll_fill->SetColor(0.5,0,0,0.8);
-
-		health_orb->m_orb_scroll_lip = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos,orb_dims);
-		health_orb->m_orb_scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
-		health_orb->m_orb_scroll_lip->SetColor(0.3,0,0,0.8);
-
-		health_orb->m_orb_front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
-
-		//MANA
-		mana_orb = new HUD_Orb();
-		mana_orb->m_orb_back = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos2,orb_dims);
-		
-		mana_orb->m_orb_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos2,orb_dims);
-		
-		mana_orb->m_orb_scroll_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos2,orb_dims);
-		mana_orb->m_orb_scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
-
-		mana_orb->m_orb_scroll_lip = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos2,orb_dims);
-		mana_orb->m_orb_scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
-
-		mana_orb->m_orb_front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos2,orb_dims);
-
-        mana_orb->SetColor(ALLIANCE_WARLOCK);
-		m_orb_height = health_orb->m_orb_fill->GetHeight();
-
-        /*************************************SPELL SLOT*************************************/
-        m_spell_size = W * 0.055;
-        m_num_spells = SpellManager::GetInstance()->GetNumSpells();
-        m_spell_space = 10;
-
-		new_height = m_spell_size+12;
-		new_width = m_num_spells* (m_spell_size+m_spell_space) + 5;
-		vector2df slot_dims = vector2df(new_width,new_height);
-
-        tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
-		if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
-
-        vector2df slot_pos = vector2df(W-orb_dims.X-slot_dims.X, 0);
-
-        spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
-
-
-        /*************************************STAMINA*************************************/
-		float size = 20.0f;			// Height of the bar
-
-		float xInit = health_orb->m_orb_back->GetHeight();		// Calculate the Init and End of the bar on X axis
-		float xEnd =  slot_pos.X;		
-
-		float yInit = 0;
-		float yEnd = yInit + size;
-
-		stamina_bar =g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
-		stamina_bar->SetColor(0.5,1.0,0.5);
-
-		m_stamina_bar_width =  stamina_bar->GetWidth();
+        p_initPlayerOrbs();
+        if(health_orb != nullptr) p_initPlayerPotion();
+        if(mana_orb != nullptr){ 
+            p_initPlayerSpellSelector();
+            if(p_alliance != ALLIANCE_WIZARD) p_initPlayerTrap();
+        }
+        if(spell_slot!= nullptr && health_orb!=nullptr) p_initStaminaBar();
 	}
     else{
         health_orb->SetHeight(m_orb_height);
@@ -126,6 +56,7 @@ void PlayerHUD::InitHUD(){
 
 void PlayerHUD::Draw(){
     p_drawPlayerOrbs();
+    p_drawStaminaBar();
     p_drawPlayerSpellSelector();
     p_drawPlayerPotion();
 
@@ -142,6 +73,7 @@ void PlayerHUD::Draw(){
 
 void PlayerHUD::Erase(){
     p_erasePlayerOrbs();
+    p_eraseStaminaBar();
     p_erasePlayerSpellSelector();
     p_erasePlayerPotion();
     if(spell_slot != nullptr) delete spell_slot;
@@ -153,26 +85,187 @@ void PlayerHUD::Erase(){
 //---------------------------------------PRIVATE----------------------------------------//
 //--------------------------------------------------------------------------------------//
 
+//--------------------------------------------------------------------------------------//
+//----------------------------------------INITS-----------------------------------------//
+//--------------------------------------------------------------------------------------//
+
+
+void PlayerHUD::p_initPlayerOrbs(){
+    int W = g_engine->GetScreenWidth();		
+    float ratio = g_engine->GetAspectRatio();
+    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
+
+    //orb dimensions
+    float new_width = W/5.0f;
+    float new_height = ratio * new_width;
+    vector2df orb_dims = vector2df(new_width,new_height);
+    if(orb_dims.X > tex_dims.X) orb_dims = vector2df(tex_dims.X,tex_dims.Y);
+
+    //orb position
+    vector2df pos = vector2df(0,0);
+
+    //HEALTH
+    health_orb = new HUD_Orb();
+    health_orb->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
+    
+    health_orb->fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
+    health_orb->fill->SetColor(1,0,0);
+    
+    health_orb->scroll_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
+    health_orb->scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+    health_orb->scroll_fill->SetColor(0.5,0,0,0.8);
+
+    health_orb->scroll_lip = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos,orb_dims);
+    health_orb->scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+    health_orb->scroll_lip->SetColor(0.3,0,0,0.8);
+
+    health_orb->front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
+    
+    health_orb->xPos = pos.X;
+    health_orb->yPos = pos.Y;
+    health_orb->width = orb_dims.X;
+    health_orb->height = orb_dims.Y;
+
+    //MANA
+    pos = vector2df(g_engine->GetScreenWidth()-orb_dims.X,0);
+    mana_orb = new HUD_Orb();
+    mana_orb->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_BACK],pos,orb_dims);
+    
+    mana_orb->fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FILL],pos,orb_dims);
+    
+    mana_orb->scroll_fill = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL],pos,orb_dims);
+    mana_orb->scroll_fill->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+
+    mana_orb->scroll_lip = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_SCROLL_LIP],pos,orb_dims);
+    mana_orb->scroll_lip->SetMask(TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK]);
+
+    mana_orb->front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
+
+    mana_orb->SetColor(ALLIANCE_WARLOCK);
+
+    mana_orb->xPos = pos.X;
+    mana_orb->yPos = pos.Y;
+    mana_orb->width = orb_dims.X;
+    mana_orb->height = orb_dims.Y;
+
+    //INITIAL ORB FILL HEIGHT
+    m_orb_height = health_orb->fill->GetHeight();
+}
+
+void PlayerHUD::p_initStaminaBar(){
+    float size = 20.0f;			// Height of the bar
+
+    float xInit = health_orb->height;		// Calculate the Init and End of the bar on X axis
+    float xEnd =  spell_slot->GetPosition().X;		
+
+    float yInit = 0;
+    float yEnd = yInit + size;
+
+    stamina_bar =g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
+    stamina_bar->SetColor(0.5,1.0,0.5);
+
+    m_stamina_bar_width = stamina_bar->GetWidth();
+}
+
+void PlayerHUD::p_initPlayerSpellSelector(){
+    int W = g_engine->GetScreenWidth();	
+    m_spell_size = W * 0.055;
+    m_num_spells = SpellManager::GetInstance()->GetNumSpells();
+    m_spell_space = 10;
+
+    float new_height = m_spell_size+12;
+    float new_width = m_num_spells* (m_spell_size + m_spell_space) + 5;
+    vector2df slot_dims = vector2df(new_width,new_height);
+
+    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
+    if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
+
+    vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
+
+    spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
+}
+
+void PlayerHUD::p_initPlayerPotion(){
+    int W = g_engine->GetScreenWidth();	
+    float ratio = g_engine->GetAspectRatio();
+    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+
+    float new_width = W/10.0f;
+    float new_height = ratio * new_width;
+    vector2df slot_dims = vector2df(new_width,new_height);
+    if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
+
+    potion_slot = new ItemSlot();
+    potion_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(0,health_orb->height),slot_dims);
+    
+    potion_slot->xPos = 0;
+    potion_slot->yPos = health_orb->height;
+    potion_slot->width = slot_dims.X;
+    potion_slot->height = slot_dims.Y;
+}
+
+void PlayerHUD::p_initPlayerTrap(){
+    int W = g_engine->GetScreenWidth();	
+    
+    float ratio = g_engine->GetAspectRatio();
+    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+
+    float new_width = W/10.0f;
+    float new_height = ratio * new_width;
+    vector2df slot_dims = vector2df(new_width,new_height);
+    if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
+
+    //TRAP SLOT
+    trap_slot = new ItemSlot();
+    trap_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
+    
+    trap_slot->xPos = W-slot_dims.X;
+    trap_slot->yPos = mana_orb->height;
+    trap_slot->width = slot_dims.X;
+    trap_slot->height = slot_dims.Y;
+
+    //TRAP USINGS SLOT
+    slot_dims = vector2df(slot_dims.X/3,slot_dims.Y/3);
+    trap_usings_slot = new ItemSlot();
+    trap_usings_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
+    
+    trap_usings_slot->xPos = W-slot_dims.X;
+    trap_usings_slot->yPos = mana_orb->height;
+    trap_usings_slot->width = slot_dims.X;
+    trap_usings_slot->height = slot_dims.Y;
+    
+    m_trap_usings = TrapManager::GetInstance()->getPlayerUsings(m_player);
+}
+
+//--------------------------------------------------------------------------------------//
+//----------------------------------------DRAWS-----------------------------------------//
+//--------------------------------------------------------------------------------------//
+
+
 void PlayerHUD::p_drawPlayerOrbs() const{
-    if(health_orb != nullptr && mana_orb != nullptr && stamina_bar != nullptr){
+    if(health_orb != nullptr && mana_orb != nullptr){
         float HP = m_player->GetHP();
         float MP = m_player->GetMP();
-        float SP = m_player->GetSP();
 
 		health_orb->SetHeight(m_orb_height*(HP/100));
 		mana_orb->SetHeight(m_orb_height*(MP/100));
 
 		health_orb->Update(0.005);
 		mana_orb->Update(0.005);
-
-		stamina_bar->SetWidth(m_stamina_bar_width*(SP/100));
 	}
+}
+
+void PlayerHUD::p_drawStaminaBar(){
+    if(stamina_bar != nullptr){
+        float SP = m_player->GetSP();
+		stamina_bar->SetWidth(m_stamina_bar_width*(SP/100));
+    }
 }
 
 void PlayerHUD::p_drawPlayerSpellSelector() const{
     if(mana_orb != nullptr){
         float W =  g_engine->GetScreenWidth();
-        float xPos = W - mana_orb->m_orb_back->GetWidth();              // X position
+        float xPos = W - mana_orb->bkg->GetWidth();              // X position
         float yPos = 3;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //currentSpell
@@ -195,20 +288,52 @@ void PlayerHUD::p_drawPlayerSpellSelector() const{
 
 void PlayerHUD::p_drawPlayerPotion(){
     if(p_potion != m_player->GetPotion()){
-        if(p_potion != nullptr) p_potion->EraseHUD();
+        if(p_potion != nullptr) potion_slot->RemoveItem();
         p_potion = m_player->GetPotion();
+
+        if(p_potion != nullptr && potion_slot->item == nullptr) potion_slot->AddItem(p_potion->GetHUDTexture());
     }
-    if(p_potion != nullptr) p_potion->DrawHUD();
 }
 
 void PlayerHUD::p_drawPlayerTrap(){
-    TrapManager::GetInstance()->DrawHUD(m_player);
+    std::string tex = TrapManager::GetInstance()->GetPathFromEnum(TrapManager::GetInstance()->getPlayerTrap(m_player));
+    float usings = TrapManager::GetInstance()->getPlayerUsings(m_player);
+    //SI NO ESTA INICIALIZADO
+    if(trap_slot == nullptr){
+        p_initPlayerTrap();
+    }
+    //SI NO HAY ITEM
+    else if(trap_slot->item == nullptr && trap_usings_slot->item == nullptr){
+        m_trap_usings = TrapManager::GetInstance()->getPlayerUsings(m_player);
+        std::string usingsTex = TrapManager::GetInstance()->GetPathFromUsings(m_trap_usings);
+
+        trap_slot->AddItem(tex);
+        trap_usings_slot->AddItem(usingsTex);
+    }
+    //SI LA TEXTURA HA CAMBIADO
+    else if(trap_slot->item->GetTexture() != tex){
+        trap_slot->item->SetTexture(tex);
+    }
+    //SI LOS USOS HAN CAMBIADO
+    if(m_trap_usings != usings){
+        m_trap_usings = usings;
+        std::string usingsTex = TrapManager::GetInstance()->GetPathFromUsings(m_trap_usings);
+        trap_usings_slot->item->SetTexture(usingsTex);
+    }
 }
+
+//--------------------------------------------------------------------------------------//
+//---------------------------------------ERASES-----------------------------------------//
+//--------------------------------------------------------------------------------------//
+
 
 void PlayerHUD::p_erasePlayerOrbs(){
     if(health_orb != nullptr){ delete health_orb; health_orb = nullptr;} 
 	if(mana_orb != nullptr){ delete mana_orb; mana_orb = nullptr;}
-	if(stamina_bar != nullptr){ delete stamina_bar; stamina_bar = nullptr;}
+}
+
+void PlayerHUD::p_eraseStaminaBar(){
+    if(stamina_bar != nullptr){ delete stamina_bar; stamina_bar = nullptr;}
 }
 
 void PlayerHUD::p_erasePlayerSpellSelector(){
@@ -221,12 +346,16 @@ void PlayerHUD::p_erasePlayerSpellSelector(){
 }
 
 void PlayerHUD::p_erasePlayerPotion(){
-    if(p_potion != nullptr) p_potion->EraseHUD();
+    if(p_potion != nullptr) potion_slot->RemoveItem();
     p_potion = nullptr;
 }
 
 void PlayerHUD::p_erasePlayerTrap(){
-    TrapManager::GetInstance()->EraseHUD(m_player);
+    delete trap_slot;
+    delete trap_usings_slot;
+    
+    trap_slot = nullptr;
+    trap_usings_slot = nullptr;
 }
 
 //--------------------------------------------------------------------------------------//
@@ -234,50 +363,76 @@ void PlayerHUD::p_erasePlayerTrap(){
 //--------------------------------------------------------------------------------------//
 
 PlayerHUD::HUD_Orb::HUD_Orb(){
-    m_orb_front = nullptr;
-    m_orb_back = nullptr;
-    m_orb_fill = nullptr;
-    m_orb_scroll_lip = nullptr;
-    m_orb_scroll_fill = nullptr;
+    front = nullptr;
+    bkg = nullptr;
+    fill = nullptr;
+    scroll_lip = nullptr;
+    scroll_fill = nullptr;
 }
 
 PlayerHUD::HUD_Orb::~HUD_Orb(){
-	delete m_orb_front;
-	delete m_orb_back;
-	delete m_orb_fill;
-	delete m_orb_scroll_lip;
-	delete m_orb_scroll_fill;
+	delete front;
+	delete bkg;
+	delete fill;
+	delete scroll_lip;
+	delete scroll_fill;
 
-	m_orb_front = nullptr;
-	m_orb_back = nullptr;
-	m_orb_fill = nullptr;
-	m_orb_scroll_lip = nullptr;
-	m_orb_scroll_fill = nullptr;
-	m_orb_scroll_lip = nullptr;
+	front = nullptr;
+	bkg = nullptr;
+	fill = nullptr;
+	scroll_lip = nullptr;
+	scroll_fill = nullptr;
+	scroll_lip = nullptr;
 }
 
 void PlayerHUD::HUD_Orb::SetHeight(float v){
 	float lip_height = 3;
-	m_orb_fill->SetRect(0,m_orb_fill->GetTextureHeight()-v,m_orb_fill->GetWidth(),v);
-	m_orb_scroll_fill->SetRect(0,m_orb_scroll_fill->GetTextureHeight()-v,m_orb_scroll_fill->GetWidth(),v);
-	m_orb_scroll_lip->SetRect(0,m_orb_scroll_lip->GetTextureHeight()-v,m_orb_scroll_lip->GetWidth(),v - (v - lip_height));
-	m_orb_scroll_lip->SetPosition(m_orb_fill->GetPosX(),m_orb_fill->GetHeight() - lip_height);
+	fill->SetRect(0,fill->GetTextureHeight()-v,fill->GetWidth(),v);
+	scroll_fill->SetRect(0,scroll_fill->GetTextureHeight()-v,scroll_fill->GetWidth(),v);
+	scroll_lip->SetRect(0,scroll_lip->GetTextureHeight()-v,scroll_lip->GetWidth(),v - (v - lip_height));
+	scroll_lip->SetPosition(fill->GetPosX(),fill->GetHeight() - lip_height);
 }
 
 void PlayerHUD::HUD_Orb::SetColor(int alliance){
     if(alliance == ALLIANCE_WARLOCK){
-		m_orb_fill->SetColor(1.0f,0,1.0f);
-		m_orb_scroll_fill->SetColor(0.0f,0.0f,0.5f,0.5f);
-		m_orb_scroll_lip->SetColor(0.3f,0.0f,0.3f,0.3f);
+		fill->SetColor(1.0f,0,1.0f);
+		scroll_fill->SetColor(0.0f,0.0f,0.5f,0.5f);
+		scroll_lip->SetColor(0.3f,0.0f,0.3f,0.3f);
     }
     else{
-        m_orb_fill->SetColor(0.0f,0.0f,1.0f);
-        m_orb_scroll_fill->SetColor(0.0f,0.0f,0.5f,0.5f);
-        m_orb_scroll_lip->SetColor(0.0f,0.0f,0.3f,0.3f);
+        fill->SetColor(0.0f,0.0f,1.0f);
+        scroll_fill->SetColor(0.0f,0.0f,0.5f,0.5f);
+        scroll_lip->SetColor(0.0f,0.0f,0.3f,0.3f);
     }   
 }   
 
 void PlayerHUD::HUD_Orb::Update(float vel){
-	m_orb_scroll_fill->ScrollV(vel);
-	m_orb_scroll_lip->ScrollH(-vel);
+	scroll_fill->ScrollV(vel);
+	scroll_lip->ScrollH(-vel);
+}
+
+PlayerHUD::ItemSlot::ItemSlot(){
+    bkg = nullptr;
+    item = nullptr;
+    xPos = 0.0f;
+    yPos = 0.0f;
+    width = 0.0f;
+    height = 0.0f;
+}
+
+PlayerHUD::ItemSlot::~ItemSlot(){
+    delete bkg;
+    delete item;
+    bkg = nullptr;
+    item = nullptr;
+}
+
+void PlayerHUD::ItemSlot::AddItem(std::string texPath){
+    item = GraphicEngine::getInstance()->addSprite(texPath, vector2df(xPos,yPos), vector2df(width,height));
+    item->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
+}
+
+void PlayerHUD::ItemSlot::RemoveItem(){
+    delete item;
+    item = nullptr;
 }

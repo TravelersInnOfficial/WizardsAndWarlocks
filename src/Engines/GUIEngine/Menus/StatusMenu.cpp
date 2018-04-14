@@ -42,14 +42,14 @@ void StatusMenu::Update(bool* open, float deltaTime){
         ImGui::Text("WIZARDS");
         ImGui::Separator();
         for(int i = 0; i<wizards.size();i++) ImGui::Text("%s",wizards[i].c_str());
-        for(int i = 0; i<dead_wizards.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), dead_wizards[i].c_str());
+        for(int i = 0; i<dead_wizards.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), "%s", dead_wizards[i].c_str());
     
         
         ImGui::Separator();
         ImGui::Text("WARLOCKS");
         ImGui::Separator();
         for(int i = 0; i<warlocks.size();i++) ImGui::Text("%s",warlocks[i].c_str());
-        for(int i = 0; i<dead_warlocks.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), dead_warlocks[i].c_str());
+        for(int i = 0; i<dead_warlocks.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), "%s", dead_warlocks[i].c_str());
 
         ImGui::End();
     }

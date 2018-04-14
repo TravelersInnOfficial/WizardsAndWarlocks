@@ -25,8 +25,6 @@ public:
 	// functions
 	void CreatePotion(vector3df TPosition, vector3df TRotation);
 	void Drop(vector3df force);
-	void DrawHUD();
-	void EraseHUD();
 
 	// child functions
 	virtual void Use(Player* p)=0;
@@ -40,6 +38,7 @@ public:
 	bool GetPickedState();
 	Player* GetUser();
 	vector3df GetPosition();
+	std::string GetHUDTexture();
 
 	// Setters
 	void SetPosition(vector3df pos);
