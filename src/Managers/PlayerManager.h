@@ -47,6 +47,7 @@ public:
 	Player* GetPlayerFromID(int id);
 	Player* GetPlayerFromNetID(int id);
 	std::vector<Player*> GetAllPlayers();
+	std::vector<Player*> GetAllPlayers(Alliance alli);
 	
 	// DeadCam Functions
 	bool PlayerAlive(Player* player);				// Da la posicion del jugador target, en el caso de que no este cambia el puntero

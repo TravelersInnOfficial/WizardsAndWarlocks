@@ -27,8 +27,7 @@ Player::Player(bool isPlayer1){
 	if(isPlayer1) overlayManager = new OverlayManager();
 	else overlayManager = nullptr;
 
-	if(isPlayer1) m_hud = new PlayerHUD(this);
-	else m_hud = nullptr;
+	m_hud = new PlayerHUD(this);
 	
 	createSoundEvents();
 	changeSurface(2);

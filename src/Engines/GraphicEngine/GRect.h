@@ -11,6 +11,7 @@ class GRect{
 public:
 	~GRect();
 	void SetColor(float r, float g, float b);
+	void SetRotation(float rot);
 	void SetWidth(float width);
 	void SetHeight(float height);
 	void SetPosition(float x, float y);

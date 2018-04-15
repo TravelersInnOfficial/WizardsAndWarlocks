@@ -1,5 +1,6 @@
 #include "PlayerHUD.h"
 #include "Player.h"
+#include "./../Managers/PlayerManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Objects/Potion.h"
@@ -21,9 +22,13 @@ PlayerHUD::PlayerHUD(Player* p){
     stamina_bar = nullptr;
     spell_slot = nullptr;
     potion_slot = nullptr;
+    trap_slot = nullptr;
+    trap_usings_slot = nullptr;
     
     m_orb_height = 0.0f;
     m_stamina_bar_width = 0.0f;
+
+    m_minimap = nullptr;
 
     g_engine = GraphicEngine::getInstance();
 }
@@ -46,6 +51,11 @@ void PlayerHUD::InitHUD(){
             if(p_alliance != ALLIANCE_WIZARD) p_initPlayerTrap();
         }
         if(spell_slot!= nullptr && health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
+
+
+        /************************************MINIMAP*************************************/
+        if(m_minimap == nullptr) m_minimap = new HUD_Minimap(m_player);
+
 	}
     else{
         health_orb->SetHeight(m_orb_height);
@@ -59,6 +69,7 @@ void PlayerHUD::Draw(){
     p_drawStaminaBar();
     p_drawPlayerSpellSelector();
     p_drawPlayerPotion();
+    p_drawMinimap();
 
     if(p_alliance == -1) p_alliance = m_player->GetAlliance();
     if(p_alliance != m_player->GetAlliance()){
@@ -76,9 +87,9 @@ void PlayerHUD::Erase(){
     p_eraseStaminaBar();
     p_erasePlayerSpellSelector();
     p_erasePlayerPotion();
-    if(spell_slot != nullptr) delete spell_slot;
-    spell_slot = nullptr;
     if(p_alliance != ALLIANCE_WARLOCK) p_erasePlayerTrap();
+    if(spell_slot != nullptr){ delete spell_slot; spell_slot = nullptr; }
+    if(m_minimap != nullptr){ delete m_minimap; m_minimap = nullptr; }
 }
 
 //--------------------------------------------------------------------------------------//
@@ -245,6 +256,17 @@ void PlayerHUD::p_initPlayerTrap(){
 //--------------------------------------------------------------------------------------//
 
 
+void PlayerHUD::p_drawMinimap(){
+    if(m_minimap!=nullptr){
+        float rotation = m_player->GetRotY();
+        rotation = rotation * 180 / M_PI;
+        m_minimap->SetRotation(rotation);
+
+        m_minimap->UpdateScroll();
+        m_minimap->DrawPlayers();
+    }
+}
+
 void PlayerHUD::p_drawPlayerOrbs() const{
     if(health_orb != nullptr && mana_orb != nullptr){
         float HP = m_player->GetHP();
@@ -359,8 +381,8 @@ void PlayerHUD::p_erasePlayerPotion(){
 }
 
 void PlayerHUD::p_erasePlayerTrap(){
-    delete trap_slot;
-    delete trap_usings_slot;
+    if(trap_slot != nullptr) delete trap_slot;
+    if(trap_usings_slot != nullptr) delete trap_usings_slot;
     
     trap_slot = nullptr;
     trap_usings_slot = nullptr;
@@ -444,3 +466,193 @@ void PlayerHUD::ItemSlot::RemoveItem(){
     delete item;
     item = nullptr;
 }
+
+//--------------------------------------------------------------------------------------//
+//------------------------------------HUD MINIMAP---------------------------------------//
+//--------------------------------------------------------------------------------------//
+
+PlayerHUD::HUD_Minimap::HUD_Minimap(Player* p){
+    m_player = p;
+
+    m_zoom = 1.0f;
+    m_sizeMap = 40.0f; // Ejemplo del Lobby2
+    m_originalSize = 40.0f;
+    m_mapPath = "./../assets/textures/HUD/Minimap/map.jpg";
+
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+    float ratio = g_engine->GetAspectRatio();
+
+    m_rotation = 0.0f;
+    m_position = vector2df(600, 300);
+    m_size = vector2df(200, 200*ratio);
+    m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
+    m_mapImage->SetMask("./../assets/textures/HUD/Minimap/mask.jpg");
+}
+
+PlayerHUD::HUD_Minimap::~HUD_Minimap(){
+    delete m_mapImage;
+
+    int size = m_players.size();
+    for(int i=0; i<size; i++){
+        delete m_players[i];
+    }
+    m_players.clear();
+}
+
+void PlayerHUD::HUD_Minimap::ZoomMap(float value){
+    m_zoom = value;
+
+    m_sizeMap = m_originalSize;
+
+    float sizeRect = 1.0f / value;
+    float pos = 0.5 - sizeRect/2;
+
+    m_mapImage->SetTextureRect(pos, pos, sizeRect, sizeRect);
+}
+
+void PlayerHUD::HUD_Minimap::AlivePoint(GSprite* sprite){
+    std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+
+    sprite->SetColor(0, 1, 0);
+    sprite->SetTexture(path);
+}
+
+void PlayerHUD::HUD_Minimap::DeadPoint(GSprite* sprite){
+    std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+
+    sprite->SetColor(1, 0, 0);
+    sprite->SetTexture(path);
+}
+
+void PlayerHUD::HUD_Minimap::SetMapSize(float size){
+    m_originalSize = size;
+    m_sizeMap = size;
+}
+
+void PlayerHUD::HUD_Minimap::SetRotation(float rot){
+    m_rotation = rot;
+    m_mapImage->SetRotation(-rot);
+}
+
+void PlayerHUD::HUD_Minimap::SetTexture(std::string path){
+    if(m_mapPath.compare(path) != 0){
+        m_mapPath = path;
+        m_mapImage->SetTexture(path);
+    }
+}
+
+void PlayerHUD::HUD_Minimap::ChangeMap(std::string path, float size){
+    SetTexture(path);
+    SetMapSize(size);
+}
+
+void PlayerHUD::HUD_Minimap::UpdateScroll(){
+    vector3df position = m_player->GetPos();
+
+    // La distancia Z se corresponde con el scrollV
+    float xValue = position.X / (m_sizeMap * 2);
+    float zValue = position.Z / (m_sizeMap * 2);
+
+    m_mapImage->SetScrollH(xValue);
+    m_mapImage->SetScrollV(-zValue);
+}
+
+GSprite* PlayerHUD::HUD_Minimap::CreatePlayerSprite(){
+    GSprite* output = nullptr;
+
+    m_spriteSize = vector2df(10,10);
+    vector2df pos(0,0);
+
+    output = GraphicEngine::getInstance()->addSprite("", pos, m_spriteSize);
+    return output;
+}
+
+void PlayerHUD::HUD_Minimap::RecalculatePlayerSprites(int playerSize){
+    int spriteSize = m_players.size();
+
+    // En el caso de que hayan menos sprites que players, vamos creando sprites
+    while(spriteSize < playerSize){
+        GSprite* newSprite = CreatePlayerSprite();
+        m_players.push_back(newSprite);
+        spriteSize++;
+    }
+
+    // En el caso de que hayan sprites de más, vamos eliminano sprites
+    while(spriteSize > playerSize){
+        delete m_players[spriteSize-1];
+        spriteSize--;
+    }
+
+}
+
+void PlayerHUD::HUD_Minimap::DrawPlayers(){
+    std::vector<Player*> players = PlayerManager::GetInstance()->GetAllPlayers(m_player->GetAlliance());
+    int playerSize = players.size();
+    RecalculatePlayerSprites(playerSize);
+
+    int spriteSize = m_players.size();
+    for(int i=0; i<spriteSize; i++){
+        Player* currentPlayer = players[i];
+        SetStyleSprite(i, currentPlayer);
+        CalculatePositionSprite(i, currentPlayer);
+    }
+}
+
+void PlayerHUD::HUD_Minimap::SetStyleSprite(int id, Player* p){
+    GSprite* currentSprite = m_players[id];
+
+    if(p->IsDead()){
+        DeadPoint(currentSprite);
+    }else{
+        AlivePoint(currentSprite);
+    }
+
+}
+
+void PlayerHUD::HUD_Minimap::CalculatePositionSprite(int id, Player* p){
+    float ratio = GraphicEngine::getInstance()->GetAspectRatio();
+
+    vector3df position = m_player->GetPos();
+    vector3df otherPosition = p->GetPos();
+
+    vector3df diff = otherPosition - position;
+
+    float xValue = (diff.X * (m_size.X)) / (m_sizeMap * 2);
+    float zValue = (diff.Z * (m_size.Y)) / (m_sizeMap * 2);
+
+    xValue *= m_zoom;
+    zValue *= m_zoom;
+
+    // -- ROTATE THE POINT -----------------------------------
+    float radRotation = m_rotation * M_PI/180;
+
+    float cosRot = cos(radRotation);
+    float sinRot = sin(radRotation);
+
+    float xValueRot = (xValue * cosRot) + (zValue * -sinRot);
+    float zValueRot = (xValue * sinRot) + (zValue *  cosRot);
+    zValueRot *= ratio;
+
+    // -------------------------------------------------------
+    // -- CHECK IF OUTSIDE -----------------------------------
+
+    float checkX = (xValueRot * xValueRot) / (m_size.X/2 * m_size.X/2);
+    float checkY = (zValueRot * zValueRot) / (m_size.Y/2 * m_size.Y/2);
+
+    if(checkX + checkY > 1){
+        // Esta fuera del circulo del minimapa
+        m_players[id]->SetColor(0,0,0,0);
+        return;
+    }
+
+    // -------------------------------------------------------
+    xValueRot -= m_spriteSize.X/2;
+    zValueRot -= m_spriteSize.Y/2;
+
+    xValueRot += m_position.X + m_size.X/2;
+    zValueRot += m_position.Y + m_size.Y/2;
+
+    m_players[id]->SetPosition(xValueRot, zValueRot);
+}
+

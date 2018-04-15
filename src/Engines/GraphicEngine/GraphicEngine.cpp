@@ -250,7 +250,7 @@ int GraphicEngine::GetScreenWidth(){
 float GraphicEngine::GetAspectRatio(){
 	int W = GetScreenWidth();		
 	int H = GetScreenHeight();
-	return W/H;
+	return H/(float)W;
 }
 
 void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){

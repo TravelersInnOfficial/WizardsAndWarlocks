@@ -363,6 +363,29 @@ std::vector<Player*> PlayerManager::GetAllPlayers(){
 	return(toRet);
 }
 
+std::vector<Player*> PlayerManager::GetAllPlayers(Alliance alli){
+	std::vector<Player*> toRet;
+
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		Player* currentPlayer = players[i];
+		if(currentPlayer->GetAlliance() == alli){
+			toRet.push_back(currentPlayer);
+		}
+	}
+
+	size = deadPlayers.size();
+	for(int i=0; i<size; i++){
+		Player* currentPlayer = deadPlayers[i];
+		if(currentPlayer->GetAlliance() == alli){
+			toRet.push_back(currentPlayer);
+		}
+	}
+
+
+	return toRet;
+}
+
 Player* PlayerManager::GetPlayerFromID(int id){
 	Player* toRet = nullptr;
 	

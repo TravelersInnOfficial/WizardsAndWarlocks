@@ -55,12 +55,24 @@ void GSprite::SetPosition(float X, float Y){
 	m_sprite->SetPosition(X, Y);
 }
 
+void GSprite::SetRotation(float rot){
+	m_sprite->SetRotation(rot);
+}
+
 void GSprite::ScrollV(float vel){
 	m_sprite->ScrollV(vel);
 }
 
 void GSprite::ScrollH(float vel){
 	m_sprite->ScrollH(vel);
+}
+
+void GSprite::SetScrollV(float value){
+	m_sprite->SetScrollV(value);
+}
+
+void GSprite::SetScrollH(float value){
+	m_sprite->SetScrollH(value);
 }
 
 void GSprite::SetHeight(float h){
@@ -74,6 +86,11 @@ void GSprite::SetWidth(float w){
 void GSprite::SetColor(float r, float g, float b, float a){
 	m_sprite->SetColor(r, g, b, a);
 }
+
+void GSprite::SetTextureRect(float x, float y, float w, float h){
+	m_sprite->SetTextureRect(x, y, w, h);
+}
+
 
 void GSprite::SetTexture(std::string path){
 	m_sprite->SetTexture(path);

@@ -2,6 +2,10 @@
 #define PLAYERHUD_H
 
 #include <string>
+#include <vector2d.h>
+#include <iostream>
+#include <vector>
+
 
 //FAST FORWARD DECLARATIONS
 class GraphicEngine;
@@ -39,6 +43,7 @@ private:
         void SetColor(int alliance);
 	};
 
+
     struct ItemSlot{
         GSprite* bkg;
         GSprite* item;
@@ -53,6 +58,41 @@ private:
         void RemoveItem();
     };
 
+    struct HUD_Minimap{
+        Player*                 m_player;
+
+        // Map Info
+        GSprite*                m_mapImage;
+        float                   m_originalSize;
+        float                   m_sizeMap;
+        float                   m_zoom;
+        std::string             m_mapPath;
+        vector2df               m_position;
+        vector2df               m_size;
+        float                   m_rotation;
+        
+        std::vector<GSprite*>   m_players;
+        vector2df               m_spriteSize;
+
+        HUD_Minimap(Player* p);
+        ~HUD_Minimap();
+        void DrawPlayers();
+        void ZoomMap(float value);
+        void SetMapSize(float size);
+        void SetRotation(float rot);
+        void RecalculatePlayerSprites(int playerSize);
+        void SetTexture(std::string path);
+        void UpdateScroll();
+        void ChangeMap(std::string path, float size);
+
+        GSprite* CreatePlayerSprite();
+        void CalculatePositionSprite(int id, Player* p);
+        void SetStyleSprite(int id, Player* p);
+
+        void AlivePoint(GSprite* sprite);
+        void DeadPoint(GSprite* sprite);
+    };
+
     Player* m_player;
     int p_alliance;
     Potion* p_potion;
@@ -64,6 +104,9 @@ private:
     ItemSlot* potion_slot;
     ItemSlot* trap_slot;
     ItemSlot* trap_usings_slot;
+
+    HUD_Minimap* m_minimap;
+
 
 	float m_orb_height;
     float m_stamina_bar_width;
@@ -85,6 +128,7 @@ private:
     void p_drawPlayerSpellSelector() const;
     void p_drawPlayerPotion();
     void p_drawPlayerTrap();
+    void p_drawMinimap();
 
     void p_erasePlayerOrbs();
     void p_eraseStaminaBar();

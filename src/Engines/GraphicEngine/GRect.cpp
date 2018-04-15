@@ -13,6 +13,10 @@ void GRect::SetColor(float r, float g, float b){
 	m_rect->SetColor(r, g, b);
 }
 
+void GRect::SetRotation(float rot){
+	m_rect->SetRotation(rot);
+}
+
 void GRect::SetWidth(float width){
 	m_rect->SetWidth(width);
 }
