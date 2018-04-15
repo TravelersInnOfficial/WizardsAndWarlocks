@@ -19,7 +19,7 @@ public:
 
 	virtual void Contact(void* punt, EntityEnum tipo);
 
-	void SetPosition(vector3df TPosition);
+	virtual void SetPosition(vector3df TPosition);
 	void SetRotation(vector3df TRotation);
 
 protected:

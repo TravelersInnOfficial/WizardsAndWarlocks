@@ -18,17 +18,11 @@ GuivernoWind::~GuivernoWind(){
 }
 
 void GuivernoWind::Lanzar(Player* p){
-	if(area==nullptr){
-		CreateArea(p);
-	}
-	else{
-		UpdateArea(p);
-	}
+	if(area==nullptr) CreateArea(p);
+	else UpdateArea(p);
+	
 	Hechizo::Lanzar(p);
-
-	if(!lanzable){
-		ResetSpell();
-	}
+	if(!lanzable) ResetSpell();
 }
 
 void GuivernoWind::WasteMana(Player* p, float deltaTime){
@@ -69,7 +63,7 @@ void GuivernoWind::CreateArea(Player* p){
 	pos.X = pos.X + sin(rot.Y)*dist;
 	pos.Z = pos.Z + cos(rot.Y)*dist;
 
-	area = (IceArea*)ObjectManager::GetInstance()->AddDamageArea(pos, vector3df(1,1,1), vector3df(0,0,0), AREA_ICE);
+	area = (IceArea*)ObjectManager::GetInstance()->AddDamageArea(pos, vector3df(1,0.5f,2), rot, AREA_ICE);
 	area->SetEmisor(p->GetId());
 }
 

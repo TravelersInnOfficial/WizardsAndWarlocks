@@ -17,7 +17,6 @@ bool DamageArea::Update(float deltaTime){
 	std::cout<<"DAMAGE AREA BASICO"<<std::endl;
 	return true;
 }
-
 	
 void DamageArea::Update(){
 }

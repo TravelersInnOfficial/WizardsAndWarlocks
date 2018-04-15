@@ -26,25 +26,32 @@ void GParticle::SetTexture(std::string path){
 void GParticle::SetType(PARTICLE_TYPE type){
 	switch(type){
 		case TRAP_PARTICLE:
-			ps->SetManager(new TrapParticle());
+			pm = new TrapParticle();
+			ps->SetManager(pm);
 			break;
 		case INVISIBLE_PARTICLE:
-			ps->SetManager(new InvisibleParticle()); 
+			pm = new InvisibleParticle();
+			ps->SetManager(pm); 
 			break;
 		case PROJECTILE_PARTICLE:
-			ps->SetManager(new ProjectileParticle()); 
+			pm = new ProjectileParticle();
+			ps->SetManager(pm); 
 			break;
 		case EFFECT_PARTICLE:
-			ps->SetManager(new EffectParticle()); 
+			pm = new EffectParticle();
+			ps->SetManager(pm); 
 			break;
 		case POISON_PARTICLE:
-			ps->SetManager(new PoisonParticle()); 
+			pm = new PoisonParticle();
+			ps->SetManager(pm); 
 			break;
 		case BLOOD_PARTICLE:
-			ps->SetManager(new BloodParticle()); 
+			pm = new BloodParticle();
+			ps->SetManager(pm); 
 			break;
 		case WIND_PARTICLE:
-			//ps->SetManager(new WindParticle()); 
+			pm = new WindParticle();
+			ps->SetManager(pm); 
 			break;
 		default:;
 	}
@@ -52,10 +59,24 @@ void GParticle::SetType(PARTICLE_TYPE type){
 
 void GParticle::SetPos(vector3df position){
 	toe::core::TOEvector3df pos = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	ps->SetTranslateSmooth(pos);
+}
+
+void GParticle::SetPosSpecial(vector3df position){
+	toe::core::TOEvector3df pos = toe::core::TOEvector3df(position.X, position.Y, position.Z);
 	ps->SetTranslate(pos);
+}
+
+void GParticle::SetRot(vector3df rotation){
+	toe::core::TOEvector3df rot = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	ps->SetRotation(rot);
 }
 
 void GParticle::Update(){
 	float dt = StateManager::GetInstance()->GetDeltaTime();
 	ps->Update(dt);
+}
+
+ParticleManager* GParticle::GetPM(){
+	return pm;
 }

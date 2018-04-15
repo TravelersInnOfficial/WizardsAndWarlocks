@@ -20,10 +20,16 @@ public:
 	void SetTexture(std::string path);
 	void SetType(PARTICLE_TYPE type);
 	void SetPos(vector3df position);
+	void SetPosSpecial(vector3df position);
+	void SetRot(vector3df rotation);
+
 	void Update();
 
+	ParticleManager* GetPM();
+	
 private:
 	TFParticleSystem* ps;
+	ParticleManager* pm;
 	
 };
 

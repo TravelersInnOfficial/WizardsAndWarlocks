@@ -16,9 +16,12 @@ public:
 	void Deactivate();
 
 	void SetEmisor(int emi);
+	void SetPosition(vector3df TPosition) override;
 
 protected:
 	void CreateIceArea(vector3df TPosition, vector3df TScale, vector3df TRotation);
+
+	GParticle* particle;
 
 	int 		emisor;				// Emisor del area de danyo
 	bool 		activated;			// Esta activa? Deberia seguir existiendo? Si/No

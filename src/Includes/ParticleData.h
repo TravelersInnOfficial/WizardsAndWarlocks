@@ -7,8 +7,7 @@
 #include <GraphicEngine/Particles/ProjectileParticle.h>
 #include <GraphicEngine/Particles/PoisonParticle.h>
 #include <GraphicEngine/Particles/BloodParticle.h>
-//#include <GraphicEngine/Particles/WindParticle.h>
-
+#include <GraphicEngine/Particles/WindParticle.h>
 
 enum PARTICLE_TYPE{
 	ERR_PARTICLE		= -1,

@@ -14,7 +14,7 @@ PoisonArea::PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3
 		particle = new GParticle(TPosition);
 		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
 		particle->SetType(POISON_PARTICLE);
-		particle->SetQuantityPerSecond(300);
+		particle->SetQuantityPerSecond(600);
 	}
 }
 	
