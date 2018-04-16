@@ -30,7 +30,7 @@ void Burned::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/FireParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -45,7 +45,7 @@ void Burned::createSoundEvent() {
 
 void Burned::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -80,7 +80,7 @@ void Frozen::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -99,7 +99,7 @@ void Frozen::createSoundEvent() {
 
 void Frozen::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -128,7 +128,7 @@ void Poisoned::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -141,7 +141,7 @@ void Poisoned::RemoveEffect(Player* p){
 
 void Poisoned::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -193,7 +193,7 @@ void Paralyzed::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/ElectricParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -216,7 +216,7 @@ void Paralyzed::createSoundEvent() {
 
 void Paralyzed::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -235,7 +235,7 @@ void Silenced::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/SilencedParticles.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -256,7 +256,7 @@ void Silenced::createSoundEvent() {
 
 void Silenced::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -285,7 +285,7 @@ void Madness::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/ConfusedParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
@@ -295,7 +295,7 @@ void Madness::UpdateEffect(Player* p) {
 
 void Madness::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -336,13 +336,13 @@ void DeathSnare::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/SnareParticle.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
 void DeathSnare::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -421,13 +421,13 @@ void DefenseUp::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/DefenseParticles.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
 void DefenseUp::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -504,13 +504,13 @@ void Untargetable::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/DefenseParticles2.png");
 		particle->SetType(EFFECT_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		particle->SetQuantityPerSecond(100);
 	}
 }
 
 void Untargetable::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
@@ -606,7 +606,7 @@ void Invisible::UpdateEffect(Player* p) {
 
 void Invisible::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPos(p->GetPos());
+		particle->SetPosSpecial(p->GetPos());
 		particle->Update();
 	}
 }
