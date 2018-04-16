@@ -581,6 +581,7 @@ void PlayerHUD::HUD_Minimap::RecalculatePlayerSprites(int playerSize){
     // En el caso de que hayan sprites de más, vamos eliminano sprites
     while(spriteSize > playerSize){
         delete m_players[spriteSize-1];
+        m_players.erase(m_players.begin() + spriteSize - 1);
         spriteSize--;
     }
 

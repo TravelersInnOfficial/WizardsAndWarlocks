@@ -78,6 +78,7 @@ void FPSCamera::CatchMouseInput(){
 }
 
 void FPSCamera::SetWorking(bool work){
+	std::cout<<"Cambiado a work"<<std::endl;
 	if(work && !m_working) GraphicEngine::getInstance()->SetCursorPosition(lastPos);
 	m_working = work;
 }

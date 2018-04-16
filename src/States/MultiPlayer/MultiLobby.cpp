@@ -37,7 +37,7 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 		networkObject->SetIntVar(MULTIGAME_WINNER_ALLIANCE, (int)NO_ALLIANCE, false, false);
 	}
 
-	g_engine->ToggleCameraMovement(false);
+	g_engine->ToggleMenu(false);
 }
 
 MultiLobby::~MultiLobby(){

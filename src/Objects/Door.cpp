@@ -170,10 +170,15 @@ void Door::playOpen() {
 void Door::NetInteract(){
     NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(n_engine->IsClientInit()){
-        working = true;
-        increment = -increment;
-        if (isOpen) playClose();
-        else playOpen();
+        if(!working){
+            working = true;
+            increment = -increment;
+            if (isOpen) playClose();
+            else{ 
+                playOpen();
+                SetVisible(true);
+            }
+        }
     }
 }
 

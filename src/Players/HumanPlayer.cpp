@@ -230,6 +230,7 @@ void HumanPlayer::GetNetInput(){
 }
 
 void HumanPlayer::ToggleMenu(bool newState){
+	std::cout<<"Cambiar Estado"<<std::endl;
 	menuActivated = newState;
 	if(m_camera != nullptr) m_camera->SetWorking(!menuActivated);
 	GraphicEngine::getInstance()->ToggleMenu(menuActivated);

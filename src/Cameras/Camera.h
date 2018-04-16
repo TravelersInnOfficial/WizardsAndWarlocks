@@ -19,6 +19,8 @@ public:
     void SetRotation(vector3df rotation);
     vector3df GetRotation();
 
+    bool GetWorking();
+
     virtual void SetWorking(bool wor) = 0;
 
     virtual void UpdateCamera(vector3df target) = 0;

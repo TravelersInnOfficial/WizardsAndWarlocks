@@ -192,8 +192,14 @@ void Player::CreatePlayerCharacter(bool firstInit){
 
 		// Camera
 		if(isPlayerOne){ 
-			if(m_camera!=nullptr) delete m_camera;
-			m_camera = new FPSCamera(m_position, rotation);		
+			bool work = true;
+
+			if(m_camera!=nullptr){ 
+				work = m_camera->GetWorking();
+				delete m_camera;
+			}
+			m_camera = new FPSCamera(m_position, rotation);
+			m_camera->SetWorking(work);
 		}
 
 		hasCharacter = true;
@@ -217,8 +223,11 @@ void Player::DestroyPlayerCharacter(){
 	}
 	
 	if(isPlayerOne && m_camera!=nullptr){
+		bool work = m_camera->GetWorking();;
+
 		delete m_camera;
 		m_camera = new WatcherCamera(GetPos());
+		m_camera->SetWorking(work);
 	}
 	
 	hasCharacter = false;

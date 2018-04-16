@@ -11,6 +11,8 @@ EndMatchMenu::EndMatchMenu(MenuType type, int winners) : Menu(type){
     if(winners == (int)ALLIANCE_WIZARD) m_winners = "THE WIZARDS WON!";
     else if(winners == (int) ALLIANCE_WARLOCK) m_winners = "THE WARLOCKS WON!";
 
+    std::cout<<"A true"<<std::endl;
+
     HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
     hp->ToggleMenu(true);
 
