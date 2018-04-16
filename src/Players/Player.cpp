@@ -671,6 +671,7 @@ void Player::SendSignal(){
 }
 
 void Player::Die(){
+	EffectManager::GetInstance()->CleanEffects(this);
 	GUIEngine::GetInstance()->ShowDeathMessage(name);
 	ObjectManager::GetInstance()->AddPlayerParts(playerAlliance, m_position, m_dimensions, rotation);
 
