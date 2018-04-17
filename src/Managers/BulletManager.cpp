@@ -3,6 +3,8 @@
 #include "./../Projectiles/FireProjectile.h"
 #include "./../Projectiles/ThunderProjectile.h"
 #include "./../Projectiles/PoisonBomb.h"
+#include <fstream>
+#include <json.hpp>
 
 static BulletManager* instance = nullptr;
 
@@ -21,26 +23,57 @@ BulletManager::~BulletManager(){
 	EmptyObject();
 }
 
-void BulletManager::InitObject(){}
+void BulletManager::InitObject(){
+	loadProjectileDamage();
+}
 
+void BulletManager::loadProjectileDamage(){
+ 	//Takes path from binary location (/bin)
+	std::string jsonPath = "./../assets/json/game_data.json";
+	std::ifstream i(jsonPath);
+	nlohmann::json j;
+	i >> j;
+
+	std::map<std::string,BULLETCODE> bulletMap = GetBULLETCODE_StrMap();
+	BULLETCODE ID;
+
+	for(int i = 0; !j["projectile_data"][i].is_null(); i++){
+		ID =  bulletMap [j ["projectile_data"][i]["ID"] ];
+		bullet_damage.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["damage"]));
+		bullet_radius.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["radius"]));
+		bullet_speed.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["speed"]));
+		bullet_max_distance.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["max_distance"]));
+	}
+}
 void BulletManager::EmptyObject(){
 	DeleteAllProyectiles();
 	instance = nullptr;
 }
 
 void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect){
+	float dmg;
 	switch(b){
 		case BULLET_BASIC:
+			dmg = bullet_damage[BULLET_BASIC] * dmgMult;
 			proyectiles.push_back(new BasicProjectile(pos, dir, emi, bulletEffect, dmgMult));
 			break;
+		
 		case BULLET_FIRE:
+			dmg = bullet_damage[BULLET_FIRE] * dmgMult;
 			proyectiles.push_back(new FireProjectile(pos, dir, emi, dmgMult));
 			break;
+		
 		case BULLET_THUNDER:
+			dmg = bullet_damage[BULLET_THUNDER] * dmgMult;
 			proyectiles.push_back(new ThunderProjectile(pos, dir, emi, dmgMult));
 			break;
+		
 		case POISON_BOMB:
+			dmg = bullet_damage[POISON_BOMB] * dmgMult;
 			proyectiles.push_back(new PoisonBomb(pos, dir, emi, dmgMult));
+			break;
+		
+		default:
 			break;
 	}
 }
@@ -115,4 +148,19 @@ void BulletManager::DeleteAllProyectiles(){
 		delete p;											// Delete del proyectil
 	}
 	proyectilesToDelete.clear();							// Limpiamos el vector
+}
+
+std::map<std::string, BULLETCODE> BulletManager::GetBULLETCODE_StrMap(){
+	std::map<std::string, BULLETCODE> ret_map;
+	ret_map.insert(std::pair<std::string, BULLETCODE>("BULLET_NONE", BULLET_NONE));
+	ret_map.insert(std::pair<std::string, BULLETCODE>("BULLET_BASIC", BULLET_BASIC));
+	ret_map.insert(std::pair<std::string, BULLETCODE>("BULLET_FIRE", BULLET_FIRE));
+	ret_map.insert(std::pair<std::string, BULLETCODE>("BULLET_THUNDER", BULLET_THUNDER));
+	ret_map.insert(std::pair<std::string, BULLETCODE>("POISON_BOMB", POISON_BOMB));
+
+	return ret_map;
+};
+
+float BulletManager::GetBulletDamage(BULLETCODE bullet){
+	return bullet_damage[bullet];
 }

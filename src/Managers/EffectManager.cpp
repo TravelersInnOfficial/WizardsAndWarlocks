@@ -1,4 +1,6 @@
 #include "EffectManager.h"
+#include <fstream>
+#include <json.hpp>
 
 static EffectManager* instance = nullptr;
 
@@ -20,6 +22,27 @@ EffectManager::~EffectManager(){
 void EffectManager::InitObject(){
 	maxTime = 0.5f;
 	currentTime = 0.0f;
+
+	loadEffectsData();
+}
+
+void EffectManager::loadEffectsData(){
+ 	//Takes path from binary location (/bin)
+	std::string jsonPath = "./../assets/json/game_data.json";
+	std::ifstream i(jsonPath);
+	nlohmann::json j;
+	i >> j;
+
+	std::map<std::string,EFFECTCODE> codesMap = GetEFFECTCODE_StrMap();
+	EFFECTCODE ID;
+
+	for(int i = 0; !j["effect_data"][i].is_null(); i++){
+		ID = codesMap[ j["effect_data"][i]["ID"] ];
+
+		effect_name.insert(std::pair<EFFECTCODE,std::string>(ID, j["effect_data"][i]["name"] ));
+		effect_time.insert(std::pair<EFFECTCODE,float>(ID, j["effect_data"][i]["duration"] ));
+		effect_value.insert(std::pair<EFFECTCODE,float>(ID, j["effect_data"][i]["value"] )); 
+	}
 }
 
 void EffectManager::EmptyObject(){
@@ -222,4 +245,43 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		break;
 	}
 	return e;
+}
+
+std::map<std::string, EFFECTCODE> EffectManager::GetEFFECTCODE_StrMap(){
+	std::map<std::string, EFFECTCODE> ret_map;
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_BASIC", WEAK_BASIC));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_BURNED", WEAK_BURNED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_SOFTBURNED", WEAK_SOFTBURNED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_FROZEN", WEAK_FROZEN));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_PARALYZED", WEAK_PARALYZED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_SLOWEDDOWN", WEAK_SLOWEDDOWN));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_POISONED", WEAK_POISONED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_SOFTPOISONED", WEAK_SOFTPOISONED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_SILENCED", WEAK_SILENCED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_GHOSTDISTORSION", WEAK_GHOSTDISTORSION));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_MADNESS", WEAK_MADNESS));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_DEATHSNARE", WEAK_DEATHSNARE));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("WEAK_FUZZY", WEAK_FUZZY));
+
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_DAMAGE", POWERUP_DAMAGE));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_DEFENSE", POWERUP_DEFENSE));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_SPEED", POWERUP_SPEED));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_UNTARGET", POWERUP_UNTARGET));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_FIRE", POWERUP_FIRE));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_POISON", POWERUP_POISON));
+	ret_map.insert(std::pair<std::string, EFFECTCODE>("POWERUP_INVISIBLE", POWERUP_INVISIBLE));
+
+	return ret_map;
+}
+
+std::string EffectManager::GetEffectName(EFFECTCODE effect){
+	return effect_name[effect];
+}
+
+float EffectManager::GetEffectDuration(EFFECTCODE effect){
+	return effect_time[effect];
+}
+
+float EffectManager::GetEffectValue(EFFECTCODE effect){
+	return effect_value[effect];
 }

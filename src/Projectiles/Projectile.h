@@ -21,6 +21,7 @@ public:
 
     BT_Body* GetBody();
     GBody* GetShape();
+    int GetDamage();
 
 protected:
     void CreateProjectile();

@@ -4,6 +4,8 @@
 #include "PlayerManager.h"
 #include "./../Spells/SpellsInclude.h"
 #include <limits>
+#include <fstream>
+#include <json.hpp>
 
 static SpellManager* instance = nullptr;
 
@@ -23,6 +25,37 @@ SpellManager::~SpellManager(){
 }
 
 void SpellManager::InitObject(){
+	loadSpellsData();
+}
+
+void SpellManager::loadSpellsData(){
+ 	//Takes path from binary location (/bin)
+	std::string jsonPath = "./../assets/json/game_data.json";
+	std::ifstream i(jsonPath);
+	nlohmann::json j;
+	i >> j;
+
+	//spell data
+	SPELLCODE ID;
+
+	std::map<std::string,SPELLCODE> codesMap = GetSPELLCODE_StrMap();
+	std::map<SPELLCODE,std::string> s_info;
+	std::map<SPELLCODE,float> s_props;
+
+	for(int i = 0; !j["spells_data"][i].is_null(); i++){
+		ID = codesMap[ j["spells_data"][i]["ID"] ];
+
+		spell_names.insert(std::pair<SPELLCODE,std::string>(ID, j["spells_data"][i]["name"]));
+		spell_descriptions.insert(std::pair<SPELLCODE,std::string>(ID, j["spells_data"][i]["description"]));
+		spell_PROJECTILE.insert(std::pair<SPELLCODE,std::string>(ID, j["spells_data"][i]["PROJECTILE_ID"]));
+		spell_EFFECT.insert(std::pair<SPELLCODE,std::string>(ID, j["spells_data"][i]["EFFECT_ID"]));
+
+		spell_costMP.insert(std::pair<SPELLCODE,float>(ID, j["spells_data"][i]["costMP"]));
+		spell_tCast.insert(std::pair<SPELLCODE,float>(ID, j["spells_data"][i]["tCast"]));
+		spell_tCooldown.insert(std::pair<SPELLCODE,float>(ID, j["spells_data"][i]["tCooldown"]));
+		spell_optHP.insert(std::pair<SPELLCODE,float>(ID, j["spells_data"][i]["optHP"]));
+		spell_optMP.insert(std::pair<SPELLCODE,float>(ID, j["spells_data"][i]["optMP"]));
+	}
 }
 
 void SpellManager::EmptyObject(){
@@ -239,65 +272,64 @@ float SpellManager::GetMinCostPM(Player* p){
 
 Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 	Hechizo* h;
-	
 	switch(type){
 		default:				// Para los que no existan
 		case SPELL_PROJECTILE:	// Hechizo de ataque basico
-			h = new SpellProjectile(0, 0.0f, 0.5f, 100, 0);
+			h = new SpellProjectile(spell_costMP[SPELL_PROJECTILE], spell_tCast[SPELL_PROJECTILE], spell_tCooldown[SPELL_PROJECTILE], spell_optHP[SPELL_PROJECTILE], spell_optMP[SPELL_PROJECTILE]);
 		break;
 		
 		case SPELL_FIRE:		// Hechizo bola fuego
-			h = new DragonBreath(-20, .5f, 2.5f, 100, 100);
+			h = new DragonBreath(spell_costMP[SPELL_FIRE], spell_tCast[SPELL_FIRE], spell_tCooldown[SPELL_FIRE], spell_optHP[SPELL_FIRE], spell_optMP[SPELL_FIRE]);
 			//h = new DragonBreath(-0, 0.0f, 0.2f, 100, 100);
 		break;
 		
 		case SPELL_THUNDER:		// Hechizo paralizador
-			h = new OdinFury(-20, .5f, 2.5f, 100, 100);
+			h = new OdinFury(spell_costMP[SPELL_THUNDER], spell_tCast[SPELL_THUNDER], spell_tCooldown[SPELL_THUNDER], spell_optHP[SPELL_THUNDER], spell_optMP[SPELL_THUNDER]);
 		break;
 		
 		case SPELL_POISON:		// Bomba de veneno
-			h = new OgreBelch(-20, 1.0f, 5.0f, 100, 100);
+			h = new OgreBelch(spell_costMP[SPELL_POISON], spell_tCast[SPELL_POISON], spell_tCooldown[SPELL_POISON], spell_optHP[SPELL_POISON], spell_optMP[SPELL_POISON]);
 		break;
 		
 		case SPELL_WALL:		// Hechizo Invocacion Muro
-			h = new DesperationWall(-15, 0.0f, 5.0f, 100, 100);
+			h = new DesperationWall(spell_costMP[SPELL_WALL], spell_tCast[SPELL_WALL], spell_tCooldown[SPELL_WALL], spell_optHP[SPELL_WALL], spell_optMP[SPELL_WALL]);
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
+			h = new GuivernoWind(spell_costMP[SPELL_BLIZZARD], spell_tCast[SPELL_BLIZZARD], spell_tCooldown[SPELL_BLIZZARD], spell_optHP[SPELL_BLIZZARD], spell_optMP[SPELL_BLIZZARD]);
 			//h = new GuivernoWind(-2, 0.0f, 0.0f, 100, 75);
-			h = new GuivernoWind(0, 0.0f, 0.0f, 100, 75);
 		break;
 
 		case SPELL_TELEPORT:	// Hechizo de teleport
-			h = new Teleport(-15, 0.0f, 2.0f, 100, 100);
+			h = new Teleport(spell_costMP[SPELL_TELEPORT], spell_tCast[SPELL_TELEPORT], spell_tCooldown[SPELL_TELEPORT], spell_optHP[SPELL_TELEPORT], spell_optMP[SPELL_TELEPORT]);
 		break;
 
 		case SPELL_INVISIBILITY:	// Hechizo de invisibilidad
-			h = new InvisibilityCape(-20, 1.5f, 10.0f, 100, 100);
+			h = new InvisibilityCape(spell_costMP[SPELL_INVISIBILITY], spell_tCast[SPELL_INVISIBILITY], spell_tCooldown[SPELL_INVISIBILITY], spell_optHP[SPELL_INVISIBILITY], spell_optMP[SPELL_INVISIBILITY]);
 		break;
 
 		case SPELL_SPEED:
-			h = new Superspeed(-15, 0.0f, 5.0f, 100, 100);
+			h = new Superspeed(spell_costMP[SPELL_SPEED], spell_tCast[SPELL_SPEED], spell_tCooldown[SPELL_SPEED], spell_optHP[SPELL_SPEED], spell_optMP[SPELL_SPEED]);
 		break;
 
 		case SPELL_DEFENSE:
-			h = new OhmnioProtection(-20, 0.0f, 5.0f, 100, 100);
+			h = new OhmnioProtection(spell_costMP[SPELL_DEFENSE], spell_tCast[SPELL_DEFENSE], spell_tCooldown[SPELL_DEFENSE], spell_optHP[SPELL_DEFENSE], spell_optMP[SPELL_DEFENSE]);
 		break;
 
 		case SPELL_UNTARGET:
-			h = new DivinePoncho(-30, 0.0f, 7.0f, 100, 100);
+			h = new DivinePoncho(spell_costMP[SPELL_UNTARGET], spell_tCast[SPELL_UNTARGET], spell_tCooldown[SPELL_UNTARGET], spell_optHP[SPELL_UNTARGET], spell_optMP[SPELL_UNTARGET]);
 		break;
 
 		case SPELL_CLEANSE:
-			h = new GaiaCleanse(-20, 0.0f, 5.0f, 100, 100);
+			h = new GaiaCleanse(spell_costMP[SPELL_CLEANSE], spell_tCast[SPELL_CLEANSE], spell_tCooldown[SPELL_CLEANSE], spell_optHP[SPELL_CLEANSE], spell_optMP[SPELL_CLEANSE]);
 		break;
 
 		case SPELL_DUMMY:
-			h = new SpellDummy(-15, 0.0f, 5.0f, 100, 100);
+			h = new SpellDummy(spell_costMP[SPELL_DUMMY], spell_tCast[SPELL_DUMMY], spell_tCooldown[SPELL_DUMMY], spell_optHP[SPELL_DUMMY], spell_optMP[SPELL_DUMMY]);
 		break;
 
 		case SPELL_TELEPORTBASE:
-			h = new TeleportBase(-20, 0.0f, 3.0f, 100, 100);
+			h = new TeleportBase(spell_costMP[SPELL_TELEPORTBASE], spell_tCast[SPELL_TELEPORTBASE], spell_tCooldown[SPELL_TELEPORTBASE], spell_optHP[SPELL_TELEPORTBASE], spell_optMP[SPELL_TELEPORTBASE]);
 		break;
 
 	}
@@ -449,3 +481,44 @@ void SpellManager::RefreshServerAll(){
 		}
 	}
 }
+
+std::vector<std::string> SpellManager::GetSpellInfo(SPELLCODE spell){
+	std::vector<std::string> toRet;
+	toRet.push_back(spell_names[spell]);
+	toRet.push_back(spell_descriptions[spell]);
+	toRet.push_back(spell_PROJECTILE[spell]);
+	toRet.push_back(spell_EFFECT[spell]);
+	return toRet;
+}
+
+std::vector<float> SpellManager::GetSpellProps(SPELLCODE spell){
+	std::vector<float> toRet;
+	toRet.push_back(spell_costMP[spell]);
+	toRet.push_back(spell_tCast[spell]);
+	toRet.push_back(spell_tCooldown[spell]);
+	toRet.push_back(spell_optHP[spell]);
+	toRet.push_back(spell_optMP[spell]);
+	return toRet;
+}
+
+std::map<std::string, SPELLCODE> SpellManager::GetSPELLCODE_StrMap(){
+	std::map<std::string, SPELLCODE> ret_map;
+	ret_map.insert(std::pair<std::string, SPELLCODE>("NO_SPELL", NO_SPELL));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_SPEED", SPELL_SPEED));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_DEFENSE", SPELL_DEFENSE));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_INVISIBILITY", SPELL_INVISIBILITY));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_UNTARGET", SPELL_UNTARGET));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_BASIC", SPELL_BASIC));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_PROJECTILE", SPELL_PROJECTILE));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_FIRE", SPELL_FIRE));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_POISON", SPELL_POISON));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_THUNDER", SPELL_THUNDER));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_TELEPORT", SPELL_TELEPORT));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_CLEANSE", SPELL_CLEANSE));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_WALL", SPELL_WALL));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_DUMMY", SPELL_DUMMY));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_TELEPORTBASE", SPELL_TELEPORTBASE));
+	ret_map.insert(std::pair<std::string, SPELLCODE>("SPELL_BLIZZARD", SPELL_BLIZZARD));
+
+	return ret_map;
+};

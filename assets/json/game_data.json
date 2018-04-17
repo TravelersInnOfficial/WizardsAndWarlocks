@@ -1,0 +1,361 @@
+{
+  "spells_data": [
+  {
+    "ID": "NO_SPELL", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "None",
+    "description": "None.",
+    "costMP": 0.0,
+    "tCast": 0.0,
+    "tCooldown": 0.0,
+    "optHP": 0.0,
+    "optMP": 0.0
+  },
+  {
+    "ID": "SPELL_SPEED", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "POWERUP_SPEED",
+    "name": "SUPREME SPEED",
+    "description": "Makes you incredibly fast.",
+    "costMP": -15.0,
+    "tCast": 0.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_DEFENSE", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "POWERUP_DEFENSE",
+    "name": "DIVINE PONCHO",
+    "description": "Protects against all spells for several seconds.",
+    "costMP": -20.0,
+    "tCast": 0.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_INVISIBILITY", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "POWERUP_INVISIBLE",
+    "name": "INVISIBILITY CAPE",
+    "description": "Makes you invisible for a short time.",
+    "costMP": -20.0,
+    "tCast": 1.5,
+    "tCooldown": 10.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_UNTARGET", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "POWERUP_UNTARGET",
+    "name": "OHMIO PROTECTION",
+    "description": "Small protection.",
+    "costMP": -30.0,
+    "tCast": 0.0,
+    "tCooldown": 7.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_BASIC", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "Default.",
+    "description": "None.",
+    "costMP": 0.0,
+    "tCast": 0.0,
+    "tCooldown": 0.0,
+    "optHP": 0.0,
+    "optMP": 0.0
+  },
+  {
+    "ID": "SPELL_PROJECTILE", 
+    "PROJECTILE_ID": "BULLET_BASIC",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "BASIC SPELL",
+    "description": "Basic projectile spell.",
+    "costMP": 0.0,
+    "tCast": 0.0,
+    "tCooldown": 0.5,
+    "optHP": 100.0,
+    "optMP": 0.0
+  },
+  {
+    "ID": "SPELL_FIRE", 
+    "PROJECTILE_ID": "BULLET_FIRE",
+    "EFFECT_ID": "WEAK_BURNED",
+    "name": "DRAGON BREATH",
+    "description": "Fireball that causes burn effect for several seconds.",
+    "costMP": -20.0,
+    "tCast": 0.5,
+    "tCooldown": 2.5,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_POISON",  
+    "PROJECTILE_ID": "POISON_BOMB",
+    "EFFECT_ID": "WEAK_POISONED",
+    "name": "OGRE BURP",
+    "description": "Poison bomb that creates a big poisonus damage area.",
+    "costMP": -20.0,
+    "tCast": 1.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_THUNDER", 
+    "PROJECTILE_ID": "BULLET_THUNDER",
+    "EFFECT_ID": "WEAK_PARALYZED",
+    "name": "ODIN FURY",
+    "description": "Thunderball that causes paralysis.",
+    "costMP": -20.0,
+    "tCast": 0.5,
+    "tCooldown": 2.5,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_TELEPORT", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "TELEPORT",
+    "description": "Teleports you a small distance the way you are looking.",
+    "costMP": -15.0,
+    "tCast": 0.0,
+    "tCooldown": 2.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_CLEANSE", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "GAIA WATERS",
+    "description": "Clears all active effects upon you.",
+    "costMP": -20.0,
+    "tCast": 0.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_WALL", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "DESPERATION WALL",
+    "description": "Summons a great protection wall.",
+    "costMP": -15.0,
+    "tCast": 0.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_DUMMY", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "DUMMY CLONE",
+    "description": "Creates a clone of you.",
+    "costMP": -15.0,
+    "tCast": 0.0,
+    "tCooldown": 5.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_TELEPORTBASE", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "TELEPORT BASE",
+    "description": "Sets a teleport point. Click again on the spell to teleport back to that point.",
+    "costMP": -20.0,
+    "tCast": 0.0,
+    "tCooldown": 3.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_BLIZZARD", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "EFFECT_NONE",
+    "name": "GUIVERN WIND",
+    "description": "Blizzard area that damages your enemy and slows it down gradually until freeze.",
+    "costMP": -2.0,
+    "tCast": 0.0,
+    "tCooldown": 0.0,
+    "optHP": 100.0,
+    "optMP": 75.0
+  }
+  ],
+  "projectile_data": [
+    {
+      "ID": "BULLET_NONE",
+      "radius" : 0.05,
+      "speed" : 55.0,
+      "damage" : 10.0,
+      "max_distance" : 20.0
+    },
+    {
+      "ID": "BULLET_BASIC",
+      "radius" : 0.5,
+      "speed" : 55.0,
+      "damage" : 10.0,
+      "max_distance" : 20.0
+    },
+    {
+      "ID": "BULLET_FIRE",
+      "radius" : 0.2,
+      "speed" : 40.0,
+      "damage" : 20.0,
+      "max_distance" : 20.0
+    },
+    {
+      "ID": "BULLET_THUNDER",
+      "radius" : 0.15,
+      "speed" : 40.0,
+      "damage" : 20.0,
+      "max_distance" : 20.0
+    },
+    {
+      "ID": "POISON_BOMB",
+      "radius" : 0.2,
+      "speed" : 15.0,
+      "damage" : 20.0,
+      "max_distance" : 30.0
+    }
+  ],
+  "effect_data": [
+    {
+      "ID": "EFFECT_NONE",
+      "name": "NONE",
+      "duration": 0.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_BASIC",
+      "name": "NONE",
+      "duration": 5.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_BURNED",
+      "name": "BURN",
+      "duration": 6.0,
+      "value": 3.0
+    },
+    {
+      "ID": "WEAK_SOFTBURNED",
+      "name": "SOFT BURN",
+      "duration": 3.0,
+      "value": 3.0
+    },
+    {
+      "ID": "WEAK_FROZEN",
+      "name": "FREEZE",
+      "duration": 3.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_PARALYZED",
+      "name": "PARALYSIS",
+      "duration": 3.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_SLOWEDDOWN",
+      "name": "SLOWDOWN",
+      "duration": 4.0,
+      "value": 10.0
+    },
+    {
+      "ID": "WEAK_POISONED",
+      "name": "POISONED",
+      "duration": 6.0,
+      "value": 3.0
+    },
+    {
+      "ID": "WEAK_SOFTPOISONED",
+      "name": "SOFT POISONED",
+      "duration": 3.0,
+      "value": 3.0
+    },
+    {
+      "ID": "WEAK_SILENCED",
+      "name": "SILENCED",
+      "duration": 4.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_GHOSTDISTORSION",
+      "name": "SIGHT DISTORSION",
+      "duration": 0.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_MADNESS",
+      "name": "MADDNESS",
+      "duration": 4.0,
+      "value": 0.0
+    },
+    {
+      "ID": "WEAK_DEATHSNARE",
+      "name": "DEATHSNARE",
+      "duration": 2.0,
+      "value": 4.0
+    },
+    {
+      "ID": "WEAK_FUZZY",
+      "name": "FUZZY",
+      "duration": 5.0,
+      "value": 0.0
+    },
+    {
+      "ID": "POWERUP_DAMAGE",
+      "name": "DAMAGE PLUS",
+      "duration": 7.0,
+      "value": 1.6
+    },
+    {
+      "ID": "POWERUP_DEFENSE",
+      "name": "DEFENSE UP",
+      "duration": 7.0,
+      "value": 1.6
+    },
+    {
+      "ID": "POWERUP_SPEED",
+      "name": "SPEED UP",
+      "duration": 4.0,
+      "value": 3.0
+    },
+    {
+      "ID": "POWERUP_UNTARGET",
+      "name": "DEFENSE UP",
+      "duration": 4.0,
+      "value": 10.0
+    },
+    {
+      "ID": "POWERUP_FIRE",
+      "name": "BURN",
+      "duration": 7.0,
+      "value": 0.0
+    },
+    {
+      "ID": "POWERUP_POISON",
+      "name": "POISONED",
+      "duration": 7.0,
+      "value": 0.0
+    },
+    {
+      "ID": "POWERUP_INVISIBLE",
+      "name": "INVISIBILITY",
+      "duration": 10.0,
+      "value": 0.0
+    }
+  ]
+}

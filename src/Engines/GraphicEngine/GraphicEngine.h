@@ -95,6 +95,13 @@ public:
 	*/
 	void drawAim(bool playerMoving);
 
+	/**
+	 * @brief Set the Aim Color
+	 * 
+	 * @param r 
+	 * @param g 
+	 * @param b 
+	 */
 	void SetAimColor(float r, float g, float b);
 
 	/**
@@ -117,9 +124,19 @@ public:
 	*/
 	int GetScreenWidth();
 
-
+	/**
+	 * @brief Get the Aspect Ratio
+	 * 
+	 * @return float 
+	 */
 	float GetAspectRatio();
 	
+	/**
+	 * @brief Draws 2D image in screen
+	 * 
+	 * @param texturePath 
+	 * @param rect 
+	 */
 	void draw2DImage(std::string texturePath, vector4df rect);
 	/**
 	 * Draws a rectangle

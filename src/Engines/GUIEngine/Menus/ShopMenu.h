@@ -2,7 +2,6 @@
 #define SHOPMENU_H
 
 #include <GUIEngine/Menu.h>
-#include <ItemsData.h>
 #include <Assets.h>
 #include <map>
 #include "TrapCodes.h"
@@ -28,7 +27,7 @@ private:
     void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<SPELLCODE>, std::map<ImTextureID*, SPELLCODE>*);
     void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<TrapEnum>,  std::map<ImTextureID*, TrapEnum>*);
     void load_sockets(const char* id,const char* type, int total, int cols, std::vector<ImTextureID*> &items_selected);
-    void load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], const char * names[], const char * descriptions[], ImTextureID category_banner, std::string banner_text);
+    void load_items(const char* id,const char* type, int total, int cols, ImTextureID* texture[], std::vector<std::string> item_keys, ImTextureID category_banner, std::string banner_text);
    
     void ChangeSpell(int pos, SPELLCODE sEnum);
     void ChangeTrap(TrapEnum tEnum);
@@ -120,7 +119,16 @@ private:
                                                 TEXTUREMAP[TEXTURE_TENUM_SPIRITS].c_str(),
                                                 TEXTUREMAP[TEXTURE_TENUM_TAXES].c_str()};
 
-//NAMES 
+//descriptions 
+    void loadShopItemsInfo();
+    void loadOfensiveItem(SPELLCODE spell,std::vector<std::string>* data_stack);
+    void loadDefensiveItem(SPELLCODE spell,std::vector<std::string>* data_stack);
+    void loadTacticItem(SPELLCODE spell,std::vector<std::string>* data_stack);
+    std::vector<std::string> o_spellKeys;
+    std::vector<std::string> d_spellKeys;
+    std::vector<std::string> t_spellKeys;
+
+/*
     const char * o_spellKeys[N_OSPELLS] = { SPELLNAMES[SPELL_BLIZZARD], 
                                             SPELLNAMES[SPELL_FIRE], 
                                             SPELLNAMES[SPELL_POISON],
@@ -167,7 +175,8 @@ private:
                                                      TRAPDESC[TENUM_SILENCE],
                                                      TRAPDESC[TENUM_SPIRITS],
                                                      TRAPDESC[TENUM_TAXES]};
-
+    
+*/
 };
 
 #endif
