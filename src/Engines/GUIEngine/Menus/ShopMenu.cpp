@@ -83,7 +83,6 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
 }
 
 void ShopMenu::loadShopItemsInfo(){
-
     loadOfensiveItem(SPELL_BLIZZARD, &o_spellKeys);
     loadOfensiveItem(SPELL_FIRE, &o_spellKeys);
     loadOfensiveItem(SPELL_POISON, &o_spellKeys);
@@ -100,6 +99,12 @@ void ShopMenu::loadShopItemsInfo(){
     loadTacticItem(SPELL_TELEPORTBASE, &t_spellKeys);
     loadTacticItem(SPELL_WALL, &t_spellKeys);
 
+    loadTrapItem(TENUM_DEATH_CLAWS, &trapKeys);
+    loadTrapItem(TENUM_DISTURBANCE, &trapKeys);
+    loadTrapItem(TENUM_EXPLOSIVE, &trapKeys);
+    loadTrapItem(TENUM_SILENCE, &trapKeys);
+    loadTrapItem(TENUM_SPIRITS, &trapKeys);
+    loadTrapItem(TENUM_TAXES, &trapKeys);
 }
 
 void ShopMenu::loadOfensiveItem(SPELLCODE spell, std::vector<std::string>* data_stack){
@@ -118,7 +123,7 @@ void ShopMenu::loadOfensiveItem(SPELLCODE spell, std::vector<std::string>* data_
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
     float effect_value = e_manager->GetEffectValue(effect_map[info[3]]);
-    std::string effect_data = effect_name + " (-"+std::to_string(effect_value)+"HP/s, "+std::to_string(effect_duration)+"s)";
+    std::string effect_data = effect_name + " (-"+std::to_string(effect_value)+" HP/s, "+std::to_string(effect_duration)+"s)";
 
     std::string description = info[0] + "\n" + info[1] 
                             + "\n- Damage: " + std::to_string(damage) + " HP" 
@@ -128,6 +133,7 @@ void ShopMenu::loadOfensiveItem(SPELLCODE spell, std::vector<std::string>* data_
                             + "\n- Cooldown: " + std::to_string(data[2]) + " s";
     data_stack->push_back(description);
 }
+
 void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data_stack){
     SpellManager* s_manager = SpellManager::GetInstance();
     BulletManager* b_manager = BulletManager::GetInstance();
@@ -154,6 +160,7 @@ void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data
                             + "\n- Cooldown: " + std::to_string(data[2]) + " s";
     data_stack->push_back(description);
 }
+
 void ShopMenu::loadTacticItem(SPELLCODE spell, std::vector<std::string>* data_stack){
     SpellManager* s_manager = SpellManager::GetInstance();
     BulletManager* b_manager = BulletManager::GetInstance();
@@ -178,6 +185,29 @@ void ShopMenu::loadTacticItem(SPELLCODE spell, std::vector<std::string>* data_st
                             + "\n- Mana Cost: "+ std::to_string(data[0]) + " MP"
                             + "\n- Casting Time: " + std::to_string(data[1]) + " s"
                             + "\n- Cooldown: " + std::to_string(data[2]) + " s";
+    data_stack->push_back(description);
+}
+
+void ShopMenu::loadTrapItem(TrapEnum trap, std::vector<std::string>* data_stack){
+    EffectManager* e_manager = EffectManager::GetInstance();
+    TrapManager* t_manager = TrapManager::GetInstance();
+    
+    std::map<std::string, EFFECTCODE> effect_map = e_manager->GetEFFECTCODE_StrMap();
+
+    std::string trap_name = t_manager->GetTrapName(trap);
+    std::string trap_description = t_manager->GetTrapDescription(trap);
+    std::string trap_effect_id = t_manager->GetTrapEffect(trap);
+    float trap_damage = t_manager->GetTrapDamage(trap);
+
+    std::string effect_name = e_manager->GetEffectName(effect_map[trap_effect_id]);
+    float effect_duration = e_manager->GetEffectDuration(effect_map[trap_effect_id]);
+    float effect_value = e_manager->GetEffectValue(effect_map[trap_effect_id]);
+    
+    std::string effect_data = effect_name + " (-"+std::to_string(effect_value)+" HP/s, "+std::to_string(effect_duration)+"s)";
+
+    std::string description = trap_name + "\n" + trap_description 
+                            + "\n- Damage: " + std::to_string(trap_damage) + " HP" 
+                            + "\n- Effect: " + effect_data + "\n";
     data_stack->push_back(description);
 }
 
@@ -340,7 +370,7 @@ void ShopMenu::Update(bool* open, float deltaTime){
         load_items("ofensive_spells_columns",TYPE_SPELL, N_OSPELLS, N_OSPELLS, o_spelltexture, o_spellKeys, ospells_banner, "Ofensive Spells");
         load_items("defensive_spells_columns", TYPE_SPELL, N_DSPELLS, N_DSPELLS, d_spelltexture, d_spellKeys, dspells_banner, "Defensive Spells");
         load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, N_TSPELLS, t_spelltexture, t_spellKeys, tspells_banner, "Tactic Spells");
-        //load_items("traps_columns", TYPE_TRAP, N_TRAPS, N_TRAPS, trap_texture, trapKeys, trap_descriptions, traps_banner, "Traps"); 
+        load_items("traps_columns", TYPE_TRAP, N_TRAPS, N_TRAPS, trap_texture, trapKeys, traps_banner, "Traps"); 
         
         if(slots.empty()){
             for(int i = 0;i<slot_pos.size();i++){

@@ -357,5 +357,56 @@
       "duration": 10.0,
       "value": 0.0
     }
+  ],
+  "trap_data": [
+    {
+      "ID": "TENUM_NO_TRAP",
+      "EFFECT_ID": "EFFECT_NONE",
+      "name": "NONE",
+      "description": "None.",
+      "damage": 0.0
+    },
+    {
+      "ID": "TENUM_DEATH_CLAWS",
+      "EFFECT_ID": "WEAK_DEATHSNARE",
+      "name": "DEATH_CLAWS",
+      "description": "None.",
+      "damage": 10.0
+    },
+    {
+      "ID": "TENUM_SPIRITS",
+      "EFFECT_ID": "WEAK_FUZZY",
+      "name": "SPIRITS",
+      "description": "None.",
+      "damage": 25.0
+    },
+    {
+      "ID": "TENUM_SILENCE",
+      "EFFECT_ID": "WEAK_SILENCED",
+      "name": "SILENCE",
+      "description": "None.",
+      "damage": 25.0
+    },
+    {
+      "ID": "TENUM_TAXES",
+      "EFFECT_ID": "EFFECT_NONE",
+      "name": "TAXES",
+      "description": "None.",
+      "damage": 25.0
+    },
+    {
+      "ID": "TENUM_DISTURBANCE",
+      "EFFECT_ID": "WEAK_MADNESS",
+      "name": "DISTURBANCE",
+      "description": "None.",
+      "damage": 25.0
+    },
+    {
+      "ID": "TENUM_EXPLOSIVE",
+      "EFFECT_ID": "EFFECT_NONE",
+      "name": "EXPLOSIVE",
+      "description": "None.",
+      "damage": 35.0
+    }
   ]
 }

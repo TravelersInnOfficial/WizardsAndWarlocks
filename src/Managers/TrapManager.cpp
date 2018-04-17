@@ -3,6 +3,8 @@
 #include <vector3d.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <fstream>
+#include <json.hpp>
 
 static TrapManager* instance = nullptr;
 
@@ -31,6 +33,28 @@ TrapManager::~TrapManager(){
 
 void TrapManager::InitObject(){
 	lastTrapId = 0;
+	loadJSONTrapData();
+}
+
+void TrapManager::loadJSONTrapData(){
+	//Takes path from binary location (/bin)
+	std::string jsonPath = "./../assets/json/game_data.json";
+	std::ifstream i(jsonPath);
+	nlohmann::json j;
+	i >> j;
+
+	std::map<std::string, TrapEnum> codesMap = GetTRAPENUM_StrMap();
+	TrapEnum ID;
+
+	for(int i = 0; !j["trap_data"][i].is_null(); i++){
+		ID = codesMap[ j["trap_data"][i]["ID"] ];
+
+		trap_EFFECT.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["EFFECT_ID"]));
+		trap_name.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["name"]));
+		trap_description.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["description"]));
+		trap_damage.insert(std::pair<TrapEnum,float>(ID, j["trap_data"][i]["damage"]));
+	}
+
 }
 
 void TrapManager::EmptyObject(){
@@ -320,3 +344,33 @@ void TrapManager::RefreshServerAll(){
 		}
 	}
 }
+
+std::string TrapManager::GetTrapEffect(TrapEnum trap){
+	return trap_EFFECT[trap];
+}
+
+std::string TrapManager::GetTrapName(TrapEnum trap){
+	return trap_name[trap];
+}
+
+std::string TrapManager::GetTrapDescription(TrapEnum trap){
+	return trap_description[trap];
+}
+
+float TrapManager::GetTrapDamage(TrapEnum trap){
+	return trap_damage[trap];
+}
+
+
+std::map<std::string, TrapEnum> TrapManager::GetTRAPENUM_StrMap(){
+	std::map<std::string, TrapEnum> ret_map;
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_NO_TRAP", TENUM_NO_TRAP));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_DEATH_CLAWS", TENUM_DEATH_CLAWS));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_SPIRITS", TENUM_SPIRITS));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_SILENCE", TENUM_SILENCE));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_TAXES", TENUM_TAXES));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_DISTURBANCE", TENUM_DISTURBANCE));
+	ret_map.insert(std::pair<std::string, TrapEnum>("TENUM_EXPLOSIVE", TENUM_EXPLOSIVE));
+
+	return ret_map;
+};

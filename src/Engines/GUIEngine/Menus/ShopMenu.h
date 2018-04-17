@@ -124,9 +124,11 @@ private:
     void loadOfensiveItem(SPELLCODE spell,std::vector<std::string>* data_stack);
     void loadDefensiveItem(SPELLCODE spell,std::vector<std::string>* data_stack);
     void loadTacticItem(SPELLCODE spell,std::vector<std::string>* data_stack);
+    void loadTrapItem(TrapEnum trap,std::vector<std::string>* data_stack);
     std::vector<std::string> o_spellKeys;
     std::vector<std::string> d_spellKeys;
     std::vector<std::string> t_spellKeys;
+    std::vector<std::string> trapKeys;
 
 /*
     const char * o_spellKeys[N_OSPELLS] = { SPELLNAMES[SPELL_BLIZZARD], 
