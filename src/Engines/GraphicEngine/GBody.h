@@ -13,7 +13,7 @@ class GBody: public GEntity{
 	friend class GraphicEngine;
 public:
 
-	~GBody();
+	virtual ~GBody();
 
 	/**
 	 * Set body texture
@@ -35,8 +35,6 @@ public:
 	*/
 	void setMaterialType(MATERIAL_TYPE type);
 	
-	void Remove();
-
 	void AddText(std::string text, vector3df position, int id = 0);
 
 	void SetInvisible();
@@ -45,12 +43,11 @@ public:
 
 	void SetTextureScale(vector2df value);
 
-private:
+protected:
 	//GBody(irr::scene::ISceneNode* node);
 	GBody(TFMesh* node);
-	TFMesh* privateAnimatedMesh; 
+	
 	std::map<int, int> m_billboards;		// ID del billboard, ID en el motor
-	//irr::scene::IBillboardTextSceneNode* board;
   
 };
 
