@@ -178,52 +178,52 @@ class Player: public Entidad{
 		void eraseTargetHUD();
 		
 		// We check if the player can jump
-		float currentJumpCheckTime;
-		float maxJumpCheckTime;
+		float m_currentJumpCheckTime;
+		float m_maxJumpCheckTime;
 		bool CheckIfCanJump(float deltaTime = 0, bool forceSkip = false);
 		bool JumpRaycast();
 
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
-		vector3df 		rotation;			// Rotacion del jugador
+		vector3df 		m_rotation;			// Rotacion del jugador
 
-		PlayerController* controller;		// Objeto que controla el input del jugador
+		PlayerController* m_controller;		// Objeto que controla el input del jugador
 
-		float 			raycastDistance;	// Distancia del rayo de RayCast
+		float 			m_raycastDistance;	// Distancia del rayo de RayCast
 
-		int 			currentSpell;		// Hechizo Seleccionado para lanzar
-		int 			numberSpells;		// Numero de hechizos del jugador [0-numberSpells]
+		int 			m_currentSpell;		// Hechizo Seleccionado para lanzar
+		int 			m_numberSpells;		// Numero de hechizos del jugador [0-m_numberSpells]
 
 		float 			m_HP;				// Vida del jugador		- 100HP
 		float			m_MP;				// Mana del jugador		- 100HP
 		float			m_SP;				// Stamina del jugador	- 100HP
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
-		bool 			isPlayerOne;		// Es el jugador con el que jugamos? Si/No
-		bool			isRunning;			// The player is running? Yes/No
+		bool 			m_isPlayerOne;		// Es el jugador con el que jugamos? Si/No
+		bool			m_isRunning;			// The player is running? Yes/No
 
-		OverlayManager* overlayManager;
+		OverlayManager* m_overlayManager;
 		
-		Alliance 		playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
+		Alliance 		m_playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		GBody* 			m_playerNode;		// Cuerpo visual del jugador
 		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 
-		NetworkObject* 	networkObject;		// Objeto de red del jugador
-		std::string		name;				// Nombre del jugador en RED
+		NetworkObject* 	m_networkObject;		// Objeto de red del jugador
+		std::string		m_name;				// Nombre del jugador en RED
 
-		bool			readyToStart;		// Esta preparado para empezar la partida?
-		bool			matchStarted;		// Ha empezado la partida?
-		bool			hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
+		bool			m_readyToStart;		// Esta preparado para empezar la partida?
+		bool			m_matchStarted;		// Ha empezado la partida?
+		bool			m_hasCharacter;		// El jugador tiene un cuerpo fisico y grafico
 
-		bool			stepsStarted;		// Han empezado a sonar los steps?
-		bool 			pulseStarted;		// Pulse sound event started?
-		bool 			moving;				// Se esta moviendo?
+		bool			m_stepsStarted;		// Han empezado a sonar los steps?
+		bool 			m_pulseStarted;		// Pulse sound event started?
+		bool 			m_moving;				// Se esta moviendo?
 
-		Player* 		targetDeadCam;
+		Player* 		m_targetDeadCam;
 
-		Potion* potion;						// Pocion en el inventario
+		Potion* m_potion;						// Pocion en el inventario
 
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
