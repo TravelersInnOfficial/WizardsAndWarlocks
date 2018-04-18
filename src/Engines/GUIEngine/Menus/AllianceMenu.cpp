@@ -21,14 +21,14 @@ AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     
     //ImGui::GetIO().MouseDrawCursor = true;
 
-    tex_alliances_init[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
-    tex_alliances_init[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
+    tex_alliances_init[0] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+    tex_alliances_init[1] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
 
-    tex_alliances[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
-    tex_alliances[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
+    tex_alliances[0] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+    tex_alliances[1] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE]);
 
-    tex_alliances_hover[0] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE_HOVER]);
-    tex_alliances_hover[1] = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE_HOVER]);
+    tex_alliances_hover[0] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE_HOVER]);
+    tex_alliances_hover[1] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE_HOVER]);
 
     toe::core::TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
     buttonSize = ImVec2(dims.X,dims.Y);

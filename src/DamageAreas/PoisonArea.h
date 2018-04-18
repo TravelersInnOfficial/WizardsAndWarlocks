@@ -11,8 +11,8 @@ public:
 	PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~PoisonArea();
 
-	bool Update(float deltaTime);
-	void Contact(void* punt, EntityEnum tipo);
+	bool Update(float deltaTime) override;
+	void Contact(void* punt, EntityEnum tipo) override;
 
 	void SetAlliance(Alliance emi);
 

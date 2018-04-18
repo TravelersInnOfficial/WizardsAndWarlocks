@@ -60,17 +60,17 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
         }
     }
 
-    ospells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_OSPELLS_BANNER]);
-    dspells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_DSPELLS_BANNER]);
-    tspells_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_TSPELLS_BANNER]);
-    traps_banner = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_TRAPS_BANNER]);
+    ospells_banner      = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_OSPELLS_BANNER]);
+    dspells_banner      = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_DSPELLS_BANNER]);
+    tspells_banner      = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_TSPELLS_BANNER]);
+    traps_banner        = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_TRAPS_BANNER]);
     toe::core::TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_OSPELLS_BANNER]);
     bannerSize = ImVec2(dims.X,dims.Y);
 
-    texture_init = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
-    texture_button = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
-    texture_hover = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_HOVER]);
-    texture_pressed = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_PRESSED]);
+    texture_init        = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
+    texture_button      = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON]);
+    texture_hover       = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_HOVER]);
+    texture_pressed     = (void*)(size_t)toe::GetTextureID(TEXTUREMAP[TEXTURE_BUTTON_PRESSED]);
 
     dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_BUTTON]);
     buttonSize = ImVec2(dims.X,dims.Y);
@@ -102,14 +102,14 @@ void ShopMenu::Close(bool* open){
 
 void ShopMenu::load_imagesid(int total, const char* layouts[], ImTextureID* texture[], std::vector<SPELLCODE> codes, std::map<ImTextureID*, SPELLCODE>* map){
     for(int i = 0; i<total;i++){
-        texture[i] = (ImTextureID*) toe::GetTextureID(layouts[i]);
+        texture[i] = (ImTextureID*)(size_t) toe::GetTextureID(layouts[i]);
         map->insert(std::pair<ImTextureID*,SPELLCODE>(texture[i],codes[i]));
     }
 }
 
 void ShopMenu::load_imagesid(int total, const char * layouts[], ImTextureID* texture[], std::vector<TrapEnum> codes,  std::map<ImTextureID*, TrapEnum>* map){
     for(int i = 0; i<total;i++){
-        texture[i] = (ImTextureID*) toe::GetTextureID(layouts[i]);
+        texture[i] = (ImTextureID*)(size_t) toe::GetTextureID(layouts[i]);
         map->insert(std::pair<ImTextureID*,TrapEnum>(texture[i],codes[i]));
     }
 }

@@ -10,9 +10,9 @@ public:
 	IceArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation);
 	~IceArea();
 
-	bool Update(float deltaTime);
+	bool Update(float deltaTime) override;
 
-	void Contact(void* punt, EntityEnum tipo);
+	void Contact(void* punt, EntityEnum tipo) override;
 	void Deactivate();
 
 	void SetEmisor(int emi);

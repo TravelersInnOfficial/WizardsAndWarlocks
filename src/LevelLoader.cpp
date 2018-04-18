@@ -133,12 +133,12 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 			else if(type == "Door"){
 				int idDoor = id;
-				doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
+				doors[idDoor] = objManager->AddDoor(position, size, rotation, axis, model);
 			}
 
 			else if(type == "DoorBlocked"){
 				int idDoor = id;
-				doors[idDoor] = objManager->AddDoor(position, size, rotation, axis);
+				doors[idDoor] = objManager->AddDoor(position, size, rotation, axis, model);
 				doors[idDoor]->SetBlock(true);
 			}
 

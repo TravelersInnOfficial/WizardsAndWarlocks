@@ -15,7 +15,7 @@ class GPortal;
 
 class Door: public Entidad{
 public:
-	Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d);
 	~Door();
 	void Interact(Player* p);
 	void Interact();
@@ -40,7 +40,7 @@ public:
 	void SetVisible(bool visibility);
 
 private:
-	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d);
 	void WorkDoor();
 	void UpdatePosShape();
 	void createSoundEvents();	//Create the sound events needed for the player

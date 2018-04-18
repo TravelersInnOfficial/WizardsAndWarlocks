@@ -37,7 +37,7 @@ public:
 	// Adders
 	Block* 			AddBlock(vector3df pos, vector3df size = vector3df(1,1,1), vector3df rot = vector3df(0,0,0), std::string texture="");
 	Prop* 			AddProp(vector3df pos, vector3df size, vector3df rot, std::string model, std::string texture);
-	Door* 			AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
+	Door* 			AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d);
 	Grail* 			AddGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	Switch* 		AddSwitch(Door* d, vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);
 	Switch* 		AddSwitch(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter);

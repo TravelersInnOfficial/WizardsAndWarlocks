@@ -92,8 +92,8 @@ void ObjectManager::AddReadyPoint(vector3df TPosition){
 	}
 }
 
-Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
-	Door* d = new Door(TPosition, TScale, TRotation, TCenter);
+Door* ObjectManager::AddDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d){
+	Door* d = new Door(TPosition, TScale, TRotation, TCenter, model3d);
 	doors.push_back(d);
 	return d;
 }

@@ -4,9 +4,9 @@
 
 #include <GraphicEngine/GPortal.h>
 
-Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d){
 	TRotation.Y += 180;
-    CreateDoor(TPosition, TScale, TRotation, TCenter);
+    CreateDoor(TPosition, TScale, TRotation, TCenter, model3d);
 
     min = TRotation.Y;
     max = TRotation.Y + 90;
@@ -31,7 +31,7 @@ Door::~Door(){
     delete m_doorNode;
 }
 
-void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter){
+void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d){
 
     //Dimensions of the box
     TScale.X *= 0.05;
@@ -46,7 +46,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     // Cargamos el modelo
-    m_doorNode = g_engine->addObjMeshSceneNode("./../assets/modelos/door.obj");
+    m_doorNode = g_engine->addObjMeshSceneNode("./../assets/modelos/door2.obj");
     m_doorNode->setPosition(TPosition);
     m_doorNode->setRotation(TRotation);
     m_doorNode->setScale(vector3df(1,1,1));

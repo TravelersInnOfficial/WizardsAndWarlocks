@@ -16,7 +16,7 @@ Match::Match(SinglePlayerGame* fat){
 	senseManager	= RegionalSenseManager::GetInstance();
 	
 	// Level
-	LevelLoader::LoadLevel("../assets/json/map.json");
+	LevelLoader::LoadLevel("../assets/json/castle_final.json");
 
 	objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 	objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");

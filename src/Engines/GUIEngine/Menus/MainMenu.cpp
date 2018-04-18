@@ -27,14 +27,15 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     
     //ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     //BUTTONS DATA
-    texture_init = (void*) toe::GetTextureID(button_layout);
+    texture_init = (void*)(size_t) toe::GetTextureID(button_layout);
     for(int i = 0; i<N_BUTTONS;i++){
         texture[i] = texture_init;
     }
-    texture_hover = (void*) toe::GetTextureID(button_hover_layout);
-    texture_pressed = (void*) toe::GetTextureID(button_pressed_layout);
-    bkg = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
-    title_texture = (void*) toe::GetTextureID(TEXTUREMAP[TEXTURE_MENU_TITLE]);
+
+    texture_hover       = (void*)(size_t) toe::GetTextureID(button_hover_layout);
+    texture_pressed     = (void*)(size_t) toe::GetTextureID(button_pressed_layout);
+    title_texture       = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_MENU_TITLE]);
+    bkg                 = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
     toe::core::TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_MENU_TITLE]);
     titleSize = ImVec2(t_dims.X/1.6,t_dims.Y/1.5);
     
