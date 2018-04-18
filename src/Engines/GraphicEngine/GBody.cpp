@@ -60,3 +60,7 @@ void GBody::SetInvisible(){
 void GBody::ChangeShader(SHADERTYPE shader){
 	((TFMesh*)privateNode)->SetProgram(shader);
 }
+
+void GBody::SetTextureScale(vector2df value){
+	((TFMesh*)privateNode)->SetTextureScale(value.X, value.Y);
+}

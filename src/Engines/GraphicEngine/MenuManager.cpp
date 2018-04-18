@@ -81,7 +81,6 @@ void MenuManager::CreateMenu(MenuType type, int option){
 void MenuManager::Update(float deltaTime){
 	GUIEngine::GetInstance()->Update();
 	if(currentMenu != nullptr){
-		//g_engine->ToggleCameraMovement(false);
 		currentMenu->Update(&open_menu, deltaTime);
 	}
 }

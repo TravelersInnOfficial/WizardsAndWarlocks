@@ -193,8 +193,8 @@ void PlayerManager::EraseAI(){
 		}
 	}
 
-	int sizeP = players.size();
-	for(int i=sizeP-1; i>=0; i--){
+	size = players.size();
+	for(int i=size-1; i>=0; i--){
 		Player* p = players[i];
 		if(p != playerOne){
 			players.erase(players.begin() + i);
@@ -202,8 +202,8 @@ void PlayerManager::EraseAI(){
 		}
 	}
 
-	int sizeDP = deadPlayers.size();
-	for(int i=sizeDP-1; i>=0; i--){
+	size = deadPlayers.size();
+	for(int i=size-1; i>=0; i--){
 		Player* p = deadPlayers[i];
 		if(p != playerOne){
 			deadPlayers.erase(deadPlayers.begin() + i);
@@ -381,7 +381,6 @@ std::vector<Player*> PlayerManager::GetAllPlayers(Alliance alli){
 			toRet.push_back(currentPlayer);
 		}
 	}
-
 
 	return toRet;
 }

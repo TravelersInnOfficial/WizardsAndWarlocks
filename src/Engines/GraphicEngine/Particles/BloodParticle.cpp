@@ -20,7 +20,7 @@ void BloodParticle::InitParticle(Particle& p){
 	Z = (rand() % maxVel)/10.0f - maxVel/20.0f;
 	p.speed = toe::core::TOEvector3df(X*2,Y,Z*2);
 
-	int color = 240; p.r = color; p.g = color; p.b = color;
+	int color = 255; p.r = 50; p.g = color; p.b = color;
 
 	p.translation = toe::core::TOEvector3df(0,0,0);
 
@@ -34,7 +34,10 @@ void BloodParticle::InitParticle(Particle& p){
 
 void BloodParticle::UpdateParticle(Particle& p, float deltaTime){
 	p.speed.Y -= deltaTime*10;
+	
 	p.pos.X += p.speed.X * deltaTime;
 	p.pos.Y += p.speed.Y * deltaTime;
 	p.pos.Z += p.speed.Z * deltaTime;
+	
+	if (p.r <= 252) p.r = p.r + 2;
 }

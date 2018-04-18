@@ -14,7 +14,7 @@ PoisonArea::PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3
 		particle = new GParticle(TPosition);
 		particle->SetTexture("./../assets/textures/particles/PoisonParticle.png");
 		particle->SetType(POISON_PARTICLE);
-		particle->SetQuantityPerSecond(600);
+		particle->SetQuantityPerSecond(700);
 	}
 }
 	
@@ -26,7 +26,7 @@ bool PoisonArea::Update(float deltaTime){
 	if(particle != nullptr) particle->Update();
 
 	// Gas bomb update
-    ghostScale += 0.010;
+    ghostScale += 0.6 * deltaTime;
     bt_body->SetScale(ghostScale*1.4);
     m_areaNode->setScale(vector3df(ghostScale));
 

@@ -8,29 +8,39 @@ EffectParticle::~EffectParticle(){
 
 void EffectParticle::InitParticle(Particle& p){
 
-	float X = (rand() % 10)/10.0f - 0.5f;
-	float Y = (rand() % 20)/10.0f - 0.5f;
-	float Z = (rand() % 10)/10.0f - 0.5f;
-	p.pos 	= toe::core::TOEvector3df(X, Y, Z);
+	int maxPosOffset = 15;
+	float X = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
+	float Y = 0.0f;
+	float Z = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
+	p.pos = toe::core::TOEvector3df(X, Y, Z);
 
-	Y = (rand() % 2)/10.0f;
-	X = (rand() % 2)/10.0f;
-	Z = (rand() % 2)/10.0f;
-	p.speed = toe::core::TOEvector3df(X,Y,Z);
 
-	//int color = (unsigned char)(rand() % 255 + 240);
+	int maxVel = 2;
+	X = (rand() % maxVel)/10.0f - maxVel/20.0f;
+	Y = maxVel;
+	Z = (rand() % maxVel)/10.0f - maxVel/20.0f;
+	p.speed = toe::core::TOEvector3df(X, Y, Z);
+
 	int color = 255;
 	p.r = color;
 	p.g = color;
 	p.b = color;
 
-	p.translation = toe::core::TOEvector3df(0,0,0);
-	p.size = (rand() % 3)/10.0f;
+	p.translation = toe::core::TOEvector3df(0,-1.4,0);
+	
+	// SIZE
+	int maxSize = 5;
+	p.size = (rand() % maxSize)/10.0f;
+
 	p.rotation = (rand() % 360);
-	p.life = 0.25f;
+	p.life = 1.8f;
 }
 
 void EffectParticle::UpdateParticle(Particle& p, float deltaTime){
-	//p.speed.Y += deltaTime * 0.5f * 0.25f;
+	p.speed.Y += deltaTime * 0.5f * 0.25f;
 	p.pos.Y += p.speed.Y * deltaTime;
+	p.size -= p.size * deltaTime * 0.5f;
+	p.r -= p.r * deltaTime * 0.25f;
+	p.g -= p.g * deltaTime * 0.25f;
+	p.b -= p.b * deltaTime * 0.25f;
 }

@@ -27,6 +27,10 @@ void Camera::SetTarget(vector3df lookat){
 	p_Camera->setTarget(lookat);
 }
 
+bool Camera::GetWorking(){
+	return m_working;
+}
+
 vector3df Camera::GetTarget(){
 	return p_Camera->getTarget();
 }

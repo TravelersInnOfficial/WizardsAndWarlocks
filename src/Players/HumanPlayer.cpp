@@ -6,9 +6,9 @@ HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 
 	SpellManager* spellManager = SpellManager::GetInstance();
 	spellManager->AddHechizo(0, this, SPELL_PROJECTILE);
-	spellManager->AddHechizo(1, this, SPELL_SPEED);
-	spellManager->AddHechizo(2, this, SPELL_WALL);
-	spellManager->AddHechizo(3, this, SPELL_BLIZZARD);
+	spellManager->AddHechizo(1, this, SPELL_FIRE);
+	spellManager->AddHechizo(2, this, SPELL_DEFENSE);
+	spellManager->AddHechizo(3, this, SPELL_SPEED);
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -230,6 +230,7 @@ void HumanPlayer::GetNetInput(){
 }
 
 void HumanPlayer::ToggleMenu(bool newState){
+	std::cout<<"Cambiar Estado"<<std::endl;
 	menuActivated = newState;
 	if(m_camera != nullptr) m_camera->SetWorking(!menuActivated);
 	GraphicEngine::getInstance()->ToggleMenu(menuActivated);
