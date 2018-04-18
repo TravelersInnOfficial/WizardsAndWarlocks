@@ -5,6 +5,7 @@
 #include "GEntity.h"
 #include <MaterialTypes.h>
 #include <MaterialFlags.h>
+#include <vector2d.h>
 
 //fast forward declaration
 class TFMesh;
@@ -41,6 +42,8 @@ public:
 	void SetInvisible();
 
 	void ChangeShader(SHADERTYPE shader);
+
+	void SetTextureScale(vector2df value);
 
 private:
 	//GBody(irr::scene::ISceneNode* node);
