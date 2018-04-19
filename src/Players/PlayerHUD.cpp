@@ -87,7 +87,7 @@ void PlayerHUD::Erase(){
     p_eraseStaminaBar();
     p_erasePlayerSpellSelector();
     p_erasePlayerPotion();
-    if(p_alliance != ALLIANCE_WARLOCK) p_erasePlayerTrap();
+    p_erasePlayerTrap();
     if(spell_slot != nullptr){ delete spell_slot; spell_slot = nullptr; }
     if(m_minimap != nullptr){ delete m_minimap; m_minimap = nullptr; }
 }
@@ -219,36 +219,42 @@ void PlayerHUD::p_initPlayerPotion(){
 }
 
 void PlayerHUD::p_initPlayerTrap(){
-    int W = g_engine->GetScreenWidth();	
-    
-    float ratio = g_engine->GetAspectRatio();
-    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+    if(mana_orb != nullptr){
+        int W = g_engine->GetScreenWidth();	
+        
+        float ratio = g_engine->GetAspectRatio();
+        toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
-    float new_width = W/10.0f;
-    float new_height = ratio * new_width;
-    vector2df slot_dims = vector2df(new_width,new_height);
-    if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
+        float new_width = W/10.0f;
+        float new_height = ratio * new_width;
+        vector2df slot_dims = vector2df(new_width,new_height);
+        if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
-    //TRAP SLOT
-    trap_slot = new ItemSlot();
-    trap_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
-    
-    trap_slot->xPos = W-slot_dims.X;
-    trap_slot->yPos = mana_orb->height;
-    trap_slot->width = slot_dims.X;
-    trap_slot->height = slot_dims.Y;
+        //TRAP SLOT
+        if(trap_slot == nullptr){
+            trap_slot = new ItemSlot();
+            trap_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
+            
+            trap_slot->xPos = W-slot_dims.X;
+            trap_slot->yPos = mana_orb->height;
+            trap_slot->width = slot_dims.X;
+            trap_slot->height = slot_dims.Y;
+        }
 
-    //TRAP USINGS SLOT
-    slot_dims = vector2df(slot_dims.X/3,slot_dims.Y/3);
-    trap_usings_slot = new ItemSlot();
-    trap_usings_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
-    
-    trap_usings_slot->xPos = W-slot_dims.X;
-    trap_usings_slot->yPos = mana_orb->height;
-    trap_usings_slot->width = slot_dims.X;
-    trap_usings_slot->height = slot_dims.Y;
-    
-    m_trap_usings = TrapManager::GetInstance()->getPlayerUsings(m_player);
+        //TRAP USINGS SLOT
+        if(trap_usings_slot == nullptr){
+            slot_dims = vector2df(slot_dims.X/3,slot_dims.Y/3);
+            trap_usings_slot = new ItemSlot();
+            trap_usings_slot->bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_ITEM_SLOT],vector2df(W-slot_dims.X,mana_orb->height),slot_dims);
+            
+            trap_usings_slot->xPos = W-slot_dims.X;
+            trap_usings_slot->yPos = mana_orb->height;
+            trap_usings_slot->width = slot_dims.X;
+            trap_usings_slot->height = slot_dims.Y;
+        }
+        
+        m_trap_usings = TrapManager::GetInstance()->getPlayerUsings(m_player);
+    }
 }
 
 //--------------------------------------------------------------------------------------//
@@ -378,6 +384,9 @@ void PlayerHUD::p_erasePlayerSpellSelector(){
 void PlayerHUD::p_erasePlayerPotion(){
     if(p_potion != nullptr) potion_slot->RemoveItem();
     p_potion = nullptr;
+
+    delete potion_slot;
+    potion_slot = nullptr;
 }
 
 void PlayerHUD::p_erasePlayerTrap(){
@@ -451,13 +460,15 @@ PlayerHUD::ItemSlot::ItemSlot(){
 }
 
 PlayerHUD::ItemSlot::~ItemSlot(){
-    delete bkg;
-    delete item;
+    if(bkg != nullptr) delete bkg;
+    if(item != nullptr) delete item;
+
     bkg = nullptr;
     item = nullptr;
 }
 
 void PlayerHUD::ItemSlot::AddItem(std::string texPath){
+    if(item != nullptr) delete item;
     item = GraphicEngine::getInstance()->addSprite(texPath, vector2df(xPos,yPos), vector2df(width,height));
     item->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
 }

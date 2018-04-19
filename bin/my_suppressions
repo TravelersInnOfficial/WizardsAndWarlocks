@@ -1,0 +1,229 @@
+{
+   GLFW ADDR8
+   Memcheck:Addr8
+   fun:memcpy@GLIBC_2.2.5
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   fun:memcpy@GLIBC_2.2.5
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   fun:memcpy@GLIBC_2.2.5
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+   fun:_ZN13GraphicEngineC1Eb
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+   fun:_ZN13GraphicEngineC1Eb
+   fun:_ZN13GraphicEngine11getInstanceEb
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:_Znwm
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+   fun:_ZN13GraphicEngineC1Eb
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+   fun:_ZN13GraphicEngineC1Eb
+   fun:_ZN13GraphicEngine11getInstanceEb
+   fun:_ZN12StateManagerC1EP10ServerInfo
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:_Znwm
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Addr8
+   fun:memcpy@GLIBC_2.2.5
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/libGLX_mesa.so.0.0.0
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+   fun:glfwCreateWindow
+   fun:_ZN11VideoDriver13CreateWindowsENSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEN3toe4core11TOEvector2dIiEEb
+   fun:_ZN13GraphicEngineC1Eb
+   fun:_ZN13GraphicEngine11getInstanceEb
+   fun:_ZN12StateManagerC1EP10ServerInfo
+   fun:_ZN12StateManager11GetInstanceEP10ServerInfo
+   fun:main
+}
+
+{
+   <insert_a_suppression_name_here>
+   Memcheck:Leak
+   match-leak-kinds: possible
+   fun:malloc
+   fun:strdup
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/usr/lib/dri/i965_dri.so
+   obj:/home/angel/Escritorio/WizardsAndWarlocks/libs/Linux/libglfw.so.3
+}
+
