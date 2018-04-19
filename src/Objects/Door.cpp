@@ -45,7 +45,7 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     // Aplicamos Material unlit y Textura
     if (m_doorNode) {
         m_doorNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-        m_doorNode->setMaterialTexture(0, "./../assets/textures/door.jpg");
+        //m_doorNode->setMaterialTexture(0, "./../assets/textures/door.jpg");
     }
 
     //Dimensions of the box
