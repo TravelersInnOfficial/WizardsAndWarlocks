@@ -161,57 +161,82 @@ bool EffectManager::CheckEffect(Player* p, EFFECTCODE EFFECT){
 
 Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 	Effect * e;
+	float e_time;
+	float e_value;
 	switch(EFFECT){
 		case WEAK_BURNED:
-			e = new Burned(6.0f, 3.0f);
+			e_time = effect_time[WEAK_BURNED];
+			e_value = effect_value[WEAK_BURNED];
+			e = new Burned(e_time, e_value);
 		break;
 
 		case WEAK_SOFTBURNED:
-			e = new Burned(3.0f, 3.0f);
+			e_time = effect_time[WEAK_SOFTBURNED];
+			e_value = effect_value[WEAK_SOFTBURNED];
+			e = new Burned(e_time, e_value);
 		break;
 
 		case WEAK_FROZEN:
-			e = new Frozen(3.0f, 0.0f);
+			e_time = effect_time[WEAK_FROZEN];
+			e_value = effect_value[WEAK_FROZEN];
+			e = new Frozen(e_time, e_value);
 		break;
 
 		case WEAK_PARALYZED:
-			e = new Paralyzed(3.0f);
+			e_time = effect_time[WEAK_PARALYZED];
+			e_value = effect_value[WEAK_PARALYZED];
+			e = new Paralyzed(e_time);
 		break;
 
 		case WEAK_SLOWEDDOWN:
-			e = new SlowedDown(4.0f, 10.0f);
+			e_time = effect_time[WEAK_SLOWEDDOWN];
+			e_value = effect_value[WEAK_SLOWEDDOWN];
+			e = new SlowedDown(e_time, e_value);
 		break;
 
 		case WEAK_POISONED:
-			e = new Poisoned(6.0f, 3.0f);
+			e_time = effect_time[WEAK_POISONED];
+			e_value = effect_value[WEAK_POISONED];
+			e = new Poisoned(e_time, e_value);
 		break;
 
 		case WEAK_SOFTPOISONED:
-			e = new Poisoned(3.0f, 3.0f);
+			e_time = effect_time[WEAK_SOFTPOISONED];
+			e_value = effect_value[WEAK_SOFTPOISONED];
+			e = new Poisoned(e_time, e_value);
 		break;
 
 		case WEAK_SILENCED:
-			e = new Silenced(4.0f);
+			e_time = effect_time[WEAK_SILENCED];
+			e = new Silenced(e_time);
 		break;
 
 		case WEAK_MADNESS:
-			e = new Madness(4.0f);
+			e_time = effect_time[WEAK_MADNESS];
+			e = new Madness(e_time);
 		break;
 
 		case WEAK_DEATHSNARE:
-			e = new DeathSnare(2.0f, 4);
+			e_time = effect_time[WEAK_DEATHSNARE];
+			e_value = effect_value[WEAK_DEATHSNARE];
+			e = new DeathSnare(e_time, e_value);
 		break;
 
 		case POWERUP_DAMAGE:
-			e = new DamageUp(7.0f);
+			e_time = effect_time[POWERUP_DAMAGE];
+			e_value = effect_value[POWERUP_DAMAGE];
+			e = new DamageUp(e_time, e_value);
 		break;
 
 		case POWERUP_DEFENSE:
+			e_time = effect_time[POWERUP_DEFENSE];
+			e_value = effect_value[POWERUP_DEFENSE];
 			e = new DefenseUp(7.0f);
 		break;
 
 		case WEAK_FUZZY:
-			e = new Fuzzy(5.0f);
+			e_time = effect_time[WEAK_FUZZY];
+			e = new Fuzzy(e_time);
 		break;
 
 		/*
@@ -220,27 +245,35 @@ Effect* EffectManager::CreateEffect(EFFECTCODE EFFECT){
 		break;
 
 		*/
-		case POWERUP_SPEED:
-			e = new SpeedUp(4.0f);
+		case POWERUP_SPEED:			
+			e_time = effect_time[POWERUP_SPEED];
+			e_value = effect_value[POWERUP_SPEED];
+			e = new SpeedUp(e_time, e_value);
 		break;
 
 		case POWERUP_UNTARGET:
-			e = new Untargetable(4.0f);
+			e_time = effect_time[POWERUP_UNTARGET];
+			e_value = effect_value[POWERUP_UNTARGET];
+			e = new Untargetable(e_time, e_value);
 		break;
 
 		case POWERUP_FIRE:
-			e = new FireShots(7.0f);
+			e_time = effect_time[POWERUP_FIRE];
+			e = new FireShots(e_time);
 		break;
 
 		case POWERUP_POISON:
+			e_time = effect_time[POWERUP_POISON];
 			e = new PoisonShots(7.0f);
 		break;
 
 		case POWERUP_INVISIBLE:
-			e = new Invisible(10.0f);
+			e_time = effect_time[POWERUP_INVISIBLE];
+			e = new Invisible(e_time);
 		break;
 
 		default:
+			e_time = effect_time[WEAK_BASIC];
 			e = new Effect(5.0f, WEAK_BASIC);
 		break;
 	}

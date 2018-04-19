@@ -1,5 +1,4 @@
 #include "StateManager.h"
-#include <GraphicEngine/MenuManager.h>
 #include <time.h>
 #include <iostream>
 #include <cstdio>
@@ -31,7 +30,6 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	s_engine = SoundSystem::getInstance();
 	s_engine->createSystem("./../assets/banks/");
 	n_engine = NetworkEngine::GetInstance(serverInfo);
-	m_engine = MenuManager::GetInstance();
 	gui_engine = GUIEngine::GetInstance();
 
 	srand(time(0));
@@ -44,6 +42,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	LoadState(firstState);
 	preparedStatus = WITHOUT_STATE;
 	resourcesLoaded = false;
+	loading = false;
 }
 
 StateManager::~StateManager(){
@@ -91,6 +90,8 @@ void StateManager::LoadState(State_Code code, bool* end){
 	if(currentState!=nullptr){
 		delete currentState;
 		currentState = nullptr;
+		loading = false;
+		std::cout<<"deleting\n";
 	}
 	
 	switch(code){
@@ -124,6 +125,10 @@ void StateManager::LoadState(State_Code code, bool* end){
 			break;
 		case WITHOUT_STATE:
 			currentState = nullptr;
+			break;
+		case STATE_LOADING_SCREEN:
+			loading = true;
+			currentState = new LoadingScreen();	
 			break;
 	}
 }
@@ -172,4 +177,13 @@ int* StateManager::GetWizardAINumberPointer(){
 
 int* StateManager::GetWarlockAINumberPointer(){
 	return &maxWarlockPlayers;
+}
+
+void StateManager::SetLoadingStatusString(std::string status){
+	/*
+	if(loading){
+		LoadingScreen *s = (LoadingScreen*) currentState;
+		s->SetStatusText(status);
+	}
+	*/
 }

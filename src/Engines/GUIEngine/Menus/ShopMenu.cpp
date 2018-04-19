@@ -8,6 +8,9 @@
 #include "./../Managers/BulletManager.h"
 #include "./../Managers/EffectManager.h"
 
+#include <sstream>
+#include <iomanip>
+
 ShopMenu::ShopMenu(MenuType type) : Menu(type){
     N_SPELL_SOCKETS = SpellManager::GetInstance()->GetNumSpells();
     N_TRAP_SOCKETS = 1;
@@ -123,15 +126,15 @@ void ShopMenu::loadOfensiveItem(SPELLCODE spell, std::vector<std::string>* data_
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
     float effect_value = e_manager->GetEffectValue(effect_map[info[3]]);
-    std::string effect_data = effect_name + " (-"+std::to_string(effect_value)+" HP/s, "+std::to_string(effect_duration)+"s)";
-
-    std::string description = info[0] + "\n" + info[1] 
-                            + "\n- Damage: " + std::to_string(damage) + " HP" 
-                            + "\n- Effect: " + effect_data
-                            + "\n- Mana Cost: "+ std::to_string(data[0]) + " MP"
-                            + "\n- Casting Time: " + std::to_string(data[1]) + " s"
-                            + "\n- Cooldown: " + std::to_string(data[2]) + " s";
-    data_stack->push_back(description);
+    
+    std::ostringstream description;
+    description << std::setprecision(4) << info[0] << "\n" << info[1] 
+                            << "\n- Damage: " << damage << " HP" 
+                            << "\n- Effect: " << effect_name <<" (-"<<effect_value<<" HP/s, "<<effect_duration<<" s)"
+                            << "\n- Mana Cost: "<< data[0] << " MP"
+                            << "\n- Casting Time: " << data[1] << " s"
+                            << "\n- Cooldown: " << data[2] << " s";
+    data_stack->push_back(description.str());
 }
 
 void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data_stack){
@@ -150,15 +153,15 @@ void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
     float effect_value = e_manager->GetEffectValue(effect_map[info[3]]);
-    std::string effect_data = effect_name + " (*"+std::to_string(effect_value)+", "+std::to_string(effect_duration)+"s)";
-
-    std::string description = info[0] + "\n" + info[1] 
-                            + "\n- Damage: " + std::to_string(damage) + " HP" 
-                            + "\n- Effect: " + effect_data
-                            + "\n- Mana Cost: "+ std::to_string(data[0]) + " MP"
-                            + "\n- Casting Time: " + std::to_string(data[1]) + " s"
-                            + "\n- Cooldown: " + std::to_string(data[2]) + " s";
-    data_stack->push_back(description);
+    
+    std::ostringstream description;
+    description << std::setprecision(4) << info[0] << "\n" << info[1] 
+                            << "\n- Damage: " << damage << " HP" 
+                            << "\n- Effect: " << effect_name <<" (*"<<effect_value<<", "<<effect_duration<<" s)"
+                            << "\n- Mana Cost: "<< data[0] << " MP"
+                            << "\n- Casting Time: " << data[1] << " s"
+                            << "\n- Cooldown: " << data[2] << " s";
+    data_stack->push_back(description.str());
 }
 
 void ShopMenu::loadTacticItem(SPELLCODE spell, std::vector<std::string>* data_stack){
@@ -177,15 +180,15 @@ void ShopMenu::loadTacticItem(SPELLCODE spell, std::vector<std::string>* data_st
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
     float effect_value = e_manager->GetEffectValue(effect_map[info[3]]);
-    std::string effect_data = effect_name + " (*"+std::to_string(effect_value)+", "+std::to_string(effect_duration)+"s)";
 
-    std::string description = info[0] + "\n" + info[1] 
-                            + "\n- Damage: " + std::to_string(damage) + " HP" 
-                            + "\n- Effect: " + effect_data
-                            + "\n- Mana Cost: "+ std::to_string(data[0]) + " MP"
-                            + "\n- Casting Time: " + std::to_string(data[1]) + " s"
-                            + "\n- Cooldown: " + std::to_string(data[2]) + " s";
-    data_stack->push_back(description);
+    std::ostringstream description;
+    description << std::setprecision(4) << info[0] << "\n" << info[1] 
+                            << "\n- Damage: " << damage << " HP" 
+                            << "\n- Effect: " << effect_name <<" (*"<<effect_value<<", "<<effect_duration<<" s)"
+                            << "\n- Mana Cost: "<< data[0] << " MP"
+                            << "\n- Casting Time: " << data[1] << " s"
+                            << "\n- Cooldown: " << data[2] << " s";
+    data_stack->push_back(description.str());
 }
 
 void ShopMenu::loadTrapItem(TrapEnum trap, std::vector<std::string>* data_stack){
@@ -203,12 +206,11 @@ void ShopMenu::loadTrapItem(TrapEnum trap, std::vector<std::string>* data_stack)
     float effect_duration = e_manager->GetEffectDuration(effect_map[trap_effect_id]);
     float effect_value = e_manager->GetEffectValue(effect_map[trap_effect_id]);
     
-    std::string effect_data = effect_name + " (-"+std::to_string(effect_value)+" HP/s, "+std::to_string(effect_duration)+"s)";
-
-    std::string description = trap_name + "\n" + trap_description 
-                            + "\n- Damage: " + std::to_string(trap_damage) + " HP" 
-                            + "\n- Effect: " + effect_data + "\n";
-    data_stack->push_back(description);
+    std::ostringstream description;
+    description << std::setprecision(4) << trap_name << "\n" << trap_description 
+                            << "\n- Damage: -" << trap_damage << " HP" 
+                            << "\n- Effect: " << effect_name << " (-" << effect_value << " HP/s, " << effect_duration <<" s)\n";
+    data_stack->push_back(description.str());
 }
 
 ShopMenu::~ShopMenu(){

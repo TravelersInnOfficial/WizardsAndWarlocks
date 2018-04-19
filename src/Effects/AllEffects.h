@@ -162,11 +162,12 @@ private:
 // POWERUP_DAMAGE
 class DamageUp: public Effect{
 public:
-	DamageUp(float time);
+	DamageUp(float time, float damage);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
+	float m_dmg;
 	void createSoundEvent();
 };
 
@@ -196,24 +197,26 @@ public:
 // POWERUP_SPEED
 class SpeedUp: public Effect{
 public:
-	SpeedUp(float time);
+	SpeedUp(float time, float vel);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 private:
 	void createSoundEvent();
+	float m_vel;
 };
 
 // POWERUP_UNTARGET
 class Untargetable: public Effect{
 public:
-	Untargetable(float time);
+	Untargetable(float time, float def);
 	void ApplyEffect(Player* p);
 	void UpdateEffect(Player* p);
 	void RemoveEffect(Player* p);
 	void UpdateEffectParticles(Player* p);
 private:
 	GParticle* particle;
+	float m_def;
 	void createSoundEvent();
 };
 

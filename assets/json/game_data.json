@@ -203,7 +203,7 @@
     },
     {
       "ID": "BULLET_BASIC",
-      "radius" : 0.5,
+      "radius" : 0.05,
       "speed" : 55.0,
       "damage" : 10.0,
       "max_distance" : 20.0
@@ -241,7 +241,7 @@
       "ID": "WEAK_BASIC",
       "name": "NONE",
       "duration": 5.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "WEAK_BURNED",
@@ -265,7 +265,7 @@
       "ID": "WEAK_PARALYZED",
       "name": "PARALYSIS",
       "duration": 3.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "WEAK_SLOWEDDOWN",
@@ -289,7 +289,7 @@
       "ID": "WEAK_SILENCED",
       "name": "SILENCED",
       "duration": 4.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "WEAK_GHOSTDISTORSION",
@@ -301,7 +301,7 @@
       "ID": "WEAK_MADNESS",
       "name": "MADDNESS",
       "duration": 4.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "WEAK_DEATHSNARE",
@@ -313,7 +313,7 @@
       "ID": "WEAK_FUZZY",
       "name": "FUZZY",
       "duration": 5.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "POWERUP_DAMAGE",
@@ -343,69 +343,69 @@
       "ID": "POWERUP_FIRE",
       "name": "BURN",
       "duration": 7.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "POWERUP_POISON",
       "name": "POISONED",
       "duration": 7.0,
-      "value": 0.0
+      "value": -1.0
     },
     {
       "ID": "POWERUP_INVISIBLE",
       "name": "INVISIBILITY",
       "duration": 10.0,
-      "value": 0.0
+      "value": -1.0
     }
   ],
   "trap_data": [
     {
       "ID": "TENUM_NO_TRAP",
       "EFFECT_ID": "EFFECT_NONE",
-      "name": "NONE",
+      "name": "NO TRAP",
       "description": "None.",
       "damage": 0.0
     },
     {
       "ID": "TENUM_DEATH_CLAWS",
       "EFFECT_ID": "WEAK_DEATHSNARE",
-      "name": "DEATH_CLAWS",
-      "description": "None.",
+      "name": "DEATH CLAWS",
+      "description": "Freezes the target and makes damage.",
       "damage": 10.0
     },
     {
       "ID": "TENUM_SPIRITS",
       "EFFECT_ID": "WEAK_FUZZY",
-      "name": "SPIRITS",
-      "description": "None.",
+      "name": "UNDERWORLD SPIRITS",
+      "description": "Creates an illusion that makes sight difficult.",
       "damage": 25.0
     },
     {
       "ID": "TENUM_SILENCE",
       "EFFECT_ID": "WEAK_SILENCED",
-      "name": "SILENCE",
-      "description": "None.",
+      "name": "SPECTRAL SILENCE",
+      "description": "Bans the target for casting any spell.",
       "damage": 25.0
     },
     {
       "ID": "TENUM_TAXES",
       "EFFECT_ID": "EFFECT_NONE",
-      "name": "TAXES",
-      "description": "None.",
+      "name": "CARONTE TAXES",
+      "description": "Destroys the targets actual potion.",
       "damage": 25.0
     },
     {
       "ID": "TENUM_DISTURBANCE",
       "EFFECT_ID": "WEAK_MADNESS",
-      "name": "DISTURBANCE",
-      "description": "None.",
+      "name": "BEING DISTURBANCE",
+      "description": "Reverses the target controls.",
       "damage": 25.0
     },
     {
       "ID": "TENUM_EXPLOSIVE",
       "EFFECT_ID": "EFFECT_NONE",
       "name": "EXPLOSIVE",
-      "description": "None.",
+      "description": "Makes damage to the target with an explosion.",
       "damage": 35.0
     }
   ]
