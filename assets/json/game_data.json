@@ -241,7 +241,7 @@
       "ID": "WEAK_BASIC",
       "name": "NONE",
       "duration": 5.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "WEAK_BURNED",
@@ -265,7 +265,7 @@
       "ID": "WEAK_PARALYZED",
       "name": "PARALYSIS",
       "duration": 3.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "WEAK_SLOWEDDOWN",
@@ -289,7 +289,7 @@
       "ID": "WEAK_SILENCED",
       "name": "SILENCED",
       "duration": 4.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "WEAK_GHOSTDISTORSION",
@@ -301,7 +301,7 @@
       "ID": "WEAK_MADNESS",
       "name": "MADDNESS",
       "duration": 4.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "WEAK_DEATHSNARE",
@@ -313,7 +313,7 @@
       "ID": "WEAK_FUZZY",
       "name": "FUZZY",
       "duration": 5.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "POWERUP_DAMAGE",
@@ -343,19 +343,19 @@
       "ID": "POWERUP_FIRE",
       "name": "BURN",
       "duration": 7.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "POWERUP_POISON",
       "name": "POISONED",
       "duration": 7.0,
-      "value": -1.0
+      "value": 0.0
     },
     {
       "ID": "POWERUP_INVISIBLE",
       "name": "INVISIBILITY",
       "duration": 10.0,
-      "value": -1.0
+      "value": 0.0
     }
   ],
   "trap_data": [
