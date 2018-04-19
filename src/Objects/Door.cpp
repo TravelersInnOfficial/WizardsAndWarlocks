@@ -33,6 +33,21 @@ Door::~Door(){
 
 void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d){
 
+    // Graphic Engine
+    GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+    // Cargamos el modelo
+    m_doorNode = g_engine->addObjMeshSceneNode("./../assets/modelos/door2.obj");
+    m_doorNode->setPosition(TPosition);
+    m_doorNode->setRotation(TRotation);
+    m_doorNode->setScale(vector3df(TScale.X, TScale.Y, TScale.Z));
+
+    // Aplicamos Material unlit y Textura
+    if (m_doorNode) {
+        m_doorNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+        m_doorNode->setMaterialTexture(0, "./../assets/textures/door.jpg");
+    }
+
     //Dimensions of the box
     TScale.X *= 0.05;
     TScale.Y *= 1;
@@ -41,21 +56,6 @@ void Door::CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation
     TCenter.X *= TScale.X;
     TCenter.Y *= TScale.Y;
     TCenter.Z *= TScale.Z;
-
-    // Graphic Engine
-    GraphicEngine* g_engine = GraphicEngine::getInstance();
-
-    // Cargamos el modelo
-    m_doorNode = g_engine->addObjMeshSceneNode("./../assets/modelos/door2.obj");
-    m_doorNode->setPosition(TPosition);
-    m_doorNode->setRotation(TRotation);
-    m_doorNode->setScale(vector3df(1,1,1));
-
-    // Aplicamos Material unlit y Textura
-    if (m_doorNode) {
-        m_doorNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-        m_doorNode->setMaterialTexture(0, "./../assets/textures/door.jpg");
-    }
 
     //BULLET
     vector3df HalfExtents(TScale.X, TScale.Y, TScale.Z);
