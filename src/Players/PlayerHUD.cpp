@@ -304,7 +304,7 @@ void PlayerHUD::p_drawPlayerSpellSelector() const{
         float xPos = W - mana_orb->bkg->GetWidth();              // X position
         float yPos = 3;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
-        int current = m_player->GetCurrentSpell();                      //currentSpell
+        int current = m_player->GetCurrentSpell();                      //m_currentSpell
 
         std::vector<Hechizo*> hechizos = SpellManager::GetInstance()->GetSpells(m_player);
 

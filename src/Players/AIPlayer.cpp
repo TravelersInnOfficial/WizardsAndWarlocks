@@ -20,7 +20,7 @@ AIPlayer::AIPlayer():Player(false){
 	path = new Pathfinding();
 
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
-	sensor = senseManager->AddSensor(id, &m_position, &rotation, 0.0f, behaviour->GetBlackboard());
+	sensor = senseManager->AddSensor(id, &m_position, &m_rotation, 0.0f, behaviour->GetBlackboard());
 
 	shootSpell = false;
 	castingSpell = false;
@@ -131,11 +131,11 @@ void AIPlayer::ResetValues(){
 	SetAllInput(UP);
 	forceToMove = vector3df(0,0,0);
 	forceToRotate = vector2df(0,0);
-	rotation.X = elevation;
+	m_rotation.X = elevation;
 }
 
 void AIPlayer::Update(float deltaTime){
-	if(hasCharacter){
+	if(m_hasCharacter){
 		ResetValues();
 		behaviour->Update(deltaTime);
 		Steering2Controller(deltaTime);
@@ -149,7 +149,7 @@ void AIPlayer::DeadUpdate(){
 }
 
 void AIPlayer::SetAngularForce(vector3df v){
-	if(hasCharacter){
+	if(m_hasCharacter){
 		bt_body->SetAngularVelocity(v);
 	}
 }
@@ -170,34 +170,34 @@ void AIPlayer::Die(){
 
 void AIPlayer::CheckInput(){
 	// Movimiento
-	if(controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
-	if(controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
-	if(controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
-	if(controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
+	if(m_controller->IsKeyDown(ACTION_MOVE_LEFT)){ this->MoveX(-1); }
+	if(m_controller->IsKeyDown(ACTION_MOVE_DOWN)){ this->MoveZ(-1); }
+	if(m_controller->IsKeyDown(ACTION_MOVE_RIGHT)){ this->MoveX(1); }
+	if(m_controller->IsKeyDown(ACTION_MOVE_UP)){ this->MoveZ(1); }
+	if(m_controller->IsKeyPressed(ACTION_JUMP)){ this->Jump(); }
 	// Acciones
-	if(controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
-	if(controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
-	if(controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
+	if(m_controller->IsKeyDown(ACTION_RAYCAST)){ this->Raycast(); }
+	if(m_controller->IsKeyPressed(ACTION_USE_OBJECT)){ this->UseObject();}
+	if(m_controller->IsKeyPressed(ACTION_DROP_OBJECT)){ this->DropObject(); }
 	// Hechizos
-	if(controller->IsKeyPressed(ACTION_SHOOT)){ 
+	if(m_controller->IsKeyPressed(ACTION_SHOOT)){ 
 		if(StartSpell()){
 			castingSpell = true;
 		} 
 	}
-	if(controller->IsKeyReleased(ACTION_SHOOT)){ 
+	if(m_controller->IsKeyReleased(ACTION_SHOOT)){ 
 		ResetSpell();
 		castingSpell = false;
 	}
-	if(controller->IsKeyDown(ACTION_SHOOT)){ 
+	if(m_controller->IsKeyDown(ACTION_SHOOT)){ 
 		if(ShootSpell()){
 			shootSpell = true;
 		} 
 	}
-	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
-	//if(controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
+	//if(m_controller->IsKeyReleased(ACTION_CHANGE_SPELL_UP)){ ChangeCurrentSpell(1); }
+	//if(m_controller->IsKeyReleased(ACTION_CHANGE_SPELL_DOWN)){ ChangeCurrentSpell(-1); }
 	// Trampas
-	if(controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
+	if(m_controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ this->DeployTrap(); }
 }
 
 void AIPlayer::SetForceToMove(vector3df force){
@@ -214,7 +214,7 @@ void AIPlayer::Steering2Controller(float deltaTime){
 	if(forceToMove.length()>5){
 		float dir = atan2(forceToMove.X, forceToMove.Z);
 		// Luego le restamos la rotacion propia del personaje 
-		dir = rotation.Y - dir;
+		dir = m_rotation.Y - dir;
 		dir = dir*180.0f/M_PI;						// Lo pasamos a Grados para que sea más intuitivo operar con ellos
 
 		if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
@@ -276,7 +276,7 @@ vector2di AIPlayer::GetActionMoveIA(){
 }
 
 int AIPlayer::GetCurrentSpell(){
-	return currentSpell;
+	return m_currentSpell;
 }
 
 bool AIPlayer::GetShootSpell(){
@@ -298,15 +298,15 @@ float AIPlayer::GetMinCostPM(){
 // ========================================================================================= //
 
 void AIPlayer::SetCurrentSpell(int num){
-	currentSpell = num;
+	m_currentSpell = num;
 }
 
 void AIPlayer::Debug(){
-	if(hasCharacter){
+	if(m_hasCharacter){
 		GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 		vector3df p = m_position;
-		vector3df l = rotation;
+		vector3df l = m_rotation;
 		vector3df c = vector3df(1,1,1);
 		vector3df o = vector3df(0,0,0);
 
@@ -344,10 +344,10 @@ void AIPlayer::Debug(){
 			c = vector3df(0, 255*shootSpell, 0);
 			g_engine->draw2DRectangle(c, 10,0,20,10);
 			// CurrentSpell
-			if(currentSpell == 0) 		c = vector3df(255,0,0);
-			else if(currentSpell == 1)	c = vector3df(0,255,0);
-			else if(currentSpell == 2)	c = vector3df(0,0,255);
-			else if(currentSpell == 3)	c = vector3df(255,255,0);
+			if(m_currentSpell == 0) 		c = vector3df(255,0,0);
+			else if(m_currentSpell == 1)	c = vector3df(0,255,0);
+			else if(m_currentSpell == 2)	c = vector3df(0,0,255);
+			else if(m_currentSpell == 3)	c = vector3df(255,255,0);
 			g_engine->draw2DRectangle(c, 20,0,30,10);
 		}
 		//Comportamientos IA
