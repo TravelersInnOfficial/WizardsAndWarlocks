@@ -264,8 +264,7 @@ Hechizo* SpellManager::CrearHechizo(SPELLCODE type){
 		break;
 		
 		case SPELL_BLIZZARD:	// Hechizo continuo hielo
-			//h = new GuivernoWind(-2, 0.0f, 0.0f, 100, 75);
-			h = new GuivernoWind(0, 0.0f, 0.0f, 100, 75);
+			h = new GuivernoWind(-2, 0.0f, 0.0f, 100, 75);
 		break;
 
 		case SPELL_TELEPORT:	// Hechizo de teleport
