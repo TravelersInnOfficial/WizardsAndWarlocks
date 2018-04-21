@@ -4,6 +4,7 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <NetworkEngine/Client.h>
 #include <NetworkEngine/Server.h>
+#include <GUIEngine/GUIEngine.h>
 
 #define MODEL_SIZE 0.136f
 
@@ -50,6 +51,10 @@ bool Potion::CheckUseMP(Player* p){
 
 void Potion::Update(){
 	if(!picked) UpdatePosShape();
+}
+
+void Potion::ShowInteractInfo(){
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Grab potion");
 }
 
 void Potion::Interact(Player* p){

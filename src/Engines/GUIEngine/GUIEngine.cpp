@@ -17,6 +17,7 @@ GUIEngine::GUIEngine(){
     //INITIAL NOTIFICATIONS POSITION
     m_notifications_Ypos = 10;
     m_notifications_distance = 10;
+    entity_info = "";
 }
 
 GUIEngine* GUIEngine::GetInstance(){
@@ -33,6 +34,7 @@ void GUIEngine::Update(){
     //IMGUI BEGUIN DRAW
     ImGui_ImplGlfwGL3_NewFrame();
     printNotifications();
+    printEntityInfo();
 }
 
 void GUIEngine::Draw(){
@@ -83,6 +85,31 @@ void GUIEngine::printNotifications(){
 
 void GUIEngine::MakeCustomNotification(std::string data, float time){
     m_notifications_data.insert(std::pair<std::string,float>(data, time+ImGui::GetTime()));
+}
+
+void GUIEngine::printEntityInfo(){
+    if(entity_info != ""){
+        bool open = true;
+        bool *p_open = &open;
+        float initial_Y = m_notifications_Ypos;
+        int id = 0;
+        float W = g_engine->GetScreenWidth();
+        float H = g_engine->GetScreenHeight();
+        ImVec2 window_pos = ImVec2(W/2, H/2);
+        ImGui::SetNextWindowPos(window_pos, ImGuiCond_Always);
+        ImGui::SetNextWindowBgAlpha(0.3f);
+        if(!ImGui::Begin(entity_info.c_str(), p_open, ImGuiWindowFlags_NoTitleBar|ImGuiWindowFlags_NoResize|ImGuiWindowFlags_AlwaysAutoResize|ImGuiWindowFlags_NoMove|ImGuiWindowFlags_NoSavedSettings))
+            ImGui::End();
+        else{
+            ImGui::Text("%s",entity_info.c_str());
+            ImGui::End();
+        }
+        entity_info = "";
+    }
+}
+
+void GUIEngine::ShowEntityInfo(std::string info){
+    if(info != "") entity_info = info;
 }
 
 void GUIEngine::ShowDeathMessage(std::string victim, float time){

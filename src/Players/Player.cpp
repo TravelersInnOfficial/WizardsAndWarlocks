@@ -418,6 +418,23 @@ void Player::Update(float deltaTime){
 		checkMaxVelocity();
 
 		if(m_overlayManager!=nullptr) m_overlayManager->Update(deltaTime);
+
+		// Comprobar si estamos mirando a un item interactuable
+		vector3df rot = GetRot();
+		rot.X = -rot.X;
+
+		vector3df Start = GetHeadPos();
+		float EndX = Start.X + sin(rot.Y)*cos(rot.X)*m_raycastDistance;
+		float EndY = Start.Y + sin(rot.X)*m_raycastDistance;
+		float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*m_raycastDistance;
+
+		vector3df End(EndX, EndY, EndZ);
+		
+		void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
+		if(Object!=nullptr){
+			Entidad* h = (Entidad*)Object;
+			h->ShowInteractInfo();
+		}	
 	}
 }
 

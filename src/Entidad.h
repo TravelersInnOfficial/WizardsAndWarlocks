@@ -28,6 +28,7 @@ public:
 	Entidad();
 	virtual void Contact(void* punt, EntityEnum tipo);
 	virtual void Interact(Player* p);
+	virtual void ShowInteractInfo();
 	EntityEnum GetClase();
 	int GetId();
 	virtual ~Entidad();

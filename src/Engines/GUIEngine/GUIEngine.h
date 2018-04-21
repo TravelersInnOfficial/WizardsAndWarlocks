@@ -17,17 +17,20 @@ public:
     void Draw();
     void MakeCustomNotification(std::string, float time = 3.5f);
     void ShowDeathMessage(std::string, float time = 3.5f);
+    void ShowEntityInfo(std::string);
     void InitReceiver();
 
 private:
     GraphicEngine* g_engine;
     GUIEngine();
     void printNotifications();
+    void printEntityInfo();
 
     //NOTIFICATIONS DATA
     float m_notifications_Ypos;
     float m_notifications_distance;
     std::map<std::string,float> m_notifications_data;
+    std::string entity_info;
 
 };
 #endif
