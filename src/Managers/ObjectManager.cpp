@@ -2,6 +2,11 @@
 #include "./../AI/RoomGraph/LoaderRoomGraph.h"
 #include "./../Objects/AllPotions.h"
 #include "./../NavMeshLoader.h"
+#include "./EffectManager.h"
+#include <fstream>
+#include <json.hpp>
+#include <sstream>
+#include <iomanip>
 
 static ObjectManager* instance = nullptr;
 
@@ -25,11 +30,50 @@ void ObjectManager::InitObject(){
 	roomGraph = nullptr;
 	grail = nullptr;
 	readyZone = vector4df(-9999,-9999,-9999,-9999);
+	ReadJSONPotionsData();
 }
 
 void ObjectManager::EmptyObject(){
 	ClearMap();
 	instance = nullptr;
+}
+
+void ObjectManager::ReadJSONPotionsData(){
+	//Takes path from binary location (/bin)
+	std::string jsonPath = "./../assets/json/game_data.json";
+	std::ifstream i(jsonPath);
+	nlohmann::json j;
+	i >> j;
+
+	EffectManager* e_manager = EffectManager::GetInstance();
+
+	std::map<std::string, EFFECTCODE> effect_map = e_manager->GetEFFECTCODE_StrMap();
+	std::map<std::string, POTIONTYPE> codesMap = GetPOTIONTYPE_StrMap();
+	POTIONTYPE ID;
+
+	for(int i = 0; !j["potions_data"][i].is_null(); i++){
+		ID = codesMap[ j["potions_data"][i]["ID"] ];
+		std::string effect_name = e_manager->GetEffectName(effect_map[ j["potions_data"][i]["EFFECT_ID"] ]);
+		
+		potion_EFFECT.insert(std::pair<POTIONTYPE,std::string>(ID, effect_name));	
+		potion_name.insert(std::pair<POTIONTYPE,std::string>(ID, j["potions_data"][i]["name"]));
+		potion_description.insert(std::pair<POTIONTYPE,std::string>(ID, j["potions_data"][i]["description"]));
+		potion_value.insert(std::pair<POTIONTYPE,float>(ID, j["potions_data"][i]["value"]));
+	}
+
+}
+
+std::map<std::string, POTIONTYPE> ObjectManager::GetPOTIONTYPE_StrMap(){
+	std::map<std::string, POTIONTYPE> ret_map;
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_LIFE", POTION_LIFE));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_MANA", POTION_MANA));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_ICE", POTION_ICE));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_ELECTRIC", POTION_ELECTRIC));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_FIRE", POTION_FIRE));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_POISON", POTION_POISON));
+	ret_map.insert(std::pair<std::string, POTIONTYPE>("POTION_DEFENSE", POTION_DEFENSE));
+
+	return ret_map;
 }
 
 // ===================================================================================================== //
@@ -118,27 +162,64 @@ Switch* ObjectManager::AddSwitch(vector3df TPosition, vector3df TScale, vector3d
 
 Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, POTIONTYPE type){
 	Potion* p = nullptr;
+	float value = 0.0f;
+	std::ostringstream p_info;
 	switch(type){
 		case POTION_LIFE:
-			p = (Potion*) new LifePotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_LIFE];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_LIFE] << "\n"
+			<< potion_description[POTION_LIFE] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_LIFE] <<"\n";
+			p = (Potion*) new LifePotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_MANA:
-			p = (Potion*) new ManaPotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_MANA];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_MANA] << "\n"
+			<< potion_description[POTION_MANA] << "\n"
+			<< "+" << value << "MP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_MANA] <<"\n";
+			p = (Potion*) new ManaPotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_ICE:
-			p = (Potion*) new IcePotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_ICE];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_ICE] << "\n"
+			<< potion_description[POTION_ICE] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_ICE] <<"\n";
+			p = (Potion*) new IcePotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_ELECTRIC:
-			p = (Potion*) new ElectricPotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_ELECTRIC];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_ELECTRIC] << "\n"
+			<< potion_description[POTION_ELECTRIC] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_ELECTRIC] <<"\n";
+			p = (Potion*) new ElectricPotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_FIRE:
-			p = (Potion*) new FirePotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_FIRE];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_FIRE] << "\n"
+			<< potion_description[POTION_FIRE] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_FIRE] <<"\n";
+			p = (Potion*) new FirePotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_POISON:
-			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_POISON];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_POISON] << "\n"
+			<< potion_description[POTION_POISON] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_POISON] <<"\n";
+			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		case POTION_DEFENSE:
-			p = (Potion*) new DefensePotion(TPosition, TScale, TRotation);
+			value = potion_value[POTION_DEFENSE];
+			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_DEFENSE] << "\n"
+			<< potion_description[POTION_DEFENSE] << "\n"
+			<< "+" << value << "HP\n"
+			<< "EFFECT: " << potion_EFFECT[POTION_DEFENSE] <<"\n";
+			p = (Potion*) new DefensePotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
 		default:
 			std::cout<<"POCION NO CONTROLADA"<<std::endl;

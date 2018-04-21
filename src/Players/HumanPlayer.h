@@ -21,6 +21,8 @@ public:
 
 private:
 	bool menuActivated;
+	void LookingAtObject();
+	float showObjInfo;
 
 };
 

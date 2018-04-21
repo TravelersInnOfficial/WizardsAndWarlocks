@@ -193,7 +193,7 @@
     "optMP": 75.0
   }
   ],
-  "projectile_data": [
+  "projectiles_data": [
     {
       "ID": "BULLET_NONE",
       "radius" : 0.05,
@@ -230,7 +230,7 @@
       "max_distance" : 30.0
     }
   ],
-  "effect_data": [
+  "effects_data": [
     {
       "ID": "EFFECT_NONE",
       "name": "NONE",
@@ -358,7 +358,7 @@
       "value": 0.0
     }
   ],
-  "trap_data": [
+  "traps_data": [
     {
       "ID": "TENUM_NO_TRAP",
       "EFFECT_ID": "EFFECT_NONE",
@@ -407,6 +407,57 @@
       "name": "EXPLOSIVE",
       "description": "Makes damage to the target with an explosion.",
       "damage": 35.0
+    }
+  ],
+  "potions_data": [
+    {
+      "ID" : "POTION_LIFE",
+      "EFFECT_ID" : "EFFECT_NONE",
+      "name" : "LIFE POTION",
+      "description" : "Partially restores your HP.",
+      "value" : 50.0
+    },
+    {
+      "ID" : "POTION_MANA",
+      "EFFECT_ID" : "EFFECT_NONE",
+      "name" : "MANA POTION",
+      "description" : "Partially restores your MP.",
+      "value" : 50.0
+    },
+    {
+      "ID" : "POTION_ICE",
+      "EFFECT_ID" : "WEAK_FROZEN",
+      "name" : "ICE POTION",
+      "description" : "Recovers 60 hp, 60/2 mp and freezes player.",
+      "value" : 60.0
+    },
+    {
+      "ID" : "POTION_ELECTRIC",
+      "EFFECT_ID" : "WEAK_PARALYZED",
+      "name" : "ELECTRIC POTION",
+      "description" : "Recovers 60 hp, 60/2 mp and paralyzes player.",
+      "value" : 60.0
+    },
+    {
+      "ID" : "POTION_FIRE",
+      "EFFECT_ID" : "POWERUP_FIRE",
+      "name" : "FIRE POTION",
+      "description" : "Recovers 20 HP and applies fire hits.",
+      "value" : 20.0
+    },
+    {
+      "ID" : "POTION_POISON",
+      "EFFECT_ID" : "POWERUP_POISON",
+      "name" : "POISON POTION",
+      "description" : "Recovers 20 MP and applies poison hits",
+      "value" : 20.0
+    },
+    {
+      "ID" : "POTION_DEFENSE",
+      "EFFECT_ID" : "POWERUP_DEFENSE",
+      "name" : "DEFENSE POTION",
+      "description" : "Recovers 20 HP and applies defense resistance",
+      "value" : 20.0
     }
   ]
 }

@@ -1,5 +1,6 @@
 #include "Fountain.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include <GUIEngine/GUIEngine.h>
 
 Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	user = nullptr;
@@ -141,6 +142,10 @@ void Fountain::Interact(Player* p){
 		}
 	}
 	inUse = true;
+}
+
+void Fountain::ShowInteractInfo(){
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Drink");
 }
 
 void Fountain::UpdatePosShape(){

@@ -37,12 +37,12 @@ void BulletManager::loadProjectileDamage(){
 	std::map<std::string,BULLETCODE> bulletMap = GetBULLETCODE_StrMap();
 	BULLETCODE ID;
 
-	for(int i = 0; !j["projectile_data"][i].is_null(); i++){
-		ID =  bulletMap [j ["projectile_data"][i]["ID"] ];
-		bullet_damage.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["damage"]));
-		bullet_radius.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["radius"]));
-		bullet_speed.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["speed"]));
-		bullet_max_distance.insert(std::pair<BULLETCODE,float>(ID,j["projectile_data"][i]["max_distance"]));
+	for(int i = 0; !j["projectiles_data"][i].is_null(); i++){
+		ID =  bulletMap [j ["projectiles_data"][i]["ID"] ];
+		bullet_damage.insert(std::pair<BULLETCODE,float>(ID,j["projectiles_data"][i]["damage"]));
+		bullet_radius.insert(std::pair<BULLETCODE,float>(ID,j["projectiles_data"][i]["radius"]));
+		bullet_speed.insert(std::pair<BULLETCODE,float>(ID,j["projectiles_data"][i]["speed"]));
+		bullet_max_distance.insert(std::pair<BULLETCODE,float>(ID,j["projectiles_data"][i]["max_distance"]));
 	}
 }
 void BulletManager::EmptyObject(){

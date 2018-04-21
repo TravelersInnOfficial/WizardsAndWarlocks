@@ -36,12 +36,12 @@ void EffectManager::loadEffectsData(){
 	std::map<std::string,EFFECTCODE> codesMap = GetEFFECTCODE_StrMap();
 	EFFECTCODE ID;
 
-	for(int i = 0; !j["effect_data"][i].is_null(); i++){
-		ID = codesMap[ j["effect_data"][i]["ID"] ];
+	for(int i = 0; !j["effects_data"][i].is_null(); i++){
+		ID = codesMap[ j["effects_data"][i]["ID"] ];
 
-		effect_name.insert(std::pair<EFFECTCODE,std::string>(ID, j["effect_data"][i]["name"] ));
-		effect_time.insert(std::pair<EFFECTCODE,float>(ID, j["effect_data"][i]["duration"] ));
-		effect_value.insert(std::pair<EFFECTCODE,float>(ID, j["effect_data"][i]["value"] )); 
+		effect_name.insert(std::pair<EFFECTCODE,std::string>(ID, j["effects_data"][i]["name"] ));
+		effect_time.insert(std::pair<EFFECTCODE,float>(ID, j["effects_data"][i]["duration"] ));
+		effect_value.insert(std::pair<EFFECTCODE,float>(ID, j["effects_data"][i]["value"] )); 
 	}
 }
 

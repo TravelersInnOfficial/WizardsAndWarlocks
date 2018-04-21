@@ -2,6 +2,7 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
+#include <GUIEngine/GUIEngine.h>
 
 NpcSeller::NpcSeller(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
@@ -41,4 +42,8 @@ void NpcSeller::Interact(Player* p){
 		hp->ToggleMenu(true);
 		hp->SetAllInput(UP);
 	}
+}
+
+void NpcSeller::ShowInteractInfo(){
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Talk");
 }

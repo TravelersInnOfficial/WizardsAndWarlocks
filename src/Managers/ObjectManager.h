@@ -87,6 +87,8 @@ public:
 	void UseNetworkPotion(int potionVecPos, Player* p);
 
 private:
+	void ReadJSONPotionsData();
+	std::map<std::string, POTIONTYPE> GetPOTIONTYPE_StrMap();
 
 	// Updates
 	void UpdateGrail(float deltaTime);
@@ -116,6 +118,11 @@ private:
 	vector4df					readyZone;		// Zona de READY
 	NavMesh*					navmesh;		// Malla de movimiento para la IA del nivel, única
 	RoomGraph*					roomGraph;		// Grafo de habitaciones del nivel, utilizado por la IA
+
+	std::map<POTIONTYPE, std::string> potion_EFFECT;
+	std::map<POTIONTYPE, std::string> potion_name;
+	std::map<POTIONTYPE, std::string> potion_description;
+	std::map<POTIONTYPE, float> potion_value;
 
 	ObjectManager();
 	ObjectManager(ObjectManager&);

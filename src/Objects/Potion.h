@@ -61,9 +61,10 @@ protected:
 	BT_Body* 	bt_body; 		// Cuerpo fisico de la pocion
     GBody*      m_potionNode;	// Cuerpo visual de la pocion
 
+	std::string m_info;			// Potion info
 	std::string HUDTexturePath;	// Texture for the HUD to paint
 
-	Potion(vector3df TScale, int value, std::string tex);
+	Potion(vector3df TScale, int value, std::string info, std::string tex);
 	void DeletePotion();
 	void UpdatePosShape();
 

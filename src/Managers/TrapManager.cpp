@@ -46,13 +46,13 @@ void TrapManager::loadJSONTrapData(){
 	std::map<std::string, TrapEnum> codesMap = GetTRAPENUM_StrMap();
 	TrapEnum ID;
 
-	for(int i = 0; !j["trap_data"][i].is_null(); i++){
-		ID = codesMap[ j["trap_data"][i]["ID"] ];
+	for(int i = 0; !j["traps_data"][i].is_null(); i++){
+		ID = codesMap[ j["traps_data"][i]["ID"] ];
 
-		trap_EFFECT.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["EFFECT_ID"]));
-		trap_name.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["name"]));
-		trap_description.insert(std::pair<TrapEnum,std::string>(ID, j["trap_data"][i]["description"]));
-		trap_damage.insert(std::pair<TrapEnum,float>(ID, j["trap_data"][i]["damage"]));
+		trap_EFFECT.insert(std::pair<TrapEnum,std::string>(ID, j["traps_data"][i]["EFFECT_ID"]));
+		trap_name.insert(std::pair<TrapEnum,std::string>(ID, j["traps_data"][i]["name"]));
+		trap_description.insert(std::pair<TrapEnum,std::string>(ID, j["traps_data"][i]["description"]));
+		trap_damage.insert(std::pair<TrapEnum,float>(ID, j["traps_data"][i]["damage"]));
 	}
 
 }

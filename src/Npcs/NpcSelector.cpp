@@ -1,4 +1,5 @@
 #include "./NpcSelector.h"
+#include <GUIEngine/GUIEngine.h>
 
 NpcSelector::NpcSelector(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreatePhysical(TPosition, TTScale, TRotation);
@@ -38,4 +39,8 @@ void NpcSelector::Interact(Player* p){
 		hp->ToggleMenu(true);
 		hp->SetAllInput(UP);
 	}
+}
+
+void NpcSelector::ShowInteractInfo(){
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Talk");
 }

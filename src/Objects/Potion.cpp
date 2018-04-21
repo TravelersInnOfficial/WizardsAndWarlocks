@@ -8,11 +8,12 @@
 
 #define MODEL_SIZE 0.136f
 
-Potion::Potion(vector3df TScale, int val, std::string tex){
+Potion::Potion(vector3df TScale, int val, std::string info, std::string tex){
 	clase = EENUM_POTION;
 	potionScale = TScale;
 	potionTexture = tex;
 	value = val;
+	m_info = info;
 	player = nullptr;
 	picked = false;
 
@@ -54,7 +55,7 @@ void Potion::Update(){
 }
 
 void Potion::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Grab potion");
+	GUIEngine::GetInstance()->ShowEntityInfo(m_info);
 }
 
 void Potion::Interact(Player* p){

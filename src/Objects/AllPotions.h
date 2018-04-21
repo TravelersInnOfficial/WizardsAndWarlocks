@@ -13,7 +13,7 @@
 
 class LifePotion: public Potion{
 public:
-    LifePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    LifePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -27,7 +27,7 @@ public:
 
 class ManaPotion: public Potion{
 public:
-    ManaPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    ManaPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -41,7 +41,7 @@ public:
 
 class IcePotion: public Potion{
 public:
-    IcePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    IcePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -55,7 +55,7 @@ public:
 
 class ElectricPotion: public Potion{
 public:
-    ElectricPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    ElectricPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -69,7 +69,7 @@ public:
 
 class FirePotion: public Potion{
 public:
-    FirePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    FirePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -83,7 +83,7 @@ public:
 
 class PoisonPotion: public Potion{
 public:
-    PoisonPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    PoisonPotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };
@@ -97,7 +97,7 @@ public:
 
 class DefensePotion: public Potion{
 public:
-    DefensePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0));
+    DefensePotion(vector3df TPosition, vector3df TScale = vector3df(1,1,1), vector3df TRotation = vector3df(0,0,0), float value = 0.0f, std::string info = "");
     void Use(Player* p);
     bool CheckUse(Player* p);
 };

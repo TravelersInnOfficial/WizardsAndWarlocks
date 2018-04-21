@@ -9,6 +9,7 @@ HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	spellManager->AddHechizo(1, this, SPELL_FIRE);
 	spellManager->AddHechizo(2, this, SPELL_DEFENSE);
 	spellManager->AddHechizo(3, this, SPELL_SPEED);
+	showObjInfo = 0.0f;
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -280,4 +281,30 @@ void HumanPlayer::CheckInput(){
 void HumanPlayer::Update(float deltaTime){
 	Player::Update(deltaTime);
 	if(!menuActivated) UpdateInput();
+	// Comprobar si estamos mirando a un item interactuable
+	if(m_isPlayerOne) LookingAtObject();
+}
+
+
+void HumanPlayer::LookingAtObject(){	
+		vector3df rot = GetRot();
+		rot.X = -rot.X;
+
+		vector3df Start = GetHeadPos();
+		float EndX = Start.X + sin(rot.Y)*cos(rot.X)*m_raycastDistance;
+		float EndY = Start.Y + sin(rot.X)*m_raycastDistance;
+		float EndZ = Start.Z + cos(rot.Y)*cos(rot.X)*m_raycastDistance;
+
+		vector3df End(EndX, EndY, EndZ);
+		
+		void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
+		if(Object!=nullptr){
+			if(GraphicEngine::getInstance()->getTime() - showObjInfo > 500.0f){
+				Entidad* h = (Entidad*)Object;
+				h->ShowInteractInfo();
+			}
+		}
+		else{
+			showObjInfo = GraphicEngine::getInstance()->getTime();
+		}	
 }

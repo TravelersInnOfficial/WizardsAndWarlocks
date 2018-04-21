@@ -91,8 +91,6 @@ void GUIEngine::printEntityInfo(){
     if(entity_info != ""){
         bool open = true;
         bool *p_open = &open;
-        float initial_Y = m_notifications_Ypos;
-        int id = 0;
         float W = g_engine->GetScreenWidth();
         float H = g_engine->GetScreenHeight();
         ImVec2 window_pos = ImVec2(W/2, H/2);
