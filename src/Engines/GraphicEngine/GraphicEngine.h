@@ -3,6 +3,7 @@
 
 #include "GRoom.h"
 #include "GBody.h"
+#include "GAnimation.h"
 #include "GParticle.h"
 #include "GCamera.h"
 #include "GEntity.h"
@@ -200,6 +201,16 @@ public:
 	 * @return GBody* Graphic body
 	 */
 	GBody* addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale = vector3df(1,1,1));
+	
+	/**
+	 * @brief Adds an animated mesh to scene and returns animation
+	 * 
+	 * @param position 	vector of object position
+	 * @param rotation 	vector of object rotation
+	 * @param scale 	vector of object scale
+	 * @return GAnimation* 
+	 */
+	GAnimation* addAnimatedMeshSceneNode(vector3df position = vector3df(0,0,0), vector3df rotation = vector3df(0,0,0), vector3df scale = vector3df(1,1,1));
 
 	/**
 	 * @brief Adds a camera scene node with an animator appropriate for FPS.

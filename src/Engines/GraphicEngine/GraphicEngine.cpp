@@ -324,6 +324,7 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	GBody* gb = nullptr;
 	toe::core::TOEvector3df data = toe::core::TOEvector3df(0, 0, 0);
 	toe::core::TOEvector3df scale = toe::core::TOEvector3df(1, 1, 1);
+	
 	gb = new GBody(
 		privateSManager->AddMesh(data, data, scale, path)
 	);
@@ -335,10 +336,23 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
 	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
 	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+	
 	gb = new GBody(
 		privateSManager->AddMesh(position_TOE, rotation_TOE, scale_TOE, path)
 	);
 	return gb;
+}
+
+GAnimation* GraphicEngine::addAnimatedMeshSceneNode(vector3df position, vector3df rotation, vector3df scale){
+	GAnimation* ga = nullptr;
+	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+	
+	ga = new GAnimation(
+		privateSManager->AddAnimation(position_TOE, rotation_TOE, scale_TOE)
+	);
+	return ga;
 }
 
 GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed){
