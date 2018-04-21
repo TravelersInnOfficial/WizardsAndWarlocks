@@ -18,19 +18,15 @@
 #include "./../Cameras/WatcherCamera.h"
 #include "./../Cameras/FPSCamera.h"
 #include <Assets.h>
-GraphicEngine* g_engine = nullptr;
+#include "Animation_Strings.h"
 
 Player::Player(bool isPlayer1){
-	// Inicializamos la variable global
-	g_engine = GraphicEngine::getInstance();
-
 	if(isPlayer1) m_overlayManager = new OverlayManager();
 	else m_overlayManager = nullptr;
 
+	// Create hud
 	m_hud = new PlayerHUD(this);
 	
-	createSoundEvents();
-	changeSurface(2);
 	m_position = vector3df(0,2,0);
 	m_dimensions = vector3df(1.8,1.8,1.8);
 
@@ -66,19 +62,65 @@ Player::Player(bool isPlayer1){
 
 	m_name = "";
 
+	// Spell number
 	m_currentSpell = 0;
 	m_numberSpells = 3;   // Rango de hechizos [0 a m_numberSpells]
 
+	// Add intial trap type
 	TrapManager::GetInstance()->AddTrapToPlayer(this, TENUM_SPIRITS);
-	CreatePlayerCharacter(true);
+	
+	// Create visual body and its animations
+	CreatePlayerCharacter();
 
+	// Assign random name to player
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	bool isClient = n_engine->IsClientInit();
 	bool isServer = n_engine->IsServerInit();
 	if(!isClient && !isServer) SetRandomName();	// Hace falta que el player ya este creado para poner el billboard
 
+	// Create Sounds
+	createSoundEvents();
+	changeSurface(2);
 
+	// Reposition player
 	Respawn();
+}
+
+Player::~Player(){
+
+	delete m_controller;
+	delete m_overlayManager;
+
+	if(bt_body != nullptr){
+		delete bt_body;
+		bt_body = nullptr;
+	}
+
+    if(m_playerNode != nullptr){
+		delete m_playerNode;
+		m_playerNode = nullptr;
+	}
+
+	if(m_camera!=nullptr){
+		delete m_camera;
+		m_camera = nullptr;
+	}
+
+	if(m_hud != nullptr){
+		delete m_hud;
+		m_hud = nullptr;
+	}
+
+	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
+	for(; it!=soundEvents.end(); it++){
+		SoundEvent* even = it->second;
+		if (even->isPlaying()) even->stop();	//Stop the sound if its playing
+		even->release();
+		delete even;						//Release the sound
+	}
+
+	TrapManager::GetInstance()->ErasePlayer(this);	
+	SpellManager::GetInstance()->ErasePlayer(this);
 }
 
 void Player::InitHUD(){
@@ -119,82 +161,92 @@ void Player::PlayerInit(){
 	stopPulse();
 }
 
-Player::~Player(){
+void Player::InitPlayerAnimations(){
+	switch(m_playerAlliance){
+		case(ALLIANCE_WIZARD):
+			if(m_isPlayerOne){
+				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
+				
+			}
+			else{
+				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj", m_position, m_rotation, m_dimensions);
 
-	delete m_controller;
-	delete m_overlayManager;
+			} 
+		break;
+		
+		case(ALLIANCE_WARLOCK):
+			if(m_isPlayerOne){
+				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj", m_position, m_rotation, m_dimensions);
 
-	if(bt_body != nullptr){
-		delete bt_body;
-		bt_body = nullptr;
+			} 
+			else{
+				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj", m_position, m_rotation, m_dimensions);
+				
+			} 
+			
+		break;
+		
+		default:
+			if(m_isPlayerOne){
+
+			} 
+			else{
+
+			} 
+			
+		break;
 	}
-
-    if(m_playerNode != nullptr){
-		delete m_playerNode;
-		m_playerNode = nullptr;
-	}
-
-	if(m_camera!=nullptr){
-		delete m_camera;
-		m_camera = nullptr;
-	}
-
-	if(m_hud != nullptr){
-		delete m_hud;
-		m_hud = nullptr;
-	}
-
-	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
-	for(; it!=soundEvents.end(); it++){
-		SoundEvent* even = it->second;
-		if (even->isPlaying()) even->stop();	//Stop the sound if its playing
-		even->release();
-		delete even;						//Release the sound
-	}
-
-	TrapManager::GetInstance()->ErasePlayer(this);	
-	SpellManager::GetInstance()->ErasePlayer(this);
 }
 
-void Player::CreatePlayerCharacter(bool firstInit){
-	if(!m_hasCharacter){
-
-		// Graphic Player		
-		if(m_playerAlliance == ALLIANCE_WIZARD) {
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
+void Player::CreatePlayerGBody(){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	
+	switch(m_playerAlliance){
+		case(ALLIANCE_WIZARD):
+			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj", m_position, m_rotation, m_dimensions);
 
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-		}
+		break;
 		
-		else if(m_playerAlliance == ALLIANCE_WARLOCK){
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
+		case(ALLIANCE_WARLOCK):
+			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj", m_position, m_rotation, m_dimensions);
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj", m_position, m_rotation, m_dimensions);
 			
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-		}
+		break;
 		
-		else{
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
+		default:
+			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
+			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj", m_position, m_rotation, m_dimensions);
 			
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-		}
-		
-		if(firstInit) m_playerNode->setScale(m_dimensions);
-		m_playerNode->setPosition(m_position);
-		//m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+		break;
+	}
 
+	// Apply material flag
+	m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
+
+	// Fill Animation string vectors
+	InitPlayerAnimations();
+	
+}
+
+void Player::CreatePlayerCharacter(){
+	if(!m_hasCharacter){
+		// Graphic Player
+		CreatePlayerGBody();
+		
 		SetBillboard();
 
 		// Physic Player
 		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
 		bt_body = new BT_Body();
-		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0),C_PLAYER, playerCW);
+		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
 
 		// Camera
-		if(m_isPlayerOne){ 
+		if(m_isPlayerOne){
 			bool work = true;
 
 			if(m_camera!=nullptr){ 
@@ -210,10 +262,6 @@ void Player::CreatePlayerCharacter(bool firstInit){
 	
 }
 
-/**
- * @brief Destoys player visual body only when game has started
- * 
- */
 void Player::DestroyPlayerCharacter(){
 	if(bt_body != nullptr){
 		delete bt_body;
@@ -989,47 +1037,16 @@ void Player::SetAlliance(Alliance newAlliance){
 
 	m_playerAlliance = newAlliance;
 
-	switch(newAlliance){
-		case(ALLIANCE_WIZARD):{
-			if(m_hasCharacter){
-				delete m_playerNode;
+	if(m_playerAlliance == ALLIANCE_WARLOCK)
+		TrapManager::GetInstance()->setPlayerUsings(this, 4);
 
-				if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj");
-				
-				m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-			}
-			if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WIZARD, true, false);
-			break;
-		}
-		case(ALLIANCE_WARLOCK):{
-			if(m_hasCharacter){
-				delete m_playerNode;
+	if(m_hasCharacter){
+		delete m_playerNode;
 
-				if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj");
-				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj");
-				
-				m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-			}
-			if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, ALLIANCE_WARLOCK, true, false);
-			TrapManager::GetInstance()->setPlayerUsings(this, 4);
-			break;
-		}
-		default:{
-			if(m_hasCharacter){
-				delete m_playerNode;
-
-				if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj");
-				else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
-				
-				m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-			}
-			if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, NO_ALLIANCE, true, false);
-			break;
-		}
+		CreatePlayerGBody();
 	}
-	m_playerNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
+	if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, m_playerAlliance, true, false);
 
 	m_HP = 100;
 	m_MP = 100;

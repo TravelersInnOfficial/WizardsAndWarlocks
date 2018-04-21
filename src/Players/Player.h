@@ -29,7 +29,12 @@ class Player: public Entidad{
 	public:
 
 		Player(bool isPlayer1 = false);
-		void CreatePlayerCharacter(bool firstInit = false);
+		virtual ~Player();
+
+		void InitPlayerAnimations();
+		void CreatePlayerGBody();
+		void CreatePlayerCharacter();
+
 		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update(float deltaTime);
@@ -156,8 +161,6 @@ class Player: public Entidad{
 		void SetName(std::string newName);
 		void SetVisible(bool);
 		void SetRandomName();
-
-		virtual ~Player();
 
 		// Public variables
 		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
