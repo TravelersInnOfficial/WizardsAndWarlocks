@@ -420,6 +420,11 @@ void Player::Update(float deltaTime){
 		if(m_overlayManager!=nullptr) m_overlayManager->Update(deltaTime);
 
 		// Comprobar si estamos mirando a un item interactuable
+		if(m_isPlayerOne) LookingAtObject();
+	}
+}
+
+void Player::LookingAtObject(){	
 		vector3df rot = GetRot();
 		rot.X = -rot.X;
 
@@ -435,7 +440,6 @@ void Player::Update(float deltaTime){
 			Entidad* h = (Entidad*)Object;
 			h->ShowInteractInfo();
 		}	
-	}
 }
 
 bool Player::ChangeCurrentSpell(int value){

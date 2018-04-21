@@ -86,6 +86,7 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();
+		void LookingAtObject();
 
 		//Menu Functions
 		void ShowStatusMenu();
