@@ -91,7 +91,6 @@ void StateManager::LoadState(State_Code code, bool* end){
 		delete currentState;
 		currentState = nullptr;
 		loading = false;
-		std::cout<<"deleting\n";
 	}
 	
 	switch(code){
@@ -103,6 +102,7 @@ void StateManager::LoadState(State_Code code, bool* end){
 				resourcesLoaded = true;
 				ResourceManager::LoadResources();
 			}
+			
 			currentState = new SinglePlayerGame();
 			break;
 		case STATE_NETGAME_CLIENT:

@@ -482,10 +482,11 @@ PlayerHUD::HUD_Minimap::HUD_Minimap(Player* p){
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     float ratio = g_engine->GetAspectRatio();
-
+    float W = g_engine->GetScreenWidth();
+    float H = g_engine->GetScreenHeight();
     m_rotation = 0.0f;
-    m_position = vector2df(600, 300);
     m_size = vector2df(200, 200*ratio);
+    m_position = vector2df(W-m_size.X, H-m_size.Y);
     m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
     m_mapImage->SetMask("./../assets/textures/HUD/Minimap/mask.jpg");
 }

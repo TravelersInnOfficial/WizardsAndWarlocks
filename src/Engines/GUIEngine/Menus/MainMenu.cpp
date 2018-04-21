@@ -449,7 +449,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         }
 
         //HELP WINDOWS
-        ImGui::ShowTestWindow();
+        //ImGui::ShowTestWindow();
         //ImGui::ShowMetricsWindow();
         
         ImGui::End();

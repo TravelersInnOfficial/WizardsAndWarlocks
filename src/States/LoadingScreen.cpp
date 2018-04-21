@@ -7,8 +7,8 @@
 LoadingScreen::LoadingScreen(){
     g_engine = GraphicEngine::getInstance();
     float W = g_engine->GetScreenWidth();
-    loading_bar = g_engine->add2DRect(vector2df(0,0),vector2df(W,100));
-    loading_bar->SetColor(1,0,0);
+    //loading_bar = g_engine->add2DRect(vector2df(0,0),vector2df(W,100));
+    //loading_bar->SetColor(1,0,0);
     bar_width = W;
 }
 
@@ -24,7 +24,6 @@ bool LoadingScreen::Input(){
 }
 
 void LoadingScreen::Update(float deltaTime){
-
 }
 
 void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
@@ -32,7 +31,7 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
     std::ostringstream bar_progress;
     bar_progress << std::setprecision(4) << "bar progress: " << progress <<"%\n";
     std::cout<<bar_progress.str();
-    loading_bar->SetWidth(bar_width*progress);
+    //loading_bar->SetWidth(bar_width*progress);
 }
 
 void LoadingScreen::Draw(){

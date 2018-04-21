@@ -14,7 +14,6 @@ void ResourceManager::LoadResources(){
 	float cont = 0;
 	float bar_width = 0;
 
-
 	std::map<GAMEMESHES,std::string>::iterator meshIterator;
 	std::map<GAMETEXTURES, std::string>::iterator textureIterator;
 
