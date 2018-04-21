@@ -385,13 +385,14 @@ void Fuzzy::RemoveEffect(Player* p){
 //================================================================
 // DAMAGE UP (TARION)
 //================================================================
-DamageUp::DamageUp(float time):Effect(time, POWERUP_DAMAGE){
+DamageUp::DamageUp(float time, float  damage):Effect(time,POWERUP_DAMAGE){
 	createSoundEvent();
+	m_dmg = damage;
 }
 
 void DamageUp::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->m_DamageMult *= 1.6;
+	p->m_DamageMult *= m_dmg;
 }
 
 void DamageUp::UpdateEffect(Player* p) {
@@ -399,7 +400,7 @@ void DamageUp::UpdateEffect(Player* p) {
 }
 
 void DamageUp::RemoveEffect(Player* p){
-	p->m_DamageMult /= 1.6;				// 1.6 * 0.625 = 1
+	p->m_DamageMult /= m_dmg;				// 1.6 * 0.625 = 1
 }
 
 void DamageUp::createSoundEvent() {
@@ -467,12 +468,13 @@ void ElementUp::RemoveEffect(Player* p){
 //================================================================
 // SPEED UP (Hermes)
 //================================================================
-SpeedUp::SpeedUp(float time):Effect(time, POWERUP_SPEED){
+SpeedUp::SpeedUp(float time, float vel):Effect(time, POWERUP_SPEED){
 	createSoundEvent();
+	m_vel = vel;
 }
 
 void SpeedUp::ApplyEffect(Player* p){
-	p->max_velocity *= 3.0f;
+	p->max_velocity *= m_vel;
 	// TODO: APPLY COOLDOWN REDUCTION
 	playEffectEvent();
 }
@@ -482,7 +484,7 @@ void SpeedUp::UpdateEffect(Player* p) {
 }
 
 void SpeedUp::RemoveEffect(Player* p){
-	p->max_velocity /= 3.0f;
+	p->max_velocity /= m_vel;
 }
 
 void SpeedUp::createSoundEvent() {
@@ -492,14 +494,15 @@ void SpeedUp::createSoundEvent() {
 //================================================================
 // UNTARGETABLE (Poncho)
 //================================================================
-Untargetable::Untargetable(float time):Effect(time, POWERUP_UNTARGET){
+Untargetable::Untargetable(float time, float def):Effect(time, POWERUP_UNTARGET){
 	createSoundEvent();
 	particle = nullptr;
+	m_def = def;
 }
 
 void Untargetable::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->m_Defense *= 10.0f;
+	p->m_Defense *= m_def;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/DefenseParticles2.png");
@@ -520,7 +523,7 @@ void Untargetable::UpdateEffect(Player* p) {
 }
 
 void Untargetable::RemoveEffect(Player* p){
-	p->m_Defense /= 10.0f;
+	p->m_Defense /= m_def;
 	if(particle != nullptr){
 		delete particle;
 		particle = nullptr;

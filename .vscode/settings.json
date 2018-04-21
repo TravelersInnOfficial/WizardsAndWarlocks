@@ -72,5 +72,6 @@
         "**/bin": true,
         "**/obj": true,
         "**/libs": true
-      }    
+    },
+    "C_Cpp.dimInactiveRegions": false
 }

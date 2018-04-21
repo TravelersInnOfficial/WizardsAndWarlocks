@@ -49,12 +49,25 @@ public:
 	void ErasePlayer(Player* player);
 	void RefreshServerAll();
 
+	std::map<std::string, TrapEnum> GetTRAPENUM_StrMap();
+	std::string GetTrapEffect(TrapEnum trap);
+	std::string GetTrapName(TrapEnum trap);
+	std::string GetTrapDescription(TrapEnum trap);
+	float GetTrapDamage(TrapEnum trap);
+
 private:
+	void loadJSONTrapData();
+
 	std::vector<Trap*> traps;
 	std::map<Player*,TrapEnum> playerTrap;
 	std::map<Player*, int> playerUsings;
 	int lastTrapId;
 	int MaxUsings = 4;
+
+	std::map<TrapEnum,std::string> trap_EFFECT;
+	std::map<TrapEnum,std::string> trap_name;
+	std::map<TrapEnum,std::string> trap_description;
+	std::map<TrapEnum,float> trap_damage;
 
 	GSprite* trapHud;
 	GSprite* numberTrap;

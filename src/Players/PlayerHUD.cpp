@@ -165,7 +165,7 @@ void PlayerHUD::p_initPlayerOrbs(){
 
 void PlayerHUD::p_initStaminaBar(){
     int W = g_engine->GetScreenWidth();	
-    float size = 10.0f;			// Height of the bar
+    float size = 10.0f;			            // Height of the bar
 
     float xInit = health_orb->width;		// Calculate the Init and End of the bar on X axis
     float xEnd =  W - mana_orb->width;		
@@ -183,12 +183,12 @@ void PlayerHUD::p_initStaminaBar(){
 
 void PlayerHUD::p_initPlayerSpellSelector(){
     int W = g_engine->GetScreenWidth();	
-    m_spell_size = W * 0.055;
+    m_spell_size = W * 0.075;
     m_num_spells = SpellManager::GetInstance()->GetNumSpells();
     m_spell_space = 10;
 
     float new_height = m_spell_size+12;
-    float new_width = m_num_spells* (m_spell_size + m_spell_space) + 5;
+    float new_width = m_num_spells* (m_spell_size + m_spell_space) + 8;
     vector2df slot_dims = vector2df(new_width,new_height);
 
     toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
@@ -301,7 +301,7 @@ void PlayerHUD::p_drawStaminaBar(){
 void PlayerHUD::p_drawPlayerSpellSelector() const{
     if(mana_orb != nullptr){
         float W =  g_engine->GetScreenWidth();
-        float xPos = W - mana_orb->bkg->GetWidth();              // X position
+        float xPos = W - mana_orb->width;                     // X position
         float yPos = 3;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell
@@ -493,10 +493,11 @@ PlayerHUD::HUD_Minimap::HUD_Minimap(Player* p){
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
     float ratio = g_engine->GetAspectRatio();
-
+    float W = g_engine->GetScreenWidth();
+    float H = g_engine->GetScreenHeight();
     m_rotation = 0.0f;
-    m_position = vector2df(600, 300);
     m_size = vector2df(200, 200*ratio);
+    m_position = vector2df(W-m_size.X, H-m_size.Y);
     m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
     m_mapImage->SetMask("./../assets/textures/HUD/Minimap/mask.jpg");
 }

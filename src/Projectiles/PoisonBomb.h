@@ -8,7 +8,7 @@
 class PoisonBomb : public Projectile{
 
 public:
-    PoisonBomb(vector3df pos, vector3df dir, int emi, float damageMult = 1);
+    PoisonBomb(vector3df pos, vector3df dir, int emi,float radius = 0.2, float speed = 15, float damageMult = 20, float max_distance = 30);
     ~PoisonBomb();
 
 private:

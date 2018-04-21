@@ -52,8 +52,6 @@ void MenuPrincipal::Draw(){
 		bkg = GraphicEngine::getInstance()->addSprite("./../assets/textures/GUI/Menus/MainMenu/book_background.png", vector2df(0,0), dims);
 	}
 	g_engine->EndDraw();
-	
-
 }
 
 void MenuPrincipal::PrepareGame(){

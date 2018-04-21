@@ -21,14 +21,23 @@ public:
 	void Update();
 	void DeleteProyectiles();
 	void DeleteAllProyectiles();
+
+	std::map<std::string, BULLETCODE> GetBULLETCODE_StrMap();
+	float GetBulletDamage(BULLETCODE bullet);
 private:
 
 	std::vector<Projectile*> proyectiles;
 	std::vector<Projectile*> proyectilesToDelete;
+	std::map<BULLETCODE, float> bullet_damage;
+	std::map<BULLETCODE, float> bullet_radius;
+	std::map<BULLETCODE, float> bullet_speed;
+	std::map<BULLETCODE, float> bullet_max_distance;
 
 	BulletManager();
 	BulletManager(BulletManager&);
 	BulletManager operator =(BulletManager&);
+
+	void loadProjectileDamage();
 };
 
 

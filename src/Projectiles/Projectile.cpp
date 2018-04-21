@@ -163,3 +163,7 @@ void Projectile::playSoundEvent(vector3df pos) {
 	}
 	
 }
+
+int Projectile::GetDamage(){
+	return damage;
+}

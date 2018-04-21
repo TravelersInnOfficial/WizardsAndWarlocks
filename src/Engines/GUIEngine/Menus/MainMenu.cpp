@@ -365,30 +365,35 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::Separator();
                 ImGui::Text("\nVolume:\n");
                 
+                static bool mute = false;
                 static float master = SoundSystem::getInstance()->getVolume();
                 static float music = SoundSystem::getInstance()->getVolumeVCA("Music");
                 static float sfx = SoundSystem::getInstance()->getVolumeVCA("SFX");
                 static float voices = SoundSystem::getInstance()->getVolumeVCA("Voices");
+                
+                master = master*10;
+                music = music*100;
+                sfx = sfx*100;
+                voices = voices*100;
 
-                master =master*10;
-                music =music*100;
-                sfx =sfx*100;
-                voices =voices*100;
-
+                ImGui::Checkbox("Mute", &mute);
                 ImGui::SliderFloat("Master", &master, 0.0f, 100.0f, "%.2f");
                 ImGui::SliderFloat("Music", &music, 0.0f, 100.0f, "%.2f");
                 ImGui::SliderFloat("SFX", &sfx, 0.0f, 100.0f, "%.2f");
                 ImGui::SliderFloat("Voices", &voices, 0.0f, 100.0f, "%.2f");
 
-                master =master/10;
-                music =music/100;
-                sfx =sfx/100;
-                voices =voices/100;
+                master = master/10;
+                music = music/100;
+                sfx = sfx/100;
+                voices = voices/100;
 
                 SoundSystem::getInstance()->setVolume(master);
                 SoundSystem::getInstance()->setVolumeVCA("Music",music);
                 SoundSystem::getInstance()->setVolumeVCA("SFX",sfx);
                 SoundSystem::getInstance()->setVolumeVCA("Voices",voices);
+
+                if(mute) SoundSystem::getInstance()->setVolume(0);
+
                 ImGui::Separator();
 
                 ImGui::Text("\nScreen Options");

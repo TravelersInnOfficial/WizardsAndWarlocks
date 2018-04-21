@@ -5,6 +5,7 @@
 #include "./../States/MultiPlayer/MultiPlayerGame.h"
 #include "./../States/OnePlayer/SinglePlayerGame.h"
 #include "./../States/MenuPrincipal.h"
+#include "./../States/LoadingScreen.h"
 #include "./../States/State.h"
 // Motores
 #include <PhysicsEngine/BulletEngine.h>
@@ -32,6 +33,7 @@ public:
 	void CloseGame();
 	float GetDeltaTime();
 
+	void SetLoadingStatusString(std::string status);
 	int GetWizardAINumber();
 	int GetWarlockAINumber();
 	int* GetWizardAINumberPointer();
@@ -59,6 +61,7 @@ private:
 	int maxWarlockPlayers;
 
 	bool resourcesLoaded;
+	bool loading;
 
 	StateManager(ServerInfo* serverInfo = nullptr);
 };

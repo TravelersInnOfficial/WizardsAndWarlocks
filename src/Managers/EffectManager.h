@@ -21,10 +21,19 @@ public:
 	void CleanEffects(Player* p);
 	void UpdateEffects(float deltaTime);
 	bool CheckEffect(Player* p, EFFECTCODE e);
+
+	std::map<std::string, EFFECTCODE> GetEFFECTCODE_StrMap();
+	std::string GetEffectName(EFFECTCODE);
+	float GetEffectDuration(EFFECTCODE);
+	float GetEffectValue(EFFECTCODE);
+
 private:
 	Effect* CreateEffect(EFFECTCODE e);
 
 	std::map<Player*, std::vector<Effect*>* > effects;
+	std::map<EFFECTCODE, std::string> effect_name;
+	std::map<EFFECTCODE, float> effect_time;
+	std::map<EFFECTCODE, float> effect_value;
 
 	float currentTime;
 	float maxTime;
@@ -32,6 +41,7 @@ private:
 	EffectManager();
 	EffectManager(EffectManager&);
 	EffectManager operator =(EffectManager&);
+	void loadEffectsData();
 };
 
 #endif
