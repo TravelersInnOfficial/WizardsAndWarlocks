@@ -19,7 +19,10 @@ ObjectManager* ObjectManager::GetInstance(){
 	return instance;
 }
 
-ObjectManager::ObjectManager(){}
+ObjectManager::ObjectManager(){
+	wizardSpawnSelected = 0;
+	warlockSpawnSelected = 0;
+}
 
 ObjectManager::~ObjectManager(){
 	EmptyObject();
@@ -368,6 +371,24 @@ void ObjectManager::SendFountainSignal(){
 
 // ===================================================================================================== //
 //
+// SETTERS
+//
+// ===================================================================================================== //
+
+void ObjectManager::SetWizardSpawn(int num){
+	if(num < wizardSpawn.size()){
+		wizardSpawnSelected = num;
+	}
+}
+
+void ObjectManager::SetWarlockSpawn(int num){
+	if(num < warlockSpawn.size()){
+		warlockSpawnSelected = num;
+	}
+}
+	
+// ===================================================================================================== //
+//
 // GETTERS
 //
 // ===================================================================================================== //
@@ -376,14 +397,22 @@ vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
 	vector3df toRet = vector3df(0,2,0);
 	
 	if(playerAlliance == ALLIANCE_WIZARD && wizardSpawn.size() > 0){
-		int randIndex = rand() % wizardSpawn.size();
-		toRet = wizardSpawn.at(randIndex);
+		int posCenter = wizardSpawnSelected;
+		toRet = wizardSpawn[posCenter];
 	}
 
 	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
+		int posCenter = warlockSpawnSelected;
+		toRet = warlockSpawn[posCenter];
+
 		int randIndex = rand() % warlockSpawn.size();
 		toRet = warlockSpawn.at(randIndex);
 	}
+	float dist = 1.0f;
+
+	toRet.X += dist * (rand() % 2 ? 1 : -1);   // Random -1/1
+	toRet.Z += dist * (rand() % 2 ? 1 : -1);
+
 
 	return(toRet);
 }
@@ -553,6 +582,21 @@ bool ObjectManager::CheckIfWon(){
 	if(grail != nullptr) toRet = grail->CheckIfWon();
 	return toRet;
 }
+
+void ObjectManager::SetWizardSpawn(){
+	int maxNumber = wizardSpawn.size();
+	int pos = rand() % maxNumber;
+
+	wizardSpawnSelected = pos;
+}
+
+void ObjectManager::SetWarlockSpawn(){
+	int maxNumber = warlockSpawn.size();
+	int pos = rand() % maxNumber;
+
+	warlockSpawnSelected = pos;
+}
+
 
 // ===================================================================================================== //
 //

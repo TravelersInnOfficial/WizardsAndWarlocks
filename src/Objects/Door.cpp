@@ -125,7 +125,6 @@ void Door::Update(){
 
 void Door::SendSignal(){
     RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
-    // id, AI_code name, float str, Kinematic kin, AI_modalities mod
     sense->AddSignal(id, this, true, AI_DOOR, 5.0f, GetKinematic(), AI_SIGHT);
 }
 

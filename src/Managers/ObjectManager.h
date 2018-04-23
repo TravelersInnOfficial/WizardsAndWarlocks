@@ -69,6 +69,10 @@ public:
 	std::vector<Potion*> GetAllPotions();
 	void CopyRoomGraph(RoomGraph* copy);
 
+	// Setters
+	void SetWizardSpawn(int num);
+	void SetWarlockSpawn(int num);
+
 	// Deleters
 	void DeletePotion(Potion* p);
 	void DeleteBlock(Block* b);
@@ -79,6 +83,8 @@ public:
 	void ClearMap();
 	bool CheckIfWon();
 	void Update(float deltaTime);
+	void SetWizardSpawn();
+	void SetWarlockSpawn();
 
 	// Door Sync
 	int GetDoorVecPos(Door* door);
@@ -112,8 +118,12 @@ private:
 	std::vector<Fountain*>		fountains;		// Vector donde se almacenan todas las fuentes
 	std::vector<Npc*>			npcs;			// Vector donde se almacenan todos los npcs
 	std::vector<PlayerParts*>	playerParts;	// Vector donde se almacenan los body parts al morir
+	
 	std::vector<vector3df>		wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
 	std::vector<vector3df>		warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
+	int 						wizardSpawnSelected;	// Posicion del spawner seleccionado
+	int 						warlockSpawnSelected;	// Posicion del spawner seleccionado
+
 	Grail*						grail;			// El grail de la partida, unico
 	vector4df					readyZone;		// Zona de READY
 	NavMesh*					navmesh;		// Malla de movimiento para la IA del nivel, única
