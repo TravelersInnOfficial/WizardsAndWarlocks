@@ -45,5 +45,5 @@ void NpcSeller::Interact(Player* p){
 }
 
 void NpcSeller::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Talk");
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Shop");
 }

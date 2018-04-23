@@ -10,6 +10,7 @@ HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	spellManager->AddHechizo(2, this, SPELL_DEFENSE);
 	spellManager->AddHechizo(3, this, SPELL_SPEED);
 	showObjInfo = 0.0f;
+	m_interacting = false;
 }
 
 HumanPlayer::~HumanPlayer(){
@@ -232,6 +233,7 @@ void HumanPlayer::GetNetInput(){
 
 void HumanPlayer::ToggleMenu(bool newState){
 	menuActivated = newState;
+	m_interacting = newState;
 	if(m_camera != nullptr) m_camera->SetWorking(!menuActivated);
 	GraphicEngine::getInstance()->ToggleMenu(menuActivated);
 }
@@ -249,7 +251,8 @@ void HumanPlayer::CheckInput(){
 		if(m_controller->IsKeyReleased(ACTION_RUN)){ Run(false); }
 		
 		// Acciones
-		if(m_controller->IsKeyDown(ACTION_RAYCAST)){ Raycast(); }
+		if(m_controller->IsKeyDown(ACTION_RAYCAST)){ if(Raycast()) m_interacting = true;}
+		if(m_controller->IsKeyReleased(ACTION_RAYCAST)){m_interacting = false;}
 
 		if(m_controller->IsKeyPressed(ACTION_USE_OBJECT)){ UseObject();}
 		if(m_controller->IsKeyPressed(ACTION_DROP_OBJECT)){ DropObject(); }
@@ -281,8 +284,7 @@ void HumanPlayer::CheckInput(){
 void HumanPlayer::Update(float deltaTime){
 	Player::Update(deltaTime);
 	if(!menuActivated) UpdateInput();
-	// Comprobar si estamos mirando a un item interactuable
-	if(m_isPlayerOne) LookingAtObject();
+	if(m_isPlayerOne && !m_interacting) LookingAtObject(); // Comprobar si estamos mirando a un item interactuable
 }
 
 

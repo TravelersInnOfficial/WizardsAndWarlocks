@@ -62,7 +62,7 @@ class Player: public Entidad{
 		bool ChangeMP(float);
 		void UpdateSP(float deltaTime);
 		void Respawn();
-		void Raycast();
+		bool Raycast();
 		virtual void Die();
 		void ReturnToLobby();
 		void DrawOverlays();

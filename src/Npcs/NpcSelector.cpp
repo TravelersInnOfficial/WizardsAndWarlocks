@@ -42,5 +42,5 @@ void NpcSelector::Interact(Player* p){
 }
 
 void NpcSelector::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Talk");
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Change Alliance");
 }

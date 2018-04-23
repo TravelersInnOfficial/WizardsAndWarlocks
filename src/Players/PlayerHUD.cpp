@@ -301,7 +301,7 @@ void PlayerHUD::p_drawStaminaBar(){
 void PlayerHUD::p_drawPlayerSpellSelector() const{
     if(mana_orb != nullptr){
         float W =  g_engine->GetScreenWidth();
-        float xPos = W - mana_orb->width;                     // X position
+        float xPos = W - mana_orb->width;                               // X position
         float yPos = 3;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell

@@ -655,7 +655,8 @@ void Player::Respawn(){
 	PlayerInit();
 }
 
-void Player::Raycast(){
+bool Player::Raycast(){
+	bool toRet = false;
 	vector3df rot = GetRot();
 	rot.X = -rot.X;
 
@@ -670,7 +671,10 @@ void Player::Raycast(){
 	if(Object!=nullptr){
 		Entidad* h = (Entidad*)Object;
 		h->Interact(this);
+		toRet = true;
 	}
+
+	return toRet;
 }
 
 bool Player::StartSpell(){
