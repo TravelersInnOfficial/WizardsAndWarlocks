@@ -100,18 +100,8 @@ void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
 }
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
-	/*if(privateDriver != nullptr){
-		irr::video::SColorf fromC;
-		fromC.set(1.0f, c.X, c.Y, c.Z); //(a, r, g, b)
-
-		irr::core::vector3df from(f.X, f.Y, f.Z);
-		irr::core::vector3df to(t.X, t.Y, t.Z);
-
-		irr::core::matrix4 id;
-		id.makeIdentity();
-		privateDriver->setTransform(irr::video::ETS_WORLD, id);
-		privateDriver->draw3DLine(from, to, fromC.toSColor());
-	}*/
+	if(privateSManager != nullptr)
+		privateSManager->DrawLine(toe::core::TOEvector3df(f.X, f.Y, f.Z), toe::core::TOEvector3df(t.X, t.Y, t.Z), toe::core::TOEvector3df(c.X, c.Y, c.Z));
 }
 
 void GraphicEngine::CreateAim(){
