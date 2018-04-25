@@ -30,6 +30,17 @@ public:
 	void playEvent(vector3df pos);
 	
 private:
+
+    struct HUD_bar{
+        HUD_bar();
+        ~HUD_bar();
+        void Update(float time, float total);
+        float bar_width;
+        GRect* bkg;
+        GRect* progress_bar;
+    };
+
+	HUD_bar* deactivation_bar;
 	bool playerOneInteraction;	// La esta pillando el jugador 1? Si/No
 	bool recovered;				// El grial ha sido pillado? Si/No
 	bool casting;				// Se esta pillando? Si/No
@@ -40,6 +51,7 @@ private:
 	void CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation);
 	void UpdatePosShape();
 	void createSoundEvent();
+	void drawProgressBar();
 
 	BT_Body*        bt_body;		// Cuerpo fisico del grial
     GBody*          m_grailNode;	// Cuerpo visual del grial

@@ -10,6 +10,7 @@ Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	maxCasting = 5.0f;
 	createSoundEvent();
 	CreateGrail(TPosition, TScale, TRotation);
+	deactivation_bar = nullptr;
 }
 
 void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -40,18 +41,23 @@ Grail::~Grail(){
 
     delete bt_body;
     delete m_grailNode;
+	if(deactivation_bar!=nullptr) delete deactivation_bar;
 }
 
 void Grail::Update(float deltaTime){
-	
 	if(casting){
 		timeCasting += deltaTime; 
 		casting = false; 
 	}
 	else{
+		if(deactivation_bar != nullptr){
+			delete deactivation_bar;
+			deactivation_bar = nullptr;
+		}
 		playerOneInteraction = false;
 		timeCasting = 0.0f;
 	}
+	drawGUI();
 	
 	UpdatePosShape();
 }
@@ -62,7 +68,7 @@ void Grail::Update(){
 
 void Grail::Interact(Player* p){
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
-
+	if(deactivation_bar != nullptr) deactivation_bar->Update(timeCasting, maxCasting);
 		if(timeCasting >= maxCasting){
 			recovered = true;
 			timeCasting = 0.0f;
@@ -104,10 +110,37 @@ void Grail::drawGUI(){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(timeCasting > 0){
 		if(playerOneInteraction || n_engine->IsServerInit()){
-			GraphicEngine* g_engine = GraphicEngine::getInstance();
-			if(g_engine != nullptr) g_engine->drawGrailGUI(timeCasting, maxCasting);
+			drawProgressBar();
 		}
 	}
+}
+
+void Grail::drawProgressBar(){
+	if(deactivation_bar == nullptr) deactivation_bar = new HUD_bar();
+}
+
+Grail::HUD_bar::HUD_bar(){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	float W = g_engine->GetScreenWidth();
+	float H = g_engine->GetScreenHeight();
+	float bar_height = H/40;
+	bar_width = W/5;
+	float posX = (W/2) - (bar_width/2);
+	float posY = (H/2) - (bar_height*3);
+
+	bkg = g_engine->add2DRect(vector2df(posX,posY), vector2df(bar_width,bar_height));
+	progress_bar = g_engine->add2DRect(vector2df(posX,posY), vector2df(bar_width,bar_height));
+	progress_bar->SetColor(1.0f,0.0f,0.0f);
+}
+
+Grail::HUD_bar::~HUD_bar(){
+	delete bkg;
+	delete progress_bar;
+}
+
+void Grail::HUD_bar::Update(float time, float total){
+	float progress = bar_width * (time/total);
+	progress_bar->SetWidth(progress);
 }
 
 /********************************************************************************************************

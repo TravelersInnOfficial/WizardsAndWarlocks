@@ -174,29 +174,6 @@ void GraphicEngine::drawAim(bool moving){
 	}
 }
 
-void GraphicEngine::drawGrailGUI(float currentValue, float maxValue){
-	/*if(privateDriver != nullptr){
-		irr::u32 W = (irr::u32) privateDriver->getScreenSize().Width;
-		irr::u32 H = (irr::u32) privateDriver->getScreenSize().Height;
-
-		float size = 20;
-		float xInit = W/2 - 200;
-
-		float xEnd =  W/2 + 200;
-		float yInit = H/2 + H/4;
-
-		float yEnd = yInit + size;
-		float hP = currentValue/maxValue;
-
-		// Black Bar
-		vector3df color = vector3df(0.0f,0.0f,0.0f);
-		draw2DRectangle(color, xInit, yInit, xEnd, yEnd);
-
-		// Helath & Mana Bar
-		color = vector3df(51, 171, 249);
-		draw2DRectangle(color, xInit, yInit, xInit + (xEnd - xInit) * hP, yEnd);
-	}*/
-}
 void GraphicEngine::ClearOverlay(){
 	if(m_actual_overlay!=nullptr) m_actual_overlay->SetTexture("");
 	

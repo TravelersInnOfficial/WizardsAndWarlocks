@@ -106,11 +106,6 @@ public:
 	void SetAimColor(float r, float g, float b);
 
 	/**
-	 * Draws GUI for the grail
-	*/
-	void drawGrailGUI(float currentValue, float maxValue);
-
-	/**
 	 * Draws all the efects activated
 	*/
 	void drawOverlays(OverlayCodes type);

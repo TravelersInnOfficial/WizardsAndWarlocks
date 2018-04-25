@@ -70,14 +70,24 @@ private:
     BT_Body* m_rigidBody;
     GBody* g_body;
 
+    struct HUD_bar{
+        HUD_bar();
+        ~HUD_bar();
+        void Update(float time, float total);
+        float bar_width;
+        GRect* bkg;
+        GRect* progress_bar;
+    };
+
     float deltaTime;
-    float m_current_time;
     float m_deactivation_time;
-    float m_world_time;
+    float interaction_time;
+    bool isInteracting;
 
     int trapId;
 
     GParticle* particle;
+    HUD_bar* deactivation_bar;
 
     void InitializeTrapData();
     void SetTrapData(vector3df, std::string, std::string);

@@ -23,9 +23,7 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	m_body = new BT_GhostObject();
 	m_rigidBody = new BT_Body();
 
-	m_current_time = 0;
 	m_deactivation_time = 3;
-	m_world_time = 0;
 
 	m_rigidBody->CreateBox(TPosition,(*m_dimensions)*0.5,0,0);
 	m_rigidBody->AssignPointer(this);
@@ -49,6 +47,10 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 		particle->SetType(TRAP_PARTICLE);
 		particle->SetQuantityPerSecond(5);
 	}
+
+	deactivation_bar = nullptr;
+	interaction_time = 0.0f;
+	isInteracting = false;
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
@@ -60,14 +62,24 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 
 Trap::~Trap(){
 
-
 	if(particle != nullptr) delete particle;
+	if(deactivation_bar != nullptr) delete deactivation_bar;
 	Erase();
 }
 
 void Trap::Update(float deltaTime){
+	if(!isInteracting){
+		if(deactivation_bar != nullptr){
+			delete deactivation_bar;
+			deactivation_bar = nullptr;
+		}
+		interaction_time = (interaction_time - deltaTime) < 0 ? 0 : (interaction_time - deltaTime);
+	}
+	else interaction_time += deltaTime;
+
 	this->deltaTime = deltaTime;
 	if(particle != nullptr) particle->Update();
+	isInteracting = false;
 }
 
 void Trap::Update(){
@@ -142,7 +154,8 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 void Trap::Interact(Player* p){
 	NetworkEngine* n_engine = NetworkEngine::GetInstance();
 	if(!n_engine->IsClientInit()){
-		if(m_world_time - deltaTime*0.001 < -0.1) m_current_time = 0;
+		isInteracting = true;
+		if(deactivation_bar == nullptr) deactivation_bar = new HUD_bar();
 		Deactivate(deltaTime);
 		if(n_engine->IsServerInit()){
 			Server* myServer = n_engine->GetServer();
@@ -154,6 +167,30 @@ void Trap::Interact(Player* p){
 			}
 		}
 	}
+}
+
+Trap::HUD_bar::HUD_bar(){
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+	float W = g_engine->GetScreenWidth();
+	float H = g_engine->GetScreenHeight();
+	float bar_height = H/40;
+	bar_width = W/5;
+	float posX = (W/2) - (bar_width/2);
+	float posY = (H/2) - (bar_height*3);
+
+	bkg = g_engine->add2DRect(vector2df(posX,posY), vector2df(bar_width,bar_height));
+	progress_bar = g_engine->add2DRect(vector2df(posX,posY), vector2df(bar_width,bar_height));
+	progress_bar->SetColor(1.0f,0.0f,0.0f);
+}
+
+Trap::HUD_bar::~HUD_bar(){
+	delete bkg;
+	delete progress_bar;
+}
+
+void Trap::HUD_bar::Update(float time, float total){
+	float progress = bar_width * (time/total);
+	progress_bar->SetWidth(progress);
 }
 
 void Trap::Activate(Player* player){
@@ -226,11 +263,9 @@ void Trap::ForceEffect(Player* player){
 }
 
 void Trap::Deactivate(float deltaTime){
-	m_world_time = deltaTime*0.001;
-	m_current_time += deltaTime;
-	if(m_current_time>=m_deactivation_time){
+	if(deactivation_bar != nullptr) deactivation_bar->Update(interaction_time, m_deactivation_time);
+	if(interaction_time >= m_deactivation_time){
 		TrapManager::GetInstance()->DeleteTrap(this);
-		m_current_time=0.0f;
 	}
 }
 
