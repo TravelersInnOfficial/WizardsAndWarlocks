@@ -31,6 +31,7 @@ class GraphicEngine{
 	friend class GSprite;
 	friend class GRect;
 	friend class GParticle;
+	friend class Light;
 
 public:
 	/// DEVICE FUNCTIONS

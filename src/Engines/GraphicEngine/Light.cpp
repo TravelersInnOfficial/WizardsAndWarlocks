@@ -13,6 +13,10 @@ Light::Light(vector3df TPosition, vector3df Color, float range){
 	if(attenuation > 1) attenuation = 0.1f;
 
     privateNode = (TFNode*)sm->AddLight(position, rotation, color, attenuation);
+    
+    if(GraphicEngine::getInstance()->m_currentRoom != nullptr){
+        GraphicEngine::getInstance()->m_currentRoom->AddChild(this);
+    }
 }
 
 Light::~Light(){

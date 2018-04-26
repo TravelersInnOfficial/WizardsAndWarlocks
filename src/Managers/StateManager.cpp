@@ -4,6 +4,8 @@
 #include <cstdio>
 #include <thread>
 #include <chrono>
+#include <GraphicEngine/MenuManager.h>
+
 
 StateManager::StateManager(ServerInfo* serverInfo){
 
@@ -31,6 +33,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	s_engine->createSystem("./../assets/banks/");
 	n_engine = NetworkEngine::GetInstance(serverInfo);
 	gui_engine = GUIEngine::GetInstance();
+	m_engine = MenuManager::GetInstance();
 
 	srand(time(0));
 	currentState = nullptr;

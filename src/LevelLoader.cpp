@@ -41,7 +41,6 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
-	
 	GraphicEngine::getInstance()->AddDome();
 
 	// Limpiamos los objetos
@@ -87,8 +86,6 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			id = j["Rooms"][k]["Objects"][i]["ID"];
 			ptr = j["Rooms"][k]["Objects"][i]["Body"];
 
-
-
 			// Unity transform
 			position = vector3df(ptr["Position"][0], 	ptr["Position"][1], ptr["Position"][2]);
 			if(ptr["Rotation"][0] != nullptr) rotation = vector3df(ptr["Rotation"][0], ptr["Rotation"][1], ptr["Rotation"][2]);
@@ -103,7 +100,9 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 
 			// Create object
-			if(type == "Block") objManager->AddBlock(position, size, rotation, texture);
+			if(type == "Block") {
+				objManager->AddBlock(position, size, rotation, texture);
+			}
 			else if(type == "Prop") objManager->AddProp(position, size, rotation, model, texture);
 			else if(type == "Switch"){
 				Switch* swi = objManager->AddSwitch(position, size, rotation, vector3df(0,0,0));
@@ -146,8 +145,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 				float range = ptr["Range"];
 				vector3df color = vector3df(ptr["Color"][0], ptr["Color"][1], ptr["Color"][2]);
 				objManager->AddLight(position, color, range);
-			}
 
+			}
 		}
 	}
 
