@@ -17,14 +17,6 @@ void ResourceManager::LoadResources(){
 	std::map<GAMEMESHES,std::string>::iterator meshIterator;
 	std::map<GAMETEXTURES, std::string>::iterator textureIterator;
 
-	// Load Meshes
-	for (meshIterator = MESHMAP.begin(); meshIterator != MESHMAP.end(); meshIterator++){
-		toe::LoadMesh(meshIterator->second);
-		cont++;
-		bar_width = (cont*100)/totalSize;
-		s->SetLoadingStatus(meshIterator->second, bar_width);
-	}
-
 	// Load Textures
 	for (textureIterator = TEXTUREMAP.begin(); textureIterator != TEXTUREMAP.end(); textureIterator++){
 		toe::LoadTexture(textureIterator->second);
@@ -32,5 +24,12 @@ void ResourceManager::LoadResources(){
 		bar_width = (cont*100)/totalSize;
 		s->SetLoadingStatus(textureIterator->second, bar_width);
 	}
-
+	
+	// Load Meshes
+	for (meshIterator = MESHMAP.begin(); meshIterator != MESHMAP.end(); meshIterator++){
+		toe::LoadMesh(meshIterator->second);
+		cont++;
+		bar_width = (cont*100)/totalSize;
+		s->SetLoadingStatus(meshIterator->second, bar_width);
+	}
 }
