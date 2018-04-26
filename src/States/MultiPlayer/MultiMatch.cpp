@@ -17,7 +17,7 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	networkManager	= NetworkManager::GetInstance();
 
 	// Level
-	LevelLoader::LoadLevel("../assets/json/map.json");
+	LevelLoader::LoadLevel("../assets/json/castle_final.json");
 
 	objectManager->SetWarlockSpawn();
 

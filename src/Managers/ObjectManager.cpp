@@ -601,14 +601,15 @@ void ObjectManager::SetWarlockSpawnSeed(){
 	warlockSpawnSeed = rand() % 100;
 }
 
+void ObjectManager::SetWarlockSpawnSeed(int seed){
+	warlockSpawnSeed = seed;
+}
+
 int ObjectManager::GetSpawnerSeed(){
 	if(warlockSpawnSeed < 0) SetWarlockSpawnSeed();
 	return warlockSpawnSeed;
 }
 
-int ObjectManager::SetWarlockSpawnSeed(int seed){
-	warlockSpawnSeed = seed;
-}
 
 // ===================================================================================================== //
 //

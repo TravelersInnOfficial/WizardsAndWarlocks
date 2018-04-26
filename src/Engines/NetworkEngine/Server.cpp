@@ -176,7 +176,6 @@ void Server::RecievePackages(bool isLobby){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
-
 				// Si la partida ha empezado negamos la conexion
 				if(!isLobby){
 					RakNet::BitStream bitstream;
@@ -302,7 +301,6 @@ void Server::RecievePackages(bool isLobby){
 						SendPackage(&updateTraps, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
 					}
 				}
-
 				break;
 			}
 

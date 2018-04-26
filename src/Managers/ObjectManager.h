@@ -86,7 +86,7 @@ public:
 	void SetWizardSpawn();
 	void SetWarlockSpawn();
 	void SetWarlockSpawnSeed();
-	int SetWarlockSpawnSeed(int seed);
+	void SetWarlockSpawnSeed(int seed);
 	int GetSpawnerSeed();
 
 	// Door Sync
