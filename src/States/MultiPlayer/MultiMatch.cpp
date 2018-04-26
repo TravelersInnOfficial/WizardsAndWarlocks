@@ -19,6 +19,8 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	// Level
 	LevelLoader::LoadLevel("../assets/json/map.json");
 
+	objectManager->SetWarlockSpawn();
+
 	// Ponemos a true el inicio de la partida de los players
 	playerManager->ManageMatchStatus(true);
 	gameEnded = false;

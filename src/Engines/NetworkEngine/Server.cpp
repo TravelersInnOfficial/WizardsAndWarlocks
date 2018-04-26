@@ -118,6 +118,13 @@ int Server::RemovePlayer(RakNet::RakNetGUID guid){
 	return(id);
 }
 
+void Server::SendSpawnerSeed(){
+	RakNet::BitStream bitstream;
+	bitstream.Write((RakNet::MessageID)ID_SEND_SEED);
+	bitstream.Write(ObjectManager::GetInstance()->GetSpawnerSeed());
+	SendPackage(&bitstream, HIGH_PRIORITY, RELIABLE_ORDERED, RakNet::UNASSIGNED_RAKNET_GUID, true);
+}
+
 // REMEMBER: IS THE NETWORK ID, NOT THE ENTITY ID
 void Server::SetTrap(vector3df point,vector3df normal, int playerId, int trapId){
 	RakNet::BitStream setTrapMessage;

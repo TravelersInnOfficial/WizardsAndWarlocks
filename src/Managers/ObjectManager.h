@@ -85,6 +85,9 @@ public:
 	void Update(float deltaTime);
 	void SetWizardSpawn();
 	void SetWarlockSpawn();
+	void SetWarlockSpawnSeed();
+	int SetWarlockSpawnSeed(int seed);
+	int GetSpawnerSeed();
 
 	// Door Sync
 	int GetDoorVecPos(Door* door);
@@ -123,6 +126,7 @@ private:
 	std::vector<vector3df>		warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
 	int 						wizardSpawnSelected;	// Posicion del spawner seleccionado
 	int 						warlockSpawnSelected;	// Posicion del spawner seleccionado
+	int							warlockSpawnSeed;		// Seed para calcular el warlock spawn
 
 	Grail*						grail;			// El grail de la partida, unico
 	vector4df					readyZone;		// Zona de READY

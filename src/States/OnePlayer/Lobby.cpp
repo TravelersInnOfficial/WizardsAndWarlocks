@@ -15,6 +15,8 @@ Lobby::Lobby(SinglePlayerGame* fat){
 	trapManager		= TrapManager::GetInstance();
 	senseManager	= RegionalSenseManager::GetInstance();
 
+	objectManager->SetWarlockSpawnSeed();
+
 	// Level
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 

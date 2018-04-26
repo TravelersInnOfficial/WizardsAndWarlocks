@@ -20,7 +20,10 @@ MultiLobby::MultiLobby(MultiPlayerGame* fat){
 	// Level
 	LevelLoader::LoadLevel("./../assets/json/Lobby2.json");
 
-	if(n_engine->IsServerInit()) isServer = true;
+	if(n_engine->IsServerInit()){
+		isServer = true;
+		objectManager->SetWarlockSpawnSeed();
+	}
 	else if(n_engine->IsClientInit()) isServer = false;
 
 	networkObject = networkManager->GetMultiGame();
@@ -77,7 +80,10 @@ void MultiLobby::UpdateLobby(float deltaTime){
 		father->StartGame();
 	}
 
-	CheckIfReady();
+	if(isServer){
+		CheckIfReady();
+		n_engine->GetServer()->SendSpawnerSeed();
+	}
 }
 
 void MultiLobby::Update(float deltaTime){

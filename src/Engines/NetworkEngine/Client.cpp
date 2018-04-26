@@ -301,6 +301,17 @@ void Client::RecievePackages(){
 				TrapManager::GetInstance()->NoPlayerDeploy(pos, normal, (TrapEnum)type, id);
 				break;
 			}
+			
+			case ID_SEND_SEED: {
+				RakNet::BitStream bitstream(packet->data, packet->length, false);
+				int seed = -1;
+				
+				bitstream.IgnoreBytes(sizeof(RakNet::MessageID));
+				bitstream.Read(seed);
+
+				ObjectManager::GetInstance()->SetWarlockSpawnSeed(seed);
+				break;
+			}
 		}
 	}
 }

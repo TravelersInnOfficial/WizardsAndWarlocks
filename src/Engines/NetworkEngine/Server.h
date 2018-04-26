@@ -28,6 +28,8 @@ public:
 	// Sends game-level packages
 	void SendPackage(RakNet::BitStream*, PacketPriority, PacketReliability, RakNet::AddressOrGUID, bool broadcast);
 
+	void SendSpawnerSeed();
+
 	// Reads game-level packages
 	void RecievePackages(bool isLobby = false);
 
