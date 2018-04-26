@@ -107,11 +107,8 @@ void StateManager::LoadState(State_Code code, bool* end){
 			currentState =  new MultiPlayerGame();
 			break;
 		case STATE_NETGAME_SERVER:
+			resourcesLoaded = true;
 			n_engine->StartServer();
-			if(!resourcesLoaded){
-				ResourceManager::LoadResources();
-				resourcesLoaded = true;
-			}
 			currentState =  new MultiPlayerGame();
 			break;
 		case STATE_CLOSE_GAME:

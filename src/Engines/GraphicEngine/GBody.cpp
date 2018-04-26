@@ -1,6 +1,7 @@
 #include "GBody.h"
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
 
 GBody::GBody(TFMesh* node){
     privateNode = (TFNode*)node;
@@ -15,8 +16,10 @@ GBody::~GBody(){
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
-	TFMesh* mesh = (TFMesh*)privateNode;
-	mesh->SetTexture(path);
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		TFMesh* mesh = (TFMesh*)privateNode;
+		mesh->SetTexture(path);
+	}
     //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
     //privateNode->setMaterialType(irr::video::EMT_SOLID);
 	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);

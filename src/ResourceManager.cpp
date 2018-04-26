@@ -8,8 +8,10 @@ ResourceManager::ResourceManager(){
 }
 
 void ResourceManager::LoadResources(){
-	LoadingScreen* s = nullptr;
-	if(!NetworkEngine::GetInstance()->IsServerInit()) s = new LoadingScreen();
+	
+	if(NetworkEngine::GetInstance()->IsServerInit()) return;
+	
+	LoadingScreen* s = new LoadingScreen();
 
 	float totalSize = MESHMAP.size() + TEXTUREMAP.size();
 	float cont = 0;
