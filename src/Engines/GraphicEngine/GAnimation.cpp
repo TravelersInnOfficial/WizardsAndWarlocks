@@ -8,7 +8,7 @@ GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {
 
 GAnimation::~GAnimation(){  }
 
-void GAnimation::SetPaths(std::string ID, std::vector<std::string> paths, int fps){
+void GAnimation::SetPaths(std::string ID, std::vector<std::string> &paths, int fps){
     ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);
 }
 
