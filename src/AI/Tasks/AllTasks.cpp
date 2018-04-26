@@ -90,7 +90,7 @@ bool MasterMovement::run(Blackboard* bb){
 EmptyTask::EmptyTask(){}
 
 bool EmptyTask::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"EmptyTask"<<std::endl;
+	if(DEBUG) std::cout<<"EmptyTask\n";
 
 	return true;
 }
@@ -168,6 +168,7 @@ bool TravelRoom::run(Blackboard* bb){
 	RoomGraph* room = bb->GetRoomGraph();
 	if(character!=nullptr && room!=nullptr){
 		vector3df pos = room->NextRoomPos();
+
 		character->ShortestPath(pos);
 
 		Kinematic cKin = character->GetKinematic();
@@ -355,6 +356,7 @@ bool WhereExplore::run(Blackboard* bb){
 	RoomGraph* room = bb->GetRoomGraph();
 	if(room!=nullptr && character!=nullptr){
 		vector3df pos = room->WhereExplore(character->GetPos());
+
 		character->ShortestPath(pos);
 
 		Kinematic cKin;

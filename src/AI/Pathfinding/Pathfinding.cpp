@@ -52,7 +52,7 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
-            nodePos.Y += 0.2;
+            nodePos.Y += 0.5;
             void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
             
             // Hacemos un procesado inicial del puntero
@@ -87,6 +87,8 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
     }
 
     // Devolvemos el valor
+    std::cout<<"Size: "<<m_path.size()<<std::endl;
+    std::cout<<output<<std::endl;
     return output;
 }
 
@@ -120,6 +122,8 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
     m_connections.push_back(randomConn);
 
     heur->setNode(EndNode);
+
+    std::cout<<"Start"<<std::endl;
 
     float endNodeHeuristic = 0;
     //Add the nearest nodes to the open list  
@@ -227,7 +231,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                     }
 
                     //Otherwhise remove it from the closed list
-                    m_closedList->remove(endNodeRecord);
+                    //m_closedList->remove(endNodeRecord);
 
                     //We can use the node's old cost values to calculate its heuristic without calling the
                     //possibly expensive heuristic function
@@ -281,10 +285,15 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
+        std::cout<<"Por aqui"<<std::endl;
         if(current!=nullptr && current->m_connection!=nullptr){
             Node* currentNode = current->m_node;
-            if(currentNode != EndNode) m_path.push_back(EndNode);
+            if(currentNode != EndNode) {
+                std::cout<<EndNode->getPosition()<<std::endl;
+                m_path.push_back(EndNode);
+            }
             do{
+                std::cout<<currentNode->getPosition()<<std::endl;
                 m_path.push_back(currentNode);
                 current = m_closedList->find(current->m_connection->getFromNode());
                 currentNode = current->m_node;
@@ -292,6 +301,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
 
             m_path.push_back(current->m_node);  // Anyadimos lo que seria el StartNode
             std::reverse(m_path.begin(), m_path.end());
+            std::cout<<"finish"<<std::endl;
         }
     }
 

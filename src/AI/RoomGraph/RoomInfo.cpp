@@ -8,7 +8,8 @@ RoomInfo::RoomInfo(int id, vector3df pos, vector3df firstSide, vector3df secondS
 	m_position = pos;
 	m_firstSide = firstSide;
 	m_secondSide = secondSide;
-	m_securityLevel = 0;
+	m_securityLevel = 100;
+	//m_securityLevel = 0;
 	m_exploreSecurity = -1;
 }
 
