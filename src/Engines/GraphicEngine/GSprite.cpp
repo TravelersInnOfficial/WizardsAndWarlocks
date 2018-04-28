@@ -87,6 +87,10 @@ void GSprite::SetColor(float r, float g, float b, float a){
 	m_sprite->SetColor(r, g, b, a);
 }
 
+void GSprite::SetAlpha(float a){
+	m_sprite->SetAlpha(a);
+}
+
 void GSprite::SetTextureRect(float x, float y, float w, float h){
 	m_sprite->SetTextureRect(x, y, w, h);
 }

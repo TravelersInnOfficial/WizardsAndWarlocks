@@ -9,7 +9,6 @@
 #include "./../Managers/EffectManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
-
 #include <SpellCodes.h>
 #include <TrapCodes.h>
 #include <Constants.h>
@@ -125,6 +124,11 @@ Player::~Player(){
 
 void Player::InitHUD(){
 	if(m_hud != nullptr) m_hud->InitHUD();
+}
+
+void Player::AddToMinimap(Player* p){
+	//aqui solo llega si es player one
+	if(m_hud!= nullptr && p!=nullptr) m_hud->ShowEnemyInMap(p);
 }
 
 void Player::InitGame(){
