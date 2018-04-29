@@ -46,7 +46,7 @@ public:
 	Npc* 			AddNpc(vector3df TPosition, vector3df TScale, vector3df TRotation, NPCType type);
 	Invocation* 	AddInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation, InvoEnum type);
 	DamageArea* 	AddDamageArea(vector3df TPosition, vector3df TScale, vector3df TRotation, AreaEnum type);
-	void 			AddSpawner(Alliance playerAlliance, vector3df TPosition);
+	void 			AddSpawner(Alliance playerAlliance, vector3df TPosition, vector3df TRotation);
 	void 			AddReadyPoint(vector3df TPosition);
 	void 			AddNavmesh(std::string path);
 	void 			AddRoomGraph(std::string path);
@@ -122,8 +122,9 @@ private:
 	std::vector<Npc*>			npcs;			// Vector donde se almacenan todos los npcs
 	std::vector<PlayerParts*>	playerParts;	// Vector donde se almacenan los body parts al morir
 	
-	std::vector<vector3df>		wizardSpawn;	// Vector donde se almacenan todos los spawners de MAGOS
-	std::vector<vector3df>		warlockSpawn;	// Vector donde se almacenan todos los spawners de BRUJOS
+	std::vector<vector3df>		wizardSpawn;		// Vector donde se almacenan todos los spawners de MAGOS
+	std::vector<vector3df>		warlockSpawn;		// Vector donde se almacenan todos los spawners de BRUJOS
+	std::vector<vector3df>		warlockSpawnRot;	// Vector donde se almacena la ROTACION de todos los spawners de BRUJOS
 	int 						wizardSpawnSelected;	// Posicion del spawner seleccionado
 	int 						warlockSpawnSelected;	// Posicion del spawner seleccionado
 	int							warlockSpawnSeed;		// Seed para calcular el warlock spawn
