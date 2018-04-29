@@ -74,7 +74,7 @@ void Frozen::UpdateEffect(Player* p){
 
 void Frozen::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->max_velocity /= 1000.0f;
+	p->m_max_velocity /= 1000.0f;
 	p->canJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
@@ -85,7 +85,7 @@ void Frozen::ApplyEffect(Player* p){
 }
 
 void Frozen::RemoveEffect(Player* p){
-	p->max_velocity *= 1000.0f;
+	p->m_max_velocity *= 1000.0f;
 	p->canJump = true;
 	if(particle != nullptr){
 		delete particle;
@@ -166,11 +166,11 @@ void SlowedDown::UpdateEffect(Player* p) {
 }
 
 void SlowedDown::ApplyEffect(Player* p){
-	p->max_velocity /= factor;
+	p->m_max_velocity /= factor;
 }
 
 void SlowedDown::RemoveEffect(Player* p){
-	p->max_velocity *= factor;
+	p->m_max_velocity *= factor;
 }
 
 void SlowedDown::createSoundEvent() {
@@ -187,7 +187,7 @@ Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
 
 void Paralyzed::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->max_velocity /= 1000.0f;
+	p->m_max_velocity /= 1000.0f;
 	p->canJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
@@ -202,7 +202,7 @@ void Paralyzed::UpdateEffect(Player* p) {
 }
 
 void Paralyzed::RemoveEffect(Player* p){
-	p->max_velocity *= 1000.0f;
+	p->m_max_velocity *= 1000.0f;
 	p->canJump = true;	
 	if(particle != nullptr){
 		delete particle;
@@ -330,7 +330,7 @@ void DeathSnare::UpdateEffect(Player* p){
 
 void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
-	p->max_velocity /= 1000.0f;
+	p->m_max_velocity /= 1000.0f;
 	p->canJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
@@ -348,7 +348,7 @@ void DeathSnare::UpdateEffectParticles(Player* p) {
 }
 
 void DeathSnare::RemoveEffect(Player* p){
-	p->max_velocity *= 1000.0f;
+	p->m_max_velocity *= 1000.0f;
 	p->canJump = true;
 	if(particle != nullptr){
 		delete particle;
@@ -474,7 +474,7 @@ SpeedUp::SpeedUp(float time, float vel):Effect(time, POWERUP_SPEED){
 }
 
 void SpeedUp::ApplyEffect(Player* p){
-	p->max_velocity *= m_vel;
+	p->m_max_velocity *= m_vel;
 	// TODO: APPLY COOLDOWN REDUCTION
 	playEffectEvent();
 }
@@ -484,7 +484,7 @@ void SpeedUp::UpdateEffect(Player* p) {
 }
 
 void SpeedUp::RemoveEffect(Player* p){
-	p->max_velocity /= m_vel;
+	p->m_max_velocity /= m_vel;
 }
 
 void SpeedUp::createSoundEvent() {

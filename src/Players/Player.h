@@ -36,6 +36,7 @@ class Player: public Entidad{
 		void CreatePlayerGBody();
 		void CreatePlayerCharacter();
 
+		void DestroyPlayerGBody();
 		void DestroyPlayerCharacter();
 		void PlayerInit();
 		virtual void Update(float deltaTime);
@@ -164,8 +165,8 @@ class Player: public Entidad{
 		void SetRandomName();
 
 		// Public variables
-		float 			max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
-		float 			max_velocityY;
+		float 			m_max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
+		float 			m_max_velocityY;
 		float 			m_DamageMult;		// Multiplicador de danyo del jugador
 		float 			m_Defense;			// Divisor del danyo recibido
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
@@ -176,7 +177,7 @@ class Player: public Entidad{
 
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
-		void UpdatePosShape();				// Actualiza el cuerpo visual del jugador
+		void UpdatePosShape(float);			// Actualiza el cuerpo visual del jugador y las animaciones
 		void createSoundEvents();			//Create the sound events needed for the player
 		void SetBillboard();				// Ponemos el billboard en el player
 		void eraseTargetHUD();
@@ -186,6 +187,15 @@ class Player: public Entidad{
 		float m_maxJumpCheckTime;
 		bool CheckIfCanJump(float deltaTime = 0, bool forceSkip = false);
 		bool JumpRaycast();
+
+		/**
+		 * @brief Changes animation of the player
+		 * 
+		 * @param id: id of the animation
+		 * @param wholeBody: if true, applies animation to the legs
+		 * @param loop: looping animation
+		 */
+		void ChangeAnimation(std::string id, int fps = 25, bool loop = false, bool wholeBody = false);
 
 		vector3df 		m_position;			// Posicion del jugador
 		vector3df 		m_dimensions;		// Dimensiones del jugador
@@ -211,7 +221,9 @@ class Player: public Entidad{
 		Alliance 		m_playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
-		GBody* 			m_playerNode;		// Cuerpo visual del jugador
+		//GBody* 		m_playerNode;		// Cuerpo visual del jugador
+		GAnimation* 	m_playerNode;		// Cuerpo visual del jugador
+		GAnimation* 	m_playerNodeTop;		// Cuerpo visual del jugador
 		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 
 		NetworkObject* 	m_networkObject;		// Objeto de red del jugador

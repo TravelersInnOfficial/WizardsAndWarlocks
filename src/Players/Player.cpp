@@ -33,8 +33,8 @@ Player::Player(bool isPlayer1){
 	DeclareInput();
 
 	m_raycastDistance = 2.0f;
-	max_velocity = 4.5f;
-	max_velocityY = 8.0f;
+	m_max_velocity = 4.5f;
+	m_max_velocityY = 8.0f;
 
 	m_playerAlliance = NO_ALLIANCE;
 	m_isPlayerOne = isPlayer1;
@@ -42,6 +42,7 @@ Player::Player(bool isPlayer1){
 
 	bt_body = nullptr;
 	m_playerNode = nullptr;
+	m_playerNodeTop = nullptr;
 	m_camera = nullptr;
 	m_networkObject = nullptr;
 	m_targetDeadCam = nullptr;
@@ -95,10 +96,8 @@ Player::~Player(){
 		bt_body = nullptr;
 	}
 
-    if(m_playerNode != nullptr){
-		delete m_playerNode;
-		m_playerNode = nullptr;
-	}
+	// Delete m_playerNode and m_playerNodeTop
+	DestroyPlayerGBody();
 
 	if(m_camera!=nullptr){
 		delete m_camera;
@@ -266,19 +265,28 @@ void Player::CreatePlayerCharacter(){
 	
 }
 
+void Player::DestroyPlayerGBody(){
+    if(m_playerNode != nullptr){
+		delete m_playerNode;
+		m_playerNode = nullptr;
+	}
+	if(m_playerNodeTop != nullptr){
+		delete m_playerNodeTop;
+		m_playerNodeTop = nullptr;
+	}
+}
+
 void Player::DestroyPlayerCharacter(){
 	if(bt_body != nullptr){
 		delete bt_body;
 		bt_body = nullptr;
 	}
 
-    if(m_playerNode != nullptr){
-		delete m_playerNode;
-		m_playerNode = nullptr;
-	}
+	// Delete m_playerNode and m_playerNodeTop
+	DestroyPlayerGBody();
 	
 	if(m_isPlayerOne && m_camera!=nullptr){
-		bool work = m_camera->GetWorking();;
+		bool work = m_camera->GetWorking();
 
 		delete m_camera;
 		m_camera = new WatcherCamera(GetPos());
@@ -453,7 +461,9 @@ void Player::Update(float deltaTime){
 		CheckInput(); // Comprobamos los Input del personaje
 
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
-		UpdatePosShape();
+		UpdatePosShape(deltaTime);
+
+		// Actualizamos la posicion del sonido
 		UpdateSoundsPosition();
 
 		// En el caso de que sea el jugador 1 actualizamos su camara
@@ -513,19 +523,19 @@ void Player::checkMaxVelocity(){
 		// Fix velocity HORIZONTAL
 		vector3df auxVelocityH(velocity.X,0,velocity.Z);
 		float speedH = auxVelocityH.length();
-		if(speedH > max_velocity) {
-			auxVelocityH.X *= max_velocity/speedH;
+		if(speedH > m_max_velocity) {
+			auxVelocityH.X *= m_max_velocity/speedH;
 			auxVelocityH.setY(velocity.Y);
-			auxVelocityH.Z *= max_velocity/speedH;
+			auxVelocityH.Z *= m_max_velocity/speedH;
 			bt_body->SetLinearVelocity(auxVelocityH);
 		}
 
 		// Fix velocity VERTICAL
 		vector3df auxVelocityV(0, velocity.Y, 0);
 		float speedV = auxVelocityV.length();
-		if(speedV > max_velocityY) {
+		if(speedV > m_max_velocityY) {
 			auxVelocityV.setX(auxVelocityH.X);
-			auxVelocityV.Y *= max_velocityY/speedV;
+			auxVelocityV.Y *= m_max_velocityY/speedV;
 			auxVelocityV.setZ(auxVelocityH.Z);
 			bt_body->SetLinearVelocity(auxVelocityV);
 		}
@@ -691,9 +701,8 @@ bool Player::StartSpell(){
 		return false;
 	}
 
-	
-
-	return SpellManager::GetInstance()->StartHechizo(m_currentSpell,this);
+	bool fired = SpellManager::GetInstance()->StartHechizo(m_currentSpell,this);
+	return fired;
 }
 
 bool Player::ShootSpell(){
@@ -803,8 +812,8 @@ void Player::Run(bool runStatus){
 	float factor = 5/3.0f;
 	if(m_isRunning != runStatus){
 		m_isRunning = runStatus;
-		if(runStatus) max_velocity *= factor;
-		else max_velocity /= factor;
+		if(runStatus) m_max_velocity *= factor;
+		else m_max_velocity /= factor;
 	}
 }
 
@@ -885,7 +894,11 @@ void Player::UpdatePosShape(){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
 
-		m_playerNode->setPosition(m_position);
+		// UPDATE LEGS
+		vector3df pos = m_position;
+		pos.Y += 0.3;
+
+		m_playerNode->setPosition(pos);
 		m_rotation = bt_body->GetRotation();
 		m_playerNode->setRotation(m_rotation * 180 / M_PI);
 	}
@@ -1049,8 +1062,7 @@ void Player::SetAlliance(Alliance newAlliance){
 		TrapManager::GetInstance()->setPlayerUsings(this, 4);
 
 	if(m_hasCharacter){
-		delete m_playerNode;
-
+		DestroyPlayerGBody();
 		CreatePlayerGBody();
 	}
 
@@ -1065,23 +1077,21 @@ void Player::SetAlliance(Alliance newAlliance){
 void Player::SetPosition(vector3df pos){
 	if(m_hasCharacter){
 		m_position = pos;
-		m_playerNode->setPosition(pos);
-		m_playerNode->updateAbsolutePosition();
-		bt_body->SetPosition(pos);
+		bt_body->SetPosition(m_position);
 	}
 }
 
 void Player::SetPosX(float posX){
 	if(m_hasCharacter){
 		m_position.X = posX;
-		m_playerNode->setPosition(m_position);
+		bt_body->SetPosition(m_position);
 	}
 }
 
 void Player::SetPosY(float posY){
 	if(m_hasCharacter){
 		m_position.Y = posY;
-		m_playerNode->setPosition(m_position);
+		bt_body->SetPosition(m_position);
 	}
 }
 
@@ -1091,7 +1101,6 @@ void Player::SetRotation(vector3df rot){
 		vector3df newRot = m_rotation;
 		newRot.X = 0; newRot.Z = 0;
 		newRot = newRot * 180 / M_PI;
-		m_playerNode->setRotation(newRot);
 		bt_body->SetRotation(newRot);
 	}
 }
