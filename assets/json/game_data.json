@@ -331,7 +331,7 @@
       "ID": "POWERUP_SPEED",
       "name": "SPEED UP",
       "duration": 4.0,
-      "value": 3.0
+      "value": 2.0
     },
     {
       "ID": "POWERUP_UNTARGET",

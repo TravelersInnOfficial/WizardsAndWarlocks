@@ -34,7 +34,6 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	
 	toe::core::TOEvector3df motorPosition(position.X, position.Y, position.Z);
 	// COmprobamos si ya existia la id almacenada
 	if(m_billboards.find(id) != m_billboards.end()){
