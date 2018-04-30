@@ -24,6 +24,7 @@
 
 class Potion;
 class PlayerHUD;
+class Trap;
 
 class Player: public Entidad{
 	public:
@@ -43,7 +44,7 @@ class Player: public Entidad{
 		//Draw visuals
 		void Draw();
 		void InitHUD();
-
+		void AddToMinimap(Player* p);
 		//Erase visuals
 		void EraseHUD();
 

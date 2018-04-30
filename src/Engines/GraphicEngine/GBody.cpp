@@ -1,6 +1,7 @@
 #include "GBody.h"
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
 
 GBody::GBody(TFMesh* node){
     privateNode = (TFNode*)node;
@@ -15,8 +16,10 @@ GBody::~GBody(){
 }
 
 void GBody::setMaterialTexture(int layer, std::string path){
-	TFMesh* mesh = (TFMesh*)privateNode;
-	mesh->SetTexture(path);
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		TFMesh* mesh = (TFMesh*)privateNode;
+		mesh->SetTexture(path);
+	}
     //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
     //privateNode->setMaterialType(irr::video::EMT_SOLID);
 	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
@@ -31,7 +34,6 @@ void GBody::setMaterialType(MATERIAL_TYPE type){
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){
-	
 	toe::core::TOEvector3df motorPosition(position.X, position.Y, position.Z);
 	// COmprobamos si ya existia la id almacenada
 	if(m_billboards.find(id) != m_billboards.end()){

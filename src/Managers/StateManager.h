@@ -49,7 +49,6 @@ private:
 	GraphicEngine*	g_engine;
 	SoundSystem*	s_engine;
 	NetworkEngine*	n_engine;
-	MenuManager*	m_engine;
 	GUIEngine* 		gui_engine;
 
 

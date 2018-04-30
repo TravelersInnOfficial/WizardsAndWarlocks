@@ -1,20 +1,22 @@
 #include "Trap.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/EffectManager.h"
+#include "./../Managers/PlayerManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include <NetworkEngine/NetworkEngine.h>
+#include <GraphicEngine/GBody.h>
 #include <ColliderMasks.h>
 #include <ParticleData.h>
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	clase = EENUM_TRAP;
 	m_normal = normal;
-	m_position = new vector3df(TPosition.X, TPosition.Y, TPosition.Z);
+	m_position = vector3df(TPosition.X, TPosition.Y, TPosition.Z);
 	m_rotation = new vector3df(normal.X,normal.Y,normal.Z);
 	m_trapType = trapType;
 	InitializeTrapData();
 
-	m_position->Y +=0.01;
+	m_position.Y +=0.01;
 
 	if(m_rotation->X >= 270) m_rotation->X = m_rotation->X - 270;
 	if(m_rotation->Y >= 270) m_rotation->Y = m_rotation->Y - 270;
@@ -34,7 +36,7 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	g_body->setMaterialFlag(EMF_LIGHTING,false);
 
 	vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
-	m_body->CreateGhostBox(*m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0), C_TRAP, trapCW);
+	m_body->CreateGhostBox(m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0), C_TRAP, trapCW);
 	m_body->AssignPointer(this);
 
 	createSoundEvent();
@@ -51,6 +53,8 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	deactivation_bar = nullptr;
 	interaction_time = 0.0f;
 	isInteracting = false;
+
+	playerOne = PlayerManager::GetInstance()->GetPlayerOne();
 }
 
 void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::string effect){
@@ -61,7 +65,6 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 }
 
 Trap::~Trap(){
-
 	if(particle != nullptr) delete particle;
 	if(deactivation_bar != nullptr) delete deactivation_bar;
 	Erase();
@@ -229,6 +232,7 @@ void Trap::Activate(Player* player){
 		break;
 	}
 
+	if(playerOne != nullptr) playerOne->AddToMinimap(player);
 	TrapManager::GetInstance()->DeleteTrap(this);
 }
 
@@ -270,9 +274,9 @@ void Trap::Deactivate(float deltaTime){
 }
 
 void Trap::SetPosition(vector3df position){
-	m_position->X = position.X;
-	m_position->Y = position.Y;
-	m_position->Z = position.Z;
+	m_position.X = position.X;
+	m_position.Y = position.Y;
+	m_position.Z = position.Z;
 }
 
 void Trap::SetDimensions(vector3df dimensions){
@@ -286,7 +290,7 @@ void Trap::SetType(TrapEnum trapType){
 }
 
 vector3df Trap::GetPosition(){
-	vector3df pos(m_position->X, m_position->Y, m_position->Z);
+	vector3df pos(m_position.X, m_position.Y, m_position.Z);
 	return pos;
 }
 
@@ -308,7 +312,6 @@ void Trap::Erase(){
 	delete m_body;
 	delete g_body;
 
-	delete m_position;
 	delete m_rotation;
 	delete m_dimensions;
 
@@ -320,7 +323,6 @@ void Trap::Erase(){
 	if (!explodeEvent->isPlaying()) explodeEvent->stop();
 	explodeEvent->release();
 	delete explodeEvent;
-
 }
 
 void Trap::SendSignal(){

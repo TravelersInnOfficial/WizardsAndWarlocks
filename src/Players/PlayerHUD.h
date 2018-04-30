@@ -5,7 +5,7 @@
 #include <vector2d.h>
 #include <iostream>
 #include <vector>
-
+#include <map>
 
 //FAST FORWARD DECLARATIONS
 class GraphicEngine;
@@ -13,6 +13,7 @@ class Player;
 class Potion;
 class GSprite;
 class GRect;
+class Trap;
 //-------------------------
 
 class PlayerHUD{
@@ -22,6 +23,7 @@ public:
     void InitHUD();
     void Draw();
     void Erase();
+    void ShowEnemyInMap(Player* p);
 
 private:
     
@@ -59,20 +61,23 @@ private:
     };
 
     struct HUD_Minimap{
-        Player*                 m_player;
+        Player*                    m_player;
 
         // Map Info
-        GSprite*                m_mapImage;
-        float                   m_originalSize;
-        float                   m_sizeMap;
-        float                   m_zoom;
-        std::string             m_mapPath;
-        vector2df               m_position;
-        vector2df               m_size;
-        float                   m_rotation;
+        GSprite*                   m_mapImage;
+        float                      m_originalSize;
+        float                      m_sizeMap;
+        float                      m_zoom;
+        std::string                m_mapPath;
+        vector2df                  m_position;
+        vector2df                  m_size;
+        float                      m_rotation;
         
-        std::vector<GSprite*>   m_players;
-        vector2df               m_spriteSize;
+        std::vector<GSprite*>      m_players;
+        vector2df                  m_spriteSize;
+        std::map<Player*,float>    p_enemies;
+        std::vector<GSprite*>      m_enemies;
+        std::vector<GSprite*>      m_traps;
 
         HUD_Minimap(Player* p);
         ~HUD_Minimap();
@@ -81,12 +86,14 @@ private:
         void SetMapSize(float size);
         void SetRotation(float rot);
         void RecalculatePlayerSprites(int playerSize);
+        void RecalculateTrapSprites(int trapsSize);
         void SetTexture(std::string path);
         void UpdateScroll();
         void ChangeMap(std::string path, float size);
 
         GSprite* CreatePlayerSprite();
         void CalculatePositionSprite(int id, Player* p);
+        void CalculatePositionSprite(int id, Trap* t);
         void SetStyleSprite(int id, Player* p);
 
         void AlivePoint(GSprite* sprite);
