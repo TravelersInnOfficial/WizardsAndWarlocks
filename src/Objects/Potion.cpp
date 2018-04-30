@@ -6,12 +6,9 @@
 #include <NetworkEngine/Server.h>
 #include <GUIEngine/GUIEngine.h>
 
-#define MODEL_SIZE 0.136f
-
-Potion::Potion(vector3df TScale, int val, std::string info, std::string tex){
+Potion::Potion(vector3df TScale, int val, std::string info){	
 	clase = EENUM_POTION;
 	potionScale = TScale;
-	potionTexture = tex;
 	value = val;
 	m_info = info;
 	player = nullptr;
@@ -93,22 +90,16 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	player = nullptr;
 
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
-
 	vector3df TCenter = vector3df(0,0,0);
 
 	// Create graphic body loading mesh
-	m_potionNode = g_engine->addObjMeshSceneNode("./../assets/modelos/potion.obj");
+	m_potionNode = g_engine->addObjMeshSceneNode(m_potionpath);
 	m_potionNode->setPosition(TPosition);
-	m_potionNode->setScale(potionScale);
+	m_potionNode->setScale(potionScale*1.5);
 	m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
-	if (m_potionNode) {
-		m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_potionNode->setMaterialTexture(0, potionTexture);
-    }
-
 	//Bullet Physics
-	vector3df HalfExtents(potionScale.X * MODEL_SIZE, potionScale.Y * MODEL_SIZE * 1.5, potionScale.Z * MODEL_SIZE);
+	vector3df HalfExtents(potionScale.X*0.1f, potionScale.Y*0.15f, potionScale.Z*0.1f);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,1,1,TCenter, C_POTION, potionCW);
 	bt_body->Rotate(TRotation);

@@ -9,8 +9,9 @@
 // ===============================================================================================//
 
 LifePotion::LifePotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_HP.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_HP.png";
+	m_potionpath = "./../assets/modelos/hp.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -30,8 +31,9 @@ bool LifePotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 ManaPotion::ManaPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_MP.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_MP.png";
+	m_potionpath = "./../assets/modelos/mp.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -51,8 +53,9 @@ bool ManaPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 IcePotion::IcePotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_ICE.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_ICE.png";
+	m_potionpath = "./../assets/modelos/ice.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -74,8 +77,9 @@ bool IcePotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 ElectricPotion::ElectricPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_THUNDER.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_THUNDER.png";
+	m_potionpath = "./../assets/modelos/thunder.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -97,8 +101,9 @@ bool ElectricPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 FirePotion::FirePotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_FIRE.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_FIRE.png";
+	m_potionpath = "./../assets/modelos/fire.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -119,8 +124,9 @@ bool FirePotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 PoisonPotion::PoisonPotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_POISON.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_POISON.png";
+	m_potionpath = "./../assets/modelos/poison.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
@@ -141,8 +147,9 @@ bool PoisonPotion::CheckUse(Player* p){
 // ===============================================================================================//
 
 DefensePotion::DefensePotion(vector3df TPosition, vector3df TScale, vector3df TRotation, float value, std::string info)
-:Potion(TScale, value, info, "./../assets/textures/potions/POT_DEFENSE.png"){
+:Potion(TScale, value, info){
 	HUDTexturePath = "./../assets/textures/HUD/Potions/POT_SHIELD.png";
+	m_potionpath = "./../assets/modelos/shield.obj";
 	CreatePotion(TPosition, TRotation);
 }
 
