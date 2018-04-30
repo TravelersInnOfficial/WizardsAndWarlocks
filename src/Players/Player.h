@@ -222,7 +222,7 @@ class Player: public Entidad{
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		//GBody* 		m_playerNode;		// Cuerpo visual del jugador
-		GAnimation* 	m_playerNode;		// Cuerpo visual del jugador
+		GBody* 	m_playerNode;		// Cuerpo visual del jugador
 		GAnimation* 	m_playerNodeTop;		// Cuerpo visual del jugador
 		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 

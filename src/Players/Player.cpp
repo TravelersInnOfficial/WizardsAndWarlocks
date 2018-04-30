@@ -889,7 +889,7 @@ void Player::QuitStatusMenu(){
 	MenuManager::GetInstance()->ClearMenu();
 }
 
-void Player::UpdatePosShape(){
+void Player::UpdatePosShape(float deltatime){
 	if(m_hasCharacter){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
