@@ -8,7 +8,6 @@
 
 
 StateManager::StateManager(ServerInfo* serverInfo){
-
 	maxWizardPlayers = 4;
 	maxWarlockPlayers = 4;
 
@@ -41,7 +40,7 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	State_Code firstState = STATE_MENU;
 	//State_Code firstState = STATE_GAME;
 	if(serverInfo->isServer) firstState = STATE_NETGAME_SERVER;
-	
+
 	LoadState(firstState);
 	preparedStatus = WITHOUT_STATE;
 	resourcesLoaded = false;
@@ -95,32 +94,24 @@ void StateManager::LoadState(State_Code code, bool* end){
 		currentState = nullptr;
 		loading = false;
 	}
-	
+
 	switch(code){
 		case STATE_MENU:
+			if(!resourcesLoaded){
+				ResourceManager::LoadResources();
+				resourcesLoaded = true;
+			}
 			currentState = new MenuPrincipal();
 			break;
 		case STATE_GAME:
-			if(!resourcesLoaded){
-				resourcesLoaded = true;
-				ResourceManager::LoadResources();
-			}
-			
 			currentState = new SinglePlayerGame();
 			break;
 		case STATE_NETGAME_CLIENT:
-			if(!resourcesLoaded){
-				resourcesLoaded = true;
-				ResourceManager::LoadResources();
-			}
 			currentState =  new MultiPlayerGame();
 			break;
 		case STATE_NETGAME_SERVER:
+			resourcesLoaded = true;
 			n_engine->StartServer();
-			if(!resourcesLoaded){
-				resourcesLoaded = true;
-				ResourceManager::LoadResources();
-			}
 			currentState =  new MultiPlayerGame();
 			break;
 		case STATE_CLOSE_GAME:

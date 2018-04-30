@@ -4,11 +4,16 @@
 #include <vector3d.h>
 #include <TrapCodes.h>
 #include <PhysicsEngine/BT_GhostObject.h>
-#include <GraphicEngine/GBody.h>
 #include <SoundEngine/SoundSystem.h>
-#include "./../Players/Player.h"
 #include "./../Entidad.h"
 #include <GraphicEngine/GParticle.h>
+
+//FAST FORWARD DECLARATIONS
+class Player;
+class GRect;
+class GBody;
+class Kinematic;
+class BT_Body;
 
 class Trap : public Entidad{
 public:
@@ -57,9 +62,10 @@ protected:
 
 private:
     TrapEnum m_trapType;
+    Player* playerOne;
 
     vector3df m_normal;
-    vector3df* m_position;
+    vector3df m_position;
     vector3df* m_dimensions;
     vector3df* m_rotation;
 

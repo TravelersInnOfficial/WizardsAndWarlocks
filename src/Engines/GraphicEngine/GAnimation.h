@@ -11,7 +11,7 @@ public:
 	friend class GraphicEngine;
     ~GAnimation();
 
-	void SetPaths(std::string ID, std::vector<std::string> paths, int fps = 25);
+	void SetPaths(std::string ID, std::vector<std::string> &paths, int fps = 25);
 
     void Update(float deltatime);
 

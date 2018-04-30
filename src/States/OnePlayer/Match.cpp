@@ -17,9 +17,10 @@ Match::Match(SinglePlayerGame* fat){
 	
 	// Level
 	LevelLoader::LoadLevel("../assets/json/castle_final.json");
-
 	objectManager->AddNavmesh("./../assets/json/NavMesh.json");
 	objectManager->AddRoomGraph( "./../assets/json/map_rooms.json");
+
+	objectManager->SetWarlockSpawn();
 
 	playerOne = playerManager->GetPlayerOne();
 
@@ -29,6 +30,7 @@ Match::Match(SinglePlayerGame* fat){
 
 	father->PlayEvent("ghosts", vector3df(-0.245, 1.14, 17.25));
 	father->PlayEvent("waterdrops", vector3df(-0.245, 1.20, 17.25));
+
 }
 
 Match::~Match(){

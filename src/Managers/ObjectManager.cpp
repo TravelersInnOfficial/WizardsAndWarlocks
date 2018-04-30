@@ -104,9 +104,12 @@ Prop* ObjectManager::AddProp(vector3df pos, vector3df size, vector3df rot, std::
 	return p;
 }
 
-void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition){
-	if(playerAlliance == ALLIANCE_WIZARD) wizardSpawn.push_back(TPosition);
-	else warlockSpawn.push_back(TPosition);
+void ObjectManager::AddSpawner(Alliance playerAlliance, vector3df TPosition, vector3df TRotation){
+	if(playerAlliance == ALLIANCE_WIZARD)wizardSpawn.push_back(TPosition);
+	else{
+		warlockSpawn.push_back(TPosition);
+		warlockSpawnRot.push_back(TRotation);
+	}
 }
 
 void ObjectManager::AddReadyPoint(vector3df TPosition){
@@ -404,9 +407,6 @@ vector3df ObjectManager::GetRandomSpawnPoint(Alliance playerAlliance){
 	else if(playerAlliance == ALLIANCE_WARLOCK && warlockSpawn.size() > 0){
 		int posCenter = warlockSpawnSelected;
 		toRet = warlockSpawn[posCenter];
-
-		int randIndex = rand() % warlockSpawn.size();
-		toRet = warlockSpawn.at(randIndex);
 	}
 	float dist = 1.0f;
 
@@ -591,10 +591,26 @@ void ObjectManager::SetWizardSpawn(){
 }
 
 void ObjectManager::SetWarlockSpawn(){
+	if(warlockSpawnSeed < 0) SetWarlockSpawnSeed();
+
 	int maxNumber = warlockSpawn.size();
-	int pos = rand() % maxNumber;
+	int pos = warlockSpawnSeed % maxNumber;
 
 	warlockSpawnSelected = pos;
+	AddGrail(warlockSpawn[warlockSpawnSelected], vector3df(1,1,1), warlockSpawnRot[warlockSpawnSelected]);
+}
+
+void ObjectManager::SetWarlockSpawnSeed(){
+	warlockSpawnSeed = rand() % 100;
+}
+
+void ObjectManager::SetWarlockSpawnSeed(int seed){
+	warlockSpawnSeed = seed;
+}
+
+int ObjectManager::GetSpawnerSeed(){
+	if(warlockSpawnSeed < 0) SetWarlockSpawnSeed();
+	return warlockSpawnSeed;
 }
 
 

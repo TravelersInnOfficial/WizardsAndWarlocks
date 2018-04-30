@@ -3,7 +3,9 @@
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/TrapManager.h"
+#include "./../Managers/StateManager.h"
 #include "./../Objects/Potion.h"
+//#include "./../Objects/Trap.h"
 #include <Assets.h>
 #include <vector>
 #include <string>
@@ -90,6 +92,28 @@ void PlayerHUD::Erase(){
     p_erasePlayerTrap();
     if(spell_slot != nullptr){ delete spell_slot; spell_slot = nullptr; }
     if(m_minimap != nullptr){ delete m_minimap; m_minimap = nullptr; }
+}
+
+void PlayerHUD::ShowEnemyInMap(Player* p){
+    //si es el hud del jugador 1 y p no es nullptr
+
+    if(m_minimap!=nullptr && p_alliance != p->GetAlliance()){                   // si la alianza es diferente es un enemigo
+        std::map<Player*,float>::iterator it = m_minimap->p_enemies.find(p);    // buscamos si ya se encuentra dentro del mapa de enemigos
+        if(it == m_minimap->p_enemies.end()){                                   // si no se encuentra se añade
+            m_minimap->p_enemies.insert(std::pair<Player*,float>(p,5.0f));      // | se inserta el enemigo y los 5s que dura en el minimapa
+            
+            std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];        // | se crea el sprite
+            
+            GSprite* newSprite = m_minimap->CreatePlayerSprite();               // |
+            newSprite->SetTexture(path);                                        // |
+            newSprite->SetColor(1,0,0);                                         // |
+
+            m_minimap->m_enemies.push_back(newSprite);                          // \ se añade al vector de sprites enemigos
+        }
+        else{                                                                   // si se encuentra le sumamos tiempo
+            it->second += 5.0f;                                                 // \ +5s al tiempo actual
+        }
+    }
 }
 
 //--------------------------------------------------------------------------------------//
@@ -510,6 +534,19 @@ PlayerHUD::HUD_Minimap::~HUD_Minimap(){
         delete m_players[i];
     }
     m_players.clear();
+
+
+    size = m_enemies.size();
+    for(int i=0; i<size; i++){
+        delete m_enemies[i];
+    }
+    m_enemies.clear();
+
+    size = m_traps.size();
+    for(int i=0; i<size; i++){
+        delete m_traps[i];
+    }
+    m_traps.clear();
 }
 
 void PlayerHUD::HUD_Minimap::ZoomMap(float value){
@@ -596,7 +633,27 @@ void PlayerHUD::HUD_Minimap::RecalculatePlayerSprites(int playerSize){
         m_players.erase(m_players.begin() + spriteSize - 1);
         spriteSize--;
     }
+}
 
+void PlayerHUD::HUD_Minimap::RecalculateTrapSprites(int trapSize){
+    int spriteSize = m_traps.size();
+
+    while(spriteSize < trapSize){
+        std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+        
+        GSprite* newSprite = CreatePlayerSprite();
+        newSprite->SetColor(1,1,0);
+        newSprite->SetTexture(path);
+        
+        m_traps.push_back(newSprite);
+        spriteSize++;
+    }
+
+    while(spriteSize > trapSize){
+        delete m_traps[spriteSize-1];
+        m_traps.erase(m_traps.begin() + spriteSize - 1);
+        spriteSize--;
+    }
 }
 
 void PlayerHUD::HUD_Minimap::DrawPlayers(){
@@ -604,23 +661,62 @@ void PlayerHUD::HUD_Minimap::DrawPlayers(){
     int playerSize = players.size();
     RecalculatePlayerSprites(playerSize);
 
+    //PLAYERS
     int spriteSize = m_players.size();
     for(int i=0; i<spriteSize; i++){
         Player* currentPlayer = players[i];
         SetStyleSprite(i, currentPlayer);
         CalculatePositionSprite(i, currentPlayer);
     }
+
+    //ENEMIES
+    if(!p_enemies.empty()){
+        std::map<Player*,float>::iterator it = p_enemies.begin();
+        std::vector<GSprite*>::iterator spr_it = m_enemies.begin();
+
+        for(; it!=p_enemies.end() && spr_it!=m_enemies.end() ; ++it, ++spr_it){
+            float time_left = it->second;
+            int id = spr_it - m_enemies.begin();
+
+            if(time_left>0){
+                time_left -= StateManager::GetInstance()->GetDeltaTime();
+                it->second = time_left;
+                Player* currentPlayer = (Player*) it->first;
+                CalculatePositionSprite(id, currentPlayer);
+            }
+            else{
+                p_enemies.erase(it);
+                delete m_enemies[id];
+                m_enemies.erase(spr_it);
+            }
+        }
+    }
+
+    //TRAPS
+    if(m_player->GetAlliance() == ALLIANCE_WARLOCK){
+        std::vector<Trap*> traps = TrapManager::GetInstance()->GetAllTraps();
+        int trapSize = traps.size();
+        RecalculateTrapSprites(trapSize);
+
+        spriteSize = m_traps.size();
+        for(int i = 0; i<spriteSize; i++){
+            CalculatePositionSprite(i, traps[i]);
+        }
+    }
 }
 
 void PlayerHUD::HUD_Minimap::SetStyleSprite(int id, Player* p){
-    GSprite* currentSprite = m_players[id];
+    GSprite* currentSprite = nullptr;
+    if(p->GetAlliance() == m_player->GetAlliance() ) currentSprite = m_players[id];
+    else currentSprite = m_enemies[id];
 
-    if(p->IsDead()){
-        DeadPoint(currentSprite);
-    }else{
-        AlivePoint(currentSprite);
+    if(currentSprite != nullptr){
+        if(p->IsDead()){
+            DeadPoint(currentSprite);
+        }else{
+            AlivePoint(currentSprite);
+        }
     }
-
 }
 
 void PlayerHUD::HUD_Minimap::CalculatePositionSprite(int id, Player* p){
@@ -655,7 +751,8 @@ void PlayerHUD::HUD_Minimap::CalculatePositionSprite(int id, Player* p){
 
     if(checkX + checkY > 1){
         // Esta fuera del circulo del minimapa
-        m_players[id]->SetColor(0,0,0,0);
+        if(m_player->GetAlliance() == p->GetAlliance()) m_players[id]->SetColor(0,0,0,0);
+        else m_enemies[id]->SetColor(0,0,0,0);
         return;
     }
 
@@ -666,6 +763,56 @@ void PlayerHUD::HUD_Minimap::CalculatePositionSprite(int id, Player* p){
     xValueRot += m_position.X + m_size.X/2;
     zValueRot += m_position.Y + m_size.Y/2;
 
-    m_players[id]->SetPosition(xValueRot, zValueRot);
+    if(m_player->GetAlliance() == p->GetAlliance()) m_players[id]->SetPosition(xValueRot, zValueRot);
+    else m_enemies[id]->SetPosition(xValueRot, zValueRot);
 }
 
+void PlayerHUD::HUD_Minimap::CalculatePositionSprite(int id, Trap* t){
+    float ratio = GraphicEngine::getInstance()->GetAspectRatio();
+
+    vector3df position = m_player->GetPos();
+    vector3df otherPosition = t->GetPosition();
+
+    vector3df diff = otherPosition - position;
+
+    float xValue = (diff.X * (m_size.X)) / (m_sizeMap * 2);
+    float zValue = (diff.Z * (m_size.Y)) / (m_sizeMap * 2);
+
+    xValue *= m_zoom;
+    zValue *= m_zoom;
+
+    // -- ROTATE THE POINT -----------------------------------
+    float radRotation = m_rotation * M_PI/180;
+
+    float cosRot = cos(radRotation);
+    float sinRot = sin(radRotation);
+
+    float xValueRot = (xValue * cosRot) + (zValue * -sinRot);
+    float zValueRot = (xValue * sinRot) + (zValue *  cosRot);
+    zValueRot *= ratio;
+
+    // -------------------------------------------------------
+    // -- CHECK IF OUTSIDE -----------------------------------
+
+    float checkX = (xValueRot * xValueRot) / (m_size.X/2 * m_size.X/2);
+    float checkY = (zValueRot * zValueRot) / (m_size.Y/2 * m_size.Y/2);
+
+    if(m_player->GetAlliance() != ALLIANCE_WARLOCK) m_traps[id]->SetAlpha(0);
+    else m_traps[id]->SetAlpha(1);
+
+    if(checkX + checkY > 1){
+        // Esta fuera del circulo del minimapa
+        m_traps[id]->SetAlpha(0);
+        return;
+    }
+    else m_traps[id]->SetAlpha(1);
+
+    // -------------------------------------------------------
+    xValueRot -= m_spriteSize.X/2;
+    zValueRot -= m_spriteSize.Y/2;
+
+    xValueRot += m_position.X + m_size.X/2;
+    zValueRot += m_position.Y + m_size.Y/2;
+
+    m_traps[id]->SetPosition(xValueRot, zValueRot);
+}

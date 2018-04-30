@@ -34,6 +34,7 @@ public:
 	void SetRect(float x, float y, float w, float h);
 	void SetTextureRect(float x, float y, float w, float h);
 	void SetColor(float r, float g, float b, float a = 1.0f);
+	void SetAlpha(float a);
 
 private:
 	GSprite(TFSprite* sprite);

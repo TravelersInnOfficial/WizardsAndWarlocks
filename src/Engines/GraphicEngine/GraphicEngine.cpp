@@ -1,5 +1,6 @@
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
 #include "./../GUIEngine/GUIEngine.h"
 
 #include <ShaderTypes.h>
@@ -304,9 +305,12 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
 	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
 	
-	gb = new GBody(
-		privateSManager->AddMesh(position_TOE, rotation_TOE, scale_TOE, path)
-	);
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		gb = new GBody(
+			privateSManager->AddMesh(position_TOE, rotation_TOE, scale_TOE, path)
+		);
+	}
+	else gb = new GBody(privateSManager->AddMesh(position_TOE, rotation_TOE, scale_TOE, ""));
 	return gb;
 }
 
