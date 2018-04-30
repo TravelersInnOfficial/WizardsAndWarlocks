@@ -7,14 +7,14 @@ PoisonParticle::~PoisonParticle(){
 }
 
 void PoisonParticle::InitParticle(Particle& p){
-	p.translation = toe::core::TOEvector3df(0,0,0);
+	p.translation =  TOEvector3df(0,0,0);
 
 	// INITIAL POSITION
 	int maxPosOffset = 30;
 	float X = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
 	float Y = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
 	float Z = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
-	p.pos = toe::core::TOEvector3df(X, Y, Z);
+	p.pos =  TOEvector3df(X, Y, Z);
 
 	// VELOCITY
 	int maxVel = 20;
@@ -23,7 +23,7 @@ void PoisonParticle::InitParticle(Particle& p){
 	Z = (rand() % maxVel)/10.0f - maxVel/20.0f;
 
 	float velocity = 1.2f;
-	toe::core::TOEvector3df dir = toe::core::TOEvector3df(X,Y,Z);
+	 TOEvector3df dir =  TOEvector3df(X,Y,Z);
 	dir.normalize();
 	p.speed = dir * velocity;
 

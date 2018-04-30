@@ -4,9 +4,9 @@
 
 Light::Light(vector3df TPosition, vector3df Color, float range){
 	SceneManager* sm = VideoDriver::GetInstance()->GetSceneManager();
-	toe::core::TOEvector3df position = toe::core::TOEvector3df(TPosition.X, TPosition.Y, TPosition.Z);
-	toe::core::TOEvector3df rotation = toe::core::TOEvector3df(0,0,0);
-	toe::core::TOEvector4df color = toe::core::TOEvector4df(Color.X, Color.Y, Color.Z, 1);
+	 TOEvector3df position =  TOEvector3df(TPosition.X, TPosition.Y, TPosition.Z);
+	 TOEvector3df rotation =  TOEvector3df(0,0,0);
+	 TOEvector4df color =  TOEvector4df(Color.X, Color.Y, Color.Z, 1);
 	
 	float attenuation = 0.1f - (range / 100.0f); // Attenuation: 0.1 TO 0 |||| Range: 0 to 10
 	if(attenuation < 0) attenuation = 0.0f;
@@ -25,7 +25,7 @@ void Light::SetActiveState(bool active){
 }
 
 void Light::ChangeColor(vector3df color){
-	toe::core::TOEvector4df toecolor = toe::core::TOEvector4df(color.X, color.Y, color.Z, 1);
+	 TOEvector4df toecolor =  TOEvector4df(color.X, color.Y, color.Z, 1);
 	TFLight* light = (TFLight*)privateNode;
 	light->SetColor(toecolor);
 }

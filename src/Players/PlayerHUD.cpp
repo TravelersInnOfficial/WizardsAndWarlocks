@@ -128,7 +128,7 @@ void PlayerHUD::ShowEnemyInMap(Player* p){
 void PlayerHUD::p_initPlayerOrbs(){
     int W = g_engine->GetScreenWidth();		
     float ratio = g_engine->GetAspectRatio();
-    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
+     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
     //orb dimensions
     float new_width = W/5.0f;
@@ -215,7 +215,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
     float new_width = m_num_spells* (m_spell_size + m_spell_space) + 8;
     vector2df slot_dims = vector2df(new_width,new_height);
 
-    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
+     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
     if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
     vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
@@ -226,7 +226,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
 void PlayerHUD::p_initPlayerPotion(){
     int W = g_engine->GetScreenWidth();	
     float ratio = g_engine->GetAspectRatio();
-    toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
     float new_width = W/10.0f;
     float new_height = ratio * new_width;
@@ -247,7 +247,7 @@ void PlayerHUD::p_initPlayerTrap(){
         int W = g_engine->GetScreenWidth();	
         
         float ratio = g_engine->GetAspectRatio();
-        toe::core::TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+         TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
         float new_width = W/10.0f;
         float new_height = ratio * new_width;
@@ -541,6 +541,7 @@ PlayerHUD::HUD_Minimap::~HUD_Minimap(){
         delete m_enemies[i];
     }
     m_enemies.clear();
+    p_enemies.clear();
 
     size = m_traps.size();
     for(int i=0; i<size; i++){
