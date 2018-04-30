@@ -118,13 +118,15 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 	int size = m_rooms.size();
 	for(int i=0; i<size; i++){
 		RoomInfo* info = m_rooms[i];
-		// Conseguimos las dos esquinas de cada habitacion
-		vector3df firstSide = info->GetFirstSide();
-		vector3df secondSide = info->GetSecondSide();
-		// Miramos si la posicion pasado por parametros esta dentro de las dos esquinas
-		if(CheckInside(firstSide.X, secondSide.X, pos.X) && CheckInside(firstSide.Z, secondSide.Z, pos.Z)){
-			m_actualRoom = m_rooms[i];
-			break;	
+		if(info != m_actualRoom){
+			// Conseguimos las dos esquinas de cada habitacion
+			vector3df firstSide = info->GetFirstSide();
+			vector3df secondSide = info->GetSecondSide();
+			// Miramos si la posicion pasado por parametros esta dentro de las dos esquinas
+			if(CheckInside(firstSide.X, secondSide.X, pos.X) && CheckInside(firstSide.Z, secondSide.Z, pos.Z)){
+				m_actualRoom = m_rooms[i];
+				break;	
+			}
 		}
 	}
 	// En el caso de que no este dentro de ninguna habitacion supondremos que esta en la misma

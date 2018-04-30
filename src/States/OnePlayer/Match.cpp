@@ -46,6 +46,10 @@ bool Match::Input(){
 		if(MenuManager::GetInstance()->GetCurrentMenu() == nullptr) father->ReturnLobby();
 	}
 
+	if(g_engine->IsKeyPressed(Key_M)){
+		std::cout<<playerOne->GetPos()<<std::endl;
+	}
+
 	return false;
 }
 

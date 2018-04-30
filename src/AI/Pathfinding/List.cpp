@@ -16,6 +16,8 @@ void List::clear(){
 }
 
 void List::add(NodeRecord* nr){
+    if(nr->m_node == nullptr) std::cout<<"TIO, QUE ES NULL"<<std::endl;
+
     int pos = getNodeRecordPosition(nr->m_node);
     if(pos != -1){
         m_list[pos] = nr;
@@ -45,11 +47,13 @@ void List::remove(NodeRecord* nr) {
     for(int i = 0; i<size; i++){
         NodeRecord* current = m_list[i]; 
         if(nr == current){
+            //delete m_list[i];
             //m_list.erase(m_list.begin() + i);
+            
             //cambiamos el seleccionado por el ultimo y hacemos un heapify
             m_list[i] = m_list[m_list.size()-1];
             
-            delete m_list[size-1];
+            //delete m_list[size-1];
             m_list.erase(m_list.end()-1);
 
             heapify(i);

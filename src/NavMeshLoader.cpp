@@ -41,6 +41,8 @@ void NavMeshLoader::LoadNavMeshGraph(NavMesh* navmesh, std::string jsonPath){
             float z = j["NavMesh"][i]["Position"]["Z"];
             position = vector3df(x,y,z);
             navmesh->AddNode(ID,position);
+
+            GraphicEngine::getInstance()->addSphere2Scene(position);
         }   	
         else if(j["NavMesh"][i]["Type"] == "Connection"){
             fromNodeIndex = j["NavMesh"][i]["Connection"]["FromNode"];

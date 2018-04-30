@@ -123,10 +123,6 @@ bool SinglePlayerGame::Input(){
 		captured = !captured;
 	}
 
-	if(g_engine->IsKeyPressed(Key_M)){
-		AL = playerManager->AddAIPlayer();
-	}
-
 	return m_stateGame->Input();
 }
 

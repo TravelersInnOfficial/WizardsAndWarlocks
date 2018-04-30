@@ -52,7 +52,7 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
-            nodePos.Y += 0.2;
+            nodePos.Y += 0.5;
             void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
             
             // Hacemos un procesado inicial del puntero
@@ -77,6 +77,7 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
                 break;
             }
         }
+    std::cout<<output<<"/"<<size<<std::endl;
     // En el caso de que se pase, miramos que el camino sea superior a 1
     }else if(m_path.size() > 0){
         // Lo ponemos al ultimo
@@ -176,6 +177,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         Node* endNode = nullptr;
         float endNodeCost = 0;
         NodeRecord* endNodeRecord = new NodeRecord();
+
         std::vector<Connection*> nodeConnections;
 
         while(m_openList->size()>0){
@@ -226,13 +228,15 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                         continue;
                     }
 
-                    //Otherwhise remove it from the closed list
-                    m_closedList->remove(endNodeRecord);
 
                     //We can use the node's old cost values to calculate its heuristic without calling the
                     //possibly expensive heuristic function
                     //endNodeHeuristic = endNodeRecord.cost - endNodeRecord.costSoFar
                     endNodeHeuristic = heur->estimate(endNodeRecord->m_node);
+
+                    //Otherwhise remove it from the closed list
+                    // "Esto antes estaba puesto"
+                    m_closedList->remove(endNodeRecord);
                 }
                 //Skip if the node is open and we've not found a better route
                 else if(m_openList->contains(endNode)){
@@ -277,11 +281,14 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
             //and remove it from the open list
             //ALREADY REMOVED WHEN GET SMALLESTELEMENT
             //m_openList->remove(current);
+
+
             m_closedList->add(current);
         }
 
         //We’re here if we’ve either found the goal, or if we’ve no more nodes to search, find which.
         if(current!=nullptr && current->m_connection!=nullptr){
+            std::cout<<"new path"<<std::endl;
             Node* currentNode = current->m_node;
             if(currentNode != EndNode) m_path.push_back(EndNode);
             do{
