@@ -13,14 +13,14 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateDriver = toe::GetVideoDriver();
 	
 	if(isServer){
-		privateDriver->CreateWindows("Wizards&Warlocks", toe::core::TOEvector2di(1,1), false);
+		privateDriver->CreateWindows("Wizards&Warlocks",  TOEvector2di(1,1), false);
 		privateDriver->Minimize();
 	}
 	else
-	privateDriver->CreateWindows("Wizards&Warlocks",toe::core::TOEvector2di(800,600));
+	privateDriver->CreateWindows("Wizards&Warlocks", TOEvector2di(800,600));
 	//privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 	
-	privateDriver->SetClearScreenColor(toe::core::TOEvector4df(0.7, 0.7, 1, 1));
+	privateDriver->SetClearScreenColor( TOEvector4df(0.7, 0.7, 1, 1));
 	privateSManager = privateDriver->GetSceneManager();
 
 	privateReceiver = new EventReceiver();
@@ -30,7 +30,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateCamera = nullptr;
 
 	privateDriver->EnableClipping();
-	privateSManager->SetAmbientLight(toe::core::TOEvector3df(0.45f,0.45f,0.45f));
+	privateSManager->SetAmbientLight( TOEvector3df(0.45f,0.45f,0.45f));
 
 	m_currentRoom = nullptr;
 }
@@ -102,7 +102,7 @@ void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){
 
 void GraphicEngine::paintLineDebug(vector3df f, vector3df t, vector3df c){
 	if(privateSManager != nullptr)
-		privateSManager->DrawLine(toe::core::TOEvector3df(f.X, f.Y, f.Z), toe::core::TOEvector3df(t.X, t.Y, t.Z), toe::core::TOEvector3df(c.X, c.Y, c.Z));
+		privateSManager->DrawLine( TOEvector3df(f.X, f.Y, f.Z),  TOEvector3df(t.X, t.Y, t.Z),  TOEvector3df(c.X, c.Y, c.Z));
 }
 
 void GraphicEngine::CreateAim(){
@@ -191,7 +191,7 @@ void GraphicEngine::drawOverlays(OverlayCodes type){
 			float W = GetScreenWidth();
 			float H = GetScreenHeight();
 
-			m_actual_overlay = toe::AddSprite("", toe::core::TOEvector2df(0,0),toe::core::TOEvector2df(W,H));
+			m_actual_overlay = toe::AddSprite("",  TOEvector2df(0,0), TOEvector2df(W,H));
 		}
 		else if(overlayTexture.length() > 0 && m_actual_overlay->GetTexture() != overlayTexture){
 			m_actual_overlay->SetTexture(overlayTexture);
@@ -260,9 +260,9 @@ GBody* GraphicEngine::addCube2Scene(vector3df p, vector3df r, vector3df s, float
 	if(privateSManager != nullptr){
 		gb = new GBody(
 			toe::AddCube(
-				toe::core::TOEvector3df(p.X, p.Y, p.Z),
-				toe::core::TOEvector3df(r.X, r.Y, r.Z),
-				toe::core::TOEvector3df(s.X * size, s.Y * size, s.Z * size)
+				 TOEvector3df(p.X, p.Y, p.Z),
+				 TOEvector3df(r.X, r.Y, r.Z),
+				 TOEvector3df(s.X * size, s.Y * size, s.Z * size)
 			)
 		);
 	}
@@ -276,9 +276,9 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 	if(privateSManager != nullptr){
 		gb = new GBody(
 			toe::AddSphere(
-				toe::core::TOEvector3df(p.X, p.Y, p.Z),
-				toe::core::TOEvector3df(0, 0, 0),
-				toe::core::TOEvector3df(s.X * radius, s.Y * radius, s.Z * radius)
+				 TOEvector3df(p.X, p.Y, p.Z),
+				 TOEvector3df(0, 0, 0),
+				 TOEvector3df(s.X * radius, s.Y * radius, s.Z * radius)
 			)
 		);
 		gb->Rotate(vector3df(r.X, r.Y, 0));
@@ -290,8 +290,8 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	GBody* gb = nullptr;
-	toe::core::TOEvector3df data = toe::core::TOEvector3df(0, 0, 0);
-	toe::core::TOEvector3df scale = toe::core::TOEvector3df(1, 1, 1);
+	 TOEvector3df data =  TOEvector3df(0, 0, 0);
+	 TOEvector3df scale =  TOEvector3df(1, 1, 1);
 	
 	gb = new GBody(
 		privateSManager->AddMesh(data, data, scale, path)
@@ -301,9 +301,9 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
 	GBody* gb = nullptr;
-	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	 TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	 TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
 	
 	if(!NetworkEngine::GetInstance()->IsServerInit()){
 		gb = new GBody(
@@ -316,9 +316,9 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 
 GAnimation* GraphicEngine::addAnimatedMeshSceneNode(vector3df position, vector3df rotation, vector3df scale){
 	GAnimation* ga = nullptr;
-	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df rotation_TOE = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	toe::core::TOEvector3df scale_TOE = toe::core::TOEvector3df(scale.X, scale.Y, scale.Z);
+	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	 TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	 TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
 	
 	ga = new GAnimation(
 		privateSManager->AddAnimation(position_TOE, rotation_TOE, scale_TOE)
@@ -338,7 +338,7 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
 	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
-	toe::core::TOEvector3df defaultdata = toe::core::TOEvector3df(0, 0, 0);
+	 TOEvector3df defaultdata =  TOEvector3df(0, 0, 0);
 	privateCamera = new GCamera(privateSManager->AddCamera(defaultdata, defaultdata, true));
 
 	// LA DEVOLVEMOS
@@ -357,8 +357,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
 	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
-	toe::core::TOEvector3df position_TOE = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df lookat_TOE = toe::core::TOEvector3df(lookat.X, lookat.Y, lookat.Z);
+	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	 TOEvector3df lookat_TOE =  TOEvector3df(lookat.X, lookat.Y, lookat.Z);
 	privateCamera = new GCamera(privateSManager->AddCamera(position_TOE, lookat_TOE, true));
 
 	// LA DEVOLVEMOS
@@ -366,8 +366,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vector2df size){
-	toe::core::TOEvector2df pos(position.X, position.Y);
-	toe::core::TOEvector2df dims(size.X, size.Y);
+	 TOEvector2df pos(position.X, position.Y);
+	 TOEvector2df dims(size.X, size.Y);
 	TFSprite* sprite = toe::AddSprite(texture, pos, dims);
 
 	GSprite* output = new GSprite(sprite);
@@ -375,8 +375,8 @@ GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vecto
 }
 
 GRect* GraphicEngine::add2DRect(vector2df position, vector2df size){
-	toe::core::TOEvector2df pos(position.X, position.Y);
-	toe::core::TOEvector2df dim(size.X, size.Y);
+	 TOEvector2df pos(position.X, position.Y);
+	 TOEvector2df dim(size.X, size.Y);
 	TFRect* rect = toe::Add2DRect(pos, dim);
 
 	GRect* output = new GRect(rect);
@@ -393,7 +393,7 @@ void GraphicEngine::SetCursorPosition(vector2di cursor){
 }
 
 vector2di GraphicEngine::GetCursorPosition(){
-	toe::core::TOEvector2di auxPos = privateDriver->GetCursorPosition();
+	 TOEvector2di auxPos = privateDriver->GetCursorPosition();
 	return vector2di(auxPos.X, auxPos.Y);
 }
 

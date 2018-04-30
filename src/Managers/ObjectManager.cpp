@@ -278,7 +278,11 @@ Invocation* ObjectManager::AddInvocation(vector3df TPosition, vector3df TScale, 
 		break;
 
 		case INVO_TELEPORT:
-			in = new BaseT(TPosition,  TScale, TRotation);
+			TPosition.Y -= 0.8f;
+			TRotation.X = 90.0f;
+			TRotation.Y = 0.0f;
+			TRotation.Z = 0.0f;
+			in = new BaseT(TPosition, TScale, TRotation);
 		break;
 	}
 	if(in!=nullptr)invocations.push_back(in);

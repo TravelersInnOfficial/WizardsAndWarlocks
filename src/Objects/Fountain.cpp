@@ -40,19 +40,14 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	float TMass = 0;
 
 	// Create graphic body loading mesh
-	m_fountainNode = g_engine->addObjMeshSceneNode("./../assets/modelos/fountain.obj");
+	m_fountainNode = g_engine->addObjMeshSceneNode("./../assets/modelos/restore_fountain.obj");
 	m_fountainNode->setPosition(TPosition);
 	m_fountainNode->setScale(TScale);
 	m_fountainNode->setRotation(TRotation);
 	m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
-	if (m_fountainNode) {
-		m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_fountainNode->setMaterialTexture(0, "./../assets/textures/marbre5.jpg");
-    }
-
 	//Bullet Physics
-	vector3df HalfExtents(TScale * 0.5f * vector3df(1.36876, 2.0, 1.2));
+	vector3df HalfExtents(TScale * 0.5f * vector3df(1.36876, 1.5, 0.5));
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,TMass,0, vector3df(0,0,0), C_FOUNTAIN, fountainCW);
 	bt_body->Rotate(TRotation);
@@ -145,7 +140,7 @@ void Fountain::Interact(Player* p){
 }
 
 void Fountain::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Drink");
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Use");
 }
 
 void Fountain::UpdatePosShape(){

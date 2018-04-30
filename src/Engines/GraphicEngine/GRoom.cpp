@@ -5,9 +5,9 @@
 
 GRoom::GRoom(int id, vector3df position, vector3df rotation, vector3df scale){
 	m_id = id;
-	toe::core::TOEvector3df pos(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df rot(rotation.X, rotation.Y, rotation.Z);
-	toe::core::TOEvector3df sca(scale.X, scale.Y, scale.Z);
+	 TOEvector3df pos(position.X, position.Y, position.Z);
+	 TOEvector3df rot(rotation.X, rotation.Y, rotation.Z);
+	 TOEvector3df sca(scale.X, scale.Y, scale.Z);
 	privateNode = GraphicEngine::getInstance()->privateSManager->AddRoom(pos, rot, sca);
 }
 
@@ -26,7 +26,7 @@ int GRoom::GetId(){
 }
 
 float GRoom::GetDistance(vector3df position){
-	toe::core::TOEvector3df pos(position.X, position.Y, position.Z);
+	 TOEvector3df pos(position.X, position.Y, position.Z);
 	float toRet = ((TFRoom*)privateNode)->GetDistance(pos);
 	return toRet;
 }
@@ -42,9 +42,9 @@ bool GRoom::RemoveChild(GEntity* entity){
 
 GPortal* GRoom::AddConnection(GRoom* room, vector3df position, vector3df rotation, vector3df scale){
 	TFRoom* connectRoom = (TFRoom*)room->privateNode;
-	toe::core::TOEvector3df pos(position.X, position.Y, position.Z);
-	toe::core::TOEvector3df rot(rotation.X, rotation.Y, rotation.Z);
-	toe::core::TOEvector3df sca(scale.X, scale.Y, scale.Z);
+	 TOEvector3df pos(position.X, position.Y, position.Z);
+	 TOEvector3df rot(rotation.X, rotation.Y, rotation.Z);
+	 TOEvector3df sca(scale.X, scale.Y, scale.Z);
 
 	TFPortal* portal = ((TFRoom*)privateNode)->AddConnection(connectRoom, pos, rot, sca);
 	GPortal* tfportal = new GPortal(portal);

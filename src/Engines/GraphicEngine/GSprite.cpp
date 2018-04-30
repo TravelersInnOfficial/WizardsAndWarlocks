@@ -18,7 +18,7 @@ void GSprite::ToBkg(){
 }
 
 vector2df GSprite::GetPosition(){
-	toe::core::TOEvector2df pos = m_sprite->GetPosition();
+	 TOEvector2df pos = m_sprite->GetPosition();
 	vector2df output(pos.X, pos.Y);
 	return output;
 }

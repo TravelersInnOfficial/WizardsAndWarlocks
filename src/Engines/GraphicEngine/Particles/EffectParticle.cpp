@@ -12,21 +12,21 @@ void EffectParticle::InitParticle(Particle& p){
 	float X = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
 	float Y = 0.0f;
 	float Z = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
-	p.pos = toe::core::TOEvector3df(X, Y, Z);
+	p.pos =  TOEvector3df(X, Y, Z);
 
 
 	int maxVel = 2;
 	X = (rand() % maxVel)/10.0f - maxVel/20.0f;
 	Y = maxVel;
 	Z = (rand() % maxVel)/10.0f - maxVel/20.0f;
-	p.speed = toe::core::TOEvector3df(X, Y, Z);
+	p.speed =  TOEvector3df(X, Y, Z);
 
 	int color = 255;
 	p.r = color;
 	p.g = color;
 	p.b = color;
 
-	p.translation = toe::core::TOEvector3df(0,-1.4,0);
+	p.translation =  TOEvector3df(0,-1.4,0);
 	
 	// SIZE
 	int maxSize = 5;

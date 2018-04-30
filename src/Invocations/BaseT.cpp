@@ -4,7 +4,6 @@ BaseT::BaseT(vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(-1){
 	active = true;
 	CreateInvocation(TPosition, TScale, TRotation);
-	
 }
 
 void BaseT::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -12,14 +11,15 @@ void BaseT::CreateInvocation(vector3df TPosition, vector3df TScale, vector3df TR
 	// GraphicEngine
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-	m_invocationNode = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
+	m_invocationNode = g_engine->addObjMeshSceneNode("./../assets/modelos/restore_fountain.obj");
 	m_invocationNode->setPosition(TPosition);
 	m_invocationNode->setScale(TScale);
+	m_invocationNode->setRotation(TRotation);
 	m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	if (m_invocationNode) {
 		m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_WALL.png");
+        m_invocationNode->setMaterialTexture(0, "./../assets/textures/teleport_base.png");
     }
 
 	//Bullet Physics

@@ -7,7 +7,7 @@
 AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
     
-    toe::core::TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND]); 
+     TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND]); 
     vector2df siz(s.X,s.Y);
     m_width = siz.X;
     m_height = siz.Y;
@@ -30,7 +30,7 @@ AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     tex_alliances_hover[0] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE_HOVER]);
     tex_alliances_hover[1] = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ALLIANCE_HOVER]);
 
-    toe::core::TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
+     TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_WARLOCK_ALLIANCE]);
     buttonSize = ImVec2(dims.X,dims.Y);
     m_fontSize = ImGui::GetFontSize()*1.3f;
 }

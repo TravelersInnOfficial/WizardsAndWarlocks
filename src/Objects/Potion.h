@@ -56,7 +56,6 @@ protected:
 
 	// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
 	vector3df 	potionScale;	// Escala de la pocion
-	std::string potionTexture;	// Textura de la pocion
 
 	BT_Body* 	bt_body; 		// Cuerpo fisico de la pocion
     GBody*      m_potionNode;	// Cuerpo visual de la pocion
@@ -64,12 +63,14 @@ protected:
 	std::string m_info;			// Potion info
 	std::string HUDTexturePath;	// Texture for the HUD to paint
 
-	Potion(vector3df TScale, int value, std::string info, std::string tex);
+	Potion(vector3df TScale, int value, std::string info);
 	void DeletePotion();
 	void UpdatePosShape();
 
 	GRect* m_rect;
 	GSprite* m_sprite;
+
+	std::string m_potionpath;
 };
 
 #endif
