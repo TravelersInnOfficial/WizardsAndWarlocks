@@ -4,6 +4,8 @@
 #include <vector3d.h>
 #include <json.hpp>
 
+#include <GraphicEngine/GraphicEngine.h>
+
 NavMeshLoader::NavMeshLoader(){
 
 }

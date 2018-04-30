@@ -10,17 +10,17 @@ GPortal::~GPortal(){
 }
 
 void GPortal::SetCenter(vector3df center){
-	toe::core::TOEvector3df input(center.X, center.Y, center.Z);
+	 TOEvector3df input(center.X, center.Y, center.Z);
 	m_portal->SetCenter(input);
 }
 
 void GPortal::SetRotation(vector3df rot){
-	toe::core::TOEvector3df input(rot.X, rot.Y, rot.Z);
+	 TOEvector3df input(rot.X, rot.Y, rot.Z);
 	m_portal->SetRotation(input);
 }
 
 void GPortal::SetSize(vector3df size){
-	toe::core::TOEvector3df input(size.X, size.Y, size.Z);
+	 TOEvector3df input(size.X, size.Y, size.Z);
 	m_portal->SetSize(input);
 }
 

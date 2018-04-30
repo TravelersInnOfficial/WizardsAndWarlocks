@@ -6,8 +6,8 @@
 
 GParticle::GParticle(vector3df position){
 	SceneManager* sm = GraphicEngine::getInstance()->privateSManager;
-	toe::core::TOEvector3df pos = toe::core::TOEvector3df(position.X, position.Y, position.Z);
-	ps = sm->AddParticleSystem(pos, toe::core::TOEvector3df(0,0,0), toe::core::TOEvector3df(1,1,1));
+	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
+	ps = sm->AddParticleSystem(pos,  TOEvector3df(0,0,0),  TOEvector3df(1,1,1));
 }
 
 GParticle::~GParticle(){
@@ -58,17 +58,17 @@ void GParticle::SetType(PARTICLE_TYPE type){
 }
 
 void GParticle::SetPos(vector3df position){
-	toe::core::TOEvector3df pos = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
 	ps->SetTranslateSmooth(pos);
 }
 
 void GParticle::SetPosSpecial(vector3df position){
-	toe::core::TOEvector3df pos = toe::core::TOEvector3df(position.X, position.Y, position.Z);
+	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
 	ps->SetTranslate(pos);
 }
 
 void GParticle::SetRot(vector3df rotation){
-	toe::core::TOEvector3df rot = toe::core::TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	 TOEvector3df rot =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
 	ps->SetRotation(rot);
 }
 

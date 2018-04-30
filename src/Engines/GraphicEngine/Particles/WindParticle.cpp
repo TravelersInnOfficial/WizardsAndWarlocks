@@ -12,17 +12,17 @@ void WindParticle::InitParticle(Particle& p){
 	float X = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
 	float Y = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
 	float Z = (rand() % maxPosOffset)/10.0f - maxPosOffset/20.0f;
-	p.pos = toe::core::TOEvector3df(X, Y, Z);
+	p.pos =  TOEvector3df(X, Y, Z);
 
 	velocity = 2;
 	int maxRandomVel = 15;
 	X = direction.X * velocity + ((rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f);
 	Y = (rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f;
 	Z = direction.Z * velocity + ((rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f);
-	p.speed = toe::core::TOEvector3df(X,Y,Z);
+	p.speed =  TOEvector3df(X,Y,Z);
 
 	int color = 255; p.r = color; p.g = color; p.b = color;
-	p.translation = toe::core::TOEvector3df(0,0,0);
+	p.translation =  TOEvector3df(0,0,0);
 
 	// SIZE
 	int maxSize = 3;

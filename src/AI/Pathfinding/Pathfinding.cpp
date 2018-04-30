@@ -228,15 +228,15 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
                         continue;
                     }
 
+                    //Otherwhise remove it from the closed list
+                    m_closedList->remove(endNodeRecord);
+
 
                     //We can use the node's old cost values to calculate its heuristic without calling the
                     //possibly expensive heuristic function
                     //endNodeHeuristic = endNodeRecord.cost - endNodeRecord.costSoFar
                     endNodeHeuristic = heur->estimate(endNodeRecord->m_node);
 
-                    //Otherwhise remove it from the closed list
-                    // "Esto antes estaba puesto"
-                    m_closedList->remove(endNodeRecord);
                 }
                 //Skip if the node is open and we've not found a better route
                 else if(m_openList->contains(endNode)){
@@ -290,7 +290,9 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
         if(current!=nullptr && current->m_connection!=nullptr){
             std::cout<<"new path"<<std::endl;
             Node* currentNode = current->m_node;
-            if(currentNode != EndNode) m_path.push_back(EndNode);
+            if(currentNode != EndNode) {
+                m_path.push_back(EndNode);
+            }
             do{
                 m_path.push_back(currentNode);
                 current = m_closedList->find(current->m_connection->getFromNode());

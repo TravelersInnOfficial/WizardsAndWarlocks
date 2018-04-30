@@ -56,7 +56,7 @@ void Menu::SetWidth(float w){m_width = w;}
 void Menu::SetHeight(float h){m_height = h;}
 
 void Menu::UpdateCursor(){
-    toe::core::TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+     TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
     if(m_cursor == nullptr){
         vector2df dims(cursor_dims.X,cursor_dims.Y);
         m_cursor = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR], vector2df(0,0), dims);
