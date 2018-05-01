@@ -27,7 +27,7 @@ void OdinFury::Lanzar(Player* p){
 
 	BulletManager* bullman = BulletManager::GetInstance();
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
-	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), BULLET_THUNDER);
+	bullman->AddProyectil(pos, rot, direction, p->GetId(), p->GetDamageM(), BULLET_THUNDER);
 	
 	playSoundEvent(voiceEvent, pos); //Play voice event
 	playSoundEvent(shotEvent, pos); //Play shot event

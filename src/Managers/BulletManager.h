@@ -16,7 +16,7 @@ public:
 	void InitObject();
 	void EmptyObject();
 
-	void AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect = WEAK_BASIC);
+	void AddProyectil(vector3df pos, vector3df rot, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect = WEAK_BASIC);
 	void AddToDeleteProyecil(Projectile* pro);
 	void Update();
 	void DeleteProyectiles();

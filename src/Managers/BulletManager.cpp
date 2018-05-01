@@ -50,28 +50,28 @@ void BulletManager::EmptyObject(){
 	instance = nullptr;
 }
 
-void BulletManager::AddProyectil(vector3df pos, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect){
+void BulletManager::AddProyectil(vector3df pos, vector3df rot, vector3df dir, int emi, float dmgMult, BULLETCODE b, EFFECTCODE bulletEffect){
 	float dmg;
 	std::string separator(20, '.');
 	switch(b){
 		case BULLET_BASIC:
 			dmg = bullet_damage[BULLET_BASIC] * dmgMult;
-			proyectiles.push_back(new BasicProjectile(pos, dir, emi, bulletEffect, bullet_radius[BULLET_BASIC], bullet_speed[BULLET_BASIC], dmg, bullet_max_distance[BULLET_BASIC]));
+			proyectiles.push_back(new BasicProjectile(pos, rot, dir, emi, bulletEffect, bullet_radius[BULLET_BASIC], bullet_speed[BULLET_BASIC], dmg, bullet_max_distance[BULLET_BASIC]));
 			break;
 		
 		case BULLET_FIRE:
 			dmg = bullet_damage[BULLET_FIRE] * dmgMult;
-			proyectiles.push_back(new FireProjectile(pos, dir, emi,  bullet_radius[BULLET_FIRE], bullet_speed[BULLET_FIRE], dmg, bullet_max_distance[BULLET_FIRE]));
+			proyectiles.push_back(new FireProjectile(pos, rot, dir, emi,  bullet_radius[BULLET_FIRE], bullet_speed[BULLET_FIRE], dmg, bullet_max_distance[BULLET_FIRE]));
 			break;
 		
 		case BULLET_THUNDER:
 			dmg = bullet_damage[BULLET_THUNDER] * dmgMult;
-			proyectiles.push_back(new ThunderProjectile(pos, dir, emi,  bullet_radius[BULLET_THUNDER], bullet_speed[BULLET_THUNDER], dmg, bullet_max_distance[BULLET_THUNDER]));
+			proyectiles.push_back(new ThunderProjectile(pos, rot, dir, emi,  bullet_radius[BULLET_THUNDER], bullet_speed[BULLET_THUNDER], dmg, bullet_max_distance[BULLET_THUNDER]));
 			break;
 		
 		case POISON_BOMB:
 			dmg = bullet_damage[POISON_BOMB] * dmgMult;
-			proyectiles.push_back(new PoisonBomb(pos, dir, emi,  bullet_radius[POISON_BOMB], bullet_speed[POISON_BOMB], dmg, bullet_max_distance[POISON_BOMB]));
+			proyectiles.push_back(new PoisonBomb(pos, rot, dir, emi,  bullet_radius[POISON_BOMB], bullet_speed[POISON_BOMB], dmg, bullet_max_distance[POISON_BOMB]));
 			break;
 		
 		default:

@@ -13,7 +13,7 @@
 
 class Projectile: public Entidad{
 public:
-    Projectile(vector3df pos, vector3df dir, int emi, float r, float v, float damage = 15, float maxDistance = 10.0f, std::string texture = "./../assets/textures/wall.bmp", std::string soundPath = "");
+    Projectile(vector3df pos, vector3df rot, vector3df dir, int emi, float r, float v, float damage = 15, float maxDistance = 10.0f, std::string soundPath = "");
     ~Projectile();
     void Update();
     void Contact(void* punt, EntityEnum tipo);
@@ -24,7 +24,7 @@ public:
     int GetDamage();
 
 protected:
-    void CreateProjectile();
+    virtual void CreateProjectile() = 0;
 	void NormalizeDir();
     void createSoundEvent(std::string soundPath);
 	virtual void UpdatePosShape();
@@ -37,6 +37,7 @@ protected:
 
     vector3df       initPos;            // Posicion inicial del proyectil
     vector3df*   	direction;	        // La direccion que va a tomar el proyectil
+    vector3df       initRot;
     float			radius;	            // Radio del proyectil
     float			velocity;           // Velocidad del proyectil
 
@@ -45,7 +46,6 @@ protected:
 
     BT_Body*        bt_body;            // Cuerpo fisico del proyectil
     GBody*          m_ProjectileNode;    // Cuerpo visual del proyectil
-    std::string     m_Texture;
     std::string     soundPath;
     SoundEvent*     soundEvent;
 

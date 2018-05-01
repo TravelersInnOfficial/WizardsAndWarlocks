@@ -203,28 +203,28 @@
     },
     {
       "ID": "BULLET_BASIC",
-      "radius" : 0.05,
+      "radius" : 1.5,
       "speed" : 55.0,
       "damage" : 10.0,
       "max_distance" : 20.0
     },
     {
       "ID": "BULLET_FIRE",
-      "radius" : 0.2,
+      "radius" : 2,
       "speed" : 40.0,
       "damage" : 20.0,
       "max_distance" : 20.0
     },
     {
       "ID": "BULLET_THUNDER",
-      "radius" : 0.15,
+      "radius" : 2.5,
       "speed" : 40.0,
       "damage" : 20.0,
       "max_distance" : 20.0
     },
     {
       "ID": "POISON_BOMB",
-      "radius" : 0.2,
+      "radius" : 2.5,
       "speed" : 15.0,
       "damage" : 20.0,
       "max_distance" : 30.0

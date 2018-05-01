@@ -26,7 +26,7 @@ void OgreBelch::Lanzar(Player* p){
 	vector3df direction = vector3df( sin(rot.Y)*cos(rot.X), sin(rot.X), cos(rot.Y)*cos(rot.X));
 
 	BulletManager* bullman = BulletManager::GetInstance();
-	bullman->AddProyectil(pos, direction, p->GetId(), p->GetDamageM(), POISON_BOMB);
+	bullman->AddProyectil(pos, rot, direction, p->GetId(), p->GetDamageM(), POISON_BOMB);
 	
 	playSoundEvent(voiceEvent, pos); //Play voice event
 	playSoundEvent(shotEvent, pos); //Play shot event
