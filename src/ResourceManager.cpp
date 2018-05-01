@@ -30,7 +30,6 @@ void ResourceManager::LoadResources(){
 	
 	// Load Meshes
 	for (meshIterator = MESHMAP.begin(); meshIterator != MESHMAP.end(); meshIterator++){
-		std::cout<<"LOADING: "<< meshIterator->second<<std::endl;
 		toe::LoadMesh(meshIterator->second);
 		cont++;
 		bar_width = (cont*100)/totalSize;
