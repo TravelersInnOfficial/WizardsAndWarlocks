@@ -2,7 +2,9 @@
 #define ASSETS_H
 
 #include <iostream>
+#include <vector>
 #include <map>
+#include "Animation_Strings.h"
 
 enum GAMETEXTURES {
 	TEXTURE_tilefloor,
@@ -121,6 +123,23 @@ enum GAMEMESHES {
 	MESH_bookcase
 };
 
+enum GAMEANIMATIONS {
+	ANIM_WIZARD_TSHOOT1,
+	ANIM_WIZARD_TSHOOT2,
+	ANIM_WIZARD_TSHOOT3,
+	ANIM_WIZARD_TDRINK,
+	ANIM_WIZARD_TINTERACT,
+	ANIM_WIZARD_TIDLE,
+	ANIM_WIZARD_BIDLE,
+	ANIM_WIZARD_TWALK,
+	ANIM_WIZARD_BWALK,
+	ANIM_WIZARD_TRUN,
+	ANIM_WIZARD_BRUN,
+	ANIM_WIZARD_ARMIDLE,
+	ANIM_WIZARD_ARMSHOOT1,
+	ANIM_WIZARD_ARMWALK,
+};
+
 
 static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	std::map<GAMETEXTURES, std::string> m;
@@ -225,7 +244,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
 	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
 	return m;
-};
+}
 
 static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
 	std::map<GAMEMESHES, std::string> m;
@@ -244,9 +263,34 @@ static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
 	m[MESH_bookcase]	= "./../assets/modelos/bookcase.obj";
 
 	return m;
-};
+}
 
-static std::map<GAMETEXTURES, std::string> TEXTUREMAP =  CREATE_TEXTUREMAP();
-static std::map<GAMEMESHES, std::string> MESHMAP =  CREATE_MESHMAP();
+static std::vector<std::string> CREATE_ANIMATIONMAP(){
+	std::vector<std::string> m;
+
+	// INSERT ALL ANIMATIONS
+	m.insert( m.end(), AWIZARD_TSHOOT1.begin(), AWIZARD_TSHOOT1.end() );
+    m.insert( m.end(), AWIZARD_TSHOOT2.begin(), AWIZARD_TSHOOT2.end() );
+    m.insert( m.end(), AWIZARD_TSHOOT3.begin(), AWIZARD_TSHOOT3.end() );
+    m.insert( m.end(), AWIZARD_TDRINK.begin(), AWIZARD_TDRINK.end() );
+    m.insert( m.end(), AWIZARD_TINTERACT.begin(), AWIZARD_TINTERACT.end() );
+	
+    m.insert( m.end(), AWIZARD_TIDLE.begin(), AWIZARD_TIDLE.end() );
+    m.insert( m.end(), AWIZARD_BIDLE.begin(), AWIZARD_BIDLE.end() );
+    m.insert( m.end(), AWIZARD_TWALK.begin(), AWIZARD_TWALK.end() );
+    m.insert( m.end(), AWIZARD_BWALK.begin(), AWIZARD_BWALK.end() );
+    m.insert( m.end(), AWIZARD_TRUN.begin(), AWIZARD_TRUN.end() );
+    m.insert( m.end(), AWIZARD_BRUN.begin(), AWIZARD_BRUN.end() );
+
+    m.insert( m.end(), AWIZARD_ARMWALK.begin(), AWIZARD_ARMWALK.end() );
+    m.insert( m.end(), AWIZARD_ARMIDLE.begin(), AWIZARD_ARMIDLE.end() );
+    m.insert( m.end(), AWIZARD_ARMSHOOT1.begin(), AWIZARD_ARMSHOOT1.end() );
+
+	return m;
+}
+
+static std::map<GAMETEXTURES, std::string> TEXTUREMAP = CREATE_TEXTUREMAP();
+static std::map<GAMEMESHES, std::string> MESHMAP = CREATE_MESHMAP();
+static std::vector<std::string> ANIMATIONMAP = CREATE_ANIMATIONMAP();
 
 #endif
