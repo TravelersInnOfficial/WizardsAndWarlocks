@@ -221,23 +221,6 @@ float GraphicEngine::GetAspectRatio(){
 	return H/(float)W;
 }
 
-void GraphicEngine::draw2DImage(std::string texturePath, vector4df rect){
-	/*if(privateDriver != nullptr){
-		irr::video::ITexture* spellTexture = privateDriver->getTexture(texturePath.c_str());
-		irr::core::rect<irr::s32> destRect = irr::core::rect<irr::s32>(rect.X, rect.Y, rect.X2, rect.Y2);
-		const irr::core::dimension2d<irr::u32> size = spellTexture->getSize();
-		irr::core::rect<irr::s32> imgRect = irr::core::rect<irr::s32>(0, 0, size.Width, size.Height);
-		privateDriver->draw2DImage(spellTexture, destRect, imgRect, 0, 0, true);
-	}*/
-}
-
-void GraphicEngine::draw2DRectangle(vector3df c, float xInit, float yInit, float xEnd, float yEnd){
-	/*if(privateDriver != nullptr){
-		irr::video::SColor color = irr::video::SColor(255, c.X, c.Y, c.Z);
-		privateDriver->draw2DRectangle(color, irr::core::rect<irr::s32>(xInit, yInit, xEnd, yEnd));
-	}*/
-}
-
 // SMANAGER FUNCTIONS
 void GraphicEngine::drawAll(){
 	if(privateDriver != nullptr){ 

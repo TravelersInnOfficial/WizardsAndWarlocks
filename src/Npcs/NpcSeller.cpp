@@ -20,9 +20,7 @@ void NpcSeller::CreatePhysical(vector3df TPosition, vector3df TScale, vector3df 
 	gBody->setPosition(TPosition);
 	gBody->setScale(TScale);
 	gBody->setRotation(TRotation);
-	gBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 	if (gBody) {
-		gBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
         gBody->setMaterialTexture(0, "./../assets/textures/npc.png");
     }
 

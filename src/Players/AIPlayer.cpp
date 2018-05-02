@@ -339,16 +339,13 @@ void AIPlayer::Debug(){
 		if(true){
 			// Esta disparando hechizo? CastingSpell
 			c = vector3df(255*castingSpell, 0, 0);
-			g_engine->draw2DRectangle(c, 0,0,10,10);
 			// Ha conseguido lanzar el hechizo? ShootSpell
 			c = vector3df(0, 255*shootSpell, 0);
-			g_engine->draw2DRectangle(c, 10,0,20,10);
 			// CurrentSpell
 			if(m_currentSpell == 0) 		c = vector3df(255,0,0);
 			else if(m_currentSpell == 1)	c = vector3df(0,255,0);
 			else if(m_currentSpell == 2)	c = vector3df(0,0,255);
 			else if(m_currentSpell == 3)	c = vector3df(255,255,0);
-			g_engine->draw2DRectangle(c, 20,0,30,10);
 		}
 		//Comportamientos IA
 		if(true){

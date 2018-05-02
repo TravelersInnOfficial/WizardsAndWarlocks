@@ -44,7 +44,6 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	m_fountainNode->setPosition(TPosition);
 	m_fountainNode->setScale(TScale);
 	m_fountainNode->setRotation(TRotation);
-	m_fountainNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	//Bullet Physics
 	vector3df HalfExtents(TScale * 0.5f * vector3df(1.36876, 1.5, 0.5));

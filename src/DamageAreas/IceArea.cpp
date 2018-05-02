@@ -66,7 +66,6 @@ void IceArea::CreateIceArea(vector3df TPosition, vector3df TScale, vector3df TRo
 
     // Aplicamos Material unlit y Textura
     if (m_areaNode) {
-        m_areaNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
         if(!GraphicEngine::getInstance()->GetParticleActive()) m_areaNode->setMaterialTexture(0, "./../assets/textures/marbre5.jpg");
 		else m_areaNode->setMaterialTexture(0, "./../assets/textures/none.png");
     }

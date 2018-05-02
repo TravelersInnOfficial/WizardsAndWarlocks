@@ -56,7 +56,6 @@ void PoisonArea::CreatePoisonArea(vector3df TPosition, vector3df TScale, vector3
 
 	// Aplicamos Material unlit y Textura
 	if (m_areaNode) {
-		m_areaNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 		m_areaNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_POISON.png");
 		if(GraphicEngine::getInstance()->GetParticleActive()) m_areaNode->setMaterialTexture(0, "./../assets/textures/none.png");
 	}

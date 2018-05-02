@@ -18,15 +18,9 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 
 	// Create graphic body loading mesh
 	m_grailNode = g_engine->addObjMeshSceneNode("./../assets/modelos/grail.obj", TPosition, TRotation, TScale);
-	m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-
-	if (m_grailNode) {
-		m_grailNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        //m_grailNode->setMaterialTexture(0, "./../assets/textures/gold.jpg");
-    }
 
 	//Bullet Physics
-	vector3df HalfExtents(TScale.X*0.7, TScale.Y*0.7, TScale.Z*0.7);
+	vector3df HalfExtents(TScale.X*0.7, TScale.Y, TScale.Z*0.7);
 	bt_body = new BT_Body();
 	bt_body->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_GRAIL, grailCW);
 	bt_body->Rotate(TRotation);

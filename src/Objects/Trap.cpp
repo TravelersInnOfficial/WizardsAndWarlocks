@@ -33,7 +33,6 @@ Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 
 	g_body = GraphicEngine::getInstance()->addCube2Scene(TPosition, *m_rotation, vector3df(m_dimensions->X,m_dimensions->Y,m_dimensions->Z));
 	g_body->setMaterialTexture(0,m_texturePath);
-	g_body->setMaterialFlag(EMF_LIGHTING,false);
 
 	vector3df aux_dimensions(m_dimensions->X*0.5,m_dimensions->Y*0.5+0.25,m_dimensions->Z*0.5);
 	m_body->CreateGhostBox(m_position, *m_rotation, aux_dimensions, vector3df(0,aux_dimensions.Y, 0), C_TRAP, trapCW);

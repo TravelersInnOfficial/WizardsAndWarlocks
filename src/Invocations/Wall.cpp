@@ -24,12 +24,8 @@ void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vec
 	m_invocationNode = g_engine->addCube2Scene(TPosition, TRotation, TScale, 1.0f);
 	m_invocationNode->setPosition(TPosition);
 	m_invocationNode->setScale(TScale);
-	m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
-	if (m_invocationNode) {
-		m_invocationNode->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_WALL.png");
-    }
+	if (m_invocationNode) m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_WALL.png");
 
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5);

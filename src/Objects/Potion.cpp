@@ -96,7 +96,6 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	m_potionNode = g_engine->addObjMeshSceneNode(m_potionpath);
 	m_potionNode->setPosition(TPosition);
 	m_potionNode->setScale(potionScale*1.5);
-	m_potionNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	//Bullet Physics
 	vector3df HalfExtents(potionScale.X*0.1f, potionScale.Y*0.15f, potionScale.Z*0.1f);

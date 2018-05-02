@@ -17,11 +17,7 @@ void NpcSelector::CreatePhysical(vector3df TPosition, vector3df TScale, vector3d
 	gBody->setPosition(TPosition);
 	gBody->setScale(TScale);
 	gBody->setRotation(TRotation);
-	gBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
-	if (gBody) {
-		gBody->setMaterialFlag(MATERIAL_FLAG::EMF_NORMALIZE_NORMALS, true);
-        gBody->setMaterialTexture(0, "./../assets/textures/npc.png");
-    }
+	if (gBody) gBody->setMaterialTexture(0, "./../assets/textures/npc.png");
 
 	vector3df HalfExtents(TScale.X * 0.15f, TScale.Y * 0.35, TScale.Z * 0.15f);
 	pBody = new BT_Body();

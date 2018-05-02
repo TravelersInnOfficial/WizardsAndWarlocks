@@ -20,17 +20,6 @@ void GBody::setMaterialTexture(int layer, std::string path){
 		TFMesh* mesh = (TFMesh*)privateNode;
 		mesh->SetTexture(path);
 	}
-    //IrrEngine::getInstance()->setTextureToBody(this, layer, path);
-    //privateNode->setMaterialType(irr::video::EMT_SOLID);
-	//privateNode->setMaterialType(irr::video::EMT_TRANSPARENT_ALPHA_CHANNEL_REF);
-}
-
-void GBody::setMaterialFlag(MATERIAL_FLAG flag, bool value){
-    //privateNode->setMaterialFlag((irr::video::E_MATERIAL_FLAG)flag, value);
-}
-
-void GBody::setMaterialType(MATERIAL_TYPE type){
-    //privateNode->setMaterialType((irr::video::E_MATERIAL_TYPE)type);
 }
 
 void GBody::AddText(std::string text, vector3df position, int id){

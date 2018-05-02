@@ -44,7 +44,6 @@ void PlayerParts::GenerateBodyPart(vector3df bodyPartPosition, vector3df phyisic
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 
 	newGraphicBody = g_engine->addObjMeshSceneNode(objPath, bodyPartPosition, m_rotation, vector3df(1, 1, 1));
-	newGraphicBody->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
 
 	newPhysicBody = new BT_Body();
 	newPhysicBody->CreateBox(bodyPartPosition, phyisicalScale, 40.0f, 0.0f, vector3df(0,0,0), C_BODYPART, bodypartCW);

@@ -61,9 +61,6 @@ void Projectile::UpdatePosShape(){
 	bt_body->Update();
 	vector3df pos = bt_body->GetPosition();
 	m_ProjectileNode->setPosition(pos);
-
-	initRot.Z += 10;
-	m_ProjectileNode->setRotation(initRot);
 }
 
 /**

@@ -127,18 +127,6 @@ public:
 	 * @return float 
 	 */
 	float GetAspectRatio();
-	
-	/**
-	 * @brief Draws 2D image in screen
-	 * 
-	 * @param texturePath 
-	 * @param rect 
-	 */
-	void draw2DImage(std::string texturePath, vector4df rect);
-	/**
-	 * Draws a rectangle
-	 */
-	void draw2DRectangle(vector3df color, float xInit, float yInit, float xEnd, float yEnd);
 
 	/// SMANAGER FUNCTIONS
 

@@ -21,7 +21,6 @@ void Switch::CreateSwitch(vector3df TPosition, vector3df TScale, vector3df TRota
 
     // Aplicamos Material unlit y Textura
     if (m_switchNode) {
-        m_switchNode->setMaterialFlag(MATERIAL_FLAG::EMF_LIGHTING, false);
         m_switchNode->setMaterialTexture(0, "./../assets/textures/button.png");
     }
 
