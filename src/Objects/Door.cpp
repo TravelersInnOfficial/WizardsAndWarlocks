@@ -10,7 +10,7 @@ Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df
 
     min = TRotation.Y;
     max = TRotation.Y + 90;
-    increment = -5;
+    increment = -80;
     rotation = TRotation;
     working = false;
     isOpen  = false;
@@ -90,8 +90,8 @@ void Door::Interact(){
     }
 }
 
-void Door::WorkDoor(){
-    rotation.Y += increment;
+void Door::WorkDoor(float deltaTime){
+    rotation.Y += increment * deltaTime;
     bt_body->Rotate(rotation);
 
     if(rotation.Y <= min || rotation.Y >= max){ 
@@ -110,9 +110,9 @@ void Door::UpdatePosShape(){
     m_doorNode->setRotation(rotation);
 }
 
-void Door::Update(){
+void Door::Update(float deltaTime){
     if(working){
-       WorkDoor();
+       WorkDoor(deltaTime);
     }
 	UpdatePosShape();
 }

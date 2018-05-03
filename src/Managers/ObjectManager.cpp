@@ -626,7 +626,7 @@ int ObjectManager::GetSpawnerSeed(){
 
 void ObjectManager::Update(float deltaTime){
 	UpdateGrail(deltaTime);
-	UpdateDoors();
+	UpdateDoors(deltaTime);
 	UpdateSwitchs();
 	UpdatePotions();
 	UpdateFountains(deltaTime);
@@ -640,11 +640,11 @@ void ObjectManager::UpdateGrail(float deltaTime){
 	if(grail!=nullptr) grail->Update(deltaTime);
 }
 
-void ObjectManager::UpdateDoors(){
+void ObjectManager::UpdateDoors(float deltaTime){
 	int size = doors.size();
 	for(int i=0; i<size; i++){
 		Door* d = doors[i];
-		d->Update();
+		d->Update(deltaTime);
 	}
 }
 

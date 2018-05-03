@@ -101,7 +101,7 @@ private:
 
 	// Updates
 	void UpdateGrail(float deltaTime);
-	void UpdateDoors();
+	void UpdateDoors(float deltaTime);
 	void UpdateSwitchs();
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);

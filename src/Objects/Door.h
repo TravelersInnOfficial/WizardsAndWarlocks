@@ -19,7 +19,7 @@ public:
 	~Door();
 	void Interact(Player* p);
 	void Interact();
-	void Update();
+	void Update(float deltaTime);
 	void SetBlock(bool bl);
 
 	// Sense Functions
@@ -41,7 +41,7 @@ public:
 
 private:
 	void CreateDoor(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d);
-	void WorkDoor();
+	void WorkDoor(float deltaTime);
 	void UpdatePosShape();
 	void createSoundEvents();	//Create the sound events needed for the player
 
