@@ -211,6 +211,7 @@ void Hechizo::EraseHUD(){
 
 void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool current, bool disabled, int alliance){
 	if(m_rect!=nullptr && m_cast_cd != nullptr && m_sprite != nullptr){
+		//TODO:: SI TE QUEDAS SIN MANA SE QUEDA EL RECTANGULO PINTADO
 		if(current){ 
 			if(alliance == ALLIANCE_WARLOCK) m_rect->SetColor(0.5,0,0.5);
 			else m_rect->SetColor(0,0,0.5);

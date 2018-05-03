@@ -349,8 +349,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vector2df size){
-	 TOEvector2df pos(position.X, position.Y);
-	 TOEvector2df dims(size.X, size.Y);
+	TOEvector2df pos(position.X, position.Y);
+	TOEvector2df dims(size.X, size.Y);
 	TFSprite* sprite = toe::AddSprite(texture, pos, dims);
 
 	GSprite* output = new GSprite(sprite);
@@ -358,12 +358,20 @@ GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vecto
 }
 
 GRect* GraphicEngine::add2DRect(vector2df position, vector2df size){
-	 TOEvector2df pos(position.X, position.Y);
-	 TOEvector2df dim(size.X, size.Y);
+	TOEvector2df pos(position.X, position.Y);
+	TOEvector2df dim(size.X, size.Y);
 	TFRect* rect = toe::Add2DRect(pos, dim);
 
 	GRect* output = new GRect(rect);
 	return output;
+}
+
+GText2D* GraphicEngine::add2DText(std::string text, vector2df position){
+	TOEvector2df pos(position.X, position.Y);
+	TF2DText* txt = toe::Add2DText(text,pos);
+	
+	GText2D* output = new GText2D(txt);
+	return output; 
 }
 
 

@@ -61,13 +61,6 @@ enum GAMETEXTURES {
 	TEXTURE_grass,
 	TEXTURE_bookcase,
 	TEXTURE_white_floor,
-	TEXTURE_POT_FIRE,
-	TEXTURE_POT_MP,
-	TEXTURE_POT_ICE,
-	TEXTURE_POT_THUNDER,
-	TEXTURE_POT_DEFENSE,
-	TEXTURE_POT_POISON,
-	TEXTURE_POT_HP,
 	TEXTURE_gardenwall,
 	TEXTURE_rock,
 	TEXTURE_none,
@@ -198,13 +191,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_grass]						= "./../assets/textures/grass.jpg";
 	m[TEXTURE_bookcase]						= "./../assets/textures/bookcase.png";
 	m[TEXTURE_white_floor]					= "./../assets/textures/white_floor.jpg";
-	m[TEXTURE_POT_FIRE]						= "./../assets/textures/potions/POT_FIRE.png";
-	m[TEXTURE_POT_MP]						= "./../assets/textures/potions/POT_MP.png";
-	m[TEXTURE_POT_ICE]						= "./../assets/textures/potions/POT_ICE.png";
-	m[TEXTURE_POT_THUNDER]					= "./../assets/textures/potions/POT_THUNDER.png";
-	m[TEXTURE_POT_DEFENSE]					= "./../assets/textures/potions/POT_DEFENSE.png";
-	m[TEXTURE_POT_POISON]					= "./../assets/textures/potions/POT_POISON.png";
-	m[TEXTURE_POT_HP]						= "./../assets/textures/potions/POT_HP.png";
 	m[TEXTURE_gardenwall]					= "./../assets/textures/gardenwall.jpg";
 	m[TEXTURE_rock]							= "./../assets/textures/rock.jpg";
 	m[TEXTURE_none]							= "./../assets/textures/none.png";

@@ -746,7 +746,7 @@ void Player::SendSignal(){
 
 void Player::Die(){
 	EffectManager::GetInstance()->CleanEffects(this);
-	GUIEngine::GetInstance()->ShowDeathMessage(m_name);
+	GUIEngine::GetInstance()->ShowDeathMessage(m_name,m_playerAlliance);
 	ObjectManager::GetInstance()->AddPlayerParts(m_playerAlliance, m_position, m_dimensions, m_rotation);
 
 	ResetDieSpells();										// Reseteamos los hechizos del jugador

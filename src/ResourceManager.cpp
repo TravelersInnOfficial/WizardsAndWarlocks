@@ -2,7 +2,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include "./Managers/StateManager.h"
 #include <NetworkEngine/NetworkEngine.h>
-
+#include <Assets.h>
 ResourceManager::ResourceManager(){
 	
 }

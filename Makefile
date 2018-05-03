@@ -21,7 +21,7 @@ else
     Target				:= WizardsAndWarlocks
     CPPFLAGS        	+= -I/usr/include -I/usr/include/bullet
     LDFLAGS				:= -L./libs/Linux
-    LIBS 				+= -lraknet -lfmod -lfmodstudio -lXxf86vm -lXext -lX11 -lXcursor -lGL -lGLEW -lglfw
+    LIBS 				+= -lraknet -lfmod -lfmodstudio -lXxf86vm -lXext -lX11 -lXcursor -lGL -lGLEW -lglfw -lpthread
 endif
 
 BinPath 			:= ./bin
