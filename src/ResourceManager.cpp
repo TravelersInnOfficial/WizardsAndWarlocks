@@ -2,91 +2,9 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include "./Managers/StateManager.h"
 #include <NetworkEngine/NetworkEngine.h>
-#include <Assets.h>
-#include <vector3d.h>
-
-#include <iostream>
-#include <fstream>
-#include <map>
 
 ResourceManager::ResourceManager(){
 	
-}
-
-void ResourceManager::ReadMeshes(){
-	std::ifstream readFile;
-
-  	readFile.open ("./../assets/json/meshes.txt", std::ifstream::in);
-  	if(readFile.is_open()){
-
-  		std::string line;
-  		std::string nameEnum = "";
-
-  		// En el caso de que no tengan un enumerador asignado le pondremos una posicion por defecto
-  		int lastWithoutEnum = (int)MESH_SIZE; 
-  		while(std::getline(readFile, line)){
-  			// Comprobamos si estamos leyendo un path
-  			if(line[0] == '>'){
-  				line.erase(line.begin());
-
-  				GAMEMESHES currentEnum;
-  				if(nameEnum.compare("")!=0){
-  					currentEnum = GAMEMESHES_String[nameEnum];
-  				}else{
-  					currentEnum = (GAMEMESHES)lastWithoutEnum;
-  					lastWithoutEnum++;
-  				}
-
-  				// Nos guardamos el valor en el mapa
-  				MESHMAP[currentEnum] = line;
-
-  				nameEnum = "";
-  			// En otro caso estamos leyendo un nombre de Enumerador
-  			}else{
-  				nameEnum = line;
-  			}
-
-  		}
-  	}
-  	readFile.close();
-}
-
-void ResourceManager::ReadTextures(){
-	std::ifstream readFile;
-
-  	readFile.open ("./../assets/json/textures.txt", std::ifstream::in);
-  	if(readFile.is_open()){
-
-  		std::string line;
-  		std::string nameEnum = "";
-
-  		// En el caso de que no tengan un enumerador asignado le pondremos una posicion por defecto
-  		int lastWithoutEnum = (int)TEXTURE_SIZE; 
-  		while(std::getline(readFile, line)){
-  			// Comprobamos si estamos leyendo un path
-  			if(line[0] == '>'){
-  				line.erase(line.begin());
-
-  				GAMETEXTURES currentEnum;
-  				if(nameEnum.compare("")!=0){
-  					currentEnum = GAMETEXTURES_String[nameEnum];
-  				}else{
-  					currentEnum = (GAMETEXTURES)lastWithoutEnum;
-  					lastWithoutEnum++;
-  				}
-
-  				// Nos guardamos el valor en el mapa
-  				TEXTUREMAP[currentEnum] = line;
-
-  				nameEnum = "";
-  			// En otro caso estamos leyendo un nombre de Enumerador
-  			}else{
-  				nameEnum = line;
-  			}
-
-  		}
-  	}
-  	readFile.close();
 }
 
 void ResourceManager::LoadResources(){
@@ -95,12 +13,7 @@ void ResourceManager::LoadResources(){
 	
 	LoadingScreen* s = new LoadingScreen();
 
-
-
-	ReadTextures();
-	ReadMeshes();
-
-	float totalSize = MESHMAP.size() + TEXTUREMAP.size();// + ANIMATIONMAP.size();
+	float totalSize = MESHMAP.size() + TEXTUREMAP.size() + ANIMATIONMAP.size();
 	float cont = 0;
 	float bar_width = 0;
 

@@ -105,116 +105,8 @@ enum GAMETEXTURES {
 	TEXTURE_ORB_SCROLL_FILL_MASK,
 	TEXTURE_SPELL_SLOT,
 	TEXTURE_ITEM_SLOT,
-	TEXTURE_ITEM_SLOT_MASK,
-
-	TEXTURE_SIZE
+	TEXTURE_ITEM_SLOT_MASK
 };
-
-static std::map<std::string, GAMETEXTURES> GAMETEXTURES_STR(){
-	std::map<std::string, GAMETEXTURES> m;
-
-	m["TEXTURE_tilefloor"]						= TEXTURE_tilefloor;	
-	m["TEXTURE_stones"]							= TEXTURE_stones;	
-	m["TEXTURE_npc"]							= TEXTURE_npc;	
-	m["TEXTURE_button"]							= TEXTURE_button;	
-	m["TEXTURE_door"]							= TEXTURE_door;	
-	m["TEXTURE_Warlock"]						= TEXTURE_Warlock;	
-	m["TEXTURE_game_icon"]						= TEXTURE_game_icon;
-	m["TEXTURE_uno"]							= TEXTURE_uno;
-	m["TEXTURE_cuatro"]							= TEXTURE_cuatro;
-	m["TEXTURE_dos"]							= TEXTURE_dos; 
-	m["TEXTURE_tres"]							= TEXTURE_tres;
-	m["TEXTURE_cero"]							= TEXTURE_cero; 
-	m["TEXTURE_TENUM_TAXES"]					= TEXTURE_TENUM_TAXES;
-	m["TEXTURE_TENUM_DISTURBANCE"]				= TEXTURE_TENUM_DISTURBANCE;
-	m["TEXTURE_TENUM_SILENCE"]					= TEXTURE_TENUM_SILENCE;
-	m["TEXTURE_TENUM_DEATH_CLAWS"]				= TEXTURE_TENUM_DEATH_CLAWS;
-	m["TEXTURE_TENUM_EXPLOSIVE"]				= TEXTURE_TENUM_EXPLOSIVE;
-	m["TEXTURE_TENUM_SPIRITS"]					= TEXTURE_TENUM_SPIRITS;
-	m["TEXTURE_POT_FIRE_HUD"]					= TEXTURE_POT_FIRE_HUD;
-	m["TEXTURE_POT_SHIELD_HUD"]					= TEXTURE_POT_SHIELD_HUD;
-	m["TEXTURE_POT_MP_HUD"]						= TEXTURE_POT_MP_HUD;
-	m["TEXTURE_POT_ICE_HUD"]					= TEXTURE_POT_ICE_HUD;
-	m["TEXTURE_POT_POISON_HUD"]					= TEXTURE_POT_POISON_HUD;
-	m["TEXTURE_POT_THUNDER_HUD"]				= TEXTURE_POT_THUNDER_HUD;
-	m["TEXTURE_POT_HP_HUD"]						= TEXTURE_POT_HP_HUD;
-	m["TEXTURE_SPELL_SPEED_HUD"]				= TEXTURE_SPELL_SPEED_HUD;
-	m["TEXTURE_SPELL_DUMMY_HUD"]				= TEXTURE_SPELL_DUMMY_HUD;
-	m["TEXTURE_SPELL_CLEANSE_HUD"]				= TEXTURE_SPELL_CLEANSE_HUD;
-	m["TEXTURE_SPELL_PROJECTILE_WIZARD_HUD"]	= TEXTURE_SPELL_PROJECTILE_WIZARD_HUD;
-	m["TEXTURE_SPELL_BLIZZARD_HUD"]				= TEXTURE_SPELL_BLIZZARD_HUD;
-	m["TEXTURE_SPELL_WALL_HUD"]					= TEXTURE_SPELL_WALL_HUD;
-	m["TEXTURE_SPELL_PROJECTILE_WARLOCK_HUD"]	= TEXTURE_SPELL_PROJECTILE_WARLOCK_HUD;
-	m["TEXTURE_SPELL_TELEPORTBASE_HUD"]			= TEXTURE_SPELL_TELEPORTBASE_HUD;
-	m["TEXTURE_SPELL_THUNDER_HUD"]				= TEXTURE_SPELL_THUNDER_HUD;
-	m["TEXTURE_SPELL_FIRE_HUD"]					= TEXTURE_SPELL_FIRE_HUD;
-	m["TEXTURE_SPELL_UNTARGET_HUD"]				= TEXTURE_SPELL_UNTARGET_HUD;
-	m["TEXTURE_SPELL_POISON_HUD"]				= TEXTURE_SPELL_POISON_HUD;
-	m["TEXTURE_SPELL_DEFENSE_HUD"]				= TEXTURE_SPELL_DEFENSE_HUD;
-	m["TEXTURE_SPELL_TELEPORT_HUD"]				= TEXTURE_SPELL_TELEPORT_HUD;
-	m["TEXTURE_SPELL_INVISIBILITY_HUD"]			= TEXTURE_SPELL_INVISIBILITY_HUD;
-	m["TEXTURE_BLOOD"]							= TEXTURE_BLOOD;
-	m["TEXTURE_FUZZY"]							= TEXTURE_FUZZY;
-	m["TEXTURE_HITLANDED"]						= TEXTURE_HITLANDED;
-	m["TEXTURE_decal"]							= TEXTURE_decal;	
-	m["TEXTURE_skydome"]						= TEXTURE_skydome;
-	m["TEXTURE_SPELL_WALL"]						= TEXTURE_SPELL_WALL;
-	m["TEXTURE_SPELL_THUNDER"]					= TEXTURE_SPELL_THUNDER;
-	m["TEXTURE_SPELL_FIRE"]						= TEXTURE_SPELL_FIRE;
-	m["TEXTURE_SPELL_POISON"]					= TEXTURE_SPELL_POISON;
-	m["TEXTURE_SPELL_PROJECTILE"]				= TEXTURE_SPELL_PROJECTILE;
-	m["TEXTURE_gold"]							= TEXTURE_gold;	
-	m["TEXTURE_grass"]							= TEXTURE_grass;	
-	m["TEXTURE_bookcase"]						= TEXTURE_bookcase;	
-	m["TEXTURE_white_floor"]					= TEXTURE_white_floor;
-	m["TEXTURE_POT_FIRE"]						= TEXTURE_POT_FIRE;
-	m["TEXTURE_POT_MP"]							= TEXTURE_POT_MP;
-	m["TEXTURE_POT_ICE"]						= TEXTURE_POT_ICE;
-	m["TEXTURE_POT_THUNDER"]					= TEXTURE_POT_THUNDER;
-	m["TEXTURE_POT_DEFENSE"]					= TEXTURE_POT_DEFENSE;
-	m["TEXTURE_POT_POISON"]						= TEXTURE_POT_POISON;
-	m["TEXTURE_POT_HP"]							= TEXTURE_POT_HP;
-	m["TEXTURE_gardenwall"]						= TEXTURE_gardenwall;	
-	m["TEXTURE_rock"]							= TEXTURE_rock;	
-	m["TEXTURE_none"]							= TEXTURE_none;	
-	m["TEXTURE_Switch"]							= TEXTURE_Switch;	
-	m["TEXTURE_2897"]							= TEXTURE_2897;	
-	m["TEXTURE_doorblocked"]					= TEXTURE_doorblocked;	
-	m["TEXTURE_Wizard"]							= TEXTURE_Wizard;	
-	m["TEXTURE_marbre5"]						= TEXTURE_marbre5;	
-	m["TEXTURE_negro"]							= TEXTURE_negro;	
-	m["TEXTURE_yellow"]							= TEXTURE_yellow;	
-	m["TEXTURE_madera"]							= TEXTURE_madera;	
-	m["TEXTURE_BUTTON"]							= TEXTURE_BUTTON;
-	m["TEXTURE_BUTTON_HOVER"]					= TEXTURE_BUTTON_HOVER;
-	m["TEXTURE_BUTTON_PRESSED"]					= TEXTURE_BUTTON_PRESSED;
-	m["TEXTURE_SHOP_BACKGROUND"]				= TEXTURE_SHOP_BACKGROUND;
-	m["TEXTURE_SHOP_SLOT"]						= TEXTURE_SHOP_SLOT;
-	m["TEXTURE_ALLIANCE_BACKGROUND"]			= TEXTURE_ALLIANCE_BACKGROUND;
-	m["TEXTURE_BOOK_BACKGROUND"]				= TEXTURE_BOOK_BACKGROUND;
-	m["TEXTURE_GUI_CURSOR"]						= TEXTURE_GUI_CURSOR;
-	m["TEXTURE_GUI_CURSOR_GLOW"]				= TEXTURE_GUI_CURSOR_GLOW;
-	m["TEXTURE_WARLOCK_ALLIANCE"]				= TEXTURE_WARLOCK_ALLIANCE;
-	m["TEXTURE_WIZARD_ALLIANCE"]				= TEXTURE_WIZARD_ALLIANCE;
-	m["TEXTURE_WARLOCK_ALLIANCE_HOVER"]			= TEXTURE_WARLOCK_ALLIANCE_HOVER;
-	m["TEXTURE_WIZARD_ALLIANCE_HOVER"]			= TEXTURE_WIZARD_ALLIANCE_HOVER;
-	m["TEXTURE_OSPELLS_BANNER"]					= TEXTURE_OSPELLS_BANNER;
-	m["TEXTURE_DSPELLS_BANNER"]					= TEXTURE_DSPELLS_BANNER;
-	m["TEXTURE_TSPELLS_BANNER"]					= TEXTURE_TSPELLS_BANNER;
-	m["TEXTURE_TRAPS_BANNER"]					= TEXTURE_TRAPS_BANNER;
-	m["TEXTURE_MENU_TITLE"]						= TEXTURE_MENU_TITLE;
-	m["TEXTURE_ORB_BACK"]						= TEXTURE_ORB_BACK;
-	m["TEXTURE_ORB_FRONT"]						= TEXTURE_ORB_FRONT;
-	m["TEXTURE_ORB_FILL"]						= TEXTURE_ORB_FILL;
-	m["TEXTURE_ORB_SCROLL_FILL"]				= TEXTURE_ORB_SCROLL_FILL;
-	m["TEXTURE_ORB_SCROLL_LIP"]					= TEXTURE_ORB_SCROLL_LIP;
-	m["TEXTURE_ORB_SCROLL_FILL_MASK"]			= TEXTURE_ORB_SCROLL_FILL_MASK;
-	m["TEXTURE_SPELL_SLOT"]						= TEXTURE_SPELL_SLOT;
-	m["TEXTURE_ITEM_SLOT"]						= TEXTURE_ITEM_SLOT;
-	m["TEXTURE_ITEM_SLOT_MASK"]					= TEXTURE_ITEM_SLOT_MASK;
-
-	return m;
-}
 
 enum GAMEMESHES {
 	MESH_grail,
@@ -228,29 +120,8 @@ enum GAMEMESHES {
 	MESH_bomb,
 	MESH_Warlock,
 	MESH_npc,
-	MESH_bookcase,
-
-	MESH_SIZE
+	MESH_bookcase
 };
-
-static std::map<std::string, GAMEMESHES> GAMEMESHES_STR(){
-	std::map<std::string, GAMEMESHES> m;
-
-	m["MESH_grail"] 		= MESH_grail;
-	m["MESH_WarlockArm"] 	= MESH_WarlockArm;
-	m["MESH_Wizard"] 		= MESH_Wizard;
-	m["MESH_door"] 			= MESH_door;
-	m["MESH_fountain"] 		= MESH_fountain;
-	m["MESH_button"] 		= MESH_button;
-	m["MESH_WizardArm"] 	= MESH_WizardArm;
-	m["MESH_potion"] 		= MESH_potion;
-	m["MESH_bomb"] 			= MESH_bomb;
-	m["MESH_Warlock"] 		= MESH_Warlock;
-	m["MESH_npc"] 			= MESH_npc;
-	m["MESH_bookcase"] 		= MESH_bookcase;
-
-	return m;
-}
 
 enum GAMEANIMATIONS {
 	ANIM_WIZARD_TSHOOT1,
@@ -268,6 +139,131 @@ enum GAMEANIMATIONS {
 	ANIM_WIZARD_ARMSHOOT1,
 	ANIM_WIZARD_ARMWALK,
 };
+
+
+static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
+	std::map<GAMETEXTURES, std::string> m;
+
+	m[TEXTURE_tilefloor]					= "./../assets/textures/tilefloor.png";
+	m[TEXTURE_stones]						= "./../assets/textures/stones.jpg";
+	m[TEXTURE_npc]							= "./../assets/textures/npc.png";
+	m[TEXTURE_button]						= "./../assets/textures/button.png";
+	m[TEXTURE_door]							= "./../assets/textures/door.jpg";
+	m[TEXTURE_Warlock]						= "./../assets/textures/Warlock.png";
+	m[TEXTURE_game_icon]					= "./../assets/textures/game_icon.png";
+	m[TEXTURE_uno]							= "./../assets/textures/HUD/Counter/1.png";
+	m[TEXTURE_cuatro]						= "./../assets/textures/HUD/Counter/4.png";
+	m[TEXTURE_dos]							= "./../assets/textures/HUD/Counter/2.png";
+	m[TEXTURE_tres]							= "./../assets/textures/HUD/Counter/3.png";
+	m[TEXTURE_cero]							= "./../assets/textures/HUD/Counter/0.png";
+	m[TEXTURE_TENUM_TAXES]					= "./../assets/textures/HUD/Traps/TENUM_TAXES.png";
+	m[TEXTURE_TENUM_DISTURBANCE]			= "./../assets/textures/HUD/Traps/TENUM_DISTURBANCE.png";
+	m[TEXTURE_TENUM_SILENCE]				= "./../assets/textures/HUD/Traps/TENUM_SILENCE.png";
+	m[TEXTURE_TENUM_DEATH_CLAWS]			= "./../assets/textures/HUD/Traps/TENUM_DEATH_CLAWS.png";
+	m[TEXTURE_TENUM_EXPLOSIVE]				= "./../assets/textures/HUD/Traps/TENUM_EXPLOSIVE.png";
+	m[TEXTURE_TENUM_SPIRITS]				= "./../assets/textures/HUD/Traps/TENUM_SPIRITS.png";
+	m[TEXTURE_POT_FIRE_HUD]					= "./../assets/textures/HUD/Potions/POT_FIRE.png";
+	m[TEXTURE_POT_SHIELD_HUD]				= "./../assets/textures/HUD/Potions/POT_SHIELD.png";
+	m[TEXTURE_POT_MP_HUD]					= "./../assets/textures/HUD/Potions/POT_MP.png";
+	m[TEXTURE_POT_ICE_HUD]					= "./../assets/textures/HUD/Potions/POT_ICE.png";
+	m[TEXTURE_POT_POISON_HUD]				= "./../assets/textures/HUD/Potions/POT_POISON.png";
+	m[TEXTURE_POT_THUNDER_HUD]				= "./../assets/textures/HUD/Potions/POT_THUNDER.png";
+	m[TEXTURE_POT_HP_HUD]					= "./../assets/textures/HUD/Potions/POT_HP.png";
+	m[TEXTURE_SPELL_SPEED_HUD]				= "./../assets/textures/HUD/Spells/SPELL_SPEED.png";
+	m[TEXTURE_SPELL_DUMMY_HUD]				= "./../assets/textures/HUD/Spells/SPELL_DUMMY.png";
+	m[TEXTURE_SPELL_CLEANSE_HUD]			= "./../assets/textures/HUD/Spells/SPELL_CLEANSE.png";
+	m[TEXTURE_SPELL_PROJECTILE_WIZARD_HUD]	= "./../assets/textures/HUD/Spells/SPELL_PROJECTILE_WIZARD.png";
+	m[TEXTURE_SPELL_BLIZZARD_HUD]			= "./../assets/textures/HUD/Spells/SPELL_BLIZZARD.png";
+	m[TEXTURE_SPELL_WALL_HUD]				= "./../assets/textures/HUD/Spells/SPELL_WALL.png";
+	m[TEXTURE_SPELL_PROJECTILE_WARLOCK_HUD]	= "./../assets/textures/HUD/Spells/SPELL_PROJECTILE_WARLOCK.png";
+	m[TEXTURE_SPELL_TELEPORTBASE_HUD]		= "./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png";
+	m[TEXTURE_SPELL_THUNDER_HUD]			= "./../assets/textures/HUD/Spells/SPELL_THUNDER.png";
+	m[TEXTURE_SPELL_FIRE_HUD]				= "./../assets/textures/HUD/Spells/SPELL_FIRE.png";
+	m[TEXTURE_SPELL_UNTARGET_HUD]			= "./../assets/textures/HUD/Spells/SPELL_UNTARGET.png";
+	m[TEXTURE_SPELL_POISON_HUD]				= "./../assets/textures/HUD/Spells/SPELL_POISON.png";
+	m[TEXTURE_SPELL_DEFENSE_HUD]			= "./../assets/textures/HUD/Spells/SPELL_DEFENSE.png";
+	m[TEXTURE_SPELL_TELEPORT_HUD]			= "./../assets/textures/HUD/Spells/SPELL_TELEPORT.png";
+	m[TEXTURE_SPELL_INVISIBILITY_HUD]		= "./../assets/textures/HUD/Spells/SPELL_INVISIBILITY.png";
+	m[TEXTURE_BLOOD]						= "./../assets/textures/overlays/BLOOD.png";
+	m[TEXTURE_FUZZY]						= "./../assets/textures/overlays/FUZZY.png";
+	m[TEXTURE_HITLANDED]					= "./../assets/textures/overlays/HITLANDED.png";
+	m[TEXTURE_decal]						= "./../assets/textures/decal.png";
+	m[TEXTURE_skydome]						= "./../assets/textures/skymap/skydome.jpg";
+	m[TEXTURE_SPELL_WALL]					= "./../assets/textures/projectils/SPELL_WALL.png";
+	m[TEXTURE_SPELL_THUNDER]				= "./../assets/textures/projectils/SPELL_THUNDER.png";
+	m[TEXTURE_SPELL_FIRE]					= "./../assets/textures/projectils/SPELL_FIRE.png";
+	m[TEXTURE_SPELL_POISON]					= "./../assets/textures/projectils/SPELL_POISON.png";
+	m[TEXTURE_SPELL_PROJECTILE]				= "./../assets/textures/projectils/SPELL_PROJECTILE.png";
+	m[TEXTURE_gold]							= "./../assets/textures/gold.jpg";
+	m[TEXTURE_grass]						= "./../assets/textures/grass.jpg";
+	m[TEXTURE_bookcase]						= "./../assets/textures/bookcase.png";
+	m[TEXTURE_white_floor]					= "./../assets/textures/white_floor.jpg";
+	m[TEXTURE_POT_FIRE]						= "./../assets/textures/potions/POT_FIRE.png";
+	m[TEXTURE_POT_MP]						= "./../assets/textures/potions/POT_MP.png";
+	m[TEXTURE_POT_ICE]						= "./../assets/textures/potions/POT_ICE.png";
+	m[TEXTURE_POT_THUNDER]					= "./../assets/textures/potions/POT_THUNDER.png";
+	m[TEXTURE_POT_DEFENSE]					= "./../assets/textures/potions/POT_DEFENSE.png";
+	m[TEXTURE_POT_POISON]					= "./../assets/textures/potions/POT_POISON.png";
+	m[TEXTURE_POT_HP]						= "./../assets/textures/potions/POT_HP.png";
+	m[TEXTURE_gardenwall]					= "./../assets/textures/gardenwall.jpg";
+	m[TEXTURE_rock]							= "./../assets/textures/rock.jpg";
+	m[TEXTURE_none]							= "./../assets/textures/none.png";
+	m[TEXTURE_Switch]						= "./../assets/textures/switch.png";
+	m[TEXTURE_2897]							= "./../assets/textures/2897.jpg";
+	m[TEXTURE_doorblocked]					= "./../assets/textures/doorblocked.jpg";
+	m[TEXTURE_Wizard]						= "./../assets/textures/Wizard.png";
+	m[TEXTURE_marbre5]						= "./../assets/textures/marbre5.jpg";
+	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
+	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
+	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
+	m[TEXTURE_BUTTON]						= "./../assets/textures/GUI/Menus/Common/button.png";
+	m[TEXTURE_BUTTON_HOVER]					= "./../assets/textures/GUI/Menus/Common/button_hover.png";
+	m[TEXTURE_BUTTON_PRESSED]				= "./../assets/textures/GUI/Menus/Common/button_pressed.png";
+	m[TEXTURE_SHOP_BACKGROUND]				= "./../assets/textures/GUI/Menus/ShopMenu/shop_background.png";
+	m[TEXTURE_SHOP_SLOT]					= "./../assets/textures/GUI/Menus/ShopMenu/slot.png";
+	m[TEXTURE_ALLIANCE_BACKGROUND]			= "./../assets/textures/GUI/Menus/AllianceMenu/alliance_background.png";
+	m[TEXTURE_BOOK_BACKGROUND]				= "./../assets/textures/GUI/Menus/MainMenu/book_background.png";
+	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
+	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
+	m[TEXTURE_WARLOCK_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance.png";
+	m[TEXTURE_WIZARD_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/wizard_alliance.png";
+	m[TEXTURE_WARLOCK_ALLIANCE_HOVER]		= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance_hover.png";
+	m[TEXTURE_WIZARD_ALLIANCE_HOVER]		= "./../assets/textures/GUI/Menus/AllianceMenu/wizard_alliance_hover.png";
+	m[TEXTURE_OSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/ofensive_spells_banner.png";
+	m[TEXTURE_DSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/defensive_spells_banner.png";
+	m[TEXTURE_TSPELLS_BANNER]				= "./../assets/textures/GUI/Menus/ShopMenu/tactic_spells_banner.png";
+	m[TEXTURE_TRAPS_BANNER]					= "./../assets/textures/GUI/Menus/ShopMenu/traps_banner.png";
+	m[TEXTURE_MENU_TITLE]					= "./../assets/textures/GUI/Menus/MainMenu/titulo.png";
+	m[TEXTURE_ORB_BACK]						= "./../assets/textures/HUD/Orb/orb_back.png";
+	m[TEXTURE_ORB_FRONT]					= "./../assets/textures/HUD/Orb/orb_front.png";
+	m[TEXTURE_ORB_FILL]						= "./../assets/textures/HUD/Orb/orb_fill.png";
+	m[TEXTURE_ORB_SCROLL_FILL]				= "./../assets/textures/HUD/Orb/orb_scroll_fill.png";
+	m[TEXTURE_ORB_SCROLL_LIP]				= "./../assets/textures/HUD/Orb/orb_scroll_lip.png";
+	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
+	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Orb/spell_slot.png";
+	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
+	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
+	return m;
+}
+
+static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
+	std::map<GAMEMESHES, std::string> m;
+	
+	m[MESH_grail]		= "./../assets/modelos/grail.obj";
+	m[MESH_WarlockArm]	= "./../assets/modelos/WarlockArm.obj";
+	m[MESH_Wizard]		= "./../assets/modelos/Wizard.obj";
+	m[MESH_door]		= "./../assets/modelos/door.obj";
+	m[MESH_fountain]	= "./../assets/modelos/fountain.obj";
+	m[MESH_button]		= "./../assets/modelos/button.obj";
+	m[MESH_WizardArm]	= "./../assets/modelos/WizardArm.obj";
+	m[MESH_potion]		= "./../assets/modelos/potion.obj";
+	m[MESH_bomb]		= "./../assets/modelos/bomb.obj";
+	m[MESH_Warlock]		= "./../assets/modelos/Warlock.obj";
+	m[MESH_npc]			= "./../assets/modelos/npc.obj";
+	m[MESH_bookcase]	= "./../assets/modelos/bookcase.obj";
+
+	return m;
+}
 
 static std::vector<std::string> CREATE_ANIMATIONMAP(){
 	std::vector<std::string> m;
@@ -293,13 +289,8 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
 	return m;
 }
 
+static std::map<GAMETEXTURES, std::string> TEXTUREMAP = CREATE_TEXTUREMAP();
+static std::map<GAMEMESHES, std::string> MESHMAP = CREATE_MESHMAP();
 static std::vector<std::string> ANIMATIONMAP = CREATE_ANIMATIONMAP();
-
-static std::map<std::string, GAMETEXTURES> GAMETEXTURES_String = GAMETEXTURES_STR();
-static std::map<GAMETEXTURES, std::string> TEXTUREMAP;
-
-static std::map<std::string, GAMEMESHES> GAMEMESHES_String = GAMEMESHES_STR();
-static std::map<GAMEMESHES, std::string> MESHMAP;
-
 
 #endif

@@ -6,8 +6,6 @@ class ResourceManager{
 public:
     ResourceManager();
     static void LoadResources();
-    static void ReadTextures();
-    static void ReadMeshes();
 };
 
 #endif
