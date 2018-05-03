@@ -30,7 +30,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateCamera = nullptr;
 
 	privateDriver->EnableClipping();
-	privateSManager->SetAmbientLight( TOEvector3df(0.15f,0.15f,0.15f));
+	privateSManager->SetAmbientLight( TOEvector3df(0.25f,0.25f,0.25f));
 
 	m_currentRoom = nullptr;
 }

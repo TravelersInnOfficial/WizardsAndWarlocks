@@ -8,11 +8,10 @@ Light::Light(vector3df TPosition, vector3df Color, float range){
 	 TOEvector3df rotation =  TOEvector3df(0,0,0);
 	 TOEvector4df color =  TOEvector4df(Color.X, Color.Y, Color.Z, 1);
 	
-	float attenuation = 0.1f - (range / 100.0f); // Attenuation: 0.1 TO 0 |||| Range: 0 to 10
-	if(attenuation < 0) attenuation = 0.0f;
-	if(attenuation > 1) attenuation = 0.1f;
-
-    privateNode = (TFNode*)sm->AddLight(position, rotation, color, attenuation);
+	//float attenuation = 0.1f - (range / 100.0f); // Attenuation: 0.1 TO 0 |||| Range: 0 to 10
+	//if(attenuation < 0) attenuation = 0.0f;
+	//if(attenuation > 1) attenuation = 0.1f;
+    privateNode = (TFNode*)sm->AddLight(position, rotation, color, range);
     
     if(GraphicEngine::getInstance()->m_currentRoom != nullptr){
         GraphicEngine::getInstance()->m_currentRoom->AddChild(this);
