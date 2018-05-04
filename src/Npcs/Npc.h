@@ -9,13 +9,14 @@ class Npc: public Entidad{
 		Npc();
 		virtual ~Npc();
 		
+		void Update(float deltaTime);
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		virtual void Interact(Player* p);
 		virtual void StopInteraction();
 
 	protected:
-		BT_Body*	pBody;
-	    GBody*      gBody;
+		BT_Body*		pBody;
+	    GAnimation*   	gBody;
 		bool active;
 	
 };

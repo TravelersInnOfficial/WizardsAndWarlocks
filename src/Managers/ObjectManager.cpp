@@ -631,6 +631,7 @@ void ObjectManager::Update(float deltaTime){
 	UpdatePotions();
 	UpdateFountains(deltaTime);
 	UpdateBlocks();
+	UpdateNpcs(deltaTime);
 	UpdateInvocations(deltaTime);
 	UpdateDamageAreas(deltaTime);
 	UpdatePlayerParts(deltaTime);
@@ -685,6 +686,14 @@ void ObjectManager::StopInteractionsNPC(){
 	for(int i=0; i<size; i++){
 		Npc* n = npcs[i];
 		n->StopInteraction();
+	}
+}
+
+void ObjectManager::UpdateNpcs(float deltaTime){
+	int size = npcs.size();
+	for(int i=0; i<size; i++){
+		Npc* n = npcs[i];
+		n->Update(deltaTime);
 	}
 }
 
