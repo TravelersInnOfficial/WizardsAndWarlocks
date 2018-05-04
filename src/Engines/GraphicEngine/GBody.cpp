@@ -4,10 +4,13 @@
 #include <NetworkEngine/NetworkEngine.h>
 
 GBody::GBody(TFMesh* node){
-    privateNode = (TFNode*)node;
-    if(GraphicEngine::getInstance()->m_currentRoom != nullptr){
-    	GraphicEngine::getInstance()->m_currentRoom->AddChild(this);
-    }
+	privateNode = nullptr;
+	if(node != nullptr){
+		privateNode = (TFNode*)node;
+		if(GraphicEngine::getInstance()->m_currentRoom != nullptr){
+			GraphicEngine::getInstance()->m_currentRoom->AddChild(this);
+		}
+	}
 }
 
 GBody::~GBody(){

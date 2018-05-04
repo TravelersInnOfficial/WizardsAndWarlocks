@@ -3,7 +3,7 @@
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {
-    privateNode = animation;
+    privateNode = (TFNode*)animation;
 }
 
 GAnimation::~GAnimation(){  }

@@ -19,6 +19,6 @@ MESH_bomb
 MESH_Warlock
 >./../assets/modelos/Warlock.obj
 MESH_npc
->"./../assets/modelos/npc.obj
+>./../assets/modelos/npc.obj
 MESH_bookcase
 >/../assets/modelos/bookcase.obj

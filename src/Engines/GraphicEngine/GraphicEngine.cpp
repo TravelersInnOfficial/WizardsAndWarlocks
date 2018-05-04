@@ -299,10 +299,10 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 
 GAnimation* GraphicEngine::addAnimatedMeshSceneNode(vector3df position, vector3df rotation, vector3df scale){
 	GAnimation* ga = nullptr;
-	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
-	 TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	 TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
-	
+	TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
+
 	ga = new GAnimation(
 		privateSManager->AddAnimation(position_TOE, rotation_TOE, scale_TOE)
 	);
