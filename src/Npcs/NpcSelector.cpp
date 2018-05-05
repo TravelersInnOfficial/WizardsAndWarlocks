@@ -30,7 +30,7 @@ void NpcSelector::CreateVisual(vector3df TPosition, vector3df TScale, vector3df 
 }
 
 void NpcSelector::CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	vector3df HalfExtents(TScale.X * 0.15f, TScale.Y * 0.35, TScale.Z * 0.15f);
+	vector3df HalfExtents(TScale.X * 1.2f, TScale.Y * 1.2f, TScale.Z * 1.2f);
 	pBody = new BT_Body();
 	pBody->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_NPC, npcCW);
 	pBody->SetRotation(TRotation);
