@@ -13,6 +13,7 @@ class Player;
 class Potion;
 class GSprite;
 class GRect;
+class GText2D;
 class Trap;
 //-------------------------
 
@@ -33,6 +34,7 @@ private:
 		GSprite* fill;
 		GSprite* scroll_fill;
 		GSprite* scroll_lip;
+        GText2D* info;
         float xPos;
         float yPos;
         float width;
@@ -41,7 +43,7 @@ private:
 		HUD_Orb();
         ~HUD_Orb();
 		void SetHeight(float v);
-		void Update(float vel);
+		void Update(float vel, std::string inf);
         void SetColor(int alliance);
 	};
 

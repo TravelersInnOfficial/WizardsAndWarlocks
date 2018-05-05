@@ -30,7 +30,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateCamera = nullptr;
 
 	privateDriver->EnableClipping();
-	privateSManager->SetAmbientLight( TOEvector3df(0.25f,0.25f,0.25f));
+	//privateSManager->SetAmbientLight( TOEvector3df(0.25f,0.25f,0.25f));
+	privateSManager->SetAmbientLight( TOEvector3df(1.0f,1.0f,1.0f));
 
 	m_currentRoom = nullptr;
 }
@@ -299,10 +300,10 @@ GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, 
 
 GAnimation* GraphicEngine::addAnimatedMeshSceneNode(vector3df position, vector3df rotation, vector3df scale){
 	GAnimation* ga = nullptr;
-	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
-	 TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	 TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
-	
+	TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
+
 	ga = new GAnimation(
 		privateSManager->AddAnimation(position_TOE, rotation_TOE, scale_TOE)
 	);
@@ -349,8 +350,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 }
 
 GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vector2df size){
-	 TOEvector2df pos(position.X, position.Y);
-	 TOEvector2df dims(size.X, size.Y);
+	TOEvector2df pos(position.X, position.Y);
+	TOEvector2df dims(size.X, size.Y);
 	TFSprite* sprite = toe::AddSprite(texture, pos, dims);
 
 	GSprite* output = new GSprite(sprite);
@@ -358,12 +359,20 @@ GSprite* GraphicEngine::addSprite(std::string texture, vector2df position, vecto
 }
 
 GRect* GraphicEngine::add2DRect(vector2df position, vector2df size){
-	 TOEvector2df pos(position.X, position.Y);
-	 TOEvector2df dim(size.X, size.Y);
+	TOEvector2df pos(position.X, position.Y);
+	TOEvector2df dim(size.X, size.Y);
 	TFRect* rect = toe::Add2DRect(pos, dim);
 
 	GRect* output = new GRect(rect);
 	return output;
+}
+
+GText2D* GraphicEngine::add2DText(std::string text, vector2df position){
+	TOEvector2df pos(position.X, position.Y);
+	TF2DText* txt = toe::Add2DText(text,pos);
+	
+	GText2D* output = new GText2D(txt);
+	return output; 
 }
 
 

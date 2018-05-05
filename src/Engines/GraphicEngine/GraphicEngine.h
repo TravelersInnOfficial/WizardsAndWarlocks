@@ -9,6 +9,7 @@
 #include "GEntity.h"
 #include "GSprite.h"
 #include "GRect.h"
+#include "GText2D.h"
 #include "EventReceiver.h"
 #include "MenuReceiver.h"
 #include <EventEnum.h>
@@ -30,6 +31,7 @@ class GraphicEngine{
 	friend class GRoom;
 	friend class GSprite;
 	friend class GRect;
+	friend class GText2D;
 	friend class GParticle;
 	friend class Light;
 
@@ -222,6 +224,7 @@ public:
 
 	GRect* add2DRect(vector2df position = vector2df(0,0), vector2df size = vector2df(10, 10));
 
+	GText2D* add2DText(std::string text = "", vector2df position = vector2df(0,0));
 	/**
 	 * @brief Returns mouse position in the screen
 	 *

@@ -61,13 +61,6 @@ enum GAMETEXTURES {
 	TEXTURE_grass,
 	TEXTURE_bookcase,
 	TEXTURE_white_floor,
-	TEXTURE_POT_FIRE,
-	TEXTURE_POT_MP,
-	TEXTURE_POT_ICE,
-	TEXTURE_POT_THUNDER,
-	TEXTURE_POT_DEFENSE,
-	TEXTURE_POT_POISON,
-	TEXTURE_POT_HP,
 	TEXTURE_gardenwall,
 	TEXTURE_rock,
 	TEXTURE_none,
@@ -198,13 +191,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_grass]						= "./../assets/textures/grass.jpg";
 	m[TEXTURE_bookcase]						= "./../assets/textures/bookcase.png";
 	m[TEXTURE_white_floor]					= "./../assets/textures/white_floor.jpg";
-	m[TEXTURE_POT_FIRE]						= "./../assets/textures/potions/POT_FIRE.png";
-	m[TEXTURE_POT_MP]						= "./../assets/textures/potions/POT_MP.png";
-	m[TEXTURE_POT_ICE]						= "./../assets/textures/potions/POT_ICE.png";
-	m[TEXTURE_POT_THUNDER]					= "./../assets/textures/potions/POT_THUNDER.png";
-	m[TEXTURE_POT_DEFENSE]					= "./../assets/textures/potions/POT_DEFENSE.png";
-	m[TEXTURE_POT_POISON]					= "./../assets/textures/potions/POT_POISON.png";
-	m[TEXTURE_POT_HP]						= "./../assets/textures/potions/POT_HP.png";
 	m[TEXTURE_gardenwall]					= "./../assets/textures/gardenwall.jpg";
 	m[TEXTURE_rock]							= "./../assets/textures/rock.jpg";
 	m[TEXTURE_none]							= "./../assets/textures/none.png";
@@ -269,12 +255,22 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
 	std::vector<std::string> m;
 
 	// INSERT ALL ANIMATIONS
-	m.insert( m.end(), AWIZARD_TSHOOT1.begin(), AWIZARD_TSHOOT1.end() );
+/*	m.insert( m.end(), AWIZARD_TSHOOT1.begin(), AWIZARD_TSHOOT1.end() );
     m.insert( m.end(), AWIZARD_TSHOOT2.begin(), AWIZARD_TSHOOT2.end() );
     m.insert( m.end(), AWIZARD_TSHOOT3.begin(), AWIZARD_TSHOOT3.end() );
     m.insert( m.end(), AWIZARD_TDRINK.begin(), AWIZARD_TDRINK.end() );
     m.insert( m.end(), AWIZARD_TINTERACT.begin(), AWIZARD_TINTERACT.end() );
 	
+
+	m.insert( m.end(), AWIZARD_TCIRCLE.begin(), AWIZARD_TCIRCLE.end() );
+    m.insert( m.end(), AWIZARD_BCIRCLE.begin(), AWIZARD_BCIRCLE.end() );
+    m.insert( m.end(), AWIZARD_TDAB.begin(), 	AWIZARD_TDAB.end() );
+    m.insert( m.end(), AWIZARD_BDAB.begin(), 	AWIZARD_BDAB.end() );
+	m.insert( m.end(), AWIZARD_TDANCE.begin(), 	AWIZARD_TDANCE.end() );
+    m.insert( m.end(), AWIZARD_BDANCE.begin(), 	AWIZARD_BDANCE.end() );
+    m.insert( m.end(), AWIZARD_TWIN.begin(), 	AWIZARD_TWIN.end() );
+    m.insert( m.end(), AWIZARD_BWIN.begin(), 	AWIZARD_BWIN.end() );
+
     m.insert( m.end(), AWIZARD_TIDLE.begin(), AWIZARD_TIDLE.end() );
     m.insert( m.end(), AWIZARD_BIDLE.begin(), AWIZARD_BIDLE.end() );
     m.insert( m.end(), AWIZARD_TWALK.begin(), AWIZARD_TWALK.end() );
@@ -282,9 +278,25 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWIZARD_TRUN.begin(), AWIZARD_TRUN.end() );
     m.insert( m.end(), AWIZARD_BRUN.begin(), AWIZARD_BRUN.end() );
 
-    m.insert( m.end(), AWIZARD_ARMWALK.begin(), AWIZARD_ARMWALK.end() );
-    m.insert( m.end(), AWIZARD_ARMIDLE.begin(), AWIZARD_ARMIDLE.end() );
-    m.insert( m.end(), AWIZARD_ARMSHOOT1.begin(), AWIZARD_ARMSHOOT1.end() );
+    m.insert( m.end(), AWIZARD_TJUMPSTART.begin(), 	AWIZARD_TJUMPSTART.end() );
+    m.insert( m.end(), AWIZARD_BJUMPSTART.begin(), 	AWIZARD_BJUMPSTART.end() );
+	m.insert( m.end(), AWIZARD_TJUMPFALL.begin(), 	AWIZARD_TJUMPFALL.end() );
+    m.insert( m.end(), AWIZARD_BJUMPFALL.begin(), 	AWIZARD_BJUMPFALL.end() );
+    m.insert( m.end(), AWIZARD_TJUMPEND.begin(), 	AWIZARD_TJUMPEND.end() );
+    m.insert( m.end(), AWIZARD_BJUMPEND.begin(), 	AWIZARD_BJUMPEND.end() );
+
+	m.insert( m.end(), AWIZARD_ARMIDLE.begin(), 		AWIZARD_ARMIDLE.end() );
+    m.insert( m.end(), AWIZARD_ARMWALK.begin(), 		AWIZARD_ARMWALK.end() );
+    m.insert( m.end(), AWIZARD_ARMRUN.begin(), 			AWIZARD_ARMRUN.end() );
+    m.insert( m.end(), AWIZARD_ARMSHOOT1.begin(), 		AWIZARD_ARMSHOOT1.end() );
+	m.insert( m.end(), AWIZARD_ARMSHOOT2.begin(), 		AWIZARD_ARMSHOOT2.end() );
+    m.insert( m.end(), AWIZARD_ARMSHOOT3.begin(), 		AWIZARD_ARMSHOOT3.end() );
+    m.insert( m.end(), AWIZARD_ARMDRINK.begin(), 		AWIZARD_ARMDRINK.end() );
+    m.insert( m.end(), AWIZARD_ARMINTERACT.begin(), 	AWIZARD_ARMINTERACT.end() );
+    m.insert( m.end(), AWIZARD_ARMDAB.begin(), 			AWIZARD_ARMDAB.end() );
+*/
+	m.insert( m.end(), AGENIE_DEFAULT.begin(), 		AGENIE_DEFAULT.end() );
+	m.insert( m.end(), ATARANTULA_DEFAULT.begin(), 	ATARANTULA_DEFAULT.end() );
 
 	return m;
 }

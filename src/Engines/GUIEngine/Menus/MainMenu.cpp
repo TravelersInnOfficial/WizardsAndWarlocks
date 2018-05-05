@@ -14,6 +14,11 @@ char MainMenu::server_name[MAX_STRING_SIZE] = "Unknown Castle";
 char MainMenu::ip_address[MAX_STRING_SIZE] = "127.0.0.1";
 
 MainMenu::MainMenu(MenuType type) : Menu(type){
+
+    button_layout = TEXTUREMAP[TEXTURE_BUTTON].c_str();
+    button_hover_layout = TEXTUREMAP[TEXTURE_BUTTON_HOVER].c_str();
+    button_pressed_layout = TEXTUREMAP[TEXTURE_BUTTON_PRESSED].c_str();
+
     m_id = "MainMenu";
 
     m_start_host = false;
@@ -27,6 +32,7 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     
     //ImGui::GetIO().MouseDrawCursor = true; //cursor visible
     //BUTTONS DATA
+    //std::cout<<"BUTTON LAYOUT"<<TEXTUREMAP[TEXTURE_BUTTON]<<"\n";
     texture_init = (void*)(size_t) toe::GetTextureID(button_layout);
     for(int i = 0; i<N_BUTTONS;i++){
         texture[i] = texture_init;

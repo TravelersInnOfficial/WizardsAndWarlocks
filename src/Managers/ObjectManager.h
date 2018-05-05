@@ -106,6 +106,7 @@ private:
 	void UpdatePotions();
 	void UpdateFountains(float deltaTime);
 	void UpdateBlocks();
+	void UpdateNpcs(float deltaTime);
 	void UpdateInvocations(float deltaTime);
 	void UpdateDamageAreas(float deltaTime);
 	void UpdatePlayerParts(float deltaTime);

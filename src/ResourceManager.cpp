@@ -4,6 +4,8 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <Assets.h>
 
+#include <Assets.h>
+
 ResourceManager::ResourceManager(){
 	
 }
@@ -39,11 +41,11 @@ void ResourceManager::LoadResources(){
 	}
 
 	// Load Animations
-	//for (animIt = ANIMATIONMAP.begin(); animIt != ANIMATIONMAP.end(); animIt++){
-	//	toe::LoadMesh(*animIt);
-	//	cont++;
-	//	bar_width = (cont*100)/totalSize;
-	//	s->SetLoadingStatus(*animIt, bar_width);
-	//}
+	for (animIt = ANIMATIONMAP.begin(); animIt != ANIMATIONMAP.end(); animIt++){
+		toe::LoadMesh(*animIt);
+		cont++;
+		bar_width = (cont*100)/totalSize;
+		s->SetLoadingStatus(*animIt, bar_width);
+	}
 	
 }

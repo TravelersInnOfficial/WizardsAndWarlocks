@@ -128,7 +128,7 @@ void PlayerHUD::ShowEnemyInMap(Player* p){
 void PlayerHUD::p_initPlayerOrbs(){
     int W = g_engine->GetScreenWidth();		
     float ratio = g_engine->GetAspectRatio();
-     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
+    TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
     //orb dimensions
     float new_width = W/5.0f;
@@ -155,6 +155,13 @@ void PlayerHUD::p_initPlayerOrbs(){
     health_orb->scroll_lip->SetColor(0.3,0,0,0.8);
 
     health_orb->front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
+
+    std::string hp = std::to_string((int) m_player->GetHP());
+    
+    health_orb->info = g_engine->add2DText(hp);
+    //std::cout<<" health_orb->info->GetSize().X: "<< health_orb->info->GetSize().X<<"\n";
+    //std::cout<<" health_orb->info->GetSize().Y: "<< health_orb->info->GetSize().Y<<"\n";
+    health_orb->info->SetPosition((pos.X + orb_dims.X/2) - health_orb->info->GetSize().X/2, 0);
     
     health_orb->xPos = pos.X;
     health_orb->yPos = pos.Y;
@@ -177,6 +184,9 @@ void PlayerHUD::p_initPlayerOrbs(){
     mana_orb->front = g_engine->addSprite(TEXTUREMAP[TEXTURE_ORB_FRONT],pos,orb_dims);
 
     mana_orb->SetColor(ALLIANCE_WARLOCK);
+
+    std::string mp = std::to_string((int) m_player->GetMP());
+    mana_orb->info = g_engine->add2DText(mp,vector2df(W - orb_dims.X, pos.Y));
 
     mana_orb->xPos = pos.X;
     mana_orb->yPos = pos.Y;
@@ -305,8 +315,8 @@ void PlayerHUD::p_drawPlayerOrbs() const{
 		health_orb->SetHeight(m_orb_height*(HP/100));
 		mana_orb->SetHeight(m_orb_height*(MP/100));
 
-		health_orb->Update(0.005);
-		mana_orb->Update(0.005);
+		health_orb->Update(0.005, std::to_string((int) m_player->GetHP()));
+		mana_orb->Update(0.005, std::to_string((int) m_player->GetMP()));
 	}
 }
 
@@ -431,6 +441,7 @@ PlayerHUD::HUD_Orb::HUD_Orb(){
     fill = nullptr;
     scroll_lip = nullptr;
     scroll_fill = nullptr;
+    info = nullptr;
 }
 
 PlayerHUD::HUD_Orb::~HUD_Orb(){
@@ -439,6 +450,7 @@ PlayerHUD::HUD_Orb::~HUD_Orb(){
 	delete fill;
 	delete scroll_lip;
 	delete scroll_fill;
+    delete info;
 
 	front = nullptr;
 	bkg = nullptr;
@@ -446,6 +458,7 @@ PlayerHUD::HUD_Orb::~HUD_Orb(){
 	scroll_lip = nullptr;
 	scroll_fill = nullptr;
 	scroll_lip = nullptr;
+    info = nullptr;
 }
 
 void PlayerHUD::HUD_Orb::SetHeight(float v){
@@ -469,9 +482,10 @@ void PlayerHUD::HUD_Orb::SetColor(int alliance){
     }   
 }   
 
-void PlayerHUD::HUD_Orb::Update(float vel){
-	scroll_fill->ScrollV(vel);
-	scroll_lip->ScrollH(-vel);
+void PlayerHUD::HUD_Orb::Update(float vel, std::string inf){
+	if(scroll_fill != nullptr) scroll_fill->ScrollV(vel);
+	if(scroll_lip != nullptr) scroll_lip->ScrollH(-vel);
+    if(info!=nullptr) info->SetText(inf);
 }
 
 PlayerHUD::ItemSlot::ItemSlot(){
