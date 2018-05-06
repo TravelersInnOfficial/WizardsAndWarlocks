@@ -218,13 +218,17 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 		}
 		else m_rect->SetColor(0,0,0);
 
+		//SI NO QUEDA MANA PARA LANZAR EL HECHIZO
 		if(disabled){
 			m_sprite->SetColor(0.2,0.2,0.2);
+			if(m_cast_cd->GetHeight()>0) m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown));
 		}
+		//SI EL TIEMPO DE CASTEO HA EMPEZADO
 		else if(timeCasting>0){ 
-			m_cast_cd->SetColor(0,0,1);
+			m_cast_cd->SetColor(1,1,0);
 			m_cast_cd->SetHeight((size + outline)*(timeCasting/casting)); //(initY + size) - size * (timeCasting/casting), 
 		}
+		//SI EL TIEMPO DE COOLDOWN HA EMPEZADO
 		else if(currentCooldown>0){ 
 			m_cast_cd->SetColor(1,0,0);
 			m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown)); //(initY) + size * (1-(currentCooldown/cooldown))

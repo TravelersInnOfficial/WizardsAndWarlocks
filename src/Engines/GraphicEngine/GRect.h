@@ -18,6 +18,7 @@ public:
 	void SetXPos(float x);
 	void SetYPos(float y);
 	float GetWidth();
+	float GetHeight();
 
 private:
 	GRect(TFRect* rect);

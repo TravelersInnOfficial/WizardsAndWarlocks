@@ -17,6 +17,7 @@ public:
     
     void SetText(std::string text);
     void SetPosition(float x, float y);
+    void SetTextSize(float siz);
     vector2df GetSize();
 
 private:

@@ -21,6 +21,10 @@ void GText2D::SetText(std::string text){
     }
 }
 
+void GText2D::SetTextSize(float siz){
+    m_tf2dtext->SetTextSize(siz);
+}
+
 vector2df GText2D::GetSize(){
     TOEvector2df s = m_tf2dtext->GetSize();
     vector2df toRet(s.X,s.Y);

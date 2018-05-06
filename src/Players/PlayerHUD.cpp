@@ -5,7 +5,6 @@
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/StateManager.h"
 #include "./../Objects/Potion.h"
-//#include "./../Objects/Trap.h"
 #include <Assets.h>
 #include <vector>
 #include <string>
@@ -159,9 +158,10 @@ void PlayerHUD::p_initPlayerOrbs(){
     std::string hp = std::to_string((int) m_player->GetHP());
     
     health_orb->info = g_engine->add2DText(hp);
-    //std::cout<<" health_orb->info->GetSize().X: "<< health_orb->info->GetSize().X<<"\n";
-    //std::cout<<" health_orb->info->GetSize().Y: "<< health_orb->info->GetSize().Y<<"\n";
-    health_orb->info->SetPosition((pos.X + orb_dims.X/2) - health_orb->info->GetSize().X/2, 0);
+    health_orb->info->SetTextSize(0.1f);
+    float info_posX = (pos.X + orb_dims.X/2) - health_orb->info->GetSize().X/2;
+    float info_posY = 0;
+    health_orb->info->SetPosition(info_posX, info_posY);
     
     health_orb->xPos = pos.X;
     health_orb->yPos = pos.Y;
@@ -186,7 +186,11 @@ void PlayerHUD::p_initPlayerOrbs(){
     mana_orb->SetColor(ALLIANCE_WARLOCK);
 
     std::string mp = std::to_string((int) m_player->GetMP());
-    mana_orb->info = g_engine->add2DText(mp,vector2df(W - orb_dims.X, pos.Y));
+    mana_orb->info = g_engine->add2DText(mp);
+    mana_orb->info->SetTextSize(0.1f);
+    info_posX = W-orb_dims.X/2 - (mana_orb->info->GetSize().X/2);
+    info_posY = 0;
+    mana_orb->info->SetPosition(info_posX, info_posY);
 
     mana_orb->xPos = pos.X;
     mana_orb->yPos = pos.Y;
@@ -204,7 +208,8 @@ void PlayerHUD::p_initStaminaBar(){
     float xInit = health_orb->width;		// Calculate the Init and End of the bar on X axis
     float xEnd =  W - mana_orb->width;		
 
-    float yInit = spell_slot->GetHeight();
+    //float yInit = spell_slot->GetHeight();
+    float yInit = 0.0f;
     float yEnd = yInit + size;
 
     stamina_bar =g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
@@ -228,7 +233,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
      TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
     if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
-    vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
+    vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 10);
 
     spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
 }
@@ -336,7 +341,7 @@ void PlayerHUD::p_drawPlayerSpellSelector() const{
     if(mana_orb != nullptr){
         float W =  g_engine->GetScreenWidth();
         float xPos = W - mana_orb->width;                               // X position
-        float yPos = 3;                                                 // Y position
+        float yPos = 13;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell
 
@@ -485,7 +490,12 @@ void PlayerHUD::HUD_Orb::SetColor(int alliance){
 void PlayerHUD::HUD_Orb::Update(float vel, std::string inf){
 	if(scroll_fill != nullptr) scroll_fill->ScrollV(vel);
 	if(scroll_lip != nullptr) scroll_lip->ScrollH(-vel);
-    if(info!=nullptr) info->SetText(inf);
+    if(info!=nullptr){ 
+        info->SetText(inf);
+        float info_posX = (bkg->GetPosition().X + bkg->GetWidth()/2) - info->GetSize().X/2;
+        float info_posY = 0;
+        info->SetPosition(info_posX, info_posY);
+    }
 }
 
 PlayerHUD::ItemSlot::ItemSlot(){

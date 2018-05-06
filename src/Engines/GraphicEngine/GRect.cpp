@@ -37,8 +37,11 @@ void GRect::SetYPos(float y){
 	m_rect->SetPosY(y);
 }
 
-
 float GRect::GetWidth(){
 	return m_rect->GetWidth();
+}
+
+float GRect::GetHeight(){
+	return m_rect->GetHeight();
 }
 
