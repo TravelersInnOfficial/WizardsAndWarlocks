@@ -46,7 +46,7 @@ private:
 	
 	//Por cada hechizo que pueda tener el jugador un hastable
 	std::map<Player*, Hechizo*> m_spells[4];
-	int numHechizos = 4;
+	int m_spellNumber = 4;
 
 	std::map<SPELLCODE, std::string> spell_names;
 	std::map<SPELLCODE, std::string> spell_descriptions;

@@ -59,7 +59,7 @@ void SpellManager::loadSpellsData(){
 }
 
 void SpellManager::EmptyObject(){
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		m_spells[i].clear();
 	}
 	instance = nullptr;
@@ -78,9 +78,9 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
 	bool toRet = false;
 	bool alreadyHas = false;
 
-	if(num >=0 && num < numHechizos){			// Comprobamos si el numero de hechizo pasado es correcto
+	if(num >=0 && num < m_spellNumber){			// Comprobamos si el numero de hechizo pasado es correcto
 
-		for(int i = 1; i < numHechizos && !alreadyHas; i++){
+		for(int i = 1; i < m_spellNumber && !alreadyHas; i++){
 			Hechizo* hAux = m_spells[i][p];
 			if(hAux != nullptr){
 				SPELLCODE currentSpell = hAux->GetType();
@@ -120,7 +120,7 @@ bool SpellManager::AddHechizo(int num, Player* p, SPELLCODE type, bool broadcast
  */
 void SpellManager::UpdateCooldown(float deltaTime){
 	m_deltaTime = deltaTime;				// Hacemos update de nuestro deltaTime
-	for(int i=0; i<numHechizos; i++){			// Recorremos todos los hashtables que tenemos
+	for(int i=0; i<m_spellNumber; i++){			// Recorremos todos los hashtables que tenemos
 		std::map<Player*, Hechizo*>::iterator it = m_spells[i].begin();
 		for(; it!=m_spells[i].end(); ++it){		// Recorremos entre todos los m_spells
 			Hechizo* h = it->second;			// Cargamos el hechizo
@@ -136,7 +136,7 @@ void SpellManager::UpdateCooldown(float deltaTime){
 }
 
 void SpellManager::ResetCooldown(Player* p){
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		if(m_spells[i].find(p) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][p];
 			h->ResetCooldown();
@@ -145,7 +145,7 @@ void SpellManager::ResetCooldown(Player* p){
 }
 
 bool SpellManager::LanzarHechizo(int num, Player* p){
-	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+	if(num>=0 && num<m_spellNumber){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(m_spells[num].find(p) != m_spells[num].end()){
 			Hechizo* h = m_spells[num][p];			// Cargamos el hechizo en una variables
 			if(h!=nullptr){							// Comprobamos si realmente existe
@@ -167,7 +167,7 @@ bool SpellManager::LanzarHechizo(int num, Player* p){
  * @param p Player que lanza el hechizo
  */
 bool SpellManager::StartHechizo(int num, Player* p){
-	if(num>=0 && num<numHechizos){				// Comprobamos si el numero de hechizo pasado es correcto
+	if(num>=0 && num<m_spellNumber){				// Comprobamos si el numero de hechizo pasado es correcto
 		if(m_spells[num].find(p) != m_spells[num].end()){	// Comprobamos que la clave este
 			Hechizo* h = m_spells[num][p];			// Cargamos el hechizo en una variables
 			if(h!=nullptr){							// Comprobamos si realmente existe
@@ -183,7 +183,7 @@ bool SpellManager::StartHechizo(int num, Player* p){
 }
 
 void SpellManager::ResetHechizo(int num, Player* p){
-	if(num>=0 && num<numHechizos){
+	if(num>=0 && num<m_spellNumber){
 		if(m_spells[num].find(p) != m_spells[num].end()){
 			Hechizo* h = m_spells[num][p];
 			if(h!=nullptr){
@@ -194,7 +194,7 @@ void SpellManager::ResetHechizo(int num, Player* p){
 }
 
 void SpellManager::ResetHechizo(Player* p){
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		if(m_spells[i].find(p) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][p];
 			if(h!=nullptr){
@@ -205,7 +205,7 @@ void SpellManager::ResetHechizo(Player* p){
 }
 
 void SpellManager::ResetDieHechizo(Player* p){
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		if(m_spells[i].find(p) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][p];
 			if(h!=nullptr){
@@ -217,7 +217,7 @@ void SpellManager::ResetDieHechizo(Player* p){
 
 void SpellManager::ResetAllDieHechizo(){
 	std::map<Player*, Hechizo*>::iterator it;
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		it = m_spells[i].begin();
 		for(;it!=m_spells[i].end(); it++){
 			Hechizo* h = it->second;
@@ -229,7 +229,7 @@ void SpellManager::ResetAllDieHechizo(){
 }
 
 SPELLCODE SpellManager::GetSpellCode(int num, Player* p){
-	if(num>=0 && num<numHechizos){
+	if(num>=0 && num<m_spellNumber){
 		if(m_spells[num].find(p) != m_spells[num].end()){
 			Hechizo* h = m_spells[num][p];
 			if(h!=nullptr){
@@ -241,7 +241,7 @@ SPELLCODE SpellManager::GetSpellCode(int num, Player* p){
 }
 
 float SpellManager::GetUtility(int num, Player* p){
-	if(num>=0 && num<numHechizos){
+	if(num>=0 && num<m_spellNumber){
 		if(m_spells[num].find(p) != m_spells[num].end()){
 			Hechizo* h = m_spells[num][p];
 			if(h!=nullptr){
@@ -255,7 +255,7 @@ float SpellManager::GetUtility(int num, Player* p){
 float SpellManager::GetMinCostPM(Player* p){
 	float min = std::numeric_limits<float>::max();;
 
-	for(int i=0; i<numHechizos; i++){
+	for(int i=0; i<m_spellNumber; i++){
 		if(m_spells[i].find(p) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][p];
 			if(h != nullptr){
@@ -423,12 +423,12 @@ std::string SpellManager::GetPathFromEnum(SPELLCODE sKind){
 	return toRet;
 }
 
-int SpellManager::GetNumSpells(){ return numHechizos; }
+int SpellManager::GetNumSpells(){ return m_spellNumber; }
 
 std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 	std::vector<Hechizo*> spells;
 
-	for(int i = 0; i < numHechizos;i++){
+	for(int i = 0; i < m_spellNumber;i++){
 		if(m_spells[i].find(player) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][player];
 			if(h != nullptr) spells.push_back(h);
@@ -441,7 +441,7 @@ std::vector<Hechizo*> SpellManager::GetSpells(Player* player){
 void SpellManager::ErasePlayer(Player* player){
 	
 	ResetDieHechizo(player);
-	for(int i=0; i < numHechizos; i++){
+	for(int i=0; i < m_spellNumber; i++){
 		if(m_spells[i].find(player) != m_spells[i].end()){
 			Hechizo* h = m_spells[i][player];
 			if(h!=nullptr){
