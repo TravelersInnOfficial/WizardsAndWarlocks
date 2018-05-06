@@ -51,17 +51,19 @@ void GuivernoWind::ResetSpell(){
 
 void GuivernoWind::CreateArea(Player* p){
 	vector3df pos = p->GetPos();
-	vector3df rot = p->GetRot();
+	vector3df rot = p->GetCameraRot();
 
 	playSoundEvent(voiceEvent, p->GetPos()); //Play voice event
 	shotEvent->setParamValue("Maintain click", 0.00f);
 	playSoundEvent(shotEvent, p->GetPos()); //Play voice event
 
-	rot.Z = 0.0f; rot.X = 0.0f;
-	rot.Y = rot.Y * 180 / M_PI;
+	rot.Z = 0.0f;
 
-	pos.X = pos.X + sin(rot.Y)*dist;
-	pos.Z = pos.Z + cos(rot.Y)*dist;
+	float radRotY = rot.Y * M_PI / 180;
+	float radRotX = -rot.X * M_PI / 180;
+	pos.X = pos.X + sin(radRotY)*cos(radRotX)*dist;
+	pos.Y = pos.Y + sin(radRotX)*dist;
+	pos.Z = pos.Z + cos(radRotY)*cos(radRotX)*dist;
 
 	area = (IceArea*)ObjectManager::GetInstance()->AddDamageArea(pos, vector3df(1,0.5f,2), rot, AREA_ICE);
 	area->SetEmisor(p->GetId());
@@ -69,13 +71,15 @@ void GuivernoWind::CreateArea(Player* p){
 
 void GuivernoWind::UpdateArea(Player* p){
 	vector3df pos = p->GetPos();
-	vector3df rot = p->GetRot();
+	vector3df rot = p->GetCameraRot();
 
-	pos.X = pos.X + sin(rot.Y)*dist;
-	pos.Z = pos.Z + cos(rot.Y)*dist;
+	float radRotY = rot.Y * M_PI / 180;
+	float radRotX = -rot.X * M_PI / 180;
+	pos.X = pos.X + sin(radRotY)*cos(radRotX)*dist;
+	pos.Y = pos.Y + sin(radRotX)*dist;
+	pos.Z = pos.Z + cos(radRotY)*cos(radRotX)*dist;
 
-	rot.Z = 0.0f; rot.X = 0.0f;
-	rot.Y = rot.Y * 180 / M_PI;
+	rot.Z = 0.0f; 
 
 	area->SetPosition(pos);
 	area->SetRotation(rot);

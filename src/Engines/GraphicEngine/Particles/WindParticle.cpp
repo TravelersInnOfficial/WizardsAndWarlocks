@@ -17,7 +17,7 @@ void WindParticle::InitParticle(Particle& p){
 	velocity = 2;
 	int maxRandomVel = 15;
 	X = direction.X * velocity + ((rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f);
-	Y = (rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f;
+	Y = direction.Y * velocity + (rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f;
 	Z = direction.Z * velocity + ((rand() % maxRandomVel)/10.0f - maxRandomVel/20.0f);
 	p.speed =  TOEvector3df(X,Y,Z);
 

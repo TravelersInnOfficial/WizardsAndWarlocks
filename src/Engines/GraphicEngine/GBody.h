@@ -24,6 +24,8 @@ public:
 	
 	void AddText(std::string text, vector3df position, int id = 0);
 
+	void EditText(std::string text, int id = 0);
+
 	void SetInvisible();
 
 	void ChangeShader(SHADERTYPE shader);

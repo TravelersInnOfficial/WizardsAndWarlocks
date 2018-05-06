@@ -127,6 +127,7 @@ class Player: public Entidad{
 		vector3df GetHeadPos();
 		float GetRotY();
 		vector3df GetRot();
+		vector3df GetCameraRot();
 		float GetWidth();
 		float GetHeight();
 		float GetLength();

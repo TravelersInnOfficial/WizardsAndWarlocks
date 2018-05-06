@@ -897,7 +897,9 @@ void Player::UpdatePosShape(float deltatime){
 
 		m_playerNode->setPosition(pos);
 		m_rotation = bt_body->GetRotation();
-		m_playerNode->setRotation(m_rotation * 180 / M_PI);
+
+		if(m_isPlayerOne)m_playerNode->setRotation(m_camera->GetRotation());
+		else m_playerNode->setRotation(m_rotation * 180 / M_PI);
 	}
 }
 
@@ -986,6 +988,8 @@ vector3df Player::GetPos(){ return m_position; }
 float Player::GetRotY(){ return m_rotation.Y; }
 
 vector3df Player::GetRot(){ return m_rotation; }
+
+vector3df Player::GetCameraRot(){ if(m_camera!=nullptr) return m_camera->GetRotation();}
 
 float Player::GetWidth(){ return m_dimensions.X; }
 
@@ -1124,11 +1128,13 @@ void Player::SetVisible(bool visible){
 	if(!visible) {
 		m_visible = false;
 		m_playerNode->setMaterialTexture(0, "../assets/textures/none.png");
+		m_playerNode->EditText("");
 	}
 	else{
 		m_visible = true;
 		if(m_playerAlliance == ALLIANCE_WARLOCK) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 		else m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+		m_playerNode->EditText(m_name);
 	}
 }
 

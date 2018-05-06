@@ -43,6 +43,17 @@ void GBody::AddText(std::string text, vector3df position, int id){
 	m_billboards[id] = privateNode->AddBillboard(motorPosition, text);
 }
 
+void GBody::EditText(std::string text, int id){
+	// COmprobamos si ya existia la id almacenada
+	if(m_billboards.find(id) != m_billboards.end()){
+		// Comprobamos que haya algo creado ahi
+		int motorId = m_billboards[id];
+		if(motorId != -1){
+			privateNode->SetBillboardText(text, motorId);
+		}
+	}
+}
+
 void GBody::SetInvisible(){
 	((TFMesh*)privateNode)->SetInvisible();
 }

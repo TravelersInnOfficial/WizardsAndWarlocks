@@ -19,14 +19,19 @@ void IceArea::SetPosition(vector3df pos){
 	m_areaNode->setPosition(pos);
 	if(particle != nullptr){
 		WindParticle* pm = (WindParticle*)particle->GetPM();
-		float rot = m_areaNode->getRotation().Y * M_PI / 180.0f;
-		vector3df newDir = vector3df(sin(rot), 0, cos(rot));
+
+		vector3df rotation = m_areaNode->getRotation();
+
+		float rotX = -rotation.X * M_PI / 180.0f;
+		float rotY = rotation.Y * M_PI / 180.0f;
+		vector3df newDir = vector3df(sin(rotY)*cos(rotX), sin(rotX), cos(rotY)*cos(rotX));
 		pm->SetDirection(newDir);
 
 		float dist = -1.0f;
 		vector3df TPosition = pos;
-		TPosition.X = TPosition.X + sin(rot) * dist;
-		TPosition.Z = TPosition.Z + cos(rot) * dist;
+		TPosition.X = TPosition.X + sin(rotY)*cos(rotX)*dist;
+		TPosition.Y = TPosition.Y + sin(rotX)*dist;
+		TPosition.Z = TPosition.Z + cos(rotY)*cos(rotX)*dist;
 		particle->SetPosSpecial(TPosition);
 	}
 }
