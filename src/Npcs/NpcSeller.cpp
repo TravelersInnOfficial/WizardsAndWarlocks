@@ -32,7 +32,7 @@ void NpcSeller::CreateVisual(vector3df TPosition, vector3df TScale, vector3df TR
 }
 
 void NpcSeller::CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation){
-	vector3df HalfExtents(TScale.X * 0.65f, TScale.Y * 0.5, TScale.Z * 0.5f);
+	vector3df HalfExtents(TScale.X * 1.5, TScale.Y * 1.2, TScale.Z * 1.5);
 	pBody = new BT_Body();
 	pBody->CreateBox(TPosition, HalfExtents,0,0,vector3df(0,0,0), C_NPC, npcCW);
 	pBody->SetRotation(TRotation);
