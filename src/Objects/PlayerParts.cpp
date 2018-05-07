@@ -95,6 +95,9 @@ void PlayerParts::GenerateWarlockBodyParts(vector3df bodyPos){
 	GenerateBodyPart(bodyPos, vector3df(0.2, 0.2, 0.2), "./../assets/modelos/PlayerParts/Warlock/leftArm.obj");
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj");
 	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/ornament1.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.1, 0.1), "./../assets/modelos/PlayerParts/Warlock/ornament2.obj");
+	GenerateBodyPart(bodyPos, vector3df(0.1, 0.5, 0.1), "./../assets/modelos/PlayerParts/Warlock/staff.obj");
 	for(int i = 0; i < m_graphicParts.size(); i++){
 		if(m_graphicParts.at(i) != nullptr) GraphicEngine::getInstance()->setTextureToBody(m_graphicParts.at(i), 0, "./../assets/textures/Warlock.png");
 	}

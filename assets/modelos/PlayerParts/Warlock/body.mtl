@@ -1,11 +1,11 @@
-# Blender MTL File: 'PlayersSeparated.blend'
+# Blender MTL File: 'body.blend'
 # Material Count: 1
 
-newmtl lambert2.008
-Ns 92.156863
+newmtl Warlock
+Ns 82.352941
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
+Kd 0.640000 0.092714 0.020880
+Ks 0.061854 0.061854 0.061854
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
