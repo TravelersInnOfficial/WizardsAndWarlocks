@@ -16,8 +16,6 @@ void List::clear(){
 }
 
 void List::add(NodeRecord* nr){
-    if(nr->m_node == nullptr) std::cout<<"TIO, QUE ES NULL"<<std::endl;
-
     int pos = getNodeRecordPosition(nr->m_node);
     if(pos != -1){
         m_list[pos] = nr;

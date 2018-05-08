@@ -21,6 +21,10 @@ public:
 	 * path: relative path of texture
 	*/
 	void setMaterialTexture(int layer, std::string path);
+
+	void SetBumpMap(std::string path);
+
+	void SetSpecularMap(std::string path);
 	
 	void AddText(std::string text, vector3df position, int id = 0);
 

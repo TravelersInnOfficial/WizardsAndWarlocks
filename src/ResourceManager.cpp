@@ -4,8 +4,6 @@
 #include <NetworkEngine/NetworkEngine.h>
 #include <Assets.h>
 
-#include <Assets.h>
-
 ResourceManager::ResourceManager(){
 	
 }
