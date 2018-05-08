@@ -67,6 +67,7 @@ private:
 
         // Map Info
         GSprite*                   m_mapImage;
+        GSprite*                   m_compassImg;
         float                      m_originalSize;
         float                      m_sizeMap;
         float                      m_zoom;
@@ -108,6 +109,7 @@ private:
     GraphicEngine* g_engine;
     HUD_Orb* health_orb;
 	HUD_Orb* mana_orb;
+    GRect* stamina_bkg;
     GRect* stamina_bar;
     GSprite* spell_slot;
     ItemSlot* potion_slot;

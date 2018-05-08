@@ -13,6 +13,10 @@ void GRect::SetColor(float r, float g, float b){
 	m_rect->SetColor(r, g, b);
 }
 
+void GRect::SetMask(std::string path){
+	m_rect->SetMask(path);
+}
+
 void GRect::SetRotation(float rot){
 	m_rect->SetRotation(rot);
 }

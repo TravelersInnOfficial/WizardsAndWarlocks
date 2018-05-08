@@ -98,7 +98,8 @@ enum GAMETEXTURES {
 	TEXTURE_ORB_SCROLL_FILL_MASK,
 	TEXTURE_SPELL_SLOT,
 	TEXTURE_ITEM_SLOT,
-	TEXTURE_ITEM_SLOT_MASK
+	TEXTURE_ITEM_SLOT_MASK,
+	TEXTURE_MINIMAP_COMPASS
 };
 
 enum GAMEMESHES {
@@ -177,6 +178,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SPELL_DEFENSE_HUD]			= "./../assets/textures/HUD/Spells/SPELL_DEFENSE.png";
 	m[TEXTURE_SPELL_TELEPORT_HUD]			= "./../assets/textures/HUD/Spells/SPELL_TELEPORT.png";
 	m[TEXTURE_SPELL_INVISIBILITY_HUD]		= "./../assets/textures/HUD/Spells/SPELL_INVISIBILITY.png";
+	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Spells/spell_slot.png";
 	m[TEXTURE_BLOOD]						= "./../assets/textures/overlays/BLOOD.png";
 	m[TEXTURE_FUZZY]						= "./../assets/textures/overlays/FUZZY.png";
 	m[TEXTURE_HITLANDED]					= "./../assets/textures/overlays/HITLANDED.png";
@@ -226,9 +228,10 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ORB_SCROLL_FILL]				= "./../assets/textures/HUD/Orb/orb_scroll_fill.png";
 	m[TEXTURE_ORB_SCROLL_LIP]				= "./../assets/textures/HUD/Orb/orb_scroll_lip.png";
 	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
-	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Orb/spell_slot.png";
+	//m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Orb/spell_slot.png";
 	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
 	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
+	m[TEXTURE_MINIMAP_COMPASS]				= "./../assets/textures/HUD/Minimap/compass.png";
 	return m;
 }
 

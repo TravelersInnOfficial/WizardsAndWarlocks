@@ -1,6 +1,7 @@
 #include "Hechizo.h"
 #include "./../Managers/BulletManager.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include <Assets.h>
 
 Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP){
 	costePM = costPM;
@@ -19,7 +20,8 @@ Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std
 	HUDTexturePath = HUDMiniature;
 	shotEvent = nullptr;
 	voiceEvent = nullptr;
-
+	
+	m_bkg = nullptr;
 	m_rect = nullptr;
 	m_cast_cd = nullptr;
 	m_sprite = nullptr;
@@ -198,12 +200,17 @@ float Hechizo::GetTotalCasting(){
 	return casting;
 }
 
+float Hechizo::GetHUDHeight(){
+	return m_bkg->GetHeight();
+}
 void Hechizo::EraseHUD(){
 
+	if(m_bkg		!= nullptr) delete m_bkg;
 	if(m_rect 		!= nullptr)	delete m_rect;
 	if(m_cast_cd 	!= nullptr)	delete m_cast_cd;
 	if(m_sprite 	!= nullptr) delete m_sprite;
 	
+	m_bkg = nullptr;
 	m_rect = nullptr;
 	m_cast_cd = nullptr;
 	m_sprite = nullptr;
@@ -240,8 +247,12 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 		}
 	}
 	else{
-		m_rect 		= GraphicEngine::getInstance()->add2DRect(vector2df(initX, initY), vector2df(size+outline, size+outline));
+		m_bkg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT], vector2df(initX,initY), vector2df(size+outline,size+outline));
 		m_cast_cd 	= GraphicEngine::getInstance()->add2DRect(vector2df(initX,initY), vector2df(size+outline,0));
+		m_rect 		= GraphicEngine::getInstance()->add2DRect(vector2df(initX, initY), vector2df(size+outline, size+outline));
+		m_rect->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
+		//m_cast_cd->SetMask("./../assets/textures/HUD/Orb/item_slot_mask.png");
 		m_sprite 	= GraphicEngine::getInstance()->addSprite(HUDTexturePath, vector2df(initX+outline, initY+outline),vector2df(size-outline, size-outline));
+		m_sprite->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
 	}
 }

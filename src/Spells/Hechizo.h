@@ -43,6 +43,7 @@ public:
 	float GetTimeCasting();
 	float GetTotalCooldown();
 	float GetTotalCasting();
+	float GetHUDHeight();
 
 protected:	
 	float 	costePM;			// Coste de Mana del hechizo
@@ -67,6 +68,7 @@ protected:
 	virtual void createSoundEvent();
 	virtual void playSoundEvent(SoundEvent* event,vector3df pos);
 
+	GSprite* m_bkg;
 	GRect* m_rect;
 	GRect* m_cast_cd;
 	GSprite* m_sprite;

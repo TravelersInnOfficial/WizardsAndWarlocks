@@ -20,6 +20,7 @@ PlayerHUD::PlayerHUD(Player* p){
 
     health_orb = nullptr;
     mana_orb = nullptr;
+    stamina_bkg = nullptr;
     stamina_bar = nullptr;
     spell_slot = nullptr;
     potion_slot = nullptr;
@@ -51,7 +52,7 @@ void PlayerHUD::InitHUD(){
             p_initPlayerSpellSelector();
             if(p_alliance != ALLIANCE_WIZARD) p_initPlayerTrap();
         }
-        if(spell_slot!= nullptr && health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
+        if(/*spell_slot!= nullptr && */health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
 
 
         /************************************MINIMAP*************************************/
@@ -125,11 +126,13 @@ void PlayerHUD::ShowEnemyInMap(Player* p){
 
 
 void PlayerHUD::p_initPlayerOrbs(){
-    int W = g_engine->GetScreenWidth();		
+    //float H = g_engine->GetScreenHeight();		
+    float W = g_engine->GetScreenWidth();
     float ratio = g_engine->GetAspectRatio();
     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
     //orb dimensions
+    //(original height / original width) x new width = new height
     float new_width = W/5.0f;
     float new_height = ratio * new_width;
     vector2df orb_dims = vector2df(new_width,new_height);
@@ -208,11 +211,11 @@ void PlayerHUD::p_initStaminaBar(){
     float xInit = health_orb->width;		// Calculate the Init and End of the bar on X axis
     float xEnd =  W - mana_orb->width;		
 
-    //float yInit = spell_slot->GetHeight();
-    float yInit = 0.0f;
+    float yInit = m_spell_size + 5;
     float yEnd = yInit + size;
 
-    stamina_bar =g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
+    stamina_bkg = g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
+    stamina_bar = g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
     stamina_bar->SetColor(0.5,1.0,0.5);
 
     m_stamina_bar_width = stamina_bar->GetWidth();
@@ -224,27 +227,28 @@ void PlayerHUD::p_initPlayerSpellSelector(){
     int W = g_engine->GetScreenWidth();	
     m_spell_size = W * 0.075;
     m_num_spells = SpellManager::GetInstance()->GetNumSpells();
-    m_spell_space = 10;
+    //m_spell_space = 10;
+    m_spell_space = ( W - mana_orb->width - health_orb->width - m_num_spells*m_spell_size)/ m_num_spells;
 
-    float new_height = m_spell_size+12;
-    float new_width = m_num_spells* (m_spell_size + m_spell_space) + 8;
+    float new_height = m_spell_size+5;
+    float new_width = m_num_spells* (m_spell_size + m_spell_space);
     vector2df slot_dims = vector2df(new_width,new_height);
 
      TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
     if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
-    vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 10);
+    //vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
 
-    spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
+    //spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
 }
 
 void PlayerHUD::p_initPlayerPotion(){
     int W = g_engine->GetScreenWidth();	
-    float ratio = g_engine->GetAspectRatio();
-     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+    //float ratio = g_engine->GetAspectRatio();
+    TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
     float new_width = W/10.0f;
-    float new_height = ratio * new_width;
+    float new_height = W/10.0f;
     vector2df slot_dims = vector2df(new_width,new_height);
     if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
@@ -261,11 +265,11 @@ void PlayerHUD::p_initPlayerTrap(){
     if(mana_orb != nullptr){
         int W = g_engine->GetScreenWidth();	
         
-        float ratio = g_engine->GetAspectRatio();
-         TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+        //float ratio = g_engine->GetAspectRatio();
+        TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
         float new_width = W/10.0f;
-        float new_height = ratio * new_width;
+        float new_height = W/10.0f;
         vector2df slot_dims = vector2df(new_width,new_height);
         if(slot_dims.X > tex_dims.X) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
@@ -339,15 +343,14 @@ void PlayerHUD::p_drawStaminaBar(){
 
 void PlayerHUD::p_drawPlayerSpellSelector() const{
     if(mana_orb != nullptr){
-        float W =  g_engine->GetScreenWidth();
-        float xPos = W - mana_orb->width;                               // X position
-        float yPos = 13;                                                 // Y position
+        //float W =  g_engine->GetScreenWidth();
+        float yPos = 0;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell
 
         std::vector<Hechizo*> hechizos = SpellManager::GetInstance()->GetSpells(m_player);
 
-    	xPos = xPos - (m_spell_size + m_spell_space) * m_num_spells;
+    	float xPos = health_orb->width +m_spell_space/2;
     	float xInitSpell = 0.0f;
         if(m_player != nullptr){
             for(int i = 0; i<hechizos.size();i++){
@@ -409,6 +412,7 @@ void PlayerHUD::p_erasePlayerOrbs(){
 
 void PlayerHUD::p_eraseStaminaBar(){
     if(stamina_bar != nullptr){ delete stamina_bar; stamina_bar = nullptr;}
+    if(stamina_bkg != nullptr){delete stamina_bkg; stamina_bkg = nullptr;}
 }
 
 void PlayerHUD::p_erasePlayerSpellSelector(){
@@ -544,14 +548,19 @@ PlayerHUD::HUD_Minimap::HUD_Minimap(Player* p){
     float W = g_engine->GetScreenWidth();
     float H = g_engine->GetScreenHeight();
     m_rotation = 0.0f;
+    //float sizX = 200;
+    //float sizY = 200*ratio;
+
     m_size = vector2df(200, 200*ratio);
     m_position = vector2df(W-m_size.X, H-m_size.Y);
     m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
     m_mapImage->SetMask("./../assets/textures/HUD/Minimap/mask.jpg");
+    m_compassImg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_MINIMAP_COMPASS],m_position,m_size);
 }
 
 PlayerHUD::HUD_Minimap::~HUD_Minimap(){
     delete m_mapImage;
+    delete m_compassImg;
 
     int size = m_players.size();
     for(int i=0; i<size; i++){
@@ -607,6 +616,7 @@ void PlayerHUD::HUD_Minimap::SetMapSize(float size){
 void PlayerHUD::HUD_Minimap::SetRotation(float rot){
     m_rotation = rot;
     m_mapImage->SetRotation(-rot);
+    m_compassImg->SetRotation(-rot);
 }
 
 void PlayerHUD::HUD_Minimap::SetTexture(std::string path){
