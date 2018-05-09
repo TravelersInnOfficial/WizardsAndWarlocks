@@ -112,6 +112,7 @@ private:
     GRect* stamina_bkg;
     GRect* stamina_bar;
     GSprite* spell_slot;
+    std::vector<GSprite*> m_separators;
     ItemSlot* potion_slot;
     ItemSlot* trap_slot;
     ItemSlot* trap_usings_slot;
@@ -136,7 +137,7 @@ private:
 
     void p_drawPlayerOrbs() const;
     void p_drawStaminaBar();
-    void p_drawPlayerSpellSelector() const;
+    void p_drawPlayerSpellSelector();
     void p_drawPlayerPotion();
     void p_drawPlayerTrap();
     void p_drawMinimap();

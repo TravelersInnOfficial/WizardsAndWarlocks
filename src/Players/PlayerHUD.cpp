@@ -237,9 +237,9 @@ void PlayerHUD::p_initPlayerSpellSelector(){
      TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
     if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
-    //vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
+    vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
 
-    //spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT],slot_pos,slot_dims);
+    spell_slot = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT_BKG],slot_pos,slot_dims);
 }
 
 void PlayerHUD::p_initPlayerPotion(){
@@ -341,9 +341,9 @@ void PlayerHUD::p_drawStaminaBar(){
     }
 }
 
-void PlayerHUD::p_drawPlayerSpellSelector() const{
+void PlayerHUD::p_drawPlayerSpellSelector(){
     if(mana_orb != nullptr){
-        //float W =  g_engine->GetScreenWidth();
+        float W =  g_engine->GetScreenWidth();
         float yPos = 0;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell
@@ -352,11 +352,30 @@ void PlayerHUD::p_drawPlayerSpellSelector() const{
 
     	float xPos = health_orb->width +m_spell_space/2;
     	float xInitSpell = 0.0f;
+        float xInitNextSpell = 0.0f;
+        bool drawSeparators = false;
+        if(m_separators.empty()) drawSeparators = true;
         if(m_player != nullptr){
+            if(drawSeparators){
+                GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_R],vector2df(health_orb->width,0),vector2df( xPos + - health_orb->width, m_spell_size/2));
+                m_separators.push_back(sep);
+            }
             for(int i = 0; i<hechizos.size();i++){
                 if(hechizos[i]!=nullptr){
                     bool disabled = hechizos[i]->CheckMP(m_player->GetMP());
                     xInitSpell = xPos + (m_spell_size + m_spell_space)*i;	// Calcula la X inicial de cada hechizo
+                    xInitNextSpell = xPos + (m_spell_size + m_spell_space)*(i+1);
+                    
+                    if(drawSeparators){
+                        if(i<hechizos.size()-1){
+                            GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP],vector2df(xInitSpell+m_spell_size,0),vector2df(xInitNextSpell-xInitSpell-m_spell_size, m_spell_size/2));
+                            m_separators.push_back(sep);
+                        }
+                        else{
+                            GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_L],vector2df(xInitSpell+m_spell_size,0),vector2df((W-mana_orb->width)-(xInitSpell+m_spell_size), m_spell_size/2));
+                            m_separators.push_back(sep);
+                        }
+                    }
                     hechizos[i]->DrawHUD(xInitSpell, yPos, m_spell_size, outline, i==current, !disabled, p_alliance);
                 }
             }
@@ -422,6 +441,10 @@ void PlayerHUD::p_erasePlayerSpellSelector(){
             if(hechizos[i]!=nullptr) hechizos[i]->EraseHUD();
         }
     }
+    for(int i = 0; i<m_separators.size();i++){
+        delete m_separators[i];
+    }
+    m_separators.clear();
 }
 
 void PlayerHUD::p_erasePlayerPotion(){
