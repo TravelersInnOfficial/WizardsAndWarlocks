@@ -75,6 +75,10 @@ void GSprite::SetScrollH(float value){
 	m_sprite->SetScrollH(value);
 }
 
+void GSprite::SetSize(float w, float h){
+	m_sprite->SetSize(w, h);
+}
+
 void GSprite::SetHeight(float h){
 	m_sprite->SetHeight(h);
 }

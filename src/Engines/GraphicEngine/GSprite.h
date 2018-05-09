@@ -27,6 +27,7 @@ public:
 	void SetScrollH(float value);
 	void SetWidth(float w);
 	void SetHeight(float h);
+	void SetSize(float w, float h);
 	void SetMask(std::string path);
 	void SetTexture(std::string path);
 	void SetPosition(float X, float Y);
