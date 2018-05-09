@@ -17,8 +17,8 @@ GraphicEngine::GraphicEngine(bool isServer){
 		privateDriver->Minimize();
 	}
 	else
-	//privateDriver->CreateWindows("Wizards&Warlocks", TOEvector2di(800,600));
-	privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
+	privateDriver->CreateWindows("Wizards&Warlocks", TOEvector2di(800,600));
+	//privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 	
 	privateDriver->SetClearScreenColor( TOEvector4df(0.7, 0.7, 1, 1));
 	privateSManager = privateDriver->GetSceneManager();
@@ -92,6 +92,11 @@ void GraphicEngine::ToggleCameraMovement(bool newState){
 		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
 		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
 	}*/
+
+	if(privateCamera != nullptr){
+		TFCamera* cam = (TFCamera*) privateCamera->privateNode;
+		cam->SetRotationLocked(newState);
+	}
 }
 
 void GraphicEngine::setTextureToBody(GBody* body, int layer, std::string s){

@@ -145,9 +145,9 @@ bool MultiPlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(Key_F3)){
-		g_engine->ToggleCameraMovement(captured);
-		g_engine->setCursorVisible(!captured);
 		captured = !captured;
+		g_engine->ToggleCameraMovement(captured);
+		g_engine->setCursorVisible(captured);
 	}
 
 	return m_stateGame->Input();
