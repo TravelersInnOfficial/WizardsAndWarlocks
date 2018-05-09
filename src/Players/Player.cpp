@@ -1,3 +1,4 @@
+
 #include <cmath>
 
 #include "./Player.h"
@@ -989,7 +990,10 @@ float Player::GetRotY(){ return m_rotation.Y; }
 
 vector3df Player::GetRot(){ return m_rotation; }
 
-vector3df Player::GetCameraRot(){ if(m_camera!=nullptr) return m_camera->GetRotation();}
+vector3df Player::GetCameraRot(){ 
+	if(m_camera!=nullptr) return m_camera->GetRotation();
+	else return vector3df(0,0,0);
+}
 
 float Player::GetWidth(){ return m_dimensions.X; }
 
