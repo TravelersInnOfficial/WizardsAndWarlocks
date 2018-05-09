@@ -203,6 +203,11 @@ float Hechizo::GetTotalCasting(){
 float Hechizo::GetHUDHeight(){
 	return m_bkg->GetHeight();
 }
+
+float Hechizo::GetHUDWidth(){
+	return m_bkg->GetWidth();
+}
+
 void Hechizo::EraseHUD(){
 
 	if(m_bkg		!= nullptr) delete m_bkg;

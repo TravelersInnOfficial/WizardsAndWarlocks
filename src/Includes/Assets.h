@@ -97,9 +97,16 @@ enum GAMETEXTURES {
 	TEXTURE_ORB_SCROLL_LIP,
 	TEXTURE_ORB_SCROLL_FILL_MASK,
 	TEXTURE_SPELL_SLOT,
+	TEXTURE_SPELL_SLOT_BKG,
 	TEXTURE_ITEM_SLOT,
 	TEXTURE_ITEM_SLOT_MASK,
-	TEXTURE_MINIMAP_COMPASS
+	TEXTURE_MINIMAP_COMPASS,
+	TEXTURE_SPELL_SEP,
+	TEXTURE_SPELL_SEP_L,
+	TEXTURE_SPELL_SEP_R,
+	TEXTURE_STAMINA_BKG,
+	TEXTURE_STAMINA_GRID,
+	TEXTURE_STAMINA_LIGHT
 };
 
 enum GAMEMESHES {
@@ -179,6 +186,10 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SPELL_TELEPORT_HUD]			= "./../assets/textures/HUD/Spells/SPELL_TELEPORT.png";
 	m[TEXTURE_SPELL_INVISIBILITY_HUD]		= "./../assets/textures/HUD/Spells/SPELL_INVISIBILITY.png";
 	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Spells/spell_slot.png";
+	m[TEXTURE_SPELL_SLOT_BKG]					= "./../assets/textures/HUD/Spells/spell_selector_bkg.png";
+	m[TEXTURE_SPELL_SEP]					= "./../assets/textures/HUD/Spells/decorator.png";
+	m[TEXTURE_SPELL_SEP_L]					= "./../assets/textures/HUD/Spells/decorator_left.png";
+	m[TEXTURE_SPELL_SEP_R]					= "./../assets/textures/HUD/Spells/decorator_right.png";
 	m[TEXTURE_BLOOD]						= "./../assets/textures/overlays/BLOOD.png";
 	m[TEXTURE_FUZZY]						= "./../assets/textures/overlays/FUZZY.png";
 	m[TEXTURE_HITLANDED]					= "./../assets/textures/overlays/HITLANDED.png";
@@ -232,6 +243,9 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
 	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
 	m[TEXTURE_MINIMAP_COMPASS]				= "./../assets/textures/HUD/Minimap/compass.png";
+	m[TEXTURE_STAMINA_BKG]					= "./../assets/textures/HUD/StaminaBar/bkg.png";
+	m[TEXTURE_STAMINA_GRID]					= "./../assets/textures/HUD/StaminaBar/grid.png";
+	m[TEXTURE_STAMINA_LIGHT]				= "./../assets/textures/HUD/StaminaBar/highlight.png";
 	return m;
 }
 

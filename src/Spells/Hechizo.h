@@ -44,6 +44,7 @@ public:
 	float GetTotalCooldown();
 	float GetTotalCasting();
 	float GetHUDHeight();
+	float GetHUDWidth();
 
 protected:	
 	float 	costePM;			// Coste de Mana del hechizo
