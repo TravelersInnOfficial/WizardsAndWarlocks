@@ -18,8 +18,25 @@ WizardsAndWarlocks*
 # Imgui init
 bin/imgui.ini
 
-# .vs in src
-src/.vscode
+# all .vscode folders
+**/.vscode
 
 # The graphic engine files
 src/Engines/TravelersOcularEngine
+
+# Animations
+assets/modelos/Wizard/circle
+assets/modelos/Wizard/dance
+assets/modelos/Wizard/dab
+assets/modelos/Wizard/win
+assets/modelos/Wizard/shoot3
+
+
+#assets/modelos/Warlock/circle
+#assets/modelos/Warlock/dance
+#assets/modelos/Warlock/dab
+#assets/modelos/Warlock/win
+#assets/modelos/Warlock/shoot3
+
+############################
+assets/modelos/Wizard/jump
