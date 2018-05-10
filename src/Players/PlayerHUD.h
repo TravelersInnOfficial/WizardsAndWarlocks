@@ -69,8 +69,10 @@ private:
     GraphicEngine* g_engine;
     HUD_Orb* health_orb;
 	HUD_Orb* mana_orb;
-    GRect* stamina_bkg;
+    GSprite* stamina_bkg;
     GRect* stamina_bar;
+    GSprite* stamina_light;
+    GSprite* stamina_grid;
     GSprite* spell_slot;
     std::vector<GSprite*> m_separators;
     ItemSlot* potion_slot;

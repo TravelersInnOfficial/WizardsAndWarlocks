@@ -22,6 +22,8 @@ PlayerHUD::PlayerHUD(Player* p){
     mana_orb = nullptr;
     stamina_bkg = nullptr;
     stamina_bar = nullptr;
+    stamina_light = nullptr;
+    stamina_grid = nullptr;
     spell_slot = nullptr;
     potion_slot = nullptr;
     trap_slot = nullptr;
@@ -52,7 +54,7 @@ void PlayerHUD::InitHUD(){
             p_initPlayerSpellSelector();
             if(p_alliance != ALLIANCE_WIZARD) p_initPlayerTrap();
         }
-        if(/*spell_slot!= nullptr && */health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
+        if(spell_slot!= nullptr && health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
 
 
         /************************************MINIMAP*************************************/
@@ -211,12 +213,13 @@ void PlayerHUD::p_initStaminaBar(){
     float xInit = health_orb->width;		// Calculate the Init and End of the bar on X axis
     float xEnd =  W - mana_orb->width;		
 
-    float yInit = m_spell_size + 5;
+    float yInit = spell_slot->GetHeight();
     float yEnd = yInit + size;
 
-    stamina_bkg = g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
+    stamina_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_STAMINA_BKG],vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
     stamina_bar = g_engine->add2DRect(vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
-    stamina_bar->SetColor(0.5,1.0,0.5);
+    stamina_light = g_engine->addSprite(TEXTUREMAP[TEXTURE_STAMINA_LIGHT],vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
+    stamina_grid = g_engine->addSprite(TEXTUREMAP[TEXTURE_STAMINA_GRID],vector2df(xInit,yInit),vector2df(xEnd-xInit, yEnd-yInit));
 
     m_stamina_bar_width = stamina_bar->GetWidth();
     m_stamina_xPos = xInit;
@@ -230,7 +233,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
     //m_spell_space = 10;
     m_spell_space = ( W - mana_orb->width - health_orb->width - m_num_spells*m_spell_size)/ m_num_spells;
 
-    float new_height = m_spell_size+5;
+    float new_height = m_spell_size+10;
     float new_width = m_num_spells* (m_spell_size + m_spell_space);
     vector2df slot_dims = vector2df(new_width,new_height);
 
@@ -336,14 +339,14 @@ void PlayerHUD::p_drawStaminaBar(){
         float colorR = 1-colorG;
         stamina_bar->SetXPos(m_stamina_xPos+(m_stamina_bar_width/2 - SP_w/2));
 		stamina_bar->SetWidth(SP_w);
-        stamina_bar->SetColor(colorR,colorG - 0.15,0);
+        stamina_bar->SetColor(colorR,colorG - 0.15,0,0.8);
     }
 }
 
 void PlayerHUD::p_drawPlayerSpellSelector(){
     if(mana_orb != nullptr){
         float W =  g_engine->GetScreenWidth();
-        float yPos = 0;                                                 // Y position
+        float yPos = 3;                                                 // Y position
     	float outline = 5;			                                    // Borde de los hechizos
         int current = m_player->GetCurrentSpell();                      //m_currentSpell
 
@@ -353,10 +356,15 @@ void PlayerHUD::p_drawPlayerSpellSelector(){
     	float xInitSpell = 0.0f;
         float xInitNextSpell = 0.0f;
         bool drawSeparators = false;
+        GSprite* sep = nullptr;
+
         if(m_separators.empty()) drawSeparators = true;
+        
         if(m_player != nullptr){
             if(drawSeparators){
-                GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_R],vector2df(health_orb->width,0),vector2df( xPos + - health_orb->width, m_spell_size/2));
+                sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_R],vector2df(health_orb->width,0),vector2df( xPos + - health_orb->width, m_spell_size/2.0f));
+                m_separators.push_back(sep);
+                sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_R],vector2df(health_orb->width,spell_slot->GetHeight()),vector2df( xPos + - health_orb->width,- m_spell_size/2.0f));
                 m_separators.push_back(sep);
             }
             for(int i = 0; i<hechizos.size();i++){
@@ -367,11 +375,15 @@ void PlayerHUD::p_drawPlayerSpellSelector(){
                     
                     if(drawSeparators){
                         if(i<hechizos.size()-1){
-                            GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP],vector2df(xInitSpell+m_spell_size,0),vector2df(xInitNextSpell-xInitSpell-m_spell_size, m_spell_size/2));
+                            sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP],vector2df(xInitSpell+m_spell_size,0),vector2df(xInitNextSpell-xInitSpell-m_spell_size, m_spell_size/2.0f));
+                            m_separators.push_back(sep);
+                            sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP],vector2df(xInitSpell+m_spell_size,spell_slot->GetHeight()),vector2df(xInitNextSpell-xInitSpell-m_spell_size,- m_spell_size/2.0f));
                             m_separators.push_back(sep);
                         }
                         else{
-                            GSprite* sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_L],vector2df(xInitSpell+m_spell_size,0),vector2df((W-mana_orb->width)-(xInitSpell+m_spell_size), m_spell_size/2));
+                            sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_L],vector2df(xInitSpell+m_spell_size,0),vector2df((W-mana_orb->width)-(xInitSpell+m_spell_size), m_spell_size/2.0f));
+                            m_separators.push_back(sep);
+                            sep = g_engine->addSprite(TEXTUREMAP[TEXTURE_SPELL_SEP_L],vector2df(xInitSpell+m_spell_size,spell_slot->GetHeight()),vector2df((W-mana_orb->width)-(xInitSpell+m_spell_size),- m_spell_size/2.0f));
                             m_separators.push_back(sep);
                         }
                     }
@@ -431,6 +443,8 @@ void PlayerHUD::p_erasePlayerOrbs(){
 void PlayerHUD::p_eraseStaminaBar(){
     if(stamina_bar != nullptr){ delete stamina_bar; stamina_bar = nullptr;}
     if(stamina_bkg != nullptr){delete stamina_bkg; stamina_bkg = nullptr;}
+    if(stamina_light != nullptr){delete stamina_light; stamina_light = nullptr;}
+    if(stamina_grid != nullptr){delete stamina_grid; stamina_grid = nullptr;}
 }
 
 void PlayerHUD::p_erasePlayerSpellSelector(){
