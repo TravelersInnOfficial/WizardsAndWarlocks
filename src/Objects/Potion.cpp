@@ -60,17 +60,19 @@ void Potion::Interact(Player* p){
 
 	// If not a client, pick up the potion
 	if(!n_engine->IsClientInit()){
-		picked = true;
-		DeletePotion();
-		p->CatchObject(this);
-		player = p;
+		if(!p->HasObject()){
+			picked = true;
+			DeletePotion();
+			p->CatchObject(this);
+			player = p;
 
-		// If a server, send the potion signal
-		if (n_engine->IsServerInit()){
-			Server* server = n_engine->GetServer();
-			if(server != nullptr){
-				int pos = ObjectManager::GetInstance()->GetPotionVecPos(this);
-				server->NotifyPotionInteracted(pos, p);
+			// If a server, send the potion signal
+			if (n_engine->IsServerInit()){
+				Server* server = n_engine->GetServer();
+				if(server != nullptr){
+					int pos = ObjectManager::GetInstance()->GetPotionVecPos(this);
+					server->NotifyPotionInteracted(pos, p);
+				}
 			}
 		}
 
@@ -79,10 +81,12 @@ void Potion::Interact(Player* p){
 
 // ONLY FOR CLIENTS ON NETWORK
 void Potion::NetInteract(Player* p){
-	picked = true;
-	DeletePotion();
-	p->CatchObject(this);
-	player = p;
+	if(!p->HasObject()){
+		picked = true;
+		DeletePotion();
+		p->CatchObject(this);
+		player = p;
+	}
 }
 
 void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){

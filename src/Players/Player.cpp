@@ -6,6 +6,7 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
 #include "./../Managers/PlayerManager.h"
+#include "./../Managers/StateManager.h"
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include <SpellCodes.h>
 #include <TrapCodes.h>
@@ -671,8 +672,10 @@ void Player::Move(float posX, float posY){
 
 void Player::MoveX(int dir){
 	if(m_hasCharacter){
-		float impulse = 30;
+		float dTime = StateManager::GetInstance()->GetDeltaTime();
+		float impulse = 500;
 		impulse *= dir;
+		impulse *= dTime;
 		vector3df rot = m_rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 		m_moving = true;
@@ -681,8 +684,10 @@ void Player::MoveX(int dir){
 
 void Player::MoveZ(int dir){
 	if(m_hasCharacter){
-		float impulse = 30;
+		float dTime = StateManager::GetInstance()->GetDeltaTime();
+		float impulse = 500;
 		impulse *= dir;
+		impulse *= dTime;
 		vector3df rot = m_rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 		m_moving = true;
@@ -955,7 +960,7 @@ void Player::Run(bool runStatus){
 }
 
 void Player::CatchObject(Potion* p){
-	if(m_potion != nullptr){
+	if(m_potion == nullptr){
 		ChangeAnimation("interact", 50);
 		m_potion = p;
 	}
