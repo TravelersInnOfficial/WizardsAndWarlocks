@@ -7,6 +7,34 @@
 //// WIZARDS ANIMATIONS
 /// -------------------------------------------------------------------
 /// TOP ONLY ANIMATIONS
+// SHOOT1 ARM					50-72
+static std::vector<std::string> AWIZARD_ARMSHOOT1 = {
+	"./../assets/modelos/Wizard/shoot1/arm_000050.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000051.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000052.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000053.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000054.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000055.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000056.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000057.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000058.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000059.obj",
+
+	"./../assets/modelos/Wizard/shoot1/arm_000060.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000061.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000062.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000063.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000064.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000065.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000066.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000067.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000068.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000069.obj",
+
+	"./../assets/modelos/Wizard/shoot1/arm_000070.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000071.obj",
+	"./../assets/modelos/Wizard/shoot1/arm_000072.obj"
+};
 // SHOOT1 ANIMATION				50-72
 static std::vector<std::string> AWIZARD_TSHOOT1 = {
 	"./../assets/modelos/Wizard/shoot1/top_000050.obj",
@@ -36,6 +64,83 @@ static std::vector<std::string> AWIZARD_TSHOOT1 = {
 	"./../assets/modelos/Wizard/shoot1/top_000072.obj"
 };
 
+// SHOOT2 ARM					26-92
+static std::vector<std::string> AWIZARD_ARMSHOOT2 = {
+	"./../assets/modelos/Wizard/shoot2/arm_000026.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000027.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000028.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000029.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000030.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000031.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000032.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000033.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000034.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000035.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000036.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000037.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000038.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000039.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000040.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000041.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000042.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000043.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000044.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000045.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000046.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000047.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000048.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000049.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000050.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000051.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000052.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000053.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000054.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000055.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000056.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000057.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000058.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000059.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000060.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000061.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000062.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000063.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000064.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000065.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000066.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000067.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000068.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000069.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000070.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000071.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000072.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000073.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000074.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000075.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000076.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000077.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000078.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000079.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000080.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000081.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000082.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000083.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000084.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000085.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000086.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000087.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000088.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000089.obj",
+
+	"./../assets/modelos/Wizard/shoot2/arm_000090.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000091.obj",
+	"./../assets/modelos/Wizard/shoot2/arm_000092.obj",
+};
 // SHOOT2 ANIMATION				26-92
 static std::vector<std::string> AWIZARD_TSHOOT2= {
 	"./../assets/modelos/Wizard/shoot2/top_000026.obj",
@@ -114,6 +219,45 @@ static std::vector<std::string> AWIZARD_TSHOOT2= {
 	"./../assets/modelos/Wizard/shoot2/top_000092.obj",
 };
 
+// SHOOT3 ARM					50-82
+static std::vector<std::string> AWIZARD_ARMSHOOT3= {
+	"./../assets/modelos/Wizard/shoot3/arm_000050.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000051.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000052.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000053.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000054.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000055.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000056.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000057.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000058.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000059.obj",
+
+	"./../assets/modelos/Wizard/shoot3/arm_000060.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000061.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000062.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000063.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000064.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000065.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000066.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000067.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000068.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000069.obj",
+
+	"./../assets/modelos/Wizard/shoot3/arm_000070.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000071.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000072.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000073.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000074.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000075.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000076.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000077.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000078.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000079.obj",
+	
+	"./../assets/modelos/Wizard/shoot3/arm_000080.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000081.obj",
+	"./../assets/modelos/Wizard/shoot3/arm_000082.obj"
+};
 // SHOOT3 ANIMATION				50-82
 static std::vector<std::string> AWIZARD_TSHOOT3= {
 	"./../assets/modelos/Wizard/shoot3/top_000050.obj",
@@ -154,6 +298,76 @@ static std::vector<std::string> AWIZARD_TSHOOT3= {
 	"./../assets/modelos/Wizard/shoot3/top_000082.obj"
 };
 
+// DRINK ARM					65-125
+static std::vector<std::string> AWIZARD_ARMDRINK= {
+	"./../assets/modelos/Wizard/drink/arm_000065.obj",
+	"./../assets/modelos/Wizard/drink/arm_000066.obj",
+	"./../assets/modelos/Wizard/drink/arm_000067.obj",
+	"./../assets/modelos/Wizard/drink/arm_000068.obj",
+	"./../assets/modelos/Wizard/drink/arm_000069.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000070.obj",
+	"./../assets/modelos/Wizard/drink/arm_000071.obj",
+	"./../assets/modelos/Wizard/drink/arm_000072.obj",
+	"./../assets/modelos/Wizard/drink/arm_000073.obj",
+	"./../assets/modelos/Wizard/drink/arm_000074.obj",
+	"./../assets/modelos/Wizard/drink/arm_000075.obj",
+	"./../assets/modelos/Wizard/drink/arm_000076.obj",
+	"./../assets/modelos/Wizard/drink/arm_000077.obj",
+	"./../assets/modelos/Wizard/drink/arm_000078.obj",
+	"./../assets/modelos/Wizard/drink/arm_000079.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000080.obj",
+	"./../assets/modelos/Wizard/drink/arm_000081.obj",
+	"./../assets/modelos/Wizard/drink/arm_000082.obj",
+	"./../assets/modelos/Wizard/drink/arm_000083.obj",
+	"./../assets/modelos/Wizard/drink/arm_000084.obj",
+	"./../assets/modelos/Wizard/drink/arm_000085.obj",
+	"./../assets/modelos/Wizard/drink/arm_000086.obj",
+	"./../assets/modelos/Wizard/drink/arm_000087.obj",
+	"./../assets/modelos/Wizard/drink/arm_000088.obj",
+	"./../assets/modelos/Wizard/drink/arm_000089.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000090.obj",
+	"./../assets/modelos/Wizard/drink/arm_000091.obj",
+	"./../assets/modelos/Wizard/drink/arm_000092.obj",
+	"./../assets/modelos/Wizard/drink/arm_000093.obj",
+	"./../assets/modelos/Wizard/drink/arm_000094.obj",
+	"./../assets/modelos/Wizard/drink/arm_000095.obj",
+	"./../assets/modelos/Wizard/drink/arm_000096.obj",
+	"./../assets/modelos/Wizard/drink/arm_000097.obj",
+	"./../assets/modelos/Wizard/drink/arm_000098.obj",
+	"./../assets/modelos/Wizard/drink/arm_000099.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000100.obj",
+	"./../assets/modelos/Wizard/drink/arm_000101.obj",
+	"./../assets/modelos/Wizard/drink/arm_000102.obj",
+	"./../assets/modelos/Wizard/drink/arm_000103.obj",
+	"./../assets/modelos/Wizard/drink/arm_000104.obj",
+	"./../assets/modelos/Wizard/drink/arm_000105.obj",
+	"./../assets/modelos/Wizard/drink/arm_000106.obj",
+	"./../assets/modelos/Wizard/drink/arm_000107.obj",
+	"./../assets/modelos/Wizard/drink/arm_000108.obj",
+	"./../assets/modelos/Wizard/drink/arm_000109.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000110.obj",
+	"./../assets/modelos/Wizard/drink/arm_000111.obj",
+	"./../assets/modelos/Wizard/drink/arm_000112.obj",
+	"./../assets/modelos/Wizard/drink/arm_000113.obj",
+	"./../assets/modelos/Wizard/drink/arm_000114.obj",
+	"./../assets/modelos/Wizard/drink/arm_000115.obj",
+	"./../assets/modelos/Wizard/drink/arm_000116.obj",
+	"./../assets/modelos/Wizard/drink/arm_000117.obj",
+	"./../assets/modelos/Wizard/drink/arm_000118.obj",
+	"./../assets/modelos/Wizard/drink/arm_000119.obj",
+
+	"./../assets/modelos/Wizard/drink/arm_000120.obj",
+	"./../assets/modelos/Wizard/drink/arm_000121.obj",
+	"./../assets/modelos/Wizard/drink/arm_000122.obj",
+	"./../assets/modelos/Wizard/drink/arm_000123.obj",
+	"./../assets/modelos/Wizard/drink/arm_000124.obj",
+	"./../assets/modelos/Wizard/drink/arm_000125.obj",
+};
 // DRINK ANIMATION				65-125
 static std::vector<std::string> AWIZARD_TDRINK= {
 	"./../assets/modelos/Wizard/drink/top_000065.obj",
@@ -225,6 +439,54 @@ static std::vector<std::string> AWIZARD_TDRINK= {
 	"./../assets/modelos/Wizard/drink/top_000125.obj",
 };
 
+// INTERACT ARM					25-65
+static std::vector<std::string> AWIZARD_ARMINTERACT= {
+	"./../assets/modelos/Wizard/interact/arm_000025.obj",
+	"./../assets/modelos/Wizard/interact/arm_000026.obj",
+	"./../assets/modelos/Wizard/interact/arm_000027.obj",
+	"./../assets/modelos/Wizard/interact/arm_000028.obj",
+	"./../assets/modelos/Wizard/interact/arm_000029.obj",
+
+	"./../assets/modelos/Wizard/interact/arm_000030.obj",
+	"./../assets/modelos/Wizard/interact/arm_000031.obj",
+	"./../assets/modelos/Wizard/interact/arm_000032.obj",
+	"./../assets/modelos/Wizard/interact/arm_000033.obj",
+	"./../assets/modelos/Wizard/interact/arm_000034.obj",
+	"./../assets/modelos/Wizard/interact/arm_000035.obj",
+	"./../assets/modelos/Wizard/interact/arm_000036.obj",
+	"./../assets/modelos/Wizard/interact/arm_000037.obj",
+	"./../assets/modelos/Wizard/interact/arm_000038.obj",
+	"./../assets/modelos/Wizard/interact/arm_000039.obj",
+
+	"./../assets/modelos/Wizard/interact/arm_000040.obj",
+	"./../assets/modelos/Wizard/interact/arm_000041.obj",
+	"./../assets/modelos/Wizard/interact/arm_000042.obj",
+	"./../assets/modelos/Wizard/interact/arm_000043.obj",
+	"./../assets/modelos/Wizard/interact/arm_000044.obj",
+	"./../assets/modelos/Wizard/interact/arm_000045.obj",
+	"./../assets/modelos/Wizard/interact/arm_000046.obj",
+	"./../assets/modelos/Wizard/interact/arm_000047.obj",
+	"./../assets/modelos/Wizard/interact/arm_000048.obj",
+	"./../assets/modelos/Wizard/interact/arm_000049.obj",
+
+	"./../assets/modelos/Wizard/interact/arm_000050.obj",
+	"./../assets/modelos/Wizard/interact/arm_000051.obj",
+	"./../assets/modelos/Wizard/interact/arm_000052.obj",
+	"./../assets/modelos/Wizard/interact/arm_000053.obj",
+	"./../assets/modelos/Wizard/interact/arm_000054.obj",
+	"./../assets/modelos/Wizard/interact/arm_000055.obj",
+	"./../assets/modelos/Wizard/interact/arm_000056.obj",
+	"./../assets/modelos/Wizard/interact/arm_000057.obj",
+	"./../assets/modelos/Wizard/interact/arm_000058.obj",
+	"./../assets/modelos/Wizard/interact/arm_000059.obj",
+
+	"./../assets/modelos/Wizard/interact/arm_000060.obj",
+	"./../assets/modelos/Wizard/interact/arm_000061.obj",
+	"./../assets/modelos/Wizard/interact/arm_000062.obj",
+	"./../assets/modelos/Wizard/interact/arm_000063.obj",
+	"./../assets/modelos/Wizard/interact/arm_000064.obj",
+	"./../assets/modelos/Wizard/interact/arm_000065.obj"
+};
 // INTERACT ANIMATION			25-65
 static std::vector<std::string> AWIZARD_TINTERACT= {
 	"./../assets/modelos/Wizard/interact/top_000025.obj",
@@ -439,6 +701,53 @@ static std::vector<std::string> AWIZARD_BCIRCLE= {
 	"./../assets/modelos/Wizard/circle/bot_000097.obj",
 };
 
+// DAB ARM		                30-70
+static std::vector<std::string> AWIZARD_ARMDAB= {
+	"./../assets/modelos/Wizard/dab/arm_000030.obj",
+	"./../assets/modelos/Wizard/dab/arm_000031.obj",
+	"./../assets/modelos/Wizard/dab/arm_000032.obj",
+	"./../assets/modelos/Wizard/dab/arm_000033.obj",
+	"./../assets/modelos/Wizard/dab/arm_000034.obj",
+	"./../assets/modelos/Wizard/dab/arm_000035.obj",
+	"./../assets/modelos/Wizard/dab/arm_000036.obj",
+	"./../assets/modelos/Wizard/dab/arm_000037.obj",
+	"./../assets/modelos/Wizard/dab/arm_000038.obj",
+	"./../assets/modelos/Wizard/dab/arm_000039.obj",
+
+	"./../assets/modelos/Wizard/dab/arm_000040.obj",
+	"./../assets/modelos/Wizard/dab/arm_000041.obj",
+	"./../assets/modelos/Wizard/dab/arm_000042.obj",
+	"./../assets/modelos/Wizard/dab/arm_000043.obj",
+	"./../assets/modelos/Wizard/dab/arm_000044.obj",
+	"./../assets/modelos/Wizard/dab/arm_000045.obj",
+	"./../assets/modelos/Wizard/dab/arm_000046.obj",
+	"./../assets/modelos/Wizard/dab/arm_000047.obj",
+	"./../assets/modelos/Wizard/dab/arm_000048.obj",
+	"./../assets/modelos/Wizard/dab/arm_000049.obj",
+
+	"./../assets/modelos/Wizard/dab/arm_000050.obj",
+	"./../assets/modelos/Wizard/dab/arm_000051.obj",
+	"./../assets/modelos/Wizard/dab/arm_000052.obj",
+	"./../assets/modelos/Wizard/dab/arm_000053.obj",
+	"./../assets/modelos/Wizard/dab/arm_000054.obj",
+	"./../assets/modelos/Wizard/dab/arm_000055.obj",
+	"./../assets/modelos/Wizard/dab/arm_000056.obj",
+	"./../assets/modelos/Wizard/dab/arm_000057.obj",
+	"./../assets/modelos/Wizard/dab/arm_000058.obj",
+	"./../assets/modelos/Wizard/dab/arm_000059.obj",
+	
+	"./../assets/modelos/Wizard/dab/arm_000060.obj",
+	"./../assets/modelos/Wizard/dab/arm_000061.obj",
+	"./../assets/modelos/Wizard/dab/arm_000062.obj",
+	"./../assets/modelos/Wizard/dab/arm_000063.obj",
+	"./../assets/modelos/Wizard/dab/arm_000064.obj",
+	"./../assets/modelos/Wizard/dab/arm_000065.obj",
+	"./../assets/modelos/Wizard/dab/arm_000066.obj",
+	"./../assets/modelos/Wizard/dab/arm_000067.obj",
+	"./../assets/modelos/Wizard/dab/arm_000068.obj",
+	"./../assets/modelos/Wizard/dab/arm_000069.obj",
+	"./../assets/modelos/Wizard/dab/arm_000070.obj",
+};
 // DAB ANIMATION                30-70
 static std::vector<std::string> AWIZARD_TDAB= {
 	"./../assets/modelos/Wizard/dab/top_000030.obj",
@@ -769,6 +1078,63 @@ static std::vector<std::string> AWIZARD_BWIN= {
 /// ----------------------------------------------------------------------------
 /// FULL BODY ANIMATIONS
 // IDLE ANIMATION				40-89
+// IDLE ARM						40-89
+static std::vector<std::string> AWIZARD_ARMIDLE= {
+	"./../assets/modelos/Wizard/idle/arm_000040.obj",
+	"./../assets/modelos/Wizard/idle/arm_000041.obj",
+	"./../assets/modelos/Wizard/idle/arm_000042.obj",
+	"./../assets/modelos/Wizard/idle/arm_000043.obj",
+	"./../assets/modelos/Wizard/idle/arm_000044.obj",
+	"./../assets/modelos/Wizard/idle/arm_000045.obj",
+	"./../assets/modelos/Wizard/idle/arm_000046.obj",
+	"./../assets/modelos/Wizard/idle/arm_000047.obj",
+	"./../assets/modelos/Wizard/idle/arm_000048.obj",
+	"./../assets/modelos/Wizard/idle/arm_000049.obj",
+
+	"./../assets/modelos/Wizard/idle/arm_000050.obj",
+	"./../assets/modelos/Wizard/idle/arm_000051.obj",
+	"./../assets/modelos/Wizard/idle/arm_000052.obj",
+	"./../assets/modelos/Wizard/idle/arm_000053.obj",
+	"./../assets/modelos/Wizard/idle/arm_000054.obj",
+	"./../assets/modelos/Wizard/idle/arm_000055.obj",
+	"./../assets/modelos/Wizard/idle/arm_000056.obj",
+	"./../assets/modelos/Wizard/idle/arm_000057.obj",
+	"./../assets/modelos/Wizard/idle/arm_000058.obj",
+	"./../assets/modelos/Wizard/idle/arm_000059.obj",
+
+	"./../assets/modelos/Wizard/idle/arm_000060.obj",
+	"./../assets/modelos/Wizard/idle/arm_000061.obj",
+	"./../assets/modelos/Wizard/idle/arm_000062.obj",
+	"./../assets/modelos/Wizard/idle/arm_000063.obj",
+	"./../assets/modelos/Wizard/idle/arm_000064.obj",
+	"./../assets/modelos/Wizard/idle/arm_000065.obj",
+	"./../assets/modelos/Wizard/idle/arm_000066.obj",
+	"./../assets/modelos/Wizard/idle/arm_000067.obj",
+	"./../assets/modelos/Wizard/idle/arm_000068.obj",
+	"./../assets/modelos/Wizard/idle/arm_000069.obj",
+
+	"./../assets/modelos/Wizard/idle/arm_000070.obj",
+	"./../assets/modelos/Wizard/idle/arm_000071.obj",
+	"./../assets/modelos/Wizard/idle/arm_000072.obj",
+	"./../assets/modelos/Wizard/idle/arm_000073.obj",
+	"./../assets/modelos/Wizard/idle/arm_000074.obj",
+	"./../assets/modelos/Wizard/idle/arm_000075.obj",
+	"./../assets/modelos/Wizard/idle/arm_000076.obj",
+	"./../assets/modelos/Wizard/idle/arm_000077.obj",
+	"./../assets/modelos/Wizard/idle/arm_000078.obj",
+	"./../assets/modelos/Wizard/idle/arm_000079.obj",
+
+	"./../assets/modelos/Wizard/idle/arm_000080.obj",
+	"./../assets/modelos/Wizard/idle/arm_000081.obj",
+	"./../assets/modelos/Wizard/idle/arm_000082.obj",
+	"./../assets/modelos/Wizard/idle/arm_000083.obj",
+	"./../assets/modelos/Wizard/idle/arm_000084.obj",
+	"./../assets/modelos/Wizard/idle/arm_000085.obj",
+	"./../assets/modelos/Wizard/idle/arm_000086.obj",
+	"./../assets/modelos/Wizard/idle/arm_000087.obj",
+	"./../assets/modelos/Wizard/idle/arm_000088.obj",
+	"./../assets/modelos/Wizard/idle/arm_000089.obj"
+};
 static std::vector<std::string> AWIZARD_TIDLE= {
 	"./../assets/modelos/Wizard/idle/top_000040.obj",
 	"./../assets/modelos/Wizard/idle/top_000041.obj",
@@ -1065,6 +1431,35 @@ static std::vector<std::string> AWIZARD_BIDLE30= {
 };
 
 // WALK ANIMATION				24-47
+// WALK ARM						24-47
+static std::vector<std::string> AWIZARD_ARMWALK = {
+	"./../assets/modelos/Wizard/walk/arm_000024.obj",
+	"./../assets/modelos/Wizard/walk/arm_000025.obj",
+	"./../assets/modelos/Wizard/walk/arm_000026.obj",
+	"./../assets/modelos/Wizard/walk/arm_000027.obj",
+	"./../assets/modelos/Wizard/walk/arm_000028.obj",
+	"./../assets/modelos/Wizard/walk/arm_000029.obj",
+
+	"./../assets/modelos/Wizard/walk/arm_000030.obj",
+	"./../assets/modelos/Wizard/walk/arm_000031.obj",
+	"./../assets/modelos/Wizard/walk/arm_000032.obj",
+	"./../assets/modelos/Wizard/walk/arm_000033.obj",
+	"./../assets/modelos/Wizard/walk/arm_000034.obj",
+	"./../assets/modelos/Wizard/walk/arm_000035.obj",
+	"./../assets/modelos/Wizard/walk/arm_000036.obj",
+	"./../assets/modelos/Wizard/walk/arm_000037.obj",
+	"./../assets/modelos/Wizard/walk/arm_000038.obj",
+	"./../assets/modelos/Wizard/walk/arm_000039.obj",
+
+	"./../assets/modelos/Wizard/walk/arm_000040.obj",
+	"./../assets/modelos/Wizard/walk/arm_000041.obj",
+	"./../assets/modelos/Wizard/walk/arm_000042.obj",
+	"./../assets/modelos/Wizard/walk/arm_000043.obj",
+	"./../assets/modelos/Wizard/walk/arm_000044.obj",
+	"./../assets/modelos/Wizard/walk/arm_000045.obj",
+	"./../assets/modelos/Wizard/walk/arm_000046.obj",
+	"./../assets/modelos/Wizard/walk/arm_000047.obj"
+};
 static std::vector<std::string> AWIZARD_TWALK= {
 	"./../assets/modelos/Wizard/walk/top_000024.obj",
 	"./../assets/modelos/Wizard/walk/top_000025.obj",
@@ -1119,6 +1514,27 @@ static std::vector<std::string> AWIZARD_BWALK= {
 };
 
 // RUN ANIMATION				23-40
+// RUN ARM						23-40
+static std::vector<std::string> AWIZARD_ARMRUN= {
+	"./../assets/modelos/Wizard/run/arm_000023.obj",
+	"./../assets/modelos/Wizard/run/arm_000024.obj",
+	"./../assets/modelos/Wizard/run/arm_000025.obj",
+	"./../assets/modelos/Wizard/run/arm_000026.obj",
+	"./../assets/modelos/Wizard/run/arm_000027.obj",
+	"./../assets/modelos/Wizard/run/arm_000028.obj",
+	"./../assets/modelos/Wizard/run/arm_000029.obj",
+	"./../assets/modelos/Wizard/run/arm_000030.obj",
+	"./../assets/modelos/Wizard/run/arm_000031.obj",
+	"./../assets/modelos/Wizard/run/arm_000032.obj",
+	"./../assets/modelos/Wizard/run/arm_000033.obj",
+	"./../assets/modelos/Wizard/run/arm_000034.obj",
+	"./../assets/modelos/Wizard/run/arm_000035.obj",
+	"./../assets/modelos/Wizard/run/arm_000036.obj",
+	"./../assets/modelos/Wizard/run/arm_000037.obj",
+	"./../assets/modelos/Wizard/run/arm_000038.obj",
+	"./../assets/modelos/Wizard/run/arm_000039.obj",
+	"./../assets/modelos/Wizard/run/arm_000040.obj"
+};
 static std::vector<std::string> AWIZARD_TRUN= {
 	"./../assets/modelos/Wizard/run/top_000023.obj",
 	"./../assets/modelos/Wizard/run/top_000024.obj",
@@ -1306,439 +1722,39 @@ static std::vector<std::string> AWIZARD_BJUMPEND= {
 	"./../assets/modelos/Wizard/jump/end/bot_000072.obj",
 };
 
-//// ###########################################################################
-//// WIZARD ARMS ANIMATIONS
-// IDLE ARM						40-89
-static std::vector<std::string> AWIZARD_ARMIDLE= {
-	"./../assets/modelos/Wizard/idle/arm_000040.obj",
-	"./../assets/modelos/Wizard/idle/arm_000041.obj",
-	"./../assets/modelos/Wizard/idle/arm_000042.obj",
-	"./../assets/modelos/Wizard/idle/arm_000043.obj",
-	"./../assets/modelos/Wizard/idle/arm_000044.obj",
-	"./../assets/modelos/Wizard/idle/arm_000045.obj",
-	"./../assets/modelos/Wizard/idle/arm_000046.obj",
-	"./../assets/modelos/Wizard/idle/arm_000047.obj",
-	"./../assets/modelos/Wizard/idle/arm_000048.obj",
-	"./../assets/modelos/Wizard/idle/arm_000049.obj",
-
-	"./../assets/modelos/Wizard/idle/arm_000050.obj",
-	"./../assets/modelos/Wizard/idle/arm_000051.obj",
-	"./../assets/modelos/Wizard/idle/arm_000052.obj",
-	"./../assets/modelos/Wizard/idle/arm_000053.obj",
-	"./../assets/modelos/Wizard/idle/arm_000054.obj",
-	"./../assets/modelos/Wizard/idle/arm_000055.obj",
-	"./../assets/modelos/Wizard/idle/arm_000056.obj",
-	"./../assets/modelos/Wizard/idle/arm_000057.obj",
-	"./../assets/modelos/Wizard/idle/arm_000058.obj",
-	"./../assets/modelos/Wizard/idle/arm_000059.obj",
-
-	"./../assets/modelos/Wizard/idle/arm_000060.obj",
-	"./../assets/modelos/Wizard/idle/arm_000061.obj",
-	"./../assets/modelos/Wizard/idle/arm_000062.obj",
-	"./../assets/modelos/Wizard/idle/arm_000063.obj",
-	"./../assets/modelos/Wizard/idle/arm_000064.obj",
-	"./../assets/modelos/Wizard/idle/arm_000065.obj",
-	"./../assets/modelos/Wizard/idle/arm_000066.obj",
-	"./../assets/modelos/Wizard/idle/arm_000067.obj",
-	"./../assets/modelos/Wizard/idle/arm_000068.obj",
-	"./../assets/modelos/Wizard/idle/arm_000069.obj",
-
-	"./../assets/modelos/Wizard/idle/arm_000070.obj",
-	"./../assets/modelos/Wizard/idle/arm_000071.obj",
-	"./../assets/modelos/Wizard/idle/arm_000072.obj",
-	"./../assets/modelos/Wizard/idle/arm_000073.obj",
-	"./../assets/modelos/Wizard/idle/arm_000074.obj",
-	"./../assets/modelos/Wizard/idle/arm_000075.obj",
-	"./../assets/modelos/Wizard/idle/arm_000076.obj",
-	"./../assets/modelos/Wizard/idle/arm_000077.obj",
-	"./../assets/modelos/Wizard/idle/arm_000078.obj",
-	"./../assets/modelos/Wizard/idle/arm_000079.obj",
-
-	"./../assets/modelos/Wizard/idle/arm_000080.obj",
-	"./../assets/modelos/Wizard/idle/arm_000081.obj",
-	"./../assets/modelos/Wizard/idle/arm_000082.obj",
-	"./../assets/modelos/Wizard/idle/arm_000083.obj",
-	"./../assets/modelos/Wizard/idle/arm_000084.obj",
-	"./../assets/modelos/Wizard/idle/arm_000085.obj",
-	"./../assets/modelos/Wizard/idle/arm_000086.obj",
-	"./../assets/modelos/Wizard/idle/arm_000087.obj",
-	"./../assets/modelos/Wizard/idle/arm_000088.obj",
-	"./../assets/modelos/Wizard/idle/arm_000089.obj"
-};
-
-// WALK ARM						24-47
-static std::vector<std::string> AWIZARD_ARMWALK = {
-	"./../assets/modelos/Wizard/walk/arm_000024.obj",
-	"./../assets/modelos/Wizard/walk/arm_000025.obj",
-	"./../assets/modelos/Wizard/walk/arm_000026.obj",
-	"./../assets/modelos/Wizard/walk/arm_000027.obj",
-	"./../assets/modelos/Wizard/walk/arm_000028.obj",
-	"./../assets/modelos/Wizard/walk/arm_000029.obj",
-
-	"./../assets/modelos/Wizard/walk/arm_000030.obj",
-	"./../assets/modelos/Wizard/walk/arm_000031.obj",
-	"./../assets/modelos/Wizard/walk/arm_000032.obj",
-	"./../assets/modelos/Wizard/walk/arm_000033.obj",
-	"./../assets/modelos/Wizard/walk/arm_000034.obj",
-	"./../assets/modelos/Wizard/walk/arm_000035.obj",
-	"./../assets/modelos/Wizard/walk/arm_000036.obj",
-	"./../assets/modelos/Wizard/walk/arm_000037.obj",
-	"./../assets/modelos/Wizard/walk/arm_000038.obj",
-	"./../assets/modelos/Wizard/walk/arm_000039.obj",
-
-	"./../assets/modelos/Wizard/walk/arm_000040.obj",
-	"./../assets/modelos/Wizard/walk/arm_000041.obj",
-	"./../assets/modelos/Wizard/walk/arm_000042.obj",
-	"./../assets/modelos/Wizard/walk/arm_000043.obj",
-	"./../assets/modelos/Wizard/walk/arm_000044.obj",
-	"./../assets/modelos/Wizard/walk/arm_000045.obj",
-	"./../assets/modelos/Wizard/walk/arm_000046.obj",
-	"./../assets/modelos/Wizard/walk/arm_000047.obj"
-};
-
-// RUN ARM						23-40
-static std::vector<std::string> AWIZARD_ARMRUN= {
-	"./../assets/modelos/Wizard/run/arm_000023.obj",
-	"./../assets/modelos/Wizard/run/arm_000024.obj",
-	"./../assets/modelos/Wizard/run/arm_000025.obj",
-	"./../assets/modelos/Wizard/run/arm_000026.obj",
-	"./../assets/modelos/Wizard/run/arm_000027.obj",
-	"./../assets/modelos/Wizard/run/arm_000028.obj",
-	"./../assets/modelos/Wizard/run/arm_000029.obj",
-	"./../assets/modelos/Wizard/run/arm_000030.obj",
-	"./../assets/modelos/Wizard/run/arm_000031.obj",
-	"./../assets/modelos/Wizard/run/arm_000032.obj",
-	"./../assets/modelos/Wizard/run/arm_000033.obj",
-	"./../assets/modelos/Wizard/run/arm_000034.obj",
-	"./../assets/modelos/Wizard/run/arm_000035.obj",
-	"./../assets/modelos/Wizard/run/arm_000036.obj",
-	"./../assets/modelos/Wizard/run/arm_000037.obj",
-	"./../assets/modelos/Wizard/run/arm_000038.obj",
-	"./../assets/modelos/Wizard/run/arm_000039.obj",
-	"./../assets/modelos/Wizard/run/arm_000040.obj"
-};
-
-// SHOOT1 ARM					50-72
-static std::vector<std::string> AWIZARD_ARMSHOOT1 = {
-	"./../assets/modelos/Wizard/shoot1/arm_000050.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000051.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000052.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000053.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000054.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000055.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000056.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000057.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000058.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000059.obj",
-
-	"./../assets/modelos/Wizard/shoot1/arm_000060.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000061.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000062.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000063.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000064.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000065.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000066.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000067.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000068.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000069.obj",
-
-	"./../assets/modelos/Wizard/shoot1/arm_000070.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000071.obj",
-	"./../assets/modelos/Wizard/shoot1/arm_000072.obj"
-};
-
-// SHOOT2 ARM					26-92
-static std::vector<std::string> AWIZARD_ARMSHOOT2 = {
-	"./../assets/modelos/Wizard/shoot2/arm_000026.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000027.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000028.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000029.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000030.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000031.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000032.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000033.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000034.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000035.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000036.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000037.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000038.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000039.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000040.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000041.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000042.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000043.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000044.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000045.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000046.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000047.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000048.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000049.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000050.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000051.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000052.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000053.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000054.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000055.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000056.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000057.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000058.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000059.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000060.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000061.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000062.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000063.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000064.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000065.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000066.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000067.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000068.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000069.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000070.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000071.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000072.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000073.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000074.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000075.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000076.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000077.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000078.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000079.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000080.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000081.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000082.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000083.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000084.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000085.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000086.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000087.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000088.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000089.obj",
-
-	"./../assets/modelos/Wizard/shoot2/arm_000090.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000091.obj",
-	"./../assets/modelos/Wizard/shoot2/arm_000092.obj",
-};
-
-// SHOOT3 ARM					50-82
-static std::vector<std::string> AWIZARD_ARMSHOOT3= {
-	"./../assets/modelos/Wizard/shoot3/arm_000050.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000051.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000052.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000053.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000054.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000055.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000056.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000057.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000058.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000059.obj",
-
-	"./../assets/modelos/Wizard/shoot3/arm_000060.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000061.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000062.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000063.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000064.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000065.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000066.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000067.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000068.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000069.obj",
-
-	"./../assets/modelos/Wizard/shoot3/arm_000070.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000071.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000072.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000073.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000074.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000075.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000076.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000077.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000078.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000079.obj",
-	
-	"./../assets/modelos/Wizard/shoot3/arm_000080.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000081.obj",
-	"./../assets/modelos/Wizard/shoot3/arm_000082.obj"
-};
-
-// DRINK ARM					65-125
-static std::vector<std::string> AWIZARD_ARMDRINK= {
-	"./../assets/modelos/Wizard/drink/arm_000065.obj",
-	"./../assets/modelos/Wizard/drink/arm_000066.obj",
-	"./../assets/modelos/Wizard/drink/arm_000067.obj",
-	"./../assets/modelos/Wizard/drink/arm_000068.obj",
-	"./../assets/modelos/Wizard/drink/arm_000069.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000070.obj",
-	"./../assets/modelos/Wizard/drink/arm_000071.obj",
-	"./../assets/modelos/Wizard/drink/arm_000072.obj",
-	"./../assets/modelos/Wizard/drink/arm_000073.obj",
-	"./../assets/modelos/Wizard/drink/arm_000074.obj",
-	"./../assets/modelos/Wizard/drink/arm_000075.obj",
-	"./../assets/modelos/Wizard/drink/arm_000076.obj",
-	"./../assets/modelos/Wizard/drink/arm_000077.obj",
-	"./../assets/modelos/Wizard/drink/arm_000078.obj",
-	"./../assets/modelos/Wizard/drink/arm_000079.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000080.obj",
-	"./../assets/modelos/Wizard/drink/arm_000081.obj",
-	"./../assets/modelos/Wizard/drink/arm_000082.obj",
-	"./../assets/modelos/Wizard/drink/arm_000083.obj",
-	"./../assets/modelos/Wizard/drink/arm_000084.obj",
-	"./../assets/modelos/Wizard/drink/arm_000085.obj",
-	"./../assets/modelos/Wizard/drink/arm_000086.obj",
-	"./../assets/modelos/Wizard/drink/arm_000087.obj",
-	"./../assets/modelos/Wizard/drink/arm_000088.obj",
-	"./../assets/modelos/Wizard/drink/arm_000089.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000090.obj",
-	"./../assets/modelos/Wizard/drink/arm_000091.obj",
-	"./../assets/modelos/Wizard/drink/arm_000092.obj",
-	"./../assets/modelos/Wizard/drink/arm_000093.obj",
-	"./../assets/modelos/Wizard/drink/arm_000094.obj",
-	"./../assets/modelos/Wizard/drink/arm_000095.obj",
-	"./../assets/modelos/Wizard/drink/arm_000096.obj",
-	"./../assets/modelos/Wizard/drink/arm_000097.obj",
-	"./../assets/modelos/Wizard/drink/arm_000098.obj",
-	"./../assets/modelos/Wizard/drink/arm_000099.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000100.obj",
-	"./../assets/modelos/Wizard/drink/arm_000101.obj",
-	"./../assets/modelos/Wizard/drink/arm_000102.obj",
-	"./../assets/modelos/Wizard/drink/arm_000103.obj",
-	"./../assets/modelos/Wizard/drink/arm_000104.obj",
-	"./../assets/modelos/Wizard/drink/arm_000105.obj",
-	"./../assets/modelos/Wizard/drink/arm_000106.obj",
-	"./../assets/modelos/Wizard/drink/arm_000107.obj",
-	"./../assets/modelos/Wizard/drink/arm_000108.obj",
-	"./../assets/modelos/Wizard/drink/arm_000109.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000110.obj",
-	"./../assets/modelos/Wizard/drink/arm_000111.obj",
-	"./../assets/modelos/Wizard/drink/arm_000112.obj",
-	"./../assets/modelos/Wizard/drink/arm_000113.obj",
-	"./../assets/modelos/Wizard/drink/arm_000114.obj",
-	"./../assets/modelos/Wizard/drink/arm_000115.obj",
-	"./../assets/modelos/Wizard/drink/arm_000116.obj",
-	"./../assets/modelos/Wizard/drink/arm_000117.obj",
-	"./../assets/modelos/Wizard/drink/arm_000118.obj",
-	"./../assets/modelos/Wizard/drink/arm_000119.obj",
-
-	"./../assets/modelos/Wizard/drink/arm_000120.obj",
-	"./../assets/modelos/Wizard/drink/arm_000121.obj",
-	"./../assets/modelos/Wizard/drink/arm_000122.obj",
-	"./../assets/modelos/Wizard/drink/arm_000123.obj",
-	"./../assets/modelos/Wizard/drink/arm_000124.obj",
-	"./../assets/modelos/Wizard/drink/arm_000125.obj",
-};
-
-// INTERACT ARM					25-65
-static std::vector<std::string> AWIZARD_ARMINTERACT= {
-	"./../assets/modelos/Wizard/interact/arm_000025.obj",
-	"./../assets/modelos/Wizard/interact/arm_000026.obj",
-	"./../assets/modelos/Wizard/interact/arm_000027.obj",
-	"./../assets/modelos/Wizard/interact/arm_000028.obj",
-	"./../assets/modelos/Wizard/interact/arm_000029.obj",
-
-	"./../assets/modelos/Wizard/interact/arm_000030.obj",
-	"./../assets/modelos/Wizard/interact/arm_000031.obj",
-	"./../assets/modelos/Wizard/interact/arm_000032.obj",
-	"./../assets/modelos/Wizard/interact/arm_000033.obj",
-	"./../assets/modelos/Wizard/interact/arm_000034.obj",
-	"./../assets/modelos/Wizard/interact/arm_000035.obj",
-	"./../assets/modelos/Wizard/interact/arm_000036.obj",
-	"./../assets/modelos/Wizard/interact/arm_000037.obj",
-	"./../assets/modelos/Wizard/interact/arm_000038.obj",
-	"./../assets/modelos/Wizard/interact/arm_000039.obj",
-
-	"./../assets/modelos/Wizard/interact/arm_000040.obj",
-	"./../assets/modelos/Wizard/interact/arm_000041.obj",
-	"./../assets/modelos/Wizard/interact/arm_000042.obj",
-	"./../assets/modelos/Wizard/interact/arm_000043.obj",
-	"./../assets/modelos/Wizard/interact/arm_000044.obj",
-	"./../assets/modelos/Wizard/interact/arm_000045.obj",
-	"./../assets/modelos/Wizard/interact/arm_000046.obj",
-	"./../assets/modelos/Wizard/interact/arm_000047.obj",
-	"./../assets/modelos/Wizard/interact/arm_000048.obj",
-	"./../assets/modelos/Wizard/interact/arm_000049.obj",
-
-	"./../assets/modelos/Wizard/interact/arm_000050.obj",
-	"./../assets/modelos/Wizard/interact/arm_000051.obj",
-	"./../assets/modelos/Wizard/interact/arm_000052.obj",
-	"./../assets/modelos/Wizard/interact/arm_000053.obj",
-	"./../assets/modelos/Wizard/interact/arm_000054.obj",
-	"./../assets/modelos/Wizard/interact/arm_000055.obj",
-	"./../assets/modelos/Wizard/interact/arm_000056.obj",
-	"./../assets/modelos/Wizard/interact/arm_000057.obj",
-	"./../assets/modelos/Wizard/interact/arm_000058.obj",
-	"./../assets/modelos/Wizard/interact/arm_000059.obj",
-
-	"./../assets/modelos/Wizard/interact/arm_000060.obj",
-	"./../assets/modelos/Wizard/interact/arm_000061.obj",
-	"./../assets/modelos/Wizard/interact/arm_000062.obj",
-	"./../assets/modelos/Wizard/interact/arm_000063.obj",
-	"./../assets/modelos/Wizard/interact/arm_000064.obj",
-	"./../assets/modelos/Wizard/interact/arm_000065.obj"
-};
-
-// DAB ARM		                30-70
-static std::vector<std::string> AWIZARD_ARMDAB= {
-	"./../assets/modelos/Wizard/dab/arm_000030.obj",
-	"./../assets/modelos/Wizard/dab/arm_000031.obj",
-	"./../assets/modelos/Wizard/dab/arm_000032.obj",
-	"./../assets/modelos/Wizard/dab/arm_000033.obj",
-	"./../assets/modelos/Wizard/dab/arm_000034.obj",
-	"./../assets/modelos/Wizard/dab/arm_000035.obj",
-	"./../assets/modelos/Wizard/dab/arm_000036.obj",
-	"./../assets/modelos/Wizard/dab/arm_000037.obj",
-	"./../assets/modelos/Wizard/dab/arm_000038.obj",
-	"./../assets/modelos/Wizard/dab/arm_000039.obj",
-
-	"./../assets/modelos/Wizard/dab/arm_000040.obj",
-	"./../assets/modelos/Wizard/dab/arm_000041.obj",
-	"./../assets/modelos/Wizard/dab/arm_000042.obj",
-	"./../assets/modelos/Wizard/dab/arm_000043.obj",
-	"./../assets/modelos/Wizard/dab/arm_000044.obj",
-	"./../assets/modelos/Wizard/dab/arm_000045.obj",
-	"./../assets/modelos/Wizard/dab/arm_000046.obj",
-	"./../assets/modelos/Wizard/dab/arm_000047.obj",
-	"./../assets/modelos/Wizard/dab/arm_000048.obj",
-	"./../assets/modelos/Wizard/dab/arm_000049.obj",
-
-	"./../assets/modelos/Wizard/dab/arm_000050.obj",
-	"./../assets/modelos/Wizard/dab/arm_000051.obj",
-	"./../assets/modelos/Wizard/dab/arm_000052.obj",
-	"./../assets/modelos/Wizard/dab/arm_000053.obj",
-	"./../assets/modelos/Wizard/dab/arm_000054.obj",
-	"./../assets/modelos/Wizard/dab/arm_000055.obj",
-	"./../assets/modelos/Wizard/dab/arm_000056.obj",
-	"./../assets/modelos/Wizard/dab/arm_000057.obj",
-	"./../assets/modelos/Wizard/dab/arm_000058.obj",
-	"./../assets/modelos/Wizard/dab/arm_000059.obj",
-	
-	"./../assets/modelos/Wizard/dab/arm_000060.obj",
-	"./../assets/modelos/Wizard/dab/arm_000061.obj",
-	"./../assets/modelos/Wizard/dab/arm_000062.obj",
-	"./../assets/modelos/Wizard/dab/arm_000063.obj",
-	"./../assets/modelos/Wizard/dab/arm_000064.obj",
-	"./../assets/modelos/Wizard/dab/arm_000065.obj",
-	"./../assets/modelos/Wizard/dab/arm_000066.obj",
-	"./../assets/modelos/Wizard/dab/arm_000067.obj",
-	"./../assets/modelos/Wizard/dab/arm_000068.obj",
-	"./../assets/modelos/Wizard/dab/arm_000069.obj",
-	"./../assets/modelos/Wizard/dab/arm_000070.obj",
-};
-
-
 //// ##################################################################
 //// ##################################################################
 //// WARLOCK ANIMATIONS
 /// -------------------------------------------------------------------
 /// TOP ONLY ANIMATIONS
+// SHOOT1 ARM					50-72
+static std::vector<std::string> AWARLOCK_ARMSHOOT1 = {
+	"./../assets/modelos/Warlock/shoot1/arm_000050.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000051.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000052.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000053.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000054.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000055.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000056.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000057.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000058.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000059.obj",
+
+	"./../assets/modelos/Warlock/shoot1/arm_000060.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000061.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000062.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000063.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000064.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000065.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000066.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000067.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000068.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000069.obj",
+
+	"./../assets/modelos/Warlock/shoot1/arm_000070.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000071.obj",
+	"./../assets/modelos/Warlock/shoot1/arm_000072.obj"
+};
 // SHOOT1 ANIMATION				50-72
 static std::vector<std::string> AWARLOCK_TSHOOT1 = {
 	"./../assets/modelos/Warlock/shoot1/top_000050.obj",
@@ -1767,8 +1783,502 @@ static std::vector<std::string> AWARLOCK_TSHOOT1 = {
 	"./../assets/modelos/Warlock/shoot1/top_000071.obj",
 	"./../assets/modelos/Warlock/shoot1/top_000072.obj"
 };
+
+// SHOOT2 ARM					26-92
+static std::vector<std::string> AWARLOCK_ARMSHOOT2 = {
+	"./../assets/modelos/Warlock/shoot2/arm_000026.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000027.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000028.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000029.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000030.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000031.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000032.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000033.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000034.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000035.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000036.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000037.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000038.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000039.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000040.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000041.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000042.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000043.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000044.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000045.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000046.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000047.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000048.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000049.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000050.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000051.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000052.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000053.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000054.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000055.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000056.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000057.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000058.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000059.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000060.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000061.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000062.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000063.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000064.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000065.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000066.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000067.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000068.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000069.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000070.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000071.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000072.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000073.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000074.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000075.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000076.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000077.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000078.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000079.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000080.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000081.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000082.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000083.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000084.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000085.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000086.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000087.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000088.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000089.obj",
+
+	"./../assets/modelos/Warlock/shoot2/arm_000090.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000091.obj",
+	"./../assets/modelos/Warlock/shoot2/arm_000092.obj",
+};
+// SHOOT2 ANIMATION				26-92
+static std::vector<std::string> AWARLOCK_TSHOOT2= {
+	"./../assets/modelos/Warlock/shoot2/top_000026.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000027.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000028.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000029.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000030.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000031.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000032.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000033.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000034.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000035.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000036.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000037.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000038.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000039.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000040.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000041.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000042.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000043.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000044.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000045.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000046.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000047.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000048.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000049.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000050.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000051.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000052.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000053.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000054.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000055.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000056.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000057.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000058.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000059.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000060.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000061.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000062.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000063.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000064.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000065.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000066.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000067.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000068.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000069.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000070.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000071.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000072.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000073.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000074.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000075.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000076.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000077.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000078.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000079.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000080.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000081.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000082.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000083.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000084.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000085.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000086.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000087.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000088.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000089.obj",
+
+	"./../assets/modelos/Warlock/shoot2/top_000090.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000091.obj",
+	"./../assets/modelos/Warlock/shoot2/top_000092.obj",
+};
+
+/*
+// SHOOT3 ARM					50-82
+static std::vector<std::string> AWARLOCK_ARMSHOOT3= {
+	"./../assets/modelos/Warlock/shoot3/arm_000050.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000051.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000052.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000053.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000054.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000055.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000056.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000057.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000058.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000059.obj",
+
+	"./../assets/modelos/Warlock/shoot3/arm_000060.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000061.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000062.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000063.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000064.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000065.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000066.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000067.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000068.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000069.obj",
+
+	"./../assets/modelos/Warlock/shoot3/arm_000070.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000071.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000072.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000073.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000074.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000075.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000076.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000077.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000078.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000079.obj",
+	
+	"./../assets/modelos/Warlock/shoot3/arm_000080.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000081.obj",
+	"./../assets/modelos/Warlock/shoot3/arm_000082.obj"
+};
+*/
+
+// DRINK ARM					65-125
+static std::vector<std::string> AWARLOCK_ARMDRINK= {
+	"./../assets/modelos/Warlock/drink/arm_000065.obj",
+	"./../assets/modelos/Warlock/drink/arm_000066.obj",
+	"./../assets/modelos/Warlock/drink/arm_000067.obj",
+	"./../assets/modelos/Warlock/drink/arm_000068.obj",
+	"./../assets/modelos/Warlock/drink/arm_000069.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000070.obj",
+	"./../assets/modelos/Warlock/drink/arm_000071.obj",
+	"./../assets/modelos/Warlock/drink/arm_000072.obj",
+	"./../assets/modelos/Warlock/drink/arm_000073.obj",
+	"./../assets/modelos/Warlock/drink/arm_000074.obj",
+	"./../assets/modelos/Warlock/drink/arm_000075.obj",
+	"./../assets/modelos/Warlock/drink/arm_000076.obj",
+	"./../assets/modelos/Warlock/drink/arm_000077.obj",
+	"./../assets/modelos/Warlock/drink/arm_000078.obj",
+	"./../assets/modelos/Warlock/drink/arm_000079.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000080.obj",
+	"./../assets/modelos/Warlock/drink/arm_000081.obj",
+	"./../assets/modelos/Warlock/drink/arm_000082.obj",
+	"./../assets/modelos/Warlock/drink/arm_000083.obj",
+	"./../assets/modelos/Warlock/drink/arm_000084.obj",
+	"./../assets/modelos/Warlock/drink/arm_000085.obj",
+	"./../assets/modelos/Warlock/drink/arm_000086.obj",
+	"./../assets/modelos/Warlock/drink/arm_000087.obj",
+	"./../assets/modelos/Warlock/drink/arm_000088.obj",
+	"./../assets/modelos/Warlock/drink/arm_000089.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000090.obj",
+	"./../assets/modelos/Warlock/drink/arm_000091.obj",
+	"./../assets/modelos/Warlock/drink/arm_000092.obj",
+	"./../assets/modelos/Warlock/drink/arm_000093.obj",
+	"./../assets/modelos/Warlock/drink/arm_000094.obj",
+	"./../assets/modelos/Warlock/drink/arm_000095.obj",
+	"./../assets/modelos/Warlock/drink/arm_000096.obj",
+	"./../assets/modelos/Warlock/drink/arm_000097.obj",
+	"./../assets/modelos/Warlock/drink/arm_000098.obj",
+	"./../assets/modelos/Warlock/drink/arm_000099.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000100.obj",
+	"./../assets/modelos/Warlock/drink/arm_000101.obj",
+	"./../assets/modelos/Warlock/drink/arm_000102.obj",
+	"./../assets/modelos/Warlock/drink/arm_000103.obj",
+	"./../assets/modelos/Warlock/drink/arm_000104.obj",
+	"./../assets/modelos/Warlock/drink/arm_000105.obj",
+	"./../assets/modelos/Warlock/drink/arm_000106.obj",
+	"./../assets/modelos/Warlock/drink/arm_000107.obj",
+	"./../assets/modelos/Warlock/drink/arm_000108.obj",
+	"./../assets/modelos/Warlock/drink/arm_000109.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000110.obj",
+	"./../assets/modelos/Warlock/drink/arm_000111.obj",
+	"./../assets/modelos/Warlock/drink/arm_000112.obj",
+	"./../assets/modelos/Warlock/drink/arm_000113.obj",
+	"./../assets/modelos/Warlock/drink/arm_000114.obj",
+	"./../assets/modelos/Warlock/drink/arm_000115.obj",
+	"./../assets/modelos/Warlock/drink/arm_000116.obj",
+	"./../assets/modelos/Warlock/drink/arm_000117.obj",
+	"./../assets/modelos/Warlock/drink/arm_000118.obj",
+	"./../assets/modelos/Warlock/drink/arm_000119.obj",
+
+	"./../assets/modelos/Warlock/drink/arm_000120.obj",
+	"./../assets/modelos/Warlock/drink/arm_000121.obj",
+	"./../assets/modelos/Warlock/drink/arm_000122.obj",
+	"./../assets/modelos/Warlock/drink/arm_000123.obj",
+	"./../assets/modelos/Warlock/drink/arm_000124.obj",
+	"./../assets/modelos/Warlock/drink/arm_000125.obj",
+};
+// DRINK ANIMATION				65-125
+static std::vector<std::string> AWARLOCK_TDRINK= {
+	"./../assets/modelos/Warlock/drink/top_000065.obj",
+	"./../assets/modelos/Warlock/drink/top_000066.obj",
+	"./../assets/modelos/Warlock/drink/top_000067.obj",
+	"./../assets/modelos/Warlock/drink/top_000068.obj",
+	"./../assets/modelos/Warlock/drink/top_000069.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000070.obj",
+	"./../assets/modelos/Warlock/drink/top_000071.obj",
+	"./../assets/modelos/Warlock/drink/top_000072.obj",
+	"./../assets/modelos/Warlock/drink/top_000073.obj",
+	"./../assets/modelos/Warlock/drink/top_000074.obj",
+	"./../assets/modelos/Warlock/drink/top_000075.obj",
+	"./../assets/modelos/Warlock/drink/top_000076.obj",
+	"./../assets/modelos/Warlock/drink/top_000077.obj",
+	"./../assets/modelos/Warlock/drink/top_000078.obj",
+	"./../assets/modelos/Warlock/drink/top_000079.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000080.obj",
+	"./../assets/modelos/Warlock/drink/top_000081.obj",
+	"./../assets/modelos/Warlock/drink/top_000082.obj",
+	"./../assets/modelos/Warlock/drink/top_000083.obj",
+	"./../assets/modelos/Warlock/drink/top_000084.obj",
+	"./../assets/modelos/Warlock/drink/top_000085.obj",
+	"./../assets/modelos/Warlock/drink/top_000086.obj",
+	"./../assets/modelos/Warlock/drink/top_000087.obj",
+	"./../assets/modelos/Warlock/drink/top_000088.obj",
+	"./../assets/modelos/Warlock/drink/top_000089.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000090.obj",
+	"./../assets/modelos/Warlock/drink/top_000091.obj",
+	"./../assets/modelos/Warlock/drink/top_000092.obj",
+	"./../assets/modelos/Warlock/drink/top_000093.obj",
+	"./../assets/modelos/Warlock/drink/top_000094.obj",
+	"./../assets/modelos/Warlock/drink/top_000095.obj",
+	"./../assets/modelos/Warlock/drink/top_000096.obj",
+	"./../assets/modelos/Warlock/drink/top_000097.obj",
+	"./../assets/modelos/Warlock/drink/top_000098.obj",
+	"./../assets/modelos/Warlock/drink/top_000099.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000100.obj",
+	"./../assets/modelos/Warlock/drink/top_000101.obj",
+	"./../assets/modelos/Warlock/drink/top_000102.obj",
+	"./../assets/modelos/Warlock/drink/top_000103.obj",
+	"./../assets/modelos/Warlock/drink/top_000104.obj",
+	"./../assets/modelos/Warlock/drink/top_000105.obj",
+	"./../assets/modelos/Warlock/drink/top_000106.obj",
+	"./../assets/modelos/Warlock/drink/top_000107.obj",
+	"./../assets/modelos/Warlock/drink/top_000108.obj",
+	"./../assets/modelos/Warlock/drink/top_000109.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000110.obj",
+	"./../assets/modelos/Warlock/drink/top_000111.obj",
+	"./../assets/modelos/Warlock/drink/top_000112.obj",
+	"./../assets/modelos/Warlock/drink/top_000113.obj",
+	"./../assets/modelos/Warlock/drink/top_000114.obj",
+	"./../assets/modelos/Warlock/drink/top_000115.obj",
+	"./../assets/modelos/Warlock/drink/top_000116.obj",
+	"./../assets/modelos/Warlock/drink/top_000117.obj",
+	"./../assets/modelos/Warlock/drink/top_000118.obj",
+	"./../assets/modelos/Warlock/drink/top_000119.obj",
+
+	"./../assets/modelos/Warlock/drink/top_000120.obj",
+	"./../assets/modelos/Warlock/drink/top_000121.obj",
+	"./../assets/modelos/Warlock/drink/top_000122.obj",
+	"./../assets/modelos/Warlock/drink/top_000123.obj",
+	"./../assets/modelos/Warlock/drink/top_000124.obj",
+	"./../assets/modelos/Warlock/drink/top_000125.obj",
+};
+
+// INTERACT ARM					25-65
+static std::vector<std::string> AWARLOCK_ARMINTERACT= {
+	"./../assets/modelos/Warlock/interact/arm_000025.obj",
+	"./../assets/modelos/Warlock/interact/arm_000026.obj",
+	"./../assets/modelos/Warlock/interact/arm_000027.obj",
+	"./../assets/modelos/Warlock/interact/arm_000028.obj",
+	"./../assets/modelos/Warlock/interact/arm_000029.obj",
+
+	"./../assets/modelos/Warlock/interact/arm_000030.obj",
+	"./../assets/modelos/Warlock/interact/arm_000031.obj",
+	"./../assets/modelos/Warlock/interact/arm_000032.obj",
+	"./../assets/modelos/Warlock/interact/arm_000033.obj",
+	"./../assets/modelos/Warlock/interact/arm_000034.obj",
+	"./../assets/modelos/Warlock/interact/arm_000035.obj",
+	"./../assets/modelos/Warlock/interact/arm_000036.obj",
+	"./../assets/modelos/Warlock/interact/arm_000037.obj",
+	"./../assets/modelos/Warlock/interact/arm_000038.obj",
+	"./../assets/modelos/Warlock/interact/arm_000039.obj",
+
+	"./../assets/modelos/Warlock/interact/arm_000040.obj",
+	"./../assets/modelos/Warlock/interact/arm_000041.obj",
+	"./../assets/modelos/Warlock/interact/arm_000042.obj",
+	"./../assets/modelos/Warlock/interact/arm_000043.obj",
+	"./../assets/modelos/Warlock/interact/arm_000044.obj",
+	"./../assets/modelos/Warlock/interact/arm_000045.obj",
+	"./../assets/modelos/Warlock/interact/arm_000046.obj",
+	"./../assets/modelos/Warlock/interact/arm_000047.obj",
+	"./../assets/modelos/Warlock/interact/arm_000048.obj",
+	"./../assets/modelos/Warlock/interact/arm_000049.obj",
+
+	"./../assets/modelos/Warlock/interact/arm_000050.obj",
+	"./../assets/modelos/Warlock/interact/arm_000051.obj",
+	"./../assets/modelos/Warlock/interact/arm_000052.obj",
+	"./../assets/modelos/Warlock/interact/arm_000053.obj",
+	"./../assets/modelos/Warlock/interact/arm_000054.obj",
+	"./../assets/modelos/Warlock/interact/arm_000055.obj",
+	"./../assets/modelos/Warlock/interact/arm_000056.obj",
+	"./../assets/modelos/Warlock/interact/arm_000057.obj",
+	"./../assets/modelos/Warlock/interact/arm_000058.obj",
+	"./../assets/modelos/Warlock/interact/arm_000059.obj",
+
+	"./../assets/modelos/Warlock/interact/arm_000060.obj",
+	"./../assets/modelos/Warlock/interact/arm_000061.obj",
+	"./../assets/modelos/Warlock/interact/arm_000062.obj",
+	"./../assets/modelos/Warlock/interact/arm_000063.obj",
+	"./../assets/modelos/Warlock/interact/arm_000064.obj",
+	"./../assets/modelos/Warlock/interact/arm_000065.obj"
+};
+// INTERACT ANIMATION			25-65
+static std::vector<std::string> AWARLOCK_TINTERACT= {
+	"./../assets/modelos/Warlock/interact/top_000025.obj",
+	"./../assets/modelos/Warlock/interact/top_000026.obj",
+	"./../assets/modelos/Warlock/interact/top_000027.obj",
+	"./../assets/modelos/Warlock/interact/top_000028.obj",
+	"./../assets/modelos/Warlock/interact/top_000029.obj",
+
+	"./../assets/modelos/Warlock/interact/top_000030.obj",
+	"./../assets/modelos/Warlock/interact/top_000031.obj",
+	"./../assets/modelos/Warlock/interact/top_000032.obj",
+	"./../assets/modelos/Warlock/interact/top_000033.obj",
+	"./../assets/modelos/Warlock/interact/top_000034.obj",
+	"./../assets/modelos/Warlock/interact/top_000035.obj",
+	"./../assets/modelos/Warlock/interact/top_000036.obj",
+	"./../assets/modelos/Warlock/interact/top_000037.obj",
+	"./../assets/modelos/Warlock/interact/top_000038.obj",
+	"./../assets/modelos/Warlock/interact/top_000039.obj",
+
+	"./../assets/modelos/Warlock/interact/top_000040.obj",
+	"./../assets/modelos/Warlock/interact/top_000041.obj",
+	"./../assets/modelos/Warlock/interact/top_000042.obj",
+	"./../assets/modelos/Warlock/interact/top_000043.obj",
+	"./../assets/modelos/Warlock/interact/top_000044.obj",
+	"./../assets/modelos/Warlock/interact/top_000045.obj",
+	"./../assets/modelos/Warlock/interact/top_000046.obj",
+	"./../assets/modelos/Warlock/interact/top_000047.obj",
+	"./../assets/modelos/Warlock/interact/top_000048.obj",
+	"./../assets/modelos/Warlock/interact/top_000049.obj",
+
+	"./../assets/modelos/Warlock/interact/top_000050.obj",
+	"./../assets/modelos/Warlock/interact/top_000051.obj",
+	"./../assets/modelos/Warlock/interact/top_000052.obj",
+	"./../assets/modelos/Warlock/interact/top_000053.obj",
+	"./../assets/modelos/Warlock/interact/top_000054.obj",
+	"./../assets/modelos/Warlock/interact/top_000055.obj",
+	"./../assets/modelos/Warlock/interact/top_000056.obj",
+	"./../assets/modelos/Warlock/interact/top_000057.obj",
+	"./../assets/modelos/Warlock/interact/top_000058.obj",
+	"./../assets/modelos/Warlock/interact/top_000059.obj",
+
+	"./../assets/modelos/Warlock/interact/top_000060.obj",
+	"./../assets/modelos/Warlock/interact/top_000061.obj",
+	"./../assets/modelos/Warlock/interact/top_000062.obj",
+	"./../assets/modelos/Warlock/interact/top_000063.obj",
+	"./../assets/modelos/Warlock/interact/top_000064.obj",
+	"./../assets/modelos/Warlock/interact/top_000065.obj"
+};
+
 /// ----------------------------------------------------------------------------
 /// FULL BODY ANIMATIONS
+// IDLE ARM						40-89
+static std::vector<std::string> AWARLOCK_ARMIDLE= {
+	"./../assets/modelos/Warlock/idle/arm_000040.obj",
+	"./../assets/modelos/Warlock/idle/arm_000041.obj",
+	"./../assets/modelos/Warlock/idle/arm_000042.obj",
+	"./../assets/modelos/Warlock/idle/arm_000043.obj",
+	"./../assets/modelos/Warlock/idle/arm_000044.obj",
+	"./../assets/modelos/Warlock/idle/arm_000045.obj",
+	"./../assets/modelos/Warlock/idle/arm_000046.obj",
+	"./../assets/modelos/Warlock/idle/arm_000047.obj",
+	"./../assets/modelos/Warlock/idle/arm_000048.obj",
+	"./../assets/modelos/Warlock/idle/arm_000049.obj",
+
+	"./../assets/modelos/Warlock/idle/arm_000050.obj",
+	"./../assets/modelos/Warlock/idle/arm_000051.obj",
+	"./../assets/modelos/Warlock/idle/arm_000052.obj",
+	"./../assets/modelos/Warlock/idle/arm_000053.obj",
+	"./../assets/modelos/Warlock/idle/arm_000054.obj",
+	"./../assets/modelos/Warlock/idle/arm_000055.obj",
+	"./../assets/modelos/Warlock/idle/arm_000056.obj",
+	"./../assets/modelos/Warlock/idle/arm_000057.obj",
+	"./../assets/modelos/Warlock/idle/arm_000058.obj",
+	"./../assets/modelos/Warlock/idle/arm_000059.obj",
+
+	"./../assets/modelos/Warlock/idle/arm_000060.obj",
+	"./../assets/modelos/Warlock/idle/arm_000061.obj",
+	"./../assets/modelos/Warlock/idle/arm_000062.obj",
+	"./../assets/modelos/Warlock/idle/arm_000063.obj",
+	"./../assets/modelos/Warlock/idle/arm_000064.obj",
+	"./../assets/modelos/Warlock/idle/arm_000065.obj",
+	"./../assets/modelos/Warlock/idle/arm_000066.obj",
+	"./../assets/modelos/Warlock/idle/arm_000067.obj",
+	"./../assets/modelos/Warlock/idle/arm_000068.obj",
+	"./../assets/modelos/Warlock/idle/arm_000069.obj",
+
+	"./../assets/modelos/Warlock/idle/arm_000070.obj",
+	"./../assets/modelos/Warlock/idle/arm_000071.obj",
+	"./../assets/modelos/Warlock/idle/arm_000072.obj",
+	"./../assets/modelos/Warlock/idle/arm_000073.obj",
+	"./../assets/modelos/Warlock/idle/arm_000074.obj",
+	"./../assets/modelos/Warlock/idle/arm_000075.obj",
+	"./../assets/modelos/Warlock/idle/arm_000076.obj",
+	"./../assets/modelos/Warlock/idle/arm_000077.obj",
+	"./../assets/modelos/Warlock/idle/arm_000078.obj",
+	"./../assets/modelos/Warlock/idle/arm_000079.obj",
+
+	"./../assets/modelos/Warlock/idle/arm_000080.obj",
+	"./../assets/modelos/Warlock/idle/arm_000081.obj",
+	"./../assets/modelos/Warlock/idle/arm_000082.obj",
+	"./../assets/modelos/Warlock/idle/arm_000083.obj",
+	"./../assets/modelos/Warlock/idle/arm_000084.obj",
+	"./../assets/modelos/Warlock/idle/arm_000085.obj",
+	"./../assets/modelos/Warlock/idle/arm_000086.obj",
+	"./../assets/modelos/Warlock/idle/arm_000087.obj",
+	"./../assets/modelos/Warlock/idle/arm_000088.obj",
+	"./../assets/modelos/Warlock/idle/arm_000089.obj"
+};
+
 // IDLE ANIMATION				40-89
 static std::vector<std::string> AWARLOCK_TIDLE= {
 	"./../assets/modelos/Warlock/idle/top_000040.obj",
@@ -1883,6 +2393,35 @@ static std::vector<std::string> AWARLOCK_BIDLE= {
 	"./../assets/modelos/Warlock/idle/bot_000089.obj"
 };
 
+// WALK ARM						24-47
+static std::vector<std::string> AWARLOCK_ARMWALK = {
+	"./../assets/modelos/Warlock/walk/arm_000024.obj",
+	"./../assets/modelos/Warlock/walk/arm_000025.obj",
+	"./../assets/modelos/Warlock/walk/arm_000026.obj",
+	"./../assets/modelos/Warlock/walk/arm_000027.obj",
+	"./../assets/modelos/Warlock/walk/arm_000028.obj",
+	"./../assets/modelos/Warlock/walk/arm_000029.obj",
+
+	"./../assets/modelos/Warlock/walk/arm_000030.obj",
+	"./../assets/modelos/Warlock/walk/arm_000031.obj",
+	"./../assets/modelos/Warlock/walk/arm_000032.obj",
+	"./../assets/modelos/Warlock/walk/arm_000033.obj",
+	"./../assets/modelos/Warlock/walk/arm_000034.obj",
+	"./../assets/modelos/Warlock/walk/arm_000035.obj",
+	"./../assets/modelos/Warlock/walk/arm_000036.obj",
+	"./../assets/modelos/Warlock/walk/arm_000037.obj",
+	"./../assets/modelos/Warlock/walk/arm_000038.obj",
+	"./../assets/modelos/Warlock/walk/arm_000039.obj",
+
+	"./../assets/modelos/Warlock/walk/arm_000040.obj",
+	"./../assets/modelos/Warlock/walk/arm_000041.obj",
+	"./../assets/modelos/Warlock/walk/arm_000042.obj",
+	"./../assets/modelos/Warlock/walk/arm_000043.obj",
+	"./../assets/modelos/Warlock/walk/arm_000044.obj",
+	"./../assets/modelos/Warlock/walk/arm_000045.obj",
+	"./../assets/modelos/Warlock/walk/arm_000046.obj",
+	"./../assets/modelos/Warlock/walk/arm_000047.obj"
+};
 // WALK ANIMATION				24-47
 static std::vector<std::string> AWARLOCK_TWALK= {
 	"./../assets/modelos/Warlock/walk/top_000024.obj",
@@ -1937,6 +2476,27 @@ static std::vector<std::string> AWARLOCK_BWALK= {
 	"./../assets/modelos/Warlock/walk/bot_000047.obj"
 };
 
+// RUN ARM						23-40
+static std::vector<std::string> AWARLOCK_ARMRUN= {
+	"./../assets/modelos/Warlock/run/arm_000023.obj",
+	"./../assets/modelos/Warlock/run/arm_000024.obj",
+	"./../assets/modelos/Warlock/run/arm_000025.obj",
+	"./../assets/modelos/Warlock/run/arm_000026.obj",
+	"./../assets/modelos/Warlock/run/arm_000027.obj",
+	"./../assets/modelos/Warlock/run/arm_000028.obj",
+	"./../assets/modelos/Warlock/run/arm_000029.obj",
+	"./../assets/modelos/Warlock/run/arm_000030.obj",
+	"./../assets/modelos/Warlock/run/arm_000031.obj",
+	"./../assets/modelos/Warlock/run/arm_000032.obj",
+	"./../assets/modelos/Warlock/run/arm_000033.obj",
+	"./../assets/modelos/Warlock/run/arm_000034.obj",
+	"./../assets/modelos/Warlock/run/arm_000035.obj",
+	"./../assets/modelos/Warlock/run/arm_000036.obj",
+	"./../assets/modelos/Warlock/run/arm_000037.obj",
+	"./../assets/modelos/Warlock/run/arm_000038.obj",
+	"./../assets/modelos/Warlock/run/arm_000039.obj",
+	"./../assets/modelos/Warlock/run/arm_000040.obj"
+};
 // RUN ANIMATION				23-40
 static std::vector<std::string> AWARLOCK_TRUN= {
 	"./../assets/modelos/Warlock/run/top_000023.obj",
@@ -1977,266 +2537,6 @@ static std::vector<std::string> AWARLOCK_BRUN= {
 	"./../assets/modelos/Warlock/run/bot_000038.obj",
 	"./../assets/modelos/Warlock/run/bot_000039.obj",
 	"./../assets/modelos/Warlock/run/bot_000040.obj"
-};
-
-
-//// ###########################################################################
-//// WARLOCK ARMS ANIMATIONS
-// IDLE ARM						40-89
-static std::vector<std::string> AWARLOCK_ARMIDLE= {
-	"./../assets/modelos/Warlock/idle/arm_000040.obj",
-	"./../assets/modelos/Warlock/idle/arm_000041.obj",
-	"./../assets/modelos/Warlock/idle/arm_000042.obj",
-	"./../assets/modelos/Warlock/idle/arm_000043.obj",
-	"./../assets/modelos/Warlock/idle/arm_000044.obj",
-	"./../assets/modelos/Warlock/idle/arm_000045.obj",
-	"./../assets/modelos/Warlock/idle/arm_000046.obj",
-	"./../assets/modelos/Warlock/idle/arm_000047.obj",
-	"./../assets/modelos/Warlock/idle/arm_000048.obj",
-	"./../assets/modelos/Warlock/idle/arm_000049.obj",
-
-	"./../assets/modelos/Warlock/idle/arm_000050.obj",
-	"./../assets/modelos/Warlock/idle/arm_000051.obj",
-	"./../assets/modelos/Warlock/idle/arm_000052.obj",
-	"./../assets/modelos/Warlock/idle/arm_000053.obj",
-	"./../assets/modelos/Warlock/idle/arm_000054.obj",
-	"./../assets/modelos/Warlock/idle/arm_000055.obj",
-	"./../assets/modelos/Warlock/idle/arm_000056.obj",
-	"./../assets/modelos/Warlock/idle/arm_000057.obj",
-	"./../assets/modelos/Warlock/idle/arm_000058.obj",
-	"./../assets/modelos/Warlock/idle/arm_000059.obj",
-
-	"./../assets/modelos/Warlock/idle/arm_000060.obj",
-	"./../assets/modelos/Warlock/idle/arm_000061.obj",
-	"./../assets/modelos/Warlock/idle/arm_000062.obj",
-	"./../assets/modelos/Warlock/idle/arm_000063.obj",
-	"./../assets/modelos/Warlock/idle/arm_000064.obj",
-	"./../assets/modelos/Warlock/idle/arm_000065.obj",
-	"./../assets/modelos/Warlock/idle/arm_000066.obj",
-	"./../assets/modelos/Warlock/idle/arm_000067.obj",
-	"./../assets/modelos/Warlock/idle/arm_000068.obj",
-	"./../assets/modelos/Warlock/idle/arm_000069.obj",
-
-	"./../assets/modelos/Warlock/idle/arm_000070.obj",
-	"./../assets/modelos/Warlock/idle/arm_000071.obj",
-	"./../assets/modelos/Warlock/idle/arm_000072.obj",
-	"./../assets/modelos/Warlock/idle/arm_000073.obj",
-	"./../assets/modelos/Warlock/idle/arm_000074.obj",
-	"./../assets/modelos/Warlock/idle/arm_000075.obj",
-	"./../assets/modelos/Warlock/idle/arm_000076.obj",
-	"./../assets/modelos/Warlock/idle/arm_000077.obj",
-	"./../assets/modelos/Warlock/idle/arm_000078.obj",
-	"./../assets/modelos/Warlock/idle/arm_000079.obj",
-
-	"./../assets/modelos/Warlock/idle/arm_000080.obj",
-	"./../assets/modelos/Warlock/idle/arm_000081.obj",
-	"./../assets/modelos/Warlock/idle/arm_000082.obj",
-	"./../assets/modelos/Warlock/idle/arm_000083.obj",
-	"./../assets/modelos/Warlock/idle/arm_000084.obj",
-	"./../assets/modelos/Warlock/idle/arm_000085.obj",
-	"./../assets/modelos/Warlock/idle/arm_000086.obj",
-	"./../assets/modelos/Warlock/idle/arm_000087.obj",
-	"./../assets/modelos/Warlock/idle/arm_000088.obj",
-	"./../assets/modelos/Warlock/idle/arm_000089.obj"
-};
-
-// WALK ARM						24-47
-static std::vector<std::string> AWARLOCK_ARMWALK = {
-	"./../assets/modelos/Warlock/walk/arm_000024.obj",
-	"./../assets/modelos/Warlock/walk/arm_000025.obj",
-	"./../assets/modelos/Warlock/walk/arm_000026.obj",
-	"./../assets/modelos/Warlock/walk/arm_000027.obj",
-	"./../assets/modelos/Warlock/walk/arm_000028.obj",
-	"./../assets/modelos/Warlock/walk/arm_000029.obj",
-
-	"./../assets/modelos/Warlock/walk/arm_000030.obj",
-	"./../assets/modelos/Warlock/walk/arm_000031.obj",
-	"./../assets/modelos/Warlock/walk/arm_000032.obj",
-	"./../assets/modelos/Warlock/walk/arm_000033.obj",
-	"./../assets/modelos/Warlock/walk/arm_000034.obj",
-	"./../assets/modelos/Warlock/walk/arm_000035.obj",
-	"./../assets/modelos/Warlock/walk/arm_000036.obj",
-	"./../assets/modelos/Warlock/walk/arm_000037.obj",
-	"./../assets/modelos/Warlock/walk/arm_000038.obj",
-	"./../assets/modelos/Warlock/walk/arm_000039.obj",
-
-	"./../assets/modelos/Warlock/walk/arm_000040.obj",
-	"./../assets/modelos/Warlock/walk/arm_000041.obj",
-	"./../assets/modelos/Warlock/walk/arm_000042.obj",
-	"./../assets/modelos/Warlock/walk/arm_000043.obj",
-	"./../assets/modelos/Warlock/walk/arm_000044.obj",
-	"./../assets/modelos/Warlock/walk/arm_000045.obj",
-	"./../assets/modelos/Warlock/walk/arm_000046.obj",
-	"./../assets/modelos/Warlock/walk/arm_000047.obj"
-};
-
-// RUN ARM						23-40
-static std::vector<std::string> AWARLOCK_ARMRUN= {
-	"./../assets/modelos/Warlock/run/arm_000023.obj",
-	"./../assets/modelos/Warlock/run/arm_000024.obj",
-	"./../assets/modelos/Warlock/run/arm_000025.obj",
-	"./../assets/modelos/Warlock/run/arm_000026.obj",
-	"./../assets/modelos/Warlock/run/arm_000027.obj",
-	"./../assets/modelos/Warlock/run/arm_000028.obj",
-	"./../assets/modelos/Warlock/run/arm_000029.obj",
-	"./../assets/modelos/Warlock/run/arm_000030.obj",
-	"./../assets/modelos/Warlock/run/arm_000031.obj",
-	"./../assets/modelos/Warlock/run/arm_000032.obj",
-	"./../assets/modelos/Warlock/run/arm_000033.obj",
-	"./../assets/modelos/Warlock/run/arm_000034.obj",
-	"./../assets/modelos/Warlock/run/arm_000035.obj",
-	"./../assets/modelos/Warlock/run/arm_000036.obj",
-	"./../assets/modelos/Warlock/run/arm_000037.obj",
-	"./../assets/modelos/Warlock/run/arm_000038.obj",
-	"./../assets/modelos/Warlock/run/arm_000039.obj",
-	"./../assets/modelos/Warlock/run/arm_000040.obj"
-};
-
-// SHOOT1 ARM					50-72
-static std::vector<std::string> AWARLOCK_ARMSHOOT1 = {
-	"./../assets/modelos/Warlock/shoot1/arm_000050.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000051.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000052.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000053.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000054.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000055.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000056.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000057.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000058.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000059.obj",
-
-	"./../assets/modelos/Warlock/shoot1/arm_000060.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000061.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000062.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000063.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000064.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000065.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000066.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000067.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000068.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000069.obj",
-
-	"./../assets/modelos/Warlock/shoot1/arm_000070.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000071.obj",
-	"./../assets/modelos/Warlock/shoot1/arm_000072.obj"
-};
-
-// SHOOT2 ARM					26-92
-static std::vector<std::string> AWARLOCK_ARMSHOOT2 = {
-	"./../assets/modelos/Warlock/shoot2/arm_000026.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000027.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000028.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000029.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000030.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000031.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000032.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000033.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000034.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000035.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000036.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000037.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000038.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000039.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000040.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000041.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000042.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000043.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000044.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000045.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000046.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000047.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000048.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000049.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000050.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000051.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000052.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000053.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000054.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000055.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000056.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000057.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000058.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000059.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000060.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000061.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000062.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000063.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000064.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000065.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000066.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000067.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000068.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000069.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000070.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000071.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000072.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000073.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000074.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000075.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000076.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000077.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000078.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000079.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000080.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000081.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000082.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000083.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000084.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000085.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000086.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000087.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000088.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000089.obj",
-
-	"./../assets/modelos/Warlock/shoot2/arm_000090.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000091.obj",
-	"./../assets/modelos/Warlock/shoot2/arm_000092.obj",
-};
-
-// SHOOT3 ARM					50-82
-static std::vector<std::string> AWARLOCK_ARMSHOOT3= {
-	"./../assets/modelos/Warlock/shoot3/arm_000050.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000051.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000052.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000053.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000054.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000055.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000056.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000057.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000058.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000059.obj",
-
-	"./../assets/modelos/Warlock/shoot3/arm_000060.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000061.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000062.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000063.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000064.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000065.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000066.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000067.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000068.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000069.obj",
-
-	"./../assets/modelos/Warlock/shoot3/arm_000070.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000071.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000072.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000073.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000074.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000075.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000076.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000077.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000078.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000079.obj",
-	
-	"./../assets/modelos/Warlock/shoot3/arm_000080.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000081.obj",
-	"./../assets/modelos/Warlock/shoot3/arm_000082.obj"
 };
 
 //// ##################################################################

@@ -27,9 +27,9 @@ void LoadingScreen::Update(float deltaTime){
 }
 
 void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
-    //std::cout<<"now loading: "<<status<<"\n";
+    //std::cout<<"now loading: "<<status<< std::endl;
     std::ostringstream bar_progress;
-    bar_progress << std::setprecision(4) << "bar progress: " << progress <<"%\n";
+    bar_progress << std::setprecision(4) << "bar progress: " << progress << std::endl;
     //std::cout<<bar_progress.str();
     //loading_bar->SetWidth(bar_width*progress);
 }
