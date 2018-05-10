@@ -22,7 +22,7 @@ MultiPlayerGame::MultiPlayerGame(){
 	m_stateGame 	= new MultiLobby(this);
 	
 	// Si estaba algun menu activado lo desactivamos
-	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleCameraMovement(false);
 	g_engine->ToggleMenu(false);
 
 	// Inicializamos nuestras variables

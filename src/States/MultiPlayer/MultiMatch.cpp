@@ -36,7 +36,7 @@ MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	if(networkObject != nullptr) networkObject->SetBoolVar(MULTIGAME_CHANGE, false, false, false);
 
 	// Si estaba algun menu activado lo desactivamos
-	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleCameraMovement(false);
 	g_engine->ToggleMenu(false);
 }
 

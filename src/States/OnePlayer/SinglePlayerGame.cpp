@@ -93,7 +93,7 @@ void SinglePlayerGame::CleanGame(){
 	spellManager->ResetAllDieHechizo();
 
 	// Si estaba algun menu activado lo desactivamos
-	g_engine->ToggleCameraMovement(true);
+	g_engine->ToggleCameraMovement(false);
 	g_engine->ToggleMenu(false);
 }
 
