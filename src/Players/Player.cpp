@@ -696,7 +696,10 @@ void Player::MoveZ(int dir){
 void Player::Jump() {
 	if(m_CanJump && m_hasCharacter) {
 		stopFootsteps();
-		bt_body->SetLinearVelocity_Y(0);
+
+		vector3df velocity = bt_body->GetLinearVelocity();
+		velocity.Y = 0;
+		bt_body->SetLinearVelocity(velocity);
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
