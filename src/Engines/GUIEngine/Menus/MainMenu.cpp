@@ -408,6 +408,19 @@ void MainMenu::Update(bool* open, float deltaTime){
                 static bool *particles  = GraphicEngine::getInstance()->GetParticleState();
                 ImGui::Checkbox("Shadows", shadows);
                 ImGui::Checkbox("Particles", particles);
+
+                //static bool lights = GraphicEngine::getInstance()->GetDynamicLight();
+                //static float ambient = GraphicEngine::getInstance()->GetAmbientLight();
+
+                static bool lights = true;
+                static float ambient = 1.0f;
+
+                ImGui::Checkbox("Dynamic Lights", &lights);
+                ImGui::SliderFloat("Ambient Light Level", &ambient, 0.0f, 100.0f, "%.2f");
+
+                //if(lights != GraphicEngine::getInstance()->GetDynamicLight()) GraphicEngine::getInstance()->SetDynamicLight(light);
+                //if(ambient != GraphicEngine::getInstance()->GetAmbientLight()) GraphicEngine::getInstance()->SetAmbientLight(ambient);
+
                 ImGui::Separator();
 
                 ImGui::Text("\nAI Options");
