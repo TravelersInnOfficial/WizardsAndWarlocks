@@ -201,7 +201,8 @@ class Player: public Entidad{
 		void ChangeAnimation(std::string id, int fps = 25, bool loop = false, bool wholeBody = false);
 
 		vector3df 		m_position;			// Posicion del jugador
-		vector3df 		m_dimensions;		// Dimensiones del jugador
+		vector3df 		m_dimensions;		// Dimensiones del jugador visual
+		vector3df 		m_physicsDimensions;// Dimensiones del jugador fisico
 		vector3df 		m_rotation;			// Rotacion del jugador
 
 		PlayerController* m_controller;		// Objeto que controla el input del jugador

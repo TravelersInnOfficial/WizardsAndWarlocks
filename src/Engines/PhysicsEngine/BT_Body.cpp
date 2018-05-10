@@ -135,7 +135,10 @@ void BT_Body::SetDimensions(vector3df dimensions){
 	m_dimensions->X = dimensions.X;
 	m_dimensions->Y = dimensions.Y;
 	m_dimensions->Z = dimensions.Z;
+}
 
+void BT_Body::SetLinearVelocity_Y(float value){
+	m_RigidBody->setLinearVelocity(btVector3(0,value,0));
 }
 
 void BT_Body::SetLinearVelocity(vector3df velocity){

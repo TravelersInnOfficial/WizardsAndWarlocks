@@ -24,6 +24,7 @@ public:
 	void SetPosition(vector3df);
 	void SetDimensions(vector3df);
 	void SetLinearVelocity(vector3df);
+	void SetLinearVelocity_Y(float value);
 	void SetMass(float);
 	void SetAngularFactor(vector3df v);
 	void SetFlags(CollisionTypes mask, int collideWith);

@@ -26,6 +26,7 @@ Player::Player(bool isPlayer1){
 	
 	m_position = vector3df(0,2,0);
 	m_dimensions = vector3df(0.9,0.9,0.9);
+	m_physicsDimensions = vector3df(0.9 * 0.3, 0.9, 0.9 * 0.3);
 
 	m_controller = new PlayerController();
 	DeclareInput();
@@ -355,6 +356,7 @@ void Player::CreatePlayerGBody(){
 	
 }
 
+
 void Player::CreatePlayerCharacter(){
 	if(!m_hasCharacter){
 		// Graphic Player
@@ -363,9 +365,8 @@ void Player::CreatePlayerCharacter(){
 		SetBillboard();
 
 		// Physic Player
-		vector3df HalfExtents(m_dimensions.X * 0.30f, m_dimensions.Y, m_dimensions.Z * 0.30f);
 		bt_body = new BT_Body();
-		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
+		bt_body->CreateBox(m_position, m_physicsDimensions, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
 
 		// Camera
@@ -384,6 +385,7 @@ void Player::CreatePlayerCharacter(){
 	}
 	
 }
+
 
 void Player::DestroyPlayerGBody(){
     if(m_playerNode != nullptr){
@@ -694,8 +696,7 @@ void Player::MoveZ(int dir){
 void Player::Jump() {
 	if(m_CanJump && m_hasCharacter) {
 		stopFootsteps();
-		vector3df velocity = bt_body->GetLinearVelocity();
-		velocity.setY(0);
+		bt_body->SetLinearVelocity_Y(0);
 		float impulse = 30 * 9.8;
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
@@ -1387,14 +1388,15 @@ bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
 	return m_CanJump;
 }
 
+
 bool Player::JumpRaycast(){
 	bool auxCanJump = false;
-	float bodyLength = 1.5f;
-	float halfSize = 1.8f * 0.15f;
+	float bodyLength = m_physicsDimensions.Y + 0.1f;
+	float halfSize = m_physicsDimensions.X;
 	float hipotenuse = sqrtf(powf(halfSize, 2) + powf(halfSize, 2));
 
 	// Centro
-	vector3df startCenter = GetHeadPos();
+	vector3df startCenter = m_position;
 	vector3df endCenter(startCenter.X, startCenter.Y - bodyLength, startCenter.Z);
 	void* Object = BulletEngine::GetInstance()->Raycast(startCenter, endCenter);
 	if(Object != nullptr) auxCanJump = true;

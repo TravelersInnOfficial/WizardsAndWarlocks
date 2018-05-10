@@ -94,7 +94,8 @@ void Door::WorkDoor(float deltaTime){
     rotation.Y += increment * deltaTime;
     bt_body->Rotate(rotation);
 
-    if(rotation.Y <= min || rotation.Y >= max){ 
+    if(rotation.Y <= min || rotation.Y >= max){
+        rotation.Y = rotation.Y<=min? min: rotation.Y>=max? max: rotation.Y;
         working = false;
         // Comprobamos si se ha cerrado por completo
         if(rotation.Y <= min){
@@ -182,6 +183,7 @@ void Door::ForceOpen(){
         rotation.Y = max;
         bt_body->Rotate(rotation);
         isOpen = true;
+        SetVisible(true);
     }
 }
 
