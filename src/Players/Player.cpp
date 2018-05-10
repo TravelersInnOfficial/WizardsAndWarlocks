@@ -1,6 +1,3 @@
-
-#include <cmath>
-
 #include "./Player.h"
 #include "./PlayerHUD.h"
 #include <PhysicsEngine/BulletEngine.h>
@@ -18,6 +15,7 @@
 #include "./../Cameras/WatcherCamera.h"
 #include "./../Cameras/FPSCamera.h"
 #include <Assets.h>
+#include <cmath>
 
 Player::Player(bool isPlayer1){
 	if(isPlayer1) m_overlayManager = new OverlayManager();
@@ -47,7 +45,7 @@ Player::Player(bool isPlayer1){
 	m_networkObject = nullptr;
 	m_targetDeadCam = nullptr;
 
-	canJump = false;
+	m_CanJump = false;
 	m_matchStarted = false;
 	m_hasCharacter = false;
 	m_readyToStart = false;
@@ -151,7 +149,7 @@ void Player::PlayerInit(){
 	m_shotEffect = WEAK_BASIC;
 	m_visible = true;
 	m_dead = false;
-	canJump = false;
+	m_CanJump = false;
 
 	if(m_overlayManager != nullptr){
 		m_overlayManager->SetTime(BLOOD, 0);
@@ -207,7 +205,7 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("shoot3", AWIZARD_TSHOOT3);
 */
 
-/*				
+/*
 				// JUMP
 				m_playerNodeTop->SetPaths("jumpstart",  AWIZARD_TJUMPSTART);
 				m_playerNode->SetPaths("jumpstart",  AWIZARD_BJUMPSTART);
@@ -218,7 +216,7 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("jumpend",  AWIZARD_TJUMPEND);
 				m_playerNode->SetPaths("jumpend",  AWIZARD_BJUMPEND);
 */
-/*				
+/*
 				// DANCES
 				m_playerNodeTop->SetPaths("circle",  AWIZARD_TCIRCLE);
 				m_playerNode->SetPaths("circle",  AWIZARD_BCIRCLE);
@@ -569,7 +567,7 @@ void Player::Update(float deltaTime){
 
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable
 		if(m_moving){
-			if(!m_stepsStarted && canJump) playFootsteps();
+			if(!m_stepsStarted && m_CanJump) playFootsteps();
 			m_moving = false;
 		}
 		
@@ -694,7 +692,7 @@ void Player::MoveZ(int dir){
 }
 
 void Player::Jump() {
-	if(canJump && m_hasCharacter) {
+	if(m_CanJump && m_hasCharacter) {
 		stopFootsteps();
 		vector3df velocity = bt_body->GetLinearVelocity();
 		velocity.setY(0);
@@ -702,7 +700,7 @@ void Player::Jump() {
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
 		
-		canJump = false;
+		m_CanJump = false;
 		m_currentJumpCheckTime = m_maxJumpCheckTime;
 	}
 }
@@ -1038,7 +1036,7 @@ void Player::QuitStatusMenu(){
 }
 
 void Player::UpdateWalkAnimation(){
-	if(canJump){
+	if(m_CanJump){
 		// CHANGE WALK OR IDLE ANIMATION
 		int speedfps = 15;
 		//speedfps = 25;
@@ -1078,32 +1076,6 @@ void Player::UpdatePosShape(float dtime){
 		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)
 		m_playerNode->Update(dtime);		// UPDATE ANIMATION (arm or legs)
 
-		// DEBUG BILLBOARDS
-//		if(m_playerAlliance == ALLIANCE_WIZARD{
-		/*if(!m_isPlayerOne){
-			int vel = m_max_velocity;
-			int decimalvel = (m_max_velocity - vel) * 10;
-
-			vector3df pos;
-			
-			// SPEED
-			pos = vector3df(-0.5,0.75,0);
-			//m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
-			m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
-			// FPS
-			pos = vector3df(-0.5,0.5,0);
-			m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
-
-			// MOVING
-			pos = vector3df(0.5,0.75,0);
-			//m_playerNode->AddText("M:" + std::to_string(m_moving), pos, 2);
-			m_playerNode->AddText("D:" + std::to_string(m_playerNode->GetAnimationFrame() - m_playerNodeTop->GetAnimationFrame()), pos, 2);
-
-			// MOVING
-			pos = vector3df(0.5,0.5,0);
-			m_playerNode->AddText("F:" + std::to_string(m_walkfps), pos, 3);
-		}
-*/
 		// UPDATE TOP PART
 		if(!m_isPlayerOne && m_playerNodeTop != nullptr){
 			m_playerNode->setRotation(m_rotation * 180 / M_PI);
@@ -1115,6 +1087,37 @@ void Player::UpdatePosShape(float dtime){
 		else{
 			m_playerNode->setRotation(m_camera->GetRotation());
 		}
+
+		// DEBUG BILLBOARDS
+//		if(m_playerAlliance == ALLIANCE_WIZARD{
+		/*if(!m_isPlayerOne){
+			int vel = m_max_velocity;
+			int decimalvel = (m_max_velocity - vel) * 10;
+
+			vector3df pos;
+			
+			// SPEED
+			pos = vector3df(-0.5,0.75,0);
+			//m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
+			//m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
+			std::stringstream converter;
+    		converter << "J:" << std::boolalpha << m_CanJump;
+			m_playerNode->AddText(converter.c_str(), pos, 0);
+			// FPS
+			pos = vector3df(-0.5,0.5,0);
+			//m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
+
+			// MOVING
+			pos = vector3df(0.5,0.75,0);
+			//m_playerNode->AddText("M:" + std::to_string(m_moving), pos, 2);
+			//m_playerNode->AddText("D:" + std::to_string(m_playerNode->GetAnimationFrame() - m_playerNodeTop->GetAnimationFrame()), pos, 2);
+
+			// MOVING
+			pos = vector3df(0.5,0.5,0);
+			//m_playerNode->AddText("F:" + std::to_string(m_walkfps), pos, 3);
+		
+		} // END DEBUG BILLBOARDS
+*/
 	}
 }
 
@@ -1377,11 +1380,11 @@ bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
 	if(!forceSkip) m_currentJumpCheckTime -= deltaTime;
 	
 	if(forceSkip || m_currentJumpCheckTime <= 0){
-		canJump = JumpRaycast();
+		m_CanJump = JumpRaycast();
 		m_currentJumpCheckTime = m_maxJumpCheckTime;
 	}
 
-	return canJump;
+	return m_CanJump;
 }
 
 bool Player::JumpRaycast(){

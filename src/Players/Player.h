@@ -172,7 +172,7 @@ class Player: public Entidad{
 		float 			m_Defense;			// Divisor del danyo recibido
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
 		bool 			m_visible;			// Is player visible?
-		bool 			canJump;			// Puede saltar?
+		bool 			m_CanJump;			// Puede saltar?
 		int 			m_walkfps;			// DEBUG: Fps a los que va actualmente la animacion de andar
 
 	protected:

@@ -59,7 +59,9 @@
         "slist": "cpp",
         "future": "cpp",
         "hash_map": "cpp",
-        "map": "cpp"
+        "map": "cpp",
+        "list": "cpp",
+        "memory_resource": "cpp"
     },
 
     "editor.quickSuggestions": {

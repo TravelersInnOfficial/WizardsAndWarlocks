@@ -88,11 +88,6 @@ void GraphicEngine::ToggleMenu(bool newState){
 }
 
 void GraphicEngine::ToggleCameraMovement(bool newState){
-	/*if (privateCamera != nullptr){
-		irr::scene::ICameraSceneNode* cam = (irr::scene::ICameraSceneNode*) privateCamera->privateNode;
-		if(cam != nullptr) cam->setInputReceiverEnabled(newState);
-	}*/
-
 	if(privateCamera != nullptr){
 		TFCamera* cam = (TFCamera*) privateCamera->privateNode;
 		cam->SetRotationLocked(newState);

@@ -75,7 +75,7 @@ void Frozen::UpdateEffect(Player* p){
 void Frozen::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_max_velocity /= 1000.0f;
-	p->canJump = false;
+	p->m_CanJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
@@ -86,7 +86,7 @@ void Frozen::ApplyEffect(Player* p){
 
 void Frozen::RemoveEffect(Player* p){
 	p->m_max_velocity *= 1000.0f;
-	p->canJump = true;
+	p->m_CanJump = true;
 	if(particle != nullptr){
 		delete particle;
 		particle = nullptr;
@@ -188,7 +188,7 @@ Paralyzed::Paralyzed(float time):Effect(time, WEAK_PARALYZED){
 void Paralyzed::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_max_velocity /= 1000.0f;
-	p->canJump = false;
+	p->m_CanJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/ElectricParticle.png");
@@ -203,7 +203,7 @@ void Paralyzed::UpdateEffect(Player* p) {
 
 void Paralyzed::RemoveEffect(Player* p){
 	p->m_max_velocity *= 1000.0f;
-	p->canJump = true;	
+	p->m_CanJump = true;	
 	if(particle != nullptr){
 		delete particle;
 		particle = nullptr;
@@ -331,7 +331,7 @@ void DeathSnare::UpdateEffect(Player* p){
 void DeathSnare::ApplyEffect(Player* p){
 	playEffectEvent();
 	p->m_max_velocity /= 1000.0f;
-	p->canJump = false;
+	p->m_CanJump = false;
 	if(GraphicEngine::getInstance()->GetParticleActive()){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/SnareParticle.png");
@@ -349,7 +349,7 @@ void DeathSnare::UpdateEffectParticles(Player* p) {
 
 void DeathSnare::RemoveEffect(Player* p){
 	p->m_max_velocity *= 1000.0f;
-	p->canJump = true;
+	p->m_CanJump = true;
 	if(particle != nullptr){
 		delete particle;
 		particle = nullptr;
