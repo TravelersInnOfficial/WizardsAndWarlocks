@@ -18,7 +18,6 @@
 #include "./../Cameras/WatcherCamera.h"
 #include "./../Cameras/FPSCamera.h"
 #include <Assets.h>
-#include "Animation_Strings.h"
 
 Player::Player(bool isPlayer1){
 	if(isPlayer1) m_overlayManager = new OverlayManager();
@@ -28,7 +27,7 @@ Player::Player(bool isPlayer1){
 	m_hud = new PlayerHUD(this);
 	
 	m_position = vector3df(0,2,0);
-	m_dimensions = vector3df(1.8,1.8,1.8);
+	m_dimensions = vector3df(0.9,0.9,0.9);
 
 	m_controller = new PlayerController();
 	DeclareInput();
@@ -166,65 +165,190 @@ void Player::PlayerInit(){
 }
 
 void Player::InitPlayerAnimations(){
+	std::vector<std::string> npc_anims = {"./../assets/modelos/npc.obj"};
+	std::vector<std::string> npcArm_anims = {"./../assets/modelos/npc.obj"};
+
 	switch(m_playerAlliance){
 		case(ALLIANCE_WIZARD):
 			if(m_isPlayerOne){
-				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
+				// FILL ARM ANIMATION
+				m_playerNode->SetPaths("idle", AWIZARD_ARMIDLE);
+				m_playerNode->SetPaths("walk", AWIZARD_ARMWALK);
+				m_playerNode->SetPaths("run", AWIZARD_ARMRUN);
+
+				m_playerNode->SetPaths("shoot1", AWIZARD_ARMSHOOT1);
+				m_playerNode->SetPaths("shoot2", AWIZARD_ARMSHOOT2);
+				//m_playerNode->SetPaths("shoot3", AWIZARD_ARMSHOOT3);
+				m_playerNode->SetPaths("drink", AWIZARD_ARMDRINK);
+				m_playerNode->SetPaths("interact", AWIZARD_ARMINTERACT);
+				//m_playerNode->SetPaths("dab", AWIZARD_ARMDAB);
 				
+				// SET INITIAL LOOP
+				m_playerNode->SetAnimationLoop("idle");
 			}
 			else{
-				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj", m_position, m_rotation, m_dimensions);
+				// FILL WIZARD ANIMATION
+				// BASICS
+				m_playerNodeTop->SetPaths("idle", AWIZARD_TIDLE);
+				m_playerNode->SetPaths("idle",  AWIZARD_BIDLE);
 
-			} 
+				m_playerNodeTop->SetPaths("walk",  AWIZARD_TWALK);
+				m_playerNode->SetPaths("walk",  AWIZARD_BWALK);
+
+				m_playerNodeTop->SetPaths("run",  AWIZARD_TRUN);
+				m_playerNode->SetPaths("run",  AWIZARD_BRUN);
+
+				// TOP ONLY
+				m_playerNodeTop->SetPaths("shoot1", AWIZARD_TSHOOT1);
+				m_playerNodeTop->SetPaths("shoot2", AWIZARD_TSHOOT2);
+				m_playerNodeTop->SetPaths("drink", AWIZARD_TDRINK);
+				m_playerNodeTop->SetPaths("interact", AWIZARD_TINTERACT);
+/*
+				m_playerNodeTop->SetPaths("shoot3", AWIZARD_TSHOOT3);
+*/
+
+/*				
+				// JUMP
+				m_playerNodeTop->SetPaths("jumpstart",  AWIZARD_TJUMPSTART);
+				m_playerNode->SetPaths("jumpstart",  AWIZARD_BJUMPSTART);
+				
+				m_playerNodeTop->SetPaths("jumpfall",  AWIZARD_TJUMPFALL);
+				m_playerNode->SetPaths("jumpfall",  AWIZARD_BJUMPFALL);
+
+				m_playerNodeTop->SetPaths("jumpend",  AWIZARD_TJUMPEND);
+				m_playerNode->SetPaths("jumpend",  AWIZARD_BJUMPEND);
+*/
+/*				
+				// DANCES
+				m_playerNodeTop->SetPaths("circle",  AWIZARD_TCIRCLE);
+				m_playerNode->SetPaths("circle",  AWIZARD_BCIRCLE);
+
+				m_playerNodeTop->SetPaths("dab",  AWIZARD_TDAB);
+				m_playerNode->SetPaths("dab",  AWIZARD_BDAB);
+
+				m_playerNodeTop->SetPaths("dance",  AWIZARD_TDANCE);
+				m_playerNode->SetPaths("dance",  AWIZARD_BDANCE);
+
+				m_playerNodeTop->SetPaths("win",  AWIZARD_TWIN);
+				m_playerNode->SetPaths("win",  AWIZARD_BWIN);
+*/
+				// SET INITIAL LOOP
+				m_playerNode->SetAnimationLoop("idle");
+				m_playerNodeTop->SetAnimationLoop("idle");
+			}
 		break;
 		
 		case(ALLIANCE_WARLOCK):
 			if(m_isPlayerOne){
-				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj", m_position, m_rotation, m_dimensions);
-
-			} 
-			else{
-				//m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj", m_position, m_rotation, m_dimensions);
+				// FILL ARM ANIMATION
+				m_playerNode->SetPaths("idle", AWARLOCK_ARMIDLE);
+				m_playerNode->SetPaths("walk", AWARLOCK_ARMWALK);
+				m_playerNode->SetPaths("run",  AWARLOCK_ARMRUN);
 				
-			} 
-			
+				m_playerNode->SetPaths("shoot1", AWARLOCK_ARMSHOOT1);
+				m_playerNode->SetPaths("shoot2", AWIZARD_ARMSHOOT2);
+				//m_playerNode->SetPaths("shoot3", AWIZARD_ARMSHOOT3);
+				m_playerNode->SetPaths("drink", AWARLOCK_ARMDRINK);
+				m_playerNode->SetPaths("interact", AWARLOCK_ARMINTERACT);
+				//m_playerNode->SetPaths("dab", AWIZARD_ARMDAB);
+
+				// SET INITIAL LOOP
+				m_playerNode->SetAnimationLoop("idle");
+			}
+			else{
+				// FILL WARLOCK ANIMATION
+				// BASICS
+				m_playerNodeTop->SetPaths("idle", AWARLOCK_TIDLE);
+				m_playerNode->SetPaths("idle",  AWARLOCK_BIDLE);
+
+				m_playerNodeTop->SetPaths("walk",  AWARLOCK_TWALK);
+				m_playerNode->SetPaths("walk",  AWARLOCK_BWALK);
+
+				m_playerNodeTop->SetPaths("run",  AWARLOCK_TRUN);
+				m_playerNode->SetPaths("run",  AWARLOCK_BRUN);
+
+				// TOP ONLY ANIMATIONS
+				m_playerNodeTop->SetPaths("shoot1", AWARLOCK_TSHOOT1);
+				m_playerNodeTop->SetPaths("shoot2", AWARLOCK_TSHOOT2);
+				m_playerNodeTop->SetPaths("drink", AWARLOCK_TDRINK);
+				m_playerNodeTop->SetPaths("interact", AWARLOCK_TINTERACT);
+/*
+				m_playerNodeTop->SetPaths("shoot3", AWARLOCK_TSHOOT3);
+*/
+
+/*
+				// JUMP
+				m_playerNodeTop->SetPaths("jumpstart",  AWARLOCK_TJUMPSTART);
+				m_playerNode->SetPaths("jumpstart",  AWARLOCK_BJUMPSTART);
+
+				m_playerNodeTop->SetPaths("jumpfall",  AWARLOCK_TJUMPFALL);
+				m_playerNode->SetPaths("jumpfall",  AWARLOCK_BJUMPFALL);
+
+				m_playerNodeTop->SetPaths("jumpend",  AWARLOCK_TJUMPEND);
+				m_playerNode->SetPaths("jumpend",  AWARLOCK_BJUMPEND);	
+*/
+
+/*				
+				// DANCES
+				m_playerNodeTop->SetPaths("circle",  AWARLOCK_TCIRCLE);
+				m_playerNode->SetPaths("circle",  AWARLOCK_BCIRCLE);
+
+				m_playerNodeTop->SetPaths("dab",  AWARLOCK_TDAB);
+				m_playerNode->SetPaths("dab",  AWARLOCK_BDAB);
+
+				m_playerNodeTop->SetPaths("dance",  AWARLOCK_TDANCE);
+				m_playerNode->SetPaths("dance",  AWARLOCK_BDANCE);
+
+				m_playerNodeTop->SetPaths("win",  AWARLOCK_TWIN);
+				m_playerNode->SetPaths("win",  AWARLOCK_BWIN);
+*/
+				// SET INITIAL LOOP
+				m_playerNode->SetAnimationLoop("idle");
+				m_playerNodeTop->SetAnimationLoop("idle");
+			}
 		break;
 		
 		default:
 			if(m_isPlayerOne){
-
+				m_playerNode->SetPaths("none", AWIZARD_ARMIDLE);
 			} 
 			else{
-
+				m_playerNode->SetPaths("none", AWIZARD_ARMIDLE);
 			} 
 			
 		break;
 	}
+
+	// SYNC ANIMATIONS
+	if(!m_isPlayerOne && m_playerNodeTop != nullptr) m_playerNodeTop->BindSyncAnimation(m_playerNode);
+
 }
 
 void Player::CreatePlayerGBody(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	
+	// Set initial position of the meshes
+	m_playerNode = g_engine->addAnimatedMeshSceneNode(m_position, m_rotation, m_dimensions);
+
+	// Initialize top part
+	if(!m_isPlayerOne) 
+		m_playerNodeTop = g_engine->addAnimatedMeshSceneNode(m_position, m_rotation, m_dimensions);
+	else m_playerNodeTop = nullptr;
+	
+	// APPLY ALL TEXTURES
 	switch(m_playerAlliance){
 		case(ALLIANCE_WIZARD):
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Wizard.obj", m_position, m_rotation, m_dimensions);
-
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/Wizard.png");
 		break;
 		
 		case(ALLIANCE_WARLOCK):
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WarlockArm.obj", m_position, m_rotation, m_dimensions);
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/Warlock.obj", m_position, m_rotation, m_dimensions);
-			
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/Warlock.png");
 		break;
-		
 		default:
-			if(m_isPlayerOne) m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/WizardArm.obj", m_position, m_rotation, m_dimensions);
-			else m_playerNode = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj", m_position, m_rotation, m_dimensions);
-			
 			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/npc.png");
 		break;
 	}
 
@@ -241,7 +365,7 @@ void Player::CreatePlayerCharacter(){
 		SetBillboard();
 
 		// Physic Player
-		vector3df HalfExtents(m_dimensions.X * 0.15f, m_dimensions.Y * 0.45, m_dimensions.Z * 0.15f);
+		vector3df HalfExtents(m_dimensions.X * 0.30f, m_dimensions.Y, m_dimensions.Z * 0.30f);
 		bt_body = new BT_Body();
 		bt_body->CreateBox(m_position, HalfExtents, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
@@ -282,7 +406,7 @@ void Player::DestroyPlayerCharacter(){
 
 	// Delete m_playerNode and m_playerNodeTop
 	DestroyPlayerGBody();
-	
+
 	if(m_isPlayerOne && m_camera!=nullptr){
 		bool work = m_camera->GetWorking();
 
@@ -458,6 +582,9 @@ void Player::Update(float deltaTime){
 
 		CheckInput(); // Comprobamos los Input del personaje
 
+		// Actualizamos la animacion de idle/andar/correr
+		UpdateWalkAnimation();
+
 		// Actualizamos el cuerpo visual del personaje respecto al fisico
 		UpdatePosShape(deltaTime);
 
@@ -566,7 +693,7 @@ void Player::MoveZ(int dir){
 	}
 }
 
-void Player::Jump(){
+void Player::Jump() {
 	if(canJump && m_hasCharacter) {
 		stopFootsteps();
 		vector3df velocity = bt_body->GetLinearVelocity();
@@ -720,6 +847,19 @@ bool Player::ShootSpell(){
 	if(shoot){
 		RegionalSenseManager* sense = RegionalSenseManager::GetInstance();
 		sense->AddSignal(id, this, false, (AI_code)(AI_PLAYER_WARL+m_playerAlliance), 5.0f, GetKinematic(), AI_HEARING);
+
+		// SHOOT ANIMATION
+		std::vector<Hechizo*> spells = SpellManager::GetInstance()->GetSpells(this);
+		std::vector<SPELLCODE> spellstypes1 = { SPELL_BASIC, SPELL_PROJECTILE, SPELL_FIRE, SPELL_POISON, SPELL_THUNDER };
+
+		if(std::find( spellstypes1.begin(), spellstypes1.end(), spells[m_currentSpell]->GetType() ) != spellstypes1.end()){
+			ChangeAnimation("shoot1", 25, false);
+		}
+		else{
+			ChangeAnimation("shoot2", 25, false);
+		}
+
+		//m_playerNode->AddText("S: " + std::to_string(m_currentSpell), vector3df(-0.5,0.75,0), 0);
 	}
 
 	return shoot;
@@ -807,8 +947,9 @@ bool Player::CheckIfReady(){
 }
 
 void Player::Run(bool runStatus){
-	float factor = 5/3.0f;
 	if(m_isRunning != runStatus){
+		float factor = 5/3.0f;
+		
 		m_isRunning = runStatus;
 		if(runStatus) m_max_velocity *= factor;
 		else m_max_velocity /= factor;
@@ -816,6 +957,9 @@ void Player::Run(bool runStatus){
 }
 
 void Player::CatchObject(Potion* p){
+	// Play Interact Animation
+	ChangeAnimation("interact", 50);
+	
 	DropObject();
 	m_potion = p;
 }
@@ -836,7 +980,13 @@ void Player::LosePotion(){
 
 void Player::UseObject(){
 	if(m_potion!=nullptr){
+		// Play Drink Animation
+		ChangeAnimation("drink", 50);
+		
+		// Play Drink Sound
 		playSoundEvent(soundEvents["drink"]);
+
+		// Use potion
 		m_potion->Use(this);
 		m_potion = nullptr;
 	}
@@ -887,20 +1037,84 @@ void Player::QuitStatusMenu(){
 	MenuManager::GetInstance()->ClearMenu();
 }
 
-void Player::UpdatePosShape(float deltatime){
+void Player::UpdateWalkAnimation(){
+	if(canJump){
+		// CHANGE WALK OR IDLE ANIMATION
+		int speedfps = 15;
+		//speedfps = 25;
+		if(m_max_velocity > 0)	
+			m_walkfps = log(m_max_velocity) * 15 + speedfps;
+
+		// CHANGE ANIMATION IDDLE
+		if(m_isRunning){
+			float factor = 5/3.0f;
+			m_walkfps = log(m_max_velocity/factor) * 15 + speedfps;
+
+			ChangeAnimation("run", m_walkfps, true, true);
+		}
+		else if(m_moving){
+			ChangeAnimation("walk", m_walkfps, true, true);
+		}
+		else{
+			ChangeAnimation("idle", m_walkfps, true, true);
+		}
+	}
+	else{
+		// IS JUMPING OR FALLING
+
+	}
+}
+
+void Player::UpdatePosShape(float dtime){
 	if(m_hasCharacter){
 		m_position = bt_body->GetPosition();
 		bt_body->Update();
 
-		// UPDATE LEGS
 		vector3df pos = m_position;
 		pos.Y += 0.3;
-
-		m_playerNode->setPosition(pos);
 		m_rotation = bt_body->GetRotation();
 
-		if(m_isPlayerOne)m_playerNode->setRotation(m_camera->GetRotation());
-		else m_playerNode->setRotation(m_rotation * 180 / M_PI);
+		// UPDATE LEGS
+		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)
+		m_playerNode->Update(dtime);		// UPDATE ANIMATION (arm or legs)
+
+		// DEBUG BILLBOARDS
+//		if(m_playerAlliance == ALLIANCE_WIZARD{
+		/*if(!m_isPlayerOne){
+			int vel = m_max_velocity;
+			int decimalvel = (m_max_velocity - vel) * 10;
+
+			vector3df pos;
+			
+			// SPEED
+			pos = vector3df(-0.5,0.75,0);
+			//m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
+			m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
+			// FPS
+			pos = vector3df(-0.5,0.5,0);
+			m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
+
+			// MOVING
+			pos = vector3df(0.5,0.75,0);
+			//m_playerNode->AddText("M:" + std::to_string(m_moving), pos, 2);
+			m_playerNode->AddText("D:" + std::to_string(m_playerNode->GetAnimationFrame() - m_playerNodeTop->GetAnimationFrame()), pos, 2);
+
+			// MOVING
+			pos = vector3df(0.5,0.5,0);
+			m_playerNode->AddText("F:" + std::to_string(m_walkfps), pos, 3);
+		}
+*/
+		// UPDATE TOP PART
+		if(!m_isPlayerOne && m_playerNodeTop != nullptr){
+			m_playerNode->setRotation(m_rotation * 180 / M_PI);
+
+			m_playerNodeTop->setPosition(pos);							// UPDATE POSITION
+			m_playerNodeTop->setRotation(m_rotation * 180 / M_PI);		// UPDATE ROTATION
+			m_playerNodeTop->Update(dtime);								// UPDATE ANIMATION (body)
+		}
+		else{
+			m_playerNode->setRotation(m_camera->GetRotation());
+		}
 	}
 }
 
@@ -1207,6 +1421,25 @@ bool Player::JumpRaycast(){
 	}
 
 	return auxCanJump;
+}
+
+void Player::ChangeAnimation(std::string id, int fps, bool loop, bool wholeBody){
+	// If is player one, wholebody doesnt matter
+	if(m_isPlayerOne){
+		if(loop) m_playerNode->SetAnimationLoop(id, fps);
+		else m_playerNode->PlayAnimation(id, fps);
+	}
+	// If player is any other, has 2 parts and depends if animation is for top or whole body
+	else{
+		if(loop){
+			if(wholeBody) m_playerNode->SetAnimationLoop(id, fps);
+			m_playerNodeTop->SetAnimationLoop(id, fps);
+		}
+		else{
+			if(wholeBody) m_playerNode->PlayAnimation(id, fps);
+			m_playerNodeTop->PlayAnimation(id, fps);
+		}
+	}
 }
 
 bool Player::IsDead(){

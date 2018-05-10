@@ -271,47 +271,121 @@ static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
 static std::vector<std::string> CREATE_ANIMATIONMAP(){
 	std::vector<std::string> m;
 
-	// INSERT ALL ANIMATIONS
-/*	m.insert( m.end(), AWIZARD_TSHOOT1.begin(), AWIZARD_TSHOOT1.end() );
-    m.insert( m.end(), AWIZARD_TSHOOT2.begin(), AWIZARD_TSHOOT2.end() );
-    m.insert( m.end(), AWIZARD_TSHOOT3.begin(), AWIZARD_TSHOOT3.end() );
-    m.insert( m.end(), AWIZARD_TDRINK.begin(), AWIZARD_TDRINK.end() );
-    m.insert( m.end(), AWIZARD_TINTERACT.begin(), AWIZARD_TINTERACT.end() );
+	// INSERT ALL WIZARD ANIMATIONS
+	m.insert( m.end(), AWIZARD_ARMIDLE.begin(), 		AWIZARD_ARMIDLE.end() );
+    m.insert( m.end(), AWIZARD_BIDLE.begin(), 			AWIZARD_BIDLE.end() );
+    m.insert( m.end(), AWIZARD_TIDLE.begin(), 			AWIZARD_TIDLE.end() );
+
+    m.insert( m.end(), AWIZARD_ARMWALK.begin(), 		AWIZARD_ARMWALK.end() );
+    m.insert( m.end(), AWIZARD_TWALK.begin(), 			AWIZARD_TWALK.end() );
+    m.insert( m.end(), AWIZARD_BWALK.begin(), 			AWIZARD_BWALK.end() );
+
+    m.insert( m.end(), AWIZARD_ARMRUN.begin(), 			AWIZARD_ARMRUN.end() );
+    m.insert( m.end(), AWIZARD_TRUN.begin(), 			AWIZARD_TRUN.end() );
+    m.insert( m.end(), AWIZARD_BRUN.begin(), 			AWIZARD_BRUN.end() );
 	
+	// TOP ONLY
+	m.insert( m.end(), AWIZARD_ARMSHOOT1.begin(), 		AWIZARD_ARMSHOOT1.end() );
+	m.insert( m.end(), AWIZARD_TSHOOT1.begin(), 		AWIZARD_TSHOOT1.end() );
 
-	m.insert( m.end(), AWIZARD_TCIRCLE.begin(), AWIZARD_TCIRCLE.end() );
-    m.insert( m.end(), AWIZARD_BCIRCLE.begin(), AWIZARD_BCIRCLE.end() );
-    m.insert( m.end(), AWIZARD_TDAB.begin(), 	AWIZARD_TDAB.end() );
-    m.insert( m.end(), AWIZARD_BDAB.begin(), 	AWIZARD_BDAB.end() );
-	m.insert( m.end(), AWIZARD_TDANCE.begin(), 	AWIZARD_TDANCE.end() );
-    m.insert( m.end(), AWIZARD_BDANCE.begin(), 	AWIZARD_BDANCE.end() );
-    m.insert( m.end(), AWIZARD_TWIN.begin(), 	AWIZARD_TWIN.end() );
-    m.insert( m.end(), AWIZARD_BWIN.begin(), 	AWIZARD_BWIN.end() );
+	m.insert( m.end(), AWIZARD_ARMSHOOT2.begin(), 		AWIZARD_ARMSHOOT2.end() );
+    m.insert( m.end(), AWIZARD_TSHOOT2.begin(), 		AWIZARD_TSHOOT2.end() );
 
-    m.insert( m.end(), AWIZARD_TIDLE.begin(), AWIZARD_TIDLE.end() );
-    m.insert( m.end(), AWIZARD_BIDLE.begin(), AWIZARD_BIDLE.end() );
-    m.insert( m.end(), AWIZARD_TWALK.begin(), AWIZARD_TWALK.end() );
-    m.insert( m.end(), AWIZARD_BWALK.begin(), AWIZARD_BWALK.end() );
-    m.insert( m.end(), AWIZARD_TRUN.begin(), AWIZARD_TRUN.end() );
-    m.insert( m.end(), AWIZARD_BRUN.begin(), AWIZARD_BRUN.end() );
+    m.insert( m.end(), AWIZARD_ARMDRINK.begin(), 		AWIZARD_ARMDRINK.end() );
+    m.insert( m.end(), AWIZARD_TDRINK.begin(), 			AWIZARD_TDRINK.end() );
 
+    m.insert( m.end(), AWIZARD_ARMINTERACT.begin(), AWIZARD_ARMINTERACT.end() );
+    m.insert( m.end(), AWIZARD_TINTERACT.begin(), 	AWIZARD_TINTERACT.end() );
+
+/* TOP ANIMATIONS NOT USED YET
+    m.insert( m.end(), AWIZARD_ARMSHOOT3.begin(), 	AWIZARD_ARMSHOOT3.end() );
+    m.insert( m.end(), AWIZARD_TSHOOT3.begin(), 	AWIZARD_TSHOOT3.end() );
+*/
+
+/*
+	// JUMP ANIMATION
     m.insert( m.end(), AWIZARD_TJUMPSTART.begin(), 	AWIZARD_TJUMPSTART.end() );
     m.insert( m.end(), AWIZARD_BJUMPSTART.begin(), 	AWIZARD_BJUMPSTART.end() );
 	m.insert( m.end(), AWIZARD_TJUMPFALL.begin(), 	AWIZARD_TJUMPFALL.end() );
     m.insert( m.end(), AWIZARD_BJUMPFALL.begin(), 	AWIZARD_BJUMPFALL.end() );
     m.insert( m.end(), AWIZARD_TJUMPEND.begin(), 	AWIZARD_TJUMPEND.end() );
     m.insert( m.end(), AWIZARD_BJUMPEND.begin(), 	AWIZARD_BJUMPEND.end() );
-
-	m.insert( m.end(), AWIZARD_ARMIDLE.begin(), 		AWIZARD_ARMIDLE.end() );
-    m.insert( m.end(), AWIZARD_ARMWALK.begin(), 		AWIZARD_ARMWALK.end() );
-    m.insert( m.end(), AWIZARD_ARMRUN.begin(), 			AWIZARD_ARMRUN.end() );
-    m.insert( m.end(), AWIZARD_ARMSHOOT1.begin(), 		AWIZARD_ARMSHOOT1.end() );
-	m.insert( m.end(), AWIZARD_ARMSHOOT2.begin(), 		AWIZARD_ARMSHOOT2.end() );
-    m.insert( m.end(), AWIZARD_ARMSHOOT3.begin(), 		AWIZARD_ARMSHOOT3.end() );
-    m.insert( m.end(), AWIZARD_ARMDRINK.begin(), 		AWIZARD_ARMDRINK.end() );
-    m.insert( m.end(), AWIZARD_ARMINTERACT.begin(), 	AWIZARD_ARMINTERACT.end() );
-    m.insert( m.end(), AWIZARD_ARMDAB.begin(), 			AWIZARD_ARMDAB.end() );
 */
+
+/* 
+	//DANCE ANIMATIONS
+	m.insert( m.end(), AWIZARD_TCIRCLE.begin(), AWIZARD_TCIRCLE.end() );
+    m.insert( m.end(), AWIZARD_BCIRCLE.begin(), AWIZARD_BCIRCLE.end() );
+	
+    m.insert( m.end(), AWIZARD_TDAB.begin(), 	AWIZARD_TDAB.end() );
+    m.insert( m.end(), AWIZARD_BDAB.begin(), 	AWIZARD_BDAB.end() );
+
+    m.insert( m.end(), AWIZARD_ARMDAB.begin(), 			AWIZARD_ARMDAB.end() );	
+	m.insert( m.end(), AWIZARD_TDANCE.begin(), 	AWIZARD_TDANCE.end() );
+    m.insert( m.end(), AWIZARD_BDANCE.begin(), 	AWIZARD_BDANCE.end() );
+
+    m.insert( m.end(), AWIZARD_TWIN.begin(), 	AWIZARD_TWIN.end() );
+    m.insert( m.end(), AWIZARD_BWIN.begin(), 	AWIZARD_BWIN.end() );
+*/
+
+	/// INSERT ALL WARLOCK ANIMATIONS
+	m.insert( m.end(), AWARLOCK_ARMIDLE.begin(), 	AWARLOCK_ARMIDLE.end() );
+    m.insert( m.end(), AWARLOCK_BIDLE.begin(), 		AWARLOCK_BIDLE.end() );
+    m.insert( m.end(), AWARLOCK_TIDLE.begin(), 		AWARLOCK_TIDLE.end() );
+
+    m.insert( m.end(), AWARLOCK_ARMWALK.begin(), 	AWARLOCK_ARMWALK.end() );
+    m.insert( m.end(), AWARLOCK_TWALK.begin(), 		AWARLOCK_TWALK.end() );
+    m.insert( m.end(), AWARLOCK_BWALK.begin(), 		AWARLOCK_BWALK.end() );
+
+    m.insert( m.end(), AWARLOCK_ARMRUN.begin(), 	AWARLOCK_ARMRUN.end() );
+    m.insert( m.end(), AWARLOCK_TRUN.begin(), 		AWARLOCK_TRUN.end() );
+    m.insert( m.end(), AWARLOCK_BRUN.begin(), 		AWARLOCK_BRUN.end() );
+
+	// TOP ONLY
+	m.insert( m.end(), AWARLOCK_ARMSHOOT1.begin(), 		AWARLOCK_ARMSHOOT1.end() );
+	m.insert( m.end(), AWARLOCK_TSHOOT1.begin(), 		AWARLOCK_TSHOOT1.end() );
+
+	m.insert( m.end(), AWARLOCK_ARMSHOOT2.begin(), 		AWARLOCK_ARMSHOOT2.end() );
+    m.insert( m.end(), AWARLOCK_TSHOOT2.begin(),		AWARLOCK_TSHOOT2.end() );
+
+    m.insert( m.end(), AWARLOCK_ARMDRINK.begin(), 		AWARLOCK_ARMDRINK.end() );
+    m.insert( m.end(), AWARLOCK_TDRINK.begin(), 		AWARLOCK_TDRINK.end() );
+
+    m.insert( m.end(), AWARLOCK_ARMINTERACT.begin(), 	AWARLOCK_ARMINTERACT.end() );
+    m.insert( m.end(), AWARLOCK_TINTERACT.begin(), 		AWARLOCK_TINTERACT.end() );
+
+/* TOP ANIMATIONS NOT USED YET
+    m.insert( m.end(), AWARLOCK_ARMSHOOT3.begin(), 		AWARLOCK_ARMSHOOT3.end() );
+    m.insert( m.end(), AWARLOCK_TSHOOT3.begin(), 		AWARLOCK_TSHOOT3.end() );
+*/	
+
+/*	
+	// JUMP ANIMATION
+    m.insert( m.end(), AWARLOCK_TJUMPSTART.begin(), 	AWARLOCK_TJUMPSTART.end() );
+    m.insert( m.end(), AWARLOCK_BJUMPSTART.begin(), 	AWARLOCK_BJUMPSTART.end() );
+	m.insert( m.end(), AWARLOCK_TJUMPFALL.begin(), 		AWARLOCK_TJUMPFALL.end() );
+    m.insert( m.end(), AWARLOCK_BJUMPFALL.begin(), 		AWARLOCK_BJUMPFALL.end() );
+    m.insert( m.end(), AWARLOCK_TJUMPEND.begin(), 		AWARLOCK_TJUMPEND.end() );
+    m.insert( m.end(), AWARLOCK_BJUMPEND.begin(), 		AWARLOCK_BJUMPEND.end() );
+*/
+
+/* 	
+	//DANCE ANIMATIONS
+	m.insert( m.end(), AWARLOCK_TCIRCLE.begin(), 	AWARLOCK_TCIRCLE.end() );
+    m.insert( m.end(), AWARLOCK_BCIRCLE.begin(), 	AWARLOCK_BCIRCLE.end() );
+	
+    m.insert( m.end(), AWARLOCK_TDAB.begin(), 		AWARLOCK_TDAB.end() );
+    m.insert( m.end(), AWARLOCK_BDAB.begin(), 		AWARLOCK_BDAB.end() );
+
+    m.insert( m.end(), AWARLOCK_ARMDAB.begin(), 	AWARLOCK_ARMDAB.end() );	
+	m.insert( m.end(), AWARLOCK_TDANCE.begin(), 	AWARLOCK_TDANCE.end() );
+    m.insert( m.end(), AWARLOCK_BDANCE.begin(), 	AWARLOCK_BDANCE.end() );
+
+    m.insert( m.end(), AWARLOCK_TWIN.begin(), 		AWARLOCK_TWIN.end() );
+    m.insert( m.end(), AWARLOCK_BWIN.begin(), 		AWARLOCK_BWIN.end() );
+*/
+
+	// INSERT ALL NPC ANIMATIONS
 	m.insert( m.end(), AGENIE_DEFAULT.begin(), 		AGENIE_DEFAULT.end() );
 	m.insert( m.end(), ATARANTULA_DEFAULT.begin(), 	ATARANTULA_DEFAULT.end() );
 

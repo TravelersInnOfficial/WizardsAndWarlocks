@@ -173,11 +173,13 @@ class Player: public Entidad{
 		EFFECTCODE 		m_shotEffect;		// Efecto que aplicara al impactar la
 		bool 			m_visible;			// Is player visible?
 		bool 			canJump;			// Puede saltar?
+		int 			m_walkfps;			// DEBUG: Fps a los que va actualmente la animacion de andar
 
 	protected:
 
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
+		void UpdateWalkAnimation();		// Actualiza la animacion de movimiento del personaje
 		void UpdatePosShape(float);			// Actualiza el cuerpo visual del jugador y las animaciones
 		void createSoundEvents();			//Create the sound events needed for the player
 		void SetBillboard();				// Ponemos el billboard en el player
@@ -223,7 +225,7 @@ class Player: public Entidad{
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
 		//GBody* 		m_playerNode;		// Cuerpo visual del jugador
-		GBody* 	m_playerNode;		// Cuerpo visual del jugador
+		GAnimation* 	m_playerNode;		// Cuerpo visual del jugador
 		GAnimation* 	m_playerNodeTop;		// Cuerpo visual del jugador
 		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 
