@@ -9,8 +9,8 @@ GRect::~GRect(){
 	GraphicEngine::getInstance()->privateSManager->Delete2Delement(m_rect);
 }
 
-void GRect::SetColor(float r, float g, float b){
-	m_rect->SetColor(r, g, b);
+void GRect::SetColor(float r, float g, float b, float a){
+	m_rect->SetColor(r, g, b, a);
 }
 
 void GRect::SetMask(std::string path){

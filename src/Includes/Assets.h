@@ -106,7 +106,8 @@ enum GAMETEXTURES {
 	TEXTURE_SPELL_SEP_R,
 	TEXTURE_STAMINA_BKG,
 	TEXTURE_STAMINA_GRID,
-	TEXTURE_STAMINA_LIGHT
+	TEXTURE_STAMINA_LIGHT,
+	TEXTURE_SPELL_SLOT_MASK
 };
 
 enum GAMEMESHES {
@@ -186,7 +187,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SPELL_TELEPORT_HUD]			= "./../assets/textures/HUD/Spells/SPELL_TELEPORT.png";
 	m[TEXTURE_SPELL_INVISIBILITY_HUD]		= "./../assets/textures/HUD/Spells/SPELL_INVISIBILITY.png";
 	m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Spells/spell_slot.png";
-	m[TEXTURE_SPELL_SLOT_BKG]					= "./../assets/textures/HUD/Spells/spell_selector_bkg.png";
+	m[TEXTURE_SPELL_SLOT_BKG]				= "./../assets/textures/HUD/Spells/spell_selector_bkg.png";
+	m[TEXTURE_SPELL_SLOT_MASK]				= "./../assets/textures/HUD/Spells/spell_mask.png";
 	m[TEXTURE_SPELL_SEP]					= "./../assets/textures/HUD/Spells/decorator.png";
 	m[TEXTURE_SPELL_SEP_L]					= "./../assets/textures/HUD/Spells/decorator_left.png";
 	m[TEXTURE_SPELL_SEP_R]					= "./../assets/textures/HUD/Spells/decorator_right.png";

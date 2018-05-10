@@ -409,17 +409,14 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::Checkbox("Shadows", shadows);
                 ImGui::Checkbox("Particles", particles);
 
-                //static bool lights = GraphicEngine::getInstance()->GetDynamicLight();
-                //static float ambient = GraphicEngine::getInstance()->GetAmbientLight();
-
-                static bool lights = true;
-                static float ambient = 1.0f;
+                static bool lights = GraphicEngine::getInstance()->GetDynamicLight();
+                static float ambient = GraphicEngine::getInstance()->GetAmbientLight();
 
                 ImGui::Checkbox("Dynamic Lights", &lights);
                 ImGui::SliderFloat("Ambient Light Level", &ambient, 0.0f, 100.0f, "%.2f");
 
-                //if(lights != GraphicEngine::getInstance()->GetDynamicLight()) GraphicEngine::getInstance()->SetDynamicLight(light);
-                //if(ambient != GraphicEngine::getInstance()->GetAmbientLight()) GraphicEngine::getInstance()->SetAmbientLight(ambient);
+                if(lights != GraphicEngine::getInstance()->GetDynamicLight()) GraphicEngine::getInstance()->SetDynamicLight(lights);
+                if(ambient != GraphicEngine::getInstance()->GetAmbientLight()) GraphicEngine::getInstance()->SetAmbientLight(ambient);
 
                 ImGui::Separator();
 

@@ -9,6 +9,9 @@
 GraphicEngine::GraphicEngine(bool isServer){
 	ShadowState = true;
 	ParticleState = true;
+	dynamicLights = true;
+	ambientLight = 0.20f;
+
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
 	
@@ -30,7 +33,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	privateCamera = nullptr;
 
 	privateDriver->EnableClipping();
-	privateSManager->SetAmbientLight(TOEvector3df(0.2f,0.2f,0.2f));
+	privateSManager->SetAmbientLight(ambientLight);
 
 	m_currentRoom = nullptr;
 }
@@ -490,4 +493,24 @@ bool GraphicEngine::GetShadowActive(){
 
 bool GraphicEngine::GetParticleActive(){
 	return ParticleState;
+}
+
+bool GraphicEngine::GetDynamicLight(){
+	return dynamicLights;
+}
+
+void GraphicEngine::SetDynamicLight(bool value){
+	dynamicLights = value;
+	privateSManager->SetSendLights(value);
+}
+
+float GraphicEngine::GetAmbientLight(){
+	float output = ambientLight*100;
+	return output;
+}
+
+void GraphicEngine::SetAmbientLight(float value){
+	value = value/100;
+	ambientLight = value;
+	privateSManager->SetAmbientLight(ambientLight);
 }

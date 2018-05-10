@@ -301,12 +301,18 @@ public:
 	bool* GetParticleState();
 	bool GetShadowActive();
 	bool GetParticleActive();
+	bool GetDynamicLight();
+	void SetDynamicLight(bool value);
+	float GetAmbientLight();
+	void SetAmbientLight(float value);
 
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
 	bool ShadowState;
 	bool ParticleState;
+	bool dynamicLights;
+	float ambientLight;
 
 	VideoDriver*   privateDriver;
 	SceneManager*  privateSManager;
