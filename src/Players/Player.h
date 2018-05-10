@@ -225,9 +225,8 @@ class Player: public Entidad{
 		Alliance 		m_playerAlliance;		// Alianza del jugador [None, Wizard, Warlock]
 
 		BT_Body*		bt_body;			// Cuerpo fisico del jugador
-		//GBody* 		m_playerNode;		// Cuerpo visual del jugador
 		GAnimation* 	m_playerNode;		// Cuerpo visual del jugador
-		GAnimation* 	m_playerNodeTop;		// Cuerpo visual del jugador
+		GAnimation* 	m_playerNodeTop;	// Cuerpo visual del jugador
 		Camera* 		m_camera;			// Camara del player en primera o tercera persona
 
 		NetworkObject* 	m_networkObject;		// Objeto de red del jugador

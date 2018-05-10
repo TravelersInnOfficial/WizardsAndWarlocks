@@ -31,7 +31,7 @@ Player::Player(bool isPlayer1){
 	m_controller = new PlayerController();
 	DeclareInput();
 
-	m_raycastDistance = 2.0f;
+	m_raycastDistance = 2.75f;
 	m_max_velocity = 4.5f;
 	m_max_velocityY = 8.0f;
 
@@ -356,7 +356,6 @@ void Player::CreatePlayerGBody(){
 	
 }
 
-
 void Player::CreatePlayerCharacter(){
 	if(!m_hasCharacter){
 		// Graphic Player
@@ -385,7 +384,6 @@ void Player::CreatePlayerCharacter(){
 	}
 	
 }
-
 
 void Player::DestroyPlayerGBody(){
     if(m_playerNode != nullptr){
@@ -543,9 +541,7 @@ void Player::DeadUpdate(){
 }
 
 void Player::eraseTargetHUD(){
-	if(m_targetDeadCam!=nullptr){
-		m_targetDeadCam->EraseHUD();
-	}
+	if(m_targetDeadCam!=nullptr) m_targetDeadCam->EraseHUD();
 }
 
 void Player::Update(float deltaTime){
@@ -959,11 +955,10 @@ void Player::Run(bool runStatus){
 }
 
 void Player::CatchObject(Potion* p){
-	// Play Interact Animation
-	ChangeAnimation("interact", 50);
-	
-	DropObject();
-	m_potion = p;
+	if(m_potion != nullptr){
+		ChangeAnimation("interact", 50);
+		m_potion = p;
+	}
 }
 
 void Player::DropObject(){
@@ -1352,13 +1347,25 @@ void Player::SetName(std::string newName){
 void Player::SetVisible(bool visible){
 	if(!visible) {
 		m_visible = false;
-		m_playerNode->setMaterialTexture(0, "../assets/textures/none.png");
-		m_playerNode->EditText("");
+		if(m_playerNodeTop != nullptr){
+			m_playerNodeTop->setMaterialTexture(0, "../assets/textures/none.png");
+			m_playerNodeTop->EditText("");
+	}
 	}
 	else{
 		m_visible = true;
-		if(m_playerAlliance == ALLIANCE_WARLOCK) m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-		else m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+		std::string texturePath = "./../assets/textures/Wizard.png";
+		if(m_playerAlliance == ALLIANCE_WARLOCK) texturePath = "./../assets/textures/Warlock.png";
+
+		if(m_playerNode != nullptr){
+			m_playerNode->setMaterialTexture(0, texturePath.c_str());
+			m_playerNode->EditText("");
+		}
+		if(m_playerNodeTop != nullptr){
+			m_playerNode->setMaterialTexture(0, texturePath.c_str());
+			m_playerNodeTop->EditText("");
+		}
+		
 		m_playerNode->EditText(m_name);
 	}
 }
@@ -1390,7 +1397,6 @@ bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
 
 	return m_CanJump;
 }
-
 
 bool Player::JumpRaycast(){
 	bool auxCanJump = false;
