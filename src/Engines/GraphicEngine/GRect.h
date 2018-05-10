@@ -10,7 +10,7 @@ class GRect{
 	friend class GraphicEngine;
 public:
 	~GRect();
-	void SetColor(float r, float g, float b);
+	void SetColor(float r, float g, float b, float a = 1.0f);
 	void SetMask(std::string path = "");
 	void SetRotation(float rot);
 	void SetWidth(float width);

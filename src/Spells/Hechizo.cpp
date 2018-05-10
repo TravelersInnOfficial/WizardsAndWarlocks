@@ -233,7 +233,7 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 		//SI NO QUEDA MANA PARA LANZAR EL HECHIZO
 		if(disabled){
 			m_sprite->SetColor(0.2,0.2,0.2);
-			if(m_cast_cd->GetHeight()>0) m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown));
+			if(currentCooldown>0) m_cast_cd->SetHeight((size + outline)*(currentCooldown/cooldown));
 		}
 		//SI EL TIEMPO DE CASTEO HA EMPEZADO
 		else if(timeCasting>0){ 
@@ -253,11 +253,14 @@ void Hechizo::DrawHUD(float initX, float initY, float size, float outline, bool 
 	}
 	else{
 		m_bkg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_SPELL_SLOT], vector2df(initX,initY), vector2df(size+outline,size+outline));
-		m_cast_cd 	= GraphicEngine::getInstance()->add2DRect(vector2df(initX,initY), vector2df(size+outline,0));
 		m_rect 		= GraphicEngine::getInstance()->add2DRect(vector2df(initX, initY), vector2df(size+outline, size+outline));
-		m_rect->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
-		//m_cast_cd->SetMask("./../assets/textures/HUD/Orb/item_slot_mask.png");
 		m_sprite 	= GraphicEngine::getInstance()->addSprite(HUDTexturePath, vector2df(initX+outline, initY+outline),vector2df(size-outline, size-outline));
+		m_cast_cd 	= GraphicEngine::getInstance()->add2DRect(vector2df(initX,initY), vector2df(size+outline,size+outline));
+		
+		m_cast_cd->SetHeight(0);
+		
+		m_rect->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
+		m_cast_cd->SetMask(TEXTUREMAP[TEXTURE_SPELL_SLOT_MASK]);
 		m_sprite->SetMask(TEXTUREMAP[TEXTURE_ITEM_SLOT_MASK]);
 	}
 }
