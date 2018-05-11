@@ -1,10 +1,15 @@
 #include "./Potion.h"
+
 #include "./../AI/SenseManager/RegionalSenseManager.h"
 #include "./../Managers/ObjectManager.h"
 #include <NetworkEngine/NetworkEngine.h>
-#include <NetworkEngine/Client.h>
+#include <GraphicEngine/GBody.h>
+#include <GraphicEngine/GSprite.h>
+#include <PhysicsEngine/BT_Body.h>
 #include <NetworkEngine/Server.h>
 #include <GUIEngine/GUIEngine.h>
+#include "./../Players/Player.h"
+#include <kinematicTypes.h>
 
 Potion::Potion(vector3df TScale, int val, std::string info){	
 	clase = EENUM_POTION;

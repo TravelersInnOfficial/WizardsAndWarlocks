@@ -1,5 +1,7 @@
 #include "Seek.h"
 
+#include <kinematicTypes.h>
+
 Seek::Seek(){
 	maxAcceleration = 30.0f;
 }

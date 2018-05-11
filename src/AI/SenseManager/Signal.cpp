@@ -1,4 +1,5 @@
 #include "Signal.h"
+
 #include "Modality.h"
 
 Signal::Signal(Signal* sig){

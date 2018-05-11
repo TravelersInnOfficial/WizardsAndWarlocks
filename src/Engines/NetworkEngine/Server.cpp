@@ -1,11 +1,16 @@
 #include "Server.h"
+
 #include "./../Managers/PlayerManager.h"
 #include "./../Players/Player.h"
-
+#include "./../Objects/Trap.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/StateManager.h"
+#include "./../Objects/Door.h"
+#include "./../Objects/Potion.h"
+
+#include "NetworkObject.h"
 
 Server::Server(int serverPort, int maxClients, bool createdFromGame, std::string serverName){
 

@@ -1,7 +1,11 @@
 #include "NavMesh.h"
-#include <limits>
 
+#include <limits>
+#include "./../AI/Pathfinding/Node.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include "./../AI/Pathfinding/Connection.h"
+
+
 
 NavMesh::NavMesh(){
 

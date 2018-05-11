@@ -1,11 +1,7 @@
 #ifndef DesperationWall_H
 #define DesperationWall_H
 
-#include <iostream>
-#include <InvocationCodes.h>
-
 #include "Hechizo.h"
-#include "./../Players/Player.h"
 
 class DesperationWall: public Hechizo{
 public:

@@ -1,8 +1,20 @@
 #include "AIPlayer.h"
-#include <Names.h>
-#include "./../Managers/SpellManager.h"
+
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../AI/SteeringBehaviour/AllSteerings.h"
+#include "./../AI/Pathfinding/Pathfinding.h"
+#include "./../AI/SenseManager/Sensor.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GAnimation.h>
+#include "./../AI/RoomGraph/RoomGraph.h"
+#include "./../Managers/SpellManager.h"
+#include "./../AI/BehaviourTree.h"
+#include <PhysicsEngine/BT_Body.h>
+#include "./PlayerController.h"
+#include "./../AI/Blackboard.h"
+#include <kinematicTypes.h>
+#include <Constants.h>
+#include <cmath>
 
 AIPlayer::AIPlayer():Player(false){
 	SpellManager* spellManager = SpellManager::GetInstance();
@@ -220,7 +232,7 @@ void AIPlayer::Steering2Controller(float deltaTime){
 		if(dir<-180) dir += 360;					// Comprobamos que ningun valor se salga de [-180, 180]
 		if(dir> 180) dir -=360;
 
-		float tempdir = abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
+		float tempdir = std::abs(dir);					// Para controlar si se mueve arriba o abajo es más facil con el valor absoluto		
 		if(tempdir<=60){
 			SetController(ACTION_MOVE_UP, DOWN);
 		}

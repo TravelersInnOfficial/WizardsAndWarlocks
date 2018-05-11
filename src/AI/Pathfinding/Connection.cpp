@@ -1,5 +1,7 @@
 #include "Connection.h"
 
+#include "Node.h"
+
 Connection::Connection(){
     m_cost = 0;
     m_FromNode  = nullptr;

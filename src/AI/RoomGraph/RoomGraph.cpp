@@ -1,5 +1,7 @@
 #include "RoomGraph.h"
 
+#include "./RoomInfo.h"
+#include <cstdint>
 #include <limits>
 
 RoomGraph::RoomGraph(){
@@ -135,7 +137,7 @@ void RoomGraph::InitRoom(vector3df pos, float deltaTime){
 		// Calculamos el area de la habitacion
 		vector3df firstSide = m_actualRoom->GetFirstSide();
 		vector3df secondSide = m_actualRoom->GetSecondSide();
-		float perimeter = abs(secondSide.X - firstSide.X) + abs(secondSide.Z - firstSide.Z);
+		float perimeter = std::abs(secondSide.X - firstSide.X) + std::abs(secondSide.Z - firstSide.Z);
 		float value = 1/(perimeter/6.0f) * 100;
 		//if(value<10) value = 10.0f;
 		// Al encontrarnos en esta habitacion aumentamos su nivel de seguridad

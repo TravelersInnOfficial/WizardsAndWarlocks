@@ -1,5 +1,11 @@
 #include "PlayerParts.h"
 
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+#include <GraphicEngine/GParticle.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <ColliderMasks.h>
+
 PlayerParts::PlayerParts(Alliance alliance, vector3df position, vector3df scale, vector3df rotation){
 	m_rotation = rotation;
 	m_ragdollTime = 5.0f;

@@ -1,6 +1,11 @@
 #include "ThunderProjectile.h"
+
 #include "../Players/Player.h"
+#include <PhysicsEngine/BT_Body.h>
 #include "../Managers/EffectManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+#include <GraphicEngine/GParticle.h>
 
 ThunderProjectile::ThunderProjectile(vector3df pos, vector3df rot, vector3df dir, int emi, float radius, float speed, float damageMult, float max_distance)
 : Projectile(
@@ -48,7 +53,7 @@ void ThunderProjectile::CreateProjectile(){
 	bt_body->CreateBox(initPos, vector3df(radius*0.1,radius*0.1,radius*0.1), 50, 0,vector3df(0,0,0), C_PROJECTILE, projectileCW);
 	bt_body->AssignPointer(this);
 
-    vector3df vel(velocity * direction->X, velocity * direction->Y, velocity * direction->Z);
+    vector3df vel(velocity * direction.X, velocity * direction.Y, velocity * direction.Z);
     bt_body->SetLinearVelocity(vel);
 	
 	playSoundEvent(initPos);

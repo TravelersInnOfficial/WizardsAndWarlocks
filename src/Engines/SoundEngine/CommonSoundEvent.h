@@ -1,5 +1,6 @@
 #ifndef CommonSoundEvent_h
 #define CommonSoundEvent_h
+
 #include "SoundSystem.h"
 
 class CommonSoundEvent : public SoundEvent {

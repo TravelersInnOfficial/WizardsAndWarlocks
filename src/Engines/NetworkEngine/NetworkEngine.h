@@ -4,9 +4,10 @@
 #include <iostream>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkObject.h"
-#include "Server.h"
-#include "Client.h"
+
+class Server;
+class Client;
+class NetworkObject;
 
 class NetworkEngine{
 

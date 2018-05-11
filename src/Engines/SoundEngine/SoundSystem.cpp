@@ -1,4 +1,11 @@
 #include "IncludeEventChilds.h"
+
+#include <fmod/fmod_studio.hpp>
+#include <fmod/fmod_errors.h>
+
+#include <math.h>
+#include <Constants.h>
+
 #define ERRCHECK(_result) ERRCHECK_fn(_result, __FILE__, __LINE__)
 
 //Function that shows an error when something goes wrong

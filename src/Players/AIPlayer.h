@@ -1,14 +1,21 @@
 #ifndef AIPLAYER_H
 #define AIPLAYER_H
 
+#include "Player.h"
 #include <vector2d.h>
 
-#include "Player.h"
-#include "./PlayerController.h"
-#include "./../AI/BehaviourTree.h"
-#include "./../AI/SenseManager/Sensor.h"
-#include "./../AI/Pathfinding/Pathfinding.h"
-#include "./../AI/SteeringBehaviour/AllSteerings.h"
+class LookWhereYoureGoing;
+class ObstacleAvoidance;
+class SteeringOutput;
+class BehaviourTree;
+class Pathfinding;
+class FollowPath;
+class Wander;
+class Sensor;
+class Align;
+class Face;
+class Seek;
+class Flee;
 
 class AIPlayer: public Player{
 public:
@@ -61,8 +68,8 @@ private:
 	float elevation;	// Rotacion en X de la Cabeza, en el player se pilla directamente de la camara
 
 	BehaviourTree* 		behaviour;		// Arbol de decisiones de la IA
-	Sensor*				sensor;			// Sensor de sentidos de la IA
 	Pathfinding* 		path;			// Pathfinding assistant
+	Sensor*				sensor;			// Sensor de sentidos de la IA
 
 	// Steerings
 	LookWhereYoureGoing*	lookWhereYoureGoing;

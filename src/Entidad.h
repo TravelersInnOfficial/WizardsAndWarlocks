@@ -1,9 +1,6 @@
 #ifndef ENTIDAD_H
 #define ENTIDAD_H
 
-#include <string>
-#include <iostream>
-
 enum EntityEnum{
 	EENUM_PLAYER 		= 0x01,
 	EENUM_PROJECTILE 	= 0x02,

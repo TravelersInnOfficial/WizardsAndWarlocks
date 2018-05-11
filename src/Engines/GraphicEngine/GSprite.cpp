@@ -1,5 +1,8 @@
 #include "GSprite.h"
+
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/Elements/2DElements/TFSprite.h>
+#include <TravelersOcularEngine/src/TOcularEngine/SceneManager.h>
 
 GSprite::GSprite(TFSprite* sprite){
 	m_sprite = sprite;

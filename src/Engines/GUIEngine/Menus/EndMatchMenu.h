@@ -2,6 +2,7 @@
 #define ENDMATCHMENU_H
 
 # include <GUIEngine/Menu.h>
+
 class EndMatchMenu : public Menu{
 public:
     EndMatchMenu(MenuType, int);

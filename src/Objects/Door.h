@@ -1,17 +1,18 @@
 #ifndef DOOR_H
 #define DOOR_H
 
-#include <iostream>
+#include <map>
+#include <vector>
+#include <vector3d.h>
 
 #include "./../Entidad.h"
-#include "./../Players/Player.h"
 
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <ColliderMasks.h>
-
+class Player;
+class GBody;
+class BT_Body;
 class GPortal;
+class Kinematic;
+class SoundEvent;
 
 class Door: public Entidad{
 public:

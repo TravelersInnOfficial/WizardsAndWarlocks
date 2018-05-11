@@ -2,6 +2,8 @@
 #include <fstream>
 #include <json.hpp>
 
+#include "./../Effects/AllEffects.h"
+
 static EffectManager* instance = nullptr;
 
 EffectManager* EffectManager::GetInstance(){

@@ -1,8 +1,15 @@
 #include "TrapManager.h"
-#include "PlayerManager.h"
-#include <vector3d.h>
+
 #include <NetworkEngine/NetworkEngine.h>
-#include <GraphicEngine/GraphicEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <NetworkEngine/Client.h>
+#include <NetworkEngine/Server.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <GraphicEngine/GSprite.h>
+#include <GraphicEngine/GRect.h>
+#include "./../Objects/Trap.h"
+#include "./../Players/Player.h"
+#include "PlayerManager.h"
 #include <fstream>
 #include <json.hpp>
 

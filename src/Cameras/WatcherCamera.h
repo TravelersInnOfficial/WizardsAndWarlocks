@@ -2,9 +2,9 @@
 #define WATCHERCAMERA_H
 
 #include "Camera.h"
-#include "./../Entidad.h"
-#include <GraphicEngine/GraphicEngine.h>
-#include <PhysicsEngine/BT_Body.h>
+#include <vector2d.h>
+
+class BT_Body;
 
 class WatcherCamera : public Camera{
 public:

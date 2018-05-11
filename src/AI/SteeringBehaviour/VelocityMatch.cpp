@@ -1,5 +1,7 @@
 #include "VelocityMatch.h"
 
+#include <kinematicTypes.h>
+
 VelocityMatch::VelocityMatch(){
 	timeToTarget = 0.1f;
 	maxAcceleration = 30.0f;

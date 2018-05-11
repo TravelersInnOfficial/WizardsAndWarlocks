@@ -1,5 +1,8 @@
 #include "Block.h"
+
 #include <GraphicEngine/GraphicEngine.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GBody.h>
 
 Block::~Block(){
 	delete graphBody;

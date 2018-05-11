@@ -1,5 +1,9 @@
 #include "Invocation.h"
+
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GBody.h>
+#include <kinematicTypes.h>
 
 Invocation::Invocation(int HP){
 	m_HP = HP;

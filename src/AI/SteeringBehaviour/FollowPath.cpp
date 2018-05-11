@@ -1,5 +1,8 @@
 #include "FollowPath.h"
 
+#include <kinematicTypes.h>
+#include "./../Pathfinding/Pathfinding.h"
+
 FollowPath::FollowPath(Pathfinding* p){
 	path = p;
 	pathOffSet = 0;

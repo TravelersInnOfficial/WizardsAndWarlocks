@@ -1,5 +1,11 @@
 #include "LoaderRoomGraph.h"
 
+#include "RoomGraph.h"
+#include "RoomInfo.h"
+#include <fstream>
+#include <iostream>
+#include <json.hpp>
+
 LoaderRoomGraph::LoaderRoomGraph(){}
 
 LoaderRoomGraph::~LoaderRoomGraph(){}

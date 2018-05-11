@@ -1,12 +1,24 @@
 #ifndef BULLETENGINE_H
 #define BULLETENGINE_H
 
-#include <bullet/btBulletDynamicsCommon.h>
-#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
-#include "./BulletDebug.h"
-#include "./../Entidad.h"
 #include <ColliderMasks.h>
-#include <vector3d.h>
+
+class btSequentialImpulseConstraintSolver;
+class btDefaultCollisionConfiguration;
+class btDiscreteDynamicsWorld;
+class btCollisionDispatcher;
+struct btDefaultMotionState;
+class btBroadphaseInterface;
+class btCollisionShape;
+class btDynamicsWorld;
+class btGhostObject;
+class BulletDebug;
+class btRigidBody;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
+typedef float btScalar;
 
 class BulletEngine{
 public:

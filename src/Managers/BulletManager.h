@@ -1,13 +1,17 @@
 #ifndef BULLETMANAGER_H
 #define BULLETMANAGER_H
 
-#include <vector>
-#include <string>
-#include "./../Projectiles/Projectile.h"
 #include <BulletCodes.h>
 #include <EffectCodes.h>
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
+#include <vector>
+#include <map>
+
+class Projectile;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
+
 
 class BulletManager{
 public:

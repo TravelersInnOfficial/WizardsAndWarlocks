@@ -1,12 +1,6 @@
 #ifndef WANDER_H
 #define WANDER_H
 
-#include <iostream>
-#include <stdlib.h>
-#include <vector3d.h>
-#include <vector2d.h>
-#include <kinematicTypes.h>
-
 #include "Face.h"
 
 class Wander: public Face{

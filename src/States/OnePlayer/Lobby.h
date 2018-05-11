@@ -1,8 +1,9 @@
 #ifndef LOBBY_H
 #define LOBBY_H
 
-#include "./../State.h"
 #include "./SinglePlayerGame.h"
+
+class Player;
 
 class Lobby: public State{
 public:

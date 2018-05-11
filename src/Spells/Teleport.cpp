@@ -1,5 +1,9 @@
 #include "Teleport.h"
+
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
 #include <PhysicsEngine/BulletEngine.h>
+#include <cmath>
 
 Teleport::Teleport(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

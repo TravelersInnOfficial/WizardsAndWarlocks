@@ -1,4 +1,5 @@
 #include "RegionalSenseManager.h"
+
 // Engines
 #include <GraphicEngine/GraphicEngine.h>
 // Managers
@@ -6,7 +7,18 @@
 #include "./../../Managers/PlayerManager.h"
 #include "./../../Managers/ObjectManager.h"
 
+#include "Sensor.h"
+#include "Signal.h"
+#include "Modality.h"
+#include "./../Blackboard.h"
+#include <kinematicTypes.h>
+#include <cmath>
+
 static RegionalSenseManager* instance = nullptr;
+
+Notification::~Notification(){
+	delete signal;
+}
 
 RegionalSenseManager* RegionalSenseManager::GetInstance(){
 	static RegionalSenseManager localInstance;

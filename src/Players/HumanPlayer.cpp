@@ -1,5 +1,13 @@
 #include "HumanPlayer.h"
+
+#include "./../Managers/OverlayManager.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/SpellManager.h"
+#include "./../Cameras/Camera.h"
+#include "./PlayerController.h"
 
 HumanPlayer::HumanPlayer(bool isPlayer1):Player(isPlayer1){
 	menuActivated = false;

@@ -2,7 +2,10 @@
 #define MULTIMATCH_H
 
 #include "./MultiPlayerGame.h"
-#include "./../State.h"
+#include <Alliance.h>
+
+class NetworkObject;
+class Player;
 
 class MultiMatch: public State{
 public:

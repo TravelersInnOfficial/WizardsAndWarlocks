@@ -1,11 +1,9 @@
 #ifndef LOADERROOMGRAPH_H
 #define LOADERROOMGRAPH_H
 
-#include "RoomGraph.h"
-
-#include <fstream>
 #include <iostream>
-#include <json.hpp>
+
+class RoomGraph;
 
 class LoaderRoomGraph{
 public:

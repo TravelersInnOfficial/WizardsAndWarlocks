@@ -1,9 +1,13 @@
 #ifndef LIST_H
 #define LIST_H
 
-#include <list>
 #include <vector>
-#include "NodeRecord.h"
+class Node;
+struct NodeRecord;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class List{
 public: 

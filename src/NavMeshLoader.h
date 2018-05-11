@@ -2,7 +2,8 @@
 #define NAVMESHLOADER_H
 
 #include <iostream>
-#include "Objects/NavMesh.h"
+
+class NavMesh;
 
 class NavMeshLoader{
     public:

@@ -1,7 +1,6 @@
 #ifndef SECUENCIA_H
 #define SECUENCIA_H
 
-#include <iostream>
 #include <vector>
 #include <stdlib.h>
 #include "Task.h"

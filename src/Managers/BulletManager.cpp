@@ -1,4 +1,6 @@
 #include "BulletManager.h"
+
+#include "./../Projectiles/Projectile.h"
 #include "./../Projectiles/BasicProjectile.h"
 #include "./../Projectiles/FireProjectile.h"
 #include "./../Projectiles/ThunderProjectile.h"

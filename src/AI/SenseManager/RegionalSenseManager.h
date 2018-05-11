@@ -2,23 +2,24 @@
 #define REGIONALSENSEMANAGER_H
 
 #include <iostream>
+#include <AICodes.h>
 #include <vector>
-#include <kinematicTypes.h>
 
-#include "Signal.h"
-#include "Sensor.h"
-#include "Modality.h"
-#include "./../Blackboard.h"
-
+class Sensor;
+class Signal;
+class Blackboard;
+class Kinematic;
 class GraphicEngine;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 struct Notification{
 	float time;
 	Sensor* sensor;
 	Signal* signal;
-	~Notification(){
-		delete signal;
-	}
+	~Notification();
 };
 
 class RegionalSenseManager{

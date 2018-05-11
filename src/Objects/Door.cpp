@@ -1,8 +1,16 @@
 #include "Door.h"
-#include "./../Managers/ObjectManager.h"
-#include "./../AI/SenseManager/RegionalSenseManager.h"
 
+#include <ColliderMasks.h>
 #include <GraphicEngine/GPortal.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <SoundEngine/SoundSystem.h>
+#include "./../Managers/ObjectManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/Server.h>
+#include <kinematicTypes.h>
+#include "./../AI/SenseManager/RegionalSenseManager.h"
 
 Door::Door(vector3df TPosition, vector3df TScale, vector3df TRotation, vector3df TCenter, std::string model3d){
 	TRotation.Y += 180;

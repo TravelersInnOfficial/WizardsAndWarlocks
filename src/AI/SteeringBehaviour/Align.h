@@ -2,9 +2,9 @@
 #define ALIGN_H
 
 #include <iostream>
-#include <vector3d.h>
-#include <vector2d.h>
-#include <kinematicTypes.h>
+
+class SteeringOutput;
+class Kinematic;
 
 class Align{
 public:

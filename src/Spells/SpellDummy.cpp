@@ -1,6 +1,11 @@
 #include "SpellDummy.h"
+
 #include "./../Managers/ObjectManager.h"
 #include "./../Invocations/Dummy.h"
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
+#include <Constants.h>
+#include <cmath>
 
 SpellDummy::SpellDummy(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_DUMMY,"./../assets/textures/HUD/Spells/SPELL_DUMMY.png", optHP, optMP){

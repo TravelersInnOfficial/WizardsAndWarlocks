@@ -1,5 +1,9 @@
 #include "List.h"
 
+#include "Node.h"
+#include "Connection.h"
+#include "NodeRecord.h"
+
 List::List(){
 }
 

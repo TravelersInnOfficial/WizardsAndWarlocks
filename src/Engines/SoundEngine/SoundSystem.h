@@ -1,15 +1,23 @@
 #ifndef SoundSystem_h
 #define SoundSystem_h
 
-#include <map>
-#include <string>
 #include <iostream>
-#include <vector>
-#include "../Includes/vector3d.h"
-#include <Constants.h>
+#include <map>
+#include <vector3d.h>
 
-#include <fmod/fmod_studio.hpp>
-#include <fmod/fmod_errors.h>
+class FMOD_STUDIO_EVENTDESCRIPTION;
+class FMOD_STUDIO_EVENTINSTANCE;
+class FMOD_STUDIO_SYSTEM;
+class FMOD_STUDIO_BANK;
+class FMOD_SYSTEM;
+class FMOD_STUDIO_BANK;
+class FMOD_STUDIO_BUS;
+class FMOD_3D_ATTRIBUTES;
+class FMOD_STUDIO_VCA;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class SoundEvent;
 /********************************************************************************************************

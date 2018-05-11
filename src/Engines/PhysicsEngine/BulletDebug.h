@@ -1,8 +1,8 @@
 #ifndef BULLETDEBUG_H
 #define BULLETDEBUG_H
 
-#include <bullet/btBulletDynamicsCommon.h>
 #include <iostream>
+#include <bullet/LinearMath/btIDebugDraw.h>
 
 class BulletDebug: public btIDebugDraw {
 public:

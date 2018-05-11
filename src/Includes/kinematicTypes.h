@@ -20,14 +20,6 @@ public:
         rotation = vector2df();
     }
 
-    friend inline std::ostream& operator << (std::ostream &o,const Kinematic &v){
-        o << "(POSITION: "<<"x->"<<v.position.X<<" y->"<<v.position.Y<<" z->"<<v.position.Z<<" )"<<std::endl;
-        o << "(ORIENTATION: "<<"x->"<<v.orientation.X<<" y->"<<v.orientation.Y<<" )"<<std::endl;
-        o << "(VELOCITY: "<<"x->"<<v.velocity.X<<" y->"<<v.velocity.Y<<" z->"<<v.velocity.Z<<" )"<<std::endl;
-        o << "(ROTATION: "<<"x->"<<v.rotation.X<<" y->"<<v.rotation.Y<<" )"<<std::endl;
-        return o;
-    }
-
 };
 
 class SteeringOutput{
@@ -39,12 +31,6 @@ public:
     SteeringOutput(){
         linear = vector3df();
         angular = vector2df();
-    }
-
-    friend inline std::ostream& operator << (std::ostream &o,const SteeringOutput &v){
-        o << "(LINEAR: "<<"x->"<<v.linear.X<<" y->"<<v.linear.Y<<" z->"<<v.linear.Z<<" )"<<std::endl;
-        o << "(ANGULAR: "<<"x->"<<v.angular.X<<" y->"<<v.angular.Y<<" )";
-        return o;
     }
 
 };

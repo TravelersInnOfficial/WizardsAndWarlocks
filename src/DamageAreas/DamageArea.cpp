@@ -1,5 +1,7 @@
 #include "DamageArea.h"
-#include "./../Players/Player.h"
+
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <GraphicEngine/GBody.h>
 
 DamageArea::DamageArea(float dam, float cast, vector3df TPosition, vector3df TScale, vector3df TRotation){
 	damage = dam;

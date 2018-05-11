@@ -1,5 +1,10 @@
 #include "Dummy.h"
 
+#include <ColliderMasks.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+
 Dummy::Dummy(int HP, float time, bool alli, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
 	currentTime = time;

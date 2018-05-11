@@ -1,7 +1,7 @@
 #ifndef HEURISTIC_H
 #define HEURISTIC_H
 
-#include "Node.h"
+class Node;
 
 class Heuristic{
     public:

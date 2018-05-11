@@ -1,11 +1,17 @@
 #include "./NpcSelector.h"
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GAnimation.h>
+#include <GraphicEngine/MenuManager.h>
+#include "./../Players/HumanPlayer.h"
+#include <PhysicsEngine/BT_Body.h>
 #include <GUIEngine/GUIEngine.h>
 #include <Assets.h>
+#include <Menus.h>
 
 NpcSelector::NpcSelector(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreateVisual(TPosition, TTScale, TRotation);
 	CreatePhysical(TPosition, TTScale, TRotation);
-	hp = nullptr;
 	clase = EENUM_NPC;
 }
 
@@ -42,7 +48,7 @@ void NpcSelector::Interact(Player* p){
 		GraphicEngine::getInstance()->InitReceiver();
 		MenuManager::GetInstance()->CreateMenu(ALLIANCE_M);
 		active = true;
-		hp = (HumanPlayer*) p;
+		HumanPlayer* hp = (HumanPlayer*) p;
 		hp->ToggleMenu(true);
 		hp->SetAllInput(UP);
 	}

@@ -1,4 +1,9 @@
 #include "ObstacleAvoidance.h"
+
+#include <cmath>
+#include <limits>
+#include <Constants.h>
+#include <kinematicTypes.h>
 #include <PhysicsEngine/BulletEngine.h>
 
 ObstacleAvoidance::ObstacleAvoidance(){

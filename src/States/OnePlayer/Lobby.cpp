@@ -1,5 +1,21 @@
 #include "Lobby.h"
 
+#include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/BulletManager.h"
+#include "./../Managers/EffectManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/PlayerManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/StateManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../LevelLoader.h"
+#include "./../Players/Player.h"
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GCamera.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <SoundEngine/SoundSystem.h>
+
 Lobby::Lobby(SinglePlayerGame* fat){
 	father = fat;
 
@@ -79,4 +95,3 @@ void Lobby::CheckIfReady(){
 	// Si esta dentro de la zona, cargamos el siguiente nivel
 	if(playerOne->GetReadyStatus()) father->StartGame();
 }
-

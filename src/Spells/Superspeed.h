@@ -3,8 +3,6 @@
 
 #include "./Hechizo.h"
 
-#include <iostream>
-
 class Superspeed: public Hechizo{
 public:
 	Superspeed(float costPM, float tCast, float tCoolDown, float optHP, float optMP);

@@ -1,5 +1,8 @@
 #include "NetworkObject.h"
+
+#include "RakNetIncludes.h"
 #include "NetworkEngine.h"
+#include "Client.h"
 #include "Server.h"
 
 NetworkObject::NetworkObject(){

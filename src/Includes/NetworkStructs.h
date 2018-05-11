@@ -2,7 +2,7 @@
 #define NETWORKSTRUCTS_H
 
 #include <iostream>
-#include <NetworkEngine/RakNetIncludes.h>
+#include <raknet/MessageIdentifiers.h>
 
 struct ServerInfo{
     bool isServer = false;

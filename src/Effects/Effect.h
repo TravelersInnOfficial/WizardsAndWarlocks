@@ -1,9 +1,10 @@
 #ifndef EFFECT_H
 #define EFFECT_H
 
-#include "./../Players/Player.h"
 #include <EffectCodes.h>
-#include <SoundEngine/SoundSystem.h>
+
+class Player;
+class SoundEvent;
 
 class Effect{
 public:

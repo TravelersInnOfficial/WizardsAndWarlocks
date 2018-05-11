@@ -1,5 +1,8 @@
 #include "GText2D.h"
+
 #include "GraphicEngine.h"
+#include <TravelersOcularEngine/src/TOcularEngine/Elements/2DElements/TF2DText.h>
+#include <TravelersOcularEngine/src/TOcularEngine/SceneManager.h>
 #include <TOEvector2d.h>
 #include <vector2d.h>
 

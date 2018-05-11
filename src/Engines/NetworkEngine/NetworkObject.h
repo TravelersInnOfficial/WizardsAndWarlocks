@@ -5,7 +5,6 @@
 #include <map>
 #include <vector3d.h>
 #include <NetworkStructs.h>
-#include "RakNetIncludes.h"
 
 class NetworkObject{
 

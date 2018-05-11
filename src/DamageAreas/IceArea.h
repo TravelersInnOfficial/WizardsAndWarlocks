@@ -1,9 +1,9 @@
 #ifndef ICEAREA_H
 #define ICEAREA_H
 
-#include <iostream>
-
 #include "./DamageArea.h"
+
+class GParticle;
 
 class IceArea: public DamageArea{
 public:

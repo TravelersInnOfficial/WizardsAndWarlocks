@@ -3,17 +3,17 @@
 
 #include <vector3d.h>
 #include <TrapCodes.h>
-#include <PhysicsEngine/BT_GhostObject.h>
-#include <SoundEngine/SoundSystem.h>
 #include "./../Entidad.h"
-#include <GraphicEngine/GParticle.h>
 
 //FAST FORWARD DECLARATIONS
-class Player;
-class GRect;
 class GBody;
-class Kinematic;
+class GRect;
+class Player;
 class BT_Body;
+class Kinematic;
+class GParticle;
+class SoundEvent;
+class BT_GhostObject;
 
 class Trap : public Entidad{
 public:

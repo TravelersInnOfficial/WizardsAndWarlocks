@@ -1,14 +1,10 @@
 #ifndef ALLTASKS_H
 #define ALLTASKS_H
 
-#include <iostream>
-
 #include "./../Secuencia.h"
 #include "./../Decorador.h"
 #include "./../Selector.h"
 #include "./../Task.h"
-
-
 
 // ================================================================================================= //
 //

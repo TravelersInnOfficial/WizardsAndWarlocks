@@ -1,5 +1,7 @@
 #include "StatusMenu.h"
+
 #include "./../Managers/PlayerManager.h"
+#include "./../Players/Player.h"
 
 StatusMenu::StatusMenu(MenuType type) : Menu(type){
     m_id = "StatusMenu";

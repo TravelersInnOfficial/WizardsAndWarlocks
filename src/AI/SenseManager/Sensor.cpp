@@ -1,6 +1,8 @@
 #include "Sensor.h"
+
 #include "Modality.h"
 #include "Signal.h"
+#include "./../Blackboard.h"
 
 Sensor::Sensor(int _id, vector3df* pos, vector3df* ori, float thresh, Blackboard* inf){
 	m_id = _id;

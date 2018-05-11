@@ -1,7 +1,12 @@
 #include "Hechizo.h"
-#include "./../Managers/BulletManager.h"
+
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
+#include <GraphicEngine/GRect.h>
+#include <SoundEngine/SoundSystem.h>
+#include "./../Players/Player.h"
 #include <Assets.h>
+#include <cmath>
 
 Hechizo::Hechizo(float costPM, float tCast, float tCoolDown, SPELLCODE code, std::string HUDMiniature, float optHP, float optMP){
 	costePM = costPM;
@@ -141,7 +146,7 @@ float Hechizo::GetMP(){
 float Hechizo::CalculateUtility(float value, float optim){ 	// 100 1
 
 	float base = optim;
-	if(signbit(value - optim) == 0){	 // 0 = positivo / 0 != negativo
+	if(std::signbit(value - optim) == 0){	 // 0 = positivo / 0 != negativo
 		base = 100 - optim;
 	}
 
@@ -149,7 +154,7 @@ float Hechizo::CalculateUtility(float value, float optim){ 	// 100 1
 	if(base != 0){
 		pendiente = 100/base;
 	} 
-	float utility = pendiente * abs(value - optim);
+	float utility = pendiente * std::abs(value - optim);
 	utility = 100 - utility;
 
 	return utility;

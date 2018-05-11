@@ -1,11 +1,14 @@
 #ifndef ROOMGRAPH_H
 #define ROOMGRAPH_H
 
-#include "./RoomInfo.h"
-
 #include <iostream>
 #include <vector>
-#include <cstdint>
+
+class RoomInfo;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class RoomGraph{
 public:

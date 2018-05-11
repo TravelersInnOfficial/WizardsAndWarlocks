@@ -2,13 +2,10 @@
 #define MENUPRINCIPAL_H
 
 #include <iostream>
-#include <Menus.h>
-#include <NetworkStructs.h>
-
-#include "./../Managers/StateManager.h"
 #include "./State.h"
-#include <NetworkEngine/NetSeeker.h>
 
+class GraphicEngine;
+class SoundEvent;
 class GSprite;
 
 class MenuPrincipal: public State{
@@ -23,7 +20,7 @@ public:
 	void playMenuMusic();
 
 private:
-    std::string background = "./../assets/textures/GUI/Menus/MainMenu/background.png";
+    std::string background;
 	
 	void PrepareServer();
 	void PrepareClient(bool proprietary = false);

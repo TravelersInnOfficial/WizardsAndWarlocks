@@ -1,5 +1,7 @@
 #include "Effect.h"
 #include "./../Managers/PlayerManager.h"
+#include <SoundEngine/SoundSystem.h>
+#include "./../Players/Player.h"
 
 /**
  * @brief Constructor basico de hechizo

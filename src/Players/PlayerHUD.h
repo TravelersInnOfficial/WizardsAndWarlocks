@@ -3,8 +3,6 @@
 
 #include <map>
 #include <vector>
-#include <string>
-#include <iostream>
 #include <vector2d.h>
 
 //FAST FORWARD DECLARATIONS

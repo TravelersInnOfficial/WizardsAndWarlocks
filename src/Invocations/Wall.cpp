@@ -1,5 +1,10 @@
 #include "Wall.h"
 
+#include <ColliderMasks.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+
 InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
 	currentTime = 3;

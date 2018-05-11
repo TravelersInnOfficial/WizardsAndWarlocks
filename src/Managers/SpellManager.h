@@ -1,11 +1,13 @@
 #ifndef SPELLMANAGER_H
 #define SPELLMANAGER_H
 
-#include <iostream>
 #include <map>
+#include <vector>
+#include <iostream>
 #include <SpellCodes.h>
-#include "../Spells/Hechizo.h"
-#include "./../Players/Player.h"
+
+class Player;
+class Hechizo;
 
 class SpellManager{
 public:

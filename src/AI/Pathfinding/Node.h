@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <vector>
-#include "../../Includes/vector3d.h"
+#include <vector3d.h>
+
 class Connection;
 
 class Node{

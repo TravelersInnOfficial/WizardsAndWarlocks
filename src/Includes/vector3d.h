@@ -2,8 +2,8 @@
 #define VECTOR3D_H
 
 #include <iostream>
-#include <math.h>
-#include <Constants.h>
+
+
 
 template<typename T>
 class vector3d{
@@ -16,107 +16,85 @@ public:
     /**
      * Creates and empty 3d vector of all 0;
     */
-    vector3d() : X(0), Y(0), Z(0) {}
+    vector3d();
     
     /**
      * Creates and initializes 3d vector of same number
     */
-    vector3d(T n) : X(n), Y(n), Z(n) {}
+    vector3d(T n);
 
     /**
      * Creates and initializes 3d vector
     */
-    vector3d(T nx, T ny, T nz) : X(nx), Y(ny), Z(nz) {}
+    vector3d(T nx, T ny, T nz);
 
     /**
      * Copy constructor
     */
-    vector3d(const vector3d<T>& other) : X(other.X), Y(other.Y), Z(other.Z) {}
+    vector3d(const vector3d<T>& other);
 
     /**
      * returns length of the vector
     */
-    float length(){return sqrtf(X*X + Y*Y + Z*Z);}
+    float length();
 
     /**
      * normalize the vector
      */
 
-    void normalize(){
-        float l = length();
-        if(l==0){
-            X = 0;
-            Y = 0;
-            Z = 0;
-        }
-        else{
-            X = X/l;
-            Y = Y/l;
-            Z = Z/l;
-        }
-    }
+    void normalize();
 
     /**
      * convert the vector to radian
      */
-    void toRadians(){
-        float factor = M_PI/180;
-        X = X * factor;
-        Y = Y * factor;
-        Z = Z * factor;
-    }
+    void toRadians();
 
     /**
      * convert the vector de degrees
      */
-    void toDegrees(){
-        float factor = 180/M_PI;
-        X = X * factor;
-        Y = Y * factor;
-        Z = Z * factor;
-    }
+    void toDegrees();
 
     /**
      * Sets X Value
     */
 
-    void setX(T newX){ X = newX;}
+    void setX(T newX);
 
     /**
      * Sets Y Value
     */
 
-    void setY(T newY){ Y = newY;}
+    void setY(T newY);
 
     /**
      * Sets Z Value
     */
 
-    void setZ(T newZ){ Z = newZ;}
+    void setZ(T newZ);
 
     //Operators
-    vector3d<T> operator+(const T v) const { return vector3d<T>(X + v, Y + v, Z + v); }
-    vector3d<T> operator-(const T v) const { return vector3d<T>(X - v, Y - v, Z - v); }
-    vector3d<T> operator*(const T v) const { return vector3d<T>(X * v, Y * v, Z * v); }
-    vector3d<T> operator/(const T v) const { return vector3d<T>(X / v, Y / v, Z / v); }
-    vector3d<T> operator-(vector3d<T> v) const { return vector3d<T>(X-v.X, Y-v.Y, Z-v.Z); }
-    vector3d<T> operator+(vector3d<T> v) const { return vector3d<T>(X+v.X, Y+v.Y, Z+v.Z); }
-    vector3d<T> operator*(vector3d<T> v) const { return vector3d<T>(X*v.X, Y*v.Y, Z*v.Z); }
-    vector3d<T> operator/(vector3d<T> v) const { return vector3d<T>(X/v.X, Y/v.Y, Z/v.Z); }
+    vector3d<T> operator+(const T v) const;
+    vector3d<T> operator+(vector3d<T> v) const;
+    vector3d<T> operator-(const T v) const;
+    vector3d<T> operator-(vector3d<T> v) const;
+    vector3d<T> operator*(const T v) const;
+    vector3d<T> operator*(vector3d<T> v) const;
+    vector3d<T> operator/(const T v) const;
+    vector3d<T> operator/(vector3d<T> v) const;
 
-    void operator=(const vector3d<T> v) { X = v.X; Y = v.Y; Z = v.Z; }
-    void operator*=(const T v) { X = X*v; Y = Y*v; Z = Z*v; }
+    void operator=(const vector3d<T> v);
+    void operator*=(const T v);
 
-    bool operator==(const vector3d<T> v) { if(v.X == X && v.Y == Y && v.Z == Z) return true; return false; }
+    bool operator==(const vector3d<T> v);
 
 
-    friend inline std::ostream& operator << (std::ostream &o,const vector3d<T> &v){
+    friend inline std::ostream& operator <<(std::ostream &o,const vector3d<T> &v){
         o << "(" << v.X << ", " << v.Y << ", " << v.Z << ")";
         return o;
     }
 };
 
-typedef vector3d<float> vector3df;
-typedef vector3d<int> vector3di;
+    typedef vector3d<float> vector3df;
+    typedef vector3d<int> vector3di;
 
 #endif

@@ -1,10 +1,10 @@
 #ifndef POISONAREA_H
 #define POISONAREA_H
 
-#include <iostream>
 #include <Alliance.h>
-
 #include "./DamageArea.h"
+
+class GParticle;
 
 class PoisonArea: public DamageArea{
 public:

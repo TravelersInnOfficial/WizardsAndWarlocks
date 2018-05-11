@@ -1,14 +1,17 @@
 #include "./NpcSeller.h"
-#include "./../Managers/SpellManager.h"
-#include "./../Managers/PlayerManager.h"
-#include "./../Managers/TrapManager.h"
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GAnimation.h>
+#include <GraphicEngine/MenuManager.h>
+#include "./../Players/HumanPlayer.h"
+#include <PhysicsEngine/BT_Body.h>
 #include <GUIEngine/GUIEngine.h>
 #include <Assets.h>
+#include <Menus.h>
 
 NpcSeller::NpcSeller(vector3df TPosition, vector3df TTScale, vector3df TRotation):Npc(){
 	CreateVisual(TPosition, TTScale, TRotation);
 	CreatePhysical(TPosition, TTScale, TRotation);
-	hp = nullptr;
 	clase = EENUM_NPC;
 }
 
@@ -44,7 +47,7 @@ void NpcSeller::Interact(Player* p){
 		GraphicEngine::getInstance()->InitReceiver();
 		MenuManager::GetInstance()->CreateMenu(SELLER_M);
 		active = true;
-		hp = (HumanPlayer*) p;
+		HumanPlayer* hp = (HumanPlayer*) p;
 		hp->ToggleMenu(true);
 		hp->SetAllInput(UP);
 	}

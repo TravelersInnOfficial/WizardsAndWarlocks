@@ -1,22 +1,19 @@
 #include "LevelLoader.h"
+
 #include <map>
-#include <json.hpp>
 #include <fstream>
+#include <json.hpp>
 #include <Alliance.h>
 #include <vector3d.h>
 #include <NPCTypes.h>
 #include <PotionTypes.h>
-#include <iostream>
 
 #include <GraphicEngine/GraphicEngine.h>
-#include <GraphicEngine/GRoom.h>
 
 // Managers
-#include "Managers/TrapManager.h"
-#include "Managers/SpellManager.h"
-#include "Managers/BulletManager.h"
 #include "Managers/ObjectManager.h"
-#include "Managers/PlayerManager.h"
+#include "Objects/Door.h"
+#include "Objects/Switch.h"
 
 class GPortal;
 
@@ -41,7 +38,9 @@ bool SpawnPotion(std::string objectType, vector3df position, vector3df size, vec
 }
 
 bool LevelLoader::LoadLevel(std::string jsonPath){
-	GraphicEngine::getInstance()->AddDome();
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+
+	g_engine->AddDome();
 
 	// Limpiamos los objetos
 	ObjectManager* objManager = ObjectManager::GetInstance();
@@ -75,8 +74,8 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 		id = ptr["ID"];
 
 		// HABITACION CREADA
-		if(id>=0) room = GraphicEngine::getInstance()->AddRoom(id, position, rotation, size);
-		GraphicEngine::getInstance()->SetCurrentRoom(room);
+		if(id>=0) room = g_engine->AddRoom(id, position, rotation, size);
+		g_engine->SetCurrentRoom(room);
 
 		// Iterates objects
 		for(int i = 0; !j["Rooms"][k]["Objects"][i].is_null(); i++){
@@ -170,7 +169,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 			int secondID = ptr["Rooms"][k]["Second"];
 
 			//Anyadir Portal, Dimensiones, ID1, ID2
-			GPortal* currentPortal = GraphicEngine::getInstance()->AddConnection(firstID, secondID, position, rotation, size);
+			GPortal* currentPortal = g_engine->AddConnection(firstID, secondID, position, rotation, size);
 			for(int l=0; !j["Connections"][i]["Door"][l].is_null(); l++){
 				int assignedID = j["Connections"][i]["Door"][l];
 				Door* idDoor = doors[assignedID];
@@ -183,7 +182,7 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 
 
 	// Ponemos de vuelta la habitacion actual a null
-	GraphicEngine::getInstance()->SetCurrentRoom(nullptr);
+	g_engine->SetCurrentRoom(nullptr);
 
 	return true;
 }

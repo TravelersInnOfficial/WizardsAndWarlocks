@@ -1,10 +1,14 @@
 #include "Modality.h"
+
+#include <PhysicsEngine/BulletEngine.h>
+#include "./../RoomGraph/RoomGraph.h"
+#include "./../../Players/Player.h"
+#include "./../../Entidad.h"
+#include "./../Blackboard.h"
+#include <Constants.h>
 #include "Signal.h"
 #include "Sensor.h"
-#include <PhysicsEngine/BulletEngine.h>
-#include "./../../Entidad.h"
-#include "./../../Players/Player.h"
-#include "./../RoomGraph/RoomGraph.h"
+#include <cmath>
 
 Modality::Modality(Modality* mod){
 	maximumRange = mod->GetMaximumRange();
@@ -83,14 +87,14 @@ bool SightModality::checkSightCone(vector3df sigPos, vector3df srPos, vector3df 
 		offset += 2*M_PI;
 	}
 	// Valor absoluto para poder contar todos los valores [-angulo, angulo]
-	offset = abs(offset);
+	offset = std::abs(offset);
 	// Comprobacion con el angulo en radianes
 	if(!(offset<0.5235)){
 		return false;
 	} 
 	// ------------------------------------------------------------ CHECK X AXIS
 	offset = t - (-srOri.X);
-	offset = abs(offset);
+	offset = std::abs(offset);
 	if(!(offset<0.5235)){
 		return false;
 	}

@@ -1,5 +1,6 @@
 #include "AllPotions.h"
-#include "../Managers/EffectManager.h"
+#include "./../Managers/EffectManager.h"
+#include "./../Players/Player.h"
 
 // ===============================================================================================//
 //

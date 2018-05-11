@@ -2,9 +2,8 @@
 #define OVERLAYMANAGER_H
 
 #include <iostream>
-#include <vector>
 #include <OverlayCodes.h>
-#include <GraphicEngine/GraphicEngine.h>
+#include <map>
 
 struct OverlayInfo {
 	float time;

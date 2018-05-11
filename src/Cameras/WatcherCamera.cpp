@@ -1,5 +1,9 @@
 #include "WatcherCamera.h"
 
+#include <GraphicEngine/GraphicEngine.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GCamera.h>
+
 float lastDistance = 0;
 
 WatcherCamera::WatcherCamera(vector3df lookat):Camera(){

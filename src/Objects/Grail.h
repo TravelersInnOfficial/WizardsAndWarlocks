@@ -1,16 +1,14 @@
 #ifndef GRAIL_H
 #define GRAIL_H
 
-#include <iostream>
-
+#include <vector3d.h>
 #include "./../Entidad.h"
-#include "./../Players/Player.h"
 
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <ColliderMasks.h>
-#include <Alliance.h>
+class SoundEvent;
+class Kinematic;
+class BT_Body;
+class GBody;
+class GRect;
 
 class Grail: public Entidad{
 public:

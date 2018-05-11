@@ -1,7 +1,7 @@
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
-#include "Node.h"
+class Node;
 
 class Connection{
 public:

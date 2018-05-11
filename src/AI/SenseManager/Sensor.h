@@ -2,14 +2,15 @@
 #define SENSOR_H
 
 #include <iostream>
-#include <vector3d.h>
 #include <AICodes.h>
-#include <kinematicTypes.h>
 
-#include "./../Blackboard.h"
-
-class Modality;
 class Signal;
+class Modality;
+class Blackboard;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Sensor{
 public:

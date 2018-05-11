@@ -1,15 +1,21 @@
 #include "Projectile.h"
 #include "./../Managers/BulletManager.h"
-#include "./../Players/Player.h"
 #include "./../Invocations/Invocation.h"
 #include "./../Managers/PlayerManager.h"
+#include <GraphicEngine/GParticle.h>
+#include <SoundEngine/SoundSystem.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GBody.h>
+#include <GraphicEngine/GParticle.h>
+#include "./../Players/Player.h"
+#include <Constants.h>
 
 Projectile::Projectile(vector3df pos, vector3df rot, vector3df dir, int emi, float rat, float vel, float dmg, float maxDist, std::string soundPath){
 	particle = nullptr;
 	
 	impact = false;
 	initPos = pos;
-	direction = new vector3df(dir.X, dir.Y, dir.Z);
+	direction = dir;
    
 	emisor = emi;
 
@@ -27,7 +33,6 @@ Projectile::Projectile(vector3df pos, vector3df rot, vector3df dir, int emi, flo
 }
 
 Projectile::~Projectile(){
-	delete direction;
 	delete bt_body;
 	delete m_ProjectileNode;
 	if(particle != nullptr) delete particle;
@@ -101,10 +106,10 @@ GBody* Projectile::GetShape(){
 }
 
 void Projectile::NormalizeDir(){
-	float length = sqrt(pow(direction->X, 2) + pow(direction->Y, 2) + pow(direction->Z,2));
-	direction->X = direction->X/length;
-	direction->Y = direction->Y/length;
-	direction->Z = direction->Z/length;
+	float length = sqrt(pow(direction.X, 2) + pow(direction.Y, 2) + pow(direction.Z,2));
+	direction.X = direction.X/length;
+	direction.Y = direction.Y/length;
+	direction.Z = direction.Z/length;
 }
 
 /**

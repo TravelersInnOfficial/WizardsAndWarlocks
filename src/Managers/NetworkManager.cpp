@@ -1,5 +1,13 @@
 #include "NetworkManager.h"
 
+#include <cstdlib>
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <NetworkEngine/Server.h>
+#include <NetworkEngine/Client.h>
+#include "./PlayerManager.h"
+#include "./../Players/Player.h"
+
 NetworkManager* instance = nullptr;
 
 NetworkManager* NetworkManager::GetInstance(){

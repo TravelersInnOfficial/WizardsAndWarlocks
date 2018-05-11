@@ -1,5 +1,6 @@
 #include "Light.h"
 #include "GraphicEngine.h"
+#include "GRoom.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 
 Light::Light(vector3df TPosition, vector3df Color, float range){

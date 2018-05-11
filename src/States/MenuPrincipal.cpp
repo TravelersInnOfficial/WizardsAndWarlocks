@@ -1,9 +1,17 @@
 #include "./MenuPrincipal.h"
+
 #include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
+#include <GraphicEngine/GSprite.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include "./../Managers/StateManager.h"
 #include <GraphicEngine/MenuManager.h>
+#include <SoundEngine/SoundSystem.h>
+#include <NetworkStructs.h>
+#include <Menus.h>
 
 MenuPrincipal::MenuPrincipal(){
+	background = "./../assets/textures/GUI/Menus/MainMenu/background.png";
+	
 	g_engine = GraphicEngine::getInstance();
 	g_engine->ResetScene();
 	g_engine->setCursorVisible(false);

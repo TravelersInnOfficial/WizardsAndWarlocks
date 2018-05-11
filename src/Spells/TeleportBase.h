@@ -1,11 +1,9 @@
 #ifndef TELEPORTBASE_H
 #define TELEPORTBASE_H
 
-#include <iostream>
-#include <InvocationCodes.h>
-
-#include "./../Invocations/BaseT.h"
 #include "./Hechizo.h"
+
+class BaseT;
 
 class TeleportBase: public Hechizo{
 public:

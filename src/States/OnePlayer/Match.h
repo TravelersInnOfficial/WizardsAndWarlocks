@@ -1,8 +1,9 @@
 #ifndef MATCH_H
 #define MATCH_H
 
-#include "./../State.h"
 #include "./SinglePlayerGame.h"
+
+class Player;
 
 class Match: public State{
 public:
@@ -18,13 +19,13 @@ private:
 
 	// Nos guardamos los managers que hay actualmente creados
 	// Pero sera el SinglePlayerGame quien se encargara de eliminarlos
-	SpellManager* 			spellManager;
-	BulletManager* 			bulletManager;
-	EffectManager* 			effectManager;
-	ObjectManager*			objectManager;
-	PlayerManager*			playerManager;
-	TrapManager*			trapManager;
 	RegionalSenseManager* 	senseManager;
+	ObjectManager*			objectManager;
+	BulletManager* 			bulletManager;
+	PlayerManager*			playerManager;
+	EffectManager* 			effectManager;
+	SpellManager* 			spellManager;
+	TrapManager*			trapManager;
 
 	GraphicEngine*		g_engine;
 	BulletEngine*		f_engine;

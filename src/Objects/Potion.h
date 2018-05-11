@@ -1,17 +1,15 @@
 #ifndef POTION_H
 #define POTION_H
 
-#include <iostream>
-#include <ColliderMasks.h>
-#include <kinematicTypes.h>
+#include "./../Entidad.h"
+#include <vector3d.h>
 
-#include "./../Players/Player.h"
-#include <GraphicEngine/GraphicEngine.h>
-#include <PhysicsEngine/BT_Body.h>
-
+class GRect;
+class GBody;
 class Player;
 class GSprite;
-class GRect;
+class BT_Body;
+class Kinematic;
 
 class Potion:public Entidad{
 public:
@@ -52,7 +50,7 @@ protected:
 	int 		value;			// Cantidad de vida a curar
 	bool 		picked;			// Ha sido pillada? Si/No
 
-	Player* player;				// Player that posseses the potion
+	Player* 	player;				// Player that posseses the potion
 
 	// Variable almacenada para poder volver a formar el cuerpo una vez eliminado
 	vector3df 	potionScale;	// Escala de la pocion

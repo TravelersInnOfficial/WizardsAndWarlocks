@@ -1,10 +1,21 @@
 #include "GraphicEngine.h"
+
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include "./../GUIEngine/GUIEngine.h"
 
-#include <ShaderTypes.h>
 #include <EntityTypes.h>
+
+#include "GRoom.h"
+#include "GBody.h"
+#include "GAnimation.h"
+#include "GParticle.h"
+#include "GCamera.h"
+#include "GEntity.h"
+#include "GSprite.h"
+#include "GRect.h"
+#include "GText2D.h"
+#include "EventReceiver.h"
 
 GraphicEngine::GraphicEngine(bool isServer){
 	ShadowState = true;
@@ -37,6 +48,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 
 	m_currentRoom = nullptr;
 }
+
 
 GraphicEngine::~GraphicEngine(){
 }
@@ -513,4 +525,17 @@ void GraphicEngine::SetAmbientLight(float value){
 	value = value/100;
 	ambientLight = value;
 	privateSManager->SetAmbientLight(ambientLight);
+}
+
+void GraphicEngine::LoadTexture(std::string path){
+	toe::LoadTexture(path);
+}
+
+void GraphicEngine::LoadMesh(std::string path){
+	toe::LoadMesh(path);
+}
+
+vector2di GraphicEngine::GetTextureDims(std::string path){
+	TOEvector2di dims = toe::GetTextureDims(path);
+	return vector2di(dims.X, dims.Y);
 }

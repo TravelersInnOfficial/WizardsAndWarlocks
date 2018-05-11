@@ -1,8 +1,13 @@
 #include "MainMenu.h"
 #include "./../Managers/StateManager.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/Client.h>
 #include <vector2d.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
 #include <SoundEngine/SoundSystem.h>
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOEvector2d.h>
 
 bool MainMenu::m_options = false;
 bool MainMenu::m_exit = false;

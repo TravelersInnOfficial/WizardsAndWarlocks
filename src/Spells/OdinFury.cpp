@@ -1,5 +1,9 @@
 #include "OdinFury.h"
+
 #include "./../Managers/BulletManager.h"
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
+#include <cmath>
 
 OdinFury::OdinFury(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

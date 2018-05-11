@@ -1,11 +1,19 @@
 #include "Client.h"
+
 #include "Names.h"
+#include "./../Managers/ObjectManager.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/NetworkManager.h"
 #include "./../Managers/StateManager.h"
+#include "./../Objects/Door.h"
+#include "./../Objects/Potion.h"
+#include "./../Objects/Trap.h"
+#include "./../Players/Player.h"
 #include <GUIEngine/GUIEngine.h>
+
+#include "NetworkObject.h"
 
 Client::Client(std::string serverIp, int serverPort, bool proprietary){
 	peer = RakNet::RakPeerInterface::GetInstance();

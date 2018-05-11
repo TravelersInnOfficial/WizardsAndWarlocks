@@ -2,12 +2,17 @@
 #define HECHIZO_H
 
 #include <iostream>
-#include "./../Players/Player.h"
-#include <SoundEngine/SoundSystem.h>
+#include <Alliance.h>
 #include <SpellCodes.h>
 
-class GSprite;
 class GRect;
+class Player;
+class GSprite;
+class SoundEvent;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Hechizo{
 public:

@@ -2,8 +2,6 @@
 #define ODINFURY_H
 
 #include "Hechizo.h"
-#include "./../Players/Player.h"
-#include <BulletCodes.h>
 
 class OdinFury: public Hechizo{
 public:

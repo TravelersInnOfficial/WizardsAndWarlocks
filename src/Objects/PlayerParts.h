@@ -1,11 +1,14 @@
 #ifndef PLAYERPARTS_H
 #define PLAYERPARTS_H
 
-#include <iostream>
-#include <ColliderMasks.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <PhysicsEngine/BT_Body.h>
+#include <vector>
+#include <vector3d.h>
 #include <Alliance.h>
+#include "./../Entidad.h"
+
+class GBody;
+class BT_Body;
+class GParticle;
 
 class PlayerParts : public Entidad{
 public:

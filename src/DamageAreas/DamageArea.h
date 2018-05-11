@@ -2,12 +2,14 @@
 #define DAMAGEAREA_H
 
 #include <iostream>
-#include <vector3d.h>
-#include <ColliderMasks.h>
-
-#include <PhysicsEngine/BT_GhostObject.h>
-#include <GraphicEngine/GraphicEngine.h>
 #include "./../Entidad.h"
+
+class GBody;
+class BT_GhostObject;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class DamageArea: public Entidad{
 public:

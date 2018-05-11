@@ -1,5 +1,11 @@
 #include "GuivernoWind.h"
+
 #include "./../Managers/ObjectManager.h"
+#include "./../Players/Player.h"
+#include "./../DamageAreas/IceArea.h"
+#include <SoundEngine/SoundSystem.h>
+#include <Constants.h>
+#include <cmath>
 
 GuivernoWind::GuivernoWind(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(costPM, tCast, tCoolDown, SPELL_BLIZZARD,"./../assets/textures/HUD/Spells/SPELL_BLIZZARD.png", optHP, optMP){

@@ -2,13 +2,13 @@
 #define EFFECTMANAGER_H
 
 #include <iostream>
-#include <map>
 #include <vector>
+#include <map>
 
-#include "./../Effects/Effect.h"
-#include "./../Effects/AllEffects.h"
-#include "./../Players/Player.h"
 #include <EffectCodes.h>
+
+class Player;
+class Effect;
 
 class EffectManager{
 public:

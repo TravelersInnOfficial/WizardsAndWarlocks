@@ -1,11 +1,9 @@
 #ifndef GuivernoWind_H
 #define GuivernoWind_H
 
-#include <iostream>
-#include <AreaCodes.h>
-
 #include "Hechizo.h"
-#include "./../DamageAreas/IceArea.h"
+
+class IceArea;
 
 class GuivernoWind: public Hechizo{
 public:

@@ -1,5 +1,22 @@
 #include "Match.h"
 
+#include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/BulletManager.h"
+#include "./../Managers/EffectManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/PlayerManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/StateManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../Players/Player.h"
+#include "./../LevelLoader.h"
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GCamera.h>
+#include <GraphicEngine/MenuManager.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <SoundEngine/SoundSystem.h>
+
 Match::Match(SinglePlayerGame* fat){
 	father = fat;
 
@@ -7,13 +24,13 @@ Match::Match(SinglePlayerGame* fat){
 	g_engine 		= GraphicEngine::getInstance();
 	s_engine 		= SoundSystem::getInstance();
 
-	spellManager 	= SpellManager::GetInstance();
-	bulletManager 	= BulletManager::GetInstance();
-	effectManager 	= EffectManager::GetInstance();
-	objectManager	= ObjectManager::GetInstance();
-	playerManager	= PlayerManager::GetInstance();
-	trapManager		= TrapManager::GetInstance();
 	senseManager	= RegionalSenseManager::GetInstance();
+	objectManager	= ObjectManager::GetInstance();
+	bulletManager 	= BulletManager::GetInstance();
+	playerManager	= PlayerManager::GetInstance();
+	effectManager 	= EffectManager::GetInstance();
+	spellManager 	= SpellManager::GetInstance();
+	trapManager		= TrapManager::GetInstance();
 	
 	// Level
 	LevelLoader::LoadLevel("../assets/json/castle_final.json");
@@ -30,7 +47,6 @@ Match::Match(SinglePlayerGame* fat){
 
 	father->PlayEvent("ghosts", vector3df(-0.245, 1.14, 17.25));
 	father->PlayEvent("waterdrops", vector3df(-0.245, 1.20, 17.25));
-
 }
 
 Match::~Match(){
@@ -103,4 +119,3 @@ void Match::CheckIfWon(){
 	}
 
 }
-

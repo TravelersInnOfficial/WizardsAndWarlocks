@@ -3,17 +3,22 @@
 
 #include <iostream>
 #include <map>
+
 #include <Alliance.h>
 #include <TrapCodes.h>
 #include <SpellCodes.h>
 #include <NetworkStructs.h>
 #include "RakNetIncludes.h"
-#include "NetworkObject.h"
 
 class Player;
+class NetworkObject;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
+typedef vector3d<int> vector3di;
 
 class Server{
-
 public:
 
 	// We pass the port we're listening to

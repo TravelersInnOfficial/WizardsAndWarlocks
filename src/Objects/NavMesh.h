@@ -1,8 +1,15 @@
 #ifndef NAVMESH_H
 #define NAVMESH_H
 
-#include "./../AI/Pathfinding/Node.h"
-#include "./../AI/Pathfinding/Connection.h"
+#include <iostream>
+#include <vector>
+
+class Node;
+class Connection;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 struct Triangle{
     std::vector<Node*> vertices;

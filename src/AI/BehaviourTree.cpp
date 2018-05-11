@@ -1,5 +1,8 @@
 #include "BehaviourTree.h"
 
+#include "Blackboard.h"
+#include "./Tasks/AllTasks.h"
+
 BehaviourTree::BehaviourTree(){
     informacion = new Blackboard();
 

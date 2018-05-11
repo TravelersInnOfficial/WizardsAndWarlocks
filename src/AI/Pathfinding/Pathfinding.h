@@ -1,11 +1,19 @@
 #ifndef PATHFINDING_H
 #define PATHFINDING_H
 
-#include "List.h"
-#include "Heuristic.h"
-#include "./../../Objects/NavMesh.h"
-
+#include <iostream>
+#include <vector>
 #include <limits>
+
+class List;
+class Node;
+class NavMesh;
+class Heuristic;
+class Connection;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Pathfinding{
     public:
@@ -29,8 +37,6 @@ class Pathfinding{
 
     Node* StartNode;            // Nodo que se crea en la clase y que tenemos que reiniciar 
     Node* EndNode;              // Nodo que se crea en la clase y que tenemos que reiniciar
-
-    std::list<Connection*> *DijkstraPF(Node* StartNode, Node* GoalNode);
 
 };
 

@@ -2,7 +2,15 @@
 #define NPC_H
 
 #include <iostream>
-#include "./../Players/Player.h"
+#include "./../Entidad.h"
+
+class Player;
+class BT_Body;
+class GAnimation;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Npc: public Entidad{
 	public:

@@ -1,10 +1,14 @@
 #ifndef BT_BODY_H
 #define BT_BODY_H
 
-#include "BulletEngine.h"
-#include <vector3d.h>
-#include <Constants.h>
 #include <iostream>
+#include <vector3d.h>
+#include <ColliderMasks.h>
+
+class btCollisionShape;
+struct btDefaultMotionState;
+class btRigidBody;
+class btTransform;
 
 class BT_Body{
 public:

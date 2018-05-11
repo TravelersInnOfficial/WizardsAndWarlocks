@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 #include <StateCodes.h>
 #include <NetworkStructs.h>
 #include "Managers/StateManager.h"

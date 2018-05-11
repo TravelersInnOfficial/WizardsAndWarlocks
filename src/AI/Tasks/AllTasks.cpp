@@ -1,4 +1,5 @@
 #include "AllTasks.h"
+
 // Engines
 #include <GraphicEngine/GraphicEngine.h>
 #include <PhysicsEngine/BulletEngine.h>
@@ -9,9 +10,13 @@
 // IAPlayer
 #include "./../../Players/AIPlayer.h"
 #include "./../RoomGraph/RoomGraph.h"
+#include "./../../Objects/Potion.h"
+#include "./../../Objects/Door.h"
 // New information classes
-#include <vector2d.h>
+#include "./../Blackboard.h"
 #include <kinematicTypes.h>
+#include <vector2d.h>
+#include <cmath>
 // Enums
 #include <KeyStates.h>
 

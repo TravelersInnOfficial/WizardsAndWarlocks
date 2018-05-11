@@ -1,5 +1,8 @@
 #include "FPSCamera.h"
+
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GCamera.h>
+#include <cmath>
 
 FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
 	vector3df target = position;

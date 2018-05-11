@@ -1,8 +1,9 @@
 #include "BT_GhostObject.h"
-#include <iostream>
-#include <btBulletDynamicsCommon.h>
+
+#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <bullet/btBulletDynamicsCommon.h>
 #include "BulletEngine.h"
-#include "./../Objects/Trap.h"
+#include <Constants.h>
 
 BT_GhostObject::BT_GhostObject(){
      m_body = nullptr;

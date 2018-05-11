@@ -2,7 +2,6 @@
 #define DRAGONBREATH_H
 
 #include "Hechizo.h"
-#include "./../Players/Player.h"
 
 class DragonBreath: public Hechizo{
 public:

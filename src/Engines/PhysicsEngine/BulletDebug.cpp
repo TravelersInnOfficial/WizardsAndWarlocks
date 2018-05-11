@@ -1,4 +1,5 @@
 #include "BulletDebug.h"
+
 #include <GraphicEngine/GraphicEngine.h>
 
 void BulletDebug::drawLine( const btVector3& from, const btVector3& to, const btVector3& color){

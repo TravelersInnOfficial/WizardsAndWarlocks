@@ -1,6 +1,21 @@
 #include "SinglePlayerGame.h"
+
 #include "Lobby.h"
 #include "Match.h"
+
+#include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/BulletManager.h"
+#include "./../Managers/EffectManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/PlayerManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/StateManager.h"
+#include "./../Managers/TrapManager.h"
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/MenuManager.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <SoundEngine/SoundSystem.h>
 
 SinglePlayerGame::SinglePlayerGame(){
 	spellManager 	= SpellManager::GetInstance();
@@ -22,7 +37,6 @@ SinglePlayerGame::SinglePlayerGame(){
 	captured 	= false;
 
 	m_changeMode	= 0;
-	AL = nullptr;
 
 	CreateSoundEvents();
 }
@@ -141,7 +155,6 @@ void SinglePlayerGame::Draw(){
 	g_engine->EndDraw();
 	if(debug){
 		f_engine->DebugDrawWorld();
-		if(AL != nullptr) AL->Debug();
 	}
 }
 

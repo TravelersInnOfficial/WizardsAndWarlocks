@@ -1,5 +1,8 @@
 #include "Wander.h"
 
+#include <kinematicTypes.h>
+#include <cmath>
+
 Wander::Wander(){
 	wanderOffset = 1.0f;
 	wanderRadius = 2.0f;

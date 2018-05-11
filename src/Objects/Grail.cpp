@@ -1,5 +1,16 @@
 #include "Grail.h"
+
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+#include <SoundEngine/SoundSystem.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GRect.h>
+#include "./../Players/Player.h"
+#include <kinematicTypes.h>
+#include <ColliderMasks.h>
+#include <Alliance.h>
 
 Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	casting = false;

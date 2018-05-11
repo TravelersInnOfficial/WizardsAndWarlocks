@@ -1,5 +1,6 @@
 #include "EndMatchMenu.h"
-#include "./../Managers/StateManager.h"
+#include "./../../../Players/HumanPlayer.h"
+#include "./../../../Managers/PlayerManager.h"
 
 EndMatchMenu::EndMatchMenu(MenuType type, int winners) : Menu(type){
     m_id = "EndMatchMenu";

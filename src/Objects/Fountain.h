@@ -1,15 +1,14 @@
 #ifndef FOUNTAIN_H
 #define FOUNTAIN_H
 
-#include <iostream>
-
-#include "./../Players/Player.h"
+#include <vector3d.h>
 #include "./../Entidad.h"
 
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <ColliderMasks.h>
+class GBody;
+class Player;
+class BT_Body;
+class Kinematic;
+class SoundEvent;
 
 class Fountain: public Entidad{
 public:

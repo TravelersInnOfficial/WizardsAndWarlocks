@@ -1,12 +1,25 @@
 #include "Trap.h"
-#include "./../Managers/TrapManager.h"
+
+#include "./../AI/SenseManager/RegionalSenseManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <NetworkEngine/Server.h>
 #include "./../Managers/EffectManager.h"
 #include "./../Managers/PlayerManager.h"
-#include "./../AI/SenseManager/RegionalSenseManager.h"
-#include <NetworkEngine/NetworkEngine.h>
+#include "./../Managers/TrapManager.h"
+#include "./../Players/Player.h"
+#include <PhysicsEngine/BT_Body.h>
+#include <SoundEngine/SoundSystem.h>
+#include <GraphicEngine/GParticle.h>
 #include <GraphicEngine/GBody.h>
+#include <GraphicEngine/GRect.h>
+#include <kinematicTypes.h>
 #include <ColliderMasks.h>
 #include <ParticleData.h>
+
+
 
 Trap::Trap(vector3df TPosition, vector3df normal, TrapEnum trapType){
 	clase = EENUM_TRAP;

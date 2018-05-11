@@ -1,10 +1,12 @@
 #ifndef LOADINGSCREEN_H
 #define LOADINGSCREEN_H
 
+#include <iostream>
 #include "State.h"
 
-class GraphicEngine;
 class GRect;
+class GraphicEngine;
+
 class LoadingScreen : public State{
 public:
     LoadingScreen();

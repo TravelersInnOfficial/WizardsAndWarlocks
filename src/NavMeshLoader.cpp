@@ -1,10 +1,11 @@
 #include "NavMeshLoader.h"
-#include "Managers/ObjectManager.h"
-#include <fstream>
+
+#include "Objects/NavMesh.h"
 #include <vector3d.h>
 #include <json.hpp>
+#include <fstream>
 
-#include <GraphicEngine/GraphicEngine.h>
+
 
 NavMeshLoader::NavMeshLoader(){
 
@@ -43,8 +44,6 @@ void NavMeshLoader::LoadNavMeshGraph(NavMesh* navmesh, std::string jsonPath){
             float z = j["NavMesh"][i]["Position"]["Z"];
             position = vector3df(x,y,z);
             navmesh->AddNode(ID,position);
-
-            //GraphicEngine::getInstance()->addSphere2Scene(position);
         }   	
         else if(j["NavMesh"][i]["Type"] == "Connection"){
             fromNodeIndex = j["NavMesh"][i]["Connection"]["FromNode"];

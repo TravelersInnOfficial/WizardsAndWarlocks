@@ -1,14 +1,12 @@
 #ifndef PLAYERMANAGER_H
 #define PLAYERMANAGER_H
 
+#include <Alliance.h>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
-#include <GraphicEngine/MenuManager.h>
-#include "./../Players/Player.h"
-#include "./../Players/HumanPlayer.h"
-#include "./../Players/AIPlayer.h"
+class Player;
+class AIPlayer;
 
 class PlayerManager{
 public:

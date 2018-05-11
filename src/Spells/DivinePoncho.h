@@ -3,8 +3,6 @@
 
 #include "./Hechizo.h"
 
-#include <iostream>
-
 class DivinePoncho: public Hechizo{
 public:
 	DivinePoncho(float costPM, float tCast, float tCoolDown, float optHP, float optMP);

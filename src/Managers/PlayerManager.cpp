@@ -1,6 +1,12 @@
 #include "PlayerManager.h"
-#include "ObjectManager.h"
+
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include "./../Players/HumanPlayer.h"
+#include "./../Players/AIPlayer.h"
+#include "./../Players/Player.h"
 #include "StateManager.h"
+#include <algorithm>
 
 static PlayerManager* instance = nullptr;
 

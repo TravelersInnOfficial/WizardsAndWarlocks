@@ -1,6 +1,7 @@
 #include "LoadingScreen.h"
+
 #include <GraphicEngine/GraphicEngine.h>
-#include <GraphicEngine/MenuManager.h>
+#include <GraphicEngine/GRect.h>
 #include <sstream>
 #include <iomanip>
 

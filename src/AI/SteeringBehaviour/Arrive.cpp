@@ -1,5 +1,7 @@
 #include "Arrive.h"
 
+#include <kinematicTypes.h>
+
 Arrive::Arrive(){
 	slowRadius = 3.0f;
 	targetRadius = 0.5f;

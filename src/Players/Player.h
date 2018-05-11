@@ -1,30 +1,28 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#define _USE_MATH_DEFINES
-#include <cmath>
+#include "./../Entidad.h"
 
+#include <map>
 #include <iostream>
 #include <Actions.h>
+#include <vector3d.h>
 #include <Alliance.h>
-#include <ColliderMasks.h>
+#include <KeyStates.h>
+#include <ShaderTypes.h>
 #include <EffectCodes.h>
-#include <Names.h>
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <NetworkEngine/NetworkEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <GUIEngine/GUIEngine.h>
-#include <NetworkStructs.h>
-#include <kinematicTypes.h>
-#include "./PlayerController.h"
-#include "./../Entidad.h"
-#include "./../Cameras/Camera.h"
-#include "./../Managers/OverlayManager.h"
 
-class Potion;
-class PlayerHUD;
 class Trap;
+class Camera;
+class Potion;
+class BT_Body;
+class Kinematic;
+class PlayerHUD;
+class GAnimation;
+class SoundEvent;
+class NetworkObject;
+class OverlayManager;
+class PlayerController;
 
 class Player: public Entidad{
 	public:

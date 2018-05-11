@@ -1,17 +1,6 @@
 #ifndef GRAPHICENGINE_H
 #define GRAPHICENGINE_H
 
-#include "GRoom.h"
-#include "GBody.h"
-#include "GAnimation.h"
-#include "GParticle.h"
-#include "GCamera.h"
-#include "GEntity.h"
-#include "GSprite.h"
-#include "GRect.h"
-#include "GText2D.h"
-#include "EventReceiver.h"
-#include "MenuReceiver.h"
 #include <EventEnum.h>
 #include <vector2d.h>
 #include <vector3d.h>
@@ -19,12 +8,27 @@
 #include <map>
 #include <vector>
 #include <OverlayCodes.h>
+#include <KeyStates.h>
+#include <ShaderTypes.h>
+
+class EventReceiver;
+class GBody;
+class GAnimation;
+class GRoom;
+class GPortal;
+class GCamera;
+class GParticle;
+class GRect;
+class GSprite;
+class GText2D;
+class VideoDriver;
+class SceneManager;
+class TFRect;
+class TFSprite;
 
 class GraphicEngine{
 	friend class MenuManager;
 	friend class MainMenu;
-
-
 	friend class GUIEngine;
 	friend class GEntity;
 	friend class GBody;
@@ -305,6 +309,11 @@ public:
 	void SetDynamicLight(bool value);
 	float GetAmbientLight();
 	void SetAmbientLight(float value);
+
+	void LoadTexture(std::string path);
+	void LoadMesh(std::string path);
+
+	vector2di GetTextureDims(std::string path);
 
 private:
 	GraphicEngine(bool isServer = false);

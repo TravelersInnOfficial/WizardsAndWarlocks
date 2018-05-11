@@ -1,5 +1,8 @@
 #include "LookWhereYoureGoing.h"
 
+#include <kinematicTypes.h>
+#include <cmath>
+
 LookWhereYoureGoing::LookWhereYoureGoing(){}
 
 LookWhereYoureGoing::~LookWhereYoureGoing(){}

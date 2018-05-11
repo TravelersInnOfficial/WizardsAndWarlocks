@@ -3,29 +3,30 @@
 
 #include <iostream>
 #include <vector>
-
-#include "./../Invocations/AllInvocations.h"
-#include "./../DamageAreas/AllDamageAreas.h"
-#include "./../AI/RoomGraph/RoomGraph.h"
-#include "./../Objects/Fountain.h"
-#include "./../Npcs/NpcSelector.h"
-#include "./../Objects/NavMesh.h"
-#include "./../Objects/Switch.h"
-#include "./../Objects/Potion.h"
-#include "./../Npcs/NpcSeller.h"
-#include "./../Objects/Block.h"
-#include "./../Objects/Prop.h"
-#include "./../Objects/Grail.h"
-#include "./../Objects/Door.h"
-#include "./../Objects/PlayerParts.h"
-#include "./../Npcs/Npc.h"
-
-#include <InvocationCodes.h>
-#include <PotionTypes.h>
-#include <AreaCodes.h>
-#include <NPCTypes.h>
+#include <map>
+#include <vector4d.h>
+#include <vector3d.h>
 #include <Alliance.h>
-#include <GraphicEngine/Light.h>
+#include <NPCTypes.h>
+#include <AreaCodes.h>
+#include <PotionTypes.h>
+#include <InvocationCodes.h>
+
+class Player;
+class Block;
+class Prop;
+class Door;
+class Grail;
+class Switch;
+class Potion;
+class Fountain;
+class Npc;
+class Invocation;
+class DamageArea;
+class PlayerParts;
+class Light;
+class NavMesh;
+class RoomGraph;
 
 class ObjectManager{
 public:

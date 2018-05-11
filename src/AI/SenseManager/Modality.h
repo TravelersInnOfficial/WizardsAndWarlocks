@@ -2,12 +2,15 @@
 #define MODALITY_H
 
 #include <iostream>
-#include <vector3d.h>
-#include <Constants.h>
 #include <AICodes.h>
+
 
 class Signal;
 class Sensor;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Modality{
 public:

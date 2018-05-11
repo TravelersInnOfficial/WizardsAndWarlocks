@@ -1,15 +1,14 @@
 #ifndef PROJECTILE_H
 #define PROJECTILE_H
 
-#include <vector>
-#include <string>
+#include <iostream>
+#include <vector3d.h>
 #include "./../Entidad.h"
 
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <ColliderMasks.h>
-#include <ParticleData.h>
+class SoundEvent;
+class GParticle;
+class BT_Body;
+class GBody;
 
 class Projectile: public Entidad{
 public:
@@ -36,7 +35,7 @@ protected:
     bool            impact;             // Ha llegado a hacer hit? Si/No
 
     vector3df       initPos;            // Posicion inicial del proyectil
-    vector3df*   	direction;	        // La direccion que va a tomar el proyectil
+    vector3df   	direction;	        // La direccion que va a tomar el proyectil
     vector3df       initRot;
     float			radius;	            // Radio del proyectil
     float			velocity;           // Velocidad del proyectil

@@ -1,8 +1,8 @@
 #ifndef NODERECORD_H
 #define NODERECORD_H
 
-#include "Node.h"
-#include "Connection.h"
+class Node;
+class Connection;
 
 //This structure is used to keep track of the information we need for each node
 struct NodeRecord{

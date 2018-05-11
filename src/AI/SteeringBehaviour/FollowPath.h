@@ -2,7 +2,8 @@
 #define FOLLOWPATH_H
 
 #include "./Seek.h"
-#include "./../Pathfinding/Pathfinding.h"
+
+class Pathfinding;
 
 class FollowPath: public Seek{
 public:

@@ -1,8 +1,13 @@
 #ifndef PROP_H
 #define PROP_H
 
-#include <GraphicEngine/GBody.h>
-#include <vector3d.h>
+#include <iostream>
+
+class GBody;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Prop{
 public:

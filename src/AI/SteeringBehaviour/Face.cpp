@@ -1,5 +1,8 @@
 #include "Face.h"
 
+#include <kinematicTypes.h>
+#include <cmath>
+
 Face::Face(){}
 
 Face::~Face(){}

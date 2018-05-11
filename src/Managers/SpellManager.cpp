@@ -1,11 +1,18 @@
 #include "SpellManager.h"
-#include <GraphicEngine/GraphicEngine.h>
-#include "EffectManager.h"
-#include "PlayerManager.h"
+
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <NetworkEngine/Client.h>
+#include <NetworkEngine/Server.h>
+#include <SoundEngine/SoundSystem.h>
 #include "./../Spells/SpellsInclude.h"
+#include "./../Players/Player.h"
+#include "PlayerManager.h"
 #include <limits>
 #include <fstream>
 #include <json.hpp>
+
+
 
 static SpellManager* instance = nullptr;
 
@@ -253,7 +260,7 @@ float SpellManager::GetUtility(int num, Player* p){
 }
 
 float SpellManager::GetMinCostPM(Player* p){
-	float min = std::numeric_limits<float>::max();;
+	float min = std::numeric_limits<float>::max();
 
 	for(int i=0; i<m_spellNumber; i++){
 		if(m_spells[i].find(p) != m_spells[i].end()){

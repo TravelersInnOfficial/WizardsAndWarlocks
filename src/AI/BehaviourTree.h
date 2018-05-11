@@ -2,22 +2,13 @@
 #define BEHAVIOURTREE_H
 
 #include <iostream>
-#include <string>
 #include <vector>
-// Enums
 #include <AICodes.h>
-#include <KeyStates.h>
-// BlackBoard
-#include "Blackboard.h"
-// Elementos del BehaviourTree
-#include "Task.h"
-#include "Selector.h"
-#include "Secuencia.h"
-#include "Decorador.h"
-// Todas las tareas existentes
-#include "./Tasks/AllTasks.h"
-// Player
+
+class Task;
 class AIPlayer;
+class RoomGraph;
+class Blackboard;
 
 class BehaviourTree{
 public:

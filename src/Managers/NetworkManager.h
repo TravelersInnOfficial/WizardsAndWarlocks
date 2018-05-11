@@ -2,18 +2,11 @@
 #define NETWORKMANAGER_H
 
 #include <iostream>
-#include <cstdlib>
 #include <map>
-#include <NetworkStructs.h>
-#include <NetworkEngine/NetworkEngine.h>
-#include <NetworkEngine/Server.h>
-#include <NetworkEngine/Client.h>
-#include "./PlayerManager.h"
-#include "./../Players/Player.h"
 
+class NetworkObject;
 
 class NetworkManager{
-
 public:
 
 	static NetworkManager* GetInstance();
@@ -35,7 +28,7 @@ private:
 	void RetrieveObjects();
 	void SpawnNewObjects();
 	void EraseObjects();
-	void setPlayerManager(PlayerManager* playerManager);
+
 	NetworkManager();
 	NetworkManager(NetworkManager&);
 	NetworkManager operator=(NetworkManager&);

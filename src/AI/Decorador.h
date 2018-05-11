@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "Task.h"
-#include "Blackboard.h"
 
 class Decorador: public Task{
 public:

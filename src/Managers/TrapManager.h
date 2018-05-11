@@ -1,15 +1,19 @@
 #ifndef TRAPMANAGER_H
 #define TRAPMANAGER_H
 
-#include <iostream>
+#include <map>
 #include <vector>
-#include <vector3d.h>
-#include <Alliance.h>
-#include "./../Objects/Trap.h"
-#include "./../Players/Player.h"
+#include <TrapCodes.h>
 
-class GSprite;
+class Trap;
 class GRect;
+class Player;
+class GSprite;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
+
 class TrapManager{
 	friend class PlayerHUD;
 public:

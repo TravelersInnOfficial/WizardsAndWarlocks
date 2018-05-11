@@ -1,5 +1,7 @@
 #include "Align.h"
 
+#include <kinematicTypes.h>
+
 Align::Align(){
 	maxAngularAcceleration = 3.0f;
 	maxRotation = 10.0f;
@@ -42,7 +44,7 @@ float Align::GetAngular(float angle, float angleSize, float rotC){
 	float angular = targetRotation - rotC;
 	angular /= timeToTarget;
 
-	float angularAcceleration = abs(angular);
+	float angularAcceleration = std::abs(angular);
 	if(angularAcceleration > maxAngularAcceleration){
 		angular /= angularAcceleration;
 		angular *= maxAngularAcceleration;

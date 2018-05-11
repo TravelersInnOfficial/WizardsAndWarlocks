@@ -1,11 +1,25 @@
 #include "StateManager.h"
+
 #include <time.h>
-#include <iostream>
 #include <cstdio>
 #include <thread>
 #include <chrono>
-#include <GraphicEngine/MenuManager.h>
+#include <NetworkStructs.h>
 
+#include <GraphicEngine/MenuManager.h>
+#include "./../ResourceManager.h"
+
+// Estados
+#include "./../States/MultiPlayer/MultiPlayerGame.h"
+#include "./../States/OnePlayer/SinglePlayerGame.h"
+#include "./../States/MenuPrincipal.h"
+#include "./../States/LoadingScreen.h"
+// Motores
+#include <PhysicsEngine/BulletEngine.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include <SoundEngine/SoundSystem.h>
+#include <GUIEngine/GUIEngine.h>
 
 StateManager::StateManager(ServerInfo* serverInfo){
 	maxWizardPlayers = 4;

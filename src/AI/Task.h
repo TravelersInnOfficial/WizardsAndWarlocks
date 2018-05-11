@@ -1,9 +1,9 @@
 #ifndef TASK_H
 #define TASK_H
 
-#include "Blackboard.h"
-
 #include <iostream>
+
+class Blackboard;
 
 class Task{
 public:

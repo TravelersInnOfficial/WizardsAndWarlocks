@@ -1,16 +1,12 @@
 #ifndef INVOCATION_H
 #define INVOCATION_H
 
-#include <iostream>
-#include <vector3d.h>
-#include <kinematicTypes.h>
-#include <ColliderMasks.h>
-
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <SoundEngine/SoundSystem.h>
 #include "./../Entidad.h"
+#include <iostream>
 
+class GBody;
+class BT_Body;
+class Kinematic;
 
 class Invocation: public Entidad{
 public:
@@ -26,8 +22,6 @@ public:
 	Kinematic GetKinematic();
 
 protected:
-
-
 	int 		m_HP;						// Vida de la invocacion
 
 	BT_Body* 	bt_body;					// Cuerpo fisico de la invocacion

@@ -2,8 +2,6 @@
 #define SpellProjectile_H
 
 #include "Hechizo.h"
-#include "./../Players/Player.h"
-#include <BulletCodes.h>
 
 class SpellProjectile: public Hechizo{
 public:

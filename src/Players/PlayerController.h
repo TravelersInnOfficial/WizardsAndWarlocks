@@ -1,12 +1,13 @@
 #ifndef PLAYERCONTROLLER_H
 #define PLAYERCONTROLLER_H
 
-#include <iostream>
-#include <vector>
-#include <string>
+#include <EventEnum.h>
+#include <KeyStates.h>
 #include <Keycodes.h>
 #include <Actions.h>
-#include <GraphicEngine/GraphicEngine.h>
+#include <iostream>
+#include <vector>
+
 
 class Key_player {
 public:

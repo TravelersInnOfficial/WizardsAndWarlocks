@@ -62,3 +62,4 @@ void RandomSecuencia::shuffleVector(){
 		children.at(n) = temp;
 	}
 }
+

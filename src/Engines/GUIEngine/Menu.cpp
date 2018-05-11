@@ -1,5 +1,9 @@
 #include "Menu.h"
+
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
+#include <TOEvector2d.h>
 #include <Assets.h>
 
 Menu::Menu(MenuType type){
@@ -56,7 +60,7 @@ void Menu::SetWidth(float w){m_width = w;}
 void Menu::SetHeight(float h){m_height = h;}
 
 void Menu::UpdateCursor(){
-     TOEvector2di cursor_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
+    vector2di cursor_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
     if(m_cursor == nullptr){
         vector2df dims(cursor_dims.X,cursor_dims.Y);
         m_cursor = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_GUI_CURSOR], vector2df(0,0), dims);

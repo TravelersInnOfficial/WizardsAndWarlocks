@@ -1,7 +1,23 @@
 #include "ObjectManager.h"
+
 #include "./../AI/RoomGraph/LoaderRoomGraph.h"
+#include "./../Invocations/AllInvocations.h"
+#include "./../DamageAreas/AllDamageAreas.h"
+#include "./../AI/RoomGraph/RoomGraph.h"
+#include "./../Objects/PlayerParts.h"
 #include "./../Objects/AllPotions.h"
+#include "./../Objects/Fountain.h"
+#include "./../Npcs/NpcSelector.h"
+#include "./../Objects/NavMesh.h"
+#include "./../Npcs/NpcSeller.h"
+#include "./../Objects/Switch.h"
+#include <GraphicEngine/Light.h>
+#include "./../Objects/Potion.h"
 #include "./../NavMeshLoader.h"
+#include "./../Objects/Block.h"
+#include "./../Objects/Grail.h"
+#include "./../Objects/Prop.h"
+#include "./../Objects/Door.h"
 #include "./EffectManager.h"
 #include <fstream>
 #include <json.hpp>
@@ -18,6 +34,7 @@ ObjectManager* ObjectManager::GetInstance(){
 	}
 	return instance;
 }
+
 
 ObjectManager::ObjectManager(){
 	wizardSpawnSelected = 0;

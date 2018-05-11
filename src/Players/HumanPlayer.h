@@ -1,9 +1,7 @@
 #ifndef HUMANPLAYER_H
 #define HUMANPLAYER_H
 
-#include "./PlayerController.h"
 #include "Player.h"
-#include <KeyStates.h>
 
 class HumanPlayer: public Player{
 public:

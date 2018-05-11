@@ -1,21 +1,33 @@
 #include "./Player.h"
-#include "./PlayerHUD.h"
-#include <PhysicsEngine/BulletEngine.h>
+
+#include "./../AI/SenseManager/RegionalSenseManager.h"
+#include "./../Managers/OverlayManager.h"
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+#include <GraphicEngine/MenuManager.h>
+#include <GraphicEngine/GAnimation.h>
+#include <SoundEngine/SoundSystem.h>
 #include "./../Managers/ObjectManager.h"
-#include "./../Managers/TrapManager.h"
-#include "./../Managers/SpellManager.h"
 #include "./../Managers/EffectManager.h"
 #include "./../Managers/PlayerManager.h"
-#include "./../Managers/StateManager.h"
-#include "./../AI/SenseManager/RegionalSenseManager.h"
-#include <SpellCodes.h>
-#include <TrapCodes.h>
-#include <Constants.h>
-#include "./../Objects/Potion.h"
-
+#include "./../Managers/SpellManager.h"
 #include "./../Cameras/WatcherCamera.h"
+#include <PhysicsEngine/BulletEngine.h>
+#include "./../Managers/StateManager.h"
+#include "./../Managers/TrapManager.h"
 #include "./../Cameras/FPSCamera.h"
+#include <PhysicsEngine/BT_Body.h>
+#include "./../Spells/Hechizo.h"
+#include <GUIEngine/GUIEngine.h>
+#include "./../Objects/Potion.h"
+#include "./PlayerController.h"
+#include <kinematicTypes.h>
+#include "./PlayerHUD.h"
+#include <SpellCodes.h>
+#include <Constants.h>
+#include <algorithm>
 #include <Assets.h>
+#include <Names.h>
 #include <cmath>
 
 Player::Player(bool isPlayer1){

@@ -2,13 +2,16 @@
 #define BLOCK_H
 
 #include "../Entidad.h"
-#include <GraphicEngine/GBody.h>
-#include <PhysicsEngine/BT_Body.h>
-#include <ColliderMasks.h>
-#include <vector3d.h>
+#include <iostream>
+
+class BT_Body;
+class GBody;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Block : public Entidad{
-
 public:
     
     Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::string texture);  

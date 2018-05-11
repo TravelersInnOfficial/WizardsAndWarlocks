@@ -1,19 +1,25 @@
 #ifndef SINGLEPLAYERGAME_H
 #define SINGLEPLAYERGAME_H
 
-#include "./../AI/SenseManager/RegionalSenseManager.h"
-#include "./../Managers/SpellManager.h"
-#include "./../Managers/BulletManager.h"
-#include "./../Managers/EffectManager.h"
-#include "./../Managers/ObjectManager.h"
-#include "./../Managers/PlayerManager.h"
-#include "./../Managers/StateManager.h"
-#include "./../Managers/TrapManager.h"
-
 #include "./../State.h"
-#include "./../LevelLoader.h"
+#include <iostream>
+#include <map>
 
-#include <SoundEngine/SoundSystem.h>
+class RegionalSenseManager;
+class GraphicEngine;
+class BulletManager;
+class EffectManager;
+class ObjectManager;
+class PlayerManager;
+class SpellManager;
+class BulletEngine;
+class TrapManager;
+class SoundSystem;
+class SoundEvent;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class SinglePlayerGame: public State{
 public:
@@ -53,8 +59,6 @@ private:
 	bool 	debug;
 
 	int 	m_changeMode;
-
-	AIPlayer* AL;
 
 	std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 	void CreateSoundEvents();							//Create the sound events

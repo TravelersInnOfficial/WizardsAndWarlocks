@@ -1,5 +1,8 @@
 #include "./Npc.h"
 
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GAnimation.h>
+
 Npc::Npc(){
 	pBody = nullptr;
 	gBody = nullptr;
@@ -7,8 +10,8 @@ Npc::Npc(){
 }
 
 Npc::~Npc(){
-	delete gBody;
-	delete pBody;
+	if(gBody != nullptr) delete gBody;
+	if(pBody != nullptr) delete pBody;
 }
 
 void Npc::Update(float deltaTime){

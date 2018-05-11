@@ -1,5 +1,7 @@
 #include "Flee.h"
 
+#include <kinematicTypes.h>
+
 Flee::Flee(){
 	maxAcceleration = 30.0f;
 }

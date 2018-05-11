@@ -2,7 +2,6 @@
 #define TELEPORT_H
 
 #include "Hechizo.h"
-#include "./../Players/Player.h"
 
 class Teleport: public Hechizo{
 public:

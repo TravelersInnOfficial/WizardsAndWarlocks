@@ -1,5 +1,25 @@
 #include "MultiMatch.h"
 
+#include "./../Managers/NetworkManager.h"
+#include "./../Managers/BulletManager.h"
+#include "./../Managers/EffectManager.h"
+#include "./../Managers/ObjectManager.h"
+#include "./../Managers/PlayerManager.h"
+#include "./../Managers/StateManager.h"
+#include "./../Managers/SpellManager.h"
+#include "./../Managers/TrapManager.h"
+#include "./../Players/Player.h"
+#include "./../LevelLoader.h"
+
+
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/MenuManager.h>
+#include <GraphicEngine/GCamera.h>
+#include <PhysicsEngine/BulletEngine.h>
+#include <SoundEngine/SoundSystem.h>
+#include <NetworkEngine/NetworkEngine.h>
+#include <NetworkEngine/NetworkObject.h>
+
 MultiMatch::MultiMatch(MultiPlayerGame* fat){
 	father = fat;
 

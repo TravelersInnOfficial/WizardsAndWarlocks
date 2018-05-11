@@ -1,20 +1,26 @@
 #ifndef MULTIPLAYERGAME_H
 #define MULTIPLAYERGAME_H
 
-
-#include "./../Managers/NetworkManager.h"
-#include "./../Managers/BulletManager.h"
-#include "./../Managers/EffectManager.h"
-#include "./../Managers/ObjectManager.h"
-#include "./../Managers/PlayerManager.h"
-#include "./../Managers/StateManager.h"
-#include "./../Managers/SpellManager.h"
-#include "./../Managers/TrapManager.h"
-
 #include "./../State.h"
-#include "./../LevelLoader.h"
+#include <iostream>
+#include <map>
 
-#include <SoundEngine/SoundSystem.h>
+class NetworkManager;
+class BulletManager;
+class EffectManager;
+class ObjectManager;
+class PlayerManager;
+class GraphicEngine;
+class NetworkEngine;
+class SpellManager;
+class BulletEngine;
+class SoundSystem;
+class TrapManager;
+class SoundEvent;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class MultiPlayerGame: public State{
 public:

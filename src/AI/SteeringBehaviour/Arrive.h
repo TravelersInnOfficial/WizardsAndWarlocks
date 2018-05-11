@@ -1,9 +1,8 @@
 #ifndef ARRIVE_H
 #define ARRIVE_H
 
-#include <iostream>
-#include <vector3d.h>
-#include <kinematicTypes.h>
+class SteeringOutput;
+class Kinematic;
 
 class Arrive{
 public:

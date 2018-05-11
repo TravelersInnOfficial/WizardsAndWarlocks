@@ -1,8 +1,15 @@
+#include "./Minimap.h"
+
 #include <Assets.h>
 #include "Player.h"
-#include "./Minimap.h"
+#include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
+#include "./../Objects/Trap.h"
 #include "./../Managers/StateManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
+#include <Constants.h>
+#include <cmath>
 
 HUD_Minimap::HUD_Minimap(Player* p){
     m_player = p;

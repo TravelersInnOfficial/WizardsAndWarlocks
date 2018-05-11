@@ -1,8 +1,13 @@
 #ifndef ALLEFFECTS_H
 #define ALLEFFECTS_H
 
+#include <iostream>
+#include <vector>
+#include <Actions.h>
 #include <ParticleData.h>
 #include "Effect.h"
+
+class GParticle;
 
 ////////////////////////////////////////////
 ///	WEAKENINGS 	////////////////////////////

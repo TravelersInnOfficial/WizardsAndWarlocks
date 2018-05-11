@@ -1,9 +1,11 @@
 #include "AllEffects.h"
-#include <KeyStates.h>
-#include "./../Players/HumanPlayer.h"
-#include <algorithm>    // std::random_shuffle
 
+#include "./../Players/PlayerController.h"
+#include <algorithm>    // std::random_shuffle
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GParticle.h>
+#include <SoundEngine/SoundSystem.h>
+#include "./../Players/Player.h"
 
 ////////////////////////////////////////////
 ///	WEAKENINGS 	////////////////////////////

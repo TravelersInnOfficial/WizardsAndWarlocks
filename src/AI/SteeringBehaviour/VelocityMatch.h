@@ -1,9 +1,8 @@
 #ifndef VELOCITYMATCH_H
 #define VELOCITYMATCH_H
 
-#include <iostream>
-#include <vector3d.h>
-#include <kinematicTypes.h>
+class SteeringOutput;
+class Kinematic;
 
 class VelocityMatch{
 public:

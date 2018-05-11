@@ -3,8 +3,6 @@
 
 #include "Projectile.h"
 
-#include <AreaCodes.h>
-
 class PoisonBomb : public Projectile{
 
 public:

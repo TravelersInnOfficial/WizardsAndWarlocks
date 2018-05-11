@@ -1,5 +1,7 @@
 #include "Camera.h"
 
+#include <GraphicEngine/GCamera.h>
+
 Camera::Camera(){
 	m_working = true;
 }

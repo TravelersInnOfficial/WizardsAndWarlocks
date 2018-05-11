@@ -1,25 +1,17 @@
 #ifndef STATEMANAGER_H
 #define STATEMANAGER_H
 
-// Estados
-#include "./../States/MultiPlayer/MultiPlayerGame.h"
-#include "./../States/OnePlayer/SinglePlayerGame.h"
-#include "./../States/MenuPrincipal.h"
-#include "./../States/LoadingScreen.h"
-#include "./../States/State.h"
-// Motores
-#include <PhysicsEngine/BulletEngine.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <NetworkEngine/NetworkEngine.h>
-#include <SoundEngine/SoundSystem.h>
-#include <GUIEngine/GUIEngine.h>
-
-#include "./../ResourceManager.h"
 #include <iostream>
 #include <StateCodes.h>
-#include <NetworkStructs.h>
 
+class NetworkEngine;
+class GraphicEngine;
+class BulletEngine;
 class MenuManager;
+class SoundSystem;
+struct ServerInfo;
+class GUIEngine;
+class State;
 
 class StateManager{
 public:

@@ -1,6 +1,14 @@
 #include "Fountain.h"
+
 #include "./../AI/SenseManager/RegionalSenseManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+#include <SoundEngine/SoundSystem.h>
+#include <PhysicsEngine/BT_Body.h>
 #include <GUIEngine/GUIEngine.h>
+#include "./../Players/Player.h"
+#include <kinematicTypes.h>
+#include <ColliderMasks.h>
 
 Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	user = nullptr;

@@ -1,13 +1,16 @@
-#include <vector>
-#include <string>
+#include "PlayerHUD.h"
+
 #include <Assets.h>
 #include "Player.h"
-#include "PlayerHUD.h"
 #include "./Minimap.h"
+#include "./../Spells/Hechizo.h"
 #include "./../Objects/Potion.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Managers/SpellManager.h"
-#include "./../Managers/PlayerManager.h"
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
+#include <GraphicEngine/GText2D.h>
+#include <GraphicEngine/GRect.h>
 
 //--------------------------------------------------------------------------------------//
 //---------------------------------------PUBLIC-----------------------------------------//
@@ -131,7 +134,7 @@ void PlayerHUD::p_initPlayerOrbs(){
     //float H = g_engine->GetScreenHeight();		
     float W = g_engine->GetScreenWidth();
     float ratio = g_engine->GetAspectRatio();
-    TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
+    vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
     //orb dimensions
     //(original height / original width) x new width = new height
@@ -237,7 +240,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
     float new_width = m_num_spells* (m_spell_size + m_spell_space);
     vector2df slot_dims = vector2df(new_width,new_height);
 
-     TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
+    vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
     if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
 
     vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
@@ -248,7 +251,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
 void PlayerHUD::p_initPlayerPotion(){
     int W = g_engine->GetScreenWidth();	
     //float ratio = g_engine->GetAspectRatio();
-    TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+    vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
     float new_width = W/10.0f;
     float new_height = W/10.0f;
@@ -269,7 +272,7 @@ void PlayerHUD::p_initPlayerTrap(){
         int W = g_engine->GetScreenWidth();	
         
         //float ratio = g_engine->GetAspectRatio();
-        TOEvector2di tex_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
+        vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_ITEM_SLOT]);
 
         float new_width = W/10.0f;
         float new_height = W/10.0f;

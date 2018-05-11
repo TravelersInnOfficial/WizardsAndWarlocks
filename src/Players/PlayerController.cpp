@@ -1,5 +1,7 @@
 #include "PlayerController.h"
 
+#include <GraphicEngine/GraphicEngine.h>
+
 Key_player::Key_player(KeyboardKey k, ACTION_ENUM a){
 	key = k;
 	status = UP;

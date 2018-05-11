@@ -1,4 +1,9 @@
 #include "IceArea.h"
+
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GParticle.h>
+#include <GraphicEngine/GBody.h>
 #include "./../Players/Player.h"
 #include <ColliderMasks.h>
 #include <Constants.h>

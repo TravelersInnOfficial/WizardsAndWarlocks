@@ -3,8 +3,6 @@
 
 #include "./Hechizo.h"
 
-#include <iostream>
-
 class GaiaCleanse: public Hechizo{
 public:
 	GaiaCleanse(float costPM, float tCast, float tCoolDown, float optHP, float optMP);

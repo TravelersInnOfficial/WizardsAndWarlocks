@@ -1,5 +1,9 @@
 #include "NetworkEngine.h"
 
+#include "Server.h"
+#include "Client.h"
+#include "NetworkObject.h"
+
 static NetworkEngine* instance = nullptr;
 
 NetworkEngine::NetworkEngine(ServerInfo* serverInfo){

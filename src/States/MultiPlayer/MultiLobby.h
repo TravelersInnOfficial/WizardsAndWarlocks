@@ -2,7 +2,9 @@
 #define MULTILOBBY_H
 
 #include "./MultiPlayerGame.h"
-#include "./../State.h"
+
+class NetworkObject;
+class Player;
 
 class MultiLobby: public State{
 public:

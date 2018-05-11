@@ -3,7 +3,9 @@
 
 #include "./Invocation.h"
 
-#include <iostream>
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class BaseT: public Invocation{
 public:

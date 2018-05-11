@@ -1,5 +1,7 @@
 #include "OverlayManager.h"
 
+#include <GraphicEngine/GraphicEngine.h>
+
 OverlayManager::OverlayManager(){
 
 }

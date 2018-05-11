@@ -7,4 +7,3 @@ bool Task::terminate(){
 	return true;
 }
 
-

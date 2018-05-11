@@ -1,5 +1,7 @@
 #include "Pursue.h"
 
+#include <kinematicTypes.h>
+
 Pursue::Pursue(){
 	maxPrediction = 1.0f;
 }

@@ -1,5 +1,7 @@
 #include "GaiaCleanse.h"
 #include "./../Managers/EffectManager.h"
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
 
 GaiaCleanse::GaiaCleanse(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

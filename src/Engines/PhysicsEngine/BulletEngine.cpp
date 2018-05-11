@@ -1,6 +1,12 @@
 #include "BulletEngine.h"
+
+#include <bullet/BulletCollision/CollisionDispatch/btGhostObject.h>
+#include <bullet/btBulletDynamicsCommon.h>
 #include <GraphicEngine/GraphicEngine.h>
+#include "./BulletDebug.h"
+#include "./../Entidad.h"
 #include <Constants.h>
+#include <vector3d.h>
 
 BulletEngine* BulletEngine::GetInstance() {
 	static BulletEngine instance = BulletEngine();

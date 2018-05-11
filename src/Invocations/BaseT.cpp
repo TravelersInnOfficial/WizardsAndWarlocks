@@ -1,5 +1,10 @@
 #include "BaseT.h"
 
+#include <ColliderMasks.h>
+#include <PhysicsEngine/BT_Body.h>
+#include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GBody.h>
+
 BaseT::BaseT(vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(-1){
 	active = true;

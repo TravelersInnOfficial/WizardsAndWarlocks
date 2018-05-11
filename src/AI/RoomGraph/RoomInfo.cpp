@@ -1,4 +1,5 @@
 #include "RoomInfo.h"
+
 #include <Constants.h>
 #include <limits>
 #include <stdlib.h>

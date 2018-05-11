@@ -1,8 +1,14 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <GraphicEngine/GCamera.h>
+
 #include "./../Entidad.h"
+
+class GCamera;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Camera: public Entidad{
 public:

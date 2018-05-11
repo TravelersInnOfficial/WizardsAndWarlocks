@@ -1,6 +1,9 @@
 #include "DragonBreath.h"
+
 #include "./../Managers/BulletManager.h"
-#include <BulletCodes.h>
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
+#include <cmath>
 
 DragonBreath::DragonBreath(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

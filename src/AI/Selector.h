@@ -1,9 +1,8 @@
 #ifndef SELECTOR_H
 #define SELECTOR_H
 
-#include <iostream>
-#include <vector>
 #include <stdlib.h>
+#include <vector>
 #include "Task.h"
 
 class Selector : public Task{

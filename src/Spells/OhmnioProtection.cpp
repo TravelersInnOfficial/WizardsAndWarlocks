@@ -1,5 +1,7 @@
 #include "OhmnioProtection.h"
 #include "./../Managers/EffectManager.h"
+#include "./../Players/Player.h"
+#include <SoundEngine/SoundSystem.h>
 
 OhmnioProtection::OhmnioProtection(float costPM, float tCast, float tCoolDown, float optHP, float optMP)
 :Hechizo(

@@ -1,12 +1,16 @@
 #include "ShopMenu.h"
 #include <GraphicEngine/GraphicEngine.h>
+#include <GraphicEngine/GSprite.h>
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/TrapManager.h"
 #include <string.h>
 #include "./../Managers/PlayerManager.h"
+#include "./../Players/HumanPlayer.h"
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Managers/EffectManager.h"
+#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOEvector2d.h>
 
 #include <sstream>
 #include <iomanip>

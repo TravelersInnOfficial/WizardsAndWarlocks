@@ -1,9 +1,8 @@
 #ifndef SEEK_H
 #define SEEK_H
 
-#include <iostream>
-#include <vector3d.h>
-#include <kinematicTypes.h>
+class SteeringOutput;
+class Kinematic;
 
 class Seek{
 public:

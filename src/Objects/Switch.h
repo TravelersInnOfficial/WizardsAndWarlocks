@@ -1,14 +1,16 @@
 #ifndef SWITCH_H
 #define SWITCH_H
 
-#include <iostream>
-
-#include "./Door.h"
 #include "./../Entidad.h"
 
-#include <PhysicsEngine/BT_Body.h>
-#include <GraphicEngine/GraphicEngine.h>
-#include <ColliderMasks.h>
+class Door;
+class GBody;
+class BT_Body;
+class Kinematic;
+
+template<typename T>
+class vector3d;
+typedef vector3d<float> vector3df;
 
 class Switch: public Entidad{
 public:

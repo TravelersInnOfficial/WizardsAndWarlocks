@@ -1,5 +1,10 @@
 #include "PoisonArea.h"
+
+#include <PhysicsEngine/BT_GhostObject.h>
+#include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/EffectManager.h"
+#include <GraphicEngine/GParticle.h>
+#include <GraphicEngine/GBody.h>
 #include "./../Players/Player.h"
 #include <ColliderMasks.h>
 
