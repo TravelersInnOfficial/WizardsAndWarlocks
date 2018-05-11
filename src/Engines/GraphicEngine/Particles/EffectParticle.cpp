@@ -26,14 +26,14 @@ void EffectParticle::InitParticle(Particle& p){
 	p.g = color;
 	p.b = color;
 
-	p.translation =  TOEvector3df(0,-1.4,0);
+	p.translation =  TOEvector3df(0,-1.6,0);
 	
 	// SIZE
 	int maxSize = 5;
 	p.size = (rand() % maxSize)/10.0f;
 
 	p.rotation = (rand() % 360);
-	p.life = 1.8f;
+	p.life = 2.0f;
 }
 
 void EffectParticle::UpdateParticle(Particle& p, float deltaTime){
