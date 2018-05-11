@@ -1,35 +1,39 @@
 #include "GAnimation.h"
 #include "GraphicEngine.h"
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <NetworkEngine/NetworkEngine.h>
 
 GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {
-    privateNode = (TFNode*)animation;
+	privateNode = (TFNode*)animation;
 }
 
 GAnimation::~GAnimation(){  }
 
 void GAnimation::SetPaths(std::string ID, std::vector<std::string> &paths, int fps){
-    ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);
+	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);
 }
 
 void GAnimation::Update(float deltatime){
-    ((TFAnimation*)privateNode)->Update(deltatime);
+	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->Update(deltatime);
 }
 
 void GAnimation::SetAnimationLoop(std::string ID, int fps){
-    ((TFAnimation*)privateNode)->ChangeAnimation(ID, fps);
+	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->ChangeAnimation(ID, fps);
 }
 
 void GAnimation::PlayAnimation(std::string ID, int fps){
-    ((TFAnimation*)privateNode)->PlayAnimation(ID, fps);
+	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->PlayAnimation(ID, fps);
 }
 
 void GAnimation::BindSyncAnimation(GAnimation* master){
-    if (master != nullptr){
-        ((TFAnimation*)privateNode)->BindSyncAnimation((TFAnimation*)master->privateNode);
-    }
+	if (master != nullptr){
+		if(!NetworkEngine::GetInstance()->IsServerInit()){
+			((TFAnimation*)privateNode)->BindSyncAnimation((TFAnimation*)master->privateNode);
+		}
+	}
 }
 
 int GAnimation::GetAnimationFrame(){
-    return ((TFAnimation*)privateNode)->GetAnimationFrame();
+	if(!NetworkEngine::GetInstance()->IsServerInit()) return 0;
+	return ((TFAnimation*)privateNode)->GetAnimationFrame();
 }

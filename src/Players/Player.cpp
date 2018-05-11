@@ -685,7 +685,7 @@ void Player::Move(float posX, float posY){
 void Player::MoveX(int dir){
 	if(m_hasCharacter){
 		float dTime = StateManager::GetInstance()->GetDeltaTime();
-		float impulse = 500;
+		float impulse = 3000;
 		impulse *= dir;
 		impulse *= dTime;
 		vector3df rot = m_rotation;
@@ -697,7 +697,7 @@ void Player::MoveX(int dir){
 void Player::MoveZ(int dir){
 	if(m_hasCharacter){
 		float dTime = StateManager::GetInstance()->GetDeltaTime();
-		float impulse = 500;
+		float impulse = 3000;
 		impulse *= dir;
 		impulse *= dTime;
 		vector3df rot = m_rotation;

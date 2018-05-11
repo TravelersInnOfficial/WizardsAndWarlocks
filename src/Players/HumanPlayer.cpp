@@ -278,7 +278,7 @@ void HumanPlayer::CheckInput(){
 		if(m_controller->IsKeyPressed(ACTION_SELECT_SPELL_01)){ spellChanged = ChangeCurrentSpell(1); }
 		if(m_controller->IsKeyPressed(ACTION_SELECT_SPELL_02)){ spellChanged = ChangeCurrentSpell(2); }
 		if(m_controller->IsKeyPressed(ACTION_SELECT_SPELL_03)){ spellChanged = ChangeCurrentSpell(3); }
-		if(spellChanged && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_SPELL, m_currentSpell, true, false);
+		if(/*spellChanged && */m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_SPELL, m_currentSpell, true, false);
 		
 		// Trampas
 		if(m_controller->IsKeyPressed(ACTION_DEPLOY_TRAP)){ DeployTrap(); }
