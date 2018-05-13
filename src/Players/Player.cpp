@@ -350,17 +350,17 @@ void Player::CreatePlayerGBody(){
 	// APPLY ALL TEXTURES
 	switch(m_playerAlliance){
 		case(ALLIANCE_WIZARD):
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/Wizard.png");
-			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/Wizard.png");
+			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Wizard]);
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Wizard]);
 		break;
 		
 		case(ALLIANCE_WARLOCK):
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/Warlock.png");
-			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/Warlock.png");
+			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Warlock]);
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Warlock]);
 		break;
 		default:
-			m_playerNode->setMaterialTexture(0, "./../assets/textures/npc.png");
-			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, "./../assets/textures/npc.png");
+			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_npc]);
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_npc]);
 		break;
 	}
 
@@ -1367,25 +1367,28 @@ void Player::SetName(std::string newName){
 }
 
 void Player::SetVisible(bool visible){
-	if(!visible) {
-		m_visible = false;
+	m_visible = visible;
+
+	if(!m_visible) {
+		
+		if(m_playerNode != nullptr){
+			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_none]);
+			m_playerNode->EditText("");
+		}
 		if(m_playerNodeTop != nullptr){
 			m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_none]);
 			m_playerNodeTop->EditText("");
 	}
 	}
 	else{
-		m_visible = true;
-		std::string texturePath = TEXTUREMAP[TEXTURE_Warlock];
-		if(m_playerAlliance == ALLIANCE_WARLOCK) texturePath = TEXTUREMAP[TEXTURE_Wizard];
+		std::string texturePath = TEXTUREMAP[TEXTURE_Wizard];
+		if(m_playerAlliance == ALLIANCE_WARLOCK) texturePath = TEXTUREMAP[TEXTURE_Warlock];
 
 		if(m_playerNode != nullptr){
 			m_playerNode->setMaterialTexture(0, texturePath.c_str());
-			m_playerNode->EditText("");
 		}
 		if(m_playerNodeTop != nullptr){
-			m_playerNode->setMaterialTexture(0, texturePath.c_str());
-			m_playerNodeTop->EditText("");
+			m_playerNodeTop->setMaterialTexture(0, texturePath.c_str());
 		}
 		
 		m_playerNode->EditText(m_name);
