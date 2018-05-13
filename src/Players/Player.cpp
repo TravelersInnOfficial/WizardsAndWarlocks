@@ -38,6 +38,7 @@ Player::Player(bool isPlayer1){
 	m_hud = new PlayerHUD(this);
 	
 	m_position = vector3df(0,2,0);
+	m_rotation = vector3df(0,0,0);
 	m_dimensions = vector3df(0.9,0.9,0.9);
 	m_physicsDimensions = vector3df(0.9 * 0.3, 0.9, 0.9 * 0.3);
 
@@ -1086,7 +1087,7 @@ void Player::UpdatePosShape(float dtime){
 
 		vector3df pos = m_position;
 		pos.Y += 0.3;
-		m_rotation = bt_body->GetRotation();
+		 bt_body->GetRotation();
 
 		// UPDATE LEGS
 		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)

@@ -11,7 +11,7 @@ FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
 	target.Y = target.Y + sin(rotation.X)*max;
 	target.Z = target.Z + cos(rotation.Y)*cos(rotation.X)*max;
 
-    p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, target);
+    p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, rotation);
 
     changeX = 0;
     changeY = 0;
@@ -20,6 +20,7 @@ FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
 	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	int screenW = g_engine->GetScreenWidth();
 	int screenH = g_engine->GetScreenHeight();
+	lastPos = vector2di(screenW/2, screenH/2);
 	g_engine->SetCursorPosition(vector2di(screenW/2, screenH/2));
 }
 
@@ -43,23 +44,21 @@ void FPSCamera::UpdateCamera(vector3df position){
 		*/
 
 		CatchMouseInput();
-		rotation = GetNewRotation(rotation);
+		GetNewRotation(&rotation);
 		p_Camera->setRotation(rotation);
 	}
 }
 
 
-vector3df FPSCamera::GetNewRotation(vector3df rotation){
-	rotation.Y += changeX * sensibility;
-	rotation.X += changeY * sensibility;
+void FPSCamera::GetNewRotation(vector3df* rotation){
+	rotation->Y += changeX * sensibility;
+	rotation->X += changeY * sensibility;
 
 	float variation = 180/10;
 	float max = 180/2 - variation;
 	float min = -180/2 + variation;
 
-	rotation.X = rotation.X>max? max: rotation.X<min? min: rotation.X;
-
-	return rotation;
+	rotation->X = rotation->X>max? max: rotation->X<min? min: rotation->X;
 }
 
 void FPSCamera::CatchMouseInput(){
