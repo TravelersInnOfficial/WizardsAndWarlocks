@@ -22,10 +22,10 @@ FPSCamera::~FPSCamera(){
 }
 
 void FPSCamera::UpdateCamera(vector3df position){
-	if(m_working){
     	vector3df rotation = p_Camera->getRotation();
     	rotation.Z = 0;
 		p_Camera->setPosition(position);
+	if(m_working){
 		CatchMouseInput();
 		GetNewRotation(&rotation);
 		p_Camera->setRotation(rotation);
