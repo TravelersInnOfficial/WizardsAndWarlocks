@@ -1087,7 +1087,7 @@ void Player::UpdatePosShape(float dtime){
 
 		vector3df pos = m_position;
 		pos.Y += 0.3;
-		 bt_body->GetRotation();
+		bt_body->GetRotation();
 
 		// UPDATE LEGS
 		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)
@@ -1095,10 +1095,14 @@ void Player::UpdatePosShape(float dtime){
 
 		// UPDATE TOP PART
 		if(!m_isPlayerOne && m_playerNodeTop != nullptr){
-			m_playerNode->setRotation(m_rotation * 180 / M_PI);
+			vector3df currentRotation = m_rotation;
+			currentRotation.X = 0;
+			currentRotation = currentRotation * 180/M_PI;
+
+			m_playerNode->setRotation(currentRotation);
 
 			m_playerNodeTop->setPosition(pos);							// UPDATE POSITION
-			m_playerNodeTop->setRotation(m_rotation * 180 / M_PI);		// UPDATE ROTATION
+			m_playerNodeTop->setRotation(currentRotation);				// UPDATE ROTATION
 			m_playerNodeTop->Update(dtime);								// UPDATE ANIMATION (body)
 		}
 		else{
