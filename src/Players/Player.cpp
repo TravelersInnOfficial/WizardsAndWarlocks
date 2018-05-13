@@ -64,10 +64,11 @@ Player::Player(bool isPlayer1){
 	m_matchStarted = false;
 	m_hasCharacter = false;
 	m_readyToStart = false;
-	m_moving = false;
 	m_stepsStarted = false;
 	m_pulseStarted = false;
-	m_isRunning = false;
+	m_moving = false;
+	m_running = false;
+	m_dancing = false;
 
 	m_currentJumpCheckTime = .05f;
 	m_maxJumpCheckTime = .05f;
@@ -220,7 +221,6 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("shoot3", AWIZARD_TSHOOT3);
 */
 
-/*
 				// JUMP
 				m_playerNodeTop->SetPaths("jumpstart",  AWIZARD_TJUMPSTART);
 				m_playerNode->SetPaths("jumpstart",  AWIZARD_BJUMPSTART);
@@ -230,7 +230,7 @@ void Player::InitPlayerAnimations(){
 
 				m_playerNodeTop->SetPaths("jumpend",  AWIZARD_TJUMPEND);
 				m_playerNode->SetPaths("jumpend",  AWIZARD_BJUMPEND);
-*/
+
 /*
 				// DANCES
 				m_playerNodeTop->SetPaths("circle",  AWIZARD_TCIRCLE);
@@ -245,6 +245,7 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("win",  AWIZARD_TWIN);
 				m_playerNode->SetPaths("win",  AWIZARD_BWIN);
 */
+
 				// SET INITIAL LOOP
 				m_playerNode->SetAnimationLoop("idle");
 				m_playerNodeTop->SetAnimationLoop("idle");
@@ -289,7 +290,6 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("shoot3", AWARLOCK_TSHOOT3);
 */
 
-/*
 				// JUMP
 				m_playerNodeTop->SetPaths("jumpstart",  AWARLOCK_TJUMPSTART);
 				m_playerNode->SetPaths("jumpstart",  AWARLOCK_BJUMPSTART);
@@ -299,7 +299,6 @@ void Player::InitPlayerAnimations(){
 
 				m_playerNodeTop->SetPaths("jumpend",  AWARLOCK_TJUMPEND);
 				m_playerNode->SetPaths("jumpend",  AWARLOCK_BJUMPEND);	
-*/
 
 /*				
 				// DANCES
@@ -378,6 +377,7 @@ void Player::CreatePlayerCharacter(){
 		SetBillboard();
 
 		// Physic Player
+		vector3df HalfExtents(m_dimensions.X * 0.30f, m_dimensions.Y, m_dimensions.Z * 0.30f);
 		bt_body = new BT_Body();
 		bt_body->CreateBox(m_position, m_physicsDimensions, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
@@ -438,7 +438,7 @@ void Player::DeclareInput(){
 	m_controller->AddAction(Key_E, ACTION_RAYCAST);
 	m_controller->AddAction(Key_Space, ACTION_JUMP);
 	m_controller->AddAction(Key_R, ACTION_USE_OBJECT);
-	m_controller->AddAction(Key_T, ACTION_DROP_OBJECT);
+	m_controller->AddAction(Key_Q, ACTION_DROP_OBJECT);
 	m_controller->AddAction(Key_MouseLeft, ACTION_SHOOT);
 	m_controller->AddAction(Key_F, ACTION_DEPLOY_TRAP);
 	m_controller->AddAction(Key_MouseMiddle_Up, ACTION_CHANGE_SPELL_UP);
@@ -575,7 +575,7 @@ void Player::Update(float deltaTime){
 	// Si tenemos cuerpo fisico
 	if(m_hasCharacter){
 		CheckIfCanJump(deltaTime);		// Comprobamos si podemos saltar
-		UpdateSP(deltaTime);			// Updateamos SP (sumamos o restamos segun m_isRunning)
+		UpdateSP(deltaTime);			// Updateamos SP (sumamos o restamos segun m_running)
 
 		// En el caso de que se estuviera moviendo en el frame anterior cambiamos la variable
 		if(m_moving){
@@ -718,6 +718,10 @@ void Player::Jump() {
 		bt_body->ApplyCentralImpulse(vector3df(0,impulse,0));
 		m_position.Y = bt_body->GetPosition().Y;
 		
+		// JUMP ANIMATION
+		ChangeAnimation("jumpfall",  15,  true, true);
+		ChangeAnimation("jumpstart", 25, false, true);
+
 		m_CanJump = false;
 		m_currentJumpCheckTime = m_maxJumpCheckTime;
 	}
@@ -780,7 +784,7 @@ bool Player::ChangeMP(float MP){
 void Player::UpdateSP(float deltaTime){
 	float useCost = 30*deltaTime;	// 30 = Consumo en 1 segundo
 
-	if(m_isRunning && m_moving) m_SP -= useCost;
+	if(m_running && m_moving) m_SP -= useCost;
 	else m_SP += (useCost/2);
 	
 	if(m_SP <= 0){
@@ -869,10 +873,10 @@ bool Player::ShootSpell(){
 		std::vector<SPELLCODE> spellstypes1 = { SPELL_BASIC, SPELL_PROJECTILE, SPELL_FIRE, SPELL_POISON, SPELL_THUNDER };
 
 		if(std::find( spellstypes1.begin(), spellstypes1.end(), spells[m_currentSpell]->GetType() ) != spellstypes1.end()){
-			ChangeAnimation("shoot1", 25, false);
+			ChangeAnimation("shoot1", 25, false, false);
 		}
 		else{
-			ChangeAnimation("shoot2", 25, false);
+			ChangeAnimation("shoot2", 25, false, false);
 		}
 
 		//m_playerNode->AddText("S: " + std::to_string(m_currentSpell), vector3df(-0.5,0.75,0), 0);
@@ -963,10 +967,10 @@ bool Player::CheckIfReady(){
 }
 
 void Player::Run(bool runStatus){
-	if(m_isRunning != runStatus){
+	if(m_running != runStatus){
 		float factor = 5/3.0f;
 		
-		m_isRunning = runStatus;
+		m_running = runStatus;
 		if(runStatus) m_max_velocity *= factor;
 		else m_max_velocity /= factor;
 	}
@@ -1053,7 +1057,7 @@ void Player::QuitStatusMenu(){
 }
 
 void Player::UpdateWalkAnimation(){
-	if(m_CanJump){
+	if(m_CanJump && !m_dancing){
 		// CHANGE WALK OR IDLE ANIMATION
 		int speedfps = 15;
 		//speedfps = 25;
@@ -1061,7 +1065,7 @@ void Player::UpdateWalkAnimation(){
 			m_walkfps = log(m_max_velocity) * 15 + speedfps;
 
 		// CHANGE ANIMATION IDDLE
-		if(m_isRunning){
+		if(m_running && m_moving){
 			float factor = 5/3.0f;
 			m_walkfps = log(m_max_velocity/factor) * 15 + speedfps;
 
@@ -1074,11 +1078,7 @@ void Player::UpdateWalkAnimation(){
 			ChangeAnimation("idle", m_walkfps, true, true);
 		}
 	}
-	else{
-		// IS JUMPING OR FALLING
-
 	}
-}
 
 void Player::UpdatePosShape(float dtime){
 	if(m_hasCharacter){
@@ -1370,14 +1370,14 @@ void Player::SetVisible(bool visible){
 	if(!visible) {
 		m_visible = false;
 		if(m_playerNodeTop != nullptr){
-			m_playerNodeTop->setMaterialTexture(0, "../assets/textures/none.png");
+			m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_none]);
 			m_playerNodeTop->EditText("");
 	}
 	}
 	else{
 		m_visible = true;
-		std::string texturePath = "./../assets/textures/Wizard.png";
-		if(m_playerAlliance == ALLIANCE_WARLOCK) texturePath = "./../assets/textures/Warlock.png";
+		std::string texturePath = TEXTUREMAP[TEXTURE_Warlock];
+		if(m_playerAlliance == ALLIANCE_WARLOCK) texturePath = TEXTUREMAP[TEXTURE_Wizard];
 
 		if(m_playerNode != nullptr){
 			m_playerNode->setMaterialTexture(0, texturePath.c_str());
@@ -1413,7 +1413,20 @@ bool Player::CheckIfCanJump(float deltaTime, bool forceSkip){
 	if(!forceSkip) m_currentJumpCheckTime -= deltaTime;
 	
 	if(forceSkip || m_currentJumpCheckTime <= 0){
-		m_CanJump = JumpRaycast();
+		bool rayResult = JumpRaycast();
+
+		/// JUMP ANIMATION
+		// If was in the floor and falls
+		if(m_CanJump && !rayResult){
+			ChangeAnimation("jumpfall",  15,  true, true);
+		}
+		// If was in the air and touches the ground
+		else if (!m_CanJump && rayResult){
+			ChangeAnimation("idle",    25,  true, true);
+			ChangeAnimation("jumpend", 25, false, true);
+		}
+
+		m_CanJump = rayResult;
 		m_currentJumpCheckTime = m_maxJumpCheckTime;
 	}
 
