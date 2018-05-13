@@ -336,14 +336,14 @@ GCamera* GraphicEngine::addCameraSceneNodeFPS(float rotateSpeed, float moveSpeed
 	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
 	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
-	 TOEvector3df defaultdata =  TOEvector3df(0, 0, 0);
+	TOEvector3df defaultdata =  TOEvector3df(0, 0, 0);
 	privateCamera = new GCamera(privateSManager->AddCamera(defaultdata, defaultdata, true));
 
 	// LA DEVOLVEMOS
 	return privateCamera;
 }
 
-GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat){
+GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df rotation){
 	// DESTRUIMOS NUESTRA PROPIA CAMARA
 	if(privateCamera != nullptr){
 		delete privateCamera;
@@ -355,8 +355,8 @@ GCamera* GraphicEngine::addCameraSceneNode(vector3df position, vector3df lookat)
 	if (oldCamera != nullptr) privateSManager->DeleteCamera(oldCamera);
 	
 	// CREAMOS UNA NUEVA CAMARA EN EL MOTOR Y EN EL JUEGO
-	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
-	 TOEvector3df lookat_TOE =  TOEvector3df(lookat.X, lookat.Y, lookat.Z);
+	TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	TOEvector3df lookat_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
 	privateCamera = new GCamera(privateSManager->AddCamera(position_TOE, lookat_TOE, true));
 
 	// LA DEVOLVEMOS
