@@ -8,6 +8,7 @@
 #include <GraphicEngine/Particles/PoisonParticle.h>
 #include <GraphicEngine/Particles/BloodParticle.h>
 #include <GraphicEngine/Particles/WindParticle.h>
+#include <GraphicEngine/Particles/GrailParticle.h>
 
 enum PARTICLE_TYPE{
 	ERR_PARTICLE		= -1,
@@ -17,7 +18,8 @@ enum PARTICLE_TYPE{
 	POISON_PARTICLE		=  4,
 	EFFECT_PARTICLE		=  5,
 	WIND_PARTICLE		=  6,
-	BLOOD_PARTICLE		=  7
+	BLOOD_PARTICLE		=  7,
+	GRAIL_PARTICLE		=  8
 };
 
 #endif

@@ -25,6 +25,7 @@ public:
 
 protected:
     GAnimation(TFAnimation* animation);
+	bool isNet = false;
 };
 
 #endif

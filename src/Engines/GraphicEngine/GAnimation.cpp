@@ -5,6 +5,7 @@
 
 GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {
 	privateNode = (TFNode*)animation;
+	isNet = NetworkEngine::GetInstance()->IsServerInit();
 }
 
 GAnimation::~GAnimation(){ 
@@ -12,30 +13,28 @@ GAnimation::~GAnimation(){
 }
 
 void GAnimation::SetPaths(std::string ID, std::vector<std::string> &paths, int fps){
-	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);
+	if(!isNet) ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);
 }
 
 void GAnimation::Update(float deltatime){
-	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->Update(deltatime);
+	if(!isNet) ((TFAnimation*)privateNode)->Update(deltatime);
 }
 
 void GAnimation::SetAnimationLoop(std::string ID, int fps){
-	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->ChangeAnimation(ID, fps);
+	if(!isNet) ((TFAnimation*)privateNode)->ChangeAnimation(ID, fps);
 }
 
 void GAnimation::PlayAnimation(std::string ID, int fps){
-	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->PlayAnimation(ID, fps);
+	if(!isNet) ((TFAnimation*)privateNode)->PlayAnimation(ID, fps);
 }
 
 void GAnimation::BindSyncAnimation(GAnimation* master){
 	if (master != nullptr){
-		if(!NetworkEngine::GetInstance()->IsServerInit()){
-			((TFAnimation*)privateNode)->BindSyncAnimation((TFAnimation*)master->privateNode);
-		}
+		if(!isNet) ((TFAnimation*)privateNode)->BindSyncAnimation((TFAnimation*)master->privateNode);
 	}
 }
 
 int GAnimation::GetAnimationFrame(){
-	if(!NetworkEngine::GetInstance()->IsServerInit()) return 0;
+	if(!isNet) return 0;
 	return ((TFAnimation*)privateNode)->GetAnimationFrame();
 }

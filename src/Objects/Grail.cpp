@@ -11,6 +11,8 @@
 #include <kinematicTypes.h>
 #include <ColliderMasks.h>
 #include <Alliance.h>
+#include <GraphicEngine/GParticle.h>
+#include <ParticleData.h>
 
 Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	casting = false;
@@ -38,6 +40,15 @@ void Grail::CreateGrail(vector3df TPosition, vector3df TScale, vector3df TRotati
 	bt_body->AssignPointer(this);
 	
 	playEvent(TPosition);
+
+	particle = nullptr;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		TPosition.Y -= 1.25f;
+		particle = new GParticle(TPosition);
+		particle->SetTexture("./../assets/textures/particles/NeutralParticle.png");
+		particle->SetType(GRAIL_PARTICLE);
+		particle->SetQuantityPerSecond(30);
+	}
 }
 
 Grail::~Grail(){
@@ -47,6 +58,7 @@ Grail::~Grail(){
     delete bt_body;
     delete m_grailNode;
 	if(deactivation_bar!=nullptr) delete deactivation_bar;
+	if(particle != nullptr) delete particle;
 }
 
 void Grail::Update(float deltaTime){
@@ -63,7 +75,7 @@ void Grail::Update(float deltaTime){
 		timeCasting = 0.0f;
 	}
 	drawGUI();
-	
+	if(particle != nullptr) particle->Update();
 	UpdatePosShape();
 }
 

@@ -53,6 +53,10 @@ void GParticle::SetType(PARTICLE_TYPE type){
 			pm = new WindParticle();
 			ps->SetManager(pm); 
 			break;
+		case GRAIL_PARTICLE:
+			pm = new GrailParticle();
+			ps->SetManager(pm); 
+			break;
 		default:;
 	}
 }

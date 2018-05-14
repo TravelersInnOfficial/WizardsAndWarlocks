@@ -9,6 +9,7 @@ class Kinematic;
 class BT_Body;
 class GBody;
 class GRect;
+class GParticle;
 
 class Grail: public Entidad{
 public:
@@ -54,6 +55,7 @@ private:
 	BT_Body*        bt_body;		// Cuerpo fisico del grial
     GBody*          m_grailNode;	// Cuerpo visual del grial
 	SoundEvent* 	soundEvent;		// Sonidos del grial
+	GParticle* particle;
 };
 
 #endif
