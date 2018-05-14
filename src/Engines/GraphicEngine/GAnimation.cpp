@@ -7,7 +7,9 @@ GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {
 	privateNode = (TFNode*)animation;
 }
 
-GAnimation::~GAnimation(){  }
+GAnimation::~GAnimation(){ 
+	if(!NetworkEngine::GetInstance()->IsServerInit()) GraphicEngine::getInstance()->privateSManager->DeleteAnimation(privateNode);
+}
 
 void GAnimation::SetPaths(std::string ID, std::vector<std::string> &paths, int fps){
 	if(!NetworkEngine::GetInstance()->IsServerInit()) ((TFAnimation*)privateNode)->SetAnimationPaths(ID, paths, fps);

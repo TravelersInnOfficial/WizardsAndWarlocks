@@ -28,15 +28,17 @@ class TFSprite;
 
 class GraphicEngine{
 	friend class MenuManager;
-	friend class MainMenu;
 	friend class GUIEngine;
+	friend class MainMenu;
+	
+	friend class GAnimation;
+	friend class GParticle;
 	friend class GEntity;
+	friend class GText2D;
+	friend class GSprite;
 	friend class GBody;
 	friend class GRoom;
-	friend class GSprite;
 	friend class GRect;
-	friend class GText2D;
-	friend class GParticle;
 	friend class Light;
 
 public:

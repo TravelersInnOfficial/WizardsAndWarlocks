@@ -25,7 +25,6 @@ public:
 
 protected:
     GAnimation(TFAnimation* animation);
-
 };
 
 #endif
