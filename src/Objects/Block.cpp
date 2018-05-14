@@ -37,9 +37,10 @@ Block::Block(vector3df TPosition, vector3df TRotation, vector3df TScale, std::st
 
   		if(found<=firstPath.size()){
   			if(folder.compare("maptextures")==0){
-				std::string finalPath = firstPath + "/normal_" + fileName;	
-
-				graphBody->SetBumpMap(finalPath);
+				std::string finalPathBump = firstPath + "/normal_" + fileName;
+				std::string finalPathSpecular = firstPath + "/specular_" + fileName;
+				graphBody->SetBumpMap(finalPathBump);
+				graphBody->SetSpecularMap(finalPathSpecular);
   			}
   		}
   	}	

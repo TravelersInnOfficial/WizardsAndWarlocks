@@ -1577,25 +1577,8 @@ static std::vector<std::string> AWIZARD_BRUN= {
 };
 
 // JUMP ANIMATION
-// START                      	25-50
+// START                      	40-57
 static std::vector<std::string> AWIZARD_TJUMPSTART= {
-	"./../assets/modelos/Wizard/jump/start/top_000025.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000026.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000027.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000028.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000029.obj",
-
-	"./../assets/modelos/Wizard/jump/start/top_000030.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000031.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000032.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000033.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000034.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000035.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000036.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000037.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000038.obj",
-	"./../assets/modelos/Wizard/jump/start/top_000039.obj",
-
 	"./../assets/modelos/Wizard/jump/start/top_000040.obj",
 	"./../assets/modelos/Wizard/jump/start/top_000041.obj",
 	"./../assets/modelos/Wizard/jump/start/top_000042.obj",
@@ -1607,26 +1590,16 @@ static std::vector<std::string> AWIZARD_TJUMPSTART= {
 	"./../assets/modelos/Wizard/jump/start/top_000048.obj",
 	"./../assets/modelos/Wizard/jump/start/top_000049.obj",
 	"./../assets/modelos/Wizard/jump/start/top_000050.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000051.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000052.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000053.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000054.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000055.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000056.obj",
+	"./../assets/modelos/Wizard/jump/start/top_000057.obj",
 };
 
 static std::vector<std::string> AWIZARD_BJUMPSTART= {
-	"./../assets/modelos/Wizard/jump/start/bot_000025.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000026.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000027.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000028.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000029.obj",
-
-	"./../assets/modelos/Wizard/jump/start/bot_000030.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000031.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000032.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000033.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000034.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000035.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000036.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000037.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000038.obj",
-	"./../assets/modelos/Wizard/jump/start/bot_000039.obj",
-
 	"./../assets/modelos/Wizard/jump/start/bot_000040.obj",
 	"./../assets/modelos/Wizard/jump/start/bot_000041.obj",
 	"./../assets/modelos/Wizard/jump/start/bot_000042.obj",
@@ -1638,44 +1611,44 @@ static std::vector<std::string> AWIZARD_BJUMPSTART= {
 	"./../assets/modelos/Wizard/jump/start/bot_000048.obj",
 	"./../assets/modelos/Wizard/jump/start/bot_000049.obj",
 	"./../assets/modelos/Wizard/jump/start/bot_000050.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000051.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000052.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000053.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000054.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000055.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000056.obj",
+	"./../assets/modelos/Wizard/jump/start/bot_000057.obj",
 };
 
-// FALLING						45-55
+// FALLING						59-68
 static std::vector<std::string> AWIZARD_TJUMPFALL= {
-	"./../assets/modelos/Wizard/jump/falling/top_000045.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000046.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000047.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000048.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000049.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000050.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000051.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000052.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000053.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000054.obj",
-	"./../assets/modelos/Wizard/jump/falling/top_000055.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000059.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000060.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000061.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000062.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000063.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000064.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000065.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000066.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000067.obj",
+	"./../assets/modelos/Wizard/jump/falling/top_000068.obj",
 };
 
 static std::vector<std::string> AWIZARD_BJUMPFALL= {
-	"./../assets/modelos/Wizard/jump/falling/bot_000045.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000046.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000047.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000048.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000049.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000050.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000051.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000052.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000053.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000054.obj",
-	"./../assets/modelos/Wizard/jump/falling/bot_000055.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000059.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000060.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000061.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000062.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000063.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000064.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000065.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000066.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000067.obj",
+	"./../assets/modelos/Wizard/jump/falling/bot_000068.obj",
 };
 
-// END							52-72
+// END							57-76
 static std::vector<std::string> AWIZARD_TJUMPEND= {
-	"./../assets/modelos/Wizard/jump/end/top_000052.obj",
-	"./../assets/modelos/Wizard/jump/end/top_000053.obj",
-	"./../assets/modelos/Wizard/jump/end/top_000054.obj",
-	"./../assets/modelos/Wizard/jump/end/top_000055.obj",
-	"./../assets/modelos/Wizard/jump/end/top_000056.obj",
 	"./../assets/modelos/Wizard/jump/end/top_000057.obj",
 	"./../assets/modelos/Wizard/jump/end/top_000058.obj",
 	"./../assets/modelos/Wizard/jump/end/top_000059.obj",
@@ -1694,14 +1667,13 @@ static std::vector<std::string> AWIZARD_TJUMPEND= {
 	"./../assets/modelos/Wizard/jump/end/top_000070.obj",
 	"./../assets/modelos/Wizard/jump/end/top_000071.obj",
 	"./../assets/modelos/Wizard/jump/end/top_000072.obj",
+	"./../assets/modelos/Wizard/jump/end/top_000073.obj",
+	"./../assets/modelos/Wizard/jump/end/top_000074.obj",
+	"./../assets/modelos/Wizard/jump/end/top_000075.obj",
+	"./../assets/modelos/Wizard/jump/end/top_000076.obj",
 };
 
 static std::vector<std::string> AWIZARD_BJUMPEND= {
-	"./../assets/modelos/Wizard/jump/end/bot_000052.obj",
-	"./../assets/modelos/Wizard/jump/end/bot_000053.obj",
-	"./../assets/modelos/Wizard/jump/end/bot_000054.obj",
-	"./../assets/modelos/Wizard/jump/end/bot_000055.obj",
-	"./../assets/modelos/Wizard/jump/end/bot_000056.obj",
 	"./../assets/modelos/Wizard/jump/end/bot_000057.obj",
 	"./../assets/modelos/Wizard/jump/end/bot_000058.obj",
 	"./../assets/modelos/Wizard/jump/end/bot_000059.obj",
@@ -1720,6 +1692,10 @@ static std::vector<std::string> AWIZARD_BJUMPEND= {
 	"./../assets/modelos/Wizard/jump/end/bot_000070.obj",
 	"./../assets/modelos/Wizard/jump/end/bot_000071.obj",
 	"./../assets/modelos/Wizard/jump/end/bot_000072.obj",
+	"./../assets/modelos/Wizard/jump/end/bot_000073.obj",
+	"./../assets/modelos/Wizard/jump/end/bot_000074.obj",
+	"./../assets/modelos/Wizard/jump/end/bot_000075.obj",
+	"./../assets/modelos/Wizard/jump/end/bot_000076.obj",
 };
 
 //// ##################################################################
@@ -2538,6 +2514,129 @@ static std::vector<std::string> AWARLOCK_BRUN= {
 	"./../assets/modelos/Warlock/run/bot_000039.obj",
 	"./../assets/modelos/Warlock/run/bot_000040.obj"
 };
+
+// JUMP ANIMATION
+// START                      	40-57
+static std::vector<std::string> AWARLOCK_TJUMPSTART= {
+	"./../assets/modelos/Warlock/jump/start/top_000040.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000041.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000042.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000043.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000044.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000045.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000046.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000047.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000048.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000049.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000050.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000051.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000052.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000053.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000054.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000055.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000056.obj",
+	"./../assets/modelos/Warlock/jump/start/top_000057.obj",
+};
+
+static std::vector<std::string> AWARLOCK_BJUMPSTART= {
+	"./../assets/modelos/Warlock/jump/start/bot_000040.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000041.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000042.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000043.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000044.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000045.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000046.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000047.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000048.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000049.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000050.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000051.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000052.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000053.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000054.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000055.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000056.obj",
+	"./../assets/modelos/Warlock/jump/start/bot_000057.obj",
+};
+
+// FALLING						59-68
+static std::vector<std::string> AWARLOCK_TJUMPFALL= {
+	"./../assets/modelos/Warlock/jump/falling/top_000059.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000060.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000061.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000062.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000063.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000064.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000065.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000066.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000067.obj",
+	"./../assets/modelos/Warlock/jump/falling/top_000068.obj",
+};
+
+static std::vector<std::string> AWARLOCK_BJUMPFALL= {
+	"./../assets/modelos/Warlock/jump/falling/bot_000059.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000060.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000061.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000062.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000063.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000064.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000065.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000066.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000067.obj",
+	"./../assets/modelos/Warlock/jump/falling/bot_000068.obj",
+};
+
+// END							57-76
+static std::vector<std::string> AWARLOCK_TJUMPEND= {
+	"./../assets/modelos/Warlock/jump/end/top_000057.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000058.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000059.obj",
+
+	"./../assets/modelos/Warlock/jump/end/top_000060.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000061.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000062.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000063.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000064.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000065.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000066.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000067.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000068.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000069.obj",
+
+	"./../assets/modelos/Warlock/jump/end/top_000070.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000071.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000072.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000073.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000074.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000075.obj",
+	"./../assets/modelos/Warlock/jump/end/top_000076.obj",
+};
+
+static std::vector<std::string> AWARLOCK_BJUMPEND= {
+	"./../assets/modelos/Warlock/jump/end/bot_000057.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000058.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000059.obj",
+
+	"./../assets/modelos/Warlock/jump/end/bot_000060.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000061.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000062.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000063.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000064.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000065.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000066.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000067.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000068.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000069.obj",
+
+	"./../assets/modelos/Warlock/jump/end/bot_000070.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000071.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000072.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000073.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000074.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000075.obj",
+	"./../assets/modelos/Warlock/jump/end/bot_000076.obj",
+};
+
 
 //// ##################################################################
 //// ##################################################################

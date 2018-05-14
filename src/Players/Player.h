@@ -30,13 +30,8 @@ class Player: public Entidad{
 		Player(bool isPlayer1 = false);
 		virtual ~Player();
 
-		void InitPlayerAnimations();
-		void CreatePlayerGBody();
-		void CreatePlayerCharacter();
-
-		void DestroyPlayerGBody();
 		void DestroyPlayerCharacter();
-		void PlayerInit();
+
 		virtual void Update(float deltaTime);
 		virtual void DeadUpdate();
 
@@ -91,10 +86,6 @@ class Player: public Entidad{
 		void UseObject();
 		void DeployTrap();
 		bool HasObject();
-
-		//Menu Functions
-		void ShowStatusMenu();
-		void QuitStatusMenu();
 
 		// Controller
 		void SetController(ACTION_ENUM action, keyStatesENUM state);
@@ -174,6 +165,12 @@ class Player: public Entidad{
 		int 			m_walkfps;			// DEBUG: Fps a los que va actualmente la animacion de andar
 
 	protected:
+		void InitPlayerAnimations();
+		void CreatePlayerGBody();
+		void CreatePlayerCharacter();
+
+		void DestroyPlayerGBody();
+		void PlayerInit();
 
 		void checkMaxVelocity();			// Comprueba que no sobrepase la velocidad máxima además de alterarla
 		void positionCamera();				// Actualiza la posicion de la camera
@@ -184,10 +181,15 @@ class Player: public Entidad{
 		void eraseTargetHUD();
 		
 		// We check if the player can jump
-		float m_currentJumpCheckTime;
-		float m_maxJumpCheckTime;
 		bool CheckIfCanJump(float deltaTime = 0, bool forceSkip = false);
 		bool JumpRaycast();
+
+		//Menu Functions
+		void ShowStatusMenu();
+		void QuitStatusMenu();
+
+		// Dance
+		void StartRandomDance();
 
 		/**
 		 * @brief Changes animation of the player
@@ -216,7 +218,9 @@ class Player: public Entidad{
 
 		bool 			m_dead;				// El jugador sigue vivo? Si/No
 		bool 			m_isPlayerOne;		// Es el jugador con el que jugamos? Si/No
-		bool			m_isRunning;			// The player is running? Yes/No
+		bool 			m_moving;			// Se esta moviendo?
+		bool			m_running;			// Is Player running? Yes/No
+		bool 			m_dancing;			// Is Player dancing?
 
 		OverlayManager* m_overlayManager;
 		
@@ -236,7 +240,6 @@ class Player: public Entidad{
 
 		bool			m_stepsStarted;		// Han empezado a sonar los steps?
 		bool 			m_pulseStarted;		// Pulse sound event started?
-		bool 			m_moving;				// Se esta moviendo?
 
 		Player* 		m_targetDeadCam;
 
@@ -245,6 +248,9 @@ class Player: public Entidad{
 		std::map<std::string, SoundEvent*> soundEvents;		//Sound events
 
 		PlayerHUD* m_hud;
+
+		float m_currentJumpCheckTime;
+		float m_maxJumpCheckTime;
 
 };
 
