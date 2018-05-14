@@ -1095,14 +1095,15 @@ void Player::UpdatePosShape(float dtime){
 
 		// UPDATE TOP PART
 		if(!m_isPlayerOne && m_playerNodeTop != nullptr){
+			std::cout<<(m_rotation * 180/M_PI)<<std::endl;
 			vector3df currentRotation = m_rotation;
 			currentRotation.X = 0;
 			currentRotation = currentRotation * 180/M_PI;
 
-			m_playerNode->setRotation(currentRotation);
+			m_playerNode->setRotation(m_rotation * 180/M_PI);
 
 			m_playerNodeTop->setPosition(pos);							// UPDATE POSITION
-			m_playerNodeTop->setRotation(currentRotation);				// UPDATE ROTATION
+			m_playerNodeTop->setRotation(m_rotation * 180/M_PI);		// UPDATE ROTATION
 			m_playerNodeTop->Update(dtime);								// UPDATE ANIMATION (body)
 		}
 		else{
