@@ -4,6 +4,7 @@
 #include <PhysicsEngine/BT_Body.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include <GraphicEngine/GBody.h>
+#include <Assets.h>
 
 InvocationWall::InvocationWall(int HP, float time, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :Invocation(HP){
@@ -30,7 +31,7 @@ void InvocationWall::CreateInvocation(vector3df TPosition, vector3df TScale, vec
 	m_invocationNode->setPosition(TPosition);
 	m_invocationNode->setScale(TScale);
 
-	if (m_invocationNode) m_invocationNode->setMaterialTexture(0, "./../assets/textures/projectils/SPELL_WALL.png");
+	if (m_invocationNode) m_invocationNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_SPELL_WALL]);
 
 	//Bullet Physics
 	vector3df HalfExtents(TScale.X*0.5, TScale.Y*0.5, TScale.Z*0.5);
