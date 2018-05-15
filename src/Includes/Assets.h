@@ -7,18 +7,15 @@
 #include "Animation_Strings.h"
 
 enum GAMETEXTURES {
-	TEXTURE_tilefloor,
-	TEXTURE_stones,
-	TEXTURE_npc,
-	TEXTURE_button,
-	TEXTURE_door,
+	TEXTURE_none,
+	TEXTURE_Wizard,
 	TEXTURE_Warlock,
 	TEXTURE_game_icon,
+	TEXTURE_cero,
 	TEXTURE_uno,
-	TEXTURE_cuatro,
 	TEXTURE_dos,
 	TEXTURE_tres,
-	TEXTURE_cero,
+	TEXTURE_cuatro,
 	TEXTURE_TENUM_TAXES,
 	TEXTURE_TENUM_DISTURBANCE,
 	TEXTURE_TENUM_SILENCE,
@@ -51,27 +48,7 @@ enum GAMETEXTURES {
 	TEXTURE_FUZZY,
 	TEXTURE_HITLANDED,
 	TEXTURE_decal,
-	TEXTURE_skydome,
 	TEXTURE_SPELL_WALL,
-	TEXTURE_SPELL_THUNDER,
-	TEXTURE_SPELL_FIRE,
-	TEXTURE_SPELL_POISON,
-	TEXTURE_SPELL_PROJECTILE,
-	TEXTURE_gold,
-	TEXTURE_grass,
-	TEXTURE_bookcase,
-	TEXTURE_white_floor,
-	TEXTURE_gardenwall,
-	TEXTURE_rock,
-	TEXTURE_none,
-	TEXTURE_Switch,
-	TEXTURE_2897,
-	TEXTURE_doorblocked,
-	TEXTURE_Wizard,
-	TEXTURE_marbre5,
-	TEXTURE_negro,
-	TEXTURE_yellow,
-	TEXTURE_madera,
 	TEXTURE_BOOK_BACKGROUND,
 	TEXTURE_SHOP_BACKGROUND,
 	TEXTURE_ALLIANCE_BACKGROUND,
@@ -146,12 +123,9 @@ enum GAMEANIMATIONS {
 static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	std::map<GAMETEXTURES, std::string> m;
 
-	m[TEXTURE_tilefloor]					= "./../assets/textures/tilefloor.png";
-	m[TEXTURE_stones]						= "./../assets/textures/stones.jpg";
-	m[TEXTURE_npc]							= "./../assets/textures/npc.png";
-	m[TEXTURE_button]						= "./../assets/textures/button.png";
-	m[TEXTURE_door]							= "./../assets/textures/door.jpg";
+	m[TEXTURE_none]							= "./../assets/textures/none.png";
 	m[TEXTURE_Warlock]						= "./../assets/textures/Warlock.png";
+	m[TEXTURE_Wizard]						= "./../assets/textures/Wizard.png";
 	m[TEXTURE_game_icon]					= "./../assets/textures/game_icon.png";
 	m[TEXTURE_uno]							= "./../assets/textures/HUD/Counter/1.png";
 	m[TEXTURE_cuatro]						= "./../assets/textures/HUD/Counter/4.png";
@@ -175,9 +149,9 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SPELL_DUMMY_HUD]				= "./../assets/textures/HUD/Spells/SPELL_DUMMY.png";
 	m[TEXTURE_SPELL_CLEANSE_HUD]			= "./../assets/textures/HUD/Spells/SPELL_CLEANSE.png";
 	m[TEXTURE_SPELL_PROJECTILE_WIZARD_HUD]	= "./../assets/textures/HUD/Spells/SPELL_PROJECTILE_WIZARD.png";
+	m[TEXTURE_SPELL_PROJECTILE_WARLOCK_HUD]	= "./../assets/textures/HUD/Spells/SPELL_PROJECTILE_WARLOCK.png";
 	m[TEXTURE_SPELL_BLIZZARD_HUD]			= "./../assets/textures/HUD/Spells/SPELL_BLIZZARD.png";
 	m[TEXTURE_SPELL_WALL_HUD]				= "./../assets/textures/HUD/Spells/SPELL_WALL.png";
-	m[TEXTURE_SPELL_PROJECTILE_WARLOCK_HUD]	= "./../assets/textures/HUD/Spells/SPELL_PROJECTILE_WARLOCK.png";
 	m[TEXTURE_SPELL_TELEPORTBASE_HUD]		= "./../assets/textures/HUD/Spells/SPELL_TELEPORTBASE.png";
 	m[TEXTURE_SPELL_THUNDER_HUD]			= "./../assets/textures/HUD/Spells/SPELL_THUNDER.png";
 	m[TEXTURE_SPELL_FIRE_HUD]				= "./../assets/textures/HUD/Spells/SPELL_FIRE.png";
@@ -196,27 +170,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_FUZZY]						= "./../assets/textures/overlays/FUZZY.png";
 	m[TEXTURE_HITLANDED]					= "./../assets/textures/overlays/HITLANDED.png";
 	m[TEXTURE_decal]						= "./../assets/textures/decal.png";
-	m[TEXTURE_skydome]						= "./../assets/textures/skymap/skydome.jpg";
-	m[TEXTURE_SPELL_WALL]					= "./../assets/textures/projectils/SPELL_WALL.png";
-	m[TEXTURE_SPELL_THUNDER]				= "./../assets/textures/projectils/SPELL_THUNDER.png";
-	m[TEXTURE_SPELL_FIRE]					= "./../assets/textures/projectils/SPELL_FIRE.png";
-	m[TEXTURE_SPELL_POISON]					= "./../assets/textures/projectils/SPELL_POISON.png";
-	m[TEXTURE_SPELL_PROJECTILE]				= "./../assets/textures/projectils/SPELL_PROJECTILE.png";
-	m[TEXTURE_gold]							= "./../assets/textures/gold.jpg";
-	m[TEXTURE_grass]						= "./../assets/textures/grass.jpg";
-	m[TEXTURE_bookcase]						= "./../assets/textures/bookcase.png";
-	m[TEXTURE_white_floor]					= "./../assets/textures/white_floor.jpg";
-	m[TEXTURE_gardenwall]					= "./../assets/textures/gardenwall.jpg";
-	m[TEXTURE_rock]							= "./../assets/textures/rock.jpg";
-	m[TEXTURE_none]							= "./../assets/textures/none.png";
-	m[TEXTURE_Switch]						= "./../assets/textures/switch.png";
-	m[TEXTURE_2897]							= "./../assets/textures/2897.jpg";
-	m[TEXTURE_doorblocked]					= "./../assets/textures/doorblocked.jpg";
-	m[TEXTURE_Wizard]						= "./../assets/textures/Wizard.png";
-	m[TEXTURE_marbre5]						= "./../assets/textures/marbre5.jpg";
-	m[TEXTURE_negro]						= "./../assets/textures/negro.jpg";
-	m[TEXTURE_yellow]						= "./../assets/textures/yellow.jpg";
-	m[TEXTURE_madera]						= "./../assets/textures/madera.jpg";
+	m[TEXTURE_SPELL_WALL]					= "./../assets/textures/SPELL_WALL.png";
 	m[TEXTURE_BUTTON]						= "./../assets/textures/GUI/Menus/Common/button.png";
 	m[TEXTURE_BUTTON_HOVER]					= "./../assets/textures/GUI/Menus/Common/button_hover.png";
 	m[TEXTURE_BUTTON_PRESSED]				= "./../assets/textures/GUI/Menus/Common/button_pressed.png";
@@ -241,7 +195,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_ORB_SCROLL_FILL]				= "./../assets/textures/HUD/Orb/orb_scroll_fill.png";
 	m[TEXTURE_ORB_SCROLL_LIP]				= "./../assets/textures/HUD/Orb/orb_scroll_lip.png";
 	m[TEXTURE_ORB_SCROLL_FILL_MASK]			= "./../assets/textures/HUD/Orb/orb_scroll_fill_mask.png";
-	//m[TEXTURE_SPELL_SLOT]					= "./../assets/textures/HUD/Orb/spell_slot.png";
 	m[TEXTURE_ITEM_SLOT]					= "./../assets/textures/HUD/Orb/item_slot.png";
 	m[TEXTURE_ITEM_SLOT_MASK]				= "./../assets/textures/HUD/Orb/item_slot_mask.png";
 	m[TEXTURE_MINIMAP_COMPASS]				= "./../assets/textures/HUD/Minimap/compass.png";
