@@ -37,9 +37,9 @@ void SpellDummy::Lanzar(Player* p){	// Estaria bien que se pusiera justo en el s
 	Dummy* target = nullptr;
 
 	if(p->GetAlliance() == ALLIANCE_WIZARD){
-		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WIZARD);
+		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.27, 0.9, 0.27), rot, INVO_WIZARD);
 	}else{
-		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.54, 1.62, 0.54), rot, INVO_WARLOCK);
+		target = (Dummy*)objectMaster->AddInvocation(pos, vector3df(0.27, 0.9, 0.27), rot, INVO_WARLOCK);
 	}
 
 	target->SetName(p->GetName());

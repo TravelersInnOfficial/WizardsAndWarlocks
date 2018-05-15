@@ -377,7 +377,6 @@ void Player::CreatePlayerCharacter(){
 		SetBillboard();
 
 		// Physic Player
-		vector3df HalfExtents(m_dimensions.X * 0.30f, m_dimensions.Y, m_dimensions.Z * 0.30f);
 		bt_body = new BT_Body();
 		bt_body->CreateBox(m_position, m_physicsDimensions, 50, 2.3, vector3df(0,0,0), C_PLAYER, playerCW);
 		bt_body->AssignPointer(this);
@@ -1095,10 +1094,10 @@ void Player::UpdateWalkAnimation(){
 
 void Player::UpdatePosShape(float dtime){
 	if(m_hasCharacter){
-		m_position = bt_body->GetPosition();
+		vector3df pos = bt_body->GetPosition();
 		bt_body->Update();
+		m_position = pos;
 
-		vector3df pos = m_position;
 		pos.Y += 0.3;
 
 		// UPDATE LEGS

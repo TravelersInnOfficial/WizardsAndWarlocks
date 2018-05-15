@@ -44,3 +44,4 @@ Kinematic Invocation::GetKinematic(){
     cKin.rotation = vector2df(0,0);
     return cKin;
 }
+
