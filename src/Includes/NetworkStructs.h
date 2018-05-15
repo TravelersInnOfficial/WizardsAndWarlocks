@@ -91,9 +91,10 @@ enum ObjectVariable{
 	PLAYER_NAME					=	21,
 	PLAYER_RUN					=	22,
 	PLAYER_STAMINA				=	23,
+	PLAYER_DANCE				=	24,
 	// ########################## MULTIGAME #####################
-	MULTIGAME_CHANGE			=	24,
-	MULTIGAME_WINNER_ALLIANCE	=	25
+	MULTIGAME_CHANGE			=	25,
+	MULTIGAME_WINNER_ALLIANCE	=	26
 	
 };
 

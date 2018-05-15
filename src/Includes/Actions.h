@@ -20,7 +20,8 @@ enum ACTION_ENUM
 	ACTION_SELECT_SPELL_02		= 0x0E,		// Cambiar el hechizo por el 2
 	ACTION_SELECT_SPELL_03		= 0x0F,		// Cambiar el hechizo por el 3
 	ACTION_RUN					= 0x10,		// Empezamos a Correr
-	ACTION_SHOW_STATUS_MENU		= 0x11		// Mostramos el menu contextual	
+	ACTION_SHOW_STATUS_MENU		= 0x11,		// Mostramos el menu contextual	
+	ACTION_DANCE				= 0x12		// Empezamos a bailar	
 };
 
 #endif

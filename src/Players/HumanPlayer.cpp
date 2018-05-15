@@ -77,6 +77,9 @@ void HumanPlayer::SetNetInput(){
 		if(m_controller->IsKeyPressed(ACTION_DEPLOY_TRAP)) m_networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 2, true, false);
 		else if(m_controller->IsKeyReleased(ACTION_DEPLOY_TRAP)) m_networkObject->SetIntVar(PLAYER_DEPLOY_TRAP, 3, true, false);
 
+		if(m_controller->IsKeyPressed(ACTION_DANCE)) m_networkObject->SetIntVar(PLAYER_DANCE, 2, true, false);
+		else if(m_controller->IsKeyReleased(ACTION_DANCE)) m_networkObject->SetIntVar(PLAYER_DANCE, 3, true, false);
+
 		// OTHERS
 		if(m_hasCharacter) m_networkObject->SetVecFVar(PLAYER_ROTATION, GetRot(), true, false);
 
@@ -229,6 +232,13 @@ void HumanPlayer::GetNetInput(){
 			m_networkObject->SetIntVar(PLAYER_RUN, keystate, false, false);
 		}
 
+		keystate = m_networkObject->GetIntVar(PLAYER_DANCE);
+		if(keystate != -1){
+			m_controller->SetStatus(ACTION_DANCE, (keyStatesENUM)keystate);
+			keystate = -1;
+			m_networkObject->SetIntVar(PLAYER_DANCE, keystate, false, false);
+		}
+
 		keystate = m_networkObject->GetIntVar(PLAYER_SET_ALL_INPUT);
 		if(keystate != -1){
 			SetAllInput((keyStatesENUM)keystate);
@@ -286,6 +296,10 @@ void HumanPlayer::CheckInput(){
 		//Menus
 		if(m_controller->IsKeyPressed(ACTION_SHOW_STATUS_MENU)){ ShowStatusMenu(); }
 		if(m_controller->IsKeyReleased(ACTION_SHOW_STATUS_MENU)){ QuitStatusMenu(); }
+
+		//Baile
+		if(m_controller->IsKeyPressed(ACTION_DANCE)){ StartRandomDance(); }
+
 	}
 }
 

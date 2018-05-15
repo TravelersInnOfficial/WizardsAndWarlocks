@@ -312,7 +312,6 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWIZARD_TJUMPEND.begin(), 	AWIZARD_TJUMPEND.end() );
     m.insert( m.end(), AWIZARD_BJUMPEND.begin(), 	AWIZARD_BJUMPEND.end() );
 
-/*
 	//DANCE ANIMATIONS
 	m.insert( m.end(), AWIZARD_TCIRCLE.begin(), AWIZARD_TCIRCLE.end() );
     m.insert( m.end(), AWIZARD_BCIRCLE.begin(), AWIZARD_BCIRCLE.end() );
@@ -326,7 +325,6 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
 
     m.insert( m.end(), AWIZARD_TWIN.begin(), 	AWIZARD_TWIN.end() );
     m.insert( m.end(), AWIZARD_BWIN.begin(), 	AWIZARD_BWIN.end() );
-*/
 
 	/// INSERT ALL WARLOCK ANIMATIONS
 	m.insert( m.end(), AWARLOCK_ARMIDLE.begin(), 	AWARLOCK_ARMIDLE.end() );
@@ -367,7 +365,6 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWARLOCK_TJUMPEND.begin(), 		AWARLOCK_TJUMPEND.end() );
     m.insert( m.end(), AWARLOCK_BJUMPEND.begin(), 		AWARLOCK_BJUMPEND.end() );
 
-/* 	
 	//DANCE ANIMATIONS
 	m.insert( m.end(), AWARLOCK_TCIRCLE.begin(), 	AWARLOCK_TCIRCLE.end() );
     m.insert( m.end(), AWARLOCK_BCIRCLE.begin(), 	AWARLOCK_BCIRCLE.end() );
@@ -375,13 +372,12 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWARLOCK_TDAB.begin(), 		AWARLOCK_TDAB.end() );
     m.insert( m.end(), AWARLOCK_BDAB.begin(), 		AWARLOCK_BDAB.end() );
 
-    m.insert( m.end(), AWARLOCK_ARMDAB.begin(), 	AWARLOCK_ARMDAB.end() );	
+    //m.insert( m.end(), AWARLOCK_ARMDAB.begin(), 	AWARLOCK_ARMDAB.end() );	
 	m.insert( m.end(), AWARLOCK_TDANCE.begin(), 	AWARLOCK_TDANCE.end() );
     m.insert( m.end(), AWARLOCK_BDANCE.begin(), 	AWARLOCK_BDANCE.end() );
 
     m.insert( m.end(), AWARLOCK_TWIN.begin(), 		AWARLOCK_TWIN.end() );
     m.insert( m.end(), AWARLOCK_BWIN.begin(), 		AWARLOCK_BWIN.end() );
-*/
 
 	// INSERT ALL NPC ANIMATIONS
 	m.insert( m.end(), AGENIE_DEFAULT.begin(), 		AGENIE_DEFAULT.end() );

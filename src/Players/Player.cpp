@@ -448,7 +448,8 @@ void Player::DeclareInput(){
 	m_controller->AddAction(Key_3, ACTION_SELECT_SPELL_02);
 	m_controller->AddAction(Key_4, ACTION_SELECT_SPELL_03);
 	m_controller->AddAction(Key_LEFT_SHIFT, ACTION_RUN);
-	m_controller->AddAction(Key_TAB,ACTION_SHOW_STATUS_MENU);
+	m_controller->AddAction(Key_TAB, ACTION_SHOW_STATUS_MENU);
+	m_controller->AddAction(Key_P, ACTION_DANCE);
 }
 
 void Player::SetAllInput(keyStatesENUM state){
@@ -692,6 +693,7 @@ void Player::MoveX(int dir){
 		vector3df rot = m_rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * cos(rot.Y), 0, impulse * -1 * sin(rot.Y)));
 		m_moving = true;
+		m_dancing = false;
 	}
 }
 
@@ -704,6 +706,7 @@ void Player::MoveZ(int dir){
 		vector3df rot = m_rotation;
 		bt_body->ApplyCentralImpulse(vector3df(impulse * sin(rot.Y), 0, impulse * cos(rot.Y)));
 		m_moving = true;
+		m_dancing = false;
 	}
 }
 
@@ -1056,6 +1059,16 @@ void Player::QuitStatusMenu(){
 	MenuManager::GetInstance()->ClearMenu();
 }
 
+void Player::StartRandomDance(){
+	std::string dances[] = {"circle", "dab", "dance", "win"};
+	std::string randDance = dances[rand()%4];
+	ChangeAnimation(randDance, 25, true, true);
+
+	// IF is dab, can move
+	if(randDance == "dab") ChangeAnimation(randDance, 25, false, false);
+	m_dancing = true;
+}
+
 void Player::UpdateWalkAnimation(){
 	if(m_CanJump && !m_dancing){
 		// CHANGE WALK OR IDLE ANIMATION
@@ -1106,9 +1119,9 @@ void Player::UpdatePosShape(float dtime){
 			m_playerNode->setRotation(m_camera->GetRotation());
 		}
 
+		/*
 		// DEBUG BILLBOARDS
-//		if(m_playerAlliance == ALLIANCE_WIZARD{
-		/*if(!m_isPlayerOne){
+		if(m_isPlayerOne){
 			int vel = m_max_velocity;
 			int decimalvel = (m_max_velocity - vel) * 10;
 
@@ -1116,11 +1129,10 @@ void Player::UpdatePosShape(float dtime){
 			
 			// SPEED
 			pos = vector3df(-0.5,0.75,0);
-			//m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
+			m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
 			//m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
-			std::stringstream converter;
-    		converter << "J:" << std::boolalpha << m_CanJump;
-			m_playerNode->AddText(converter.c_str(), pos, 0);
+			//std::string jump = m_CanJump? "true" : "false";
+			//m_playerNode->AddText("J: " + jump, pos, 0);
 			// FPS
 			pos = vector3df(-0.5,0.5,0);
 			//m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
@@ -1375,7 +1387,7 @@ void Player::SetVisible(bool visible){
 		if(m_playerNodeTop != nullptr){
 			m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_none]);
 			m_playerNodeTop->EditText("");
-	}
+		}
 	}
 	else{
 		std::string texturePath = TEXTUREMAP[TEXTURE_Wizard];
