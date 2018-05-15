@@ -179,9 +179,6 @@ void Player::PlayerInit(){
 }
 
 void Player::InitPlayerAnimations(){
-	std::vector<std::string> npc_anims = {"./../assets/modelos/npc.obj"};
-	std::vector<std::string> npcArm_anims = {"./../assets/modelos/npc.obj"};
-
 	switch(m_playerAlliance){
 		case(ALLIANCE_WIZARD):
 			if(m_isPlayerOne){
@@ -213,13 +210,11 @@ void Player::InitPlayerAnimations(){
 				m_playerNode->SetPaths("run",  AWIZARD_BRUN);
 
 				// TOP ONLY
-				m_playerNodeTop->SetPaths("shoot1", AWIZARD_TSHOOT1);
-				m_playerNodeTop->SetPaths("shoot2", AWIZARD_TSHOOT2);
 				m_playerNodeTop->SetPaths("drink", AWIZARD_TDRINK);
 				m_playerNodeTop->SetPaths("interact", AWIZARD_TINTERACT);
-/*
-				m_playerNodeTop->SetPaths("shoot3", AWIZARD_TSHOOT3);
-*/
+				m_playerNodeTop->SetPaths("shoot1", AWIZARD_TSHOOT1);
+				m_playerNodeTop->SetPaths("shoot2", AWIZARD_TSHOOT2);
+				//m_playerNodeTop->SetPaths("shoot3", AWIZARD_TSHOOT3);
 
 				// JUMP
 				m_playerNodeTop->SetPaths("jumpstart",  AWIZARD_TJUMPSTART);
@@ -231,7 +226,6 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("jumpend",  AWIZARD_TJUMPEND);
 				m_playerNode->SetPaths("jumpend",  AWIZARD_BJUMPEND);
 
-/*
 				// DANCES
 				m_playerNodeTop->SetPaths("circle",  AWIZARD_TCIRCLE);
 				m_playerNode->SetPaths("circle",  AWIZARD_BCIRCLE);
@@ -244,7 +238,6 @@ void Player::InitPlayerAnimations(){
 
 				m_playerNodeTop->SetPaths("win",  AWIZARD_TWIN);
 				m_playerNode->SetPaths("win",  AWIZARD_BWIN);
-*/
 
 				// SET INITIAL LOOP
 				m_playerNode->SetAnimationLoop("idle");
@@ -260,11 +253,11 @@ void Player::InitPlayerAnimations(){
 				m_playerNode->SetPaths("run",  AWARLOCK_ARMRUN);
 				
 				m_playerNode->SetPaths("shoot1", AWARLOCK_ARMSHOOT1);
-				m_playerNode->SetPaths("shoot2", AWIZARD_ARMSHOOT2);
-				//m_playerNode->SetPaths("shoot3", AWIZARD_ARMSHOOT3);
+				m_playerNode->SetPaths("shoot2", AWARLOCK_ARMSHOOT2);
+				//m_playerNode->SetPaths("shoot3", AWARLOCK_ARMSHOOT3);
 				m_playerNode->SetPaths("drink", AWARLOCK_ARMDRINK);
 				m_playerNode->SetPaths("interact", AWARLOCK_ARMINTERACT);
-				//m_playerNode->SetPaths("dab", AWIZARD_ARMDAB);
+				//m_playerNode->SetPaths("dab", AWARLOCK_ARMDAB);
 
 				// SET INITIAL LOOP
 				m_playerNode->SetAnimationLoop("idle");
@@ -282,13 +275,11 @@ void Player::InitPlayerAnimations(){
 				m_playerNode->SetPaths("run",  AWARLOCK_BRUN);
 
 				// TOP ONLY ANIMATIONS
-				m_playerNodeTop->SetPaths("shoot1", AWARLOCK_TSHOOT1);
-				m_playerNodeTop->SetPaths("shoot2", AWARLOCK_TSHOOT2);
 				m_playerNodeTop->SetPaths("drink", AWARLOCK_TDRINK);
 				m_playerNodeTop->SetPaths("interact", AWARLOCK_TINTERACT);
-/*
-				m_playerNodeTop->SetPaths("shoot3", AWARLOCK_TSHOOT3);
-*/
+				m_playerNodeTop->SetPaths("shoot1", AWARLOCK_TSHOOT1);
+				m_playerNodeTop->SetPaths("shoot2", AWARLOCK_TSHOOT2);
+				//m_playerNodeTop->SetPaths("shoot3", AWARLOCK_TSHOOT3);
 
 				// JUMP
 				m_playerNodeTop->SetPaths("jumpstart",  AWARLOCK_TJUMPSTART);
@@ -300,7 +291,6 @@ void Player::InitPlayerAnimations(){
 				m_playerNodeTop->SetPaths("jumpend",  AWARLOCK_TJUMPEND);
 				m_playerNode->SetPaths("jumpend",  AWARLOCK_BJUMPEND);	
 
-/*				
 				// DANCES
 				m_playerNodeTop->SetPaths("circle",  AWARLOCK_TCIRCLE);
 				m_playerNode->SetPaths("circle",  AWARLOCK_BCIRCLE);
@@ -313,7 +303,7 @@ void Player::InitPlayerAnimations(){
 
 				m_playerNodeTop->SetPaths("win",  AWARLOCK_TWIN);
 				m_playerNode->SetPaths("win",  AWARLOCK_BWIN);
-*/
+
 				// SET INITIAL LOOP
 				m_playerNode->SetAnimationLoop("idle");
 				m_playerNodeTop->SetAnimationLoop("idle");
@@ -359,8 +349,8 @@ void Player::CreatePlayerGBody(){
 			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Warlock]);
 		break;
 		default:
-			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_npc]);
-			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_npc]);
+			m_playerNode->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Warlock]);
+			if(m_playerNodeTop != nullptr) m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_Warlock]);
 		break;
 	}
 
