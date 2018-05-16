@@ -287,7 +287,6 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 }
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
-	GBody* gb = nullptr;
 	vector3df data =  vector3df(0, 0, 0);
 	vector3df scale =  vector3df(1, 1, 1);
 	

@@ -48,7 +48,8 @@ Lobby::~Lobby(){
 	// Los managers los eliminara el SinglePlayerManager
 }
 
-#include "./../Players/AIPlayer.h"
+#include "./../../Players/AIPlayer.h"
+
 bool Lobby::Input(){
 	if(g_engine->IsKeyPressed(Key_V)){
 		playerManager->AddAIPlayer();
@@ -58,6 +59,7 @@ bool Lobby::Input(){
 		AIPlayer* p = playerManager->AddAIPlayer();
 		p->SetAlliance(ALLIANCE_WARLOCK);
 	}
+
 	return false;
 }
 
