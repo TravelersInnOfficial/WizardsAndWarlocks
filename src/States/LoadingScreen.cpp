@@ -13,6 +13,7 @@ LoadingScreen::LoadingScreen(){
     g_engine = GraphicEngine::getInstance();
     float W = g_engine->GetScreenWidth();
     float H = g_engine->GetScreenHeight();
+    anim_time = g_engine->getTime()/1000; //secondss
 
     bar_width = W/1.2;
     float barH = H/12;
@@ -30,6 +31,7 @@ LoadingScreen::LoadingScreen(){
     loading_bar->SetColor(0,0,1);
     
     loading_text = g_engine->add2DText("",vector2df(W/2,H/3));
+    dots_anim = g_engine->add2DText("",vector2df(W/2,H/2.5));
     loading_perc = g_engine->add2DText("",vector2df(W/2,H/2));
     actual_folder = "";
 }
@@ -37,8 +39,12 @@ LoadingScreen::LoadingScreen(){
 LoadingScreen::~LoadingScreen(){
     g_engine = nullptr;
 
+    delete m_bkg;
+    delete m_bar_bkg;
     delete loading_bar;
-    loading_bar = nullptr;
+    delete loading_text;
+    delete loading_perc;
+    delete dots_anim;
 }
 
 bool LoadingScreen::Input(){
@@ -77,12 +83,31 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
     loading_perc->SetPosition(loading_perc_posX, loading_perc_posY);
 
     loading_bar->SetWidth(bar_width*(progress/100));
+    
+    p_updateDotsAnimation();
 
     g_engine->drawAll();
 }
 
 void LoadingScreen::Draw(){
 
+}
+
+void LoadingScreen::p_updateDotsAnimation(){
+    float deltatime =  g_engine->getTime()/1000.0f; //seconds
+    if(deltatime - anim_time >= 0.5f){ //si pasan tres segundos
+        std::string txt = dots_anim->GetText();
+        float siz = txt.size();
+        if(siz >= 0 && siz<3){
+            txt += '.';
+            dots_anim->SetText(txt);
+        }else dots_anim->SetText("");
+
+        float dots_anim_posX = g_engine->GetScreenWidth()/2 - dots_anim->GetSize().X/2;
+        float dots_anim_posY = g_engine->GetScreenHeight()/2.5;
+        dots_anim->SetPosition(dots_anim_posX, dots_anim_posY);
+        anim_time = deltatime;
+    }
 }
 
 std::string LoadingScreen::p_getLoadingStatement(){
