@@ -1374,7 +1374,6 @@ void Player::SetVisible(bool visible){
 		}
 		if(m_playerNodeTop != nullptr){
 			m_playerNodeTop->setMaterialTexture(0, TEXTUREMAP[TEXTURE_none]);
-			m_playerNodeTop->EditText("");
 		}
 	}
 	else{
@@ -1394,7 +1393,7 @@ void Player::SetVisible(bool visible){
 
 void Player::SetBillboard(){
 	if(!m_isPlayerOne){
-		m_playerNode->AddText(m_name, vector3df(0,1.25f,0), -1);
+		m_playerNode->AddText(m_name, vector3df(0,1.25f,0));
 	}
 }
 

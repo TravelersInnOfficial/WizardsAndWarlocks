@@ -153,14 +153,14 @@ void Fountain::Interact(Player* p){
 			user = p;
 			
 		} else {
-			playSoundEvent(cantUseEvent);
+			if(currentTime == 0.0f) playSoundEvent(cantUseEvent);
 		}
 	}
 	inUse = true;
 }
 
 void Fountain::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Use");
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Hold to Use");
 }
 
 void Fountain::UpdatePosShape(){
