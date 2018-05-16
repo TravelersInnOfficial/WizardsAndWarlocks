@@ -6,7 +6,7 @@
 
 GParticle::GParticle(vector3df position){
 	SceneManager* sm = GraphicEngine::getInstance()->privateSManager;
-	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
+	TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
 	ps = sm->AddParticleSystem(pos,  TOEvector3df(0,0,0),  TOEvector3df(1,1,1));
 }
 
@@ -55,6 +55,10 @@ void GParticle::SetType(PARTICLE_TYPE type){
 			break;
 		case GRAIL_PARTICLE:
 			pm = new GrailParticle();
+			ps->SetManager(pm); 
+			break;
+		case FOUNTAIN_PARTICLE:
+			pm = new FountainParticle();
 			ps->SetManager(pm); 
 			break;
 		default:;
