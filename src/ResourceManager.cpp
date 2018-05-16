@@ -49,4 +49,5 @@ void ResourceManager::LoadResources(){
 		s->SetLoadingStatus(*animIt, bar_width);
 	}
 	
+	//delete s;
 }

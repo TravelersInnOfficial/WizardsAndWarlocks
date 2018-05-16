@@ -72,7 +72,6 @@ Player::Player(bool isPlayer1){
 
 	m_currentJumpCheckTime = .05f;
 	m_maxJumpCheckTime = .05f;
-	CheckIfCanJump(0, true);
 
 	m_name = "";
 
