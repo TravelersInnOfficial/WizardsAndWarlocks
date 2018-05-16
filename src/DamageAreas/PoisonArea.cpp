@@ -7,6 +7,7 @@
 #include <GraphicEngine/GBody.h>
 #include "./../Players/Player.h"
 #include <ColliderMasks.h>
+#include <Assets.h>
 
 PoisonArea::PoisonArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :DamageArea(dam, 0.2f, TPosition, TScale, TRotation){
@@ -55,7 +56,7 @@ void PoisonArea::SetAlliance(Alliance emi){
 
 void PoisonArea::CreatePoisonArea(vector3df TPosition, vector3df TScale, vector3df TRotation){    
     // Cargamos el modelo mierder
-	m_areaNode = GraphicEngine::getInstance()->addObjMeshSceneNode("../assets/modelos/bomb.obj");
+	m_areaNode = GraphicEngine::getInstance()->addObjMeshSceneNode(MESHMAP[MESH_bomb]);
     m_areaNode->setPosition(TPosition);
 	m_areaNode->setScale(TScale);
 

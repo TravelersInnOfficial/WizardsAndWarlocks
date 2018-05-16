@@ -84,22 +84,22 @@ enum GAMETEXTURES {
 	TEXTURE_STAMINA_BKG,
 	TEXTURE_STAMINA_GRID,
 	TEXTURE_STAMINA_LIGHT,
-	TEXTURE_SPELL_SLOT_MASK
+	TEXTURE_SPELL_SLOT_MASK,
+	TEXTURE_NPC_GENIE,
+	TEXTURE_NPC_TARANTULA
 };
 
 enum GAMEMESHES {
-	MESH_grail,
-	MESH_WarlockArm,
 	MESH_Wizard,
+	MESH_WizardArm,
+	MESH_Warlock,
+	MESH_WarlockArm,
+	MESH_grail,
 	MESH_door,
 	MESH_fountain,
 	MESH_button,
-	MESH_WizardArm,
 	MESH_potion,
 	MESH_bomb,
-	MESH_Warlock,
-	MESH_npc,
-	MESH_bookcase
 };
 
 enum GAMEANIMATIONS {
@@ -201,6 +201,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_STAMINA_BKG]					= "./../assets/textures/HUD/StaminaBar/bkg.png";
 	m[TEXTURE_STAMINA_GRID]					= "./../assets/textures/HUD/StaminaBar/grid.png";
 	m[TEXTURE_STAMINA_LIGHT]				= "./../assets/textures/HUD/StaminaBar/highlight.png";
+	m[TEXTURE_NPC_GENIE]					= "./../assets/textures/genie.png";
+	m[TEXTURE_NPC_TARANTULA]				= "./../assets/textures/tarantula.png";
 	return m;
 }
 
@@ -217,8 +219,6 @@ static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
 	m[MESH_potion]		= "./../assets/modelos/potion.obj";
 	m[MESH_bomb]		= "./../assets/modelos/bomb.obj";
 	m[MESH_Warlock]		= "./../assets/modelos/Warlock.obj";
-	m[MESH_npc]			= "./../assets/modelos/npc.obj";
-	m[MESH_bookcase]	= "./../assets/modelos/bookcase.obj";
 
 	return m;
 }
@@ -252,10 +252,10 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWIZARD_ARMINTERACT.begin(), AWIZARD_ARMINTERACT.end() );
     m.insert( m.end(), AWIZARD_TINTERACT.begin(), 	AWIZARD_TINTERACT.end() );
 
-/* TOP ANIMATIONS NOT USED YET
-    m.insert( m.end(), AWIZARD_ARMSHOOT3.begin(), 	AWIZARD_ARMSHOOT3.end() );
-    m.insert( m.end(), AWIZARD_TSHOOT3.begin(), 	AWIZARD_TSHOOT3.end() );
-*/
+	/* TOP ANIMATIONS NOT USED YET
+		m.insert( m.end(), AWIZARD_ARMSHOOT3.begin(), 	AWIZARD_ARMSHOOT3.end() );
+		m.insert( m.end(), AWIZARD_TSHOOT3.begin(), 	AWIZARD_TSHOOT3.end() );
+	*/
 
 	// JUMP ANIMATION
     m.insert( m.end(), AWIZARD_TJUMPSTART.begin(), 	AWIZARD_TJUMPSTART.end() );
@@ -305,32 +305,32 @@ static std::vector<std::string> CREATE_ANIMATIONMAP(){
     m.insert( m.end(), AWARLOCK_ARMINTERACT.begin(), 	AWARLOCK_ARMINTERACT.end() );
     m.insert( m.end(), AWARLOCK_TINTERACT.begin(), 		AWARLOCK_TINTERACT.end() );
 
-/* TOP ANIMATIONS NOT USED YET
-    m.insert( m.end(), AWARLOCK_ARMSHOOT3.begin(), 		AWARLOCK_ARMSHOOT3.end() );
-    m.insert( m.end(), AWARLOCK_TSHOOT3.begin(), 		AWARLOCK_TSHOOT3.end() );
-*/	
+	/* TOP ANIMATIONS NOT USED YET
+		m.insert( m.end(), AWARLOCK_ARMSHOOT3.begin(), 		AWARLOCK_ARMSHOOT3.end() );
+		m.insert( m.end(), AWARLOCK_TSHOOT3.begin(), 		AWARLOCK_TSHOOT3.end() );
+	*/	
 
 	// JUMP ANIMATION
-    m.insert( m.end(), AWARLOCK_TJUMPSTART.begin(), 	AWARLOCK_TJUMPSTART.end() );
-    m.insert( m.end(), AWARLOCK_BJUMPSTART.begin(), 	AWARLOCK_BJUMPSTART.end() );
+	m.insert( m.end(), AWARLOCK_TJUMPSTART.begin(), 	AWARLOCK_TJUMPSTART.end() );
+	m.insert( m.end(), AWARLOCK_BJUMPSTART.begin(), 	AWARLOCK_BJUMPSTART.end() );
 	m.insert( m.end(), AWARLOCK_TJUMPFALL.begin(), 		AWARLOCK_TJUMPFALL.end() );
-    m.insert( m.end(), AWARLOCK_BJUMPFALL.begin(), 		AWARLOCK_BJUMPFALL.end() );
-    m.insert( m.end(), AWARLOCK_TJUMPEND.begin(), 		AWARLOCK_TJUMPEND.end() );
-    m.insert( m.end(), AWARLOCK_BJUMPEND.begin(), 		AWARLOCK_BJUMPEND.end() );
+	m.insert( m.end(), AWARLOCK_BJUMPFALL.begin(), 		AWARLOCK_BJUMPFALL.end() );
+	m.insert( m.end(), AWARLOCK_TJUMPEND.begin(), 		AWARLOCK_TJUMPEND.end() );
+	m.insert( m.end(), AWARLOCK_BJUMPEND.begin(), 		AWARLOCK_BJUMPEND.end() );
 
 	//DANCE ANIMATIONS
 	m.insert( m.end(), AWARLOCK_TCIRCLE.begin(), 	AWARLOCK_TCIRCLE.end() );
-    m.insert( m.end(), AWARLOCK_BCIRCLE.begin(), 	AWARLOCK_BCIRCLE.end() );
+	m.insert( m.end(), AWARLOCK_BCIRCLE.begin(), 	AWARLOCK_BCIRCLE.end() );
 	
-    m.insert( m.end(), AWARLOCK_TDAB.begin(), 		AWARLOCK_TDAB.end() );
-    m.insert( m.end(), AWARLOCK_BDAB.begin(), 		AWARLOCK_BDAB.end() );
+	m.insert( m.end(), AWARLOCK_TDAB.begin(), 		AWARLOCK_TDAB.end() );
+	m.insert( m.end(), AWARLOCK_BDAB.begin(), 		AWARLOCK_BDAB.end() );
 
-    //m.insert( m.end(), AWARLOCK_ARMDAB.begin(), 	AWARLOCK_ARMDAB.end() );	
+	//m.insert( m.end(), AWARLOCK_ARMDAB.begin(), 	AWARLOCK_ARMDAB.end() );	
 	m.insert( m.end(), AWARLOCK_TDANCE.begin(), 	AWARLOCK_TDANCE.end() );
-    m.insert( m.end(), AWARLOCK_BDANCE.begin(), 	AWARLOCK_BDANCE.end() );
+	m.insert( m.end(), AWARLOCK_BDANCE.begin(), 	AWARLOCK_BDANCE.end() );
 
-    m.insert( m.end(), AWARLOCK_TWIN.begin(), 		AWARLOCK_TWIN.end() );
-    m.insert( m.end(), AWARLOCK_BWIN.begin(), 		AWARLOCK_BWIN.end() );
+	m.insert( m.end(), AWARLOCK_TWIN.begin(), 		AWARLOCK_TWIN.end() );
+	m.insert( m.end(), AWARLOCK_BWIN.begin(), 		AWARLOCK_BWIN.end() );
 
 	// INSERT ALL NPC ANIMATIONS
 	m.insert( m.end(), AGENIE_DEFAULT.begin(), 		AGENIE_DEFAULT.end() );

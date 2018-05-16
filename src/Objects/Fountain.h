@@ -9,6 +9,7 @@ class Player;
 class BT_Body;
 class Kinematic;
 class SoundEvent;
+class GParticle;
 
 class Fountain: public Entidad{
 public:
@@ -54,6 +55,8 @@ private:
     GBody*          m_fountainNode;	// Cuerpo visual de la fuente
 	SoundEvent*		useEvent;		// Sonido de fuente en uso
 	SoundEvent*		cantUseEvent;	// Sonido de no poder utilizar la fuente
+
+	GParticle* particle;
 };
 
 #endif

@@ -9,6 +9,8 @@
 #include "./../Players/Player.h"
 #include <kinematicTypes.h>
 #include <ColliderMasks.h>
+#include <GraphicEngine/GParticle.h>
+#include <ParticleData.h>
 
 Fountain::Fountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	user = nullptr;
@@ -41,6 +43,7 @@ Fountain::~Fountain(){
 	if(cantUseEvent->isPlaying()) cantUseEvent->stop();
 	cantUseEvent->release();
 	delete cantUseEvent;
+	if(particle != nullptr) delete particle;
 }
 
 void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -59,6 +62,18 @@ void Fountain::CreateFountain(vector3df TPosition, vector3df TScale, vector3df T
 	bt_body->CreateBox(TPosition, HalfExtents,TMass,0, vector3df(0,0,0), C_FOUNTAIN, fountainCW);
 	bt_body->Rotate(TRotation);
 	bt_body->AssignPointer(this);
+
+	particle = nullptr;
+	if(GraphicEngine::getInstance()->GetParticleActive()){
+		particle = new GParticle(TPosition);
+		particle->SetTexture("./../assets/textures/particles/NeutralParticle.png");
+		particle->SetType(FOUNTAIN_PARTICLE);
+		TRotation.X = 90.0f;
+		particle->SetRot(TRotation);
+		float quantity = value - 5;
+		if (quantity < 0) quantity = 0;
+		particle->SetQuantityPerSecond(quantity);
+	}
 }
 
 void Fountain::Update(float deltaTime){
@@ -66,21 +81,19 @@ void Fountain::Update(float deltaTime){
 	currentTime += deltaTime;
 
 	if(currentTime >= maxTime){
-		if(inUse){
-				Use();
-		}else{
-			if (value < maxValue) { //Reload till reach 100
-				Recover();
-			}
-							
-			if (user != nullptr) { //Free the user once
-				SetFree();
-			}		
+		if(inUse) Use();
+		else{
+			if (value < maxValue) Recover(); //Reload till reach 100
+			if (user != nullptr) SetFree(); //Free the user once
 		}
-
 		currentTime = 0.0f;
 	}
 	inUse = false;
+
+	if(particle != nullptr){
+		particle->SetQuantityPerSecond(value-10);
+		particle->Update();
+	}
 }
 
 void Fountain::Update(){
