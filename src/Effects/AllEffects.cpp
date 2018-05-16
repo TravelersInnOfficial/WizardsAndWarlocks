@@ -598,7 +598,7 @@ void Invisible::ApplyEffect(Player* p){
 		particle = new GParticle(p->GetPos());
 		particle->SetTexture("./../assets/textures/particles/InvisibleParticle.png");
 		particle->SetType(INVISIBLE_PARTICLE);
-		particle->SetQuantityPerSecond(20);
+		particle->SetQuantityPerSecond(5);
 	}
 
 	playEffectEvent();
@@ -611,7 +611,7 @@ void Invisible::UpdateEffect(Player* p) {
 
 void Invisible::UpdateEffectParticles(Player* p) {
 	if(particle != nullptr){
-		particle->SetPosSpecial(p->GetPos());
+		particle->SetPos(p->GetPos());
 		particle->Update();
 	}
 }

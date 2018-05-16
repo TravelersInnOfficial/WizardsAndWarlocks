@@ -60,11 +60,15 @@ void GBody::EditText(std::string text, int id){
 }
 
 void GBody::SetBumpMap(std::string path){
-	((TFMesh*)privateNode)->SetBumpMap(path);
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		((TFMesh*)privateNode)->SetBumpMap(path);
+	}
 }
 
 void GBody::SetSpecularMap(std::string path){
-	((TFMesh*)privateNode)->SetSpecularMap(path);
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		((TFMesh*)privateNode)->SetSpecularMap(path);
+	}
 }
 	
 void GBody::SetInvisible(){

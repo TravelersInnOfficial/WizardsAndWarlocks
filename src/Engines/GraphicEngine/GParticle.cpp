@@ -1,5 +1,6 @@
 #include "GParticle.h"
 #include "GraphicEngine.h"
+#include <NetworkEngine/NetworkEngine.h>
 #include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
 #include "./../../Managers/StateManager.h"
 #include <ParticleData.h>
@@ -7,7 +8,10 @@
 GParticle::GParticle(vector3df position){
 	SceneManager* sm = GraphicEngine::getInstance()->privateSManager;
 	TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
-	ps = sm->AddParticleSystem(pos,  TOEvector3df(0,0,0),  TOEvector3df(1,1,1));
+	ps = nullptr;
+	if(!NetworkEngine::GetInstance()->IsServerInit()){
+		ps = sm->AddParticleSystem(pos,  TOEvector3df(0,0,0),  TOEvector3df(1,1,1));
+	}
 }
 
 GParticle::~GParticle(){
@@ -16,14 +20,16 @@ GParticle::~GParticle(){
 }
 
 void GParticle::SetQuantityPerSecond(int particles){
-	ps->SetNewPerSecond(particles);
+	if(ps!=nullptr) ps->SetNewPerSecond(particles);
 }
 
 void GParticle::SetTexture(std::string path){
-	ps->SetTexture(path);
+	if(ps!=nullptr) ps->SetTexture(path);
 }
 
 void GParticle::SetType(PARTICLE_TYPE type){
+	if(ps==nullptr) return;
+	
 	switch(type){
 		case TRAP_PARTICLE:
 			pm = new TrapParticle();
@@ -66,23 +72,23 @@ void GParticle::SetType(PARTICLE_TYPE type){
 }
 
 void GParticle::SetPos(vector3df position){
-	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
-	ps->SetTranslateSmooth(pos);
+	TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
+	if(ps!=nullptr) ps->SetTranslateSmooth(pos);
 }
 
 void GParticle::SetPosSpecial(vector3df position){
-	 TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
-	ps->SetTranslate(pos);
+	TOEvector3df pos =  TOEvector3df(position.X, position.Y, position.Z);
+	if(ps!=nullptr) ps->SetTranslate(pos);
 }
 
 void GParticle::SetRot(vector3df rotation){
-	 TOEvector3df rot =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	ps->SetRotation(rot);
+	TOEvector3df rot =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	if(ps!=nullptr) ps->SetRotation(rot);
 }
 
 void GParticle::Update(){
 	float dt = StateManager::GetInstance()->GetDeltaTime();
-	ps->Update(dt);
+	if(ps!=nullptr) ps->Update(dt);
 }
 
 ParticleManager* GParticle::GetPM(){

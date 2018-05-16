@@ -123,6 +123,7 @@ void StateManager::LoadState(State_Code code, bool* end){
 			break;
 		case STATE_NETGAME_SERVER:
 			resourcesLoaded = true;
+			GraphicEngine::getInstance()->SetDynamicLight(false);
 			n_engine->StartServer();
 			currentState =  new MultiPlayerGame();
 			break;
