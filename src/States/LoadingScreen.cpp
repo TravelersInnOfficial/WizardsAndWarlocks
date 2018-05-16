@@ -58,7 +58,8 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
 
     int pos = 0;
     pos = txt.find(toErase, pos);
-    txt.erase(pos,toErase.size());
+    
+    if(pos != std::string::npos) txt.erase(pos,toErase.size());
 
     std::size_t found = txt.find_last_of("/\\");
     folder = txt.substr(0,found);
