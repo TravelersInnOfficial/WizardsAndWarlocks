@@ -477,6 +477,7 @@ SpeedUp::SpeedUp(float time, float vel):Effect(time, POWERUP_SPEED){
 
 void SpeedUp::ApplyEffect(Player* p){
 	p->m_max_velocity *= m_vel;
+	p->SetGravity(-25);
 	// TODO: APPLY COOLDOWN REDUCTION
 	playEffectEvent();
 }
@@ -487,6 +488,7 @@ void SpeedUp::UpdateEffect(Player* p) {
 
 void SpeedUp::RemoveEffect(Player* p){
 	p->m_max_velocity /= m_vel;
+	p->SetGravity(-10);
 }
 
 void SpeedUp::createSoundEvent() {
