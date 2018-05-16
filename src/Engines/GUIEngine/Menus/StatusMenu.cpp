@@ -18,8 +18,8 @@ void StatusMenu::Close(bool* open){
 }
 
 void StatusMenu::Update(bool* open, float deltaTime){
-    ImGui::SetNextWindowSize(ImVec2(screenWidth/2,screenHeight));//sets the size of the next window
-    ImGui::SetNextWindowPos(ImVec2(0,0));
+    ImGui::SetNextWindowSize(ImVec2(screenWidth/2,screenHeight/2));//sets the size of the next window
+    ImGui::SetNextWindowPos(ImVec2(screenWidth/2 - screenWidth/4, screenHeight/2 - screenHeight/4));
     if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End();
     else{
         ImGui::Text("Game Status");
@@ -41,16 +41,16 @@ void StatusMenu::Update(bool* open, float deltaTime){
             }
         }
 
-        ImGui::Text("WIZARDS");
+        ImGui::TextColored(ImVec4(0.0f,0.0f,0.5f,1.0f),"WIZARDS");
         ImGui::Separator();
-        for(int i = 0; i<wizards.size();i++) ImGui::Text("%s",wizards[i].c_str());
+        for(int i = 0; i<wizards.size();i++) ImGui::TextColored(ImVec4(0.0f,0.0f,0.5f,1.0f),"%s",wizards[i].c_str());
         for(int i = 0; i<dead_wizards.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), "%s", dead_wizards[i].c_str());
     
         
         ImGui::Separator();
-        ImGui::Text("WARLOCKS");
+        ImGui::TextColored(ImVec4(0.5f,0.0f,0.5f,1.0f),"WARLOCKS");
         ImGui::Separator();
-        for(int i = 0; i<warlocks.size();i++) ImGui::Text("%s",warlocks[i].c_str());
+        for(int i = 0; i<warlocks.size();i++) ImGui::TextColored(ImVec4(0.5f,0.0f,0.5f,1.0f),"%s",warlocks[i].c_str());
         for(int i = 0; i<dead_warlocks.size();i++) ImGui::TextColored(ImVec4(0.7f,0.5f,0.5f,1.0f), "%s", dead_warlocks[i].c_str());
 
         ImGui::End();

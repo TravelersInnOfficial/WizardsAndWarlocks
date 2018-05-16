@@ -70,6 +70,11 @@ void MenuManager::CreateMenu(MenuType type, int option){
 			//currentMenu = new AllianceMenu(type);
 			break;
 		}
+		case(EXIT_MATCH_M):{
+			open_menu = true;
+			currentMenu = new ExitMatchMenu(type);
+			break;
+		}
 		default:{
 			currentMenu = nullptr;
 			open_menu = false;

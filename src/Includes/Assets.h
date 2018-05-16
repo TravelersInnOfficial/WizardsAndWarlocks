@@ -86,7 +86,12 @@ enum GAMETEXTURES {
 	TEXTURE_STAMINA_LIGHT,
 	TEXTURE_SPELL_SLOT_MASK,
 	TEXTURE_NPC_GENIE,
-	TEXTURE_NPC_TARANTULA
+	TEXTURE_NPC_TARANTULA,
+	TEXTURE_MATCH_DEFEAT,
+	TEXTURE_MATCH_VICTORY,
+	TEXTURE_LOADING_BAR_BKG,
+	TEXTURE_LOADING_BAR_MASK,
+	TEXTURE_LOADING_SCREEN_BKG
 };
 
 enum GAMEMESHES {
@@ -203,6 +208,11 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_STAMINA_LIGHT]				= "./../assets/textures/HUD/StaminaBar/highlight.png";
 	m[TEXTURE_NPC_GENIE]					= "./../assets/textures/genie.png";
 	m[TEXTURE_NPC_TARANTULA]				= "./../assets/textures/tarantula.png";
+	m[TEXTURE_MATCH_DEFEAT]					= "./../assets/textures/GUI/Menus/EndMatchMenu/defeat.png";
+	m[TEXTURE_MATCH_VICTORY]				= "./../assets/textures/GUI/Menus/EndMatchMenu/victory.png";
+	m[TEXTURE_LOADING_BAR_BKG] 				= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_bkg.png";
+	m[TEXTURE_LOADING_BAR_MASK] 			= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_mask.png";
+	m[TEXTURE_LOADING_SCREEN_BKG] 			= "./../assets/textures/GUI/Menus/LoadingScreen/bkg.png";
 	return m;
 }
 

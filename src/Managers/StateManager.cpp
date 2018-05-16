@@ -13,7 +13,6 @@
 #include "./../States/MultiPlayer/MultiPlayerGame.h"
 #include "./../States/OnePlayer/SinglePlayerGame.h"
 #include "./../States/MenuPrincipal.h"
-#include "./../States/LoadingScreen.h"
 // Motores
 #include <PhysicsEngine/BulletEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
@@ -54,11 +53,11 @@ StateManager::StateManager(ServerInfo* serverInfo){
 	State_Code firstState = STATE_MENU;
 	//State_Code firstState = STATE_GAME;
 	if(serverInfo->isServer) firstState = STATE_NETGAME_SERVER;
-
-	LoadState(firstState);
-	preparedStatus = WITHOUT_STATE;
+	
 	resourcesLoaded = false;
-	loading = false;
+	LoadState(firstState);
+	
+	preparedStatus = WITHOUT_STATE;
 }
 
 StateManager::~StateManager(){
@@ -106,14 +105,13 @@ void StateManager::LoadState(State_Code code, bool* end){
 	if(currentState!=nullptr){
 		delete currentState;
 		currentState = nullptr;
-		loading = false;
 	}
 
 	switch(code){
 		case STATE_MENU:
 			if(!resourcesLoaded){
-				ResourceManager::LoadResources();
 				resourcesLoaded = true;
+				ResourceManager::LoadResources();
 			}
 			currentState = new MenuPrincipal();
 			break;
@@ -133,10 +131,6 @@ void StateManager::LoadState(State_Code code, bool* end){
 			break;
 		case WITHOUT_STATE:
 			currentState = nullptr;
-			break;
-		case STATE_LOADING_SCREEN:
-			loading = true;
-			currentState = new LoadingScreen();	
 			break;
 	}
 }
@@ -185,13 +179,4 @@ int* StateManager::GetWizardAINumberPointer(){
 
 int* StateManager::GetWarlockAINumberPointer(){
 	return &maxWarlockPlayers;
-}
-
-void StateManager::SetLoadingStatusString(std::string status){
-	/*
-	if(loading){
-		LoadingScreen *s = (LoadingScreen*) currentState;
-		s->SetStatusText(status);
-	}
-	*/
 }

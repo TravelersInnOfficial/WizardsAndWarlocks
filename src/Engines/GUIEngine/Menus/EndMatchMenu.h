@@ -3,6 +3,8 @@
 
 # include <GUIEngine/Menu.h>
 
+class HumanPlayer;
+
 class EndMatchMenu : public Menu{
 public:
     EndMatchMenu(MenuType, int);
@@ -11,9 +13,21 @@ public:
     void Drop();
 
 private:
-    std::string m_winners;
-    bool m_returnLobby;
+    HumanPlayer* hp;
+    bool m_victory;
+    std::string m_msg;
     void closeMenu(bool*);
+
+    ImVec2 buttonSize;                  //MENU BUTTON SIZE
+    ImVec2 imgSize;
+
+    ImTextureID texture_init;
+    ImTextureID texture_button;
+    ImTextureID texture_hover;
+    ImTextureID texture_pressed;
+    
+    ImTextureID texture_VICTORY;
+    ImTextureID texture_DEFEAT;
 
 };
 
