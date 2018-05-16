@@ -25,7 +25,7 @@ ShopMenu::ShopMenu(MenuType type) : Menu(type){
     float new_width = W/1.05;
     float new_height = ratio * new_width;
     vector2df siz(new_width, new_height);
-     TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SHOP_BACKGROUND]); 
+    TOEvector2di dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_SHOP_BACKGROUND]); 
     if(new_height > dims.Y) siz = vector2df(dims.X,dims.Y);
 
     //BUTTON SIZE

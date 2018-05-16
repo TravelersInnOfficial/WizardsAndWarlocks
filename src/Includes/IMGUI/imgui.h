@@ -169,7 +169,7 @@ namespace ImGui
     IMGUI_API void          StyleColorsDark(ImGuiStyle* dst = NULL);    // New, recommended style
     IMGUI_API void          StyleColorsClassic(ImGuiStyle* dst = NULL); // Classic imgui style (default)
     IMGUI_API void          StyleColorsLight(ImGuiStyle* dst = NULL);   // Best used with borders and a custom, thicker font
-    IMGUI_API void          StyleColorsCustom(ImGuiStyle* dst = NULL);    // New, recommended style
+    IMGUI_API void          WWStyleColor(ImGuiStyle* dst = NULL);    // New, recommended style
 
     // Window
     IMGUI_API bool          Begin(const char* name, bool* p_open = NULL, ImGuiWindowFlags flags = 0);   // push window to the stack and start appending to it. see .cpp for details. return false when window is collapsed (so you can early out in your code) but you always need to call End() regardless. 'bool* p_open' creates a widget on the upper-right to close the window (which sets your bool to false).

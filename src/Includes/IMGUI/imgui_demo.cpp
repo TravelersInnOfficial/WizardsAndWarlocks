@@ -2025,7 +2025,7 @@ bool ImGui::ShowStyleSelector(const char* label)
         case 0: ImGui::StyleColorsClassic(); break;
         case 1: ImGui::StyleColorsDark(); break;
         case 2: ImGui::StyleColorsLight(); break;
-        case 3: ImGui::StyleColorsCustom(); break;
+        case 3: ImGui::WWStyleColor(); break;
         }
         return true;
     }

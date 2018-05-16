@@ -16,6 +16,7 @@
 #include <GraphicEngine/MenuManager.h>
 #include <PhysicsEngine/BulletEngine.h>
 #include <SoundEngine/SoundSystem.h>
+#include "./../../Players/HumanPlayer.h"
 
 SinglePlayerGame::SinglePlayerGame(){
 	spellManager 	= SpellManager::GetInstance();
@@ -117,7 +118,11 @@ bool SinglePlayerGame::Input(){
 	}
 
 	if(g_engine->IsKeyPressed(Key_Escape)){
-		StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+		GraphicEngine::getInstance()->InitReceiver();
+		MenuManager::GetInstance()->CreateMenu(EXIT_MATCH_M);
+		HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
+		hp->ToggleMenu(true);
+		hp->SetAllInput(UP);
 	}
 
 	// DEBUG

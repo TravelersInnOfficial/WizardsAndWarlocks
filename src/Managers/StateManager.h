@@ -25,7 +25,6 @@ public:
 	void CloseGame();
 	float GetDeltaTime();
 
-	void SetLoadingStatusString(std::string status);
 	int GetWizardAINumber();
 	int GetWarlockAINumber();
 	int* GetWizardAINumberPointer();
@@ -53,7 +52,6 @@ private:
 	int maxWarlockPlayers;
 
 	bool resourcesLoaded;
-	bool loading;
 
 	StateManager(ServerInfo* serverInfo = nullptr);
 };

@@ -47,10 +47,10 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     texture_pressed     = (void*)(size_t) toe::GetTextureID(button_pressed_layout);
     title_texture       = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_MENU_TITLE]);
     bkg                 = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
-     TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_MENU_TITLE]);
+    TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_MENU_TITLE]);
     titleSize = ImVec2(t_dims.X/1.6,t_dims.Y/1.5);
     
-     TOEvector2di dims = toe::GetTextureDims(button_layout);
+    TOEvector2di dims = toe::GetTextureDims(button_layout);
 
     buttonSize = ImVec2(dims.X,dims.Y);
     pu_buttonSize = ImVec2(140,0);
@@ -196,7 +196,9 @@ void MainMenu::Update(bool* open, float deltaTime){
                     std::string server_player_count = std::to_string(newServerList.at(i).playerCount);
                     ImGui::Text("%s", server_player_count.c_str()); ImGui::NextColumn();
                     //server lobby StateManager
-                    std::string server_lobby_state =std::to_string(!newServerList.at(i).lobbyState);
+                    std::string server_lobby_state = "";
+                    if(!newServerList.at(i).lobbyState) server_lobby_state = "In Lobby";
+                    else server_lobby_state = "In Match";
                     ImGui::Text("%s", server_lobby_state.c_str()); ImGui::NextColumn();
                 }
            
@@ -332,7 +334,7 @@ void MainMenu::Update(bool* open, float deltaTime){
             if(ImGui::BeginPopupModal("Start a host",nullptr,popup_flags)){
                 ImGui::Text("Server Name: ");
                 ImGui::SameLine();
-                ImGui::InputText("##server_name", server_name, IM_ARRAYSIZE(player_name));
+                ImGui::InputText("##server_name", server_name, IM_ARRAYSIZE(server_name));
 
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
@@ -481,7 +483,6 @@ void MainMenu::Update(bool* open, float deltaTime){
 void MainMenu::closeMenu(bool* open){
     *open = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
-    ImGui::GetIO().MouseDrawCursor = false;
 }
 
 void MainMenu::PrepareClient(bool proprietary){

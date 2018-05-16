@@ -4,3 +4,4 @@
 #include "./../Engines/GUIEngine/Menus/EndMatchMenu.h"
 #include "./../Engines/GUIEngine/Menus/ShopMenu.h"
 #include "./../Engines/GUIEngine/Menus/StatusMenu.h"
+#include "./../Engines/GUIEngine/Menus/ExitMatchMenu.h"

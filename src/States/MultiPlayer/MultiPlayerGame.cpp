@@ -16,6 +16,7 @@
 #include <PhysicsEngine/BulletEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include <NetworkEngine/Server.h>
+#include "./../../Players/HumanPlayer.h"
 
 MultiPlayerGame::MultiPlayerGame(){
 	// Motores
@@ -141,7 +142,13 @@ void MultiPlayerGame::CleanGame(){
 bool MultiPlayerGame::Input(){
 	if(!g_engine->run()) return true;
 
-	if(g_engine->IsKeyPressed(Key_Escape)) StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+	if(g_engine->IsKeyPressed(Key_Escape)){
+		GraphicEngine::getInstance()->InitReceiver();
+		MenuManager::GetInstance()->CreateMenu(EXIT_MATCH_M);
+		HumanPlayer* hp = (HumanPlayer*) PlayerManager::GetInstance()->GetPlayerOne();
+		hp->ToggleMenu(true);
+		hp->SetAllInput(UP);
+	}
 
 	// DEBUG
 	if(g_engine->IsKeyPressed(Key_F1)) {
