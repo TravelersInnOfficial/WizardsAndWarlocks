@@ -20,10 +20,9 @@ NpcSeller::~NpcSeller(){
 
 void NpcSeller::CreateVisual(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	// CREATE VISUAL BODY
-	//gBody = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 	gBody = GraphicEngine::getInstance()->addAnimatedMeshSceneNode(TPosition, TRotation, TScale);
 	if (gBody != nullptr){
-		gBody->setMaterialTexture(0, "./../assets/textures/tarantula.png");
+		gBody->setMaterialTexture(0, TEXTUREMAP[TEXTURE_NPC_TARANTULA]);
 
 		// ADD ANIMATION
 		gBody->SetPaths("idle", ATARANTULA_DEFAULT);

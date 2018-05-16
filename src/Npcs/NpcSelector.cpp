@@ -20,10 +20,9 @@ NpcSelector::~NpcSelector(){
 
 void NpcSelector::CreateVisual(vector3df TPosition, vector3df TScale, vector3df TRotation){
 	// CREATE VISUAL BODY
-	//gBody = g_engine->addObjMeshSceneNode("./../assets/modelos/npc.obj");
 	gBody = GraphicEngine::getInstance()->addAnimatedMeshSceneNode(TPosition, TRotation, TScale);
 	if (gBody != nullptr ){
-		gBody->setMaterialTexture(0, "./../assets/textures/genie.png");
+		gBody->setMaterialTexture(0, TEXTUREMAP[TEXTURE_NPC_GENIE]);
 
 		// ADD ANIMATION
 		gBody->SetPaths("idle", AGENIE_DEFAULT);
