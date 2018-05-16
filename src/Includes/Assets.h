@@ -91,20 +91,127 @@ enum GAMETEXTURES {
 	TEXTURE_MATCH_VICTORY,
 	TEXTURE_LOADING_BAR_BKG,
 	TEXTURE_LOADING_BAR_MASK,
-	TEXTURE_LOADING_SCREEN_BKG
+	TEXTURE_LOADING_SCREEN_BKG,
+	TEXTURE_default_skydome,
+	TEXTURE_normal_mainwall,
+	TEXTURE_specular_mainwall,
+	TEXTURE_mainwall,
+	TEXTURE_invisible_texture,
+	TEXTURE_normal_stone_floor,
+	TEXTURE_specular_stone_floor,
+	TEXTURE_stone_floor,
+	TEXTURE_normal_ceilling,
+	TEXTURE_specular_ceilling,
+	TEXTURE_ceilling,
+	TEXTURE_torch,
+	TEXTURE_book3,
+	TEXTURE_book1,
+	TEXTURE_default_particle,
+	TEXTURE_NeutralParticle,
+	TEXTURE_default_font,
+	TEXTURE_map,
+	TEXTURE_mask,
+	TEXTURE_FireParticle,
+	TEXTURE_DefenseParticles,
+	TEXTURE_normal_wood_floor,
+	TEXTURE_specular_wood_floor,
+	TEXTURE_wood_floor,
+	TEXTURE_normal_grass_floor,
+	TEXTURE_specular_grass_floor,
+	TEXTURE_grass_floor,
+	TEXTURE_open_book4,
+	TEXTURE_open_book2,
+	TEXTURE_shelf,
+	TEXTURE_open_book3,
+	TEXTURE_book2,
+	TEXTURE_open_book1,
+	TEXTURE_book4,
+
+	TEXTURE_ConfusedParticle,
+	TEXTURE_DefenseParticles2,
+	TEXTURE_ElectricParticle,
+	TEXTURE_FreezeParticle,
+	TEXTURE_InvisibleParticle,
+	TEXTURE_PoisonParticle,
+	TEXTURE_SilencedParticles,
+	TEXTURE_SnareParticle,
+	TEXTURE_TrapParticle
 };
 
 enum GAMEMESHES {
-	MESH_Wizard,
-	MESH_WizardArm,
-	MESH_Warlock,
-	MESH_WarlockArm,
+	MESH_banner,
+	MESH_barrel,
+	MESH_bath,
+	MESH_bed,
+	MESH_bench,
+	MESH_book,
+	MESH_book_table,
+	MESH_bottle,
+	MESH_candle,
+	MESH_casserole,
+	MESH_chair,
+	MESH_chimney,
+	MESH_cup,
+	MESH_death_fountain,
+	MESH_dish,
+	MESH_door2,
+	MESH_door_frame,
+	MESH_double_door,
+	MESH_electricball,
+	MESH_fireball,
+	MESH_fire,
+	MESH_girder,
 	MESH_grail,
-	MESH_door,
-	MESH_fountain,
-	MESH_button,
-	MESH_potion,
+	MESH_hand_candle,
+	MESH_handcuffs,
+	MESH_hp,
+	MESH_ice,
+	MESH_lamp,
+	MESH_mp,
+	MESH_open_book,
+	MESH_poison,
+	MESH_pot_ice,
+	MESH_potion_hex,
+	MESH_potion_squad,
+	MESH_potion_tri,
+	MESH_regular,
+	MESH_restore_fountain,
+	MESH_shelf,
+	MESH_shelving01,
+	MESH_shelving02,
+	MESH_shelving03,
+	MESH_shelving04,
+	MESH_shelving_k,
+	MESH_shield,
+	MESH_skull_painting,
+	MESH_smoking_pipe,
+	MESH_table02,
+	MESH_table,
+	MESH_thunder,
+	MESH_torch,
+	MESH_water_fountain,
+	MESH_wc,
 	MESH_bomb,
+
+	MESH_WAR_body,
+	MESH_WAR_head,
+	MESH_WAR_leftArm,
+	MESH_WAR_leftLeg,
+	MESH_WAR_ornament1,
+	MESH_WAR_ornament2,
+	MESH_WAR_rightArm,
+	MESH_WAR_rightLeg,
+	MESH_WAR_staff,
+
+	MESH_WIZ_body,
+	MESH_WIZ_head,
+	MESH_WIZ_leftArm,
+	MESH_WIZ_leftLeg,
+	MESH_WIZ_ornament1,
+	MESH_WIZ_ornament2,
+	MESH_WIZ_rightArm,
+	MESH_WIZ_rightLeg,
+	MESH_WIZ_staff
 };
 
 enum GAMEANIMATIONS {
@@ -213,22 +320,131 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_LOADING_BAR_BKG] 				= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_bkg.png";
 	m[TEXTURE_LOADING_BAR_MASK] 			= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_mask.png";
 	m[TEXTURE_LOADING_SCREEN_BKG] 			= "./../assets/textures/GUI/Menus/LoadingScreen/bkg.png";
+
+	m[TEXTURE_default_skydome] = "../src/Engines/TravelersOcularEngine/assets/textures/default_skydome.jpg";
+	m[TEXTURE_normal_mainwall] = "../assets/textures/maptextures/normal_mainwall 1.png";
+	m[TEXTURE_specular_mainwall] = "../assets/textures/maptextures/specular_mainwall 1.png";
+	m[TEXTURE_mainwall] = "../assets/textures/maptextures/mainwall 1.png";
+	m[TEXTURE_invisible_texture] = "../src/Engines/TravelersOcularEngine/assets/textures/invisible_texture.png";
+	m[TEXTURE_normal_stone_floor] = "../assets/textures/maptextures/normal_stone_floor.png";
+	m[TEXTURE_specular_stone_floor] = "../assets/textures/maptextures/specular_stone_floor.png";
+	m[TEXTURE_stone_floor] = "../assets/textures/maptextures/stone_floor.png";
+	m[TEXTURE_normal_ceilling] = "../assets/textures/maptextures/normal_ceilling.png";
+	m[TEXTURE_specular_ceilling] = "../assets/textures/maptextures/specular_ceilling.png";
+	m[TEXTURE_ceilling] = "../assets/textures/maptextures/ceilling.png";
+	m[TEXTURE_torch] = "../assets/textures/torch.png";
+	m[TEXTURE_book3] = "../assets/textures/book3.png";
+	m[TEXTURE_book1] = "../assets/textures/book1.png";
+	m[TEXTURE_default_font] = "../src/Engines/TravelersOcularEngine/assets/textures/default_font.png";
+	m[TEXTURE_map] = "../assets/textures/HUD/Minimap/map.jpg";
+	m[TEXTURE_mask] = "../assets/textures/HUD/Minimap/mask.jpg";
+	m[TEXTURE_normal_wood_floor] = "../assets/textures/maptextures/normal_wood_floor.png";
+	m[TEXTURE_specular_wood_floor] = "../assets/textures/maptextures/specular_wood_floor.png";
+	m[TEXTURE_wood_floor] = "../assets/textures/maptextures/wood_floor.png";
+	m[TEXTURE_normal_grass_floor] = "../assets/textures/maptextures/normal_grass_floor.png";
+	m[TEXTURE_specular_grass_floor] = "../assets/textures/maptextures/specular_grass_floor.png";
+	m[TEXTURE_grass_floor] = "../assets/textures/maptextures/grass_floor.png";
+	m[TEXTURE_open_book4] = "../assets/textures/open_book4.png";
+	m[TEXTURE_open_book2] = "../assets/textures/open_book2.png";
+	m[TEXTURE_shelf] = "../assets/textures/shelf.png";
+	m[TEXTURE_open_book3] = "../assets/textures/open_book3.png";
+	m[TEXTURE_book2] = "../assets/textures/book2.png";
+	m[TEXTURE_open_book1] = "../assets/textures/open_book1.png";
+	m[TEXTURE_book4] = "../assets/textures/book4.png";
+
+	m[TEXTURE_default_particle] = "../src/Engines/TravelersOcularEngine/assets/textures/default_particle.png";
+	m[TEXTURE_NeutralParticle] = "../assets/textures/particles/NeutralParticle.png";
+	m[TEXTURE_FireParticle] = "../assets/textures/particles/FireParticle.png";
+	m[TEXTURE_DefenseParticles] = "../assets/textures/particles/DefenseParticles.png";
+	m[TEXTURE_ConfusedParticle] = "../assets/textures/particles/ConfusedParticle.png";
+	m[TEXTURE_DefenseParticles2] = "../assets/textures/particles/DefenseParticles2.png";
+	m[TEXTURE_ElectricParticle] = "../assets/textures/particles/ElectricParticle.png";
+	m[TEXTURE_FreezeParticle] = "../assets/textures/particles/FreezeParticle.png";
+	m[TEXTURE_InvisibleParticle] = "../assets/textures/particles/InvisibleParticle.png";
+	m[TEXTURE_PoisonParticle] = "../assets/textures/particles/PoisonParticle.png";
+	m[TEXTURE_SilencedParticles] = "../assets/textures/particles/SilencedParticles.png";
+	m[TEXTURE_SnareParticle] = "../assets/textures/particles/SnareParticle.png";
+	m[TEXTURE_TrapParticle] = "../assets/textures/particles/TrapParticle.png";
+
 	return m;
 }
 
 static std::map<GAMEMESHES, std::string> CREATE_MESHMAP(){
 	std::map<GAMEMESHES, std::string> m;
 	
-	m[MESH_grail]		= "./../assets/modelos/grail.obj";
-	m[MESH_WarlockArm]	= "./../assets/modelos/WarlockArm.obj";
-	m[MESH_Wizard]		= "./../assets/modelos/Wizard.obj";
-	m[MESH_door]		= "./../assets/modelos/door.obj";
-	m[MESH_fountain]	= "./../assets/modelos/fountain.obj";
-	m[MESH_button]		= "./../assets/modelos/button.obj";
-	m[MESH_WizardArm]	= "./../assets/modelos/WizardArm.obj";
-	m[MESH_potion]		= "./../assets/modelos/potion.obj";
-	m[MESH_bomb]		= "./../assets/modelos/bomb.obj";
-	m[MESH_Warlock]		= "./../assets/modelos/Warlock.obj";
+	m[MESH_banner] = "./../assets/modelos/banner.obj";
+	m[MESH_barrel] = "./../assets/modelos/barrel.obj";
+	m[MESH_bath] = "./../assets/modelos/bath.obj";
+	m[MESH_bed] = "./../assets/modelos/bed.obj";
+	m[MESH_bench] = "./../assets/modelos/bench.obj";
+	m[MESH_book] = "./../assets/modelos/book.obj";
+	m[MESH_book_table] = "./../assets/modelos/book_table.obj";
+	m[MESH_bottle] = "./../assets/modelos/bottle.obj";
+	m[MESH_candle] = "./../assets/modelos/candle.obj";
+	m[MESH_casserole] = "./../assets/modelos/casserole.obj";
+	m[MESH_chair] = "./../assets/modelos/chair.obj";
+	m[MESH_chimney] = "./../assets/modelos/chimney.obj";
+	m[MESH_cup] = "./../assets/modelos/cup.obj";
+	m[MESH_death_fountain] = "./../assets/modelos/death_fountain.obj";
+	m[MESH_dish] = "./../assets/modelos/dish.obj";
+	m[MESH_door2] = "./../assets/modelos/door2.obj";
+	m[MESH_door_frame] = "./../assets/modelos/door_frame.obj";
+	m[MESH_double_door] = "./../assets/modelos/double_door.obj";
+	m[MESH_electricball] = "./../assets/modelos/electricball.obj";
+	m[MESH_fireball] = "./../assets/modelos/fireball.obj";
+	m[MESH_fire] = "./../assets/modelos/fire.obj";
+	m[MESH_girder] = "./../assets/modelos/girder.obj";
+	m[MESH_grail] = "./../assets/modelos/grail.obj";
+	m[MESH_hand_candle] = "./../assets/modelos/hand_candle.obj";
+	m[MESH_handcuffs] = "./../assets/modelos/handcuffs.obj";
+	m[MESH_hp] = "./../assets/modelos/hp.obj";
+	m[MESH_ice] = "./../assets/modelos/ice.obj";
+	m[MESH_lamp] = "./../assets/modelos/lamp.obj";
+	m[MESH_mp] = "./../assets/modelos/mp.obj";
+	m[MESH_open_book] = "./../assets/modelos/open_book.obj";
+	m[MESH_poison] = "./../assets/modelos/poison.obj";
+	m[MESH_pot_ice] = "./../assets/modelos/pot_ice.obj";
+	m[MESH_potion_hex] = "./../assets/modelos/potion_hex.obj";
+	m[MESH_potion_squad] = "./../assets/modelos/potion_squad.obj";
+	m[MESH_potion_tri] = "./../assets/modelos/potion_tri.obj";
+	m[MESH_regular] = "./../assets/modelos/regular.obj";
+	m[MESH_restore_fountain] = "./../assets/modelos/restore_fountain.obj";
+	m[MESH_shelf] = "./../assets/modelos/shelf.obj";
+	m[MESH_shelving01] = "./../assets/modelos/shelving01.obj";
+	m[MESH_shelving02] = "./../assets/modelos/shelving02.obj";
+	m[MESH_shelving03] = "./../assets/modelos/shelving03.obj";
+	m[MESH_shelving04] = "./../assets/modelos/shelving04.obj";
+	m[MESH_shelving_k] = "./../assets/modelos/shelving_k.obj";
+	m[MESH_shield] = "./../assets/modelos/shield.obj";
+	m[MESH_skull_painting] = "./../assets/modelos/skull_painting.obj";
+	m[MESH_smoking_pipe] = "./../assets/modelos/smoking_pipe.obj";
+	m[MESH_table02] = "./../assets/modelos/table02.obj";
+	m[MESH_table] = "./../assets/modelos/table.obj";
+	m[MESH_thunder] = "./../assets/modelos/thunder.obj";
+	m[MESH_torch] = "./../assets/modelos/torch.obj";
+	m[MESH_water_fountain] = "./../assets/modelos/water_fountain.obj";
+	m[MESH_wc] = "./../assets/modelos/wc.obj";
+	m[MESH_bomb] = "./../assets/modelos/bomb.obj";
+
+	m[MESH_WAR_body] = "./../assets/modelos/PlayerParts/Warlock/body.obj";
+	m[MESH_WAR_head] = "./../assets/modelos/PlayerParts/Warlock/head.obj";
+	m[MESH_WAR_leftArm] = "./../assets/modelos/PlayerParts/Warlock/leftArm.obj";
+	m[MESH_WAR_leftLeg] = "./../assets/modelos/PlayerParts/Warlock/leftLeg.obj";
+	m[MESH_WAR_ornament1] = "./../assets/modelos/PlayerParts/Warlock/ornament1.obj";
+	m[MESH_WAR_ornament2] = "./../assets/modelos/PlayerParts/Warlock/ornament2.obj";
+	m[MESH_WAR_rightArm] = "./../assets/modelos/PlayerParts/Warlock/rightArm.obj";
+	m[MESH_WAR_rightLeg] = "./../assets/modelos/PlayerParts/Warlock/rightLeg.obj";
+	m[MESH_WAR_staff] = "./../assets/modelos/PlayerParts/Warlock/staff.obj";
+
+	m[MESH_WIZ_body] = "./../assets/modelos/PlayerParts/Wizards/body.obj";
+	m[MESH_WIZ_head] = "./../assets/modelos/PlayerParts/Wizards/head.obj";
+	m[MESH_WIZ_leftArm] = "./../assets/modelos/PlayerParts/Wizards/leftArm.obj";
+	m[MESH_WIZ_leftLeg] = "./../assets/modelos/PlayerParts/Wizards/leftLeg.obj";
+	m[MESH_WIZ_ornament1] = "./../assets/modelos/PlayerParts/Wizards/ornament1.obj";
+	m[MESH_WIZ_ornament2] = "./../assets/modelos/PlayerParts/Wizards/ornament2.obj";
+	m[MESH_WIZ_rightArm] = "./../assets/modelos/PlayerParts/Wizards/rightArm.obj";
+	m[MESH_WIZ_rightLeg] = "./../assets/modelos/PlayerParts/Wizards/rightLeg.obj";
+	m[MESH_WIZ_staff] = "./../assets/modelos/PlayerParts/Wizards/staff.obj";
 
 	return m;
 }

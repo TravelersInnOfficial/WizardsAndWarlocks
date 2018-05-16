@@ -288,20 +288,18 @@ GBody* GraphicEngine::addSphere2Scene(vector3df p, vector3df r, vector3df s, flo
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path){
 	GBody* gb = nullptr;
-	 TOEvector3df data =  TOEvector3df(0, 0, 0);
-	 TOEvector3df scale =  TOEvector3df(1, 1, 1);
+	vector3df data =  vector3df(0, 0, 0);
+	vector3df scale =  vector3df(1, 1, 1);
 	
-	gb = new GBody(
-		privateSManager->AddMesh(data, data, scale, path)
-	);
-	return gb;
+	return addObjMeshSceneNode(path, data, data, scale);
 }
 
 GBody* GraphicEngine::addObjMeshSceneNode(std::string path, vector3df position, vector3df rotation, vector3df scale){
 	GBody* gb = nullptr;
-	 TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
-	 TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
-	 TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
+	TOEvector3df position_TOE =  TOEvector3df(position.X, position.Y, position.Z);
+	TOEvector3df rotation_TOE =  TOEvector3df(rotation.X, rotation.Y, rotation.Z);
+	TOEvector3df scale_TOE =  TOEvector3df(scale.X, scale.Y, scale.Z);
+	
 	
 	if(!NetworkEngine::GetInstance()->IsServerInit()){
 		gb = new GBody(
@@ -437,7 +435,7 @@ void GraphicEngine::SetKeyStatus(KeyboardKey code, keyStatesENUM status){
 }
 
 void GraphicEngine::AddDome(){
-	privateSManager->AddDome();
+	if(!NetworkEngine::GetInstance()->IsServerInit()) privateSManager->AddDome();
 }
 
 void GraphicEngine::EnableClipping(){
