@@ -24,6 +24,10 @@ void GText2D::SetText(std::string text){
     }
 }
 
+std::string GText2D::GetText(){
+    return m_tf2dtext->GetText();
+}
+
 void GText2D::SetTextSize(float siz){
     m_tf2dtext->SetTextSize(siz);
 }
