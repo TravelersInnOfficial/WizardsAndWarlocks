@@ -629,10 +629,6 @@ bool Player::ChangeCurrentSpell(int value){
 	return toRet;
 }
 
-void Player::SetSpell(int value){
-	ChangeCurrentSpell(value);
-}
-
 int Player::GetCurrentSpell(){
 	return m_currentSpell;
 }
@@ -754,10 +750,6 @@ void Player::ChangeHP(float HP){
 		m_dead = true;
 		if(m_overlayManager != nullptr) m_overlayManager->SetTime(BLOOD, 0);
 	}
-}
-
-void Player::SetController(ACTION_ENUM action, keyStatesENUM state){
-	m_controller->SetStatus(action, state);
 }
 
 bool Player::ChangeMP(float MP){
@@ -1107,7 +1099,7 @@ void Player::UpdatePosShape(float dtime){
 			m_playerNode->setRotation(m_camera->GetRotation());
 		}
 
-		/*
+		
 		// DEBUG BILLBOARDS
 		if(m_isPlayerOne){
 			int vel = m_max_velocity;
@@ -1116,7 +1108,7 @@ void Player::UpdatePosShape(float dtime){
 			vector3df pos;
 			
 			// SPEED
-			pos = vector3df(-0.5,0.75,0);
+			pos = vector3df(-0.5,0.5,2);
 			m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
 			//m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
 			//std::string jump = m_CanJump? "true" : "false";
@@ -1135,11 +1127,9 @@ void Player::UpdatePosShape(float dtime){
 			//m_playerNode->AddText("F:" + std::to_string(m_walkfps), pos, 3);
 		
 		} // END DEBUG BILLBOARDS
-*/
+
 	}
 }
-
-bool Player::IsPlayerOne(){ return(m_isPlayerOne); }
 
 void Player::HitMade(Player* player){
 	if(m_overlayManager != nullptr) m_overlayManager->SetTime(HITLANDED, 0.205);
@@ -1208,10 +1198,19 @@ void Player::changeSurface(float n) {
 	if (soundEvents["footsteps"] != nullptr) soundEvents["footsteps"]->setParamValue("Surface", n);
 }
 
+// CONTROLLER
+void Player::SetController(ACTION_ENUM action, keyStatesENUM state){
+	m_controller->SetStatus(action, state);
+}
+
+PlayerController* Player::GetController(){
+	return m_controller;
+}
+
 /********************************************************************************************************
  ********************************************** GETERS **************************************************
  ********************************************************************************************************/
-
+bool Player::IsPlayerOne(){ return(m_isPlayerOne); }
 
 vector3df Player::GetAngularVelocity(){
 	vector3df toRet = vector3df(-999,-999,-999);
@@ -1220,6 +1219,18 @@ vector3df Player::GetAngularVelocity(){
 }
 
 vector3df Player::GetPos(){ return m_position; }
+
+vector3df Player::GetHeadPos(){
+	float offset = -0.1;
+	vector3df headPos = m_position;
+	vector3df cameraRot = GetRot();
+
+	headPos.X += sin(cameraRot.Y) * offset;
+	headPos.Y += 0.5; // Y OFFSET
+	headPos.Z += cos(cameraRot.Y) * offset;
+
+	return (headPos);
+}
 
 float Player::GetRotY(){ return m_rotation.Y; }
 
@@ -1244,18 +1255,6 @@ float Player::GetSP(){ return m_SP; }
 
 float Player::GetDamageM(){ return m_DamageMult; }
 
-NetworkObject* Player::GetNetworkObject(){ return (m_networkObject); }
-
-Potion* Player::GetPotion(){ return m_potion; }
-
-bool Player::GetHasCharacter(){ return m_hasCharacter; }
-
-vector3df Player::GetVelocity(){
-	vector3df toRet = vector3df(-999,-999,-999);
-	if(m_hasCharacter) toRet = bt_body->GetLinearVelocity();
-	return toRet;
-}
-
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
 	cKin.position = m_position;
@@ -1265,27 +1264,17 @@ Kinematic Player::GetKinematic(){
     return cKin;
 }
 
-vector3df Player::GetHeadPos(){
-	float offset = -0.1;
-	vector3df headPos = m_position;
-	vector3df cameraRot = GetRot();
-
-	headPos.X += sin(cameraRot.Y) * offset;
-	headPos.Y += 0.5; // Y OFFSET
-	headPos.Z += cos(cameraRot.Y) * offset;
-
-	return (headPos);
+vector3df Player::GetVelocity(){
+	vector3df toRet = vector3df(-999,-999,-999);
+	if(m_hasCharacter) toRet = bt_body->GetLinearVelocity();
+	return toRet;
 }
+
+Alliance Player::GetAlliance(){ return m_playerAlliance; }
 
 int Player::GetNumberSpells(){ return m_numberSpells; }
 
 bool Player::GetReadyStatus(){ return m_readyToStart; }
-
-Alliance Player::GetAlliance(){ return m_playerAlliance; }
-
-PlayerController* Player::GetController(){
-	return m_controller;
-}
 
 std::string Player::GetName(){ return m_name; }
 
@@ -1293,27 +1282,20 @@ bool Player::GetMoving(){
 	return m_moving;
 }
 
-void Player::SetAlliance(Alliance newAlliance){
-	if(newAlliance == ERR_ALLIANCE) return;
+Potion* Player::GetPotion(){ return m_potion; }
 
-	m_playerAlliance = newAlliance;
+bool Player::GetHasCharacter(){ return m_hasCharacter; }
 
-	if(m_playerAlliance == ALLIANCE_WARLOCK)
-		TrapManager::GetInstance()->setPlayerUsings(this, 4);
-
-	if(m_hasCharacter){
-		DestroyPlayerGBody();
-		CreatePlayerGBody();
-	}
-
-	if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, m_playerAlliance, true, false);
-
-	m_HP = 100;
-	m_MP = 100;
-	m_SP = 100;
-	SetBillboard();
+bool Player::IsDead(){
+	return m_dead;
 }
 
+NetworkObject* Player::GetNetworkObject(){ return (m_networkObject); }
+
+
+/********************************************************************************************************
+ ********************************************** SETERS **************************************************
+ ********************************************************************************************************/
 void Player::SetPosition(vector3df pos){
 	if(m_hasCharacter){
 		m_position = pos;
@@ -1363,6 +1345,31 @@ void Player::SetName(std::string newName){
 	}
 }
 
+void Player::SetAlliance(Alliance newAlliance){
+	if(newAlliance == ERR_ALLIANCE) return;
+
+	m_playerAlliance = newAlliance;
+
+	if(m_playerAlliance == ALLIANCE_WARLOCK)
+		TrapManager::GetInstance()->setPlayerUsings(this, 4);
+
+	if(m_hasCharacter){
+		DestroyPlayerGBody();
+		CreatePlayerGBody();
+	}
+
+	if(m_isPlayerOne && m_networkObject != nullptr) m_networkObject->SetIntVar(PLAYER_ALLIANCE, m_playerAlliance, true, false);
+
+	m_HP = 100;
+	m_MP = 100;
+	m_SP = 100;
+	SetBillboard();
+}
+
+void Player::SetSpell(int value){
+	ChangeCurrentSpell(value);
+}
+
 void Player::SetVisible(bool visible){
 	m_visible = visible;
 
@@ -1396,6 +1403,22 @@ void Player::SetBillboard(){
 		m_playerNode->AddText(m_name, vector3df(0,1.25f,0));
 	}
 }
+
+void Player::SetRandomName(){
+	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
+	int index = rand() % arraySize;
+	std::string auxName = defaultNames[index];
+	SetName(auxName);
+}
+
+void Player::SetShader(SHADERTYPE shader){
+	m_playerNode->ChangeShader(shader);
+}
+
+void Player::SetGravity(float gravity){
+	bt_body->SetGravity(vector3df(0, gravity, 0));
+}		
+
 
 void Player::Draw(){
 	if(m_dead && m_targetDeadCam!=nullptr){
@@ -1490,17 +1513,6 @@ void Player::ChangeAnimation(std::string id, int fps, bool loop, bool wholeBody)
 	}
 }
 
-bool Player::IsDead(){
-	return m_dead;
-}
-
-void Player::SetRandomName(){
-	int arraySize = sizeof(defaultNames)/sizeof(defaultNames[0]);
-	int index = rand() % arraySize;
-	std::string auxName = defaultNames[index];
-	SetName(auxName);
-}
-
-void Player::SetShader(SHADERTYPE shader){
-	m_playerNode->ChangeShader(shader);
+void Player::UpdateStepVelocity(){
+	//soundEvents["footsteps"]->setParamValue("velocity", m_max_velocity);
 }

@@ -89,6 +89,7 @@ class Player: public Entidad{
 
 		// Controller
 		void SetController(ACTION_ENUM action, keyStatesENUM state);
+		PlayerController* GetController();
 
 		// Network Functions
 		void GetNetInput();
@@ -108,6 +109,8 @@ class Player: public Entidad{
 		
 		void UpdateSoundsPosition();		//Updates the continuous sounds
 		void changeSurface(float n);		//Changes the surface parameter of the event
+		
+		void UpdateStepVelocity();
 
 		//Geters
 		bool IsPlayerOne();
@@ -129,7 +132,6 @@ class Player: public Entidad{
 		Alliance GetAlliance();
 		int GetNumberSpells();
 		bool GetReadyStatus();
-		PlayerController* GetController();
 		std::string GetName();
 		bool GetMoving();
 		Potion* GetPotion();
@@ -137,22 +139,22 @@ class Player: public Entidad{
 		bool IsDead();
 
 		// Seters
-		void SetShader(SHADERTYPE shader);
 		void SetPosition(vector3df);
 		void SetPosX(float);
 		void SetPosY(float);
 		void SetRotation(vector3df rotation);
 		void SetHP(float);
 		void SetSP(float);
-		void SetDamageMult(float);
 		void SetDead(bool);
 		void SetNetworkObject(NetworkObject* newNetworkObject);
-		void SetAlliance(Alliance newAliance);
 		void SetMatchStatus(bool started);
-		void SetSpell(int value);
 		void SetName(std::string newName);
+		void SetAlliance(Alliance newAliance);
+		void SetSpell(int value);
 		void SetVisible(bool);
 		void SetRandomName();
+		void SetShader(SHADERTYPE shader);
+		void SetGravity(float gravity);
 
 		// Public variables
 		float 			m_max_velocity;		// Maxima Velocidad a la que puede alcanzar ACTUALMENTE
@@ -163,7 +165,7 @@ class Player: public Entidad{
 		bool 			m_visible;			// Is player visible?
 		bool 			m_CanJump;			// Puede saltar?
 		int 			m_walkfps;			// DEBUG: Fps a los que va actualmente la animacion de andar
-
+		
 	protected:
 		void InitPlayerAnimations();
 		void CreatePlayerGBody();
