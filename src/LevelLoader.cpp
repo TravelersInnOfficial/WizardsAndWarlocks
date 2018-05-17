@@ -17,6 +17,12 @@
 
 class GPortal;
 
+std::string LevelLoader::m_mapPath = "";
+float LevelLoader::m_centerX = 0.0f;
+float LevelLoader::m_centerY = 0.0f;
+float LevelLoader::m_sizeMap = 0.0f;
+float LevelLoader::m_zoom = 0.0f;
+
 LevelLoader::LevelLoader(){
 
 }
@@ -62,6 +68,20 @@ bool LevelLoader::LoadLevel(std::string jsonPath){
 	std::string model;
 	vector3df axis;
 	GRoom* room ;
+
+	m_mapPath = j["Map"][0]["Path"];
+
+	float value = j["Map"][0]["Center_X"];
+	m_centerX = roundf(value * 100.0f) / 100.0f;
+
+	value = j["Map"][0]["Center_Y"];
+	m_centerY = roundf(value * 100.0f) / 100.0f;
+
+	value = j["Map"][0]["Size"];
+	m_sizeMap = roundf(value * 100.0f) / 100.0f;
+
+	value = j["Map"][0]["Zoom"];
+	m_zoom 	= roundf(value * 100.0f) / 100.0f;
 
 	for(int k=0; !j["Rooms"][k].is_null(); k++){
 		room = nullptr;

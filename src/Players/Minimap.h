@@ -33,6 +33,7 @@ public:
 
         HUD_Minimap(Player* p);
         ~HUD_Minimap();
+        void InitMinimap();
         void DrawPlayers();
         void ZoomMap(float value);
         void SetMapSize(float size);

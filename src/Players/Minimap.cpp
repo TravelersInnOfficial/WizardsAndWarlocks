@@ -2,6 +2,7 @@
 
 #include <Assets.h>
 #include "Player.h"
+#include "./../LevelLoader.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Managers/TrapManager.h"
 #include "./../Objects/Trap.h"
@@ -15,9 +16,10 @@ HUD_Minimap::HUD_Minimap(Player* p){
     m_player = p;
 
     m_zoom = 1.0f;
-    m_sizeMap = 50.0f; // Ejemplo del Lobby2
-    m_originalSize = 50.0f;
-    m_mapPath = "./../assets/textures/HUD/Minimap/Mapa.jpg";
+    m_sizeMap = LevelLoader::m_sizeMap;
+    m_originalSize = m_sizeMap;
+
+    m_mapPath = LevelLoader::m_mapPath;
 
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
@@ -26,12 +28,25 @@ HUD_Minimap::HUD_Minimap(Player* p){
     float H = g_engine->GetScreenHeight();
     m_rotation = 0.0f;
 
-    m_center = vector2df(0,0.5f);
+    m_center = vector2df(LevelLoader::m_centerX, LevelLoader::m_centerY);
     m_size = vector2df(W/5 , (W/5)*ratio);
     m_position = vector2df(W-m_size.X, H-m_size.Y);
     m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
     m_mapImage->SetMask("./../assets/textures/HUD/Minimap/mask.jpg");
     m_compassImg = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_MINIMAP_COMPASS],m_position,m_size);
+
+    ZoomMap(LevelLoader::m_zoom);
+}
+
+void HUD_Minimap::InitMinimap(){
+    m_sizeMap = LevelLoader::m_sizeMap;
+    m_originalSize = m_sizeMap;
+
+    SetTexture(LevelLoader::m_mapPath);
+
+    m_center = vector2df(LevelLoader::m_centerX, LevelLoader::m_centerY);
+
+    ZoomMap(LevelLoader::m_zoom);
 }
 
 HUD_Minimap::~HUD_Minimap(){

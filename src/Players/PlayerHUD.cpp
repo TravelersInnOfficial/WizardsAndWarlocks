@@ -59,16 +59,16 @@ void PlayerHUD::InitHUD(){
         }
         if(spell_slot!= nullptr && health_orb!=nullptr && mana_orb != nullptr) p_initStaminaBar();
 
-
-        /************************************MINIMAP*************************************/
-        if(m_minimap == nullptr) m_minimap = new HUD_Minimap(m_player);
-
 	}
     else{
         health_orb->SetHeight(m_orb_height);
 	    mana_orb->SetHeight(m_orb_height);
     	stamina_bar->SetWidth(m_stamina_bar_width);
     }
+
+    /************************************MINIMAP*************************************/
+    if(m_minimap == nullptr) m_minimap = new HUD_Minimap(m_player);
+    else m_minimap->InitMinimap();
 }
 
 void PlayerHUD::Draw(){
