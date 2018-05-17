@@ -317,6 +317,9 @@ public:
 
 	vector2di GetTextureDims(std::string path);
 
+	float* GetMouseSensibilityPointer();
+	float GetMouseSensibility();
+
 private:
 	GraphicEngine(bool isServer = false);
 	bool m_isServer;
@@ -324,6 +327,8 @@ private:
 	bool ParticleState;
 	bool dynamicLights;
 	float ambientLight;
+
+	float mouse_sensibility;
 
 	VideoDriver*   privateDriver;
 	SceneManager*  privateSManager;

@@ -22,6 +22,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	ParticleState = true;
 	dynamicLights = true;
 	ambientLight = 0.20f;
+	mouse_sensibility = 0.5f;
 
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
@@ -535,4 +536,12 @@ void GraphicEngine::LoadMesh(std::string path){
 vector2di GraphicEngine::GetTextureDims(std::string path){
 	TOEvector2di dims = toe::GetTextureDims(path);
 	return vector2di(dims.X, dims.Y);
+}
+
+float* GraphicEngine::GetMouseSensibilityPointer(){
+	return &mouse_sensibility;
+}
+
+float GraphicEngine::GetMouseSensibility(){
+	return mouse_sensibility;
 }

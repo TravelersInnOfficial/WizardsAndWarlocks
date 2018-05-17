@@ -5,13 +5,13 @@
 #include <cmath>
 
 FPSCamera::FPSCamera(vector3df position, vector3df rotation):Camera(){
-    p_Camera = GraphicEngine::getInstance()->addCameraSceneNode(position, rotation);
+	GraphicEngine* g_engine = GraphicEngine::getInstance();
+    p_Camera = g_engine->addCameraSceneNode(position, rotation);
 
     changeX = 0;
     changeY = 0;
-    sensibility = 0.5f;
+    sensibility = g_engine->GetMouseSensibility();
 
-	GraphicEngine* g_engine = GraphicEngine::getInstance();
 	int screenW = g_engine->GetScreenWidth();
 	int screenH = g_engine->GetScreenHeight();
 	lastPos = vector2di(screenW/2, screenH/2);

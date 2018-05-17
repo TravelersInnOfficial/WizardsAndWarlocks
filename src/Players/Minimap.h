@@ -22,6 +22,7 @@ public:
         std::string                m_mapPath;
         vector2df                  m_position;
         vector2df                  m_size;
+        vector2df                  m_center;
         float                      m_rotation;
         
         std::vector<GSprite*>      m_players;

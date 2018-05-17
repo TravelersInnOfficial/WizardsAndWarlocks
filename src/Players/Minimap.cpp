@@ -17,7 +17,7 @@ HUD_Minimap::HUD_Minimap(Player* p){
     m_zoom = 1.0f;
     m_sizeMap = 50.0f; // Ejemplo del Lobby2
     m_originalSize = 50.0f;
-    m_mapPath = "./../assets/textures/HUD/Minimap/map.jpg";
+    m_mapPath = "./../assets/textures/HUD/Minimap/Mapa.jpg";
 
     GraphicEngine* g_engine = GraphicEngine::getInstance();
 
@@ -26,6 +26,7 @@ HUD_Minimap::HUD_Minimap(Player* p){
     float H = g_engine->GetScreenHeight();
     m_rotation = 0.0f;
 
+    m_center = vector2df(0,0.5f);
     m_size = vector2df(W/5 , (W/5)*ratio);
     m_position = vector2df(W-m_size.X, H-m_size.Y);
     m_mapImage = GraphicEngine::getInstance()->addSprite(m_mapPath, m_position, m_size);
@@ -111,8 +112,8 @@ void HUD_Minimap::UpdateScroll(){
     vector3df position = m_player->GetPos();
 
     // La distancia Z se corresponde con el scrollV
-    float xValue = position.X / (m_sizeMap * 2);
-    float zValue = position.Z / (m_sizeMap * 2);
+    float xValue = (position.X / (m_sizeMap * 2)) + m_center.X/2;
+    float zValue = (position.Z / (m_sizeMap * 2)) + m_center.Y/2;
 
     m_mapImage->SetScrollH(xValue);
     m_mapImage->SetScrollV(-zValue);
