@@ -163,7 +163,7 @@ void StateManager::UpdateDelta(){
 
 	// Esta cutremente aqui, SOLO ES PARA PRUEBAS
 	std::string myFps = std::to_string(int(1/(deltaTime)));
-	g_engine->ChangeWindowName(myFps);
+	//g_engine->ChangeWindowName(myFps);
 }
 
 int StateManager::GetWizardAINumber(){
