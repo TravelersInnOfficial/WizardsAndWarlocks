@@ -167,21 +167,9 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 }
 
 void Trap::Interact(Player* p){
-	NetworkEngine* n_engine = NetworkEngine::GetInstance();
-	if(!n_engine->IsClientInit()){
-		isInteracting = true;
-		if(deactivation_bar == nullptr) deactivation_bar = new HUD_bar();
-		Deactivate(deltaTime);
-		if(n_engine->IsServerInit()){
-			Server* myServer = n_engine->GetServer();
-			if(myServer != nullptr){
-				NetworkObject* no = p->GetNetworkObject();
-				if(no != nullptr){
-					myServer->EraseTrap(trapId, no->GetObjId());
-				}
-			}
-		}
-	}
+	isInteracting = true;
+	deactivation_bar = new HUD_bar();
+	Deactivate(deltaTime);
 }
 
 Trap::HUD_bar::HUD_bar(){
@@ -209,6 +197,7 @@ void Trap::HUD_bar::Update(float time, float total){
 }
 
 void Trap::Activate(Player* player){
+
 	switch(m_trapType){
 		case TENUM_DEATH_CLAWS:
 			EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
@@ -250,6 +239,7 @@ void Trap::Activate(Player* player){
 
 // FOR NET SYNC
 void Trap::ForceEffect(Player* player){
+
 	switch(m_trapType){
 		case TENUM_DEATH_CLAWS:
 			EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
@@ -281,7 +271,14 @@ void Trap::ForceEffect(Player* player){
 void Trap::Deactivate(float deltaTime){
 	if(deactivation_bar != nullptr) deactivation_bar->Update(interaction_time, m_deactivation_time);
 	if(interaction_time >= m_deactivation_time){
-		TrapManager::GetInstance()->DeleteTrap(this);
+		NetworkEngine* n_engine = NetworkEngine::GetInstance();
+		if(!n_engine->IsClientInit()){
+			TrapManager::GetInstance()->DeleteTrap(this);
+			if(n_engine->IsServerInit()){
+				Server* myServer = n_engine->GetServer();
+				if(myServer != nullptr) myServer->EraseTrap(trapId, -1);
+			}
+		}
 	}
 }
 
