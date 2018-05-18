@@ -60,32 +60,34 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
-            nodePos.Y += 0.5;
-            void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
-            
-            // Hacemos un procesado inicial del puntero
-            if(object!=nullptr){
-                Entidad* entity = (Entidad*)object;
-                if(entity->GetClase()==EENUM_DOOR){
-                    Door* door = (Door*)entity;
-                    if(!door->GetOpenState()){
-                        // En el caso de que la puerte este cerrada puede ver a traves
-                        object = nullptr;
+            if(pos.Y - nodePos.Y > -0.5f){
+                nodePos.Y += 0.5;
+                void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
+                
+                // Hacemos un procesado inicial del puntero
+                if(object!=nullptr){
+                    Entidad* entity = (Entidad*)object;
+                    if(entity->GetClase()==EENUM_DOOR){
+                        Door* door = (Door*)entity;
+                        if(!door->GetOpenState()){
+                            // En el caso de que la puerte este cerrada puede ver a traves
+                            object = nullptr;
+                        }
                     }
                 }
-            }
-            
-            // En el caso de que no haya nada en medio avanzamos el output a i
-            if(object == nullptr){
-                output = i;
-            }
-            // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
-            if(object!=nullptr && i == start && i!=0){
-                output = start-1;
-                break;
+                
+                // En el caso de que no haya nada en medio avanzamos el output a i
+                if(object == nullptr){
+                    output = i;
+                }
+                // En el caso de que no veamos el actual es que ha habido un error y debemos retroceder
+                if(object!=nullptr && i == start && i!=0){
+                    output = start-1;
+                    break;
+                } 
             }
         }
-    //std::cout<<output<<"/"<<size<<std::endl;
+    //std::cout<<output<<"/"<<size-1<<std::endl;
     // En el caso de que se pase, miramos que el camino sea superior a 1
     }else if(m_path.size() > 0){
         // Lo ponemos al ultimo
@@ -288,9 +290,9 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
             //We’ve finished looking at the connections for the current node, so add it to the closed list 
             //and remove it from the open list
             //ALREADY REMOVED WHEN GET SMALLESTELEMENT
+        
+        
             //m_openList->remove(current);
-
-
             m_closedList->add(current);
         }
 
@@ -299,6 +301,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
             //std::cout<<"new path"<<std::endl;
             Node* currentNode = current->m_node;
             if(currentNode != EndNode) {
+                std::cout<<"Algo ha ido mal"<<std::endl;
                 m_path.push_back(EndNode);
             }
             do{

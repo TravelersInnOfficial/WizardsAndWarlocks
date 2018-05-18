@@ -93,6 +93,7 @@ void Match::Draw(){
 	if(playerOne != nullptr){
 		g_engine->drawAim(playerOne->GetMoving());
 		playerOne->Draw();
+		playerManager->DrawDebug();
 	}
 }
 

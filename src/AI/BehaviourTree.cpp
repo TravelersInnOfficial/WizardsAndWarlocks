@@ -119,7 +119,7 @@ void BehaviourTree::CreateReceive(){
     sc_seePlayers->addChild(sl_checkSightPlayer);
 
     Selector* sl_checkHearPlayer = new Selector();
-    sl_checkHearPlayer->addChild(new CheckPlayerEscape);
+    sl_checkHearPlayer->addChild(new CheckPlayerEscape());
     sl_checkHearPlayer->addChild(new PlayerHearing());
 
     Secuencia* sc_hearPlayers = new Secuencia();
@@ -349,9 +349,12 @@ void BehaviourTree::CreateExploreTask(){
 }
 
 void BehaviourTree::CreateExploreMove(){
-    Task* t = new WhereExplore();
-    informacion->SetPuntero(AI_MOVE_EXPLORE, t);
-    tasks.push_back(t);
+    Secuencia* sc_whereExplore = new Secuencia();
+    sc_whereExplore->addChild(new WhereExplore());
+    sc_whereExplore->addChild(new CheckJump());
+
+    informacion->SetPuntero(AI_MOVE_EXPLORE, sc_whereExplore);
+    tasks.push_back(sc_whereExplore);
 }
 
 void BehaviourTree::CreateTravelTask(){
@@ -364,9 +367,12 @@ void BehaviourTree::CreateTravelTask(){
 }
 
 void BehaviourTree::CreateTravelMove(){
-    Task* t = new TravelRoom();
-    informacion->SetPuntero(AI_MOVE_TRAVEL, t);
-    tasks.push_back(t);
+    Secuencia* sc_travelMove = new Secuencia();
+    sc_travelMove->addChild(new TravelRoom());
+    sc_travelMove->addChild(new CheckJump());
+
+    informacion->SetPuntero(AI_MOVE_TRAVEL, sc_travelMove);
+    tasks.push_back(sc_travelMove);
 }
 
 void BehaviourTree::CreateOpenDoor(){
@@ -402,10 +408,14 @@ void BehaviourTree::CreateMoveInteract(){
     sc_moveInteract->addChild(new CheckDistance(2.0f)); // Distancia del raycast
     sc_moveInteract->addChild(new FaceObject());
 
+    Secuencia* sc_movePath = new Secuencia();
+    sc_movePath->addChild(new TargetPath());
+    sc_movePath->addChild(new CheckJump());
+
     Selector* sc_moveTarget = new Selector();
     sc_moveTarget->addChild(sc_moveInteract);
     sc_moveTarget->addChild(new CheckDoorInFront(2.0f));
-    sc_moveTarget->addChild(new TargetPath());
+    sc_moveTarget->addChild(sc_movePath);
 
     informacion->SetPuntero(AI_MOVE_INTERACT, sc_moveTarget);
     tasks.push_back(sc_moveTarget);

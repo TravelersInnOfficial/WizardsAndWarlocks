@@ -109,7 +109,7 @@ bool SightModality::checkLineOfSight(vector3df sigPos, vector3df srPos){
 		EntityEnum valor = e->GetClase();
 		if(valor == EENUM_PLAYER){
 			Player* p = (Player*)obj;
-			vector3df pos = p->GetPos();
+			vector3df pos = p->GetHeadPos();
 			if(pos == srPos){
 				return true;
 			}

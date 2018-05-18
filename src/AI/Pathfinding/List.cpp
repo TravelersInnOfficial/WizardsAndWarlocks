@@ -30,38 +30,11 @@ void List::add(NodeRecord* nr){
 }
 
 void List::remove(NodeRecord* nr) {
-    /*
-    float cost = nr->m_estimatedTotalCost;
-    int size = m_list.size();
-    for(int i = 0; i<size; i++){
-        NodeRecord* current = m_list[i]; 
-        if(nr!= current){ 
-            m_list.erase(m_list.begin() + i);
-        }
-        else if(cost<=current->m_estimatedTotalCost){
-            break;
-        }
-    }
-    */
-
-    float cost = nr->m_estimatedTotalCost;
     int size = m_list.size();
     for(int i = 0; i<size; i++){
         NodeRecord* current = m_list[i]; 
         if(nr == current){
-            //delete m_list[i];
-            //m_list.erase(m_list.begin() + i);
-            
-            //cambiamos el seleccionado por el ultimo y hacemos un heapify
-            m_list[i] = m_list[m_list.size()-1];
-            
-            //delete m_list[size-1];
-            m_list.erase(m_list.end()-1);
-
-            heapify(i);
-            break;
-        }
-        else if(cost<=current->m_estimatedTotalCost){
+            m_list.erase(m_list.begin()+i);
             break;
         }
     }
@@ -148,80 +121,22 @@ void List::printListOfNodes(){
 /**************************************************\ MIN HEAP FUNCTIONS \**************************************************/
 
 void List::insertNode(NodeRecord* nr){
-    //insert the new element at the end of the heap
-    m_list.push_back(nr);
-    
-    //check if the heap property has been broken
-    int i = m_list.size()-1;
-    //while the parent node has bigger CostSoFar swap the nodes
-    while (i != 0 && m_list[parentNodeIndex(i)]->m_estimatedTotalCost > m_list[i]->m_estimatedTotalCost)
-    {
-       swapNodes(i, parentNodeIndex(i));
-       i = parentNodeIndex(i);
+
+    int size = m_list.size();
+    for(int i=0; i<size; i++){
+        if(nr->m_estimatedTotalCost < m_list[i]->m_estimatedTotalCost){
+            m_list.insert(m_list.begin() + i, nr);
+            return;
+        }
     }
+
+    m_list.push_back(nr);
+
 }
 
 
 NodeRecord* List::getMin(){
     NodeRecord* min = m_list[0];
-
-    int size = m_list.size();
-    m_list[0] = m_list[size-1];
-
-    m_list.erase(m_list.end()-1);
-
-    heapify(0);
+    m_list.erase(m_list.begin());
     return min;
-}
-
-void List::heapify(int root){
-    int listSize = m_list.size();
-    //get the left node
-    int l = leftNodeIndex(root);
-    //get the right node
-    int r = rightNodeIndex(root);
-    //asume that the root is the smallest initially
-    int min = root;
-    //if left index is minor than m_list size and the cost so far of the left is minor that the root, the new smallest is the left
-    if(l!= -1 && l<listSize && m_list[min]->m_estimatedTotalCost > m_list[l]->m_estimatedTotalCost) min = l;
-    //if left index is minor than m_list size and the cost so far of the right is minor that the root, the new smallest is the right
-    if(r!=-1 && r<listSize && m_list[min]->m_estimatedTotalCost > m_list[r]->m_estimatedTotalCost) min = r;
-
-    //if the smallest is different from the root, switch the actual root and smallest and proceed to the next level of the heap
-    if(min != root){
-        swapNodes(root, min);
-        heapify(min);
-    }
-}
-
-void List::swapNodes(int nr1, int nr2){
-    std::iter_swap(m_list.begin()+nr1, m_list.begin()+nr2);
-    // Al crear un NodeRecord en el metodo al salir de este se elimina
-    // Llamando a su destructor y eliminando cosas que no toca
-    /*NodeRecord aux = *nr1;
-
-    *nr1 = *nr2;
-    *nr2 = aux;
-    */
-}
-
-int List::parentNodeIndex(int index){
-    int pos = (index-1)/ 2;
-    int listSize = m_list.size();
-    if(pos >=0 && pos<listSize) return pos;
-    return -1;
-}
-
-int List::leftNodeIndex(int index){
-    int pos = (2*index + 1);
-    int listSize = m_list.size();
-    if(pos >=0 && pos<listSize) return pos;
-    return -1;
-}
-
-int List::rightNodeIndex(int index){
-    int pos = (2*index + 2);
-    int listSize = m_list.size();
-    if(pos >=0 && pos<listSize) return pos;
-    return -1;
 }

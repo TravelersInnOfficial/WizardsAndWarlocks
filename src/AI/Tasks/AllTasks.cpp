@@ -381,6 +381,43 @@ bool WhereExplore::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	CHECK JUMP
+//
+// ================================================================================================= //
+
+CheckJump::CheckJump(){}
+
+bool CheckJump::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"Check Jump";
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character != nullptr){
+		vector3df pos = character->GetPos();
+		pos.Y -= 0.7;
+
+		vector3df toMove = character->GetForceToMove();
+		toMove.Y = 0;
+		toMove.normalize();
+		toMove = toMove * 1.0f + pos;
+
+		int collisionFilter = C_WALL;
+		BulletEngine* f_engine = BulletEngine::GetInstance();
+		void* object = f_engine->Raycast(pos, toMove, collisionFilter);
+
+		if(object != nullptr){
+			pos.Y += 1.0f;
+			toMove.Y += 1.0f; 
+			object = f_engine->Raycast(pos, toMove);
+			if(object==nullptr){
+				character->SetController(ACTION_JUMP, PRESSED);
+			}
+		}
+	}
+	return false;
+}
+
+// ================================================================================================= //
+//
 //	CHECK EXPLORE
 //
 // ================================================================================================= //

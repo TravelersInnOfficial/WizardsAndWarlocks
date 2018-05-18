@@ -37,6 +37,7 @@ public:
 	void EraseAllCharacters();
 	void ReturnAllToLobby();
 	void RefreshServerAll();
+	void DrawDebug();
 
 	void SpawnAI();
 	void EraseAI();

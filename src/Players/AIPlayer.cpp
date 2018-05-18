@@ -31,8 +31,10 @@ AIPlayer::AIPlayer():Player(false){
 
 	path = new Pathfinding();
 
+	m_headPos = GetHeadPos();
+
 	RegionalSenseManager* senseManager = RegionalSenseManager::GetInstance();
-	sensor = senseManager->AddSensor(id, &m_position, &m_rotation, 0.0f, behaviour->GetBlackboard());
+	sensor = senseManager->AddSensor(id, &m_headPos, &m_rotation, 0.0f, behaviour->GetBlackboard());
 
 	shootSpell = false;
 	castingSpell = false;
@@ -143,8 +145,17 @@ void AIPlayer::ResetValues(){
 	SetAllInput(UP);
 	forceToMove = vector3df(0,0,0);
 	forceToRotate = vector2df(0,0);
-	m_rotation.X = elevation;
-	std::cout<<elevation<<std::endl;
+	m_rotation.X = -elevation;
+}
+
+Kinematic AIPlayer::GetKinematic(){
+	Kinematic cKin;
+	cKin.position = GetHeadPos();
+	cKin.orientation =  vector2df(GetRot());
+	cKin.orientation.X = elevation;
+   	cKin.velocity = GetVelocity();
+    cKin.rotation = vector2df(GetAngularVelocity());
+    return cKin;
 }
 
 void AIPlayer::Update(float deltaTime){
@@ -154,6 +165,7 @@ void AIPlayer::Update(float deltaTime){
 		Steering2Controller(deltaTime);
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update(deltaTime);		// Check Inputs
+		m_headPos = GetHeadPos();		// Tiene que calcularse a posteriori para que coincida el valor con el del sensor
 	}
 }
 
@@ -217,9 +229,18 @@ void AIPlayer::SetForceToMove(vector3df force){
 	forceToMove = force;
 }
 
+vector3df AIPlayer::GetForceToMove(){
+	return forceToMove;
+}
+
 void AIPlayer::SetForceToRotate(vector2df force){
 	forceToRotate = force;
 }
+
+vector2df AIPlayer::GetForceToRotate(){
+	return forceToRotate;
+}
+
 
 void AIPlayer::Steering2Controller(float deltaTime){
 	// CAMBIAMOS LA POSICION DEL PLAYER, EL MOVIMIENTO
@@ -252,7 +273,7 @@ void AIPlayer::Steering2Controller(float deltaTime){
 	SetAngularForce(vector3df( 0 ,forceToRotate.Y, 0));
 
 	// CAMBIAMOS LA ROTACION EN X DE LA IA, MIRAR ARRIBA/ABAJO
-	float changeElevation = (forceToRotate.X) * deltaTime;
+	float changeElevation = (forceToRotate.X/2) * deltaTime;
 	elevation += changeElevation;
 }
 
@@ -318,13 +339,13 @@ void AIPlayer::Debug(){
 	if(m_hasCharacter){
 		GraphicEngine* g_engine = GraphicEngine::getInstance();
 
-		vector3df p = m_position;
+		vector3df p = GetHeadPos();
 		vector3df l = m_rotation;
 		vector3df c = vector3df(1,1,1);
 		vector3df o = vector3df(0,0,0);
 
 		// Cono de vision
-		if(true){
+		if(false){
 			vector3df o = vector3df(p.X+sin(l.Y+0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y+0.5235)*3 );
 			g_engine->paintLineDebug(p, o, c);
 			o = vector3df(p.X+sin(l.Y-0.5235)*3, p.Y + sin(-l.X+0.5235)*3, p.Z+cos(l.Y-0.5235)*3 );
@@ -338,7 +359,7 @@ void AIPlayer::Debug(){
 		// Rayos verdes
 		float lookAHead = 2.5f;
 		float lookAHead2 = 1.0f;
-		if(true){
+		if(false){
 			c = vector3df(0,1,0);
 			o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y, p.Z+cos(l.Y)*lookAHead); 
 			g_engine->paintLineDebug(p, o, c);
@@ -348,8 +369,27 @@ void AIPlayer::Debug(){
 			g_engine->paintLineDebug(p, o, c);
 		}
 
-		//Varibles IA
+		// Altura de vision
 		if(true){
+			c = vector3df(0,0,1);
+			o = vector3df(p.X+sin(l.Y)*lookAHead, p.Y+sin(elevation)*lookAHead, p.Z+cos(l.Y)*lookAHead);
+			g_engine->paintLineDebug(p, o, c);
+		}
+
+		if(true){
+			p = m_position;
+			p.Y -= 0.7;
+			vector3df toMove = GetForceToMove();
+			toMove.Y = 0;
+			toMove.normalize();
+			toMove = toMove * 1.0f;
+
+			o = p + toMove;
+			g_engine->paintLineDebug(p, o, c);
+		}
+
+		//Varibles IA
+		if(false){
 			// Esta disparando hechizo? CastingSpell
 			c = vector3df(255*castingSpell, 0, 0);
 			// Ha conseguido lanzar el hechizo? ShootSpell
@@ -364,7 +404,7 @@ void AIPlayer::Debug(){
 		if(true){
 			vector2di values = GetActionMoveIA();
 			std::string text = AICode_str[values.X] + " / " + AICode_str[values.Y];
-			m_playerNode->AddText(text, vector3df(0,1.5,0));
+			m_playerNode->EditText(text);
 		}
 	}
 }

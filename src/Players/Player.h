@@ -127,7 +127,7 @@ class Player: public Entidad{
 		float GetMP();
 		float GetSP();
 		float GetDamageM();
-		Kinematic GetKinematic();
+		virtual Kinematic GetKinematic();
 		vector3df GetVelocity();
 		Alliance GetAlliance();
 		int GetNumberSpells();
@@ -137,6 +137,7 @@ class Player: public Entidad{
 		Potion* GetPotion();
 		bool GetHasCharacter();
 		bool IsDead();
+		virtual void Debug();
 
 		// Seters
 		void SetPosition(vector3df);

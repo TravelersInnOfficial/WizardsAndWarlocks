@@ -21,7 +21,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	ShadowState = true;
 	ParticleState = true;
 	dynamicLights = true;
-	ambientLight = 0.20f;
+	ambientLight = 0.40f;
 	mouse_sensibility = 0.5f;
 
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";

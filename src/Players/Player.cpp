@@ -1257,7 +1257,7 @@ float Player::GetDamageM(){ return m_DamageMult; }
 
 Kinematic Player::GetKinematic(){
 	Kinematic cKin;
-	cKin.position = m_position;
+	cKin.position = GetHeadPos();
 	cKin.orientation =  vector2df(GetRot());
    	cKin.velocity = GetVelocity();
     cKin.rotation = vector2df(GetAngularVelocity());
@@ -1512,6 +1512,8 @@ void Player::ChangeAnimation(std::string id, int fps, bool loop, bool wholeBody)
 		}
 	}
 }
+
+void Player::Debug(){}
 
 void Player::UpdateStepVelocity(){
 	//soundEvents["footsteps"]->setParamValue("velocity", m_max_velocity);

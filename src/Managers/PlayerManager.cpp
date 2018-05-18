@@ -321,6 +321,13 @@ void PlayerManager::CheckWon(){
 
 }
 
+void PlayerManager::DrawDebug(){
+	int size = players.size();
+	for(int i=0; i<size; i++){
+		players[i]->Debug();
+	}
+}
+
 bool PlayerManager::CheckIfWon(Alliance alliance){
 	bool toRet = false;
 	if(alliance == ALLIANCE_WIZARD) toRet = wizardsWin;

@@ -180,7 +180,7 @@ Kinematic Fountain::GetKinematic(){
 	Kinematic cKin;
 	// Calculamos el punto delante de la fuente en vez del central
 	vector3df posInit = bt_body->GetPosition();
-	float dist = +0.6f;
+	float dist = +0.1f;
 	posInit.X += cos(rotation.Y)*dist;
 	posInit.Z += sin(rotation.Y)*dist;
 

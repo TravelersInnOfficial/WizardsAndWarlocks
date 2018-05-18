@@ -84,11 +84,6 @@ private:
     //min heap functions
     NodeRecord* getMin();
     void        insertNode(NodeRecord*);
-    void        swapNodes(int, int);
-    void        heapify(int);
-    int         parentNodeIndex(int);
-    int         leftNodeIndex(int);
-    int         rightNodeIndex(int);
     
 };
 

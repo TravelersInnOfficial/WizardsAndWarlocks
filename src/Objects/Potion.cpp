@@ -80,7 +80,6 @@ void Potion::Interact(Player* p){
 				}
 			}
 		}
-
 	}
 }
 

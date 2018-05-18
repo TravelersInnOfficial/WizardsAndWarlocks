@@ -17,7 +17,7 @@ EntityEnum Entidad::GetClase(){
 int Entidad::GetId(){
 	return id;
 }
-
+#include <iostream>
 void Entidad::Contact(void* punt, EntityEnum tipo){}
 void Entidad::Interact(Player* p){}
 void Entidad::ShowInteractInfo(){}
