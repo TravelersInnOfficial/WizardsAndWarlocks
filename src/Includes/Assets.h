@@ -49,7 +49,6 @@ enum GAMETEXTURES {
 	TEXTURE_HITLANDED,
 	TEXTURE_decal,
 	TEXTURE_SPELL_WALL,
-	TEXTURE_BOOK_BACKGROUND,
 	TEXTURE_SHOP_BACKGROUND,
 	TEXTURE_ALLIANCE_BACKGROUND,
 	TEXTURE_BUTTON,
@@ -135,7 +134,99 @@ enum GAMETEXTURES {
 	TEXTURE_PoisonParticle,
 	TEXTURE_SilencedParticles,
 	TEXTURE_SnareParticle,
-	TEXTURE_TrapParticle
+	TEXTURE_TrapParticle,
+
+	TEXTURE_MAINMENU_BKG_0,
+	TEXTURE_MAINMENU_BKG_1,
+	TEXTURE_MAINMENU_BKG_2,
+	TEXTURE_MAINMENU_BKG_3,
+	TEXTURE_MAINMENU_BKG_4,
+	TEXTURE_MAINMENU_BKG_5,
+	TEXTURE_MAINMENU_BKG_6,
+	TEXTURE_MAINMENU_BKG_7,
+	TEXTURE_MAINMENU_BKG_8,
+	TEXTURE_MAINMENU_BKG_9,
+	TEXTURE_MAINMENU_BKG_10,
+	TEXTURE_MAINMENU_BKG_11,
+	TEXTURE_MAINMENU_BKG_12,
+	TEXTURE_MAINMENU_BKG_13,
+	TEXTURE_MAINMENU_BKG_14,
+	TEXTURE_MAINMENU_BKG_15,
+	TEXTURE_MAINMENU_BKG_16,
+	TEXTURE_MAINMENU_BKG_17,
+	TEXTURE_MAINMENU_BKG_18,
+	TEXTURE_MAINMENU_BKG_19,
+	TEXTURE_MAINMENU_BKG_20,
+	TEXTURE_MAINMENU_BKG_21,
+	TEXTURE_MAINMENU_BKG_22,
+	TEXTURE_MAINMENU_BKG_23,
+	TEXTURE_MAINMENU_BKG_24,
+	TEXTURE_MAINMENU_BKG_25,
+	TEXTURE_MAINMENU_BKG_26,
+	TEXTURE_MAINMENU_BKG_27,
+	TEXTURE_MAINMENU_BKG_28,
+	TEXTURE_MAINMENU_BKG_29,
+	TEXTURE_MAINMENU_BKG_30,
+	TEXTURE_MAINMENU_BKG_31,
+	TEXTURE_MAINMENU_BKG_32,
+	TEXTURE_MAINMENU_BKG_33,
+	TEXTURE_MAINMENU_BKG_34,
+	TEXTURE_MAINMENU_BKG_35,
+	TEXTURE_MAINMENU_BKG_36,
+	TEXTURE_MAINMENU_BKG_37,
+	TEXTURE_MAINMENU_BKG_38,
+	TEXTURE_MAINMENU_BKG_39,
+	TEXTURE_MAINMENU_BKG_40,
+	TEXTURE_MAINMENU_BKG_41,
+	TEXTURE_MAINMENU_BKG_42,
+	TEXTURE_MAINMENU_BKG_43,
+	TEXTURE_MAINMENU_BKG_44,
+	TEXTURE_MAINMENU_BKG_45,
+	TEXTURE_MAINMENU_BKG_46,
+	TEXTURE_MAINMENU_BKG_47,
+	TEXTURE_MAINMENU_BKG_48,
+	TEXTURE_MAINMENU_BKG_49,
+	TEXTURE_MAINMENU_BKG_50,
+	TEXTURE_MAINMENU_BKG_51,
+	TEXTURE_MAINMENU_BKG_52,
+	TEXTURE_MAINMENU_BKG_53,
+	TEXTURE_MAINMENU_BKG_54,
+	TEXTURE_MAINMENU_BKG_55,
+	TEXTURE_MAINMENU_BKG_56,
+	TEXTURE_MAINMENU_BKG_57,
+	TEXTURE_MAINMENU_BKG_58,
+	TEXTURE_MAINMENU_BKG_59,
+	TEXTURE_MAINMENU_BKG_60,
+	TEXTURE_MAINMENU_BKG_61,
+	TEXTURE_MAINMENU_BKG_62,
+	TEXTURE_MAINMENU_BKG_63,
+	TEXTURE_MAINMENU_BKG_64,
+	TEXTURE_MAINMENU_BKG_65,
+	TEXTURE_MAINMENU_BKG_66,
+	TEXTURE_MAINMENU_BKG_67,
+	TEXTURE_MAINMENU_BKG_68,
+	TEXTURE_MAINMENU_BKG_69,
+	TEXTURE_MAINMENU_BKG_70,
+	TEXTURE_MAINMENU_BKG_71,
+	TEXTURE_MAINMENU_BKG_72,
+	TEXTURE_MAINMENU_BKG_73,
+	TEXTURE_MAINMENU_BKG_74,
+	TEXTURE_MAINMENU_BKG_75,
+	TEXTURE_MAINMENU_BKG_76,
+	TEXTURE_MAINMENU_BKG_77,
+	TEXTURE_MAINMENU_BKG_78,
+	TEXTURE_MAINMENU_BKG_79,
+	TEXTURE_MAINMENU_BKG_80,
+	TEXTURE_MAINMENU_BKG_81,
+	TEXTURE_MAINMENU_BKG_82,
+	TEXTURE_MAINMENU_BKG_83,
+	TEXTURE_MAINMENU_BKG_84,
+	TEXTURE_MAINMENU_BKG_85,
+	TEXTURE_MAINMENU_BKG_86,
+	TEXTURE_MAINMENU_BKG_87,
+	TEXTURE_MAINMENU_BKG_88,
+	TEXTURE_MAINMENU_BKG_89,
+	TEXTURE_MAINMENU_BKG_90
 };
 
 enum GAMEMESHES {
@@ -289,7 +380,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SHOP_BACKGROUND]				= "./../assets/textures/GUI/Menus/ShopMenu/shop_background.png";
 	m[TEXTURE_SHOP_SLOT]					= "./../assets/textures/GUI/Menus/ShopMenu/slot.png";
 	m[TEXTURE_ALLIANCE_BACKGROUND]			= "./../assets/textures/GUI/Menus/AllianceMenu/alliance_background.png";
-	m[TEXTURE_BOOK_BACKGROUND]				= "./../assets/textures/GUI/Menus/MainMenu/book_background.png";
 	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
 	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
 	m[TEXTURE_WARLOCK_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance.png";
@@ -365,6 +455,98 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SilencedParticles] = "../assets/textures/particles/SilencedParticles.png";
 	m[TEXTURE_SnareParticle] = "../assets/textures/particles/SnareParticle.png";
 	m[TEXTURE_TrapParticle] = "../assets/textures/particles/TrapParticle.png";
+
+	m[TEXTURE_MAINMENU_BKG_0]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_0.jpg";
+	m[TEXTURE_MAINMENU_BKG_1]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_1.jpg";
+	m[TEXTURE_MAINMENU_BKG_2]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_2.jpg";
+	m[TEXTURE_MAINMENU_BKG_3]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_3.jpg";
+	m[TEXTURE_MAINMENU_BKG_4]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_4.jpg";
+	m[TEXTURE_MAINMENU_BKG_5]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_5.jpg";
+	m[TEXTURE_MAINMENU_BKG_6]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_6.jpg";
+	m[TEXTURE_MAINMENU_BKG_7]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_7.jpg";
+	m[TEXTURE_MAINMENU_BKG_8]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_8.jpg";
+	m[TEXTURE_MAINMENU_BKG_9]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_9.jpg";
+	m[TEXTURE_MAINMENU_BKG_10]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_10.jpg";
+	m[TEXTURE_MAINMENU_BKG_11]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_11.jpg";
+	m[TEXTURE_MAINMENU_BKG_12]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_12.jpg";
+	m[TEXTURE_MAINMENU_BKG_13]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_13.jpg";
+	m[TEXTURE_MAINMENU_BKG_14]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_14.jpg";
+	m[TEXTURE_MAINMENU_BKG_15]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_15.jpg";
+	m[TEXTURE_MAINMENU_BKG_16]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_16.jpg";
+	m[TEXTURE_MAINMENU_BKG_17]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_17.jpg";
+	m[TEXTURE_MAINMENU_BKG_18]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_18.jpg";
+	m[TEXTURE_MAINMENU_BKG_19]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_19.jpg";
+	m[TEXTURE_MAINMENU_BKG_20]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_20.jpg";
+	m[TEXTURE_MAINMENU_BKG_21]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_21.jpg";
+	m[TEXTURE_MAINMENU_BKG_22]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_22.jpg";
+	m[TEXTURE_MAINMENU_BKG_23]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_23.jpg";
+	m[TEXTURE_MAINMENU_BKG_24]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_24.jpg";
+	m[TEXTURE_MAINMENU_BKG_25]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_25.jpg";
+	m[TEXTURE_MAINMENU_BKG_26]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_26.jpg";
+	m[TEXTURE_MAINMENU_BKG_27]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_27.jpg";
+	m[TEXTURE_MAINMENU_BKG_28]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_28.jpg";
+	m[TEXTURE_MAINMENU_BKG_29]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_29.jpg";
+	m[TEXTURE_MAINMENU_BKG_30]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_30.jpg";
+	m[TEXTURE_MAINMENU_BKG_31]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_31.jpg";
+	m[TEXTURE_MAINMENU_BKG_32]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_32.jpg";
+	m[TEXTURE_MAINMENU_BKG_33]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_33.jpg";
+	m[TEXTURE_MAINMENU_BKG_34]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_34.jpg";
+	m[TEXTURE_MAINMENU_BKG_35]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_35.jpg";
+	m[TEXTURE_MAINMENU_BKG_36]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_36.jpg";
+	m[TEXTURE_MAINMENU_BKG_37]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_37.jpg";
+	m[TEXTURE_MAINMENU_BKG_38]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_38.jpg";
+	m[TEXTURE_MAINMENU_BKG_39]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_39.jpg";
+	m[TEXTURE_MAINMENU_BKG_40]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_40.jpg";
+	m[TEXTURE_MAINMENU_BKG_41]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_41.jpg";
+	m[TEXTURE_MAINMENU_BKG_42]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_42.jpg";
+	m[TEXTURE_MAINMENU_BKG_43]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_43.jpg";
+	m[TEXTURE_MAINMENU_BKG_44]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_44.jpg";
+	m[TEXTURE_MAINMENU_BKG_45]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_45.jpg";
+	m[TEXTURE_MAINMENU_BKG_46]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_46.jpg";
+	m[TEXTURE_MAINMENU_BKG_47]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_47.jpg";
+	m[TEXTURE_MAINMENU_BKG_48]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_48.jpg";
+	m[TEXTURE_MAINMENU_BKG_49]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_49.jpg";
+	m[TEXTURE_MAINMENU_BKG_50]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_50.jpg";
+	m[TEXTURE_MAINMENU_BKG_51]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_51.jpg";
+	m[TEXTURE_MAINMENU_BKG_52]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_52.jpg";
+	m[TEXTURE_MAINMENU_BKG_53]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_53.jpg";
+	m[TEXTURE_MAINMENU_BKG_54]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_54.jpg";
+	m[TEXTURE_MAINMENU_BKG_55]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_55.jpg";
+	m[TEXTURE_MAINMENU_BKG_56]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_56.jpg";
+	m[TEXTURE_MAINMENU_BKG_57]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_57.jpg";
+	m[TEXTURE_MAINMENU_BKG_58]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_58.jpg";
+	m[TEXTURE_MAINMENU_BKG_59]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_59.jpg";
+	m[TEXTURE_MAINMENU_BKG_60]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_60.jpg";
+	m[TEXTURE_MAINMENU_BKG_61]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_61.jpg";
+	m[TEXTURE_MAINMENU_BKG_62]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_62.jpg";
+	m[TEXTURE_MAINMENU_BKG_63]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_63.jpg";
+	m[TEXTURE_MAINMENU_BKG_64]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_64.jpg";
+	m[TEXTURE_MAINMENU_BKG_65]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_65.jpg";
+	m[TEXTURE_MAINMENU_BKG_66]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_66.jpg";
+	m[TEXTURE_MAINMENU_BKG_67]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_67.jpg";
+	m[TEXTURE_MAINMENU_BKG_68]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_68.jpg";
+	m[TEXTURE_MAINMENU_BKG_69]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_69.jpg";
+	m[TEXTURE_MAINMENU_BKG_70]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_70.jpg";
+	m[TEXTURE_MAINMENU_BKG_71]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_71.jpg";
+	m[TEXTURE_MAINMENU_BKG_72]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_72.jpg";
+	m[TEXTURE_MAINMENU_BKG_73]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_73.jpg";
+	m[TEXTURE_MAINMENU_BKG_74]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_74.jpg";
+	m[TEXTURE_MAINMENU_BKG_75]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_75.jpg";
+	m[TEXTURE_MAINMENU_BKG_76]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_76.jpg";
+	m[TEXTURE_MAINMENU_BKG_77]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_77.jpg";
+	m[TEXTURE_MAINMENU_BKG_78]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_78.jpg";
+	m[TEXTURE_MAINMENU_BKG_79]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_79.jpg";
+	m[TEXTURE_MAINMENU_BKG_80]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_80.jpg";
+	m[TEXTURE_MAINMENU_BKG_81]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_81.jpg";
+	m[TEXTURE_MAINMENU_BKG_82]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_82.jpg";
+	m[TEXTURE_MAINMENU_BKG_83]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_83.jpg";
+	m[TEXTURE_MAINMENU_BKG_84]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_84.jpg";
+	m[TEXTURE_MAINMENU_BKG_85]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_85.jpg";
+	m[TEXTURE_MAINMENU_BKG_86]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_86.jpg";
+	m[TEXTURE_MAINMENU_BKG_87]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_87.jpg";
+	m[TEXTURE_MAINMENU_BKG_88]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_88.jpg";
+	m[TEXTURE_MAINMENU_BKG_89]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_89.jpg";
+	m[TEXTURE_MAINMENU_BKG_90]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_90.jpg";
 
 	return m;
 }

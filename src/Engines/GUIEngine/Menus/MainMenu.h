@@ -51,7 +51,6 @@ private:
     ImTextureID texture_init;
     ImTextureID texture_hover;
     ImTextureID texture_pressed;
-    ImTextureID bkg;
     
     ImTextureID title_texture;
     ImVec2 titleSize;

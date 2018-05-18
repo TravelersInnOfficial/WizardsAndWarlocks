@@ -32,6 +32,8 @@ private:
 	GraphicEngine* 	g_engine;			// Puntero al motor grafico del juego
 	//MenuOption 		selectedOption;		// Opcion dada en el menu
 	GSprite* bkg;
+	int bkg_frame;
+	int total_bkg_frames;
 	
 };
 
