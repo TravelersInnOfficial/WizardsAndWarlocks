@@ -1080,8 +1080,9 @@ void Player::UpdatePosShape(float dtime){
 		m_position = pos;
 
 		pos.Y += 0.3;
+		if(m_isPlayerOne) pos.Y += 0.35;		
 
-		// UPDATE LEGS
+		// UPDATE ARM OR LEGS
 		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)
 		m_playerNode->Update(dtime);		// UPDATE ANIMATION (arm or legs)
 
@@ -1226,7 +1227,7 @@ vector3df Player::GetHeadPos(){
 	vector3df cameraRot = GetRot();
 
 	headPos.X += sin(cameraRot.Y) * offset;
-	headPos.Y += 0.5; // Y OFFSET
+	headPos.Y += 0.65; // Y OFFSET
 	headPos.Z += cos(cameraRot.Y) * offset;
 
 	return (headPos);
