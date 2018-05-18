@@ -12,6 +12,7 @@
 #include <ColliderMasks.h>
 #include <Alliance.h>
 #include <GraphicEngine/GParticle.h>
+#include <GUIEngine/GUIEngine.h>
 #include <ParticleData.h>
 
 Grail::Grail(vector3df TPosition, vector3df TScale, vector3df TRotation){
@@ -77,6 +78,10 @@ void Grail::Update(float deltaTime){
 	drawGUI();
 	if(particle != nullptr) particle->Update();
 	UpdatePosShape();
+}
+
+void Grail::ShowInteractInfo(){
+	GUIEngine::GetInstance()->ShowEntityInfo("[E] Hold to Retrieve");
 }
 
 void Grail::Update(){

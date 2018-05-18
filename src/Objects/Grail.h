@@ -18,6 +18,7 @@ public:
 	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);
+	void ShowInteractInfo();
 	bool CheckIfWon();
 
 	void drawGUI();
