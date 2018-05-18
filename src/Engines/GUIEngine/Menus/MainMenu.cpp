@@ -197,8 +197,8 @@ void MainMenu::Update(bool* open, float deltaTime){
                     ImGui::Text("%s", server_player_count.c_str()); ImGui::NextColumn();
                     //server lobby StateManager
                     std::string server_lobby_state = "";
-                    if(!newServerList.at(i).lobbyState) server_lobby_state = "In Lobby";
-                    else server_lobby_state = "In Match";
+                    if(!newServerList.at(i).lobbyState) server_lobby_state = "In Match";
+                    else server_lobby_state = "In Lobby";
                     ImGui::Text("%s", server_lobby_state.c_str()); ImGui::NextColumn();
                 }
            

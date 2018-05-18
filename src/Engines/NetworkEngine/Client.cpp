@@ -17,9 +17,19 @@
 
 Client::Client(std::string serverIp, int serverPort, bool proprietary){
 	peer = RakNet::RakPeerInterface::GetInstance();
-	peer->Startup(1, &descriptor, 1);
-	peer->SetTimeoutTime(15000, RakNet::UNASSIGNED_SYSTEM_ADDRESS);
-	peer->Connect(serverIp.c_str(), serverPort, 0, 0);
+	peer->Startup(100, &descriptor, 1);
+	
+	peer->Connect(serverIp.c_str(),	// HOST
+				serverPort,		// REMOTE PORT
+				0,				// PASSWORD
+				0,				// LENGTH
+				0,				// PUBLIC KEY
+				0,				// SOCKET INDEX
+				30,				// CONNECTION ATTEMPT
+				500,			// TIME BETWEEN ATTEMPT
+				15000			// TIMEOUT TIME
+	);
+	
 	playerOneId = -1;
 	this->proprietary = proprietary;
 }
