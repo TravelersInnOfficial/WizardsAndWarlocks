@@ -306,7 +306,7 @@ void HumanPlayer::CheckInput(){
 void HumanPlayer::Update(float deltaTime){
 	Player::Update(deltaTime);
 	if(!menuActivated) UpdateInput();
-	if(m_isPlayerOne && !m_interacting) LookingAtObject(); // Comprobar si estamos mirando a un item interactuable
+	if(m_isPlayerOne) LookingAtObject(); // Comprobar si estamos mirando a un item interactuable
 }
 
 

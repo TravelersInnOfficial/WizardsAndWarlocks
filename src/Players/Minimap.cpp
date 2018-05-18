@@ -86,14 +86,14 @@ void HUD_Minimap::ZoomMap(float value){
 }
 
 void HUD_Minimap::AlivePoint(GSprite* sprite){
-    std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+    std::string path = TEXTUREMAP[TEXTURE_TrapParticle];
 
     sprite->SetColor(0, 1, 0);
     sprite->SetTexture(path);
 }
 
 void HUD_Minimap::DeadPoint(GSprite* sprite){
-    std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+    std::string path = TEXTUREMAP[TEXTURE_TrapParticle];
 
     sprite->SetColor(1, 0, 0);
     sprite->SetTexture(path);
@@ -137,7 +137,7 @@ void HUD_Minimap::UpdateScroll(){
 GSprite* HUD_Minimap::CreatePlayerSprite(){
     GSprite* output = nullptr;
 
-    m_spriteSize = vector2df(10,10);
+    m_spriteSize = vector2df(6,6);
     vector2df pos(0,0);
 
     output = GraphicEngine::getInstance()->addSprite("", pos, m_spriteSize);
@@ -166,7 +166,7 @@ void HUD_Minimap::RecalculateTrapSprites(int trapSize){
     int spriteSize = m_traps.size();
 
     while(spriteSize < trapSize){
-        std::string path = TEXTUREMAP[TEXTURE_ORB_SCROLL_FILL_MASK];
+        std::string path = TEXTUREMAP[TEXTURE_TrapParticle];
         
         GSprite* newSprite = CreatePlayerSprite();
         newSprite->SetColor(1,1,0);

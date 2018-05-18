@@ -173,6 +173,8 @@ std::map<int, NetworkObject*> Server::GetNewNetworkObjects(){
 
 void Server::RecievePackages(bool isLobby){
 
+	//std::cout<<"EMPIEZO A RECIBIR PAQUETES"<<std::endl;
+
 	// Set PONG data
 	SetServerData(isLobby);
 
@@ -181,6 +183,7 @@ void Server::RecievePackages(bool isLobby){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
+
 				// Si la partida ha empezado negamos la conexion
 				if(!isLobby){
 					RakNet::BitStream bitstream;
@@ -340,10 +343,11 @@ void Server::RecievePackages(bool isLobby){
 				break;
 			}
 
-			// CUANDO SE TERMINA UNA PARTIDA
 			case ID_IDENTIFY_PROPRIETARY: {
 				RakNet::BitStream bitstream(packet->data, packet->length, false);
-				if(createdFromGame && playerOneID == RakNet::UNASSIGNED_RAKNET_GUID) playerOneID = packet->guid;
+				if(createdFromGame && playerOneID == RakNet::UNASSIGNED_RAKNET_GUID){
+					playerOneID = packet->guid;
+				}
 				break;
 			}
 

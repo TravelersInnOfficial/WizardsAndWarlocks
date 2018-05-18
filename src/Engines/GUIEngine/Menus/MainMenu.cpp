@@ -46,7 +46,6 @@ MainMenu::MainMenu(MenuType type) : Menu(type){
     texture_hover       = (void*)(size_t) toe::GetTextureID(button_hover_layout);
     texture_pressed     = (void*)(size_t) toe::GetTextureID(button_pressed_layout);
     title_texture       = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_MENU_TITLE]);
-    bkg                 = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_BOOK_BACKGROUND].c_str());
     TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_MENU_TITLE]);
     titleSize = ImVec2(t_dims.X/1.6,t_dims.Y/1.5);
     
@@ -197,8 +196,8 @@ void MainMenu::Update(bool* open, float deltaTime){
                     ImGui::Text("%s", server_player_count.c_str()); ImGui::NextColumn();
                     //server lobby StateManager
                     std::string server_lobby_state = "";
-                    if(!newServerList.at(i).lobbyState) server_lobby_state = "In Lobby";
-                    else server_lobby_state = "In Match";
+                    if(!newServerList.at(i).lobbyState) server_lobby_state = "In Match";
+                    else server_lobby_state = "In Lobby";
                     ImGui::Text("%s", server_lobby_state.c_str()); ImGui::NextColumn();
                 }
            
@@ -441,6 +440,12 @@ void MainMenu::Update(bool* open, float deltaTime){
 
 
                 ImGui::Separator();
+
+                ImGui::Text("Other Options");
+
+                static float* sensibility = GraphicEngine::getInstance()->GetMouseSensibilityPointer();
+
+                ImGui::SliderFloat("Mouse sensibility", sensibility, 0.5f, 5.0f, "%.1f");
 
                 if(ImGui::Button("Close", pu_buttonSize)){
                     PlaySound();

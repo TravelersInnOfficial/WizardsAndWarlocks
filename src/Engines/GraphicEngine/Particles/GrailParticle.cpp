@@ -20,10 +20,10 @@ void GrailParticle::InitParticle(Particle& p){
 	Z = (rand() % 2)/10.0f;
 	p.speed =  TOEvector3df(X,Y,Z);
 
-	int color = (unsigned char)(rand() % 255 + 240);
-	p.r = color;
-	p.g = color;
-	p.b = color;
+	//int color = (unsigned char)(rand() % 255 + 240);
+	p.r = 60;
+	p.g = 200;
+	p.b = 120;
 	
 	// SIZE
 	int maxSize = 5;

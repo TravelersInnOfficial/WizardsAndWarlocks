@@ -10,8 +10,10 @@
 #include <Menus.h>
 
 MenuPrincipal::MenuPrincipal(){
-	background = "./../assets/textures/GUI/Menus/MainMenu/background.png";
-	
+	background = "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_";
+	bkg_frame = 0;
+	total_bkg_frames = 90;
+
 	g_engine = GraphicEngine::getInstance();
 	g_engine->ResetScene();
 	g_engine->setCursorVisible(false);
@@ -50,6 +52,10 @@ bool MenuPrincipal::Input(){
 void MenuPrincipal::Update(float deltaTime){
 	SoundSystem::getInstance()->Update();
 	MenuManager::GetInstance()->Update(deltaTime);
+
+	bkg_frame++;
+	if(bkg_frame>total_bkg_frames) bkg_frame = 0;
+	if(bkg!=nullptr) bkg->SetTexture(background + std::to_string(bkg_frame) + ".jpg");
 }
 
 void MenuPrincipal::Draw(){
@@ -57,7 +63,8 @@ void MenuPrincipal::Draw(){
 	MenuManager::GetInstance()->Draw();
 	if(bkg == nullptr){
 		vector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
-		bkg = GraphicEngine::getInstance()->addSprite("./../assets/textures/GUI/Menus/MainMenu/book_background.png", vector2df(0,0), dims);
+		
+		bkg = GraphicEngine::getInstance()->addSprite(background + "0.jpg", vector2df(0,0), dims);
 	}
 	g_engine->EndDraw();
 }

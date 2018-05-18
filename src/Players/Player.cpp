@@ -1080,8 +1080,9 @@ void Player::UpdatePosShape(float dtime){
 		m_position = pos;
 
 		pos.Y += 0.3;
+		if(m_isPlayerOne) pos.Y += 0.35;		
 
-		// UPDATE LEGS
+		// UPDATE ARM OR LEGS
 		m_playerNode->setPosition(pos);		// UPDATE LEGS POSITION (OR ARM)
 		m_playerNode->Update(dtime);		// UPDATE ANIMATION (arm or legs)
 
@@ -1101,6 +1102,7 @@ void Player::UpdatePosShape(float dtime){
 
 		
 		// DEBUG BILLBOARDS
+		/*
 		if(m_isPlayerOne){
 			int vel = m_max_velocity;
 			int decimalvel = (m_max_velocity - vel) * 10;
@@ -1108,26 +1110,15 @@ void Player::UpdatePosShape(float dtime){
 			vector3df pos;
 			
 			// SPEED
-			pos = vector3df(-0.5,0.5,2);
+			pos = vector3df(-0.5,0.5,1.5);
 			m_playerNode->AddText("S: " + std::to_string(vel) + "." + std::to_string(decimalvel), pos, 0);
 			//m_playerNode->AddText("T:" + std::to_string(m_playerNodeTop->GetAnimationFrame()), pos, 0);
-			//std::string jump = m_CanJump? "true" : "false";
-			//m_playerNode->AddText("J: " + jump, pos, 0);
 			// FPS
-			pos = vector3df(-0.5,0.5,0);
-			//m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
-
-			// MOVING
-			pos = vector3df(0.5,0.75,0);
-			//m_playerNode->AddText("M:" + std::to_string(m_moving), pos, 2);
-			//m_playerNode->AddText("D:" + std::to_string(m_playerNode->GetAnimationFrame() - m_playerNodeTop->GetAnimationFrame()), pos, 2);
-
-			// MOVING
-			pos = vector3df(0.5,0.5,0);
-			//m_playerNode->AddText("F:" + std::to_string(m_walkfps), pos, 3);
-		
+			pos = vector3df(-0.5,0.5,1.5);
+			m_playerNode->AddText("B:" + std::to_string(m_playerNode->GetAnimationFrame()), pos, 1);
+					
 		} // END DEBUG BILLBOARDS
-
+		*/
 	}
 }
 
@@ -1226,7 +1217,7 @@ vector3df Player::GetHeadPos(){
 	vector3df cameraRot = GetRot();
 
 	headPos.X += sin(cameraRot.Y) * offset;
-	headPos.Y += 0.5; // Y OFFSET
+	headPos.Y += 0.65; // Y OFFSET
 	headPos.Z += cos(cameraRot.Y) * offset;
 
 	return (headPos);
