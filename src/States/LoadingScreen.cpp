@@ -34,6 +34,8 @@ LoadingScreen::LoadingScreen(){
     dots_anim = g_engine->add2DText("",vector2df(W/2,H/2.5));
     loading_perc = g_engine->add2DText("",vector2df(W/2,H/2));
     actual_folder = "";
+
+    currentProgress = 0;
 }
 
 LoadingScreen::~LoadingScreen(){
@@ -86,7 +88,12 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
     
     p_updateDotsAnimation();
 
-    g_engine->drawAll();
+    int progressInt = (int)progress;
+
+    if(progressInt!=currentProgress){
+        currentProgress = progressInt;
+        g_engine->drawAll();
+    }
 }
 
 void LoadingScreen::Draw(){

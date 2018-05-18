@@ -144,6 +144,7 @@ void AIPlayer::ResetValues(){
 	forceToMove = vector3df(0,0,0);
 	forceToRotate = vector2df(0,0);
 	m_rotation.X = elevation;
+	std::cout<<elevation<<std::endl;
 }
 
 void AIPlayer::Update(float deltaTime){

@@ -14,6 +14,7 @@ Align::~Align(){}
 
 SteeringOutput Align::GetSteering(Kinematic cKin, Kinematic tKin){
 
+	cKin.orientation.X = -cKin.orientation.X;
 	vector2df rotation = tKin.orientation - cKin.orientation;
 
 	rotation.mapToRangePI();
@@ -21,7 +22,7 @@ SteeringOutput Align::GetSteering(Kinematic cKin, Kinematic tKin){
 
 	SteeringOutput output;
 	output.angular = vector2df(
-						Align::GetAngular(rotation.X, rotationSize.X, cKin.rotation.X),
+						Align::GetAngular(-rotation.X, rotationSize.X, cKin.rotation.X),
 						Align::GetAngular(rotation.Y, rotationSize.Y, cKin.rotation.Y)
 					);
 
