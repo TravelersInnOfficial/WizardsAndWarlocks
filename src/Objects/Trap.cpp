@@ -168,7 +168,7 @@ void Trap::Contact(void* punt, EntityEnum tipo){
 
 void Trap::Interact(Player* p){
 	isInteracting = true;
-	deactivation_bar = new HUD_bar();
+	if(p->IsPlayerOne()) deactivation_bar = new HUD_bar();
 	Deactivate(deltaTime);
 }
 

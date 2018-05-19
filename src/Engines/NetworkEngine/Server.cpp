@@ -183,7 +183,6 @@ void Server::RecievePackages(bool isLobby){
 
 			// CUANDO SE CONECTA UN CLIENTE
 			case ID_NEW_INCOMING_CONNECTION: {
-
 				// Si la partida ha empezado negamos la conexion
 				if(!isLobby){
 					RakNet::BitStream bitstream;
@@ -231,12 +230,14 @@ void Server::RecievePackages(bool isLobby){
 				// Pasandole su ID, en el cliente replicaremos el Objeto de Red
 				// Incluido su jugador, que se creara aqui pero para los demas se ha creado antes
 				for (auto &rowObj : networkObjects) {
-					RakNet::BitStream updateObjects;
-					updateObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
-					updateObjects.Write(ID_EXISTING_OBJECT);
-					updateObjects.Write(rowObj.first);
-					updateObjects.Write(rowObj.second->GetObjType());
-					SendPackage(&updateObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					if(rowObj.second != nullptr){
+						RakNet::BitStream updateObjects;
+						updateObjects.Write((RakNet::MessageID)ID_OBJECT_STATUS_CHAGED);
+						updateObjects.Write(ID_EXISTING_OBJECT);
+						updateObjects.Write(rowObj.first);
+						updateObjects.Write(rowObj.second->GetObjType());
+						SendPackage(&updateObjects, HIGH_PRIORITY, RELIABLE_ORDERED, packet->guid, false);
+					}
 				}
 
 				PlayerManager::GetInstance()->RefreshServerAll();
@@ -420,7 +421,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			networkObjects[k]->SetBoolVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetBoolVar(k_var, v, true, true);
 			break;
 		}
 		case ID_CHANGE_INT: {
@@ -430,7 +431,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			networkObjects[k]->SetIntVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetIntVar(k_var, v, true, true);
 			break;
 		}
 		case ID_CHANGE_FLOAT: {
@@ -440,7 +441,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			networkObjects[k]->SetFloatVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetFloatVar(k_var, v, true, true);
 			break;
 		}
 		case ID_CHANGE_VECINT: {
@@ -450,7 +451,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			networkObjects[k]->SetVecIVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetVecIVar(k_var, v, true, true);
 			break;
 		}
 		case ID_CHANGE_VECFLOAT: {
@@ -460,7 +461,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k);
 			bitstream->Read(k_var);
 			bitstream->Read(v);
-			networkObjects[k]->SetVecFVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetVecFVar(k_var, v, true, true);
 			break;
 		}
 		case ID_CHANGE_STRING: {
@@ -472,7 +473,7 @@ void Server::ModifyObject(RakNet::BitStream* bitstream){
 			bitstream->Read(k_var);
 			bitstream->Read(vAux);
 			v = vAux;
-			networkObjects[k]->SetStringVar(k_var, v, true, true);
+			if(networkObjects[k] != nullptr) networkObjects[k]->SetStringVar(k_var, v, true, true);
 			break;
 		}
 	}
