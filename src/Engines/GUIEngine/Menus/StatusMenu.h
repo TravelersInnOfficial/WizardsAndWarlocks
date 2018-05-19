@@ -9,7 +9,6 @@ public:
     ~StatusMenu();
     void Update(bool* open, float deltaTime);
     void Close(bool*);
-    void Drop();
 private:
 
 };

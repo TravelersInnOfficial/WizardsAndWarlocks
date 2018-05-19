@@ -9,10 +9,6 @@ StatusMenu::StatusMenu(MenuType type) : Menu(type){
 
 StatusMenu::~StatusMenu(){}
 
-void StatusMenu::Drop(){
-
-}
-
 void StatusMenu::Close(bool* open){
     *open = false; 
 }

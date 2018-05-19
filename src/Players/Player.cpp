@@ -778,6 +778,8 @@ void Player::UpdateSP(float deltaTime){
 }
 
 void Player::Respawn(){
+	m_targetDeadCam = nullptr;
+	
 	if(m_isPlayerOne){ 
 		MenuType * current_menu = MenuManager::GetInstance()->GetCurrentMenu();
 		if(current_menu != nullptr && *current_menu != ENDMATCH_M ) MenuManager::GetInstance()->ClearMenu();

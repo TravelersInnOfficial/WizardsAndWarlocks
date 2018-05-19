@@ -11,7 +11,6 @@ public:
     ~AllianceMenu();
     void Update(bool*, float deltaTime);
     void Close(bool*);
-    void Drop();
 
 private:
     static const int N_BUTTONS = 2;

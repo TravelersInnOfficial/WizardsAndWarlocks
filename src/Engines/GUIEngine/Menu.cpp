@@ -28,7 +28,6 @@ std::string Menu::GetID(){return m_id;}
 
 void Menu::Update(bool* open, float deltaTime){std::cout<<"REACHED MENU INTERFACE UPDATE"<<std::endl;}
 void Menu::Close(bool* open){std::cout<<"REACHED MENU INTERFACE CLOSE"<<std::endl;}
-void Menu::Drop(){std::cout<<"REACHED MENU INTERFACE DROP"<<std::endl;}
 
 void Menu::CalculateFlags(){
     w_flags = 0;

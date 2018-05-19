@@ -182,7 +182,7 @@ void PlayerManager::SpawnAI(){
 	if(playerOne->GetAlliance() == ALLIANCE_WIZARD) auxWi--;
 	else auxWa--;
 
-	for(int i = 0; i < auxWi; i++) AddAIPlayer();
+	for(int i = 0; i < 0; i++) AddAIPlayer();
 	for(int i = 0; i < auxWa; i++) {
 		Player* p = AddAIPlayer();
 		p->SetAlliance(ALLIANCE_WARLOCK);

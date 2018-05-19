@@ -21,7 +21,6 @@ public:
     ~ShopMenu();
     void Update(bool* open, float deltaTime);
     void Close(bool*);
-    void Drop();
 
 private:
     void load_imagesid(int number, const char * layouts[], ImTextureID* texture[], std::vector<SPELLCODE>, std::map<ImTextureID*, SPELLCODE>*);

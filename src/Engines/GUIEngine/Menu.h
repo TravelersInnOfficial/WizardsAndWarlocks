@@ -27,7 +27,6 @@ public:
     std::string GetID();
     virtual void Update(bool*, float);
     virtual void Close(bool*);
-    virtual void Drop();
 
     float GetWidth();
     float GetHeight();
