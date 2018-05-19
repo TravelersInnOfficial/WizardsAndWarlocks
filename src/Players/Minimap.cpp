@@ -200,10 +200,12 @@ void HUD_Minimap::DrawPlayers(){
     if(!p_enemies.empty()){
         std::map<Player*,float>::iterator it = p_enemies.begin();
         std::vector<GSprite*>::iterator spr_it = m_enemies.begin();
+        bool iterate = true;
 
-        for(; it!=p_enemies.end() && spr_it!=m_enemies.end() ; ++it, ++spr_it){
-            float time_left = it->second;
+        for(; it!=p_enemies.end() && spr_it!=m_enemies.end() ; ){
             int id = spr_it - m_enemies.begin();
+            float time_left = it->second;
+            iterate = true;
 
             if(time_left>0){
                 time_left -= StateManager::GetInstance()->GetDeltaTime();
@@ -215,6 +217,13 @@ void HUD_Minimap::DrawPlayers(){
                 p_enemies.erase(it);
                 delete m_enemies[id];
                 m_enemies.erase(spr_it);
+                iterate = false;
+            }
+
+
+            if(iterate){
+                ++it;
+                ++spr_it;
             }
         }
     }

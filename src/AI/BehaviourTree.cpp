@@ -337,9 +337,12 @@ void BehaviourTree::CreateEscapeTask(){
 }
 
 void BehaviourTree::CreateEscapeMove(){
-    Task* t = new MoveEscape(); // POR HACER
-    informacion->SetPuntero(AI_MOVE_ESCAPE, t);
-    tasks.push_back(t);
+    Secuencia* sc_escape = new Secuencia();
+    sc_escape->addChild(new MoveEscape());
+    sc_escape->addChild(new CheckJump());
+    
+    informacion->SetPuntero(AI_MOVE_ESCAPE, sc_escape);
+    tasks.push_back(sc_escape);
 }
 
 void BehaviourTree::CreateExploreTask(){

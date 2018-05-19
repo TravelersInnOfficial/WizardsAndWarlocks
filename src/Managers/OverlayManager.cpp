@@ -37,9 +37,10 @@ void OverlayManager::CleanOverlays(){
 
 void OverlayManager::Update(float deltaTime){
 	std::map<OverlayCodes, OverlayInfo*>::iterator it = overlays.begin();
-	
+	bool iterate = true;
+
 	for(; it != overlays.end(); /* No ponemos el incremento aqui*/){
-		bool iterate  = true;
+		iterate  = true;
 		if(it->second != nullptr){
 			it->second->time -= deltaTime;
 			GraphicEngine::GraphicEngine::getInstance()->SetOverlayTransparency(it->second->time/1);

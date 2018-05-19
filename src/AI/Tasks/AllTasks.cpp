@@ -634,12 +634,15 @@ CheckSawTrap::CheckSawTrap(){}
 bool CheckSawTrap::run(Blackboard* bb){
 	if(DEBUG) std::cout<<"CheckSawTrap\n";
 
-	int number = bb->GetNumberSight(AI_TRAP);
-	if(number>0){
-		bb->SetTargetSight(AI_TRAP, AI_TARGET);
-		bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
-		bb->SetMasterMovement(AI_MOVE_INTERACT);
-		return true;
+	AIPlayer* character = bb->GetPlayer();
+	if(character->GetAlliance() == ALLIANCE_WIZARD){
+		int number = bb->GetNumberSight(AI_TRAP);
+		if(number>0){
+			bb->SetTargetSight(AI_TRAP, AI_TARGET);
+			bb->SetMasterAction(AI_TASK_DEFUSE_TRAP);
+			bb->SetMasterMovement(AI_MOVE_INTERACT);
+			return true;
+		}
 	}
 	return false;
 }
