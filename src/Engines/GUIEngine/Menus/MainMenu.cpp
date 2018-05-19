@@ -80,10 +80,6 @@ void MainMenu::Close(bool* open){
     closeMenu(open);
 }
 
-void MainMenu::Drop(){
-    //MainMenu::~MainMenu();
-}
-
 void MainMenu::SinglePlayer(bool* open){
     closeMenu(open);
     StateManager::GetInstance()->PrepareStatus(STATE_GAME);

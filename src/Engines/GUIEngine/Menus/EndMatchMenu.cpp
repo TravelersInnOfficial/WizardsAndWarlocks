@@ -41,10 +41,6 @@ EndMatchMenu::EndMatchMenu(MenuType type, int winners) : Menu(type){
 EndMatchMenu::~EndMatchMenu(){
 }
 
-void EndMatchMenu::Drop(){
-    EndMatchMenu::~EndMatchMenu();
-}
-
 void EndMatchMenu::Update(bool* open, float deltaTime){
     //NEXT WINDOW STYLE SETUPS
     ImGui::SetNextWindowSize(ImVec2(m_width,m_height));//sets the size of the next window
@@ -88,7 +84,7 @@ void EndMatchMenu::Update(bool* open, float deltaTime){
 
 void EndMatchMenu::closeMenu(bool* open){
     *open = false; 
+    ImGui::GetIO().MouseDrawCursor = false;
     GraphicEngine::getInstance()->ToggleMenu(false);
     hp->ToggleMenu(false);
-    //ImGui::GetIO().MouseDrawCursor = false;
 }

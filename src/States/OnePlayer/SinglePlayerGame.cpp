@@ -57,6 +57,8 @@ SinglePlayerGame::~SinglePlayerGame(){
 	g_engine->CleanRooms();
 
 	// Liberamos los sonidos que teniamos puestos
+	soundEvents["ghosts"]->stop();
+	soundEvents["waterdrops"]->stop();
 	std::map<std::string, SoundEvent*>::iterator it = soundEvents.begin();
 	for(; it!=soundEvents.end(); it++){
 		SoundEvent* even = it->second;

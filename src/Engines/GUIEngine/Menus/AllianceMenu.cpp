@@ -11,7 +11,7 @@
 AllianceMenu::AllianceMenu(MenuType type) : Menu(type){
     m_id = "AllianceMenu";
     
-     TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND]); 
+    TOEvector2di s = toe::GetTextureDims(TEXTUREMAP[TEXTURE_ALLIANCE_BACKGROUND]); 
     vector2df siz(s.X,s.Y);
     m_width = siz.X;
     m_height = siz.Y;
@@ -45,10 +45,6 @@ AllianceMenu::~AllianceMenu(){
 
     delete m_cursor;
     m_cursor = nullptr;
-}
-
-void AllianceMenu::Drop(){
-    AllianceMenu::~AllianceMenu();
 }
 
 void AllianceMenu::Close(bool* open){

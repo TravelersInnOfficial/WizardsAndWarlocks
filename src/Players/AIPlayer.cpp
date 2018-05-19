@@ -145,7 +145,6 @@ void AIPlayer::ResetValues(){
 	SetAllInput(UP);
 	forceToMove = vector3df(0,0,0);
 	forceToRotate = vector2df(0,0);
-	m_rotation.X = -elevation;
 }
 
 Kinematic AIPlayer::GetKinematic(){
@@ -165,6 +164,7 @@ void AIPlayer::Update(float deltaTime){
 		Steering2Controller(deltaTime);
 		shootSpell = false; 	// Reseteamos la variable
 		Player::Update(deltaTime);		// Check Inputs
+		m_rotation.X = -elevation;
 		m_headPos = GetHeadPos();		// Tiene que calcularse a posteriori para que coincida el valor con el del sensor
 	}
 }

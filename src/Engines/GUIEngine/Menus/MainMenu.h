@@ -12,7 +12,6 @@ public:
     ~MainMenu();
     void Update(bool* open, float deltaTime);
     void Close(bool*);
-    void Drop();
 
 private:
     SoundEvent* soundEvent;

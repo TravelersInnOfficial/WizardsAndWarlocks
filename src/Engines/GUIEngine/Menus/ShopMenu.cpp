@@ -237,10 +237,6 @@ ShopMenu::~ShopMenu(){
     slots.clear();
 }
 
-void ShopMenu::Drop(){
-    ShopMenu::~ShopMenu();
-}
-
 void ShopMenu::Close(bool* open){
     closeMenu(open);
 }
