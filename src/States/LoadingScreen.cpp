@@ -24,9 +24,9 @@ LoadingScreen::LoadingScreen(){
     float bar_bkgW = bar_width + 60;
 
     int index = rand() % 10;
-    std::cout<<"INDEX: "<<index<<"\n";
+    //std::cout<<"INDEX: "<<index<<"\n";
     int alliance = index % 2;
-    std::cout<<"ALLIANCE: "<<alliance<<"\n";
+    //std::cout<<"ALLIANCE: "<<alliance<<"\n";
     if(alliance == 0) m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WIZARD],vector2df(0,0),vector2df(W,H));
     else m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WARLOCK],vector2df(0,0),vector2df(W,H));
 
