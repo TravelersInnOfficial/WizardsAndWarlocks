@@ -512,7 +512,7 @@ void Player::RefreshServer(){
 	m_networkObject->SetStringVar(PLAYER_NAME, m_name, true, false);
 }
 
-void Player::DeadUpdate(){
+void Player::DeadUpdate(float deltaTime){
 	if(m_isPlayerOne){
 		PlayerManager* playerManager = PlayerManager::GetInstance(); // GetPos
 
@@ -539,7 +539,7 @@ void Player::DeadUpdate(){
 			m_targetDeadCam->InitHUD();
 		}
 
-		if(m_targetDeadCam!=nullptr) m_camera->UpdateCamera(m_targetDeadCam->GetPos());
+		if(m_targetDeadCam!=nullptr) m_camera->UpdateCamera(m_targetDeadCam->GetPos(), deltaTime);
 	}
 }
 
@@ -584,24 +584,29 @@ void Player::Update(float deltaTime){
 		// Actualizamos la animacion de idle/andar/correr
 		UpdateWalkAnimation();
 
-		// Actualizamos el cuerpo visual del personaje respecto al fisico
-		UpdatePosShape(deltaTime);
-
 		// Actualizamos la posicion del sonido
 		UpdateSoundsPosition();
 
+		bt_body->Update();
+		m_position = bt_body->GetPosition();
+
 		// En el caso de que sea el jugador 1 actualizamos su camara
 		if(m_isPlayerOne && m_camera != nullptr){
+			//Position camera FPS Y TPS
+			m_camera->UpdateCamera(GetHeadPos(), deltaTime);
+
 			vector3df newRot = m_camera->GetRotation();
 			vector3df rot = newRot * M_PI / 180.0;	
 			SetRotation(rot);
-
-			//Position camera FPS Y TPS
-			m_camera->UpdateCamera(GetHeadPos());
 		}
+
+		// Actualizamos el cuerpo visual del personaje respecto al fisico
+		UpdatePosShape(deltaTime);
 
 		// Comprobamos la velocidad maxima del jugador para que no se sobrepase
 		checkMaxVelocity();
+		
+
 
 		if(m_overlayManager!=nullptr) m_overlayManager->Update(deltaTime);
 	}
@@ -1077,9 +1082,7 @@ void Player::UpdateWalkAnimation(){
 
 void Player::UpdatePosShape(float dtime){
 	if(m_hasCharacter){
-		vector3df pos = bt_body->GetPosition();
-		bt_body->Update();
-		m_position = pos;
+		vector3df pos = m_position;
 
 		pos.Y += 0.3;
 		if(m_isPlayerOne) pos.Y += 0.35;		

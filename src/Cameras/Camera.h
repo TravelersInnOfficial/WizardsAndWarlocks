@@ -29,7 +29,7 @@ public:
 
     virtual void SetWorking(bool wor) = 0;
 
-    virtual void UpdateCamera(vector3df target) = 0;
+    virtual void UpdateCamera(vector3df target, float deltaTime) = 0;
 
 protected:
     GCamera*    p_Camera;

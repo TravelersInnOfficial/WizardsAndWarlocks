@@ -98,7 +98,7 @@ void PlayerManager::UpdatePlayers(float deltaTime, bool isNetGame){
 			if(p->IsPlayerOne()) hp->SetNetInput();
 			else hp->GetNetInput();
 		}
-		p->DeadUpdate();
+		p->DeadUpdate(deltaTime);
 	}
 }
 

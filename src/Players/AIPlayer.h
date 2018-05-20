@@ -24,7 +24,7 @@ public:
 
 	void ResetValues();
 	void Update(float deltaTime) override;
-	void DeadUpdate() override;
+	void DeadUpdate(float deltaTime) override;
 	void SetAngularForce(vector3df v);
 	void Die() override;
 

@@ -169,7 +169,7 @@ void AIPlayer::Update(float deltaTime){
 	}
 }
 
-void AIPlayer::DeadUpdate(){
+void AIPlayer::DeadUpdate(float deltaTime){
 	
 }
 

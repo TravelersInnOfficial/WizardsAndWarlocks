@@ -441,7 +441,7 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 static float* sensibility = GraphicEngine::getInstance()->GetMouseSensibilityPointer();
 
-                ImGui::SliderFloat("Mouse sensibility", sensibility, 0.5f, 5.0f, "%.1f");
+                ImGui::SliderFloat("Mouse sensibility", sensibility, 1.0f, 5.0f, "%.1f");
 
                 if(ImGui::Button("Close", pu_buttonSize)){
                     PlaySound();

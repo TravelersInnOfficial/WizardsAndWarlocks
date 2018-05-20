@@ -33,7 +33,7 @@ class Player: public Entidad{
 		void DestroyPlayerCharacter();
 
 		virtual void Update(float deltaTime);
-		virtual void DeadUpdate();
+		virtual void DeadUpdate(float deltatTime);
 
 		//Draw visuals
 		void Draw();

@@ -11,7 +11,7 @@ public:
     WatcherCamera(vector3df lookat);
     ~WatcherCamera();
 
-    void UpdateCamera(vector3df target);
+    void UpdateCamera(vector3df target, float deltaTime);
     void SetPosition(vector3df target);
     void SetWorking(bool work);
 private:

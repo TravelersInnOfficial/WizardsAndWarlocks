@@ -59,7 +59,7 @@ vector3df WatcherCamera::GetTarget(float AngleX, float AngleY){
 	return vector3df(tx, ty, tz);
 }
 
-void WatcherCamera::UpdateCamera(vector3df target){
+void WatcherCamera::UpdateCamera(vector3df target, float deltaTime){
 	p_BtBody->Update();
 	p_BtBody->SetLinearVelocity(vector3df(0,0,0));
 	target.Y+=0.5;
