@@ -10,9 +10,6 @@
 #include <Menus.h>
 
 MenuPrincipal::MenuPrincipal(){
-	background = "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_";
-	bkg_frame = 0;
-	total_bkg_frames = 90;
 
 	g_engine = GraphicEngine::getInstance();
 	g_engine->ResetScene();
@@ -22,8 +19,15 @@ MenuPrincipal::MenuPrincipal(){
 	//selectedOption = NO_OPT;
 	createSoundEvent();
 	playMenuMusic();
+	
+	background = "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_";
+	bkg_frame = 0;
+	total_bkg_frames = 89;
+	vector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());	
+	bkg = g_engine->addSprite(background + std::to_string(bkg_frame)+ ".jpg", vector2df(0,0), dims);
+	bkg_frame++;
+
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
-	bkg = nullptr;
 }
 
 MenuPrincipal::~MenuPrincipal(){
@@ -35,10 +39,7 @@ MenuPrincipal::~MenuPrincipal(){
 
 	MenuManager::GetInstance()->ClearMenu();
 	
-	if(bkg!=nullptr){
-		delete bkg;
-		bkg = nullptr;
-	}
+	delete bkg;
 }
 
 bool MenuPrincipal::Input(){
@@ -55,17 +56,12 @@ void MenuPrincipal::Update(float deltaTime){
 
 	bkg_frame++;
 	if(bkg_frame>total_bkg_frames) bkg_frame = 0;
-	if(bkg!=nullptr) bkg->SetTexture(background + std::to_string(bkg_frame) + ".jpg");
+	bkg->SetTexture(background + std::to_string(bkg_frame) + ".jpg");
 }
 
 void MenuPrincipal::Draw(){
 	g_engine->BeginDraw();
 	MenuManager::GetInstance()->Draw();
-	if(bkg == nullptr){
-		vector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());
-		
-		bkg = GraphicEngine::getInstance()->addSprite(background + "0.jpg", vector2df(0,0), dims);
-	}
 	g_engine->EndDraw();
 }
 

@@ -139,8 +139,8 @@ void PlayerHUD::p_initPlayerOrbs(){
     //orb dimensions
     //(original height / original width) x new width = new height
     float new_width = W/5.0f;
-    float new_height = ratio * new_width;
-    vector2df orb_dims = vector2df(new_width,new_height);
+    //float new_height = ratio * new_width;
+    vector2df orb_dims = vector2df(new_width,new_width);
     if(orb_dims.X > tex_dims.X) orb_dims = vector2df(tex_dims.X,tex_dims.Y);
 
     //orb position

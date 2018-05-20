@@ -20,7 +20,6 @@ public:
     void SetLoadingStatus(std::string status = "", float progress = 0.0f);
 private:
     std::string p_getLoadingStatement();
-    void p_updateDotsAnimation();
 
     GraphicEngine* g_engine;
     
@@ -31,7 +30,6 @@ private:
     
     GText2D* loading_text;
     GText2D* loading_perc;
-    GText2D* dots_anim;
     float anim_time;
     float bar_width;
     int currentProgress;

@@ -20,6 +20,7 @@ public:
     void SetPosition(float x, float y);
     void SetTextSize(float siz);
     vector2df GetSize();
+    void SetTextureFont(std::string path);
 
 private:
     GText2D(TF2DText* text);

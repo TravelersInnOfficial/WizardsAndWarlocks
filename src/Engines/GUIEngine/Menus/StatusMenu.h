@@ -11,6 +11,10 @@ public:
     void Close(bool*);
 private:
 
+    ImTextureID warlock_icon;
+    ImTextureID wizard_icon;
+
+    ImVec2 icon_size;
 };
 
 #endif

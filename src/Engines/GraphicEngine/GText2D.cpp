@@ -37,3 +37,7 @@ vector2df GText2D::GetSize(){
     vector2df toRet(s.X,s.Y);
     return toRet;
 }
+
+void GText2D::SetTextureFont(std::string path){
+    m_tf2dtext->SetTextureFont(path);
+}

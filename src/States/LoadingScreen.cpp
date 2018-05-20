@@ -24,9 +24,7 @@ LoadingScreen::LoadingScreen(){
     float bar_bkgW = bar_width + 60;
 
     int index = rand() % 10;
-    //std::cout<<"INDEX: "<<index<<"\n";
     int alliance = index % 2;
-    //std::cout<<"ALLIANCE: "<<alliance<<"\n";
     if(alliance == 0) m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WIZARD],vector2df(0,0),vector2df(W,H));
     else m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WARLOCK],vector2df(0,0),vector2df(W,H));
 
@@ -37,9 +35,10 @@ LoadingScreen::LoadingScreen(){
     if(alliance == 0) loading_bar->SetColor(0,0,1);
     else loading_bar->SetColor(0.8,0,0.8);
     
-    loading_text = g_engine->add2DText("",vector2df(W/2,H/3));
-    dots_anim = g_engine->add2DText("",vector2df(W/2,H/2.5));
-    loading_perc = g_engine->add2DText("",vector2df(W/2,H/2));
+    loading_text = g_engine->add2DText("",vector2df(W/2,H/2));
+    loading_text->SetTextureFont(TEXTUREMAP[TEXTURE_BLACK_BKG_FONT]);
+    loading_perc = g_engine->add2DText("",vector2df(W/2,H/2 -  loading_text->GetSize().Y));
+    loading_perc->SetTextureFont(TEXTUREMAP[TEXTURE_BLACK_BKG_FONT]);
     actual_folder = "";
 
     currentProgress = 0;
@@ -53,7 +52,6 @@ LoadingScreen::~LoadingScreen(){
     delete loading_bar;
     delete loading_text;
     delete loading_perc;
-    delete dots_anim;
 }
 
 bool LoadingScreen::Input(){
@@ -82,18 +80,16 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
         actual_folder = folder;
         loading_text->SetText(p_getLoadingStatement());
         float loading_text_posX = g_engine->GetScreenWidth()/2 - loading_text->GetSize().X/2;
-        float loading_text_posY = g_engine->GetScreenHeight()/3;
+        float loading_text_posY = g_engine->GetScreenHeight()/2;
         loading_text->SetPosition(loading_text_posX, loading_text_posY);
     }
     
     loading_perc->SetText(prog.str());
     float loading_perc_posX = g_engine->GetScreenWidth()/2 - loading_perc->GetSize().X/2;
-    float loading_perc_posY = g_engine->GetScreenHeight()/2;
+    float loading_perc_posY = g_engine->GetScreenHeight()/2 - loading_text->GetSize().Y;
     loading_perc->SetPosition(loading_perc_posX, loading_perc_posY);
 
     loading_bar->SetWidth(bar_width*(progress/100));
-    
-    p_updateDotsAnimation();
 
     int progressInt = (int)progress;
 
@@ -105,23 +101,6 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
 
 void LoadingScreen::Draw(){
 
-}
-
-void LoadingScreen::p_updateDotsAnimation(){
-    float deltatime =  g_engine->getTime()/1000.0f; //seconds
-    if(deltatime - anim_time >= 0.5f){ //si pasan tres segundos
-        std::string txt = dots_anim->GetText();
-        float siz = txt.size();
-        if(siz >= 0 && siz<3){
-            txt += '.';
-            dots_anim->SetText(txt);
-        }else dots_anim->SetText("");
-
-        float dots_anim_posX = g_engine->GetScreenWidth()/2 - dots_anim->GetSize().X/2;
-        float dots_anim_posY = g_engine->GetScreenHeight()/2.5;
-        dots_anim->SetPosition(dots_anim_posX, dots_anim_posY);
-        anim_time = deltatime;
-    }
 }
 
 std::string LoadingScreen::p_getLoadingStatement(){

@@ -55,7 +55,7 @@ enum GAMETEXTURES {
 	TEXTURE_BUTTON_HOVER,
 	TEXTURE_BUTTON_PRESSED,
 	TEXTURE_GUI_CURSOR,
-	TEXTURE_GUI_CURSOR_GLOW,
+	TEXTURE_BLACK_BKG_FONT,
 	TEXTURE_SHOP_SLOT,
 	TEXTURE_WARLOCK_ALLIANCE,
 	TEXTURE_WIZARD_ALLIANCE,
@@ -92,6 +92,8 @@ enum GAMETEXTURES {
 	TEXTURE_LOADING_BAR_MASK,
 	TEXTURE_LOADING_SCREEN_WIZARD,
 	TEXTURE_LOADING_SCREEN_WARLOCK,
+	TEXTURE_WARLOCK_ICON,
+	TEXTURE_WIZARD_ICON,
 	TEXTURE_default_skydome,
 	TEXTURE_normal_mainwall,
 	TEXTURE_specular_mainwall,
@@ -382,7 +384,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SHOP_SLOT]					= "./../assets/textures/GUI/Menus/ShopMenu/slot.png";
 	m[TEXTURE_ALLIANCE_BACKGROUND]			= "./../assets/textures/GUI/Menus/AllianceMenu/alliance_background.png";
 	m[TEXTURE_GUI_CURSOR]					= "./../assets/textures/GUI/cursor.png";
-	m[TEXTURE_GUI_CURSOR_GLOW]				= "./../assets/textures/GUI/cursor_glow.png";
+	m[TEXTURE_BLACK_BKG_FONT]				= "./../assets/textures/GUI/black_bkg_font.png";
 	m[TEXTURE_WARLOCK_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance.png";
 	m[TEXTURE_WIZARD_ALLIANCE]				= "./../assets/textures/GUI/Menus/AllianceMenu/wizard_alliance.png";
 	m[TEXTURE_WARLOCK_ALLIANCE_HOVER]		= "./../assets/textures/GUI/Menus/AllianceMenu/warlock_alliance_hover.png";
@@ -412,6 +414,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_LOADING_BAR_MASK] 			= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_mask.png";
 	m[TEXTURE_LOADING_SCREEN_WIZARD] 		= "./../assets/textures/GUI/Menus/LoadingScreen/bkg_wizard.png";
 	m[TEXTURE_LOADING_SCREEN_WARLOCK] 		= "./../assets/textures/GUI/Menus/LoadingScreen/bkg_warlock.png";
+	m[TEXTURE_WARLOCK_ICON]				= "./../assets/textures/GUI/warlockalliance.png";
+	m[TEXTURE_WIZARD_ICON]				= "./../assets/textures/GUI/wizardalliance.png";
 
 	m[TEXTURE_default_skydome] = "../src/Engines/TravelersOcularEngine/assets/textures/default_skydome.jpg";
 	m[TEXTURE_normal_mainwall] = "../assets/textures/maptextures/normal_mainwall 1.png";
@@ -548,7 +552,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_MAINMENU_BKG_87]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_87.jpg";
 	m[TEXTURE_MAINMENU_BKG_88]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_88.jpg";
 	m[TEXTURE_MAINMENU_BKG_89]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_89.jpg";
-	m[TEXTURE_MAINMENU_BKG_90]= "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_90.jpg";
 
 	return m;
 }
