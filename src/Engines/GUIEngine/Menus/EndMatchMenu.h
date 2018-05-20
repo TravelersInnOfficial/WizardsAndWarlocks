@@ -4,6 +4,7 @@
 # include <GUIEngine/Menu.h>
 
 class HumanPlayer;
+class GSprite;
 
 class EndMatchMenu : public Menu{
 public:
@@ -25,8 +26,7 @@ private:
     ImTextureID texture_hover;
     ImTextureID texture_pressed;
     
-    ImTextureID texture_VICTORY;
-    ImTextureID texture_DEFEAT;
+    GSprite* bkg;
 
 };
 

@@ -23,12 +23,19 @@ LoadingScreen::LoadingScreen(){
     float bar_bkgX = barX - 30;
     float bar_bkgW = bar_width + 60;
 
-    m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_BKG],vector2df(0,0),vector2df(W,H));
+    int index = rand() % 10;
+    std::cout<<"INDEX: "<<index<<"\n";
+    int alliance = index % 2;
+    std::cout<<"ALLIANCE: "<<alliance<<"\n";
+    if(alliance == 0) m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WIZARD],vector2df(0,0),vector2df(W,H));
+    else m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WARLOCK],vector2df(0,0),vector2df(W,H));
+
     m_bar_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_BAR_BKG],vector2df(bar_bkgX, barY),vector2df(bar_bkgW,barH));
 
     loading_bar = g_engine->add2DRect(vector2df(barX,barY),vector2df(bar_width,barH));
     loading_bar->SetMask(TEXTUREMAP[TEXTURE_LOADING_BAR_MASK]);
-    loading_bar->SetColor(0,0,1);
+    if(alliance == 0) loading_bar->SetColor(0,0,1);
+    else loading_bar->SetColor(0.8,0,0.8);
     
     loading_text = g_engine->add2DText("",vector2df(W/2,H/3));
     dots_anim = g_engine->add2DText("",vector2df(W/2,H/2.5));

@@ -90,7 +90,8 @@ enum GAMETEXTURES {
 	TEXTURE_MATCH_VICTORY,
 	TEXTURE_LOADING_BAR_BKG,
 	TEXTURE_LOADING_BAR_MASK,
-	TEXTURE_LOADING_SCREEN_BKG,
+	TEXTURE_LOADING_SCREEN_WIZARD,
+	TEXTURE_LOADING_SCREEN_WARLOCK,
 	TEXTURE_default_skydome,
 	TEXTURE_normal_mainwall,
 	TEXTURE_specular_mainwall,
@@ -409,7 +410,8 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_MATCH_VICTORY]				= "./../assets/textures/GUI/Menus/EndMatchMenu/victory.png";
 	m[TEXTURE_LOADING_BAR_BKG] 				= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_bkg.png";
 	m[TEXTURE_LOADING_BAR_MASK] 			= "./../assets/textures/GUI/Menus/LoadingScreen/loading_bar_mask.png";
-	m[TEXTURE_LOADING_SCREEN_BKG] 			= "./../assets/textures/GUI/Menus/LoadingScreen/bkg.png";
+	m[TEXTURE_LOADING_SCREEN_WIZARD] 		= "./../assets/textures/GUI/Menus/LoadingScreen/bkg_wizard.png";
+	m[TEXTURE_LOADING_SCREEN_WARLOCK] 		= "./../assets/textures/GUI/Menus/LoadingScreen/bkg_warlock.png";
 
 	m[TEXTURE_default_skydome] = "../src/Engines/TravelersOcularEngine/assets/textures/default_skydome.jpg";
 	m[TEXTURE_normal_mainwall] = "../assets/textures/maptextures/normal_mainwall 1.png";

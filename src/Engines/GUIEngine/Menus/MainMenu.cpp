@@ -104,7 +104,7 @@ void MainMenu::Update(bool* open, float deltaTime){
     ImGui::SetNextWindowPos(ImVec2(screenWidth/2-m_width/2,screenHeight/2 - m_height/2));
     ImGui::SetNextWindowBgAlpha(0.0f);
 
-    if(!ImGui::Begin(m_id,open,w_flags)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
+    if(!ImGui::Begin(m_id,open,w_flags |= ImGuiWindowFlags_NoScrollWithMouse)) ImGui::End(); //SI NO SE INICIA CERRAR INMEDIATAMENTE
     else{
         std::vector<ImVec2> text_pos;
         ImGui::Image(title_texture,titleSize);

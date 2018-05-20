@@ -10,8 +10,7 @@ ExitMatchMenu::ExitMatchMenu(MenuType type) : Menu(type){
 }
 
 ExitMatchMenu::~ExitMatchMenu(){
-    delete m_cursor;    
-    m_cursor = nullptr;
+    delete m_cursor;
 }
 
 void ExitMatchMenu::Update(bool* open, float deltaTime){
@@ -22,6 +21,7 @@ void ExitMatchMenu::Update(bool* open, float deltaTime){
     if(ImGui::BeginPopupModal(popuptxt.c_str(),nullptr,popup_flags)){
         if(ImGui::Button("YES", ImVec2(100,100))){
             StateManager::GetInstance()->PrepareStatus(STATE_MENU);
+            Close(open);
         }
         ImGui::SameLine();
         if(ImGui::Button("NO", ImVec2(100,100))){
