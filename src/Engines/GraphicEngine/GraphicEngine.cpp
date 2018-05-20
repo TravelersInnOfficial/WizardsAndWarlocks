@@ -22,7 +22,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	ParticleState = true;
 	dynamicLights = true;
 	ambientLight = 0.40f;
-	mouse_sensibility = 0.5f;
+	mouse_sensibility = 2.5f;
 
 	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
