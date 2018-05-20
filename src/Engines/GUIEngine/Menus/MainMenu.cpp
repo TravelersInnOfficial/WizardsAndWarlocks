@@ -406,9 +406,9 @@ void MainMenu::Update(bool* open, float deltaTime){
 
                 ImGui::Text("\nScreen Options");
                 ImGui::Separator();
-                static bool *shadows = GraphicEngine::getInstance()->GetShadowState();
+                //static bool *shadows = GraphicEngine::getInstance()->GetShadowState();
                 static bool *particles  = GraphicEngine::getInstance()->GetParticleState();
-                ImGui::Checkbox("Shadows", shadows);
+                //ImGui::Checkbox("Shadows", shadows);
                 ImGui::Checkbox("Particles", particles);
 
                 static bool lights = GraphicEngine::getInstance()->GetDynamicLight();
