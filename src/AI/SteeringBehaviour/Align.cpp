@@ -3,11 +3,11 @@
 #include <kinematicTypes.h>
 
 Align::Align(){
-	maxAngularAcceleration = 3.0f;
+	maxAngularAcceleration = 2.0f;
 	maxRotation = 10.0f;
 	targetRadius = 0.025f;
 	slowRadius = 0.2f;
-	timeToTarget = 0.1f;
+	timeToTarget = 0.2f;
 }
 
 Align::~Align(){}

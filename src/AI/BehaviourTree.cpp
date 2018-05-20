@@ -275,7 +275,7 @@ void BehaviourTree::CreateMoveSpell(){
 
 void BehaviourTree::CreateCathPotion(){
     Secuencia* sc_catchPotion = new Secuencia();
-    sc_catchPotion->addChild(new CheckDistance(2.0f));  // Distancia del raycast
+    sc_catchPotion->addChild(new CheckDistance(2.5f));  // Distancia del raycast
     sc_catchPotion->addChild(new CatchPotion());
 
     informacion->SetPuntero(AI_TASK_CATCH_POT, sc_catchPotion);
@@ -295,9 +295,12 @@ void BehaviourTree::CreateMoveToTarget(){
 }
 
 void BehaviourTree::CreatePathToTarget(){
-    Task* t = new TargetPath();
-    informacion->SetPuntero(AI_MOVE_TARGETPATH, t);
-    tasks.push_back(t);
+    Secuencia* sc_pathToTarget = new Secuencia();
+    sc_pathToTarget->addChild(new TargetPath());
+    sc_pathToTarget->addChild(new CheckJump());
+
+    informacion->SetPuntero(AI_MOVE_TARGETPATH, sc_pathToTarget);
+    tasks.push_back(sc_pathToTarget);
 }
 
 void BehaviourTree::CreateDrinkPotion(){
@@ -308,7 +311,7 @@ void BehaviourTree::CreateDrinkPotion(){
 
 void BehaviourTree::CreateUseFountain(){
     Secuencia* sc_useFountain = new Secuencia();
-    sc_useFountain->addChild(new CheckDistance(2.0f));  // Distancia del raycast
+    sc_useFountain->addChild(new CheckDistance(2.5f));  // Distancia del raycast
     sc_useFountain->addChild(new UseFountain());
 
     informacion->SetPuntero(AI_TASK_USE_FOUNT, sc_useFountain);
@@ -317,7 +320,7 @@ void BehaviourTree::CreateUseFountain(){
 
 void BehaviourTree::CreateDefuseTrap(){
     Secuencia* sc_defuseTrap = new Secuencia();
-    sc_defuseTrap->addChild(new CheckDistance(2.0f));   // Distancia del raycast
+    sc_defuseTrap->addChild(new CheckDistance(2.5f));   // Distancia del raycast
     sc_defuseTrap->addChild(new DefuseTrap());
 
     informacion->SetPuntero(AI_TASK_DEFUSE_TRAP, sc_defuseTrap);
@@ -340,7 +343,7 @@ void BehaviourTree::CreateEscapeMove(){
     Secuencia* sc_escape = new Secuencia();
     sc_escape->addChild(new MoveEscape());
     sc_escape->addChild(new CheckJump());
-    
+
     informacion->SetPuntero(AI_MOVE_ESCAPE, sc_escape);
     tasks.push_back(sc_escape);
 }
@@ -372,6 +375,7 @@ void BehaviourTree::CreateTravelTask(){
 void BehaviourTree::CreateTravelMove(){
     Secuencia* sc_travelMove = new Secuencia();
     sc_travelMove->addChild(new TravelRoom());
+    sc_travelMove->addChild(new CheckDoorWay(1.0f));
     sc_travelMove->addChild(new CheckJump());
 
     informacion->SetPuntero(AI_MOVE_TRAVEL, sc_travelMove);

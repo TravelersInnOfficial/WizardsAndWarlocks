@@ -251,6 +251,53 @@ bool MoveEscape::run(Blackboard* bb){
 
 // ================================================================================================= //
 //
+//	CHECK DOOR IN WAY
+//
+// ================================================================================================= //
+
+
+CheckDoorWay::CheckDoorWay(float d){
+	dist = d;
+}
+
+bool CheckDoorWay::run(Blackboard* bb){
+	if(DEBUG) std::cout<<"Check Door Way\n"<<std::endl;
+
+	AIPlayer* character = bb->GetPlayer();
+	if(character!=nullptr){
+		vector3df pos = character->GetPos();
+		vector3df toMove = character->GetForceToMove();
+		toMove.Y = 0;
+		toMove.normalize();
+		toMove = toMove * dist + pos;
+
+		int collisionFilter = C_DOOR;
+		BulletEngine* f_engine = BulletEngine::GetInstance();
+		void* object = f_engine->Raycast(pos, toMove, collisionFilter);
+
+		if(object != nullptr){
+            Entidad* entity = (Entidad*)object;
+            if(entity->GetClase()==EENUM_DOOR){
+                Door* door = (Door*)entity;
+                if(!door->GetOpenState()){
+                	character->SetForceToMove(vector3df(0,0,0));
+
+					Kinematic cKin = character->GetKinematic();
+					Kinematic tKin;
+					tKin.position = toMove;
+					SteeringOutput steering = character->GetFace(cKin, tKin);
+					character->SetForceToRotate(steering.angular);	
+                }
+            }
+		}
+		return true;
+	}
+	return false;
+}
+
+
+// ================================================================================================= //
+//
 //	CHECK DIRECT VISION
 //
 // ================================================================================================= //
@@ -315,6 +362,7 @@ bool CheckDoorInFront::run(Blackboard* bb){
 				Door* door = (Door*)Object;
 				if(!door->GetOpenState()){
 					character->SetController(ACTION_RAYCAST, PRESSED);
+					character->SetForceToMove(vector3df(0,0,0));
 					return true;
 				}
 			}
@@ -388,7 +436,7 @@ bool WhereExplore::run(Blackboard* bb){
 CheckJump::CheckJump(){}
 
 bool CheckJump::run(Blackboard* bb){
-	if(DEBUG) std::cout<<"Check Jump";
+	if(DEBUG) std::cout<<"Check Jump\n";
 
 	AIPlayer* character = bb->GetPlayer();
 	if(character != nullptr){
@@ -780,7 +828,7 @@ bool FaceObject::run(Blackboard* bb){
 		Kinematic tKin = target->kinematic;
 
 		SteeringOutput steering = character->GetFace(cKin, tKin);
-		
+
 		character->SetForceToMove(steering.linear);
 		character->SetForceToRotate(steering.angular);
 		return true;

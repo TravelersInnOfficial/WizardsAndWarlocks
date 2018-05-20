@@ -60,7 +60,7 @@ int Pathfinding::GetIndexNearestNode(vector3df pos, int start){
         int size = m_path.size();
         for(int i=start; i<size && i<=start+2; i++){
             vector3df nodePos = m_path[i]->getPosition();
-            if(pos.Y - nodePos.Y > -0.5f){
+            if(pos.Y - nodePos.Y > -0.3f){
                 nodePos.Y += 0.5;
                 void* object = f_engine->Raycast(pos, nodePos, C_WALL | C_FOUNTAIN | C_DOOR);
                 
