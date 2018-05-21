@@ -14,6 +14,9 @@ GUIEngine::GUIEngine(){
     GLFWwindow* glf_win = VideoDriver::GetInstance()->GetWindow();
     ImGui_ImplGlfwGL3_Init(glf_win, true);
 
+    //ImGuiIO& io = ImGui::GetIO();
+    //io.Fonts->AddFontFromFileTTF("./../assets/fonts/JuliusSansOne-Regular.ttf", 13);
+      
     //INITIAL NOTIFICATIONS POSITION
     m_notifications_Ypos = 10;
     m_notifications_distance = 10;

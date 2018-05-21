@@ -303,27 +303,27 @@ void ImGui::WWStyleColor(ImGuiStyle* dst){
     colors[ImGuiCol_Border]                 = ImVec4(0.50f, 0.50f, 0.50f, 0.50f);
     colors[ImGuiCol_BorderShadow]           = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
     
-    colors[ImGuiCol_FrameBg]                = ImVec4(0.43f, 0.43f, 0.43f, 0.39f);
-    colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.47f, 0.47f, 0.69f, 0.40f);
-    colors[ImGuiCol_FrameBgActive]          = ImVec4(0.42f, 0.41f, 0.64f, 0.69f);
+    colors[ImGuiCol_FrameBg]                = ImVec4(0.50f, 0.24f, 0.10f, 0.39f);
+    colors[ImGuiCol_FrameBgHovered]         = ImVec4(0.79f, 0.38f, 0.16f, 0.40f);
+    colors[ImGuiCol_FrameBgActive]          = ImVec4(0.60f, 0.24f, 0.16f, 0.69f);
     
-    colors[ImGuiCol_TitleBg]                = ImVec4(0.27f, 0.27f, 0.54f, 0.83f); //TITLE BAR
-    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.32f, 0.32f, 0.32f, 0.87f); //TITLE BAR ACTIVE
+    colors[ImGuiCol_TitleBg]                = ImVec4(0.32f, 0.04f, 0.00f, 0.83f); //TITLE BAR
+    colors[ImGuiCol_TitleBgActive]          = ImVec4(0.32f, 0.04f, 0.00f, 0.87f); //TITLE BAR ACTIVE
     colors[ImGuiCol_TitleBgCollapsed]       = ImVec4(0.40f, 0.40f, 0.80f, 0.20f);
     colors[ImGuiCol_MenuBarBg]              = ImVec4(0.40f, 0.40f, 0.55f, 0.80f);
     
-    colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.20f, 0.25f, 0.30f, 0.60f);
-    colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.40f, 0.40f, 0.80f, 0.30f);
-    colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.40f, 0.40f, 0.80f, 0.40f);
-    colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.41f, 0.39f, 0.80f, 0.60f);
+    colors[ImGuiCol_ScrollbarBg]            = ImVec4(0.32f, 0.04f, 0.00f, 0.60f);
+    colors[ImGuiCol_ScrollbarGrab]          = ImVec4(0.90f, 0.90f, 0.90f, 0.30f);
+    colors[ImGuiCol_ScrollbarGrabHovered]   = ImVec4(0.90f, 0.90f, 0.90f, 0.40f);
+    colors[ImGuiCol_ScrollbarGrabActive]    = ImVec4(0.90f, 0.90f, 0.90f, 0.60f);
     colors[ImGuiCol_CheckMark]              = ImVec4(0.90f, 0.90f, 0.90f, 0.50f); //CHECKBOX TICK
     
     colors[ImGuiCol_SliderGrab]             = ImVec4(1.00f, 1.00f, 1.00f, 0.30f);
     colors[ImGuiCol_SliderGrabActive]       = ImVec4(0.41f, 0.39f, 0.80f, 0.60f);
     
     colors[ImGuiCol_Button]                 = ImVec4(0.32f, 0.04f, 0.00f, 1.00f); //BUTTON
-    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.40f, 0.48f, 0.71f, 0.79f); //BUTTON HOVER
-    colors[ImGuiCol_ButtonActive]           = ImVec4(0.46f, 0.54f, 0.80f, 1.00f); //BUTTON PRESSED
+    colors[ImGuiCol_ButtonHovered]          = ImVec4(0.47f, 0.06f, 0.00f, 0.95f); //BUTTON HOVER
+    colors[ImGuiCol_ButtonActive]           = ImVec4(0.50f, 0.11f, 0.00f, 1.00f); //BUTTON PRESSED
     
     colors[ImGuiCol_Header]                 = ImVec4(0.40f, 0.40f, 0.90f, 0.45f);
     colors[ImGuiCol_HeaderHovered]          = ImVec4(0.45f, 0.45f, 0.90f, 0.80f);
