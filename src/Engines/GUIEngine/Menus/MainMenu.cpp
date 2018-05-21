@@ -256,6 +256,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     PrepareClient(true);
                     closeMenu(open);
                 }
+                ImGui::SameLine();
                 if(ImGui::Button("BACK", pu_buttonSize)){
                     PlaySound();
                     m_some_selected = false;
@@ -285,7 +286,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //DIRECT CONNECTION
         if(m_direct_connection){
             ImGui::OpenPopup("Direct connection");
-            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
+            //ImGui::SetNextWindowSize(ImVec2(screenWidth/5,screenHeight/6));
             if(ImGui::BeginPopupModal("Direct connection",nullptr,popup_flags)){
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
@@ -304,6 +305,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     PrepareClient(true);
                     closeMenu(open);
                 }
+                ImGui::SameLine();
                 if(ImGui::Button("BACK",pu_buttonSize)){
                     PlaySound();
                     m_direct_connection = false;
@@ -318,7 +320,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //START A HOST
         if(m_start_host){
             ImGui::OpenPopup("Start a host");
-            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
+            //ImGui::SetNextWindowSize(ImVec2(screenWidth/5,screenHeight/6));
             if(ImGui::BeginPopupModal("Start a host",nullptr,popup_flags)){
                 ImGui::Text("Server Name: ");
                 ImGui::SameLine();
@@ -327,7 +329,6 @@ void MainMenu::Update(bool* open, float deltaTime){
                 ImGui::Text("Your Name: ");
                 ImGui::SameLine();
                 ImGui::InputText("##player_name", player_name, IM_ARRAYSIZE(player_name));
-                ImGui::Text("Your IP: 192.168.2.224");
                 ImGui::Separator();
 
                 if(ImGui::Button("START HOSTING", pu_buttonSize)){
@@ -344,6 +345,7 @@ void MainMenu::Update(bool* open, float deltaTime){
                     PrepareClient(true);
                     closeMenu(open);
                 }
+                ImGui::SameLine();
                 if(ImGui::Button("BACK", pu_buttonSize)){ 
                     PlaySound();
                     m_start_host = false;
@@ -359,7 +361,7 @@ void MainMenu::Update(bool* open, float deltaTime){
         //OPTIONS MODAL
         if(m_options){
             ImGui::OpenPopup("Options");
-            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,screenHeight/1.2));
+            ImGui::SetNextWindowSize(ImVec2(screenWidth/1.2,470));
             if(!ImGui::BeginPopupModal("Options",nullptr,popup_flags)) ImGui::EndPopup();
             else{
                 ImGui::Text("Sound Options");
