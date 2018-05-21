@@ -323,7 +323,7 @@ void HumanPlayer::LookingAtObject(){
 		
 		void* Object = BulletEngine::GetInstance()->Raycast(Start, End);
 		if(Object!=nullptr){
-			if(GraphicEngine::getInstance()->getTime() - showObjInfo > 500.0f){
+			if(!m_interacting && GraphicEngine::getInstance()->getTime() - showObjInfo > 500.0f){
 				Entidad* h = (Entidad*)Object;
 				h->ShowInteractInfo();
 			}
