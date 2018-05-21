@@ -127,16 +127,9 @@ void MainMenu::Update(bool* open, float deltaTime){
             else if(ImGui::IsItemHovered()){ 
                 ImGui::SetTooltip("%s",descriptions[i]);
                 texture[i] = texture_hover;
-                //m_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR_GLOW]);
             }
             else{
                 texture[i] = texture_init;
-                /*
-                if(m_cursor->GetTexture()!=TEXTUREMAP[TEXTURE_GUI_CURSOR]){
-                        m_cursor->SetTexture(TEXTUREMAP[TEXTURE_GUI_CURSOR]);
-                        std::cout<<"changing cursor texture\n";
-                }
-                */
             }
 
             ImGui::PopStyleColor(3);

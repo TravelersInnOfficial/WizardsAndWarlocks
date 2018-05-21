@@ -8,6 +8,7 @@
 #include <SoundEngine/SoundSystem.h>
 #include <NetworkStructs.h>
 #include <Menus.h>
+#include <Assets.h>
 
 MenuPrincipal::MenuPrincipal(){
 
@@ -20,11 +21,10 @@ MenuPrincipal::MenuPrincipal(){
 	createSoundEvent();
 	playMenuMusic();
 	
-	background = "./../assets/textures/GUI/Menus/MainMenu/bkg/frame_";
-	bkg_frame = 0;
-	total_bkg_frames = 89;
+	bkg_frame = (int) TEXTURE_MAINMENU_BKG_0;
+	total_bkg_frames = bkg_frame + 89;
 	vector2df dims(g_engine->GetScreenWidth(),g_engine->GetScreenHeight());	
-	bkg = g_engine->addSprite(background + std::to_string(bkg_frame)+ ".jpg", vector2df(0,0), dims);
+	bkg = g_engine->addSprite(TEXTUREMAP[(GAMETEXTURES) bkg_frame], vector2df(0,0), dims);
 	bkg_frame++;
 
 	MenuManager::GetInstance()->CreateMenu(MAIN_M);
@@ -55,8 +55,8 @@ void MenuPrincipal::Update(float deltaTime){
 	MenuManager::GetInstance()->Update(deltaTime);
 
 	bkg_frame++;
-	if(bkg_frame>total_bkg_frames) bkg_frame = 0;
-	bkg->SetTexture(background + std::to_string(bkg_frame) + ".jpg");
+	if(bkg_frame>total_bkg_frames) bkg_frame = (int) TEXTURE_MAINMENU_BKG_0;
+	bkg->SetTexture(TEXTUREMAP[ (GAMETEXTURES) bkg_frame]);
 }
 
 void MenuPrincipal::Draw(){
