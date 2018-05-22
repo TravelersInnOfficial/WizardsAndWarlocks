@@ -6,8 +6,8 @@ USER_FLAGS_C			=
 # DONT EDIT ---------------------------------------------------
 
 CPPFLAGS        	:= $(INCLUDE_FOLDERS)
-CXXFLAGS			:= -O3 -Wall -g -std=c++14 $(USER_FLAGS)
-CCFLAGS				:= -O3 -Wall $(USER_FLAGS_C)
+CXXFLAGS			:= -O2 -Wall -std=c++14 $(USER_FLAGS)
+CCFLAGS				:= -O2 -Wall $(USER_FLAGS_C)
 LIBS 				:= -lIrrlicht -lBulletDynamics -lBulletCollision -lLinearMath -lassimp
 
 ifeq ($(OS),Windows_NT)
