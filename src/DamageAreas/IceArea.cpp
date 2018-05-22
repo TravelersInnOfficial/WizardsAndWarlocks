@@ -7,6 +7,7 @@
 #include "./../Players/Player.h"
 #include <ColliderMasks.h>
 #include <Constants.h>
+#include <NetworkEngine/NetworkEngine.h>
 
 IceArea::IceArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRotation)
 :DamageArea(dam, 0.2f, TPosition, TScale, TRotation){
@@ -16,7 +17,10 @@ IceArea::IceArea(float dam, vector3df TPosition, vector3df TScale, vector3df TRo
 }
 	
 IceArea::~IceArea(){
-	if(particle != nullptr) delete particle;
+	if(particle != nullptr){
+		delete particle;
+		particle = nullptr;
+	}
 }
 
 void IceArea::SetPosition(vector3df pos){
@@ -30,7 +34,7 @@ void IceArea::SetPosition(vector3df pos){
 		float rotX = -rotation.X * M_PI / 180.0f;
 		float rotY = rotation.Y * M_PI / 180.0f;
 		vector3df newDir = vector3df(sin(rotY)*cos(rotX), sin(rotX), cos(rotY)*cos(rotX));
-		pm->SetDirection(newDir);
+		if(pm != nullptr) pm->SetDirection(newDir);
 
 		float dist = -1.0f;
 		vector3df TPosition = pos;
@@ -92,10 +96,12 @@ void IceArea::CreateIceArea(vector3df TPosition, vector3df TScale, vector3df TRo
 		TPosition.X = TPosition.X + sin(TRotation.Y)*dist;
 		TPosition.Z = TPosition.Z + cos(TRotation.Y)*dist;
 
-		particle = new GParticle(TPosition);
-		particle->SetRot(TRotation);
-		particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
-		particle->SetType(WIND_PARTICLE);
-		particle->SetQuantityPerSecond(200);
+		if(!NetworkEngine::GetInstance()->IsServerInit()){
+			particle = new GParticle(TPosition);
+			particle->SetRot(TRotation);
+			particle->SetTexture("./../assets/textures/particles/FreezeParticle.png");
+			particle->SetType(WIND_PARTICLE);
+			particle->SetQuantityPerSecond(200);
+		}
 	}
 }
