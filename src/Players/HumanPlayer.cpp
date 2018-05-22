@@ -6,6 +6,7 @@
 #include <PhysicsEngine/BulletEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include "./../Managers/SpellManager.h"
+#include "./../Objects/Potion.h"
 #include "./../Cameras/Camera.h"
 #include "./PlayerController.h"
 
@@ -325,7 +326,12 @@ void HumanPlayer::LookingAtObject(){
 		if(Object!=nullptr){
 			if(GraphicEngine::getInstance()->getTime() - showObjInfo > 500.0f){
 				Entidad* h = (Entidad*)Object;
-				h->ShowInteractInfo();
+				EntityEnum currentEntity = h->GetClase();
+				if(currentEntity != EENUM_POTION || m_potion == nullptr){
+					h->ShowInteractInfo();
+				}else{
+					((Potion*)h)->ShowDropPotion();
+				}
 			}
 		}
 		else{
