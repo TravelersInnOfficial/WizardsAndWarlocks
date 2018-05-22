@@ -1,3 +1,4 @@
+
 #include "BehaviourTree.h"
 
 #include "Blackboard.h"
@@ -349,7 +350,7 @@ void BehaviourTree::CreateEscapeMove(){
 }
 
 void BehaviourTree::CreateExploreTask(){
-    Task* t = new EmptyTask();
+    Task* t = new CheckDoorInFront(2.0f);
     informacion->SetPuntero(AI_TASK_EXPLORE, t);
     tasks.push_back(t);
 }

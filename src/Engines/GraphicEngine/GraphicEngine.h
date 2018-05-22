@@ -314,6 +314,7 @@ public:
 
 	void LoadTexture(std::string path);
 	void LoadMesh(std::string path);
+	void UnloadTexture(std::string path);
 
 	vector2di GetTextureDims(std::string path);
 

@@ -24,7 +24,7 @@ LoadingScreen::LoadingScreen(){
     float bar_bkgW = bar_width + 60;
 
     int index = rand() % 10;
-    int alliance = index % 2;
+    alliance = index % 2;
     if(alliance == 0) m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WIZARD],vector2df(0,0),vector2df(W,H));
     else m_bkg = g_engine->addSprite(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WARLOCK],vector2df(0,0),vector2df(W,H));
 
@@ -52,6 +52,9 @@ LoadingScreen::~LoadingScreen(){
     delete loading_bar;
     delete loading_text;
     delete loading_perc;
+
+    if(alliance == 0) g_engine->UnloadTexture(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WIZARD]);
+    else g_engine->UnloadTexture(TEXTUREMAP[TEXTURE_LOADING_SCREEN_WARLOCK]);
 }
 
 bool LoadingScreen::Input(){
