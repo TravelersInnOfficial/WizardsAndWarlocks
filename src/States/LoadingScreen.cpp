@@ -33,7 +33,6 @@ LoadingScreen::LoadingScreen(){
     loading_text = g_engine->add2DText("",vector2df(W/2,H/3));
     dots_anim = g_engine->add2DText("",vector2df(W/2,H/2.5));
     loading_perc = g_engine->add2DText("",vector2df(W/2,H/2));
-    actual_folder = "";
 
     currentProgress = 0;
 }
@@ -57,27 +56,9 @@ void LoadingScreen::Update(float deltaTime){
 }
 
 void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
-    std::string txt = status;
-    std::string toErase = "./../assets/";
-    std::string folder;
-
+    
     std::ostringstream prog;
     prog << std::setprecision(3) << (int) progress << '%';
-
-    int pos = 0;
-    pos = txt.find(toErase, pos);
-    
-    if(pos != std::string::npos) txt.erase(pos,toErase.size());
-
-    std::size_t found = txt.find_last_of("/\\");
-    folder = txt.substr(0,found);
-    if(folder != actual_folder){
-        actual_folder = folder;
-        loading_text->SetText(p_getLoadingStatement());
-        float loading_text_posX = g_engine->GetScreenWidth()/2 - loading_text->GetSize().X/2;
-        float loading_text_posY = g_engine->GetScreenHeight()/3;
-        loading_text->SetPosition(loading_text_posX, loading_text_posY);
-    }
     
     loading_perc->SetText(prog.str());
     float loading_perc_posX = g_engine->GetScreenWidth()/2 - loading_perc->GetSize().X/2;
@@ -91,6 +72,12 @@ void  LoadingScreen::SetLoadingStatus(std::string status, float progress){
     int progressInt = (int)progress;
 
     if(progressInt!=currentProgress){
+        if(currentProgress % 15 == 0){
+            loading_text->SetText(p_getLoadingStatement());
+            float loading_text_posX = g_engine->GetScreenWidth()/2 - loading_text->GetSize().X/2;
+            float loading_text_posY = g_engine->GetScreenHeight()/3;
+            loading_text->SetPosition(loading_text_posX, loading_text_posY);
+        }
         currentProgress = progressInt;
         g_engine->drawAll();
     }
