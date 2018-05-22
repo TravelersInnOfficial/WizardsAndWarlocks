@@ -240,8 +240,7 @@ void PlayerHUD::p_initPlayerSpellSelector(){
     float new_width = m_num_spells* (m_spell_size + m_spell_space);
     vector2df slot_dims = vector2df(new_width,new_height);
 
-    vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_SPELL_SLOT]);
-    if(slot_dims.Y > tex_dims.Y) slot_dims = vector2df(tex_dims.X,tex_dims.Y);
+    if(slot_dims.Y > m_spell_size + 10) slot_dims.Y = m_spell_size + 10;
 
     vector2df slot_pos = vector2df(W-mana_orb->width-slot_dims.X, 0);
 
