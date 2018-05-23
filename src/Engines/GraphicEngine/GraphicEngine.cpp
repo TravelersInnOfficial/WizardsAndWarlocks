@@ -31,9 +31,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 		privateDriver->CreateWindows("Wizards&Warlocks",  TOEvector2di(1,1), false);
 		privateDriver->Minimize();
 	}
-	else
-	privateDriver->CreateWindows("Wizards&Warlocks", TOEvector2di(800,600));
-	//privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
+	else privateDriver->CreateWindows("Wizards&Warlocks", privateDriver->GetScreenResolution(), true);
 
 	privateDriver->SetClearScreenColor( TOEvector4df(0.7, 0.7, 1, 1));
 	privateSManager = privateDriver->GetSceneManager();

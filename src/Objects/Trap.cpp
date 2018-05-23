@@ -78,9 +78,7 @@ void Trap::SetTrapData(vector3df dimensions, std::string texturePath, std::strin
 
 Trap::~Trap(){
 	if(particle != nullptr) delete particle;
-	if(deactivation_bar != nullptr){
-		delete deactivation_bar;
-	}
+	if(deactivation_bar != nullptr) delete deactivation_bar;
 	Erase();
 }
 
@@ -265,6 +263,7 @@ void Trap::ForceEffect(Player* player){
 		break;
 	}
 
+	if(playerOne != nullptr) playerOne->AddToMinimap(player);
 	TrapManager::GetInstance()->DeleteTrap(this);
 }
 

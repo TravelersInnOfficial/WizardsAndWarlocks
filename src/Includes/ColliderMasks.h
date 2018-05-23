@@ -70,13 +70,11 @@ static int projectileCW		= C_WALL
 							| C_PLAYER
 							| C_GRAIL
 							| C_SWITCH
-							| C_TRAP
 							| C_DOOR
 							| C_FOUNTAIN
 							| C_NPC;
 
-static int trapCW			= C_PROJECTILE
-							| C_PLAYER;
+static int trapCW			= C_PLAYER;
 
 static int npcCW			= C_PROJECTILE
 							| C_PLAYER
