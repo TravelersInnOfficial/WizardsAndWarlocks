@@ -60,6 +60,11 @@ void Potion::ShowInteractInfo(Player* p){
 	GUIEngine::GetInstance()->ShowEntityInfo(m_info);
 }
 
+void Potion::ShowDropPotion(){
+	std::string output = "[Q] Drop Potion";
+	GUIEngine::GetInstance()->ShowEntityInfo(output);
+}
+
 void Potion::Interact(Player* p){
     NetworkEngine* n_engine = NetworkEngine::GetInstance();
 

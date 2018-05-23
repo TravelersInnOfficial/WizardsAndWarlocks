@@ -33,8 +33,6 @@ private:
     float anim_time;
     float bar_width;
     int currentProgress;
-    std::string actual_folder;
-
     int alliance;
 };
 
