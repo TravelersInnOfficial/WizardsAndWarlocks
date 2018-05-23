@@ -11,7 +11,6 @@ StatusMenu::StatusMenu(MenuType type) : Menu(type){
     warlock_icon = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WARLOCK_ICON]);
     wizard_icon = (void*)(size_t) toe::GetTextureID(TEXTUREMAP[TEXTURE_WIZARD_ICON]);
 
-    TOEvector2di t_dims = toe::GetTextureDims(TEXTUREMAP[TEXTURE_WARLOCK_ICON]);
     icon_size = ImVec2(ImGui::GetFontSize(),ImGui::GetFontSize());
 }
 
