@@ -103,6 +103,7 @@ void Potion::CreatePotion(vector3df TPosition, vector3df TRotation){
 	// Create graphic body loading mesh
 	m_potionNode = g_engine->addObjMeshSceneNode(m_potionpath);
 	m_potionNode->setPosition(TPosition);
+	m_potionNode->setRotation(TRotation);
 	m_potionNode->setScale(potionScale*1.5);
 
 	//Bullet Physics
