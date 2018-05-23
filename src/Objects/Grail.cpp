@@ -80,8 +80,8 @@ void Grail::Update(float deltaTime){
 	UpdatePosShape();
 }
 
-void Grail::ShowInteractInfo(){
-	GUIEngine::GetInstance()->ShowEntityInfo("[E] Hold to Retrieve");
+void Grail::ShowInteractInfo(Player* p){
+	if(p->GetAlliance() == ALLIANCE_WIZARD) GUIEngine::GetInstance()->ShowEntityInfo("[E] Hold to Retrieve");
 }
 
 void Grail::Update(){

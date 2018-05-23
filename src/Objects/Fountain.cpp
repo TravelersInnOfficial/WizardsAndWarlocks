@@ -159,7 +159,7 @@ void Fountain::Interact(Player* p){
 	inUse = true;
 }
 
-void Fountain::ShowInteractInfo(){
+void Fountain::ShowInteractInfo(Player* p){
 	GUIEngine::GetInstance()->ShowEntityInfo("[E] Hold to Use");
 }
 

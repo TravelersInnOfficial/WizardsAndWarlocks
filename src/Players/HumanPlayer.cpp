@@ -325,7 +325,7 @@ void HumanPlayer::LookingAtObject(){
 		if(Object!=nullptr){
 			if(!m_interacting && GraphicEngine::getInstance()->getTime() - showObjInfo > 500.0f){
 				Entidad* h = (Entidad*)Object;
-				h->ShowInteractInfo();
+				h->ShowInteractInfo((Player*) this);
 			}
 		}
 		else{

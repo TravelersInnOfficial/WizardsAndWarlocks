@@ -17,7 +17,7 @@ public:
 	
 	// functions from father
 	void Update();
-	void ShowInteractInfo();
+	void ShowInteractInfo(Player* p);
 	void Interact(Player* p);
 	void NetInteract(Player* p);
 	

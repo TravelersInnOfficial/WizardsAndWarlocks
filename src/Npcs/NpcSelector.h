@@ -11,7 +11,7 @@ class NpcSelector: public Npc{
 		void CreateVisual(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		void CreatePhysical(vector3df TPosition, vector3df TScale, vector3df TRotation);
 		void Interact(Player* p);
-		void ShowInteractInfo();
+		void ShowInteractInfo(Player* p);
 };
 
 #endif

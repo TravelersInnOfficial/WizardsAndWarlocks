@@ -56,7 +56,7 @@ void Potion::Update(){
 	if(!picked) UpdatePosShape();
 }
 
-void Potion::ShowInteractInfo(){
+void Potion::ShowInteractInfo(Player* p){
 	GUIEngine::GetInstance()->ShowEntityInfo(m_info);
 }
 

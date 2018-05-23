@@ -199,7 +199,6 @@ void Trap::HUD_bar::Update(float time, float total){
 }
 
 void Trap::Activate(Player* player){
-
 	switch(m_trapType){
 		case TENUM_DEATH_CLAWS:
 			EffectManager::GetInstance()->AddEffect(player, WEAK_DEATHSNARE);
@@ -234,7 +233,6 @@ void Trap::Activate(Player* player){
 		default:
 		break;
 	}
-
 	if(playerOne != nullptr) playerOne->AddToMinimap(player);
 	TrapManager::GetInstance()->DeleteTrap(this);
 }

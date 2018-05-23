@@ -53,6 +53,6 @@ void NpcSelector::Interact(Player* p){
 	}
 }
 
-void NpcSelector::ShowInteractInfo(){
+void NpcSelector::ShowInteractInfo(Player* p){
 	GUIEngine::GetInstance()->ShowEntityInfo("[E] Change Alliance");
 }

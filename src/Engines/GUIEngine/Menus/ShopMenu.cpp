@@ -229,12 +229,6 @@ ShopMenu::~ShopMenu(){
 
     delete bkg;
     bkg = nullptr;
-
-    for(int i = 0; i<slots.size(); i++){
-        delete slots[i];
-        slots[i] = nullptr;
-    }
-    slots.clear();
 }
 
 void ShopMenu::Close(bool* open){
@@ -304,10 +298,6 @@ void ShopMenu::load_items(const char* id,const char* type, int total, int cols, 
         ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
         ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
         ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4) ImColor::HSV(0.0f, 0.0f, 0.0f, 0.0f));
-
-        //ImGui::Image(texture_slot,itemSize);
-        
-        slot_pos.push_back(ImGui::GetCursorScreenPos());
         
         if(ImGui::ImageButton(texture[i], ImVec2(itemSize.x/1.2,itemSize.y/1.2))){
             selected = texture[i];
@@ -379,15 +369,6 @@ void ShopMenu::Update(bool* open, float deltaTime){
         load_items("tactic_spells_columns", TYPE_SPELL, N_TSPELLS, N_TSPELLS, t_spelltexture, t_spellKeys, tspells_banner, "Tactic Spells");
         load_items("traps_columns", TYPE_TRAP, N_TRAPS, N_TRAPS, trap_texture, trapKeys, traps_banner, "Traps"); 
         
-
-        if(slots.empty()){
-            for(int i = 0;i<slot_pos.size();i++){
-                vector2df position(slot_pos[i].x-5,screenHeight-slot_pos[i].y-itemSize.y-5);
-                vector2df dims(itemSize.x+10,itemSize.y+10);
-                GSprite* currentSlot = GraphicEngine::getInstance()->addSprite(TEXTUREMAP[TEXTURE_SHOP_SLOT], position, dims);
-                slots.push_back(currentSlot);
-            }
-        }
         
         ImGui::EndChild();
         ImGui::PopStyleVar();

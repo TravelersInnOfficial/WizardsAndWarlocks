@@ -239,6 +239,13 @@ void HUD_Minimap::DrawPlayers(){
             CalculatePositionSprite(i, traps[i]);
         }
     }
+    else{
+        int size = m_traps.size();
+        for(int i=0; i<size; i++){
+            delete m_traps[i];
+        }
+        m_traps.clear();
+    }
 }
 
 void HUD_Minimap::SetStyleSprite(int id, Player* p){

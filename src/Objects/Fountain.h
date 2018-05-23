@@ -19,7 +19,7 @@ public:
 	void Update();
 	void Update(float deltaTime);
 	void Interact(Player* p);
-	void ShowInteractInfo();
+	void ShowInteractInfo(Player* p);
 	void SetFree();
 	bool GetInUse();
 	float GetPercentualValue();

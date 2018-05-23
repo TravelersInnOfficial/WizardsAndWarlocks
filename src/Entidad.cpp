@@ -20,4 +20,4 @@ int Entidad::GetId(){
 #include <iostream>
 void Entidad::Contact(void* punt, EntityEnum tipo){}
 void Entidad::Interact(Player* p){}
-void Entidad::ShowInteractInfo(){}
+void Entidad::ShowInteractInfo(Player* p){}

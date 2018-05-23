@@ -52,6 +52,6 @@ void NpcSeller::Interact(Player* p){
 	}
 }
 
-void NpcSeller::ShowInteractInfo(){
+void NpcSeller::ShowInteractInfo(Player* p){
 	GUIEngine::GetInstance()->ShowEntityInfo("[E] Shop");
 }

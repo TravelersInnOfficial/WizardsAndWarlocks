@@ -73,8 +73,6 @@ private:
     ImTextureID* trap_texture[N_TRAPS];
 
     GSprite* bkg;
-    std::vector<ImVec2> slot_pos;
-    std::vector<GSprite*> slots;
 
     std::vector<ImTextureID*> selected_spells;    //ACTUAL SELECTED SPELLS
     std::vector<ImTextureID*> selected_trap;      //ACTUAL SELECTED TRAPS
