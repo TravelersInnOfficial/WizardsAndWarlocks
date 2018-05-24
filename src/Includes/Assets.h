@@ -10,7 +10,6 @@ enum GAMETEXTURES {
 	TEXTURE_none,
 	TEXTURE_Wizard,
 	TEXTURE_Warlock,
-	TEXTURE_game_icon,
 	TEXTURE_cero,
 	TEXTURE_uno,
 	TEXTURE_dos,
@@ -330,7 +329,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_none]							= "./../assets/textures/none.png";
 	m[TEXTURE_Warlock]						= "./../assets/textures/Warlock.png";
 	m[TEXTURE_Wizard]						= "./../assets/textures/Wizard.png";
-	m[TEXTURE_game_icon]					= "./../assets/textures/game_icon.png";
 	m[TEXTURE_uno]							= "./../assets/textures/HUD/Counter/1.png";
 	m[TEXTURE_cuatro]						= "./../assets/textures/HUD/Counter/4.png";
 	m[TEXTURE_dos]							= "./../assets/textures/HUD/Counter/2.png";
