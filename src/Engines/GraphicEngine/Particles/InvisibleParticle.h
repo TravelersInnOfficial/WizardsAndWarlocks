@@ -1,6 +1,6 @@
 #ifndef INVISIBLEPARTICLE_H
 #define INVISIBLEPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 
 class InvisibleParticle: public ParticleManager{
 public:	

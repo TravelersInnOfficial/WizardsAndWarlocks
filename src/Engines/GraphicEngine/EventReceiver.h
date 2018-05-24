@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <KeyStates.h>
-#include <TravelersOcularEngine/src/TOcularEngine/IODriver.h>
+#include <TOcularEngine/IODriver.h>
 
 class EventReceiver : public IODriver {
 

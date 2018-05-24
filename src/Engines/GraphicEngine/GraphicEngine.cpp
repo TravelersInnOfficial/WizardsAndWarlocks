@@ -1,6 +1,6 @@
 #include "GraphicEngine.h"
 
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 #include "./../GUIEngine/GUIEngine.h"
 
@@ -24,7 +24,7 @@ GraphicEngine::GraphicEngine(bool isServer){
 	ambientLight = 0.40f;
 	mouse_sensibility = 2.5f;
 
-	VideoDriver::m_assetsPath = "./../src/Engines/TravelersOcularEngine/assets";
+	VideoDriver::m_assetsPath = "./../TravelersOcularEngine/assets";
 	privateDriver = toe::GetVideoDriver();
 
 	if(isServer){

@@ -9,7 +9,7 @@
 #include "./../Managers/SpellManager.h"
 #include "./../Managers/BulletManager.h"
 #include "./../Managers/EffectManager.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <TOEvector2d.h>
 
 #include <sstream>

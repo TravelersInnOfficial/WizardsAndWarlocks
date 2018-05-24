@@ -6,7 +6,7 @@
 #include <GraphicEngine/GraphicEngine.h>
 #include <GraphicEngine/GSprite.h>
 #include <SoundEngine/SoundSystem.h>
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <TOEvector2d.h>
 
 bool MainMenu::m_options = false;

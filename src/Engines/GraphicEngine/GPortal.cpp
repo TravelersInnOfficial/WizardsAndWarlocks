@@ -1,5 +1,5 @@
 #include "./GPortal.h"
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/TFPortal.h>
+#include <TOcularEngine/Elements/TFPortal.h>
 
 GPortal::GPortal(TFPortal* portal){
 	m_portal = portal;

@@ -1,6 +1,6 @@
 #ifndef POISONPARTICLE_H
 #define POISONPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 
 class PoisonParticle: public ParticleManager{
 public:	

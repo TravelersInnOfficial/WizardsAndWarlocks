@@ -1,6 +1,6 @@
 #ifndef PROJECTILEPARTICLE_H
 #define PROJECTILEPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 
 class ProjectileParticle: public ParticleManager{
 public:	

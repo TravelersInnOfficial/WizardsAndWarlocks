@@ -1,6 +1,6 @@
 #ifndef FOUNTAINPARTICLE_H
 #define FOUNTAINPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 #include <vector3d.h>
 
 class FountainParticle: public ParticleManager{

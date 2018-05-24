@@ -1,6 +1,6 @@
 #ifndef WINDPARTICLE_H
 #define WINDPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 #include <vector3d.h>
 
 class WindParticle: public ParticleManager{

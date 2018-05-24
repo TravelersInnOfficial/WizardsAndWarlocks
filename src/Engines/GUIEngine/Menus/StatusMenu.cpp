@@ -2,7 +2,7 @@
 
 #include "./../Managers/PlayerManager.h"
 #include "./../Players/Player.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <Assets.h>
 
 StatusMenu::StatusMenu(MenuType type) : Menu(type){

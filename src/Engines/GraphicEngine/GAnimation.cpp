@@ -1,6 +1,6 @@
 #include "GAnimation.h"
 #include "GraphicEngine.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 
 GAnimation::GAnimation(TFAnimation* animation) : GBody(nullptr) {

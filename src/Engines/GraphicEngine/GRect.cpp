@@ -1,8 +1,8 @@
 #include "GRect.h"
 
 #include "GraphicEngine.h"
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/2DElements/TFRect.h>
-#include <TravelersOcularEngine/src/TOcularEngine/SceneManager.h>
+#include <TOcularEngine/Elements/2DElements/TFRect.h>
+#include <TOcularEngine/SceneManager.h>
 
 GRect::GRect(TFRect* rect){
 	m_rect = rect;

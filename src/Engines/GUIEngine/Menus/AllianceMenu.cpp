@@ -4,7 +4,7 @@
 #include "./../Managers/ObjectManager.h"
 #include "./../Managers/PlayerManager.h"
 #include "./../Players/HumanPlayer.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <TOEvector2d.h>
 #include <Assets.h>
 

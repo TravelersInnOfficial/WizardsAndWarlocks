@@ -1,7 +1,7 @@
 #include "Light.h"
 #include "GraphicEngine.h"
 #include "GRoom.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 
 Light::Light(vector3df TPosition, vector3df Color, float range){
 	SceneManager* sm = VideoDriver::GetInstance()->GetSceneManager();

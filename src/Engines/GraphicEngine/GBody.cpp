@@ -2,7 +2,7 @@
 
 #include "GRoom.h"
 #include "GraphicEngine.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <NetworkEngine/NetworkEngine.h>
 
 GBody::GBody(TFMesh* node){

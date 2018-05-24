@@ -1,7 +1,7 @@
 #include "./GRoom.h"
 #include "./GPortal.h"
 #include "GraphicEngine.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 
 GRoom::GRoom(int id, vector3df position, vector3df rotation, vector3df scale){
 	m_id = id;

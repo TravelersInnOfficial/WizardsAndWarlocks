@@ -1,7 +1,7 @@
 #include "GUIEngine.h"
 
 #include <DeathMessages.h>
-#include <TravelersOcularEngine/src/TOcularEngine/VideoDriver.h>
+#include <TOcularEngine/VideoDriver.h>
 
 #include <IMGUI/imgui.h>
 #include <IMGUI/imgui_impl_glfw_gl3.h>

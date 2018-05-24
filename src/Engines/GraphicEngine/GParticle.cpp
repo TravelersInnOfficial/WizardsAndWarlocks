@@ -1,7 +1,7 @@
 #include "GParticle.h"
 #include "GraphicEngine.h"
 #include <NetworkEngine/NetworkEngine.h>
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include "./../../Managers/StateManager.h"
 #include <ParticleData.h>
 

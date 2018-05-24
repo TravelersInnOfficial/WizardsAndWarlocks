@@ -1,6 +1,6 @@
 #ifndef GRAILPARTICLE_H
 #define GRAILPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 
 class GrailParticle: public ParticleManager{
 public:	

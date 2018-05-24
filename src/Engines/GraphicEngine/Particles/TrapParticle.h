@@ -1,6 +1,6 @@
 #ifndef TRAPPARTICLE_H
 #define TRAPPARTICLE_H
-#include <TravelersOcularEngine/src/TOcularEngine/Elements/Particles/ParticleManager.h>
+#include <TOcularEngine/Elements/Particles/ParticleManager.h>
 
 class TrapParticle: public ParticleManager{
 public:	

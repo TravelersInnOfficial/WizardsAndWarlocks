@@ -3,7 +3,7 @@
 
 
 #include <vector3d.h>
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 
 //fast forward declaration
 class TFNode;

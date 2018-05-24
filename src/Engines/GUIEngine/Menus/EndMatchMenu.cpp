@@ -1,7 +1,7 @@
 #include "EndMatchMenu.h"
 #include "./../../../Players/HumanPlayer.h"
 #include "./../../../Managers/PlayerManager.h"
-#include <TravelersOcularEngine/src/TOcularEngine/TOcularEngine.h>
+#include <TOcularEngine/TOcularEngine.h>
 #include <GraphicEngine/GraphicEngine.h>
 #include <GraphicEngine/GSprite.h>
 #include <Assets.h>

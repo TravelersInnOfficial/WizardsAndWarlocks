@@ -1,5 +1,5 @@
-GESRCPATH				=src/Engines/TravelersOcularEngine
-INCLUDE_FOLDERS			=-I./src/Includes -I./src/Engines/TravelersOcularEngine/src/Common -I./src/Engines/ -I./$(GESRCPATH)/src/Common
+GENGINE					=TravelersOcularEngine
+INCLUDE_FOLDERS			=-I./src/Includes -I./src/Engines/ -I./$(GENGINE)/src/Common -I./$(GENGINE)/src/
 USER_FLAGS				=
 USER_FLAGS_C			=
 
@@ -27,22 +27,32 @@ endif
 BinPath 			:= ./bin
 BuildPath 			:= ./obj
 
-SOURCE_DIRS			:= $(shell find "./$(GESRCPATH)/src" -type d)
-SOURCE_DIRS			+= $(shell find ./src -type d -not -path "./src" -not -path "./$(GESRCPATH)/*")
+# Get all directories
+SOURCE_DIRS			:= $(shell find "./$(GENGINE)/src" -type d -not -path "./$(GENGINE)/src")	# FIND DIRS IN ENGINE
+SOURCE_DIRS			+= $(shell find ./src -type d -not -path "./src")							# FIND DIRS IN GAME
+
+# Replace all directories
+SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))				# Change src by obj
+SOURCE_DIRS 		:= $(patsubst ./$(GENGINE)/src/%,./obj/TOE/%,$(SOURCE_DIRS))	# Change src by obj
+
 SourcePath			:= $(shell find src -name '*.c')
-SourcePath			+= $(shell find src -name '*.cpp' -not -path '$(GESRCPATH)/src/main.cpp')
+SourcePath			+= $(shell find src -name '*.cpp')
+SourcePath			+= $(shell find $(GENGINE)/src -name '*.c')
+SourcePath			+= $(shell find $(GENGINE)/src -name '*.cpp' -not -path '$(GENGINE)/src/main.cpp')
+#$(info DIRS$(SourcePath))
 
 CXX					:= clang++
 CC					:= clang
 
 EXECUTABLE 			:= $(BinPath)/$(Target)
-OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))			# Subst src path by obj
-OBJ					:= $(patsubst src/%.c,obj/%.o,$(OBJ))					# Subst src path by obj
-
+OBJ					:= $(patsubst src/%.cpp,obj/%.o,$(SourcePath))			# Subst src by obj
+OBJ					:= $(patsubst src/%.c,obj/%.o,$(OBJ))					# Subst src by obj
+OBJ					:= $(patsubst $(GENGINE)/src/%.cpp,obj/TOE/%.o,$(OBJ))		# Subst TravelerOcularsEngine/src by obj
+OBJ					:= $(patsubst $(GENGINE)/src/%.c,obj/TOE/%.o,$(OBJ))		# Subst TravelerOcularsEngine/src by obj
+#$(info OBJ $(OBJ))
 # Assuming four folders to ignore
 GAMEOBJ				 = $(shell find src \( -path "src/Engines" \) -prune -o -name "*.cpp" -print)
 SOFTCLEAN			 = $(patsubst src/%.cpp,obj/%.o,$(GAMEOBJ))
-SOURCE_DIRS 		:= $(patsubst ./src/%,./obj/%,$(SOURCE_DIRS))
 
 #MAKE OPTIONS
 .PHONY: all clean cleanall ico
@@ -63,6 +73,16 @@ obj/%.o: src/%.cpp
 
 # Compile .c files
 obj/%.o: src/%.c
+	$(info Compiling-> $@)
+	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c $< -o $@
+
+# Compile .cpp files
+obj/TOE/%.o: $(GENGINE)/src/%.cpp
+	$(info Compiling-> $@)
+	@$(CXX) $(CXXFLAGS) $(CPPFLAGS) -c $< -o $@
+
+# Compile .c files
+obj/TOE/%.o: $(GENGINE)/src/%.c
 	$(info Compiling-> $@)
 	@$(CC) $(CCFLAGS) $(CPPFLAGS) -c $< -o $@
 
