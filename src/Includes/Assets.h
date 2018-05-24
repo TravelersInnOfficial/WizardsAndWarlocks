@@ -414,11 +414,11 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_WARLOCK_ICON]				= "./../assets/textures/GUI/warlockalliance.png";
 	m[TEXTURE_WIZARD_ICON]				= "./../assets/textures/GUI/wizardalliance.png";
 
-	m[TEXTURE_default_skydome] = "../src/Engines/TravelersOcularEngine/assets/textures/default_skydome.jpg";
+	m[TEXTURE_default_skydome] = "../TravelersOcularEngine/assets/textures/default_skydome.jpg";
 	m[TEXTURE_normal_mainwall] = "../assets/textures/maptextures/normal_mainwall 1.png";
 	m[TEXTURE_specular_mainwall] = "../assets/textures/maptextures/specular_mainwall 1.png";
 	m[TEXTURE_mainwall] = "../assets/textures/maptextures/mainwall 1.png";
-	m[TEXTURE_invisible_texture] = "../src/Engines/TravelersOcularEngine/assets/textures/invisible_texture.png";
+	m[TEXTURE_invisible_texture] = "../TravelersOcularEngine/assets/textures/invisible_texture.png";
 	m[TEXTURE_normal_stone_floor] = "../assets/textures/maptextures/normal_stone_floor.png";
 	m[TEXTURE_specular_stone_floor] = "../assets/textures/maptextures/specular_stone_floor.png";
 	m[TEXTURE_stone_floor] = "../assets/textures/maptextures/stone_floor.png";
@@ -428,7 +428,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_torch] = "../assets/textures/torch.png";
 	m[TEXTURE_book3] = "../assets/textures/book3.png";
 	m[TEXTURE_book1] = "../assets/textures/book1.png";
-	m[TEXTURE_default_font] = "../src/Engines/TravelersOcularEngine/assets/textures/default_font.png";
+	m[TEXTURE_default_font] = "../TravelersOcularEngine/assets/textures/default_font.png";
 	m[TEXTURE_mask] = "../assets/textures/HUD/Minimap/mask.jpg";
 	m[TEXTURE_normal_wood_floor] = "../assets/textures/maptextures/normal_wood_floor.png";
 	m[TEXTURE_specular_wood_floor] = "../assets/textures/maptextures/specular_wood_floor.png";
@@ -444,7 +444,7 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_open_book1] = "../assets/textures/open_book1.png";
 	m[TEXTURE_book4] = "../assets/textures/book4.png";
 
-	m[TEXTURE_default_particle] = "../src/Engines/TravelersOcularEngine/assets/textures/default_particle.png";
+	m[TEXTURE_default_particle] = "../TravelersOcularEngine/assets/textures/default_particle.png";
 	m[TEXTURE_NeutralParticle] = "../assets/textures/particles/NeutralParticle.png";
 	m[TEXTURE_FireParticle] = "../assets/textures/particles/FireParticle.png";
 	m[TEXTURE_DefenseParticles] = "../assets/textures/particles/DefenseParticles.png";
