@@ -169,7 +169,6 @@ void Player::PlayerInit(){
 	if(m_overlayManager != nullptr){
 		m_overlayManager->SetTime(BLOOD, 0);
 		m_overlayManager->SetTime(HITLANDED, 0);
-		m_overlayManager->SetTime(FUZZY, 0);
 	}
 
 	TrapManager::GetInstance()->setPlayerUsings(this, 4);

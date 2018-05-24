@@ -133,7 +133,6 @@ void PlayerHUD::ShowEnemyInMap(Player* p){
 void PlayerHUD::p_initPlayerOrbs(){
     //float H = g_engine->GetScreenHeight();		
     float W = g_engine->GetScreenWidth();
-    float ratio = g_engine->GetAspectRatio();
     vector2di tex_dims = GraphicEngine::getInstance()->GetTextureDims(TEXTUREMAP[TEXTURE_ORB_BACK]);
 
     //orb dimensions

@@ -45,7 +45,6 @@ enum GAMETEXTURES {
 	TEXTURE_SPELL_TELEPORT_HUD,
 	TEXTURE_SPELL_INVISIBILITY_HUD,
 	TEXTURE_BLOOD,
-	TEXTURE_FUZZY,
 	TEXTURE_HITLANDED,
 	TEXTURE_decal,
 	TEXTURE_SPELL_WALL,
@@ -111,7 +110,6 @@ enum GAMETEXTURES {
 	TEXTURE_default_particle,
 	TEXTURE_NeutralParticle,
 	TEXTURE_default_font,
-	TEXTURE_map,
 	TEXTURE_mask,
 	TEXTURE_FireParticle,
 	TEXTURE_DefenseParticles,
@@ -373,7 +371,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_SPELL_SEP_L]					= "./../assets/textures/HUD/Spells/decorator_left.png";
 	m[TEXTURE_SPELL_SEP_R]					= "./../assets/textures/HUD/Spells/decorator_right.png";
 	m[TEXTURE_BLOOD]						= "./../assets/textures/overlays/BLOOD.png";
-	m[TEXTURE_FUZZY]						= "./../assets/textures/overlays/FUZZY.png";
 	m[TEXTURE_HITLANDED]					= "./../assets/textures/overlays/HITLANDED.png";
 	m[TEXTURE_decal]						= "./../assets/textures/decal.png";
 	m[TEXTURE_SPELL_WALL]					= "./../assets/textures/SPELL_WALL.png";
@@ -432,7 +429,6 @@ static std::map<GAMETEXTURES, std::string> CREATE_TEXTUREMAP(){
 	m[TEXTURE_book3] = "../assets/textures/book3.png";
 	m[TEXTURE_book1] = "../assets/textures/book1.png";
 	m[TEXTURE_default_font] = "../src/Engines/TravelersOcularEngine/assets/textures/default_font.png";
-	m[TEXTURE_map] = "../assets/textures/HUD/Minimap/map.jpg";
 	m[TEXTURE_mask] = "../assets/textures/HUD/Minimap/mask.jpg";
 	m[TEXTURE_normal_wood_floor] = "../assets/textures/maptextures/normal_wood_floor.png";
 	m[TEXTURE_specular_wood_floor] = "../assets/textures/maptextures/specular_wood_floor.png";
