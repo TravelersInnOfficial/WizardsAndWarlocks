@@ -302,7 +302,7 @@ bool Pathfinding::AStar( vector3df from,vector3df to, vector3df firstC, vector3d
             //std::cout<<"new path"<<std::endl;
             Node* currentNode = current->m_node;
             if(currentNode != EndNode) {
-                std::cout<<"Algo ha ido mal"<<std::endl;
+                //std::cout<<"Algo ha ido mal"<<std::endl;
                 m_path.push_back(EndNode);
             }
             do{
