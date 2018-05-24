@@ -28,6 +28,18 @@
     "ID": "SPELL_DEFENSE", 
     "PROJECTILE_ID": "BULLET_NONE",
     "EFFECT_ID": "POWERUP_DEFENSE",
+    "name": "OHMIO PROTECTION",
+    "description": "Small protection.",
+    "costMP": -30.0,
+    "tCast": 0.0,
+    "tCooldown": 7.0,
+    "optHP": 100.0,
+    "optMP": 100.0
+  },
+  {
+    "ID": "SPELL_UNTARGET", 
+    "PROJECTILE_ID": "BULLET_NONE",
+    "EFFECT_ID": "POWERUP_UNTARGET",
     "name": "DIVINE PONCHO",
     "description": "Protects against all spells for several seconds.",
     "costMP": -20.0,
@@ -45,18 +57,6 @@
     "costMP": -20.0,
     "tCast": 1.5,
     "tCooldown": 10.0,
-    "optHP": 100.0,
-    "optMP": 100.0
-  },
-  {
-    "ID": "SPELL_UNTARGET", 
-    "PROJECTILE_ID": "BULLET_NONE",
-    "EFFECT_ID": "POWERUP_UNTARGET",
-    "name": "OHMIO PROTECTION",
-    "description": "Small protection.",
-    "costMP": -30.0,
-    "tCast": 0.0,
-    "tCooldown": 7.0,
     "optHP": 100.0,
     "optMP": 100.0
   },
