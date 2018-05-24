@@ -414,49 +414,49 @@
       "ID" : "POTION_LIFE",
       "EFFECT_ID" : "EFFECT_NONE",
       "name" : "LIFE POTION",
-      "description" : "Partially restores your HP.",
+      "description" : "Half fills your HP.",
       "value" : 50.0
     },
     {
       "ID" : "POTION_MANA",
       "EFFECT_ID" : "EFFECT_NONE",
       "name" : "MANA POTION",
-      "description" : "Partially restores your MP.",
+      "description" : "Half fills your MP.",
       "value" : 50.0
     },
     {
       "ID" : "POTION_ICE",
       "EFFECT_ID" : "WEAK_FROZEN",
       "name" : "ICE POTION",
-      "description" : "Recovers 60 hp, 60/2 mp and freezes player.",
+      "description" : "Recovers 60HP and 30MP but freezes player.",
       "value" : 60.0
     },
     {
       "ID" : "POTION_ELECTRIC",
       "EFFECT_ID" : "WEAK_PARALYZED",
       "name" : "ELECTRIC POTION",
-      "description" : "Recovers 60 hp, 60/2 mp and paralyzes player.",
+      "description" : "Recovers 60HP and 30MP but paralyzes player.",
       "value" : 60.0
     },
     {
       "ID" : "POTION_FIRE",
       "EFFECT_ID" : "POWERUP_FIRE",
       "name" : "FIRE POTION",
-      "description" : "Recovers 20 HP and applies fire hits.",
+      "description" : "Recovers 20 HP and adds fire effect to basic spell hits.",
       "value" : 20.0
     },
     {
       "ID" : "POTION_POISON",
       "EFFECT_ID" : "POWERUP_POISON",
       "name" : "POISON POTION",
-      "description" : "Recovers 20 MP and applies poison hits",
+      "description" : "Recovers 20 MP and applies poison effect to basic spell hits.",
       "value" : 20.0
     },
     {
       "ID" : "POTION_DEFENSE",
       "EFFECT_ID" : "POWERUP_DEFENSE",
       "name" : "DEFENSE POTION",
-      "description" : "Recovers 20 HP and applies defense resistance",
+      "description" : "Recovers 20 HP and applies defense resistance.",
       "value" : 20.0
     }
   ]

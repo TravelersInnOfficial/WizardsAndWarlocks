@@ -209,6 +209,7 @@ Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3d
 			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_ICE] << "\n"
 			<< potion_description[POTION_ICE] << "\n"
 			<< "+" << value << "HP\n"
+			<< "+" << "30MP\n"
 			<< "EFFECT: " << potion_EFFECT[POTION_ICE] <<"\n";
 			p = (Potion*) new IcePotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
@@ -217,6 +218,7 @@ Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3d
 			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_ELECTRIC] << "\n"
 			<< potion_description[POTION_ELECTRIC] << "\n"
 			<< "+" << value << "HP\n"
+			<< "+" << "30MP\n"
 			<< "EFFECT: " << potion_EFFECT[POTION_ELECTRIC] <<"\n";
 			p = (Potion*) new ElectricPotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;
@@ -232,7 +234,7 @@ Potion* ObjectManager::AddPotion(vector3df TPosition, vector3df TScale, vector3d
 			value = potion_value[POTION_POISON];
 			p_info << std::setprecision(4) << "[E]" << potion_name[POTION_POISON] << "\n"
 			<< potion_description[POTION_POISON] << "\n"
-			<< "+" << value << "HP\n"
+			<< "+" << value << "MP\n"
 			<< "EFFECT: " << potion_EFFECT[POTION_POISON] <<"\n";
 			p = (Potion*) new PoisonPotion(TPosition, TScale, TRotation, value, p_info.str());
 			break;

@@ -157,8 +157,6 @@ void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data
 
     std::vector<std::string> info = s_manager->GetSpellInfo(spell);
     std::vector<float> data = s_manager->GetSpellProps(spell);
-    
-    float damage = b_manager->GetBulletDamage(bullet_map[info[2]]);
 
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
@@ -166,7 +164,6 @@ void ShopMenu::loadDefensiveItem(SPELLCODE spell, std::vector<std::string>* data
     
     std::ostringstream description;
     description << std::setprecision(4) << info[0] << "\n" << info[1] 
-                            << "\n- Damage: " << damage << " HP" 
                             << "\n- Effect: " << effect_name <<" (*"<<effect_value<<", "<<effect_duration<<" s)"
                             << "\n- Mana Cost: "<< data[0] << " MP"
                             << "\n- Casting Time: " << data[1] << " s"
@@ -184,16 +181,13 @@ void ShopMenu::loadTacticItem(SPELLCODE spell, std::vector<std::string>* data_st
 
     std::vector<std::string> info = s_manager->GetSpellInfo(spell);
     std::vector<float> data = s_manager->GetSpellProps(spell);
-    
-    float damage = b_manager->GetBulletDamage(bullet_map[info[2]]);
 
     std::string effect_name = e_manager->GetEffectName(effect_map[info[3]]);
     float effect_duration = e_manager->GetEffectDuration(effect_map[info[3]]);
     float effect_value = e_manager->GetEffectValue(effect_map[info[3]]);
 
     std::ostringstream description;
-    description << std::setprecision(4) << info[0] << "\n" << info[1] 
-                            << "\n- Damage: " << damage << " HP" 
+    description << std::setprecision(4) << info[0] << "\n" << info[1]
                             << "\n- Effect: " << effect_name <<" (*"<<effect_value<<", "<<effect_duration<<" s)"
                             << "\n- Mana Cost: "<< data[0] << " MP"
                             << "\n- Casting Time: " << data[1] << " s"
