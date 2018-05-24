@@ -1,0 +1,36 @@
+/************************************************************/
+/******************** ART ATTRIBUTIONS **********************/
+/************************************************************/
+
+
+USED IN THE GAME:
+
+    - Health Orb 1.1 by itsmars:
+        https://opengameart.org/content/health-orb-11
+
+    - UI Button by StumpyStrust:
+        https://opengameart.org/content/ui-button
+
+    - UI Orbs by StumpyStrust:
+        https://opengameart.org/content/ui-orbs
+
+    - UI resources by Wyrmheart:
+        https://opengameart.org/content/ui-resources
+
+    - GUI elements by yd:
+        https://opengameart.org/content/gui-elements
+
+    - Old Parchment Paper by cron:
+        https://opengameart.org/content/old-parchment-paper
+
+    - teleport circle - sprite sheet by gfroad:
+        https://opengameart.org/content/teleport-circle-sprite-sheet
+
+    - Dwarven Cursor by Jinn: 
+        https://opengameart.org/content/dwarven-cursor
+
+
+USED IN THE GAME COVER:
+
+    - Old Grunge Paper Texture by wild textures:
+        http://www.wildtextures.com/free-textures/old-grunge-paper-texture/
